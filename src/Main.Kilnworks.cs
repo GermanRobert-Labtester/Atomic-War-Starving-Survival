@@ -84,7 +84,6 @@ namespace AtomicWar.GodotApp
         {
             if (_kilnworks == null) return;
             var state = _kilnworks.CaptureState();
-            KilnworksSaveStore.TrySave(state);
             if (CaptureSection(KilnworksSaveStore.SectionName, KilnworksSaveStore.TryCapturePersisted(state)))
                 _kilnworksDirty = false;
         }

@@ -29,7 +29,6 @@ namespace AtomicWar.GodotApp
         {
             if (_chemicalPlume == null) return;
             var state = _chemicalPlume.CaptureState();
-            ChemicalPlumeSaveStore.TrySave(state);
             if (CaptureSection("chemical_plume", ChemicalPlumeSaveStore.TryCapturePersisted(state)))
             {
                 _chemicalPlumeDirty = false;

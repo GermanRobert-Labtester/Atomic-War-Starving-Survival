@@ -80,7 +80,6 @@ namespace AtomicWar.GodotApp
         {
             if (_antenatalMaternalHealth == null) return;
             var state = _antenatalMaternalHealth.Ledger.CaptureState();
-            AntenatalMaternalHealthSaveStore.TrySave(state);
             if (CaptureSection(AntenatalMaternalHealthSaveStore.SectionName, AntenatalMaternalHealthSaveStore.TryCapturePersisted(state)))
                 _antenatalMaternalHealthDirty = false;
         }

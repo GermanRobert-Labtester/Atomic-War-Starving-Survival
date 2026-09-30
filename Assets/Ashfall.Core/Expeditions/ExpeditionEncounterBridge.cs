@@ -306,7 +306,8 @@ namespace Ashfall.Core.Expeditions
                         LocationId = locationId ?? _lastSurfaced?.trigger?.locationId ?? string.Empty,
                         Day = day,
                         MoraleDelta = travelRes.MoraleDelta,
-                        GuiltDelta = travelRes.GuiltDelta
+                        GuiltDelta = travelRes.GuiltDelta,
+                        FieldGuideUnlockId = travelRes.UnlocksFieldGuideId ?? string.Empty
                     };
 
                     if (_lastSurfaced != null && _lastSurfaced.encounter_id == encounterId)

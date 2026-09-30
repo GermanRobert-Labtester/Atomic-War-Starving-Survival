@@ -57,7 +57,6 @@ namespace AtomicWar.GodotApp
             if (_psychologicalProfiles == null) return;
 
             var state = _psychologicalProfiles.CaptureState();
-            PsychologicalProfileSaveStore.TrySave(state);
             string? payload = PsychologicalProfileSaveStore.TryCapturePersisted(state);
             if (!string.IsNullOrEmpty(payload))
             {

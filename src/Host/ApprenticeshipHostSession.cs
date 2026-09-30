@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 using System;
+using System.Collections.Generic;
 using Godot;
 using Ashfall.Core;
+using Ashfall.Core.Survivors;
 
 namespace AtomicWar.GodotApp
 {
@@ -13,6 +15,44 @@ namespace AtomicWar.GodotApp
     : HostSessionBase{
         public ApprenticeshipSystem System { get; }
         public string LastEvent { get; private set; } = string.Empty;
+        public Func<IReadOnlyList<ChildProfile>>? ChildrenProvider { get; set; }
+        public Func<IReadOnlyList<string>>? MentorsProvider { get; set; }
+        public Func<int>? DayProvider { get; set; }
+        public Func<int>? ChapterOpenDayProvider { get; set; }
+        public Func<bool>? ChapterTwoProvider { get; set; }
+        public IReadOnlyList<ChildProfile> VocationalCandidates()
+        {
+            var result = new List<ChildProfile>();
+            if (ChapterTwoProvider?.Invoke() != true) return result;
+            int day = DayProvider?.Invoke() ?? 0;
+            int opened = ChapterOpenDayProvider?.Invoke() ?? 0;
+            foreach (var child in ChildrenProvider?.Invoke() ?? Array.Empty<ChildProfile>())
+                if (System.CanOfferVocationalPair(child, day, opened)) result.Add(child);
+            return result;
+        }
+
+        public ActionResult RespondVocationalPair(string childId, string mentorId, string mentorshipId, bool accept)
+        {
+            if (ChapterTwoProvider?.Invoke() != true)
+                return ActionResult.Blocked("chapter_not_open", "apprentice.chapter_not_open");
+            ChildProfile? child = null;
+            foreach (var candidate in ChildrenProvider?.Invoke() ?? Array.Empty<ChildProfile>())
+                if (candidate.ChildId == childId) { child = candidate; break; }
+            if (child == null)
+                return ActionResult.Blocked("unknown_child", "apprentice.unknown_child");
+            bool mentorExists = false;
+            foreach (var id in MentorsProvider?.Invoke() ?? Array.Empty<string>())
+                if (id == mentorId) { mentorExists = true; break; }
+            if (accept && (!mentorExists || mentorId == childId))
+                return ActionResult.Blocked("mentor_unavailable", "apprentice.mentor_unavailable");
+            var result = System.RespondVocationalPair(child, mentorId, mentorshipId, accept,
+                DayProvider?.Invoke() ?? 0, ChapterOpenDayProvider?.Invoke() ?? 0);
+            LastEvent = result.IsSuccess
+                ? (accept ? $"{child.Name} accepted the mentorship." : $"{child.Name} declined the mentorship this quarter.")
+                : $"Pairing unavailable: {result.FailureCode}";
+            RaiseStateChanged();
+            return result;
+        }
         public ApprenticeshipHostSession(ApprenticeshipSystem system)
         {
             // The campaign composer supplies the shared skill progression,

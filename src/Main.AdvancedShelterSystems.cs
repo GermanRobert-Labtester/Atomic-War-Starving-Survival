@@ -576,34 +576,23 @@ namespace AtomicWar.GodotApp
 
         // ── Daily Tick Orchestration for Advanced Systems ───────────────
 
+        /// <summary>
+        /// Daily tick for the advanced systems without another tick owner, driven by
+        /// the phase-2 <c>advanced_shelter</c> day owner. Caravan trade (economy owner),
+        /// power subgrids (power owner) and the nuclear core (nuclear owner) tick elsewhere.
+        /// </summary>
         public void TickAdvancedShelterSystems(int day)
         {
-            if (_caravanTradeNetwork != null)
-            {
-                _caravanTradeNetwork.TickDay(day);
-                _caravanTradeNetworkDirty = true;
-            }
-
             if (_surgicalWard != null)
             {
                 _surgicalWard.TickDay(day);
                 _surgicalWardDirty = true;
             }
 
-            // Subgrid tick moved to TickPowerSubgrids (PowerGridDayOwner phase 1,
-            // SHELTER_HARDENING) — do not duplicate it here; this orchestrator is
-            // not currently called from the campaign pipeline.
-
             if (_hydroponicBiomes != null)
             {
                 _hydroponicBiomes.TickDay(day);
                 _hydroponicBiomesDirty = true;
-            }
-
-            if (_nuclearCore != null)
-            {
-                _nuclearCore.TickDay(day);
-                _nuclearCoreDirty = true;
             }
 
             if (_armoredCrawlers != null)

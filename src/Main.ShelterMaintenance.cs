@@ -48,7 +48,6 @@ namespace AtomicWar.GodotApp
         {
             if (_shelterMaintenance == null) return;
             var state = _shelterMaintenance.CaptureState();
-            ShelterMaintenanceSaveStore.TrySave(state);
             if (CaptureSection(ShelterMaintenanceSaveStore.SectionName,
                 ShelterMaintenanceSaveStore.TryCapturePersisted(state)))
             {

@@ -133,7 +133,6 @@ namespace AtomicWar.GodotApp
         {
             if (_traumaBond == null) return;
             var state = _traumaBond.CaptureState();
-            TraumaBondSaveStore.TrySave(state);
             if (CaptureSection("trauma_bond", TraumaBondSaveStore.TryCapturePersisted(state)))
                 _traumaBondDirty = false;
         }

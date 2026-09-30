@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using Ashfall.Core;
-using Ashfall.Core;
 using Ashfall.Core.Narrative;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -46,13 +45,13 @@ namespace AtomicWar.GodotApp
                 passed += errors.Count == 0 ? 1 : 0;
 
                 // 3. Validation covered every row, not a sample.
-                Check(session.EncountersValidated == catalog.Count && session.ValidationCount == 1,
+                Check(session.EncountersValidated == (catalog?.Count ?? 0) && session.ValidationCount == 1,
                     "Check 3: every row is validated exactly once per pass.");
-                passed += session.EncountersValidated == catalog.Count ? 1 : 0;
+                passed += session.EncountersValidated == (catalog?.Count ?? 0) ? 1 : 0;
 
                 // 4. Reference sets are honoured when supplied.
                 var factions = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-                foreach (var e in catalog.Encounters)
+                foreach (var e in catalog!.Encounters)
                     if (!string.IsNullOrEmpty(e.FactionId)) factions.Add(e.FactionId);
                 var withRefs = new PatrolEncounterIntegrityHostSession(
                     () => catalog, () => factions, () => null);

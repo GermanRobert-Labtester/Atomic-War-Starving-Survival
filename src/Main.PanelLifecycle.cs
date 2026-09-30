@@ -20,6 +20,7 @@ namespace AtomicWar.GodotApp
             return new Control[]
             {
                 _settingsPanel,
+                _assetInspectorPanel,
                 _inventoryOverlay,
                 _survivorsOverlay,
                 _craftingPanel,
@@ -239,6 +240,10 @@ namespace AtomicWar.GodotApp
             // A11y defaults (target-size floor + fixed-width label clipping)
             // for controls the panel built with raw `new` — see AshfallUiTheme.
             AshfallUiTheme.EnforceControlDefaults(panel);
+            // Lazy panels build buttons after the one-time setup walk and may
+            // bypass MakeButton — attach the shared button micro-Motion now so
+            // hover/press/focus polish is complete (idempotent).
+            AtomicWar.GodotApp.UI.UiMotion.AttachAllButtonFx(panel);
             AtomicWar.GodotApp.UI.UiMotion.AnimateOpen(panel);
             EnsureInitialFocus(panel);
         }

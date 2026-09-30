@@ -218,8 +218,10 @@ namespace AtomicWar.GodotApp
             // Lifetime completed sorties (not ActiveCount — that is in-flight only).
             int expeditions = _expeditions?.Engine?.CompletedCount ?? 0;
 
-            // Check trigger conditions: Extinction OR Day >= 360
-            if (living == 0 || day >= 360)
+            int targetDay = _endgame.GetTargetReadingDay();
+
+            // Check trigger conditions: Extinction OR Day >= targetDay
+            if (living == 0 || day >= targetDay)
             {
                 // Plan 46 — the campaign's terminal snapshot is the aggregation
                 // point: report before the ending is published so the journal
@@ -234,9 +236,10 @@ namespace AtomicWar.GodotApp
                     ExpeditionsCount = expeditions,
                     ForceExtinction = living == 0
                 };
-                _endgame.TriggerEnding(ctx);
+                var profile = _endgame.GetCurrentProfile();
+                _endgame.TriggerEnding(ctx, profile);
                 _endgameDirty = true;
-                GD.Print($"[Main.Endgame] Endgame triggered on Day {day}: {_endgame.System.State.selectedEndingId}");
+                GD.Print($"[Main.Endgame] Endgame triggered on Day {day} (Chapter {_endgame.ChapterIndex}): {_endgame.System.State.selectedEndingId}");
             }
         }
 

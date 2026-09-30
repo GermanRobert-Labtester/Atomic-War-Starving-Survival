@@ -45,7 +45,7 @@ namespace AtomicWar.GodotApp.Muster
             _choicesContainer = new VBoxContainer();
             rootVbox.AddChild(_choicesContainer);
 
-            var closeButton = new Button { Text = "Close" };
+            var closeButton = new Button { Text = "Close", CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
             closeButton.Pressed += Close;
             rootVbox.AddChild(closeButton);
         }

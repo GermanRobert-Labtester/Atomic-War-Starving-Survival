@@ -89,7 +89,6 @@ namespace AtomicWar.GodotApp
         {
             if (_palliative == null) return;
             var state = _palliative.CaptureState();
-            PalliativeCareSaveStore.TrySave(state);
             if (CaptureSection(PalliativeCareSaveStore.SectionName, PalliativeCareSaveStore.TryCapturePersisted(state)))
                 _palliativeDirty = false;
         }

@@ -1214,6 +1214,11 @@ namespace AtomicWar.GodotApp.UI
                             GD.Print($"[Expedition] Resolved {_lastSurfaced!.encounter_id} via {choiceId}.");
                             DismissEncounter();
                         }
+                        else if (_expeditionHost.LastChoiceWasDuplicate)
+                        {
+                            // Already decided (e.g. before a reload) — never reapply.
+                            DismissEncounter();
+                        }
                         else
                         {
                             if (_encounterBody != null)

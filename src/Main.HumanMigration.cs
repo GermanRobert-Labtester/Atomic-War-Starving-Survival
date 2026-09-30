@@ -64,7 +64,6 @@ namespace AtomicWar.GodotApp
         {
             if (_humanMigration == null) return;
             var state = _humanMigration.CaptureState();
-            HumanMigrationSaveStore.TrySave(state);
             if (CaptureSection("human_migration", HumanMigrationSaveStore.TryCapturePersisted(state)))
             {
                 _humanMigrationDirty = false;

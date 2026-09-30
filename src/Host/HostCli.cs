@@ -240,6 +240,7 @@ namespace AtomicWar.GodotApp
         RelationshipDecaySelfTest,
         ResearchUnlockSelfTest,
         UnifiedEndingSelfTest,
+        YearTwoChapterSelfTest,
         NpcMemorySelfTest,
         IdeologicalFrictionSelfTest,
         RomanceFamilySelfTest,
@@ -850,6 +851,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.ResearchUnlockSelfTest;
             if (Has(args, "--unified-ending-selftest") || Has(args, "--epilogue-selftest"))
                 return HostCliAction.UnifiedEndingSelfTest;
+            if (Has(args, "--year-two-chapter-selftest") || Has(args, "--play-on-selftest") || Has(args, "--chapter-selftest"))
+                return HostCliAction.YearTwoChapterSelfTest;
             if (Has(args, "--npc-memory-selftest") || Has(args, "--npc-memory-test"))
                 return HostCliAction.NpcMemorySelfTest;
             if (Has(args, "--ideological-friction-selftest") || Has(args, "--ideology-selftest"))

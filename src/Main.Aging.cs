@@ -49,7 +49,6 @@ namespace AtomicWar.GodotApp
         {
             if (_aging == null) return;
             var state = _aging.CaptureState();
-            AgingSaveStore.TrySave(state);
             if (CaptureSection("aging", AgingSaveStore.TryCapturePersisted(state)))
             {
                 _agingDirty = false;

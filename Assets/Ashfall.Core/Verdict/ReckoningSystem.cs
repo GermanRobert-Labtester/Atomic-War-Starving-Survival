@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 using System;
+using Ashfall.Core.Endgame;
 #pragma warning disable CS8618
 
 namespace Ashfall.Core.Verdict
@@ -67,10 +68,19 @@ namespace Ashfall.Core.Verdict
         // Knowing or deeper; surviving dwellings cannot be a quiet majority.
         public const float HighDoseCulpableFloorSieverts = 8.0f;
 
+        private int _knowingDay = KnowingDay;
+        private int _culpableDay = CulpableDay;
+        private int _countedDay = CountedDay;
+        private int _waiveEvidenceGateAfterDay = -1;
+
         private readonly ReckoningState _state;
 
         public ReckoningState State => _state;
         public ReckoningPhase Phase => _state.phase;
+        public int KnowingThreshold => _knowingDay;
+        public int CulpableThreshold => _culpableDay;
+        public int CountedThreshold => _countedDay;
+        public int WaiveEvidenceGateAfterDay => _waiveEvidenceGateAfterDay;
 
         public event Action<ReckoningPhase> OnPhaseChanged;
         public event Action OnCarrierHeard;
@@ -82,17 +92,33 @@ namespace Ashfall.Core.Verdict
             _state = state ?? new ReckoningState();
         }
 
+        public void ConfigureTiming(int knowingDay = 160, int culpableDay = 210, int countedDay = 240, int waiveEvidenceGateAfterDay = -1)
+        {
+            _knowingDay = knowingDay;
+            _culpableDay = culpableDay;
+            _countedDay = countedDay;
+            _waiveEvidenceGateAfterDay = waiveEvidenceGateAfterDay;
+        }
+
+        public void ConfigureFromProfile(ChapterProfileDef? profile)
+        {
+            if (profile == null) return;
+            ConfigureTiming(profile.knowing_day, profile.culpable_day, profile.counted_day, profile.waive_evidence_gate_after_day);
+        }
+
         /// <summary>Step the state machine. Returns event names fired this tick (for tests/observability).</summary>
         public System.Collections.Generic.List<string> Poll(
             int day, int livingCount, int logReadCount, int evidenceCount)
         {
             var fired = new System.Collections.Generic.List<string>();
 
-            if (_state.phase == ReckoningPhase.Dormant && day >= KnowingDay)
+            if (_state.phase == ReckoningPhase.Dormant && day >= _knowingDay)
                 SetPhase(day, ReckoningPhase.Knowing, fired);
 
-            bool evidenceGate = _state.enrolledEvidence > 0 || evidenceCount > 0;
-            if (_state.phase == ReckoningPhase.Knowing && day >= CulpableDay && evidenceGate)
+            bool evidenceGate = (_waiveEvidenceGateAfterDay >= 0 && day >= _waiveEvidenceGateAfterDay)
+                || _state.enrolledEvidence > 0
+                || evidenceCount > 0;
+            if (_state.phase == ReckoningPhase.Knowing && day >= _culpableDay && evidenceGate)
             {
                 SetPhase(day, ReckoningPhase.Culpable, fired);
                 if (!_state.carrierHeard)
@@ -103,7 +129,7 @@ namespace Ashfall.Core.Verdict
                 }
             }
 
-            if (_state.phase == ReckoningPhase.Culpable && day >= CountedDay && !_state.callResolved)
+            if (_state.phase == ReckoningPhase.Culpable && day >= _countedDay && !_state.callResolved)
             {
                 _state.callResolved = true;
                 _state.phaseChangedDay = day;
@@ -149,7 +175,7 @@ namespace Ashfall.Core.Verdict
 
         /// <summary>The census window is open when phase is Culpable+ and the carrier is scheduled.</summary>
         public bool IsCensusWindowOpen(int day)
-            => _state.phase >= ReckoningPhase.Culpable && day >= CulpableDay;
+            => _state.phase >= ReckoningPhase.Culpable && day >= _culpableDay;
 
         /// <summary>The drift the machine and the wars' calendar disagree by (canon: 3 days).</summary>
         public int ClockDriftDays => _state.driftDays;

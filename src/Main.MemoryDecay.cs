@@ -76,7 +76,6 @@ namespace AtomicWar.GodotApp
         {
             if (_memoryDecay == null) return;
             var state = _memoryDecay.System.CaptureState();
-            MemoryDecaySaveStore.TrySave(state);
             if (CaptureSection(
                     MemoryDecaySaveStore.SectionName,
                     MemoryDecaySaveStore.TryCapturePersisted(state)))

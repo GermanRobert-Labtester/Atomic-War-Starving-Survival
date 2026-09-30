@@ -251,7 +251,8 @@ namespace AtomicWar.GodotApp.UI
                 var cell = new Button
                 {
                     Text = $"{displayName} · {band} (x{entry.BasePriceModifierPermille / 1000f:0.00})",
-                    TooltipText = "Show the price decomposition for this region."
+                    TooltipText = "Show the price decomposition for this region.",
+                    CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight)
                 };
                 string region = entry.Region;
                 cell.Pressed += () =>

@@ -75,7 +75,6 @@ namespace AtomicWar.GodotApp
         {
             if (_musterReadiness == null) return;
             var state = _musterReadiness.CaptureState();
-            EmergencyMusterReadinessSaveStore.TrySave(state);
             if (CaptureSection(EmergencyMusterReadinessSaveStore.SectionName, EmergencyMusterReadinessSaveStore.TryCapturePersisted(state)))
                 _musterReadinessDirty = false;
         }

@@ -24,7 +24,6 @@ namespace AtomicWar.GodotApp
         {
             if (_verdictAccusation == null) return;
             var state = _verdictAccusation.CaptureState();
-            VerdictAccusationSaveStore.TrySave(state);
             if (CaptureSection("verdict_accusation", VerdictAccusationSaveStore.TryCapturePersisted(state)))
             {
                 _verdictAccusationDirty = false;

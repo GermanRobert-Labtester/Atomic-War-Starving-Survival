@@ -132,7 +132,6 @@ namespace AtomicWar.GodotApp
         {
             if (_migrationConsequence == null) return;
             var state = _migrationConsequence.CaptureState();
-            MigrationConsequenceSaveStore.TrySave(state);
             if (CaptureSection("migration_consequence", MigrationConsequenceSaveStore.TryCapturePersisted(state)))
                 _migrationConsequenceDirty = false;
         }

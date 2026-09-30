@@ -76,7 +76,6 @@ namespace AtomicWar.GodotApp
         {
             if (_patrolRadio == null) return;
             var state = _patrolRadio.CaptureState();
-            PatrolRadioSaveStore.TrySave(state);
             if (CaptureSection(PatrolRadioSaveStore.SectionName, PatrolRadioSaveStore.TryCapturePersisted(state)))
                 _patrolRadioDirty = false;
         }

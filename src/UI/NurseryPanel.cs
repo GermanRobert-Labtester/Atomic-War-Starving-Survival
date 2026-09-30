@@ -133,12 +133,12 @@ namespace AtomicWar.GodotApp.UI
             var row = new HBoxContainer { };
             row.AddThemeConstantOverride("separation", 12);
 
-            var assignGuardian = new Button { Text = "ASSIGN GUARDIAN (FIRST ADULT)" };
+            var assignGuardian = new Button { Text = "ASSIGN GUARDIAN (FIRST ADULT)", CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
             assignGuardian.TooltipText = "Assigns the roster's first available adult as guardian for the first child under care.";
             assignGuardian.Pressed += () => OnActionRequested?.Invoke("assign_guardian", FirstChildId());
             row.AddChild(assignGuardian);
 
-            var assignTeacher = new Button { Text = "ASSIGN TEACHER (FIRST ADULT)" };
+            var assignTeacher = new Button { Text = "ASSIGN TEACHER (FIRST ADULT)", CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
             assignTeacher.TooltipText = "Assigns the roster's first available adult as teacher under the current education focus.";
             assignTeacher.Pressed += () => OnActionRequested?.Invoke("assign_teacher", FirstChildId());
             row.AddChild(assignTeacher);

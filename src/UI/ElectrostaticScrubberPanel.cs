@@ -169,7 +169,7 @@ namespace AtomicWar.GodotApp.UI
             _statusBadgeLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
             headerHBox.AddChild(_statusBadgeLabel);
 
-            var closeButton = new Button { Text = "[X] CLOSE CONSOLE" };
+            var closeButton = new Button { Text = "[X] CLOSE CONSOLE", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             closeButton.Pressed += () =>
             {
                 Visible = false;
@@ -204,15 +204,15 @@ namespace AtomicWar.GodotApp.UI
             buttons.AddThemeConstantOverride("separation", 12);
             centerMargin.AddChild(buttons);
 
-            _rapButton = new Button { Text = "[RAP PLATES — DUST TO HOPPER]", SizeFlagsHorizontal = SizeFlags.ExpandFill };
+            _rapButton = new Button { Text = "[RAP PLATES — DUST TO HOPPER]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight), SizeFlagsHorizontal = SizeFlags.ExpandFill };
             _rapButton.Pressed += OnRapPressed;
             buttons.AddChild(_rapButton);
 
-            _emptyHopperButton = new Button { Text = "[SEAL HOPPER DUST INTO DRUMS]", SizeFlagsHorizontal = SizeFlags.ExpandFill };
+            _emptyHopperButton = new Button { Text = "[SEAL HOPPER DUST INTO DRUMS]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight), SizeFlagsHorizontal = SizeFlags.ExpandFill };
             _emptyHopperButton.Pressed += OnEmptyHopperPressed;
             buttons.AddChild(_emptyHopperButton);
 
-            _serviceButton = new Button { Text = "[SERVICE STAGE — CLEAR FAULTS]", SizeFlagsHorizontal = SizeFlags.ExpandFill };
+            _serviceButton = new Button { Text = "[SERVICE STAGE — CLEAR FAULTS]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight), SizeFlagsHorizontal = SizeFlags.ExpandFill };
             _serviceButton.Pressed += OnServicePressed;
             buttons.AddChild(_serviceButton);
 

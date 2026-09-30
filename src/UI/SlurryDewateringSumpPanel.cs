@@ -160,7 +160,7 @@ namespace AtomicWar.GodotApp.UI
             _statusBadgeLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
             headerHBox.AddChild(_statusBadgeLabel);
 
-            var closeButton = new Button { Text = "[X] CLOSE CONSOLE" };
+            var closeButton = new Button { Text = "[X] CLOSE CONSOLE", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             closeButton.Pressed += () =>
             {
                 Visible = false;
@@ -200,23 +200,23 @@ namespace AtomicWar.GodotApp.UI
             buttonContainer.AddThemeConstantOverride("separation", 12);
             centerMargin.AddChild(buttonContainer);
 
-            _flocculateButton = new Button { Text = "[DOSE FLOCCULANT — SETTLE SILT]", SizeFlagsHorizontal = SizeFlags.ExpandFill };
+            _flocculateButton = new Button { Text = "[DOSE FLOCCULANT — SETTLE SILT]", SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _flocculateButton.Pressed += OnFlocculatePressed;
             buttonContainer.AddChild(_flocculateButton);
 
-            _centrifugeButton = new Button { Text = "[RUN CENTRIFUGE BATCH]", SizeFlagsHorizontal = SizeFlags.ExpandFill };
+            _centrifugeButton = new Button { Text = "[RUN CENTRIFUGE BATCH]", SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _centrifugeButton.Pressed += OnCentrifugePressed;
             buttonContainer.AddChild(_centrifugeButton);
 
-            _replaceMediaButton = new Button { Text = "[REPLACE FILTER CLOTH]", SizeFlagsHorizontal = SizeFlags.ExpandFill };
+            _replaceMediaButton = new Button { Text = "[REPLACE FILTER CLOTH]", SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _replaceMediaButton.Pressed += OnReplaceMediaPressed;
             buttonContainer.AddChild(_replaceMediaButton);
 
-            var packCakeButton = new Button { Text = "[PACK CAKE FOR SMELTING]", SizeFlagsHorizontal = SizeFlags.ExpandFill };
+            var packCakeButton = new Button { Text = "[PACK CAKE FOR SMELTING]", SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             packCakeButton.Pressed += OnPackCakePressed;
             buttonContainer.AddChild(packCakeButton);
 
-            var packDrumsButton = new Button { Text = "[SEAL TAILINGS DRUMS]", SizeFlagsHorizontal = SizeFlags.ExpandFill };
+            var packDrumsButton = new Button { Text = "[SEAL TAILINGS DRUMS]", SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             packDrumsButton.Pressed += OnPackDrumsPressed;
             buttonContainer.AddChild(packDrumsButton);
 

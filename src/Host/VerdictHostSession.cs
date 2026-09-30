@@ -157,11 +157,18 @@ namespace AtomicWar.GodotApp
         /// <summary>True when the loaded save was migrated to the current version (v1→v2).</summary>
         public bool WasSaveMigrated { get; private set; }
 
+        /// <summary>Chapter Profile reckoning offset (in days). Default 0 = legacy Year 1 baseline.</summary>
+        public int ReckoningOffset { get; set; } = 0;
+
+        /// <summary>Sets the reckoning day offset applied to campaign days when ticking Reckoning and Radio.</summary>
+        public void SetReckoningOffset(int offset) => ReckoningOffset = offset;
+
         /// <summary>Coarse game-time step — call once per sim-day, not per-frame.</summary>
         public void AdvanceDay(int day, int livingCount, int logReadCount)
         {
             _currentDay = day;
-            var fired = Reckoning.Poll(day, livingCount, logReadCount, Evidence.Count);
+            int verdictDay = ReckoningClock.ToVerdictDay(day, ReckoningOffset);
+            var fired = Reckoning.Poll(verdictDay, livingCount, logReadCount, Evidence.Count);
             if (fired.Count > 0) LastEvent = string.Join(";", fired);
         }
 
@@ -177,7 +184,8 @@ namespace AtomicWar.GodotApp
         public System.Collections.Generic.List<string> TickRadio(int day)
         {
             if (Radio == null) return new System.Collections.Generic.List<string>();
-            var fired = Radio.Poll(day, Reckoning.Phase);
+            int verdictDay = ReckoningClock.ToVerdictDay(day, ReckoningOffset);
+            var fired = Radio.Poll(verdictDay, Reckoning.Phase);
             for (int i = 0; i < fired.Count; i++)
             {
                 var entry = FindRadioEntry(fired[i]);

@@ -85,23 +85,23 @@ namespace AtomicWar.GodotApp.UI
             consoleBox.AddThemeConstantOverride("separation", 12);
             root.AddChild(consoleBox);
 
-            _steamValButton = new Button { Text = "[ENGAGE STEAM INLET VALVE]" };
+            _steamValButton = new Button { Text = "[ENGAGE STEAM INLET VALVE]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _steamValButton.Pressed += () => ShowFeedback("Governor throttle valve opened. Steam flow increased to 85 kg/s.");
             consoleBox.AddChild(_steamValButton);
 
-            _antiScaleButton = new Button { Text = "[INJECT ANTI-SCALING INHIBITOR]" };
+            _antiScaleButton = new Button { Text = "[INJECT ANTI-SCALING INHIBITOR]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _antiScaleButton.Pressed += () => ShowFeedback("Phosphonate inhibitor dosed into geothermal brine loop.");
             consoleBox.AddChild(_antiScaleButton);
 
-            _drainBrineButton = new Button { Text = "[DRAIN SEPARATOR BRINE]" };
+            _drainBrineButton = new Button { Text = "[DRAIN SEPARATOR BRINE]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _drainBrineButton.Pressed += () => ShowFeedback("Spent mineralized brine reinjected into deep geological sump.");
             consoleBox.AddChild(_drainBrineButton);
 
-            _tripButton = new Button { Text = "[EMERGENCY TURBINE TRIP]" };
+            _tripButton = new Button { Text = "[EMERGENCY TURBINE TRIP]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _tripButton.Pressed += () => ShowFeedback("Emergency trip solenoid fired. Main steam stop valve slammed shut.");
             consoleBox.AddChild(_tripButton);
 
-            _closeButton = new Button { Text = "[CLOSE PANEL]" };
+            _closeButton = new Button { Text = "[CLOSE PANEL]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _closeButton.Pressed += () => { Visible = false; OnClose?.Invoke(); };
             consoleBox.AddChild(_closeButton);
 

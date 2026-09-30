@@ -805,8 +805,13 @@ namespace AtomicWar.GodotApp
             // one FoodConsumed event per successful meal; this handler is the
             // single translation point from preservation spoilage to the disease
             // authority's exposure pipeline (AA.1 receiver contract).
+            // Unsubscribe first: this setup is re-entered by the day owner, and a
+            // double subscription would roll the disease exposure twice per meal.
             if (_holdfastRuntime != null)
+            {
+                _holdfastRuntime.FoodConsumed -= OnFoodConsumedForSpoilage;
                 _holdfastRuntime.FoodConsumed += OnFoodConsumedForSpoilage;
+            }
 
             // 2. Pre-war Archive Decryption (Plan 62)
             if (_archiveDecryption62 == null)
@@ -837,6 +842,17 @@ namespace AtomicWar.GodotApp
                 var epilogueCatalog = CampaignEpilogueCatalogLoader.Load(_dataDir, new FileSystemIO());
                 _epilogueEngine65 = new CampaignEpilogueEngine(epilogueCatalog);
             }
+        }
+
+        private void ResetPlans62To65()
+        {
+            if (_holdfastRuntime != null)
+                _holdfastRuntime.FoodConsumed -= OnFoodConsumedForSpoilage;
+            _foodPreservation64 = null;
+            _foodPreservation64Dirty = false;
+            _archiveDecryption62 = null;
+            _archiveDecryption62Dirty = false;
+            _epilogueEngine65 = null;
         }
 
         public void TickPlans62To65(int day)

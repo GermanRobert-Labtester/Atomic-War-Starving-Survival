@@ -75,7 +75,6 @@ namespace AtomicWar.GodotApp
         {
             if (_soilReclamation == null) return;
             var state = _soilReclamation.CaptureState();
-            SoilReclamationProfileSaveStore.TrySave(state);
             if (CaptureSection(SoilReclamationProfileSaveStore.SectionName, SoilReclamationProfileSaveStore.TryCapturePersisted(state)))
                 _soilReclamationDirty = false;
         }

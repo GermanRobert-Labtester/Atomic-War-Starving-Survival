@@ -65,6 +65,7 @@ namespace AtomicWar.GodotApp
             _survivorFateChangedHandler = fate =>
             {
                 _survivorFateDirty = true;
+                _apprenticeship?.System.NotifyMentorDeath(fate.survivorId);
                 // Plan 42 — the fate owner's death signal is the canonical
                 // "survivor_perished" voice trigger.
                 TriggerSurvivorVoicePerished(fate.survivorId);
@@ -117,6 +118,12 @@ namespace AtomicWar.GodotApp
             // Pre-pipeline saves: roster entries already dead with no fate
             // record get a synthesized fate so the ledger is complete.
             int synthesized = _survivorFate.ReconcileFromRoster();
+            if (_apprenticeship != null)
+            {
+                foreach (var pair in _apprenticeship.System.State.activePairs)
+                    if (_survivorFate.HasFate(pair.mentorId))
+                        _apprenticeship.System.NotifyMentorDeath(pair.mentorId);
+            }
             if (synthesized > 0)
             {
                 _survivorFateDirty = true;

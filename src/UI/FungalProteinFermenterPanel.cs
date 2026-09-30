@@ -81,10 +81,10 @@ namespace AtomicWar.GodotApp.UI
             var centerPanel = ThreePanePanelScaffold.CreatePanelFrame("AGITATOR MANIFOLD & UV STERILIZATION");
             bodyHBox.AddChild(centerPanel);
             _buttonContainer = ThreePanePanelScaffold.CreateColumn(centerPanel, 12);
-            _buttonContainer.AddChild(new Button { Text = "[INJECT STERILE GLUCOSE NUTRIENT BROTH]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
-            _buttonContainer.AddChild(new Button { Text = "[ENGAGE PADDLE AGITATOR MOTOR]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
-            _buttonContainer.AddChild(new Button { Text = "[ACTIVATE PULSED UV SPORE STERILIZER]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
-            _buttonContainer.AddChild(new Button { Text = "[HARVEST TOP-LAYER MYCELIAL SLURRY]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
+            _buttonContainer.AddChild(new Button { Text = "[INJECT STERILE GLUCOSE NUTRIENT BROTH]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight), SizeFlagsHorizontal = SizeFlags.ExpandFill });
+            _buttonContainer.AddChild(new Button { Text = "[ENGAGE PADDLE AGITATOR MOTOR]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight), SizeFlagsHorizontal = SizeFlags.ExpandFill });
+            _buttonContainer.AddChild(new Button { Text = "[ACTIVATE PULSED UV SPORE STERILIZER]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight), SizeFlagsHorizontal = SizeFlags.ExpandFill });
+            _buttonContainer.AddChild(new Button { Text = "[HARVEST TOP-LAYER MYCELIAL SLURRY]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight), SizeFlagsHorizontal = SizeFlags.ExpandFill });
 
             // Right Column (Data & Logistics)
             var rightPanel = ThreePanePanelScaffold.CreatePanelFrame("PROTEIN PASTE YIELD & SPORE BANK");

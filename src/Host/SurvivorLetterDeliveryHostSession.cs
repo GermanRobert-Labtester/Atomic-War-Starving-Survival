@@ -78,7 +78,14 @@ namespace AtomicWar.GodotApp
         public IReadOnlyList<SurvivorLetterRecordState> GetRecordsByState(string state) =>
             System.GetRecordsByState(state);
 
-        public bool MarkFound(string letterId, int day) => System.MarkFound(letterId, day);
+        public bool MarkFound(string letterId, int day) => Changed(System.MarkFound(letterId, day));
+
+        /// <summary>Signals the host dirty hook only when a mutation actually took effect.</summary>
+        private bool Changed(bool mutated)
+        {
+            if (mutated) StateChangedHook?.Invoke();
+            return mutated;
+        }
 
         /// <summary>
         /// Attempts automatic addressing against the live shelter roster. The
@@ -87,11 +94,11 @@ namespace AtomicWar.GodotApp
         public bool TryAddressToSurvivor(string letterId, SurvivorsHostSession roster)
         {
             if (roster == null) return false;
-            return System.TryAddressToSurvivor(letterId, BuildDwellerCandidates(roster));
+            return Changed(System.TryAddressToSurvivor(letterId, BuildDwellerCandidates(roster)));
         }
 
         public bool AssignRecipientExplicit(string letterId, string survivorId) =>
-            System.AssignRecipientExplicit(letterId, survivorId);
+            Changed(System.AssignRecipientExplicit(letterId, survivorId));
 
         /// <summary>
         /// Delivers a letter and routes the morale consequence through the
@@ -108,6 +115,7 @@ namespace AtomicWar.GodotApp
                     : (survivorId, delta) => roster.Needs.Modify(survivorId, NeedKind.Morale, delta));
             if (delivered)
             {
+                StateChangedHook?.Invoke();
                 var rec = System.GetRecord(letterId);
                 LetterDelivered?.Invoke(letterId, rec?.matched_survivor_id ?? string.Empty,
                     rec?.morale_delta_applied ?? 0f);
@@ -116,14 +124,14 @@ namespace AtomicWar.GodotApp
         }
 
         public bool Withhold(string letterId, int day, SurvivorsHostSession roster) =>
-            System.Withhold(
+            Changed(System.Withhold(
                 letterId,
                 day,
                 applyMorale: roster == null
                     ? null
-                    : (survivorId, delta) => roster.Needs.Modify(survivorId, NeedKind.Morale, delta));
+                    : (survivorId, delta) => roster.Needs.Modify(survivorId, NeedKind.Morale, delta)));
 
-        public bool MarkUnanswered(string letterId, int day) => System.MarkUnanswered(letterId, day);
+        public bool MarkUnanswered(string letterId, int day) => Changed(System.MarkUnanswered(letterId, day));
 
         /// <summary>
         /// Census for panels and probes: catalog size, per-state counts, and the

@@ -231,7 +231,7 @@ namespace AtomicWar.GodotApp.UI
                 gaugeBox.AddChild(calGauge);
                 _machineConditionContainer.AddChild(gaugeBox);
 
-                var overhaulBtn = new Button { Text = "OVERHAUL TOOLING" };
+                var overhaulBtn = new Button { Text = "OVERHAUL TOOLING", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
                 overhaulBtn.Pressed += () => { _shelterWorkshop.TryOverhaulTooling(_currentRoomId); RefreshView(); };
                 _machineConditionContainer.AddChild(overhaulBtn);
 
@@ -264,7 +264,7 @@ namespace AtomicWar.GodotApp.UI
                     gearLabel.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);
                     gearRow.AddChild(gearLabel);
 
-                    var repairBtn = new Button { Text = "REPAIR" };
+                    var repairBtn = new Button { Text = "REPAIR", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
                     repairBtn.Disabled = !repairableNow;
                     var equippedRef = equipped;
                     repairBtn.Pressed += () =>
@@ -281,7 +281,7 @@ namespace AtomicWar.GodotApp.UI
             var recipes = _shelterWorkshop.GetAvailableRecipes(_currentRoomId);
             foreach (var r in recipes)
             {
-                var btn = new Button { Text = r.DisplayName };
+                var btn = new Button { Text = r.DisplayName, CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
                 if (r.Id == _selectedRecipeId) btn.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
                 btn.Pressed += () => { _selectedRecipeId = r.Id; _selectedRelicId = string.Empty; RefreshView(); };
                 _relicListContainer.AddChild(btn);
@@ -295,7 +295,7 @@ namespace AtomicWar.GodotApp.UI
 
                 _detailContainer.AddChild(new Label { Text = $"Labor Ticks: {recipe.BaseLaborTicks}\nTooling Wear: {recipe.ToolWearPermille/10f}%\nBase Scrap Waste: {recipe.BaseScrapWastePermille/10f}%" });
 
-                var startBtn = new Button { Text = "START JOB" };
+                var startBtn = new Button { Text = "START JOB", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
                 startBtn.Pressed += () =>
                 {
                     string? targetId = null;
@@ -362,7 +362,7 @@ namespace AtomicWar.GodotApp.UI
                     SizeFlagsHorizontal = SizeFlags.ExpandFill,
                     AutowrapMode = TextServer.AutowrapMode.WordSmart
                 });
-                var abandonBtn = new Button { Text = "ABANDON" };
+                var abandonBtn = new Button { Text = "ABANDON", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
                 abandonBtn.Pressed += OnLegacyCancelClicked;
                 busyRow.AddChild(abandonBtn);
                 _relicListContainer.AddChild(busyRow);
@@ -374,7 +374,7 @@ namespace AtomicWar.GodotApp.UI
                 if (_legacyWorkshop.IsRelicCompleted(relic.relic_id)) label += "  [RESTORED]";
                 else if (_legacyWorkshop.IsBusy && _legacyWorkshop.State.selectedRelicId == relic.relic_id) label += "  [IN PROGRESS]";
 
-                var btn = new Button { Text = label };
+                var btn = new Button { Text = label, CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
                 if (relic.relic_id == _selectedRelicId) btn.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
                 var capturedId = relic.relic_id;
                 btn.Pressed += () => { _selectedRelicId = capturedId; _selectedRecipeId = string.Empty; RefreshView(); };
@@ -428,7 +428,7 @@ namespace AtomicWar.GodotApp.UI
                 return;
             }
 
-            var startBtn = new Button { Text = "START RESTORATION", Disabled = !allAvailable };
+            var startBtn = new Button { Text = "START RESTORATION", Disabled = !allAvailable, CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             startBtn.Pressed += () =>
             {
                 _legacyWorkshop.StartRepair(relicId, PickResearcherId());

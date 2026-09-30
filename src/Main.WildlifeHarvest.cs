@@ -73,7 +73,6 @@ namespace AtomicWar.GodotApp
         {
             if (_wildlifeHarvest == null) return;
             var state = _wildlifeHarvest.CaptureState();
-            WildlifeHarvestSaveStore.TrySave(state);
             if (CaptureSection(WildlifeHarvestSaveStore.SectionName, WildlifeHarvestSaveStore.TryCapturePersisted(state)))
                 _wildlifeHarvestDirty = false;
         }

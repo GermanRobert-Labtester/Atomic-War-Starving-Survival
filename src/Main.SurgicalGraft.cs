@@ -33,7 +33,6 @@ namespace AtomicWar.GodotApp
         {
             if (_surgicalGraft == null) return;
             var state = _surgicalGraft.CaptureState();
-            SurgicalGraftSaveStore.TrySave(state);
             if (CaptureSection("surgical_graft", SurgicalGraftSaveStore.TryCapturePersisted(state)))
             {
                 _surgicalGraftDirty = false;

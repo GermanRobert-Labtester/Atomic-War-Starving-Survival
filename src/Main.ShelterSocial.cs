@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Inventory;
@@ -609,9 +610,19 @@ namespace AtomicWar.GodotApp
             if (appState.skillProgression != null)
                 appSkills.RestoreState(appState.skillProgression);
             var appSys = new ApprenticeshipSystem(_campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.Social, 0, 3), appSkills, _expandedShelterRoster, _survivorRelationsCore, new GodotLog());
+            string mentorshipPath = System.IO.Path.Combine(_dataDir, ApprenticeshipSystem.CatalogPath);
+            if (System.IO.File.Exists(mentorshipPath)) appSys.LoadCatalog(System.IO.File.ReadAllText(mentorshipPath));
             appSys.RestoreState(appState);
+            appSys.ChildProfileProvider = id => EnsureChildDevelopment().GetChild(id);
             appSys.IsApprenticeEligible = id =>
             {
+                var child = EnsureChildDevelopment().GetChild(id);
+                if (child != null)
+                {
+                    int day = _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay;
+                    return ChildDevelopmentSystem.ResolveCanonicalStage(child.BirthDay, day, false) >= DevelopmentStage.Adolescent
+                        && child.Milestones.Contains("vocational_apprenticeship");
+                }
                 SetupDoseLedger();
                 if (_doseLedger?.Cohort == null) return true;
                 if (_doseLedger.Cohort.GetChild(id) == null) return true;
@@ -619,6 +630,30 @@ namespace AtomicWar.GodotApp
                 return _doseLedger.Cohort.IsSchoolEligible(id, currentDay);
             };
             _apprenticeship = new ApprenticeshipHostSession(appSys);
+            _apprenticeship.ChildrenProvider = () =>
+            {
+                SetupSurvivors();
+                return EnsureChildDevelopment().System.CaptureState().Profiles
+                    .Where(c => _survivors.Find(c.ChildId)?.IsAliveState == true
+                        && (_survivorFate == null || !_survivorFate.HasFate(c.ChildId))).ToList();
+            };
+            _apprenticeship.MentorsProvider = () =>
+            {
+                SetupSurvivors();
+                return _survivors.RosterState.Where(s => s != null && s.IsAliveState
+                        && EnsureChildDevelopment().GetChild(s.Id) == null
+                        && (_survivorFate == null || !_survivorFate.HasFate(s.Id)))
+                    .Select(s => s.Id).OrderBy(id => id, StringComparer.Ordinal).ToList();
+            };
+            _apprenticeship.DayProvider = () => _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay;
+            _apprenticeship.ChapterTwoProvider = () => _endgame?.HasPlayedOn == true;
+            _apprenticeship.ChapterOpenDayProvider = () => _endgame?.Chapters.Count > 0 ? _endgame.Chapters[0].readingDay : 360;
+            _apprenticeship.StateChanged += () => _apprenticeshipDirty = true;
+            if (_survivorFate != null)
+            {
+                foreach (var mentor in appSys.State.activePairs.Select(p => p.mentorId).Distinct(StringComparer.Ordinal).ToList())
+                    if (_survivorFate.HasFate(mentor)) appSys.NotifyMentorDeath(mentor);
+            }
             if (_apprenticeshipPanel != null && _apprenticeshipPanel.IsInsideTree())
                 RemoveChild(_apprenticeshipPanel);
             _apprenticeshipPanel = new ApprenticeshipPanel();

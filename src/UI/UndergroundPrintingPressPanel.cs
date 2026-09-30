@@ -81,23 +81,23 @@ namespace AtomicWar.GodotApp.UI
             consoleBox.AddThemeConstantOverride("separation", 12);
             root.AddChild(consoleBox);
 
-            _composeButton = new Button { Text = "[COMPOSE LEAD TYPE EDITORIAL]" };
+            _composeButton = new Button { Text = "[COMPOSE LEAD TYPE EDITORIAL]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _composeButton.Pressed += () => ShowFeedback("New editorial composed in lead type tray. Title: 'The Long Winter Thaw'.");
             consoleBox.AddChild(_composeButton);
 
-            _runPressButton = new Button { Text = "[RUN OFFSET CYLINDER PRESS]" };
+            _runPressButton = new Button { Text = "[RUN OFFSET CYLINDER PRESS]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _runPressButton.Pressed += () => ShowFeedback("Offset press engaged. 300 ration decrees printed and transferred to drying racks.");
             consoleBox.AddChild(_runPressButton);
 
-            _disperseButton = new Button { Text = "[DISPERSE LEAFLETS TO SECTORS]" };
+            _disperseButton = new Button { Text = "[DISPERSE LEAFLETS TO SECTORS]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _disperseButton.Pressed += () => ShowFeedback("Runners dispatched. Leaflets distributed across Sectors 01 through 04.");
             consoleBox.AddChild(_disperseButton);
 
-            _burnPlatesButton = new Button { Text = "[EMERGENCY BURN PRESS PLATES]" };
+            _burnPlatesButton = new Button { Text = "[EMERGENCY BURN PRESS PLATES]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _burnPlatesButton.Pressed += () => ShowFeedback("Thermite charge fired into lead type melting pot. Evidence destroyed.");
             consoleBox.AddChild(_burnPlatesButton);
 
-            _closeButton = new Button { Text = "[CLOSE PANEL]" };
+            _closeButton = new Button { Text = "[CLOSE PANEL]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _closeButton.Pressed += () => { Visible = false; OnClose?.Invoke(); };
             consoleBox.AddChild(_closeButton);
 

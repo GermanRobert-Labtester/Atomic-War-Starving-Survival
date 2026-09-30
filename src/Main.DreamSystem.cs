@@ -112,7 +112,6 @@ namespace AtomicWar.GodotApp
         {
             if (_dreamSystem == null) return;
             var state = _dreamSystem.System.CaptureState();
-            DreamSaveStore.TrySave(state);
             if (CaptureSection(
                     DreamSaveStore.SectionName,
                     DreamSaveStore.TryCapturePersisted(state)))

@@ -228,6 +228,14 @@ namespace AtomicWar.GodotApp
             typeof(Control), typeof(CanvasItem), typeof(Node), typeof(object)
         };
 
+        private static readonly string[] s_campaignBindingFieldNameHints = new string[]
+        {
+            // These fields remember which current campaign owner has an event
+            // handler attached. Rebinding them after reset is required and does
+            // not mean a panel replaced an authoritative service.
+            "LessonSubscription"
+        };
+
         private static readonly string[] s_uiTypeNameHints = new string[]
         {
             "Panel", "Overlay", "Modal", "Button", "Label", "Container",
@@ -242,6 +250,33 @@ namespace AtomicWar.GodotApp
             "Camera", "Light", "WorldEnvironment", "NavigationRegion",
             "CanvasLayer", "ViewportTexture", "Snapshot", "Hud"
         };
+
+        private static bool IsUiOwnedField(FieldInfo field)
+        {
+            if (s_uiTypeNameHints.Any(hint => field.Name.Contains(hint)))
+                return true;
+
+            if (s_campaignBindingFieldNameHints.Any(hint => field.Name.Contains(hint)))
+                return true;
+
+            foreach (Type uiType in s_uiTypeFilters)
+            {
+                // `object` is a sentinel for fields declared as object; using
+                // IsAssignableFrom(object) would classify every reference type
+                // as UI and hide real service reallocations from this probe.
+                if (uiType == typeof(object))
+                {
+                    if (field.FieldType == typeof(object))
+                        return true;
+                    continue;
+                }
+
+                if (uiType.IsAssignableFrom(field.FieldType))
+                    return true;
+            }
+
+            return false;
+        }
 
         private Dictionary<string, object?> CaptureManifestSessionValues()
         {
@@ -274,7 +309,7 @@ namespace AtomicWar.GodotApp
             var dict = new Dictionary<string, object?>();
             var type = typeof(Main);
             var fields = type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)
-                             .Where(f => !s_uiTypeNameHints.Any(hint => f.Name.Contains(hint)))
+                             .Where(f => !IsUiOwnedField(f))
                              .ToList();
 
             foreach (var field in fields)
@@ -301,7 +336,7 @@ namespace AtomicWar.GodotApp
         {
             var type = typeof(Main);
             var fields = type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)
-                             .Where(f => !s_uiTypeNameHints.Any(hint => f.Name.Contains(hint)));
+                             .Where(f => !IsUiOwnedField(f));
             return fields.Count();
         }
 

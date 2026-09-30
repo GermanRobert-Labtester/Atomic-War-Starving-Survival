@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 using System;
+using System.Linq;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.UI;
@@ -16,6 +17,8 @@ namespace AtomicWar.GodotApp.UI
         private AshfallStatusRail? _statusRail;
         private VBoxContainer _contentStack = null!;
         private Label _detailText = null!;
+        private VBoxContainer _vocationalRows = null!;
+        private string _vocationalSignature = string.Empty;
 
         private ApprenticeshipHostSession? _host;
 
@@ -23,6 +26,8 @@ namespace AtomicWar.GodotApp.UI
 
         public void Bind(ApprenticeshipHostSession session)
         {
+            Unbind();
+            _vocationalSignature = string.Empty;
             _host = session;
             if (_host != null)
             {
@@ -62,6 +67,16 @@ namespace AtomicWar.GodotApp.UI
             _detailText.AutowrapMode = TextServer.AutowrapMode.WordSmart;
             _contentStack.AddChild(_detailText);
 
+            var vocationalScroll = new ScrollContainer
+            {
+                SizeFlagsHorizontal = SizeFlags.ExpandFill,
+                SizeFlagsVertical = SizeFlags.ExpandFill,
+                CustomMinimumSize = new Vector2(0, 180)
+            };
+            _vocationalRows = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill };
+            vocationalScroll.AddChild(_vocationalRows);
+            _contentStack.AddChild(vocationalScroll);
+
             _shell.SetContent(_contentStack);
 
             _shell.AttachHeaderCloseButton("CLOSE", () =>
@@ -97,10 +112,73 @@ namespace AtomicWar.GodotApp.UI
                 foreach (var p in s.activePairs)
                 {
                     text += $"  • [{p.targetSkillId}] Apprentice: {p.apprenticeId} under Mentor: {p.mentorId} — Progress: {p.progressXp:F0}/{p.targetXp:F0} XP\n";
+                    if (p.actingEligible) text += "    Eligible for an acting designation; no designation assigned.\n";
                 }
                 text += $"\nLast Event: " + (string.IsNullOrEmpty(_host.LastEvent) ? "None recorded" : _host.LastEvent);
                 _detailText.Text = text;
             }
+            RefreshVocationalRows();
+        }
+
+        private void RefreshVocationalRows()
+        {
+            if (_vocationalRows == null || _host == null) return;
+            var candidates = _host.VocationalCandidates();
+            var mentors = (_host.MentorsProvider?.Invoke() ?? Array.Empty<string>()).ToArray();
+            var definitions = _host.System.Catalog.Values.Where(d => !string.IsNullOrEmpty(d.target_skill_id))
+                .OrderBy(d => d.mentorship_id, StringComparer.Ordinal).ToArray();
+            string signature = string.Join("|", candidates.Select(c => c.ChildId)) + ";"
+                + string.Join("|", mentors) + ";" + string.Join("|", definitions.Select(d => d.mentorship_id));
+            if (_vocationalSignature == signature) return;
+            _vocationalSignature = signature;
+            var focused = GetViewport().GuiGetFocusOwner();
+            bool restoreFocus = focused != null && _vocationalRows.IsAncestorOf(focused);
+            foreach (Node row in _vocationalRows.GetChildren())
+            {
+                _vocationalRows.RemoveChild(row);
+                row.QueueFree();
+            }
+            _vocationalRows.AddChild(AshfallUiHelpers.MakeTitle("VOCATIONAL MENTORSHIP"));
+            if (candidates.Count == 0)
+            {
+                _vocationalRows.AddChild(AshfallUiHelpers.MakeBody("No adolescents with a vocational milestone are awaiting a pairing this quarter."));
+                if (restoreFocus) RestoreVocationalFocus();
+                return;
+            }
+            foreach (var child in candidates)
+            {
+                var row = new VBoxContainer();
+                row.AddChild(AshfallUiHelpers.MakeBody($"{child.Name} — the apprentice may accept or decline."));
+                var mentorChoice = new OptionButton();
+                foreach (var mentor in mentors) mentorChoice.AddItem(mentor);
+                var disciplineChoice = new OptionButton();
+                foreach (var definition in definitions) disciplineChoice.AddItem(definition.name);
+                row.AddChild(mentorChoice);
+                row.AddChild(disciplineChoice);
+                var buttons = new HBoxContainer();
+                var accept = AshfallUiHelpers.MakeButton("ACCEPT PAIRING", () =>
+                {
+                    if (mentorChoice.Selected < 0 || disciplineChoice.Selected < 0) return;
+                    _host?.RespondVocationalPair(child.ChildId, mentors[mentorChoice.Selected],
+                        definitions[disciplineChoice.Selected].mentorship_id, true);
+                });
+                accept.Disabled = mentors.Length == 0 || definitions.Length == 0;
+                buttons.AddChild(accept);
+                buttons.AddChild(AshfallUiHelpers.MakeButton("DECLINE THIS QUARTER", () =>
+                    _host?.RespondVocationalPair(child.ChildId, "", "", false)));
+                row.AddChild(buttons);
+                if (accept.Disabled) row.AddChild(AshfallUiHelpers.MakeBody("No mentor or discipline is currently available. Declining remains available."));
+                _vocationalRows.AddChild(row);
+            }
+            if (restoreFocus) RestoreVocationalFocus();
+        }
+
+        private void RestoreVocationalFocus()
+        {
+            foreach (var node in _vocationalRows.FindChildren("*", "Button", true, false))
+                if (node is Button button && !button.Disabled) { button.GrabFocus(); return; }
+            foreach (var node in _shell.FindChildren("*", "Button", true, false))
+                if (node is Button button && !button.Disabled) { button.GrabFocus(); return; }
         }
 
         public override void _ExitTree()

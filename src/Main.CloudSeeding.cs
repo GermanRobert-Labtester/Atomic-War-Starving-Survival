@@ -30,7 +30,6 @@ namespace AtomicWar.GodotApp
             if (_cloudSeeding == null || _cloudSeeding.Engine == null) return;
             var state = _cloudSeeding.CaptureState();
             if (state == null) return;
-            CloudSeedingSaveStore.TrySave(state);
             if (CaptureSection("cloud_seeding", CloudSeedingSaveStore.TryCapturePersisted(state)))
             {
                 _cloudSeedingDirty = false;

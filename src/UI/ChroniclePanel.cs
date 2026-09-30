@@ -26,7 +26,9 @@ namespace AtomicWar.GodotApp.UI
         private VBoxContainer _memorialContainer = null!;
         private VBoxContainer _factionsContainer = null!;
         private Label _lblMetrics = null!;
+        private VBoxContainer _priorChaptersContainer = null!;
         private Button _btnSeal = null!;
+        private Button _btnPlayOn = null!;
 
         public override void _Ready()
         {
@@ -86,6 +88,7 @@ namespace AtomicWar.GodotApp.UI
             AddChild(_shell);
 
             _statusRail = _shell.SetStatusRail();
+            _statusRail.AddCard("chapter", "Chapter", "CH 1", AshfallMetricCard.Criticality.Normal, minWidth: 100);
             _statusRail.AddCard("phase", "Phase", "ACTIVE", AshfallMetricCard.Criticality.Normal, minWidth: 130);
             _statusRail.AddCard("sealed", "Archive Sealed", "NO", AshfallMetricCard.Criticality.Normal, minWidth: 130);
 
@@ -137,11 +140,20 @@ namespace AtomicWar.GodotApp.UI
             metricsCard.AddChild(_lblMetrics);
             contentBox.AddChild(metricsCard);
 
+            // Prior chapter records card
+            var priorChaptersCard = AshfallUiHelpers.MakeCardFrame("CHAPTER ARCHIVE");
+            _priorChaptersContainer = new VBoxContainer();
+            _priorChaptersContainer.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
+            priorChaptersCard.AddChild(_priorChaptersContainer);
+            contentBox.AddChild(priorChaptersCard);
+
             // Action row
             var actionRow = new HBoxContainer();
             actionRow.AddThemeConstantOverride("separation", 12);
-            _btnSeal = AshfallUiHelpers.MakeButton("SEAL CAMPAIGN ARCHIVE", () => OnSealClicked());
+            _btnSeal = AshfallUiHelpers.MakeButton("SEAL HERE", () => OnSealClicked());
+            _btnPlayOn = AshfallUiHelpers.MakeButton("PLAY ON", () => OnPlayOnClicked());
             actionRow.AddChild(_btnSeal);
+            actionRow.AddChild(_btnPlayOn);
             contentBox.AddChild(actionRow);
 
             scroll.AddChild(contentBox);
@@ -156,7 +168,10 @@ namespace AtomicWar.GodotApp.UI
             var epilogue = _system?.State?.epilogueReport;
             bool isSealed = _system?.IsSealed ?? false;
             var phase = _system?.Phase ?? EndgamePhase.Active;
+            int chapterIndex = _system?.ChapterIndex ?? 1;
+            bool canPlayOn = _system?.CanPlayOn ?? false;
 
+            _statusRail.Set("chapter", $"CH {chapterIndex}", AshfallMetricCard.Criticality.Normal);
             _statusRail.Set("phase", phase.ToString().ToUpperInvariant(),
                 phase == EndgamePhase.Sealed ? AshfallMetricCard.Criticality.Normal : AshfallMetricCard.Criticality.Warn);
             _statusRail.Set("sealed", isSealed ? "YES" : "NO",
@@ -187,20 +202,71 @@ namespace AtomicWar.GodotApp.UI
                 _lblMetrics.Text = $"Days Survived: {epilogue.daysSurvived}  |  Living: {epilogue.livingSurvivors}  |  Deceased: {epilogue.deceasedSurvivors}  |  Morale: {epilogue.finalMoraleAverage:F1}%  |  Expeditions: {epilogue.expeditionsCompleted}";
             }
 
+            // Populate prior chapter archive
+            foreach (Node child in _priorChaptersContainer.GetChildren())
+                child.QueueFree();
+
+            var chapters = _system?.Chapters;
+            if (chapters != null && chapters.Count > 0)
+            {
+                foreach (var ch in chapters)
+                {
+                    _priorChaptersContainer.AddChild(AshfallUiHelpers.MakeBody(
+                        $"[Chapter {ch.chapterIndex}] {ch.chapterTitle} — Reading Day {ch.readingDay} — Ending: {ch.endingTitle}"));
+                }
+            }
+            else
+            {
+                _priorChaptersContainer.AddChild(AshfallUiHelpers.MakeBody("No prior completed chapters recorded."));
+            }
+
             if (isSealed)
             {
                 _btnSeal.Text = "CAMPAIGN SEALED — RECORD IMMUTABLE";
                 _btnSeal.Disabled = true;
+                _btnSeal.Visible = true;
+                _btnPlayOn.Visible = false;
+                _btnPlayOn.Disabled = true;
             }
             else if (phase == EndgamePhase.Epilogue)
             {
-                _btnSeal.Text = "SEAL CAMPAIGN & FREEZE ARCHIVE";
+                _btnSeal.Text = "SEAL HERE";
                 _btnSeal.Disabled = false;
+                _btnSeal.Visible = true;
+
+                if (canPlayOn)
+                {
+                    _btnPlayOn.Text = "PLAY ON";
+                    _btnPlayOn.Disabled = false;
+                    _btnPlayOn.Visible = true;
+                }
+                else
+                {
+                    _btnPlayOn.Visible = false;
+                    _btnPlayOn.Disabled = true;
+                }
             }
             else
             {
                 _btnSeal.Text = "CAMPAIGN ACTIVE (NOT READY TO SEAL)";
                 _btnSeal.Disabled = true;
+                _btnSeal.Visible = true;
+                _btnPlayOn.Visible = false;
+                _btnPlayOn.Disabled = true;
+            }
+        }
+
+        private void OnPlayOnClicked()
+        {
+            if (_host != null && _host.CanPlayOn)
+            {
+                _host.ContinueChapter();
+                Refresh();
+            }
+            else if (_system != null && _system.CanPlayOn)
+            {
+                _system.ContinueChapter();
+                Refresh();
             }
         }
 

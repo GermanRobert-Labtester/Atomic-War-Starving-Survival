@@ -81,7 +81,6 @@ namespace AtomicWar.GodotApp
         {
             if (_perimeter == null) return;
             var state = _perimeter.CaptureState();
-            PerimeterEarlyWarningSaveStore.TrySave(state);
             if (CaptureSection(PerimeterEarlyWarningSaveStore.SectionName, PerimeterEarlyWarningSaveStore.TryCapturePersisted(state)))
                 _perimeterDirty = false;
         }

@@ -138,6 +138,30 @@ namespace AtomicWar.GodotApp
             { "item_seismic_damper_pad", "shelter_wall_steel_plate" },
             { "item_vacuum_pump_oil", "machine_oil" },
             { "item_bearing_grease", "item_uv_grease" },
+
+            // ── Inventory asset wiring (2026-09-30) ──────────────────────
+            // These authored item ids carry the "item_" prefix but their art is
+            // stored under the bare stem (e.g. id "item_antibiotics" ->
+            // "antibiotics.jpg"). The resolver only prefix-ADDs (bare ->
+            // item_X), never prefix-strips, so each needs an explicit alias to
+            // its bare-stem art until dedicated "item_"-prefixed art exists.
+            { "item_ammo_762",                            "ammo_762" },
+            { "item_antibiotics",                         "antibiotics" },
+            { "item_canned_food",                         "canned_food" },
+            { "item_clean_water",                         "clean_water" },
+            { "item_dosimeter",                           "dosimeter" },
+            { "item_dried_rations",                       "dried_rations" },
+            { "item_engine",                              "engine" },
+            { "item_fuel",                                "fuel" },
+            { "item_gas_mask",                            "gas_mask" },
+            { "item_mechanical_parts",                    "mechanical_parts" },
+            { "item_medical_kit",                         "medical_kit" },
+            { "item_soldering_kit",                       "soldering_kit" },
+            { "item_water_filter",                        "water_filter" },
+            { "item_water_purification_tablets_40_of_40", "water_purification_tablets_40_of_40" },
+            // No bare-stem art; map to the closest authored treatment art.
+            { "item_compost_humus",                       "item_greenhouse_compost" },
+            { "item_pest_treatment_dust",                 "item_blight_treatment" },
         };
 
         // ── Prefix-add normalization ─────────────────────────────────

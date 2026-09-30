@@ -8,6 +8,7 @@ using static AtomicWar.GodotApp.UI.AshfallUiHelpers;
 using Ashfall.Core;
 using Ashfall.Core.Economy;
 using Ashfall.Core.Radio;
+using DesignTheme = Ashfall.Core.UI.Theme;
 namespace AtomicWar.GodotApp.Economy
 {
 
@@ -292,7 +293,8 @@ namespace AtomicWar.GodotApp.Economy
             {
                 Text = "▸ BIOLOGICAL — THE DRAWER",
                 ToggleMode = true,
-                ButtonPressed = false
+                ButtonPressed = false,
+                CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight)
             };
             _grimDrawerToggle.AddThemeFontSizeOverride("font_size", global::Ashfall.Core.UI.Theme.FontSizeLabel);
             _grimDrawerToggle.AddThemeColorOverride("font_color", ToGodotColor(global::Ashfall.Core.UI.Theme.Critical));
@@ -358,11 +360,11 @@ namespace AtomicWar.GodotApp.Economy
 
             arbitratorHbox.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
 
-            _btnDemandParley = new Button { Text = "DEMAND PARLEY [P]", Visible = false };
+            _btnDemandParley = new Button { Text = "DEMAND PARLEY [P]", Visible = false, CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _btnDemandParley.Pressed += () => DemandParley();
             arbitratorHbox.AddChild(_btnDemandParley);
 
-            _btnConfirmTrade = new Button { Text = "CONFIRM BARTER" };
+            _btnConfirmTrade = new Button { Text = "CONFIRM BARTER", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _btnConfirmTrade.Pressed += () => ExecuteTrade();
             arbitratorHbox.AddChild(_btnConfirmTrade);
 
@@ -412,7 +414,7 @@ namespace AtomicWar.GodotApp.Economy
 
                 var btnMinus = new Button { Text = "-" };
                 var btnPlus = new Button { Text = "+" };
-                var countLbl = new Label { Text = "0", CustomMinimumSize = new Vector2(20, 0), HorizontalAlignment = HorizontalAlignment.Center };
+                var countLbl = new Label { Text = "0", CustomMinimumSize = new Vector2(20, 0), ClipText = true, TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis, HorizontalAlignment = HorizontalAlignment.Center };
                 countLbl.AddThemeFontSizeOverride("font_size", global::Ashfall.Core.UI.Theme.FontSizeLabel);
 
                 btnMinus.Pressed += () =>
@@ -815,7 +817,7 @@ namespace AtomicWar.GodotApp.Economy
                 lblGood1.AddThemeFontSizeOverride("font_size", global::Ashfall.Core.UI.Theme.FontSizeSmall);
                 offerRow.AddChild(lblGood1);
 
-                var btnAddOffer = new Button { Text = "+ Offer" };
+                var btnAddOffer = new Button { Text = "+ Offer", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
                 string gId = good.id;
                 btnAddOffer.Pressed += () =>
                 {
@@ -842,7 +844,7 @@ namespace AtomicWar.GodotApp.Economy
                 lblGood2.AddThemeFontSizeOverride("font_size", global::Ashfall.Core.UI.Theme.FontSizeSmall);
                 askRow.AddChild(lblGood2);
 
-                var btnAddAsk = new Button { Text = "+ Ask" };
+                var btnAddAsk = new Button { Text = "+ Ask", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
                 btnAddAsk.Pressed += () =>
                 {
                     int cur = _factionAskCounts.GetValueOrDefault(gId, 0);

@@ -187,11 +187,11 @@ namespace AtomicWar.GodotApp.UI
             var actionRow = new HBoxContainer();
             actionRow.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
 
-            _toggleQuietHoursBtn = new Button { Text = "Toggle Quiet Hours" };
+            _toggleQuietHoursBtn = new Button { Text = "Toggle Quiet Hours", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _toggleQuietHoursBtn.Pressed += OnToggleQuietHoursPressed;
             actionRow.AddChild(_toggleQuietHoursBtn);
 
-            _soundproofWorkshopBtn = new Button { Text = "Insulate Workshop (+25% Wall)" };
+            _soundproofWorkshopBtn = new Button { Text = "Insulate Workshop (+25% Wall)", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _soundproofWorkshopBtn.Pressed += OnSoundproofWorkshopPressed;
             actionRow.AddChild(_soundproofWorkshopBtn);
 

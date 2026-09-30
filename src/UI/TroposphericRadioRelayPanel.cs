@@ -81,10 +81,10 @@ namespace AtomicWar.GodotApp.UI
             var centerPanel = ThreePanePanelScaffold.CreatePanelFrame("PARABOLIC DISH & KLYSTRON AMP");
             bodyHBox.AddChild(centerPanel);
             _buttonContainer = ThreePanePanelScaffold.CreateColumn(centerPanel, 12);
-            _buttonContainer.AddChild(new Button { Text = "[ALIGN PARABOLIC DISH AZIMUTH]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
-            _buttonContainer.AddChild(new Button { Text = "[ENGAGE 10KW KLYSTRON TRANSMITTER]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
-            _buttonContainer.AddChild(new Button { Text = "[FILTER ATMOSPHERIC NOISE SPIKE]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
-            _buttonContainer.AddChild(new Button { Text = "[RECORD ENCRYPTED DIEGETIC BROADCAST]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
+            _buttonContainer.AddChild(new Button { Text = "[ALIGN PARABOLIC DISH AZIMUTH]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight), SizeFlagsHorizontal = SizeFlags.ExpandFill });
+            _buttonContainer.AddChild(new Button { Text = "[ENGAGE 10KW KLYSTRON TRANSMITTER]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight), SizeFlagsHorizontal = SizeFlags.ExpandFill });
+            _buttonContainer.AddChild(new Button { Text = "[FILTER ATMOSPHERIC NOISE SPIKE]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight), SizeFlagsHorizontal = SizeFlags.ExpandFill });
+            _buttonContainer.AddChild(new Button { Text = "[RECORD ENCRYPTED DIEGETIC BROADCAST]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight), SizeFlagsHorizontal = SizeFlags.ExpandFill });
 
             // Right Column (Data & Logistics)
             var rightPanel = ThreePanePanelScaffold.CreatePanelFrame("DECRYPTED TELETYPE & ACTIVE NODES");

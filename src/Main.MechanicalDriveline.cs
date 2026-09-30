@@ -79,7 +79,6 @@ namespace AtomicWar.GodotApp
         {
             if (_mechanicalDriveline == null) return;
             var state = _mechanicalDriveline.Ledger.CaptureState();
-            MechanicalDrivelineSaveStore.TrySave(state);
             if (CaptureSection(
                     MechanicalDrivelineSaveStore.SectionName,
                     MechanicalDrivelineSaveStore.TryCapturePersisted(state)))

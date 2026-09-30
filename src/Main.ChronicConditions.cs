@@ -136,7 +136,6 @@ namespace AtomicWar.GodotApp
         {
             if (_chronicConditions == null) return;
             var state = _chronicConditions.CaptureState();
-            ChronicConditionSaveStore.TrySave(state);
             if (CaptureSection(
                     ChronicConditionSaveStore.SectionName,
                     ChronicConditionSaveStore.TryCapturePersisted(state)))

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 // ASHFALL CI Gate: Composition Root & StartNewGame Invariant Gate (Task 131).
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -61,6 +62,51 @@ namespace Ashfall.Core.Tests.UI
             Assert.Contains("SetupWorld()", code);
             Assert.Contains("SetupMedical()", code);
             Assert.Contains("SetupExpandedShelterSystems()", code);
+        }
+
+        /// <summary>
+        /// Composition methods on the Main partials that nothing calls are dead
+        /// integration: SetupPlans62To65/TickPlans62To65, TickPlans50To53,
+        /// TickAdvancedShelterSystems and six Reset* methods all shipped uncalled,
+        /// so their systems never ran or leaked state across campaigns.
+        /// </summary>
+        [Fact]
+        public void EveryMainSetupTickResetMethod_HasACallSite()
+        {
+            var repoRoot = FindRepoRoot();
+            var srcDir = Path.Combine(repoRoot, "src");
+            var allSource = string.Join("\n", Directory
+                .EnumerateFiles(srcDir, "*.cs", SearchOption.AllDirectories)
+                .Select(File.ReadAllText));
+
+            var declRegex = new Regex(
+                @"\b(?:private|public|internal)\s+(?:static\s+)?[\w<>?.,]+\s+((?:Setup|Tick|Reset)\w+)\s*\(",
+                RegexOptions.Compiled);
+            var declared = Directory
+                .EnumerateFiles(srcDir, "Main*.cs", SearchOption.TopDirectoryOnly)
+                .SelectMany(f => declRegex.Matches(File.ReadAllText(f)).Cast<Match>())
+                .Select(m => m.Groups[1].Value)
+                .Distinct(StringComparer.Ordinal)
+                .ToList();
+            Assert.NotEmpty(declared);
+
+            // One tokenizer pass; a method is called when its name appears more
+            // often than it is declared (declaration count covers overloads).
+            var mentions = new Dictionary<string, int>(StringComparer.Ordinal);
+            foreach (Match token in Regex.Matches(allSource, @"\b(?:Setup|Tick|Reset)\w+\b"))
+                mentions[token.Value] = mentions.TryGetValue(token.Value, out int c) ? c + 1 : 1;
+            var declarations = new Dictionary<string, int>(StringComparer.Ordinal);
+            foreach (Match m in declRegex.Matches(allSource))
+                declarations[m.Groups[1].Value] = declarations.TryGetValue(m.Groups[1].Value, out int c) ? c + 1 : 1;
+
+            var uncalled = declared
+                .Where(name => mentions.GetValueOrDefault(name) <= declarations.GetValueOrDefault(name))
+                .OrderBy(n => n, StringComparer.Ordinal)
+                .ToList();
+
+            Assert.True(uncalled.Count == 0,
+                "Main composition methods with no call site (wire them into a day owner / " +
+                "lifecycle reset, or delete them): " + string.Join(", ", uncalled));
         }
 
         [Fact]

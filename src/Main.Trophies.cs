@@ -50,7 +50,6 @@ namespace AtomicWar.GodotApp
         {
             if (_trophies == null) return;
             var state = _trophies.CaptureState();
-            TrophySaveStore.TrySave(state);
             if (CaptureSection(TrophySaveStore.SectionName, TrophySaveStore.TryCapturePersisted(state)))
                 _trophiesDirty = false;
         }

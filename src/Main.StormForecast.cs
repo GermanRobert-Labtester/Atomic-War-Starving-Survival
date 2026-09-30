@@ -92,7 +92,6 @@ namespace AtomicWar.GodotApp
         {
             if (_stormForecast == null) return;
             var state = _stormForecast.CaptureState();
-            StormForecastSaveStore.TrySave(state);
             if (CaptureSection(StormForecastSaveStore.SectionName, StormForecastSaveStore.TryCapturePersisted(state)))
                 _stormForecastDirty = false;
         }

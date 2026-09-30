@@ -67,6 +67,10 @@ namespace AtomicWar.GodotApp
         /// Falls back to the scavenging convention (1 kg/item) when unset.</summary>
         public ItemCatalog? Items { get; set; }
 
+        /// <summary>Plan 45 — field-guide authority seam (Main binds its unlock +
+        /// journal path). Returns true when the entry was newly unlocked.</summary>
+        public Func<string, bool>? FieldGuideUnlock { get; set; }
+
         /// <summary>Vehicle garage (fuel, condition, repair) — persisted inside the expedition aggregate.</summary>
         public ExpeditionVehicleSystem Vehicles { get; }
 
@@ -360,6 +364,13 @@ namespace AtomicWar.GodotApp
         private readonly ExpeditionNavalSystem _naval = new();
 
         /// <summary>
+        /// Plan 194 — the single naval vessel authority. Built-in vessels are
+        /// registered by the system; the authored <c>naval_vessels.json</c>
+        /// catalog is layered on in <see cref="Create"/>.
+        /// </summary>
+        public ExpeditionNavalSystem Naval => _naval;
+
+        /// <summary>
         /// Destinations reachable by water from the home holdfast, mapped to
         /// the water route's weather hazard. Populated by the host from the
         /// wasteland map authority (routes with travel_domain "water"). When
@@ -442,6 +453,7 @@ namespace AtomicWar.GodotApp
                     // prompt choice routes its loot grant to the right pack.
                     _lastSurfacedEncounterId = dto.encounter_id;
                     _lastSurfacedTriggerSurvivor = dto.trigger?.survivorId ?? string.Empty;
+                    _lastSurfacedDanger = dto.trigger?.dangerLevel ?? 0;
                 }
                 RaiseStateChanged();
                 OnEncounterSurfaced?.Invoke(dto);
@@ -513,6 +525,11 @@ namespace AtomicWar.GodotApp
                     dataDir, fileIO, serializer);
                 if (microDefs != null && microDefs.Count > 0)
                     session._narrative.RegisterRange(microDefs);
+
+                // Plan 194 — authored vessels override/extend the built-in set.
+                string navalPath = System.IO.Path.Combine(dataDir, "naval_vessels.json");
+                if (fileIO.FileExists(navalPath))
+                    session._naval.LoadCatalog(fileIO.ReadAllText(navalPath));
 
                 var loaded = ExpeditionCatalogLoader.Load(dataDir, fileIO, serializer);
                 if (loaded != null && loaded.Count > 0)
@@ -1117,6 +1134,9 @@ namespace AtomicWar.GodotApp
             public Status Flag = Status.NotApplicable;
             public string FlagId = string.Empty;
 
+            public Status FieldGuide = Status.NotApplicable;
+            public string FieldGuideId = string.Empty;
+
             /// <summary>F17 — micro-location hazard routing outcome. NotApplicable
             /// for flags without a registered hazard; Applied when the canonical
             /// disease authority received the consequence exactly once.</summary>
@@ -1149,13 +1169,46 @@ namespace AtomicWar.GodotApp
         /// </summary>
         public bool EncounterApplyChoice(string encounterId, string choiceId, int day, string locationId)
         {
+            LastChoiceWasDuplicate = false;
             if (_bridge == null || string.IsNullOrEmpty(encounterId)) return false;
 
             string effectiveLocation = locationId ?? PendingLocationFor(encounterId)!;
+
+            // Persistent at-most-once guard: the bridge's own guard covers only the
+            // newest surfaced encounter and lives in memory, so a backlog row, a
+            // patrol encounter or a reload could otherwise reapply consequences.
+            // Every stable key form of the surfacing is checked and recorded, so a
+            // replay after ClearPending (double-click, backlog row, fresh session)
+            // still matches the ledger even though the leg index is unrecoverable.
+            IReadOnlyList<string> surfacingKeys = SurfacingKeysFor(encounterId, effectiveLocation, day);
+            if (ChoiceLedger != null && IsAnySurfacingResolved(surfacingKeys, encounterId))
+            {
+                LastChoiceWasDuplicate = true;
+                _narrative.ClearPending(encounterId);
+                return false;
+            }
+
             bool ok = _bridge.ResolveChoice(encounterId, choiceId, day, effectiveLocation!);
 
             // The player has acknowledged this one — shrink the pending list.
-            if (ok) _narrative.ClearPending(encounterId);
+            if (ok)
+            {
+                _narrative.ClearPending(encounterId);
+                if (ChoiceLedger != null)
+                {
+                    foreach (string surfacingKey in surfacingKeys)
+                    {
+                        ChoiceLedger.Resolve(new EncounterChoiceRequest
+                        {
+                            ExpeditionId = surfacingKey,
+                            EncounterId = encounterId,
+                            ChoiceId = choiceId,
+                            Day = day,
+                            PredictedOutcome = "resolved",
+                        });
+                    }
+                }
+            }
 
             // F2/F3/F4 — apply the resolved consequence payload exactly once,
             // through the subsystems that own each effect.
@@ -1165,58 +1218,114 @@ namespace AtomicWar.GodotApp
                 LastApplication = application;
                 OnEncounterConsequencesApplied?.Invoke(application);
             }
+            if (ok) TryEscalateTravelCombat(encounterId, choiceId, effectiveLocation ?? string.Empty);
             return ok;
         }
 
         /// <summary>
-        /// Plan 45 phase 2 — resolve a travel-encounter choice through the
-        /// wasteland-inhabitants layer and, when the choice is hostile,
-        /// raise <see cref="OnTravelEncounterCombatTriggered"/> carrying the
-        /// EnemyCompositionSelector composition (wildlife pack for Creature
-        /// encounters, raid crew for high-danger Human ones). The data
-        /// outcomes (morale / guilt / field-guide unlock) resolve exactly as
-        /// they would without combat — combat rides on top, once per
-        /// resolution. Returns false when the travel engine is unavailable,
-        /// the encounter/choice is unknown, or the choice is non-hostile.
+        /// Plan 45 phase 2 — after a travel/patrol encounter choice resolves through
+        /// the bridge (data outcomes: morale / guilt / field-guide), a hostile choice
+        /// escalates to tactical combat via <see cref="OnTravelEncounterCombatTriggered"/>
+        /// with the EnemyCompositionSelector composition. Runs once per resolution:
+        /// <see cref="EncounterApplyChoice"/> only calls it after a committed resolve,
+        /// and the choice ledger refuses replays. Returns true when combat was raised.
         /// </summary>
-        public bool ResolveTravelChoiceWithCombat(
-            string encounterId, string choiceId, int day, string locationId, int dangerLevel, int enemyCount)
+        private bool TryEscalateTravelCombat(string encounterId, string choiceId, string locationId)
         {
-            if (TravelEngine == null || string.IsNullOrEmpty(encounterId) || string.IsNullOrEmpty(choiceId))
-                return false;
-
-            var catalog = TravelEngine.Catalog;
+            var catalog = TravelEngine?.Catalog;
             if (catalog == null || !catalog.TryGetEncounter(encounterId, out var definition) || definition == null)
                 return false;
             TravelEncounterChoice? choice = null;
             for (int i = 0; i < definition.Choices.Count; i++)
             {
-                if (definition.Choices[i] != null && definition.Choices[i].ChoiceId == choiceId)
+                // Same matching rule as TravelEncounterSystem.ResolveChoice.
+                if (definition.Choices[i] != null
+                    && string.Equals(definition.Choices[i].ChoiceId, choiceId, StringComparison.OrdinalIgnoreCase))
                 {
                     choice = definition.Choices[i];
                     break;
                 }
             }
-            if (choice == null) return false;
+            int danger = DangerFor(encounterId, locationId);
+            if (!TravelEncounterCombatBinder.TryBind(definition, choice, danger,
+                    CombatHostSession.DefaultAmbushEnemyCount, out var ids, ActiveRng))
+                return false;
 
-            // Data outcomes first (exactly the no-combat path).
-            bool resolved = TravelEngine.ResolveChoice(encounterId, choiceId, day, out _, out _, out _);
-            if (!resolved) return false;
-
-            // Combat escalation — the single binding authority.
-            if (TravelEncounterCombatBinder.TryBind(definition, choice, dangerLevel, enemyCount, out var ids, ActiveRng))
+            OnTravelEncounterCombatTriggered?.Invoke(new TravelCombatTrigger
             {
-                OnTravelEncounterCombatTriggered?.Invoke(new TravelCombatTrigger
-                {
-                    EncounterId = encounterId,
-                    Title = definition.Title,
-                    LocationId = locationId ?? string.Empty,
-                    DangerLevel = dangerLevel,
-                    CombatantIds = ids,
-                });
-                return true;
+                EncounterId = encounterId,
+                Title = definition.Title,
+                LocationId = locationId,
+                DangerLevel = danger,
+                CombatantIds = ids,
+            });
+            return true;
+        }
+
+        /// <summary>Danger of the sortie that surfaced the encounter, else the
+        /// authored danger of the destination, else the system default (1).</summary>
+        private int DangerFor(string encounterId, string locationId)
+        {
+            if (_lastSurfacedEncounterId == encounterId && _lastSurfacedDanger > 0) return _lastSurfacedDanger;
+            foreach (var def in Definitions)
+                if (def != null && def.id == locationId) return Math.Max(1, def.dangerLevel);
+            return 1;
+        }
+
+        /// <summary>
+        /// Persistent at-most-once ledger for applied encounter choices, owned and
+        /// saved by Main (<c>encounter_choice</c> section). Outcomes stay owned by
+        /// the narrative/travel engines; this only records that a surfacing's
+        /// consequences were applied. Unbound ⇒ legacy in-memory guard only.
+        /// </summary>
+        public EncounterChoiceResolver? ChoiceLedger { get; set; }
+
+        /// <summary>True when the last <see cref="EncounterApplyChoice"/> was refused
+        /// because that surfacing was already resolved (the UI should dismiss it).</summary>
+        public bool LastChoiceWasDuplicate { get; private set; }
+
+        /// <summary>
+        /// Every stable identity of one surfacing of an encounter. When the
+        /// encounter is still pending, its recorded leg key
+        /// (<c>{loc}@d{day}#{leg}</c>) is primary, plus the leg-less forms a
+        /// replay can still recover after the pending row is cleared: the
+        /// pending location on the resolution day and the caller's own
+        /// (locationId, day) pair. Checking and recording all of them keeps the
+        /// ledger at-most-once for double-clicks, backlog rows and reloads.
+        /// </summary>
+        private IReadOnlyList<string> SurfacingKeysFor(string encounterId, string? locationId, int day)
+        {
+            var keys = new List<string>();
+            void AddKey(string key)
+            {
+                if (!string.IsNullOrEmpty(key) && !keys.Contains(key)) keys.Add(key);
             }
-            return resolved;
+            var pending = _narrative?.State?.pending;
+            if (pending != null)
+            {
+                for (int i = 0; i < pending.Count; i++)
+                {
+                    var p = pending[i];
+                    if (p == null || p.encounterId != encounterId) continue;
+                    AddKey($"{p.locationId}@d{p.day}#{p.legIndex}");
+                    AddKey($"{p.locationId}@d{p.day}");
+                    AddKey($"{p.locationId}@d{day}");
+                    break;
+                }
+            }
+            AddKey($"{locationId ?? string.Empty}@d{day}");
+            return keys;
+        }
+
+        /// <summary>True when the ledger has already recorded any of this surfacing's key forms.</summary>
+        private bool IsAnySurfacingResolved(IReadOnlyList<string> surfacingKeys, string encounterId)
+        {
+            if (ChoiceLedger == null) return false;
+            for (int i = 0; i < surfacingKeys.Count; i++)
+            {
+                if (ChoiceLedger.IsResolved(surfacingKeys[i], encounterId)) return true;
+            }
+            return false;
         }
 
         /// <summary>The pending entry's recorded location for this encounter, or null when it is not pending.</summary>
@@ -1238,6 +1347,7 @@ namespace AtomicWar.GodotApp
         /// encounter (loot-routing hint), or empty for backlog rows.</summary>
         private string _lastSurfacedTriggerSurvivor = string.Empty;
         private string _lastSurfacedEncounterId = string.Empty;
+        private int _lastSurfacedDanger;
 
         /// <summary>
         /// F2/F3/F4 consequence application. Order (per the integration plan):
@@ -1320,6 +1430,17 @@ namespace AtomicWar.GodotApp
                     if (entry != null)
                         feedback.Add($"Journal updated: {HumanizeId(r.JournalUnlockId)}.");
                 }
+            }
+
+            // ── Plan 45: field-guide unlock from a travel/patrol choice ──
+            app.FieldGuideId = r.FieldGuideUnlockId ?? string.Empty;
+            if (!string.IsNullOrEmpty(r.FieldGuideUnlockId))
+            {
+                app.FieldGuide = FieldGuideUnlock == null
+                    ? EncounterApplicationResult.Status.SkippedNoAuthority
+                    : FieldGuideUnlock(r.FieldGuideUnlockId)
+                        ? EncounterApplicationResult.Status.Applied
+                        : EncounterApplicationResult.Status.AlreadyKnown;
             }
 
             // ── F4: location discovery ──

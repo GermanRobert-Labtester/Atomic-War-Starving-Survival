@@ -73,7 +73,6 @@ namespace AtomicWar.GodotApp
         {
             if (_accessibilitySettings == null) return;
             var state = _accessibilitySettings.System.CaptureState();
-            AccessibilitySettingsSaveStore.TrySave(state);
             if (CaptureSection(
                     AccessibilitySettingsSaveStore.SectionName,
                     AccessibilitySettingsSaveStore.TryCapturePersisted(state)))

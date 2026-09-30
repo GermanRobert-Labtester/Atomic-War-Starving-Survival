@@ -102,7 +102,6 @@ namespace AtomicWar.GodotApp
         {
             if (_shelterMuseum == null) return;
             var state = _shelterMuseum.System.CaptureState();
-            ShelterMuseumSaveStore.TrySave(state);
             if (CaptureSection(
                     ShelterMuseumSaveStore.SectionName,
                     ShelterMuseumSaveStore.TryCapturePersisted(state)))

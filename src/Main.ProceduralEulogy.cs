@@ -73,7 +73,6 @@ namespace AtomicWar.GodotApp
         {
             if (_eulogy == null) return;
             var state = _eulogy.CaptureState();
-            ProceduralEulogySaveStore.TrySave(state);
             if (CaptureSection(ProceduralEulogySaveStore.SectionName, ProceduralEulogySaveStore.TryCapturePersisted(state)))
                 _eulogyDirty = false;
         }

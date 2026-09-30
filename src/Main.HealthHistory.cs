@@ -39,7 +39,6 @@ namespace AtomicWar.GodotApp
             if (_healthHistory == null) return;
 
             var state = _healthHistory.System.CaptureState();
-            HealthHistorySaveStore.TrySave(state);
             string? payload = HealthHistorySaveStore.TryCapturePersisted(state);
             if (!string.IsNullOrEmpty(payload))
             {

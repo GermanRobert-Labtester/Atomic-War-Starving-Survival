@@ -89,7 +89,6 @@ namespace AtomicWar.GodotApp
         {
             if (_chemicalReagentSynthesis == null) return;
             var state = _chemicalReagentSynthesis.Ledger.CaptureState();
-            ChemicalReagentSynthesisSaveStore.TrySave(state);
             if (CaptureSection(
                     ChemicalReagentSynthesisSaveStore.SectionName,
                     ChemicalReagentSynthesisSaveStore.TryCapturePersisted(state)))

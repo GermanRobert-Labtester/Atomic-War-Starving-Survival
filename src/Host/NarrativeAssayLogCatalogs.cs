@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 // ============================================================================
-// Authority : Assets/StreamingAssets/Data/narrative/*.json (authored content)
+// Authority : narrative/*.json in the game data directory (authored content, resolved via CatalogPath)
 //             Assets/Ashfall.Core/Narrative/*Catalog.cs (typed entry DTOs)
 // This file : host-side file -> DTO mapping only. No gameplay logic, no
 //             schema duplication, no invented values.

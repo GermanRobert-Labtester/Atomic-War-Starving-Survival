@@ -207,6 +207,68 @@ namespace AtomicWar.GodotApp
                 Check(codexEvents == 1,
                     "M10: re-discovering the same key fires no second codex event.");
 
+                stage = "M10b persisted choice ledger refuses a replayed surfacing";
+                var ledger = new Ashfall.Core.Expeditions.EncounterChoiceResolver(
+                    new Ashfall.Core.Expeditions.EncounterChoiceState());
+                session.ChoiceLedger = ledger;
+                inventory.TryProduce("canned_food", 3);
+                bool firstApply = session.EncounterApplyChoice("micro_shrine", "add_shrine_offering", day: 7, locationId: "rural_gas_station");
+                int stockAfterFirst = CountItem(inventory, "canned_food");
+                bool replay = session.EncounterApplyChoice("micro_shrine", "add_shrine_offering", day: 7, locationId: "rural_gas_station");
+                bool replayDuplicate = session.LastChoiceWasDuplicate;
+                // Reload: the ledger survives capture/restore, the in-memory bridge guard does not.
+                var reloaded = new Ashfall.Core.Expeditions.EncounterChoiceResolver(
+                    new Ashfall.Core.Expeditions.EncounterChoiceState());
+                reloaded.RestoreState(ledger.CaptureState());
+                session.ChoiceLedger = reloaded;
+                bool replayAfterReload = session.EncounterApplyChoice("micro_shrine", "add_shrine_offering", day: 7, locationId: "rural_gas_station");
+                Check(firstApply && !replay && replayDuplicate && !replayAfterReload
+                      && CountItem(inventory, "canned_food") == stockAfterFirst && ledger.History.Count == 1,
+                    $"M10b: a replayed surfacing is refused before and after reload with no second offering (first={firstApply}, replay={replay}, reload={replayAfterReload}, ledger={ledger.History.Count}).");
+                session.ChoiceLedger = null;
+
+                stage = "M10d persisted ledger refuses a replayed popup surfacing in a fresh session";
+                var popupLedger = new Ashfall.Core.Expeditions.EncounterChoiceResolver(
+                    new Ashfall.Core.Expeditions.EncounterChoiceState());
+                session.ChoiceLedger = popupLedger;
+                inventory.TryProduce("canned_food", 3);
+                // Surfaced through the popup path: a pending row exists at apply time
+                // and ClearPending removes it before any replay can read the leg key.
+                session.NarrativeEngine?.EnqueuePending("micro_shrine", "rural_gas_station", legIndex: 2, day: 9);
+                bool popupFirst = session.EncounterApplyChoice("micro_shrine", "add_shrine_offering", day: 9, locationId: "rural_gas_station");
+                int popupStock = CountItem(inventory, "canned_food");
+                // Fresh host session: the bridge's in-memory guard is gone; only the
+                // restored ledger stands between the replay and a second application.
+                var replaySession = ExpeditionHostSession.Create(dataDir, new NarrativeEncounterSystem());
+                var restoredLedger = new Ashfall.Core.Expeditions.EncounterChoiceResolver(
+                    new Ashfall.Core.Expeditions.EncounterChoiceState());
+                restoredLedger.RestoreState(popupLedger.CaptureState());
+                replaySession.ChoiceLedger = restoredLedger;
+                bool popupReplay = replaySession.EncounterApplyChoice("micro_shrine", "add_shrine_offering", day: 9, locationId: "rural_gas_station");
+                bool popupReplayDup = replaySession.LastChoiceWasDuplicate;
+                Check(popupFirst && !popupReplay && popupReplayDup
+                      && CountItem(inventory, "canned_food") == popupStock,
+                    $"M10d: a replayed popup surfacing in a fresh session is refused by the restored ledger with no second offering (first={popupFirst}, replay={popupReplay}, dup={popupReplayDup}).");
+                session.ChoiceLedger = null;
+
+                stage = "M10c hostile travel choice escalates to combat and unlocks the field guide";
+                var travelSession = ExpeditionHostSession.Create(dataDir, new NarrativeEncounterSystem());
+                int combatRaised = 0;
+                var unlocked = new List<string>();
+                travelSession.OnTravelEncounterCombatTriggered += t => { if (t.CombatantIds.Count > 0) combatRaised++; };
+                travelSession.FieldGuideUnlock = id => { unlocked.Add(id); return true; };
+                bool hostileOk = travelSession.EncounterApplyChoice("enc_travel_wolf_pack_crossing", "choice_rifle_ambush", day: 8, locationId: "rural_gas_station");
+                int combatAfterHostile = combatRaised;
+                // Fresh session: the resolved crossing is on cooldown in the first one.
+                var calmSession = ExpeditionHostSession.Create(dataDir, new NarrativeEncounterSystem());
+                calmSession.OnTravelEncounterCombatTriggered += t => { if (t.CombatantIds.Count > 0) combatRaised++; };
+                calmSession.FieldGuideUnlock = id => { unlocked.Add(id); return true; };
+                bool calmOk = calmSession.EncounterApplyChoice("enc_travel_wolf_pack_crossing", "choice_throw_flare", day: 8, locationId: "rural_gas_station");
+                Check(hostileOk && calmOk && combatAfterHostile == 1 && combatRaised == 1
+                      && unlocked.Count == 2 && unlocked[0] == "field_fauna_two_headed_wolf"
+                      && travelSession.LastApplication?.FieldGuide == ExpeditionHostSession.EncounterApplicationResult.Status.Applied,
+                    $"M10c: rifle ambush raises combat once, the flare does not, both unlock the wolf entry (hostile={hostileOk}, calm={calmOk}, combat={combatRaised}, unlocks={unlocked.Count}).");
+
                 stage = "M11 clue discovery gates dispatch";
                 var fresh = ExpeditionHostSession.Create(dataDir, new NarrativeEncounterSystem());
                 fresh.Definitions.Clear();

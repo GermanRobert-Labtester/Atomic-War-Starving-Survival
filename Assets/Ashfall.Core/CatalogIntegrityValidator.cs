@@ -1005,6 +1005,10 @@ namespace Ashfall.Core
             // canonical shelter-assignment rooms.
             ValidateShelterOperationsCatalogs(dataDirectory, files, report);
 
+            // Chapter Profiles (Expansion 08 / Year Two P1B) — profile schema,
+            // standing modifiers, close rules, and 135 branch endings resolution.
+            ValidateChapterProfilesCatalog(dataDirectory, files, report);
+
             report.AuthoredIds = ctx.Authored;
             report.ReuseCount = ctx.Reuse;
 
@@ -1945,7 +1949,8 @@ namespace Ashfall.Core
                         if (value.ValueKind == JsonValueKind.String)
                         {
                             string? text = value.GetString();
-                            if (string.IsNullOrEmpty(text) || IsVocabularyKey(property.Name)) continue;
+                            if (string.IsNullOrEmpty(text) || IsVocabularyKey(property.Name)
+                                || IsChapterProfileVocabularyKey(ctx.File, property.Name)) continue;
                             RegisterOrReference(property.Name, text, childPath, entityDesc, ctx);
                             continue;
                         }
@@ -2090,6 +2095,13 @@ namespace Ashfall.Core
 
         private static bool IsCatalogLocalDefinitionKey(string file, string key)
             => CatalogLocalDefinitionKeys.ContainsKey(file + "/" + key);
+
+        // These fields select profile behavior; their closed values are validated
+        // by ChapterProfileCatalog, not resolved as faction_/ending_ identities.
+        // Keep this catalog-scoped so real references elsewhere still fail.
+        private static bool IsChapterProfileVocabularyKey(string file, string key)
+            => file == "chapter_profiles.json"
+                && (key == "year_one_ending_source" || key == "close_rule");
 
         private static void RegisterOrReference(string key, string value, string path, string? entityContext, Ctx ctx)
         {
@@ -3474,6 +3486,69 @@ namespace Ashfall.Core
             catch (Exception ex)
             {
                 report.Error("wildlife trapping catalog validator error: " + ex.Message);
+            }
+        }
+
+        public static void ValidateChapterProfilesCatalog(
+            string dataDirectory,
+            IFileIO files,
+            CatalogIntegrityReport report)
+        {
+            if (string.IsNullOrEmpty(dataDirectory) || files == null || report == null) return;
+            string catalogPath = files.Combine(dataDirectory, "chapter_profiles.json");
+            if (!files.FileExists(catalogPath)) return;
+
+            try
+            {
+                string json = files.ReadAllText(catalogPath);
+                var loaded = Ashfall.Core.Endgame.ChapterProfileCatalog.LoadFromJson(json);
+                foreach (var err in loaded.ValidationErrors)
+                {
+                    report.Error("chapter_profiles.json: " + err);
+                }
+
+                if (loaded.IsValid)
+                {
+                    // Verify all 135 branch endings across military, rebel, independent catalogs resolve cleanly
+                    string[] branchFiles = { "military_faction_branch.json", "rebel_faction_branch.json", "independent_faction_branch.json" };
+                    foreach (var branchFile in branchFiles)
+                    {
+                        string bfPath = files.Combine(dataDirectory, branchFile);
+                        if (!files.FileExists(bfPath)) continue;
+
+                        using var doc = JsonDocument.Parse(files.ReadAllText(bfPath));
+                        if (doc.RootElement.TryGetProperty("branches", out var branchesArr) && branchesArr.ValueKind == JsonValueKind.Array)
+                        {
+                            foreach (var branchEl in branchesArr.EnumerateArray())
+                            {
+                                if (branchEl.TryGetProperty("endings", out var endingsArr) && endingsArr.ValueKind == JsonValueKind.Array)
+                                {
+                                    foreach (var endingEl in endingsArr.EnumerateArray())
+                                    {
+                                        if (endingEl.TryGetProperty("ending_id", out var eidProp) && eidProp.GetString() is string endingId)
+                                        {
+                                            foreach (var profile in loaded.Profiles.Values)
+                                            {
+                                                var mod = loaded.ResolveStandingModifier(endingId, profile.profile_id);
+                                                // ResolveStandingModifier always returns a string (prefix
+                                                // inference and a neutral fallback included), so the real
+                                                // hazard is a modifier id the catalog does not define.
+                                                if (loaded.StandingModifiers.Count > 0 && !loaded.StandingModifiers.ContainsKey(mod))
+                                                {
+                                                    report.Error($"chapter_profiles.json: ending '{endingId}' resolves to unknown standing modifier '{mod}' in profile '{profile.profile_id}'");
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                report.Error("chapter_profiles validation error: " + ex.Message);
             }
         }
     }

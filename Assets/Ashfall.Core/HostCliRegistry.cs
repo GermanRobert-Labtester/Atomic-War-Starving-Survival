@@ -107,6 +107,7 @@ namespace Ashfall.Core
         CampaignLegacySelfTest,
         ResearchUnlockSelfTest,
         UnifiedEndingSelfTest,
+        YearTwoChapterSelfTest,
         NpcMemorySelfTest,
         IdeologicalFrictionSelfTest,
         RomanceFamilySelfTest,
@@ -927,6 +928,12 @@ namespace Ashfall.Core
                     "--unified-ending-selftest",
                     new[] { "--epilogue-selftest" },
                     "Plan 145 unified ending resolution & epilogue personalization: political, social, moral, personal, and expedition resolution"),
+                new HostCliActionDescriptor(
+                    HostCliAction.YearTwoChapterSelfTest,
+                    "Expansions & Campaign Modules",
+                    "--year-two-chapter-selftest",
+                    new[] { "--play-on-selftest", "--chapter-selftest" },
+                    "Year Two Package P2: Play On chapter continuation, dual verb reading, and non-terminal continuation gate"),
                 new HostCliActionDescriptor(
                     HostCliAction.NpcMemorySelfTest,
                     "Expansions & Campaign Modules",

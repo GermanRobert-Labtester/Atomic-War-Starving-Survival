@@ -107,7 +107,7 @@ namespace Ashfall.Core.Save
             new("silent_foundry", "SaveSilentFoundry", "SetupSilentFoundry", "foundry", "Automated foundry machinery & smelters"),
             new("disease", "SaveDisease", "SetupDisease", "medical", "Epidemics, contagions, and pathogen spread"),
             new("wasteland_map", "SaveWastelandMap", null, "world", "Wasteland map markers and fog-of-war", RequiresSetup: false),
-            new("encounter_choice", "SaveEncounterChoice", "SetupEncounterChoice", "encounters", "Encounter choice history & outcomes"),
+            new("encounter_choice", "SaveEncounterChoice", "SetupEncounterChoiceResolver", "encounters", "Encounter choice history & outcomes"),
             new("travel_encounters", "SaveTravelEncounters", "SetupTravelEncounters", "encounters", "Travel encounters and cooldown states"),
             new("water_treatment", "SaveWaterTreatment", "SetupWaterTreatment", "infrastructure", "Water filtration and purification", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("airlock_security", "SaveAirlockSecurity", "SetupAirlockSecurity", "infrastructure", "Airlock decontamination and security", LifecycleGroup: ExpandedShelterLifecycleGroup),

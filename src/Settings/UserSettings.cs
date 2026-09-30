@@ -100,6 +100,18 @@ namespace AtomicWar.GodotApp.Settings
             }
         }
 
+        /// <summary>Preview audio without applying other pending settings.</summary>
+        public static void PreviewAudio(UserSettingsData data)
+        {
+            if (data == null) return;
+            AtomicWar.GodotApp.Audio.AudioSettings.ApplyUnifiedMix(data);
+            ApplyAudio("Master", data.MasterVolume, data.MuteAll);
+            ApplyAudio("Music", data.MusicVolume, data.MuteAll);
+            ApplyAudio("SFX", data.SfxVolume, data.MuteAll);
+            ApplyAudio("Radio", data.RadioVolume, data.MuteAll);
+            ApplyAudio("Ambience", data.AmbienceVolume, data.MuteAll);
+        }
+
         /// <summary>
         /// Applies settings immediately to Godot's audio buses, display server, and engine limits.
         /// Safely catches headless/unsupported display exceptions without throwing.
@@ -110,12 +122,7 @@ namespace AtomicWar.GodotApp.Settings
             _current = data.Clone();
 
             // 1. Audio Application
-            AtomicWar.GodotApp.Audio.AudioSettings.ApplyUnifiedMix(data);
-            ApplyAudio("Master", data.MasterVolume, data.MuteAll);
-            ApplyAudio("Music", data.MusicVolume, data.MuteAll);
-            ApplyAudio("SFX", data.SfxVolume, data.MuteAll);
-            ApplyAudio("Radio", data.RadioVolume, data.MuteAll);
-            ApplyAudio("Ambience", data.AmbienceVolume, data.MuteAll);
+            PreviewAudio(data);
 
             // 2. Engine FPS Cap
             Engine.MaxFps = Math.Max(0, data.MaxFps);

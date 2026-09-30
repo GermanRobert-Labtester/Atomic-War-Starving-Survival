@@ -36,7 +36,6 @@ namespace AtomicWar.GodotApp
         {
             if (_voluntaryRegister == null) return;
             var state = _voluntaryRegister.CaptureState();
-            VoluntaryRegisterSaveStore.TrySave(state);
             if (CaptureSection("voluntary_register", VoluntaryRegisterSaveStore.TryCapturePersisted(state)))
             {
                 _voluntaryRegisterDirty = false;

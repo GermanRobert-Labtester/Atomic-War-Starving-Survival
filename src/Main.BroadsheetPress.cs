@@ -180,7 +180,6 @@ namespace AtomicWar.GodotApp
         {
             if (_broadsheetPress == null) return;
             var state = _broadsheetPress.CaptureState();
-            BroadsheetPressSaveStore.TrySave(state);
             if (CaptureSection(BroadsheetPressSaveStore.SectionName, BroadsheetPressSaveStore.TryCapturePersisted(state)))
                 _broadsheetPressDirty = false;
         }

@@ -53,7 +53,6 @@ namespace AtomicWar.GodotApp
         {
             if (_ideologicalFriction == null) return;
             var state = _ideologicalFriction.CaptureState();
-            IdeologicalFrictionSaveStore.TrySave(state);
             if (CaptureSection("ideological_friction", IdeologicalFrictionSaveStore.TryCapturePersisted(state)))
             {
                 _ideologicalFrictionDirty = false;

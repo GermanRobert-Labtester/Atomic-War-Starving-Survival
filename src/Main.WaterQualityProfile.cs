@@ -55,7 +55,6 @@ namespace AtomicWar.GodotApp
         {
             if (_waterQuality == null) return;
             var state = _waterQuality.CaptureState();
-            WaterQualityProfileSaveStore.TrySave(state);
             if (CaptureSection(WaterQualityProfileSaveStore.SectionName, WaterQualityProfileSaveStore.TryCapturePersisted(state)))
                 _waterQualityDirty = false;
         }

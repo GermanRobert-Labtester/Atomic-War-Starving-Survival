@@ -1308,7 +1308,7 @@ ARCHITECTURE_GRAPH = {
         "core": ["EncounterChoiceResolver"],
         "catalog": ["door_encounters.json"],
         "host": ["EncounterChoiceState"],
-        "setup": "SetupEncounterChoice",
+        "setup": "SetupEncounterChoiceResolver",
         "ticked": False,
         "tick_type": "On-Demand (Door Event Resolution)",
         "store": ["EncounterChoiceSaveStore"],

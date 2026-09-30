@@ -71,6 +71,13 @@ namespace AtomicWar.GodotApp.Settings
                         appliedCount++;
                     }
                 }
+                else
+                {
+                    // RESET removes the override from the panel's draft. Apply
+                    // must also remove an earlier live override, without changing
+                    // joypad bindings or applying the draft before confirmation.
+                    Reset(data, contract.Action);
+                }
             }
 
             return appliedCount;

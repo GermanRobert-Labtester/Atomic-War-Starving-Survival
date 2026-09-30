@@ -75,11 +75,11 @@ namespace AtomicWar.GodotApp.YearOfAsh
             buttonHbox.AddThemeConstantOverride("separation", 8);
             rootVbox.AddChild(buttonHbox);
 
-            _btnReplaceScrubber = new Button { Text = "Replace Scrubber" };
+            _btnReplaceScrubber = new Button { Text = "Replace Scrubber", CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
             _btnReplaceScrubber.Pressed += OnReplaceScrubberPressed;
             buttonHbox.AddChild(_btnReplaceScrubber);
 
-            _btnSealFissures = new Button { Text = "Seal Fissures" };
+            _btnSealFissures = new Button { Text = "Seal Fissures", CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
             _btnSealFissures.Pressed += OnSealFissuresPressed;
             buttonHbox.AddChild(_btnSealFissures);
         }

@@ -72,7 +72,6 @@ namespace AtomicWar.GodotApp
         {
             if (_curriculum == null) return;
             var state = _curriculum.CaptureState();
-            ApprenticeshipCurriculumSaveStore.TrySave(state);
             if (CaptureSection(ApprenticeshipCurriculumSaveStore.SectionName, ApprenticeshipCurriculumSaveStore.TryCapturePersisted(state)))
                 _curriculumDirty = false;
         }

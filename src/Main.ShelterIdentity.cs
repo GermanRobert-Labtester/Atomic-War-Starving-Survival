@@ -73,7 +73,6 @@ namespace AtomicWar.GodotApp
         {
             if (_shelterIdentity == null) return;
             var state = _shelterIdentity.CaptureState();
-            ShelterIdentitySaveStore.TrySave(state);
             if (CaptureSection("shelter_identity", ShelterIdentitySaveStore.TryCapturePersisted(state)))
                 _shelterIdentityDirty = false;
         }

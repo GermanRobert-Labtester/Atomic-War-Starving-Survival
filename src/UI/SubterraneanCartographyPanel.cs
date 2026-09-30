@@ -81,23 +81,23 @@ namespace AtomicWar.GodotApp.UI
             consoleBox.AddThemeConstantOverride("separation", 12);
             root.AddChild(consoleBox);
 
-            _scanButton = new Button { Text = "[EXECUTE 3D LIDAR SCAN]" };
+            _scanButton = new Button { Text = "[EXECUTE 3D LIDAR SCAN]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _scanButton.Pressed += () => ShowFeedback("LiDAR sweep completed. 240,000 new point cloud voxels integrated.");
             consoleBox.AddChild(_scanButton);
 
-            _isobarButton = new Button { Text = "[PROJECT RAD ISOBAR OVERLAY]" };
+            _isobarButton = new Button { Text = "[PROJECT RAD ISOBAR OVERLAY]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _isobarButton.Pressed += () => ShowFeedback("Radiation isobar layer rendered across depth slices -40m to -250m.");
             consoleBox.AddChild(_isobarButton);
 
-            _waypointButton = new Button { Text = "[PLOT EXTRACTION WAYPOINT]" };
+            _waypointButton = new Button { Text = "[PLOT EXTRACTION WAYPOINT]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _waypointButton.Pressed += () => ShowFeedback("Extraction Waypoint Foxtrot synchronized with surface team.");
             consoleBox.AddChild(_waypointButton);
 
-            _hazardButton = new Button { Text = "[FLAG COLLAPSE HAZARD]" };
+            _hazardButton = new Button { Text = "[FLAG COLLAPSE HAZARD]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _hazardButton.Pressed += () => ShowFeedback("Sector 09 marked with structural collapse hazard warning.");
             consoleBox.AddChild(_hazardButton);
 
-            _closeButton = new Button { Text = "[CLOSE PANEL]" };
+            _closeButton = new Button { Text = "[CLOSE PANEL]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _closeButton.Pressed += () => { Visible = false; OnClose?.Invoke(); };
             consoleBox.AddChild(_closeButton);
 

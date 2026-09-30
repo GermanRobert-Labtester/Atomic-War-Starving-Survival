@@ -59,7 +59,6 @@ namespace AtomicWar.GodotApp
         {
             if (_forecast == null) return;
             var state = _forecast.CaptureState();
-            WeatherForecastReliabilitySaveStore.TrySave(state);
             if (CaptureSection(WeatherForecastReliabilitySaveStore.SectionName, WeatherForecastReliabilitySaveStore.TryCapturePersisted(state)))
                 _forecastDirty = false;
         }

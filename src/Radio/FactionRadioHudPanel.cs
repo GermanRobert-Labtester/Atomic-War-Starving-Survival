@@ -102,7 +102,7 @@ namespace AtomicWar.GodotApp.Radio
 
             topBar.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
 
-            var btnSquelch = new Button { Text = "[SQUELCH: ON]" };
+            var btnSquelch = new Button { Text = "[SQUELCH: ON]", CustomMinimumSize = new Vector2(0, global::Ashfall.Core.UI.Theme.MinInteractiveHeight) };
             btnSquelch.Pressed += () =>
             {
                 _squelchActive = !_squelchActive;
@@ -366,7 +366,7 @@ namespace AtomicWar.GodotApp.Radio
                 var btn = new Button
                 {
                     Text = $"{freq:00.0}M · {f.ToUpper().Replace('_', ' ')}",
-                    CustomMinimumSize = new Vector2(250, 22),
+                    CustomMinimumSize = new Vector2(250, global::Ashfall.Core.UI.Theme.MinInteractiveHeight),
                     Alignment = HorizontalAlignment.Left
                 };
                 btn.AddThemeFontSizeOverride("font_size", global::Ashfall.Core.UI.Theme.FontSizeLabel);

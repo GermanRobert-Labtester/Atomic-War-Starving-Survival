@@ -66,7 +66,6 @@ namespace AtomicWar.GodotApp
         {
             if (_diplomacy == null) return;
             var state = _diplomacy.CaptureState();
-            DiplomacySaveStore.TrySave(state);
             if (CaptureSection(DiplomacySaveStore.SectionName, DiplomacySaveStore.TryCapturePersisted(state)))
                 _diplomacyDirty = false;
         }

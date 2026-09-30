@@ -36,7 +36,6 @@ namespace AtomicWar.GodotApp
         {
             if (_unifiedEnding == null) return;
             var state = _unifiedEnding.CaptureState();
-            UnifiedEndingSaveStore.TrySave(state);
             if (CaptureSection("unified_ending", UnifiedEndingSaveStore.TryCapturePersisted(state)))
             {
                 _unifiedEndingDirty = false;

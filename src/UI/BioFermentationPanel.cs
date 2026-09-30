@@ -237,7 +237,7 @@ namespace AtomicWar.GodotApp.UI
                 _detail.AddChild(AshfallUiHelpers.MakeEmptyState(
                     "No authored fermentation field log was readable from the data directory.",
                     title: "FIELD LOG ABSENT",
-                    actionHint: "Check Assets/StreamingAssets/Data/narrative/ for the assay catalogs."));
+                    actionHint: "The assay notebooks are missing from this installation."));
             }
             else
             {

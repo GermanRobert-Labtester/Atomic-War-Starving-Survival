@@ -38,7 +38,6 @@ namespace AtomicWar.GodotApp
             if (_cultureCreation == null) return;
 
             var state = _cultureCreation.CaptureState();
-            CultureCreationSaveStore.TrySave(state);
             string? payload = CultureCreationSaveStore.TryCapturePersisted(state);
             if (!string.IsNullOrEmpty(payload))
             {

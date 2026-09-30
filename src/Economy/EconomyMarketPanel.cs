@@ -96,7 +96,7 @@ namespace AtomicWar.GodotApp.Economy
             _rationingProtocolChoice = new OptionButton { SizeFlagsHorizontal = SizeFlags.ExpandFill };
             _rationingProtocolChoice.TooltipText = "Shelter-wide rationing protocol to apply.";
             protocolRow.AddChild(_rationingProtocolChoice);
-            _rationingApplyButton = new Button { Text = "APPLY" };
+            _rationingApplyButton = new Button { Text = "APPLY", CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
             _rationingApplyButton.TooltipText = "Apply the selected rationing protocol (validated by the canonical owner).";
             _rationingApplyButton.Pressed += OnRationingApplyPressed;
             protocolRow.AddChild(_rationingApplyButton);

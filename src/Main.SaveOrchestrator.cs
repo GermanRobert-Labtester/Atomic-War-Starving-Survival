@@ -412,6 +412,20 @@ namespace AtomicWar.GodotApp
             // before any early SaveAll so Continue cannot drop resolved choices.
             SetupMoralChoice();
 
+            // Otherwise built lazily (first day tick or panel open). A save
+            // generation holds only what SaveAll captures, so a section not
+            // rebuilt here is dropped by the next save and the Continue after
+            // that fails closed on the file this load projected.
+            SetupCounterIntelligence();
+            SetupInformantNetwork();
+            SetupReconTelemetry();
+            SetupPlans62To65();
+            SetupSurvivorLetterDelivery();
+            SetupPlasticPyrolysis();
+            SetupCargoAirdrop();
+            SetupCryoVault();
+            SetupAquaponics();
+
             BindDifficultyConsumers();
 
             UpdateHud();

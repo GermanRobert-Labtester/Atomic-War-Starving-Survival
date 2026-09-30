@@ -81,10 +81,10 @@ namespace AtomicWar.GodotApp.UI
             var centerPanel = ThreePanePanelScaffold.CreatePanelFrame("FLYWHEEL GOVERNOR & FREQUENCY SYNC");
             bodyHBox.AddChild(centerPanel);
             _buttonContainer = ThreePanePanelScaffold.CreateColumn(centerPanel, 12);
-            _buttonContainer.AddChild(new Button { Text = "[ENGAGE COMPRESSED AIR STARTER]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
-            _buttonContainer.AddChild(new Button { Text = "[SYNCHRONIZE GENERATOR TO GRID]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
-            _buttonContainer.AddChild(new Button { Text = "[PURGE DIESEL FUEL INJECTORS]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
-            _buttonContainer.AddChild(new Button { Text = "[DIVERT EXHAUST TO GREENHOUSE HEATING]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
+            _buttonContainer.AddChild(new Button { Text = "[ENGAGE COMPRESSED AIR STARTER]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight), SizeFlagsHorizontal = SizeFlags.ExpandFill });
+            _buttonContainer.AddChild(new Button { Text = "[SYNCHRONIZE GENERATOR TO GRID]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight), SizeFlagsHorizontal = SizeFlags.ExpandFill });
+            _buttonContainer.AddChild(new Button { Text = "[PURGE DIESEL FUEL INJECTORS]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight), SizeFlagsHorizontal = SizeFlags.ExpandFill });
+            _buttonContainer.AddChild(new Button { Text = "[DIVERT EXHAUST TO GREENHOUSE HEATING]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight), SizeFlagsHorizontal = SizeFlags.ExpandFill });
 
             // Right Column (Data & Logistics)
             var rightPanel = ThreePanePanelScaffold.CreatePanelFrame("DIESEL DAY TANK & BUS LOAD");

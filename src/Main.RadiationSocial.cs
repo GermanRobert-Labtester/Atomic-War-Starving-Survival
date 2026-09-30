@@ -48,7 +48,6 @@ namespace AtomicWar.GodotApp
         {
             if (_radiationSocial == null) return;
             var state = _radiationSocial.CaptureState();
-            RadiationSocialSaveStore.TrySave(state);
             if (CaptureSection(RadiationSocialSaveStore.SectionName, RadiationSocialSaveStore.TryCapturePersisted(state)))
                 _radiationSocialDirty = false;
         }

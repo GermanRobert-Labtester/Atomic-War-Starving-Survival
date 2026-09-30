@@ -21,6 +21,7 @@ namespace AtomicWar.GodotApp
         public event Action? OnSettings;
         public event Action? OnCodex;
         public event Action? OnQuit;
+        public event Action? OnInspectorRequested;
 
         private Button _btnNewGame = null!;
         private Button _btnContinue = null!;
@@ -172,6 +173,18 @@ namespace AtomicWar.GodotApp
             _btnCodex.CustomMinimumSize = new Vector2(320, 40);
             _btnCodex.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);
             vbox.AddChild(_btnCodex);
+
+            // ── Developer session (debug builds only): inspect every authored
+            // item and whether its art asset resolves. Presentation-only.
+            if (OS.IsDebugBuild())
+            {
+                var btnInspector = AshfallUiHelpers.MakeButton(
+                    "DEV SESSION — ITEM & ASSET INSPECTOR",
+                    () => OnInspectorRequested?.Invoke());
+                btnInspector.CustomMinimumSize = new Vector2(320, 36);
+                btnInspector.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);
+                vbox.AddChild(btnInspector);
+            }
 
             _btnQuit = AshfallUiHelpers.MakeButton("QUIT", () => OnQuit?.Invoke());
             _btnQuit.CustomMinimumSize = new Vector2(320, 40);

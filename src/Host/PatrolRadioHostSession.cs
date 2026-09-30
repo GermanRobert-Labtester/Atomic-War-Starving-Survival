@@ -14,7 +14,6 @@ using Ashfall.Core;
 using Ashfall.Core.Narrative;
 using Ashfall.Core.Radio;
 using Ashfall.Core.Save;
-using Ashfall.Core.Save;
 
 namespace AtomicWar.GodotApp
 {

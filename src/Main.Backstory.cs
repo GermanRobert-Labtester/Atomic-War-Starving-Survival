@@ -39,7 +39,6 @@ namespace AtomicWar.GodotApp
         {
             if (_backstory == null) return;
             var state = _backstory.CaptureState();
-            BackstorySaveStore.TrySave(state);
             if (CaptureSection("backstory", BackstorySaveStore.TryCapturePersisted(state)))
             {
                 _backstoryDirty = false;

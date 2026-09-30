@@ -81,10 +81,10 @@ namespace AtomicWar.GodotApp.UI
             var centerPanel = ThreePanePanelScaffold.CreatePanelFrame("TARGETING RADAR & FIRE CONTROL");
             bodyHBox.AddChild(centerPanel);
             _buttonContainer = ThreePanePanelScaffold.CreateColumn(centerPanel, 12);
-            _buttonContainer.AddChild(new Button { Text = "[ARM REACTIVE EXPLOSIVE TILES]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
-            _buttonContainer.AddChild(new Button { Text = "[ENGAGE AUTOMATED CIWS TRACKING]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
-            _buttonContainer.AddChild(new Button { Text = "[PULSE HIGH-VOLTAGE ELECTROCUTION OVERLOAD]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
-            _buttonContainer.AddChild(new Button { Text = "[SEAL SURFACE BLAST SHUTTERS]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
+            _buttonContainer.AddChild(new Button { Text = "[ARM REACTIVE EXPLOSIVE TILES]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight), SizeFlagsHorizontal = SizeFlags.ExpandFill });
+            _buttonContainer.AddChild(new Button { Text = "[ENGAGE AUTOMATED CIWS TRACKING]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight), SizeFlagsHorizontal = SizeFlags.ExpandFill });
+            _buttonContainer.AddChild(new Button { Text = "[PULSE HIGH-VOLTAGE ELECTROCUTION OVERLOAD]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight), SizeFlagsHorizontal = SizeFlags.ExpandFill });
+            _buttonContainer.AddChild(new Button { Text = "[SEAL SURFACE BLAST SHUTTERS]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight), SizeFlagsHorizontal = SizeFlags.ExpandFill });
 
             // Right Column (Data & Logistics)
             var rightPanel = ThreePanePanelScaffold.CreatePanelFrame("AMMO HOIST & STRUCTURAL LOAD");

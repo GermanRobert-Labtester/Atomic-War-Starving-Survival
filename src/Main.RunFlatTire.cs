@@ -107,27 +107,6 @@ namespace AtomicWar.GodotApp
             return message;
         }
 
-        public string ApplyRunFlatHazard(string vehicleId, string hazardClass, int speedKph)
-        {
-            SetupRunFlatTire();
-            if (_runFlatTire == null) return "Run-flat workshop is unavailable.";
-            return _runFlatTire.ApplyHazard(vehicleId, hazardClass, speedKph);
-        }
-
-        public string TickRunFlatHeat(string vehicleId, int speedKph, int loadBp)
-        {
-            SetupRunFlatTire();
-            if (_runFlatTire == null) return "Run-flat workshop is unavailable.";
-            return _runFlatTire.TickHeat(vehicleId, speedKph, loadBp);
-        }
-
-        public string ServiceRunFlat(string vehicleId)
-        {
-            SetupRunFlatTire();
-            if (_runFlatTire == null) return "Run-flat workshop is unavailable.";
-            return _runFlatTire.Repair(vehicleId, skill: 0.5);
-        }
-
         private void SaveRunFlatTire()
         {
             if (_runFlatTire == null) return;

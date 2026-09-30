@@ -81,10 +81,10 @@ namespace AtomicWar.GodotApp.UI
             var centerPanel = ThreePanePanelScaffold.CreatePanelFrame("DELUGE SPRAY NOZZLES & CAVITATION");
             bodyHBox.AddChild(centerPanel);
             _buttonContainer = ThreePanePanelScaffold.CreateColumn(centerPanel, 12);
-            _buttonContainer.AddChild(new Button { Text = "[INITIATE HIGH-PRESSURE CHELATING WASH]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
-            _buttonContainer.AddChild(new Button { Text = "[PULSE 32 KHZ ULTRASONIC CAVITATION]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
-            _buttonContainer.AddChild(new Button { Text = "[INJECT PRESSURIZED FOAM SEALANT]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
-            _buttonContainer.AddChild(new Button { Text = "[PNEUMATIC BLOWER SUCTION PURGE]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
+            _buttonContainer.AddChild(new Button { Text = "[INITIATE HIGH-PRESSURE CHELATING WASH]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight), SizeFlagsHorizontal = SizeFlags.ExpandFill });
+            _buttonContainer.AddChild(new Button { Text = "[PULSE 32 KHZ ULTRASONIC CAVITATION]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight), SizeFlagsHorizontal = SizeFlags.ExpandFill });
+            _buttonContainer.AddChild(new Button { Text = "[INJECT PRESSURIZED FOAM SEALANT]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight), SizeFlagsHorizontal = SizeFlags.ExpandFill });
+            _buttonContainer.AddChild(new Button { Text = "[PNEUMATIC BLOWER SUCTION PURGE]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight), SizeFlagsHorizontal = SizeFlags.ExpandFill });
 
             // Right Column (Data & Logistics)
             var rightPanel = ThreePanePanelScaffold.CreatePanelFrame("EFFLUENT SUMP & RESIN FILTERS");

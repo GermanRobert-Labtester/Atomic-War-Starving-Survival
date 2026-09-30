@@ -87,7 +87,6 @@ namespace AtomicWar.GodotApp
         {
             if (_glassworks == null) return;
             var state = _glassworks.CaptureState();
-            GlassworksSaveStore.TrySave(state);
             if (CaptureSection(GlassworksSaveStore.SectionName, GlassworksSaveStore.TryCapturePersisted(state)))
                 _glassworksDirty = false;
         }

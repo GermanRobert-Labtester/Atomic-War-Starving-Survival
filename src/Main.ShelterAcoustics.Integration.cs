@@ -50,8 +50,5 @@ namespace AtomicWar.GodotApp
 
             return _shelterAcousticDirector;
         }
-
-        public void SetupShelterAcoustics() => EnsureShelterAcoustics();
-
     }
 }

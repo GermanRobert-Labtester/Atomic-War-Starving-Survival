@@ -78,7 +78,6 @@ namespace AtomicWar.GodotApp
         {
             if (_sleepAcousticRest == null) return;
             var state = _sleepAcousticRest.Ledger.CaptureState();
-            SleepAcousticRestSaveStore.TrySave(state);
             if (CaptureSection(
                     SleepAcousticRestSaveStore.SectionName,
                     SleepAcousticRestSaveStore.TryCapturePersisted(state)))

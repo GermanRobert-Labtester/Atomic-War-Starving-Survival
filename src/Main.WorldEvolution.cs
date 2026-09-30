@@ -39,7 +39,6 @@ namespace AtomicWar.GodotApp
         {
             if (_worldEvolution == null) return;
             var state = _worldEvolution.CaptureState();
-            WorldEvolutionSaveStore.TrySave(state);
             if (CaptureSection("world_evolution", WorldEvolutionSaveStore.TryCapturePersisted(state)))
             {
                 _worldEvolutionDirty = false;

@@ -115,10 +115,9 @@ namespace AtomicWar.GodotApp
             }
 
             InternalCommunicationState state = _internalCommunication.CaptureState();
-            bool savedToFile = InternalCommunicationSaveStore.TrySave(state);
             string payload = InternalCommunicationSaveStore.TryCapturePersisted(state);
             bool captured = CaptureSection(InternalCommunicationSaveStore.SectionName, payload);
-            if (savedToFile && captured)
+            if (captured)
             {
                 _internalCommunicationDirty = false;
                 GD.Print("[InternalCommunication] Section captured.");

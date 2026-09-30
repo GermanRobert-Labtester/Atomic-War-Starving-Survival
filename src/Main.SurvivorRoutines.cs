@@ -81,7 +81,6 @@ namespace AtomicWar.GodotApp
         {
             if (_survivorRoutines == null) return;
             var state = _survivorRoutines.CaptureState();
-            SurvivorRoutineSaveStore.TrySave(state);
             if (CaptureSection(SurvivorRoutineSaveStore.SectionName,
                 SurvivorRoutineSaveStore.TryCapturePersisted(state)))
             {

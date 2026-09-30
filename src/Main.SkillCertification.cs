@@ -57,7 +57,6 @@ namespace AtomicWar.GodotApp
             if (_skillCertifications == null) return;
 
             var state = _skillCertifications.CaptureState();
-            SkillCertificationSaveStore.TrySave(state);
             string? payload = SkillCertificationSaveStore.TryCapturePersisted(state);
             if (!string.IsNullOrEmpty(payload))
             {

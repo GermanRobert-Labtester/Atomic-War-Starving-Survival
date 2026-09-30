@@ -112,14 +112,13 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
-        public void FlushEndgameIfDirty_IsCalledFromProcessFlushList()
+        public void ProcessLoop_DoesNotRunPerFrameFlushes()
         {
-            // Audit #29 — endgame dirty flush must remain in the live _Process set.
+            // Save* only stages into the SaveAll transaction buffer, which SaveAll
+            // clears and recaptures. A per-frame Flush*IfDirty therefore
+            // serializes payloads nobody reads; durability comes from SaveAll.
             string app = File.ReadAllText(Path.Combine(RepoRoot(), "src", "Main.Application.cs"));
-            Assert.Contains("FlushEndgameIfDirty()", app);
-            Assert.Matches(
-                new Regex(@"FlushMoralChoiceIfDirty\(\);\s*FlushEndgameIfDirty\(\);", RegexOptions.Singleline),
-                app);
+            Assert.DoesNotMatch(new Regex(@"\bFlush[A-Za-z0-9]+IfDirty\s*\("), app);
         }
 
         [Fact]
@@ -129,15 +128,6 @@ namespace Ashfall.Core.Tests
             Assert.Contains("SaveMoralChoice()", orch);
             Assert.Contains("SaveShelterFire()", orch);
             Assert.Contains("SaveCollectibles()", orch);
-        }
-
-        [Fact]
-        public void ProcessFlushList_IncludesShelterFire_Collectibles_MoralChoice()
-        {
-            string app = File.ReadAllText(Path.Combine(RepoRoot(), "src", "Main.Application.cs"));
-            Assert.Contains("FlushMoralChoiceIfDirty()", app);
-            Assert.Contains("FlushShelterFireIfDirty()", app);
-            Assert.Contains("FlushCollectiblesIfDirty()", app);
         }
 
         [Fact]
@@ -168,6 +158,68 @@ namespace Ashfall.Core.Tests
             Assert.True(missing.Count == 0,
                 "SaveSectionRegistry triad/orchestration drift:\n  "
                 + string.Join("\n  ", missing.OrderBy(x => x, StringComparer.Ordinal)));
+        }
+
+        /// <summary>
+        /// Sections whose state is restored by a different setup than the
+        /// registry's nominal SetupMethod.
+        /// </summary>
+        private static readonly Dictionary<string, string> RestoredByOtherSetup =
+            new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                // SetupDailyBriefingModal builds the UI node; SetupCampaignDay builds and loads _dailyBriefing.
+                { "daily_briefing", "SetupCampaignDay" },
+            };
+
+        /// <summary>
+        /// Continue resets sessions and rebuilds them in RestoreAllSubsystemsFromDisk,
+        /// and a save generation holds only what SaveAll captures. A section whose
+        /// setup is unreachable from Continue is dropped by the next save, and the
+        /// Continue after that fails closed on the file the first load projected.
+        /// </summary>
+        [Fact]
+        public void SaveSectionRegistry_SetupMethods_AreReachableFromContinue()
+        {
+            // Composition verbs only: Open*/Handle* callbacks registered inside a
+            // setup body do not run during Continue. Manifest RegisterSetupAction
+            // lambdas do, so Register*/Execute* are followed.
+            const string compositionMethod = "(?:Setup|Ensure|Compose|Execute|Register|Restore)[A-Za-z0-9_]*";
+            var methods = ScanMainMethods(compositionMethod);
+            Assert.True(methods.ContainsKey("RestoreAllSubsystemsFromDisk"), "restore root not found; scan rotted?");
+            var reachable = ReachableMethods(methods, "RestoreAllSubsystemsFromDisk", compositionMethod);
+
+            var missing = new List<string>();
+            foreach (var section in SaveSectionRegistry.All)
+            {
+                if (string.IsNullOrWhiteSpace(section.SetupMethod)) continue;
+                string setup = RestoredByOtherSetup.TryGetValue(section.SectionKey, out var other) ? other : section.SetupMethod!;
+                if (!reachable.Contains(setup))
+                    missing.Add($"{section.SectionKey}: {setup} is not reachable from RestoreAllSubsystemsFromDisk");
+            }
+
+            Assert.True(missing.Count == 0,
+                "Continue does not rebuild these saved sections:\n  "
+                + string.Join("\n  ", missing.OrderBy(x => x, StringComparer.Ordinal)));
+        }
+
+        /// <summary>
+        /// Dirty flags gate Flush*, never Save*: SaveAll starts every generation
+        /// empty, so a Save* that skips a clean live system drops its section.
+        /// </summary>
+        [Fact]
+        public void RegistrySaveMethods_DoNotSkipCleanSystems()
+        {
+            var methods = ScanMainMethods();
+            var skipsClean = new Regex(@"!\s*_?[A-Za-z0-9_.]*Dirty\b[^;{}]*\)\s*return\s*;", RegexOptions.Compiled);
+            var findings = SaveSectionRegistry.All
+                .Select(section => section.SaveMethod)
+                .Distinct(StringComparer.Ordinal)
+                .Where(name => methods.TryGetValue(name, out var bodies) && bodies.Any(body => skipsClean.IsMatch(body)))
+                .OrderBy(name => name, StringComparer.Ordinal)
+                .ToList();
+
+            Assert.True(findings.Count == 0,
+                "Save method returns early on a clean dirty flag:\n  " + string.Join("\n  ", findings));
         }
 
         [Fact]
@@ -242,7 +294,9 @@ namespace Ashfall.Core.Tests
             return (setup, save, flush);
         }
 
-        private static Dictionary<string, List<string>> ScanMainMethods()
+        private const string TriadMethodName = "(?:Setup|Save|Flush|Persist)[A-Za-z0-9_]+";
+
+        private static Dictionary<string, List<string>> ScanMainMethods(string namePattern = TriadMethodName)
         {
             string sourceRoot = Path.Combine(RepoRoot(), "src");
             string source = string.Join("\n", Directory.GetFiles(sourceRoot, "Main*.cs")
@@ -250,7 +304,7 @@ namespace Ashfall.Core.Tests
                 .Select(File.ReadAllText));
             var methods = new Dictionary<string, List<string>>(StringComparer.Ordinal);
             var header = new Regex(
-                @"(?m)^\s*(?:private|public|internal|protected)\s+(?:(?:static|async|sealed|override|virtual|new)\s+)*[^\r\n\{;]+?\s+(?<name>(?:Setup|Save|Flush|Persist)[A-Za-z0-9_]+)\s*\([^;{}]*\)\s*\{",
+                @"(?m)^\s*(?:private|public|internal|protected)\s+(?:(?:static|async|sealed|override|virtual|new)\s+)*[^\r\n\{;]+?\s+(?<name>" + namePattern + @")\s*\([^;{}]*\)\s*\{",
                 RegexOptions.Compiled);
 
             foreach (Match match in header.Matches(source))
@@ -266,7 +320,7 @@ namespace Ashfall.Core.Tests
             }
 
             var expression = new Regex(
-                @"(?m)^\s*(?:private|public|internal|protected)\s+(?:(?:static|async|sealed|override|virtual|new)\s+)*[^\r\n\{;]+?\s+(?<name>(?:Setup|Save|Flush|Persist)[A-Za-z0-9_]+)\s*\([^;{}]*\)\s*=>\s*(?<body>[^;]+);",
+                @"(?m)^\s*(?:private|public|internal|protected)\s+(?:(?:static|async|sealed|override|virtual|new)\s+)*[^\r\n\{;]+?\s+(?<name>" + namePattern + @")\s*\([^;{}]*\)\s*=>\s*(?<body>[^;]+);",
                 RegexOptions.Compiled);
             foreach (Match match in expression.Matches(source))
             {
@@ -280,12 +334,13 @@ namespace Ashfall.Core.Tests
             return methods;
         }
 
-        private static HashSet<string> ReachableMethods(Dictionary<string, List<string>> methods, string root)
+        private static HashSet<string> ReachableMethods(
+            Dictionary<string, List<string>> methods, string root, string callPattern = "(?:Save|Persist)[A-Za-z0-9_]+")
         {
             var reachable = new HashSet<string>(StringComparer.Ordinal);
             var pending = new Queue<string>();
             pending.Enqueue(root);
-            var call = new Regex(@"\b(?<name>(?:Save|Persist)[A-Za-z0-9_]+)\s*\(", RegexOptions.Compiled);
+            var call = new Regex(@"\b(?<name>" + callPattern + @")\s*\(", RegexOptions.Compiled);
 
             while (pending.Count > 0)
             {

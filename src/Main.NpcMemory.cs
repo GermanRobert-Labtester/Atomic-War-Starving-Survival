@@ -33,7 +33,6 @@ namespace AtomicWar.GodotApp
         {
             if (_npcMemory == null) return;
             var state = _npcMemory.CaptureState();
-            NpcMemorySaveStore.TrySave(state);
             if (CaptureSection("npc_memory", NpcMemorySaveStore.TryCapturePersisted(state)))
             {
                 _npcMemoryDirty = false;

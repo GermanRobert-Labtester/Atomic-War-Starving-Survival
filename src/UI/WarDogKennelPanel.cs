@@ -85,23 +85,23 @@ namespace AtomicWar.GodotApp.UI
             consoleBox.AddThemeConstantOverride("separation", 12);
             root.AddChild(consoleBox);
 
-            _deployButton = new Button { Text = "[DEPLOY SCOUT DOG]" };
+            _deployButton = new Button { Text = "[DEPLOY SCOUT DOG]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _deployButton.Pressed += () => ShowFeedback("K-02 'Echo' deployed on surface perimeter scout patrol.");
             consoleBox.AddChild(_deployButton);
 
-            _radBathButton = new Button { Text = "[RAD-CLEANSE VET BATH]" };
+            _radBathButton = new Button { Text = "[RAD-CLEANSE VET BATH]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _radBathButton.Pressed += () => ShowFeedback("Chelating de-dusting wash cycle completed for active kennel cohort.");
             consoleBox.AddChild(_radBathButton);
 
-            _rationsButton = new Button { Text = "[DISPENSE FORTIFIED MEAT]" };
+            _rationsButton = new Button { Text = "[DISPENSE FORTIFIED MEAT]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _rationsButton.Pressed += () => ShowFeedback("6 high-protein fortified meat rations dispensed to kennel pens.");
             consoleBox.AddChild(_rationsButton);
 
-            _drillButton = new Button { Text = "[INITIATE AGGRESSION DRILL]" };
+            _drillButton = new Button { Text = "[INITIATE AGGRESSION DRILL]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _drillButton.Pressed += () => ShowFeedback("Bite sleeve aggression drill completed. Combat readiness +15%.");
             consoleBox.AddChild(_drillButton);
 
-            _closeButton = new Button { Text = "[CLOSE PANEL]" };
+            _closeButton = new Button { Text = "[CLOSE PANEL]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _closeButton.Pressed += () => { Visible = false; OnClose?.Invoke(); };
             consoleBox.AddChild(_closeButton);
 

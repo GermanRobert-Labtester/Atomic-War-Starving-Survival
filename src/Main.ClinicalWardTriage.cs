@@ -97,7 +97,6 @@ namespace AtomicWar.GodotApp
         {
             if (_clinicalWardTriage == null) return;
             var state = _clinicalWardTriage.Ledger.CaptureState();
-            ClinicalWardTriageSaveStore.TrySave(state);
             if (CaptureSection(ClinicalWardTriageSaveStore.SectionName, ClinicalWardTriageSaveStore.TryCapturePersisted(state)))
                 _clinicalWardTriageDirty = false;
         }

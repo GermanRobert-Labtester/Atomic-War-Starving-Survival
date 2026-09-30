@@ -130,7 +130,8 @@ public partial class WeatherForecastPanel : Control
                             Text = preflight.CanDeploy
                                 ? $"DEPLOY CLOUD SEEDING ({preflight.SuccessChance:P0} success chance)"
                                 : $"CLOUD SEEDING BLOCKED: {preflight.Reason}",
-                            Disabled = !preflight.CanDeploy
+                            Disabled = !preflight.CanDeploy,
+                            CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight)
                         };
                         seedBtn.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);
                         if (preflight.CanDeploy)
@@ -151,7 +152,8 @@ public partial class WeatherForecastPanel : Control
                 {
                     var installBtn = new Button
                     {
-                        Text = "INSTALL CLOUD SEEDING DISPENSER"
+                        Text = "INSTALL CLOUD SEEDING DISPENSER",
+                        CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight)
                     };
                     installBtn.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);
                     installBtn.Pressed += () =>

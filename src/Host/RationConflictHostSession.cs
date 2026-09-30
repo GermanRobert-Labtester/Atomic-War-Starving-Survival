@@ -15,7 +15,6 @@ using Ashfall.Core;
 using Ashfall.Core.Economy;
 using Ashfall.Core.Save;
 using Ashfall.Core.Survivors;
-using Ashfall.Core.Survivors;
 
 namespace AtomicWar.GodotApp
 {

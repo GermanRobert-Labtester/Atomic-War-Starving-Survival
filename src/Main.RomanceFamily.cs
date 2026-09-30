@@ -53,7 +53,6 @@ namespace AtomicWar.GodotApp
         {
             if (_romanceFamily == null) return;
             var state = _romanceFamily.CapturePersistedState();
-            RomanceFamilySaveStore.TrySave(state);
             if (CaptureSection("romance_family", RomanceFamilySaveStore.TryCapturePersisted(state)))
             {
                 _romanceFamilyDirty = false;

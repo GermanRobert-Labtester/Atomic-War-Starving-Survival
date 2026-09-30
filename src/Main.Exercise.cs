@@ -70,7 +70,6 @@ namespace AtomicWar.GodotApp
         {
             if (_exercise == null) return;
             var state = _exercise.System.CaptureState();
-            ExerciseSaveStore.TrySave(state);
             if (CaptureSection(
                     ExerciseSaveStore.SectionName,
                     ExerciseSaveStore.TryCapturePersisted(state)))

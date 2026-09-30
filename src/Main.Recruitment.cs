@@ -61,7 +61,6 @@ namespace AtomicWar.GodotApp
         {
             if (_recruitment == null) return;
             var state = _recruitment.CaptureState();
-            RecruitmentSaveStore.TrySave(state);
             if (CaptureSection(
                     RecruitmentSaveStore.SectionName,
                     RecruitmentSaveStore.TryCapturePersisted(state)))

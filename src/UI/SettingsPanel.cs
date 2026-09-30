@@ -290,7 +290,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 _working.MuteAll = !_working.MuteAll;
                 _btnMute.Text = _working.MuteAll ? "ALL AUDIO: MUTED" : "ALL AUDIO: ACTIVE";
-                UserSettingsStore.Apply(_working);
+                UserSettingsStore.PreviewAudio(_working);
             });
             _btnMute.CustomMinimumSize = new Vector2(200, 32);
             contentVBox.AddChild(_btnMute);
@@ -535,7 +535,7 @@ namespace AtomicWar.GodotApp.UI
                 float newVal = Math.Clamp(getter() - 0.1f, 0f, 1f);
                 setter(newVal);
                 valLbl.Text = $"{(int)(newVal * 100)}%";
-                UserSettingsStore.Apply(_working);
+                UserSettingsStore.PreviewAudio(_working);
             });
             minusBtn.CustomMinimumSize = new Vector2(32, 28);
             row.AddChild(minusBtn);
@@ -547,7 +547,7 @@ namespace AtomicWar.GodotApp.UI
                 float newVal = Math.Clamp(getter() + 0.1f, 0f, 1f);
                 setter(newVal);
                 valLbl.Text = $"{(int)(newVal * 100)}%";
-                UserSettingsStore.Apply(_working);
+                UserSettingsStore.PreviewAudio(_working);
             });
             plusBtn.CustomMinimumSize = new Vector2(32, 28);
             row.AddChild(plusBtn);

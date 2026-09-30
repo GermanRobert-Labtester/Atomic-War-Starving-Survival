@@ -77,17 +77,17 @@ namespace AtomicWar.GodotApp.UI
             _shell.SetContent(_contentStack);
             _actionButtons = new HBoxContainer { };
             _actionButtons.AddThemeConstantOverride("separation", 12);
-            _btnInterrogate = new Button { Text = "INTERROGATE (FIRST TACTIC)" };
+            _btnInterrogate = new Button { Text = "INTERROGATE (FIRST TACTIC)", CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
             _btnInterrogate.TooltipText = "Uses the first listed interrogation tactic on the first detained captive. Costs come from the catalog.";
             _btnInterrogate.Pressed += () => OnActionRequested?.Invoke("interrogate", FirstDetainedId());
             _actionButtons.AddChild(_btnInterrogate);
 
-            _btnRecruit = new Button { Text = "RECRUIT (WHEN ELIGIBLE)" };
+            _btnRecruit = new Button { Text = "RECRUIT (WHEN ELIGIBLE)", CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
             _btnRecruit.TooltipText = "Recruitment requires trust, time and no severe abuse history — not just compliance.";
             _btnRecruit.Pressed += () => OnActionRequested?.Invoke("recruit", FirstDetainedId());
             _actionButtons.AddChild(_btnRecruit);
 
-            _btnRelease = new Button { Text = "RELEASE" };
+            _btnRelease = new Button { Text = "RELEASE", CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
             _btnRelease.TooltipText = "Frees the captive and removes the detention burden.";
             _btnRelease.Pressed += () => OnActionRequested?.Invoke("release", FirstDetainedId());
             _actionButtons.AddChild(_btnRelease);

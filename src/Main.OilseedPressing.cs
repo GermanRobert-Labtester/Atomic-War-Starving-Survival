@@ -25,7 +25,6 @@ namespace AtomicWar.GodotApp
         {
             if (_oilseedPressing == null) return;
             var state = _oilseedPressing.CaptureState();
-            OilseedPressingSaveStore.TrySave(state);
             if (CaptureSection("oilseed_pressing", OilseedPressingSaveStore.TryCapturePersisted(state)))
             {
                 _oilseedPressingDirty = false;

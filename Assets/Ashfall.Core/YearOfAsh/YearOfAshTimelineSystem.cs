@@ -8,7 +8,8 @@ namespace Ashfall.Core.YearOfAsh
     {
         Phase4_DeepFreeze = 0,    // Days 180 - 240: -35C, ash cloud peak, frozen intake
         Phase5_FactionSiege = 1,  // Days 241 - 300: Artillery barrages, Continuity Decree
-        Phase6_TheGreatThaw = 2   // Days 301 - 360: Black mud runoff, radon gas, final broadcasts
+        Phase6_TheGreatThaw = 2,  // Days 301 - 360: Black mud runoff, radon gas, final broadcasts
+        Phase7_TheLongThaw = 3    // Days 361 - 720: Year Two extended climate cycle
     }
 
     [Serializable]
@@ -24,6 +25,8 @@ namespace Ashfall.Core.YearOfAsh
         public int artilleryBarragesExperienced = 0;
         public bool continuityDecreeActive = false;
         public bool finalBroadcastsActive = false;
+        public string activeClimatePhaseId = "";
+        public int yearTwoQuarter = 0;
     }
 
     /// <summary>
@@ -34,9 +37,12 @@ namespace Ashfall.Core.YearOfAsh
     public class YearOfAshTimelineSystem
     {
         public const int StartDay = 180;
-        public const int EndDay = 360;
+        public const int LegacyEndDay = 360;
+        public const int YearTwoEndDay = 720;
+        public const int EndDay = LegacyEndDay;
 
         private readonly YearOfAshTimelineState _state;
+        private YearTwoClimateCatalog? _yearTwoCatalog;
 
         public YearOfAshTimelineState State => _state;
         public int CurrentDay => _state.currentDay;
@@ -47,6 +53,10 @@ namespace Ashfall.Core.YearOfAsh
         public float ThermalStressLevel => _state.thermalStressLevel;
         public bool ContinuityDecreeActive => _state.continuityDecreeActive;
         public bool FinalBroadcastsActive => _state.finalBroadcastsActive;
+        public string ActiveClimatePhaseId => _state.activeClimatePhaseId;
+        public int YearTwoQuarter => _state.yearTwoQuarter;
+        public YearTwoClimateCatalog? YearTwoCatalog => _yearTwoCatalog;
+        public int EffectiveEndDay => (_yearTwoCatalog != null && _yearTwoCatalog.IsValid) ? YearTwoEndDay : EndDay;
 
         public event Action<YearOfAshPhase> OnPhaseTransitioned;
         public event Action<int, string> OnEnvironmentalCrisisTriggered;
@@ -58,10 +68,17 @@ namespace Ashfall.Core.YearOfAsh
             RecalculateEnvironmentalParameters();
         }
 
+        public void BindYearTwoClimateCatalog(YearTwoClimateCatalog? catalog)
+        {
+            _yearTwoCatalog = catalog;
+            RecalculateEnvironmentalParameters();
+        }
+
         public void AdvanceDay(int day)
         {
             if (day < StartDay) day = StartDay;
-            if (day > EndDay) day = EndDay;
+            int maxDay = EffectiveEndDay;
+            if (day > maxDay) day = maxDay;
             if (day <= _state.currentDay) return;
 
             int previousDay = _state.currentDay;
@@ -101,6 +118,24 @@ namespace Ashfall.Core.YearOfAsh
             int d = _state.currentDay;
             _state.phase = PhaseForDay(d);
 
+            if (d > EndDay && _yearTwoCatalog != null && _yearTwoCatalog.IsValid)
+            {
+                if (_yearTwoCatalog.TryGetPhaseForDay(d, out var quarterPhase) && quarterPhase != null)
+                {
+                    _state.activeClimatePhaseId = quarterPhase.phase_id;
+                    _state.yearTwoQuarter = quarterPhase.quarter;
+                    var evaluation = _yearTwoCatalog.EvaluateDay(d);
+                    _state.ambientTemperatureCelsius = evaluation.TemperatureCelsius;
+                    _state.ashCloudOpacity = evaluation.AshCloudOpacity;
+                    _state.radonInfiltrationRate = evaluation.RadonInfiltrationRate;
+                    _state.thermalStressLevel = evaluation.ThermalStressLevel;
+                    return;
+                }
+            }
+
+            _state.activeClimatePhaseId = "";
+            _state.yearTwoQuarter = 0;
+
             if (_state.phase == YearOfAshPhase.Phase4_DeepFreeze)
             {
                 // Days 180 -> 240: Drops from -25C to -45C at day 210, then rises to -30C
@@ -119,13 +154,20 @@ namespace Ashfall.Core.YearOfAsh
                 _state.radonInfiltrationRate = 0.15f + (0.10f * t);
                 _state.thermalStressLevel = 0.50f - (0.20f * t);
             }
-            else // Phase6_TheGreatThaw
+            else if (_state.phase == YearOfAshPhase.Phase6_TheGreatThaw)
             {
                 // Days 301 -> 360: Ambient temp rises from -10C to +4C; ash clears, radon spikes due to melting permafrost
-                float t = (d - 300) / 60.0f;
+                float t = (Math.Min(d, EndDay) - 300) / 60.0f;
                 _state.ambientTemperatureCelsius = -10.0f + (14.0f * t);
                 _state.ashCloudOpacity = 0.75f - (0.45f * t);
                 _state.radonInfiltrationRate = 0.25f + (0.50f * t);
+                _state.thermalStressLevel = 0.20f;
+            }
+            else // Phase7_TheLongThaw without valid catalog
+            {
+                _state.ambientTemperatureCelsius = 4.0f;
+                _state.ashCloudOpacity = 0.30f;
+                _state.radonInfiltrationRate = 0.75f;
                 _state.thermalStressLevel = 0.20f;
             }
         }
@@ -153,7 +195,9 @@ namespace Ashfall.Core.YearOfAsh
                 blackBlizzardsExperienced = _state.blackBlizzardsExperienced,
                 artilleryBarragesExperienced = _state.artilleryBarragesExperienced,
                 continuityDecreeActive = _state.continuityDecreeActive,
-                finalBroadcastsActive = _state.finalBroadcastsActive
+                finalBroadcastsActive = _state.finalBroadcastsActive,
+                activeClimatePhaseId = _state.activeClimatePhaseId,
+                yearTwoQuarter = _state.yearTwoQuarter
             };
         }
 
@@ -167,7 +211,8 @@ namespace Ashfall.Core.YearOfAsh
         public void RestoreState(YearOfAshTimelineState state)
         {
             if (state == null) return;
-            _state.currentDay = Math.Max(StartDay, Math.Min(EndDay, state.currentDay));
+            int maxDay = EffectiveEndDay;
+            _state.currentDay = Math.Max(StartDay, Math.Min(maxDay, state.currentDay));
             _state.phase = PhaseForDay(_state.currentDay);
             _state.ambientTemperatureCelsius = state.ambientTemperatureCelsius;
             _state.ashCloudOpacity = state.ashCloudOpacity;
@@ -177,14 +222,17 @@ namespace Ashfall.Core.YearOfAsh
             _state.artilleryBarragesExperienced = state.artilleryBarragesExperienced;
             _state.continuityDecreeActive = state.continuityDecreeActive;
             _state.finalBroadcastsActive = state.finalBroadcastsActive;
+            _state.activeClimatePhaseId = state.activeClimatePhaseId ?? "";
+            _state.yearTwoQuarter = state.yearTwoQuarter;
             RecalculateEnvironmentalParameters();
         }
 
-        private static YearOfAshPhase PhaseForDay(int day)
+        public static YearOfAshPhase PhaseForDay(int day)
         {
             if (day <= 240) return YearOfAshPhase.Phase4_DeepFreeze;
             if (day <= 300) return YearOfAshPhase.Phase5_FactionSiege;
-            return YearOfAshPhase.Phase6_TheGreatThaw;
+            if (day <= 360) return YearOfAshPhase.Phase6_TheGreatThaw;
+            return YearOfAshPhase.Phase7_TheLongThaw;
         }
     }
 }

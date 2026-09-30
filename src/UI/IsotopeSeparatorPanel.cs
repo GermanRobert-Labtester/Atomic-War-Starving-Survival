@@ -85,23 +85,23 @@ namespace AtomicWar.GodotApp.UI
             consoleBox.AddThemeConstantOverride("separation", 12);
             root.AddChild(consoleBox);
 
-            _strikeBeamButton = new Button { Text = "[STRIKE ION BEAM ARC]" };
+            _strikeBeamButton = new Button { Text = "[STRIKE ION BEAM ARC]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _strikeBeamButton.Pressed += () => ShowFeedback("Uranium tetrachloride vaporized. Ion source arc struck at 45.2 kV.");
             consoleBox.AddChild(_strikeBeamButton);
 
-            _rampFieldButton = new Button { Text = "[RAMP 1.8T MAGNETIC FIELD]" };
+            _rampFieldButton = new Button { Text = "[RAMP 1.8T MAGNETIC FIELD]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _rampFieldButton.Pressed += () => ShowFeedback("Electromagnet coils energized. 180° bending trajectory focused on collectors.");
             consoleBox.AddChild(_rampFieldButton);
 
-            _harvestButton = new Button { Text = "[HARVEST ISOTOPE COLLECTORS]" };
+            _harvestButton = new Button { Text = "[HARVEST ISOTOPE COLLECTORS]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _harvestButton.Pressed += () => ShowFeedback("14.2g enriched U-235 (19.8% LEU) scraped from graphite pocket.");
             consoleBox.AddChild(_harvestButton);
 
-            _dumpBeamButton = new Button { Text = "[EMERGENCY BEAM DUMP]" };
+            _dumpBeamButton = new Button { Text = "[EMERGENCY BEAM DUMP]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _dumpBeamButton.Pressed += () => ShowFeedback("High-voltage crowbar triggered. Beam dumped into water-cooled target.");
             consoleBox.AddChild(_dumpBeamButton);
 
-            _closeButton = new Button { Text = "[CLOSE PANEL]" };
+            _closeButton = new Button { Text = "[CLOSE PANEL]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _closeButton.Pressed += () => { Visible = false; OnClose?.Invoke(); };
             consoleBox.AddChild(_closeButton);
 

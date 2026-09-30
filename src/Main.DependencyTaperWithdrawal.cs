@@ -78,7 +78,6 @@ namespace AtomicWar.GodotApp
         {
             if (_dependencyTaper == null) return;
             var state = _dependencyTaper.CaptureState();
-            DependencyTaperWithdrawalSaveStore.TrySave(state);
             if (CaptureSection(DependencyTaperWithdrawalSaveStore.SectionName, DependencyTaperWithdrawalSaveStore.TryCapturePersisted(state)))
                 _dependencyTaperDirty = false;
         }

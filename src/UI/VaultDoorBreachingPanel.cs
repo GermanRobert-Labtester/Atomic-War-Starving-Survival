@@ -81,10 +81,10 @@ namespace AtomicWar.GodotApp.UI
             var centerPanel = ThreePanePanelScaffold.CreatePanelFrame("HYDRAULIC RAMS & THERMAL LANCE");
             bodyHBox.AddChild(centerPanel);
             _buttonContainer = ThreePanePanelScaffold.CreateColumn(centerPanel, 12);
-            _buttonContainer.AddChild(new Button { Text = "[IGNITE MAGNESIUM THERMAL LANCE]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
-            _buttonContainer.AddChild(new Button { Text = "[PRESSURIZE 500 BAR HYDRAULIC RAMS]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
-            _buttonContainer.AddChild(new Button { Text = "[PULSE ACOUSTIC SHEAR RESONATOR]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
-            _buttonContainer.AddChild(new Button { Text = "[DEPLOY EXPLOSIVE LINEAR SHAPED CHARGE]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
+            _buttonContainer.AddChild(new Button { Text = "[IGNITE MAGNESIUM THERMAL LANCE]", SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) });
+            _buttonContainer.AddChild(new Button { Text = "[PRESSURIZE 500 BAR HYDRAULIC RAMS]", SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) });
+            _buttonContainer.AddChild(new Button { Text = "[PULSE ACOUSTIC SHEAR RESONATOR]", SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) });
+            _buttonContainer.AddChild(new Button { Text = "[DEPLOY EXPLOSIVE LINEAR SHAPED CHARGE]", SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) });
 
             // Right Column (Data & Logistics)
             var rightPanel = ThreePanePanelScaffold.CreatePanelFrame("DOOR INTEGRITY & CONSUMABLES");

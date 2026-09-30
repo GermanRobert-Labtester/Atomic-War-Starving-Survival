@@ -169,7 +169,6 @@ namespace AtomicWar.GodotApp
         {
             if (_clothingWarmth == null) return;
             var state = _clothingWarmth.CaptureState();
-            ClothingWarmthSaveStore.TrySave(state);
             if (CaptureSection(
                     ClothingWarmthSaveStore.SectionName,
                     ClothingWarmthSaveStore.TryCapturePersisted(state)))

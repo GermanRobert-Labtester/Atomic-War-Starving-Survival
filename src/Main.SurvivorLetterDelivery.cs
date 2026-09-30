@@ -53,7 +53,7 @@ namespace AtomicWar.GodotApp
                     null!,
                     _simDay);
             };
-            _survivorLetterDelivery.StateChangedHook = () => _survivorLetterDeliveryDirty = true;
+            session.StateChangedHook = () => _survivorLetterDeliveryDirty = true;
 
             _survivorLetterDelivery = session;
 
@@ -83,14 +83,6 @@ namespace AtomicWar.GodotApp
         private void FlushSurvivorLetterDeliveryIfDirty()
         {
             if (_survivorLetterDeliveryDirty) SaveSurvivorLetterDelivery();
-        }
-
-        private void TickSurvivorLetterDelivery(int day)
-        {
-            var session = EnsureSurvivorLetterDelivery();
-            // No daily mutation: resolution is a deliberate dweller action, not a
-            // clock tick. The day hook only guarantees the session exists so a
-            // save taken before any interaction still records an empty ledger.
         }
 
         private void ResetSurvivorLetterDelivery()

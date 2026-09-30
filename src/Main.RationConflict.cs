@@ -85,7 +85,6 @@ namespace AtomicWar.GodotApp
         {
             if (_rationConflict == null) return;
             var state = _rationConflict.CaptureState();
-            RationConflictSaveStore.TrySave(state);
             if (CaptureSection(RationConflictSaveStore.SectionName, RationConflictSaveStore.TryCapturePersisted(state)))
                 _rationConflictDirty = false;
         }

@@ -132,7 +132,6 @@ namespace AtomicWar.GodotApp
         {
             if (_survivorRoles == null) return;
             var state = _survivorRoles.System.CaptureState();
-            SurvivorRoleSaveStore.TrySave(state);
             if (CaptureSection(
                     SurvivorRoleSaveStore.SectionName,
                     SurvivorRoleSaveStore.TryCapturePersisted(state)))

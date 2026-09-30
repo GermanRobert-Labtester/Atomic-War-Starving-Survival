@@ -177,8 +177,8 @@ namespace AtomicWar.GodotApp.UI
                 AllowLesser = false,
                 CustomMinimumSize = new Vector2(90, 0)
             };
-            var buy = new Button { Text = "BUY" };
-            var sell = new Button { Text = "SELL" };
+            var buy = new Button { Text = "BUY", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
+            var sell = new Button { Text = "SELL", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             controls.AddChild(quantity);
             controls.AddChild(buy);
             controls.AddChild(sell);
@@ -251,7 +251,7 @@ namespace AtomicWar.GodotApp.UI
                 CustomMinimumSize = new Vector2(90, 0),
                 TooltipText = "Loan duration in days."
             };
-            var takeLoan = new Button { Text = "TAKE LOAN" };
+            var takeLoan = new Button { Text = "TAKE LOAN", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             controls.AddChild(amount);
             controls.AddChild(duration);
             controls.AddChild(takeLoan);
@@ -323,7 +323,7 @@ namespace AtomicWar.GodotApp.UI
                     AllowLesser = false,
                     CustomMinimumSize = new Vector2(110, 0)
                 };
-                var repay = new Button { Text = "REPAY" };
+                var repay = new Button { Text = "REPAY", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
                 controls.AddChild(amount);
                 controls.AddChild(repay);
                 row.AddChild(controls);

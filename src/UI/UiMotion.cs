@@ -223,6 +223,26 @@ namespace AtomicWar.GodotApp.UI
         public const float ButtonFocusScale = 1.015f;
 
         /// <summary>
+        /// Attaches <see cref="AttachButtonFx"/> to every <see cref="Button"/>
+        /// under <paramref name="root"/>. Idempotent, so it is safe to call on
+        /// every open. Used to polish lazily-built panels whose buttons are
+        /// created after the one-time setup walk and may bypass
+        /// <c>AshfallUiHelpers.MakeButton</c>.
+        /// </summary>
+        public static void AttachAllButtonFx(Control root)
+        {
+            if (root == null || !GodotObject.IsInstanceValid(root))
+                return;
+            foreach (Node child in root.GetChildren())
+            {
+                if (child is Button fxButton)
+                    AttachButtonFx(fxButton);
+                if (child is Control childControl)
+                    AttachAllButtonFx(childControl);
+            }
+        }
+
+        /// <summary>
         /// Attaches hover/press micro-motion to <paramref name="button"/>
         /// (idempotent). The effect is visual only: scale is transformed around
         /// the button center and returns exactly to 1.0, so layout and hit tests

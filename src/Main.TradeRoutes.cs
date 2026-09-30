@@ -33,7 +33,6 @@ namespace AtomicWar.GodotApp
         {
             if (_tradeRoutes == null) return;
             var state = _tradeRoutes.CaptureState();
-            TradeRouteSaveStore.TrySave(state);
             if (CaptureSection("trade_routes", TradeRouteSaveStore.TryCapturePersisted(state)))
             {
                 _tradeRoutesDirty = false;

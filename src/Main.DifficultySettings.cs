@@ -115,7 +115,6 @@ namespace AtomicWar.GodotApp
         {
             if (_difficultySettings == null) return;
             var state = _difficultySettings.CaptureState();
-            DifficultySettingsSaveStore.TrySave(state);
             if (CaptureSection(DifficultySettingsSaveStore.SectionName, DifficultySettingsSaveStore.TryCapturePersisted(state)))
                 _difficultySettingsDirty = false;
         }

@@ -33,7 +33,6 @@ namespace AtomicWar.GodotApp
         {
             if (_vehicleCustomization == null) return;
             var state = _vehicleCustomization.CapturePersistedState();
-            VehicleCustomizationSaveStore.TrySave(state);
             if (CaptureSection("vehicle_customization", VehicleCustomizationSaveStore.TryCapturePersisted(state)))
             {
                 _vehicleCustomizationDirty = false;

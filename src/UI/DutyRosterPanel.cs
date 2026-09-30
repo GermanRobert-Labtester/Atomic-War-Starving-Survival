@@ -496,8 +496,8 @@ public partial class DutyRosterPanel : Control, IBindablePanel
 
             var confirmRow = new HBoxContainer();
             confirmRow.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
-            var confirm = new Button { Text = "CONFIRM ASSIGN", SizeFlagsHorizontal = SizeFlags.ExpandFill };
-            var cancel = new Button { Text = "CANCEL", SizeFlagsHorizontal = SizeFlags.ExpandFill };
+            var confirm = new Button { Text = "CONFIRM ASSIGN", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight), SizeFlagsHorizontal = SizeFlags.ExpandFill };
+            var cancel = new Button { Text = "CANCEL", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight), SizeFlagsHorizontal = SizeFlags.ExpandFill };
             string pendingRole = _pendingAssignRole;
             string pendingSurvivor = _pendingAssignSurvivorId;
             confirm.Pressed += () => ConfirmPendingAssignment(pendingRole, pendingSurvivor);
@@ -527,6 +527,7 @@ public partial class DutyRosterPanel : Control, IBindablePanel
             var button = new Button
             {
                 Text = "ASSIGN: " + FormatSurvivorName(candidateId),
+                CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight),
                 SizeFlagsHorizontal = SizeFlags.ExpandFill,
             };
             button.Pressed += () => TryAssign(roleId, candidateId);
@@ -538,6 +539,7 @@ public partial class DutyRosterPanel : Control, IBindablePanel
             var vacate = new Button
             {
                 Text = "VACATE SHIFT",
+                CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight),
                 SizeFlagsHorizontal = SizeFlags.ExpandFill,
             };
             string role = roleId;

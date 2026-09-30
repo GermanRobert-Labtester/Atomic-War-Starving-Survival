@@ -99,7 +99,6 @@ namespace AtomicWar.GodotApp
         {
             if (_letters == null) return;
             var state = _letters.CaptureState();
-            LetterDeliverySaveStore.TrySave(state);
             if (CaptureSection(LetterDeliverySaveStore.SectionName, LetterDeliverySaveStore.TryCapturePersisted(state)))
                 _lettersDirty = false;
         }

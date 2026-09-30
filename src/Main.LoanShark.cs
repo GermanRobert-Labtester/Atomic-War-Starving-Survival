@@ -23,7 +23,6 @@ namespace AtomicWar.GodotApp
         {
             if (_loanShark == null) return;
             var state = _loanShark.CaptureState();
-            LoanSharkSaveStore.TrySave(state);
             if (CaptureSection("loan_shark", LoanSharkSaveStore.TryCapturePersisted(state)))
             {
                 _loanSharkDirty = false;

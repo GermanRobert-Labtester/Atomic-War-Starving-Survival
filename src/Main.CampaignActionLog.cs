@@ -67,7 +67,6 @@ namespace AtomicWar.GodotApp
         {
             if (_actionLog == null) return;
             var state = _actionLog.CaptureState();
-            CampaignActionLogSaveStore.TrySave(state);
             if (CaptureSection(CampaignActionLogSaveStore.SectionName, CampaignActionLogSaveStore.TryCapturePersisted(state)))
                 _actionLogDirty = false;
         }

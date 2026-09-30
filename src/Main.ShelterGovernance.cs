@@ -48,7 +48,6 @@ namespace AtomicWar.GodotApp
         {
             if (_shelterGovernance == null) return;
             var state = _shelterGovernance.CaptureState();
-            ShelterGovernanceSaveStore.TrySave(state);
             if (CaptureSection("shelter_governance", ShelterGovernanceSaveStore.TryCapturePersisted(state)))
             {
                 _shelterGovernanceDirty = false;

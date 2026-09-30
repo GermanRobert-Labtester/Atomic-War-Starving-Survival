@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "title": "Storyline Chapter Profiles & Branch Ending Modifiers Catalog",
+  "profiles": [
+    {
+      "profile_id": "profile_base_v1",
+      "family": "legacy",
+      "display_name": "Base Holdfast (Legacy)",
+      "description": "Standard Year One survival progression with historical Reckoning timing and context-driven ending evaluation.",
+      "knowing_day": 160,
+      "culpable_day": 210,
+      "counted_day": 240,
+      "reading_day": 360,
+      "reckoning_offset": 0,
+      "year_one_ending_source": "legacy_context",
+      "close_rule": "fixed_day",
+      "settle_window_days": 0,
+      "floor_day": 360,
+      "ceiling_day": 360,
+      "waive_evidence_gate_after_day": -1,
+      "default_standing_modifier": "standing_base_neutral"
+    },
+    {
+      "profile_id": "profile_military",
+      "family": "military",
+      "display_name": "Military Command (Sector Garrison)",
+      "description": "Early military-driven Reckoning pace with active military faction branch resolution as the primary Year One ending authority.",
+      "knowing_day": 145,
+      "culpable_day": 195,
+      "counted_day": 225,
+      "reading_day": 360,
+      "reckoning_offset": -15,
+      "year_one_ending_source": "faction_branch",
+      "close_rule": "ending_resolved",
+      "settle_window_days": 10,
+      "floor_day": 260,
+      "ceiling_day": 360,
+      "waive_evidence_gate_after_day": -1,
+      "default_standing_modifier": "modifier_military_command"
+    },
+    {
+      "profile_id": "profile_rebel",
+      "family": "rebel",
+      "display_name": "Insurgency Autonomy (Rebel Freeholds)",
+      "description": "Deferred rebel freehold cadence with autonomous network governance and insurgent branch resolution.",
+      "knowing_day": 170,
+      "culpable_day": 220,
+      "counted_day": 250,
+      "reading_day": 360,
+      "reckoning_offset": 10,
+      "year_one_ending_source": "faction_branch",
+      "close_rule": "ending_resolved",
+      "settle_window_days": 10,
+      "floor_day": 280,
+      "ceiling_day": 360,
+      "waive_evidence_gate_after_day": -1,
+      "default_standing_modifier": "modifier_rebel_autonomy"
+    },
+    {
+      "profile_id": "profile_independent",
+      "family": "independent",
+      "display_name": "Free Trade League (Independent Syndicates)",
+      "description": "Independent syndicate coalition timeline with syndicate branch resolution and free-trade terms.",
+      "knowing_day": 160,
+      "culpable_day": 210,
+      "counted_day": 240,
+      "reading_day": 360,
+      "reckoning_offset": 0,
+      "year_one_ending_source": "faction_branch",
+      "close_rule": "ending_resolved",
+      "settle_window_days": 10,
+      "floor_day": 260,
+      "ceiling_day": 360,
+      "waive_evidence_gate_after_day": -1,
+      "default_standing_modifier": "modifier_independent_trade"
+    },
+    {
+      "profile_id": "profile_muster",
+      "family": "muster",
+      "display_name": "Frontier Expedition (Muster Corps)",
+      "description": "Outward expansion timeline with frontier muster approach ending resolution and survey authority.",
+      "knowing_day": 180,
+      "culpable_day": 240,
+      "counted_day": 270,
+      "reading_day": 360,
+      "reckoning_offset": 30,
+      "year_one_ending_source": "muster_approach",
+      "close_rule": "fixed_day",
+      "settle_window_days": 0,
+      "floor_day": 360,
+      "ceiling_day": 360,
+      "waive_evidence_gate_after_day": -1,
+      "default_standing_modifier": "modifier_frontier_muster"
+    },
+    {
+      "profile_id": "profile_standing_d",
+      "family": "unresolved",
+      "display_name": "Unresolved Verdict (The Late Call)",
+      "description": "Campaign reaching Day 360 with the machine census uncounted. Extends the Reckoning Call into Year Two and resolves into Standing D.",
+      "knowing_day": 160,
+      "culpable_day": 210,
+      "counted_day": 390,
+      "reading_day": 360,
+      "reckoning_offset": 0,
+      "year_one_ending_source": "verdict_late_call",
+      "close_rule": "fixed_day",
+      "settle_window_days": 0,
+      "floor_day": 360,
+      "ceiling_day": 360,
+      "waive_evidence_gate_after_day": 380,
+      "default_standing_modifier": "modifier_standing_d_late_call"
+    }
+  ],
+  "standing_modifiers": {
+    "standing_base_neutral": {
+      "modifier_id": "standing_base_neutral",
+      "display_name": "Standard Holdfast Standing",
+      "description": "Derived from core Verdict balance and historical shelter survival ledger.",
+      "weight": 0
+    },
+    "modifier_military_command": {
+      "modifier_id": "modifier_military_command",
+      "display_name": "Military Command Authority",
+      "description": "Standing shaped by martial discipline and Regional Garrison chain of command.",
+      "weight": 2
+    },
+    "modifier_rebel_autonomy": {
+      "modifier_id": "modifier_rebel_autonomy",
+      "display_name": "Insurgent Freehold Autonomy",
+      "description": "Standing shaped by grassroots communal solidarity and defense of local communes.",
+      "weight": -1
+    },
+    "modifier_independent_trade": {
+      "modifier_id": "modifier_independent_trade",
+      "display_name": "Syndicate Free Trade Accord",
+      "description": "Standing shaped by pragmatic barter, neutrality, and merchant guild cooperation.",
+      "weight": 1
+    },
+    "modifier_frontier_muster": {
+      "modifier_id": "modifier_frontier_muster",
+      "display_name": "Frontier Muster Commission",
+      "description": "Standing shaped by exploratory sorties and deep wasteland waystation logistics.",
+      "weight": 3
+    },
+    "modifier_standing_d_late_call": {
+      "modifier_id": "modifier_standing_d_late_call",
+      "display_name": "The Late Call (Deferred Census)",
+      "description": "Standing suspended awaiting resolution of the delayed provincial census call.",
+      "weight": 0
+    }
+  },
+  "branch_ending_modifiers": {
+    "ending_mil_1a_benevolent_dictator": "modifier_military_command",
+    "ending_mil_1b_iron_fist": "modifier_military_command",
+    "ending_mil_1c_survivor_king": "modifier_military_command",
+    "ending_mil_4a_saint_of_wasteland": "modifier_military_command",
+    "ending_reb_1a_peoples_champion": "modifier_rebel_autonomy",
+    "ending_reb_1b_anarchist_warlord": "modifier_rebel_autonomy",
+    "ending_ind_1a_barter_baron": "modifier_independent_trade"
+  }
+}

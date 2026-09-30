@@ -81,23 +81,23 @@ namespace AtomicWar.GodotApp.UI
             consoleBox.AddThemeConstantOverride("separation", 12);
             root.AddChild(consoleBox);
 
-            _strikeTorchButton = new Button { Text = "[STRIKE PLASMA TORCH]" };
+            _strikeTorchButton = new Button { Text = "[STRIKE PLASMA TORCH]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _strikeTorchButton.Pressed += () => ShowFeedback("Plasma arc struck at 3,500°C. Tungsten scrap melting initiated.");
             consoleBox.AddChild(_strikeTorchButton);
 
-            _pourCrucibleButton = new Button { Text = "[TILT CRUCIBLE FOR POUR]" };
+            _pourCrucibleButton = new Button { Text = "[TILT CRUCIBLE FOR POUR]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _pourCrucibleButton.Pressed += () => ShowFeedback("Hydraulic tilt engaged. 45kg high-purity alloy cast into ingots.");
             consoleBox.AddChild(_pourCrucibleButton);
 
-            _argonGasButton = new Button { Text = "[INJECT ARGON SHIELD]" };
+            _argonGasButton = new Button { Text = "[INJECT ARGON SHIELD]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _argonGasButton.Pressed += () => ShowFeedback("Argon cover gas flow increased to prevent atmospheric oxidation.");
             consoleBox.AddChild(_argonGasButton);
 
-            _dumpCrucibleButton = new Button { Text = "[EMERGENCY CRUCIBLE DUMP]" };
+            _dumpCrucibleButton = new Button { Text = "[EMERGENCY CRUCIBLE DUMP]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _dumpCrucibleButton.Pressed += () => ShowFeedback("Crucible dump valve triggered. Molten charge expelled into refractory sand pit.");
             consoleBox.AddChild(_dumpCrucibleButton);
 
-            _closeButton = new Button { Text = "[CLOSE PANEL]" };
+            _closeButton = new Button { Text = "[CLOSE PANEL]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _closeButton.Pressed += () => { Visible = false; OnClose?.Invoke(); };
             consoleBox.AddChild(_closeButton);
 

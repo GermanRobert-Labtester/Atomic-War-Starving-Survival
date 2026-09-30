@@ -125,7 +125,6 @@ namespace AtomicWar.GodotApp
         {
             if (_railTrackMaintenance == null) return;
             var state = _railTrackMaintenance.CaptureState();
-            RailTrackMaintenanceSaveStore.TrySave(state);
             if (CaptureSection(RailTrackMaintenanceSaveStore.SectionName, RailTrackMaintenanceSaveStore.TryCapturePersisted(state)))
                 _railTrackMaintenanceDirty = false;
         }

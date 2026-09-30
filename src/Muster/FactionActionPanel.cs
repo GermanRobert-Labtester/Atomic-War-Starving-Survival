@@ -131,6 +131,7 @@ namespace AtomicWar.GodotApp.Muster
                         {
                             Text = choice.text,
                             TooltipText = $"{def.id} / {choice.choiceId}",
+                            CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight),
                         };
                         string actionId = def.id;
                         string choiceId = choice.choiceId;

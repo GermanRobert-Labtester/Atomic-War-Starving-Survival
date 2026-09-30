@@ -38,7 +38,6 @@ namespace AtomicWar.GodotApp
             if (_bestiary == null) return;
 
             var state = _bestiary.System.CaptureState();
-            BestiarySaveStore.TrySave(state);
             string? payload = BestiarySaveStore.TryCapturePersisted(state);
             if (!string.IsNullOrEmpty(payload))
             {

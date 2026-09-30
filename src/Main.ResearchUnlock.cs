@@ -43,7 +43,6 @@ namespace AtomicWar.GodotApp
         {
             if (_researchUnlock == null) return;
             var state = _researchUnlock.CaptureState();
-            ResearchUnlockSaveStore.TrySave(state);
             if (CaptureSection("research_unlock", ResearchUnlockSaveStore.TryCapturePersisted(state)))
             {
                 _researchUnlockDirty = false;

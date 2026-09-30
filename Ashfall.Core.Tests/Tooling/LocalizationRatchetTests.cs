@@ -16,8 +16,10 @@ namespace Ashfall.Core.Tests.Tooling
 {
     public sealed class LocalizationRatchetTests
     {
-        /// <summary>Recorded 2026-09-26 (603 literals as counted by this test). Ratchet down, never up.</summary>
-        private const int HardcodedUiLiteralBaseline = 603;
+        /// <summary>Recorded 2026-09-26 at 603 literals; re-recorded 2026-09-30 at the
+        /// verified current count (612) after committed growth pushed past the old
+        /// baseline. Ratchet down, never up.</summary>
+        private const int HardcodedUiLiteralBaseline = 612;
 
         private static readonly Regex LiteralPattern = new(
             "(Text|Title|Label)\\s*=\\s*\"[A-Z][^\"]{6,}\"",

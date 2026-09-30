@@ -83,7 +83,7 @@ namespace AtomicWar.GodotApp.UI
             var visitorsHeader = new Label { Text = "ACTIVE VISITOR STAYS" };
             _leftColumn.AddChild(visitorsHeader);
 
-            var admitButton = new Button { Text = "ADMIT NEXT ARRIVAL (LOCAL)" };
+            var admitButton = new Button { Text = "ADMIT NEXT ARRIVAL (LOCAL)", CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
             admitButton.Pressed += OnAdmitPressed;
             _leftColumn.AddChild(admitButton);
 
@@ -212,19 +212,19 @@ namespace AtomicWar.GodotApp.UI
                 var actions = new HBoxContainer();
                 actions.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
 
-                var bunk = new Button { Text = "Berth" };
+                var bunk = new Button { Text = "Berth", CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
                 bunk.Pressed += () => { _host.AssignHousing(visitor.VisitorId, "visitor_berth_" + visitor.VisitorId, HousingType.TemporaryBunk, visitor.ArrivalDay); RefreshView(); };
                 actions.AddChild(bunk);
 
-                var shared = new Button { Text = "Shared Quarter" };
+                var shared = new Button { Text = "Shared Quarter", CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
                 shared.Pressed += () => { _host.AssignHousing(visitor.VisitorId, "room_shared_bunks_b", HousingType.SharedQuarter, visitor.ArrivalDay); RefreshView(); };
                 actions.AddChild(shared);
 
-                var privateRoom = new Button { Text = "Private Room" };
+                var privateRoom = new Button { Text = "Private Room", CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
                 privateRoom.Pressed += () => { _host.AssignHousing(visitor.VisitorId, "room_visitor_private", HousingType.PrivateRoom, visitor.ArrivalDay); RefreshView(); };
                 actions.AddChild(privateRoom);
 
-                var guestSuite = new Button { Text = "Guest Suite" };
+                var guestSuite = new Button { Text = "Guest Suite", CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
                 guestSuite.Pressed += () => { _host.AssignHousing(visitor.VisitorId, "room_guest_suite", HousingType.GuestSuite, visitor.ArrivalDay); RefreshView(); };
                 actions.AddChild(guestSuite);
 
@@ -235,13 +235,13 @@ namespace AtomicWar.GodotApp.UI
 
                 if (visitor.Status == VisitorStatus.Integrated)
                 {
-                    var recruit = new Button { Text = "RECRUIT AS RESIDENT" };
+                    var recruit = new Button { Text = "RECRUIT AS RESIDENT", CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
                     var captured = visitor;
                     recruit.Pressed += () => OnRecruitPressed(captured);
                     decisionRow.AddChild(recruit);
                 }
 
-                var depart = new Button { Text = "LOG DEPARTURE" };
+                var depart = new Button { Text = "LOG DEPARTURE", CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
                 var departCaptured = visitor;
                 depart.Pressed += () => OnDepartPressed(departCaptured);
                 decisionRow.AddChild(depart);
@@ -265,7 +265,7 @@ namespace AtomicWar.GodotApp.UI
                     row.AddThemeConstantOverride("separation", 8);
                     var visitor = _host.Visitors.FirstOrDefault(v => v.VisitorId == task.VisitorId);
                     row.AddChild(new Label { Text = $"{visitor?.Name ?? task.VisitorId}: {task.TaskType} (due day {task.DueDay})" });
-                    var done = new Button { Text = "Satisfy" };
+                    var done = new Button { Text = "Satisfy", CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
                     var capturedTask = task;
                     done.Pressed += () => { _host.CompleteTask(capturedTask.TaskId, capturedTask.DueDay); RefreshView(); };
                     row.AddChild(done);

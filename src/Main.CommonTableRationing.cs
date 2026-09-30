@@ -93,7 +93,6 @@ namespace AtomicWar.GodotApp
         {
             if (_commonTable == null) return;
             var state = _commonTable.CaptureState();
-            CommonTableRationingSaveStore.TrySave(state);
             if (CaptureSection(CommonTableRationingSaveStore.SectionName, CommonTableRationingSaveStore.TryCapturePersisted(state)))
                 _commonTableDirty = false;
         }

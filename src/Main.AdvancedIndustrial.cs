@@ -110,7 +110,6 @@ namespace AtomicWar.GodotApp
         {
             if (_advancedIndustrial == null) return;
             var state = _advancedIndustrial.Capture();
-            AdvancedIndustrialSaveStore.TrySave(state);
             if (CaptureSection(
                     AdvancedIndustrialSaveStore.SectionName,
                     AdvancedIndustrialSaveStore.TryCapturePersisted(state)))

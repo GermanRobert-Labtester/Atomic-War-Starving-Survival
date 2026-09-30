@@ -594,6 +594,7 @@ namespace AtomicWar.GodotApp.UI
                 onPressed?.Invoke();
             };
             AshfallFocusPolicy.ApplyFocusVisibleStyle(btn);
+            UiMotion.AttachButtonFx(btn);
             return btn;
         }
 

@@ -155,6 +155,20 @@ namespace AtomicWar.GodotApp.YearOfAsh
                 var warCatalog = warCatalogLoader.Load(dataDir);
                 session._warRunner = new FactionWarChainRunner(warCatalog);
                 session.WireWarRunner();
+
+                // Year Two climate catalog (Plan Y2-P1 horizon lift). Fail loud like the
+                // warlord block above: an unbound catalog falls back EffectiveEndDay to
+                // 360, and restoring a Year Two save without it would silently clamp the
+                // timeline back to day 360, discarding up to 360 days of progression.
+                string y2ClimatePath = fileIO.Combine(dataDir, "year_two_climate.json");
+                if (!fileIO.FileExists(y2ClimatePath))
+                    throw new InvalidOperationException("[YearTwoClimate] year_two_climate.json is missing from " + dataDir);
+                string y2Json = fileIO.ReadAllText(y2ClimatePath);
+                var y2Catalog = YearTwoClimateCatalog.LoadFromJson(y2Json);
+                var y2Report = y2Catalog.Validate();
+                if (!y2Report.IsValid)
+                    throw new InvalidOperationException("[YearTwoClimate] Catalog validation failed: " + string.Join("; ", y2Report.Errors));
+                session.Timeline.BindYearTwoClimateCatalog(y2Catalog);
             }
 
             var existingSave = loadExistingSave ? YearOfAshSaveStore.TryLoad() : null;

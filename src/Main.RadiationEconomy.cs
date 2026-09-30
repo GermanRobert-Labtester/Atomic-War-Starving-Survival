@@ -47,7 +47,6 @@ namespace AtomicWar.GodotApp
         {
             if (_radiationEconomy == null) return;
             var state = _radiationEconomy.CaptureState();
-            RadiationEconomySaveStore.TrySave(state);
             if (CaptureSection(RadiationEconomySaveStore.SectionName, RadiationEconomySaveStore.TryCapturePersisted(state)))
                 _radiationEconomyDirty = false;
         }

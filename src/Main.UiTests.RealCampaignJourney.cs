@@ -147,6 +147,16 @@ namespace AtomicWar.GodotApp
                 Check(cannedAfterDayTick < cannedAfterConsume,
                     $"daily rationing also consumed food during the real day advance ({cannedAfterConsume} -> {cannedAfterDayTick})");
 
+                // A real ledger resolution so encounter_choice is in the first
+                // envelope; the re-save probe after Continue relies on it.
+                SetupEncounterChoiceResolver();
+                var probeChoice = _encounterChoice.Resolve(new Ashfall.Core.Expeditions.EncounterChoiceRequest
+                {
+                    ExpeditionId = "journey_resave_probe", EncounterId = "probe", ChoiceId = "wait",
+                    Day = _simDay, PredictedOutcome = string.Empty, LootSummary = string.Empty,
+                });
+                Check(probeChoice.Succeeded,"a real encounter choice was recorded before the first save");
+
                 // ── SaveAll(): the single atomic campaign envelope write. ──
                 bool saved = SaveAll(playCue: false);
                 Check(saved, "SaveAll() committed the campaign envelope");
@@ -155,6 +165,33 @@ namespace AtomicWar.GodotApp
                         "slot-" + _saveLoadHost.ActiveSlotId.Value.Value, SaveSlotService.AggregateFileName)
                     : string.Empty;
                 Check(File.Exists(aggregatePath), $"campaign.json exists on disk at '{aggregatePath}'");
+
+                // ── Mid-day save of a system created after the last envelope
+                // write (the per-frame flush path). campaign.json is the only
+                // authority; a Main Save* method must never leave a derived
+                // section file on disk that the envelope does not contain, or
+                // the next Continue fails closed on an out-of-generation file. ──
+                string slotRoot = Path.GetDirectoryName(aggregatePath) ?? string.Empty;
+                var lateCandidates = new (string Section, Func<bool> Absent, Action SetupAndSave)[]
+                {
+                    ("trophies", () => _trophies == null, () => { SetupTrophies(); SaveTrophies(); }),
+                    ("item_lore", () => _itemLore == null, () => { SetupItemLore(); SaveItemLore(); }),
+                    ("genealogy", () => _genealogy == null, () => { SetupGenealogy(); SaveGenealogy(); }),
+                    ("letter_delivery", () => _letters == null, () => { SetupLetters(); SaveLetters(); }),
+                };
+                string? lateSection = null;
+                foreach (var c in lateCandidates)
+                {
+                    string? file = SaveSectionRegistry.FileNameFor(c.Section);
+                    if (file == null || !c.Absent() || File.Exists(Path.Combine(slotRoot, file))) continue;
+                    c.SetupAndSave();
+                    lateSection = c.Section;
+                    break;
+                }
+                Check(lateSection != null, "a system absent from campaign.json was created and saved mid-day");
+                string? lateFile = lateSection == null ? null : SaveSectionRegistry.FileNameFor(lateSection);
+                Check(lateFile != null && !File.Exists(Path.Combine(slotRoot, lateFile)),
+                    $"mid-day Save of '{lateSection}' left no out-of-generation section file on disk");
 
                 // ── Simulate the app restarting: TryLoadAndRestoreGame itself
                 // calls ResetAllSessionsInMemory() before restoring, so this
@@ -195,6 +232,24 @@ namespace AtomicWar.GodotApp
                 Check(postLoadConsume.IsSuccess, "a further typed action succeeds against the restored, reloaded session");
                 Check(_inventory.Inventory.CountById("canned_food") == cannedAfterContinue - 1,
                     "the post-load action actually mutated the restored session's state");
+
+                // ── Re-save after Continue: a generation is built only from
+                // what SaveAll captures, so a Save* method that skips a clean
+                // system drops its section and the next Continue fails closed
+                // on the derived file the first load projected. ──
+                var loadedSections = (_saveLoadHost.ActiveEnvelope?.sections ?? new())
+                    .Select(s => s.sectionName).ToHashSet(StringComparer.Ordinal);
+                Check(loadedSections.Contains("encounter_choice"), "the loaded envelope carries encounter_choice");
+                Check(SaveAll(playCue: false), "SaveAll() after Continue committed a second generation");
+                var resavedSections = (_saveLoadHost.ActiveEnvelope?.sections ?? new())
+                    .Select(s => s.sectionName).ToHashSet(StringComparer.Ordinal);
+                var droppedSections = loadedSections.Where(s => !resavedSections.Contains(s)).OrderBy(s => s, StringComparer.Ordinal).ToList();
+                Check(droppedSections.Count == 0,
+                    $"re-save after Continue kept every loaded section (dropped: {string.Join(", ", droppedSections)})");
+                bool restoredTwice = TryLoadAndRestoreGame(slotToContinue, out string secondRestoreMessage);
+                Check(restoredTwice, $"a second Continue after the re-save succeeded: {secondRestoreMessage}");
+                Check(_encounterChoice != null && _encounterChoice.IsResolved("journey_resave_probe", "probe"),
+                    "the encounter choice ledger survived save → load → save → load");
 
                 // ── Plan #9 production-loop proof: combat resolved through
                 // the real composed _combat session must reach real Phase0

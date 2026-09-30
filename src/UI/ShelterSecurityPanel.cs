@@ -100,6 +100,7 @@ namespace AtomicWar.GodotApp.UI
             _rightColumn.SizeFlagsVertical = SizeFlags.ExpandFill;
 
             _lockdownButton = new Button();
+            _lockdownButton.CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight);
             _lockdownButton.Text = "INITIATE EMERGENCY LOCKDOWN";
             _lockdownButton.Pressed += OnToggleLockdownPressed;
             _rightColumn.AddChild(_lockdownButton);
@@ -191,21 +192,21 @@ namespace AtomicWar.GodotApp.UI
                 var btnRow = new HBoxContainer();
                 btnRow.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
 
-                var unlockBtn = new Button { Text = "Unlock" };
+                var unlockBtn = new Button { Text = "Unlock", CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
                 unlockBtn.Pressed += () =>
                 {
                     _host.SetDoorLockState(zone.ZoneId, DoorLockState.Unlocked);
                     RefreshView();
                 };
 
-                var lockBtn = new Button { Text = "Lock" };
+                var lockBtn = new Button { Text = "Lock", CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
                 lockBtn.Pressed += () =>
                 {
                     _host.SetDoorLockState(zone.ZoneId, DoorLockState.Locked);
                     RefreshView();
                 };
 
-                var sealBtn = new Button { Text = "Seal" };
+                var sealBtn = new Button { Text = "Seal", CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
                 sealBtn.Pressed += () =>
                 {
                     _host.SetDoorLockState(zone.ZoneId, DoorLockState.Sealed);
@@ -250,7 +251,7 @@ namespace AtomicWar.GodotApp.UI
                     var bDetails = new Label();
                     bDetails.Text = $"Intruder: {b.IntruderId} | Day: {b.DetectedDay}";
 
-                    var resolveBtn = new Button { Text = "Resolve & Reset Alarm" };
+                    var resolveBtn = new Button { Text = "Resolve & Reset Alarm", CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
                     resolveBtn.Pressed += () =>
                     {
                         _host.ResolveBreach(b.BreachId, "Secured by player");

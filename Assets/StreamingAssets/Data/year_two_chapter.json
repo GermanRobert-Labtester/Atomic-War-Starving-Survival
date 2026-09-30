@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "default_chapter_one_reading_day": 360,
+  "default_chapter_two_end_day": 720,
+  "play_on_button_label": "PLAY ON",
+  "seal_here_button_label": "SEAL HERE",
+  "play_on_tooltip": "Continue the campaign into Chapter Two without terminal side effects.",
+  "seal_here_tooltip": "Seal this campaign in the chronicle archive.",
+  "terminal_ending_categories": [
+    "extinction",
+    "frozen_silence",
+    "catastrophic_failure"
+  ],
+  "terminal_ending_ids": [
+    "ending_silent_tombs",
+    "ending_frozen_silence"
+  ],
+  "chapters": [
+    {
+      "chapter_index": 1,
+      "chapter_title": "Year One: The Long Ash",
+      "default_end_day": 360,
+      "can_play_on": true
+    },
+    {
+      "chapter_index": 2,
+      "chapter_title": "Year Two: The Long Thaw",
+      "default_end_day": 720,
+      "can_play_on": false
+    }
+  ]
+}

@@ -55,6 +55,11 @@ namespace AtomicWar.GodotApp
             _campaignDay.Register("shelter_facilities", new ShelterFacilitiesDayOwner(this), phase: 2);
             _campaignDay.Register("shelter_fire", new ShelterFireDayOwner(this), phase: 2);
             _campaignDay.Register("starting_level_rations", new StartingLevelRationsDayOwner(this), phase: 2);
+            // Advanced shelter systems without another tick owner (after phase-1 power).
+            _campaignDay.Register("advanced_shelter", new AdvancedShelterDayOwner(this), phase: 2);
+            // Plans 62/64 — food preservation spoilage/curing and pre-war archive decryption.
+            // Phase 2 so preserved-stock freshness settles before phase-3 eating.
+            _campaignDay.Register("plans_62_65", new Plans62To65DayOwner(this), phase: 2);
             _campaignDay.Register("plan_166_research", new Plan166ResearchDayOwner(this), phase: 4);
             _campaignDay.Register("plan_168_fluid", new Plan168FluidDayOwner(this), phase: 2);
 
@@ -97,6 +102,8 @@ namespace AtomicWar.GodotApp
             // phase-3 needs tick finalized canonical stress (plan §11.3).
             _campaignDay.Register("psychology_arcs_162", new PsychologyArcsDayOwner(this), phase: 4);
             _campaignDay.Register("plan_167_espionage", new Plan167EspionageDayOwner(this), phase: 4);
+            // Plans 51/52/53 — shelter espionage, survivor mental health, acoustic sync.
+            _campaignDay.Register("plans_50_53", new Plans50To53DayOwner(this), phase: 4);
             _campaignDay.Register("plan_169_procedural_narrative", new Plan169NarrativeDayOwner(this), phase: 4);
             // Plan 38 — commitments/deadlines evaluate late in phase 4 so the day's
             // expedition/faction facts are settled before a missed obligation routes
@@ -1275,14 +1282,22 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        private sealed class NuclearCoreDayOwner : IDayAdvanceOwner
+        private sealed class NuclearCoreDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
         {
             private readonly Main _m;
+            private NuclearCoreLifecycleSave? _snapshot;
             public NuclearCoreDayOwner(Main m) => _m = m;
-            public void CapturePreDaySnapshot(int day) { }
+            public void CapturePreDaySnapshot(int day) => _snapshot = _m.EnsureNuclearCore().CaptureState();
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m.EnsureNuclearCore().RestoreState(_snapshot);
+            }
             public void TickDay(int day, List<DayStateChangeEvent> events)
             {
                 var nuclear = _m.EnsureNuclearCore();
+                // Wear, coolant and heat settle before today's generation is published.
+                nuclear.TickDay(day);
+                _m._nuclearCoreDirty = true;
                 _m.PublishNuclearCoreGeneration();
                 events.Add(new DayStateChangeEvent(
                     "nuclear_generation_published",
@@ -2967,6 +2982,100 @@ namespace AtomicWar.GodotApp
                 var census = _m.GetSleepAcousticCensus();
                 events.Add(new DayStateChangeEvent(
                     "sleep_acoustic_rest_ticked", "sleep_acoustic_rest", null, null, census.QuartersCount));
+            }
+        }
+
+        /// <summary>Surgical ward, hydroponic biomes, armored crawlers (ownerId <c>advanced_shelter</c>, phase 2).</summary>
+        private sealed class AdvancedShelterDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Medical.AdvancedSurgicalWardSave? _wardSnapshot;
+            private HydroponicBiomeSave? _hydroSnapshot;
+            private ArmoredCrawlerExpeditionSave? _crawlerSnapshot;
+            public AdvancedShelterDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _wardSnapshot = _m.EnsureSurgicalWard().CaptureState();
+                _hydroSnapshot = _m.EnsureHydroponicBiomes().CaptureState();
+                _crawlerSnapshot = _m.EnsureArmoredCrawlers().CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_wardSnapshot != null) _m.EnsureSurgicalWard().RestoreState(_wardSnapshot);
+                if (_hydroSnapshot != null) _m.EnsureHydroponicBiomes().RestoreState(_hydroSnapshot);
+                if (_crawlerSnapshot != null) _m.EnsureArmoredCrawlers().RestoreState(_crawlerSnapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.EnsureSurgicalWard();
+                _m.EnsureHydroponicBiomes();
+                _m.EnsureArmoredCrawlers();
+                _m.TickAdvancedShelterSystems(day);
+                events.Add(new DayStateChangeEvent("advanced_shelter_ticked", "advanced_shelter", null, null, day));
+            }
+        }
+
+        /// <summary>Plans 51–53 day owner (ownerId <c>plans_50_53</c>, phase 4).</summary>
+        private sealed class Plans50To53DayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.Factions.ShelterEspionageState? _espionageSnapshot;
+            private Ashfall.Core.Needs.SurvivorMentalHealthState? _mentalHealthSnapshot;
+            public Plans50To53DayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupPlans50To53();
+                _espionageSnapshot = _m._shelterEspionage?.CaptureState();
+                _mentalHealthSnapshot = _m._survivorMentalHealth?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_espionageSnapshot != null) _m._shelterEspionage?.RestoreState(_espionageSnapshot);
+                if (_mentalHealthSnapshot != null) _m._survivorMentalHealth?.RestoreState(_mentalHealthSnapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupPlans50To53();
+                _m.TickPlans50To53(day);
+                events.Add(new DayStateChangeEvent("plans_50_53_ticked", "plans_50_53", null, null, day));
+            }
+        }
+
+        /// <summary>Plans 62/64 day owner (ownerId <c>plans_62_65</c>, phase 2).</summary>
+        private sealed class Plans62To65DayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private FoodPreservationState? _foodSnapshot;
+            private Ashfall.Core.Research.PrewarArchiveDecryptionState? _archiveSnapshot;
+            public Plans62To65DayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupPlans62To65();
+                _foodSnapshot = _m._foodPreservation64?.CaptureState();
+                _archiveSnapshot = _m._archiveDecryption62?.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_foodSnapshot != null) _m._foodPreservation64?.RestoreState(_foodSnapshot);
+                if (_archiveSnapshot != null) _m._archiveDecryption62?.RestoreState(_archiveSnapshot);
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                _m.SetupPlans62To65();
+                _m.TickPlans62To65(day);
+                if (_m._foodPreservation64 != null)
+                    events.Add(new DayStateChangeEvent(
+                        "food_preservation_ticked", "plans_62_65", null, null,
+                        _m._foodPreservation64.GetTotalFood()));
             }
         }
 

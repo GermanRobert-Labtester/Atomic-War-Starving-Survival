@@ -102,7 +102,6 @@ namespace AtomicWar.GodotApp
         {
             if (_cassettePlayback == null) return;
             var state = _cassettePlayback.CaptureState();
-            CassettePlaybackSaveStore.TrySave(state);
             if (CaptureSection(CassettePlaybackSaveStore.SectionName, CassettePlaybackSaveStore.TryCapturePersisted(state)))
                 _cassettePlaybackDirty = false;
         }

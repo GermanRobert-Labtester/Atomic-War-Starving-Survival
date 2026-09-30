@@ -81,23 +81,23 @@ namespace AtomicWar.GodotApp.UI
             consoleBox.AddThemeConstantOverride("separation", 12);
             root.AddChild(consoleBox);
 
-            _sliceButton = new Button { Text = "[ENGAGE DIAMOND MULTI-WIRE SLICE]" };
+            _sliceButton = new Button { Text = "[ENGAGE DIAMOND MULTI-WIRE SLICE]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _sliceButton.Pressed += () => ShowFeedback("Diamond wire web tensioned. Czochralski boule feed started.");
             consoleBox.AddChild(_sliceButton);
 
-            _slurryButton = new Button { Text = "[FEED SILICON CARBIDE SLURRY]" };
+            _slurryButton = new Button { Text = "[FEED SILICON CARBIDE SLURRY]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _slurryButton.Pressed += () => ShowFeedback("Abrasive coolant nozzles purged and pressurized to 4.2 Bar.");
             consoleBox.AddChild(_slurryButton);
 
-            _collectButton = new Button { Text = "[COLLECT WAFERS TO CASSETTE]" };
+            _collectButton = new Button { Text = "[COLLECT WAFERS TO CASSETTE]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _collectButton.Pressed += () => ShowFeedback("32 pristine 200mm silicon wafers transferred to cleanroom cassette.");
             consoleBox.AddChild(_collectButton);
 
-            _brakeButton = new Button { Text = "[EMERGENCY WIRE BRAKE]" };
+            _brakeButton = new Button { Text = "[EMERGENCY WIRE BRAKE]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _brakeButton.Pressed += () => ShowFeedback("Emergency tension brake engaged. Wire saw halted within 120ms.");
             consoleBox.AddChild(_brakeButton);
 
-            _closeButton = new Button { Text = "[CLOSE PANEL]" };
+            _closeButton = new Button { Text = "[CLOSE PANEL]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _closeButton.Pressed += () => { Visible = false; OnClose?.Invoke(); };
             consoleBox.AddChild(_closeButton);
 

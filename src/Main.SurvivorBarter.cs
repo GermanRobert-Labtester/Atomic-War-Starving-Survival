@@ -95,7 +95,6 @@ namespace AtomicWar.GodotApp
         {
             if (_barter == null) return;
             var state = _barter.CaptureState();
-            SurvivorBarterSaveStore.TrySave(state);
             if (CaptureSection(SurvivorBarterSaveStore.SectionName, SurvivorBarterSaveStore.TryCapturePersisted(state)))
                 _barterDirty = false;
         }

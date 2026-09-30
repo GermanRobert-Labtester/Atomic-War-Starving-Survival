@@ -36,6 +36,10 @@ namespace Ashfall.Core.Narrative
         /// <summary>Journal/codex knowledge key to unlock. Empty = none.</summary>
         public string JournalUnlockId = string.Empty;
 
+        /// <summary>Plan 45 — field-guide entry unlocked by a travel/patrol choice
+        /// (copied from <c>TravelEncounterResolutionResult.UnlocksFieldGuideId</c>).</summary>
+        public string FieldGuideUnlockId = string.Empty;
+
         /// <summary>Location ID to discover. Empty = none.</summary>
         public string DiscoverLocationId = string.Empty;
 

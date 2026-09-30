@@ -117,7 +117,6 @@ namespace AtomicWar.GodotApp
         {
             if (_emergencyAlerts == null) return;
             var state = _emergencyAlerts.CaptureState();
-            EmergencyAlertSaveStore.TrySave(state);
             if (CaptureSection(
                     EmergencyAlertSaveStore.SectionName,
                     EmergencyAlertSaveStore.TryCapturePersisted(state)))

@@ -27,7 +27,6 @@ namespace AtomicWar.GodotApp
         {
             if (_economyFamily == null) return;
             var state = _economyFamily.CaptureState();
-            EconomyFamilySaveStore.TrySave(state);
             if (CaptureSection("economy_family", EconomyFamilySaveStore.TryCapturePersisted(state)))
             {
                 _economyFamilyDirty = false;

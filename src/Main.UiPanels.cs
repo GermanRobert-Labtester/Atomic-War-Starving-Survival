@@ -55,6 +55,7 @@ namespace AtomicWar.GodotApp
         private VBoxContainer _gameUiContainer = null!;
         private AudioManager _audio = null!;
         private SettingsPanel _settingsPanel = null!;
+        private AssetInspectorPanel _assetInspectorPanel = null!;
         private InventoryPanel _inventoryOverlay = null!;
         private SurvivorsPanel _survivorsOverlay = null!;
         private CraftingPanel _craftingPanel = null!;
@@ -329,6 +330,11 @@ namespace AtomicWar.GodotApp
             };
             _settingsPanel.OnSettingsApplied += ApplyOnboardingSettings;
             AddChild(_settingsPanel);
+
+            // ── Developer session: Item & Asset Inspector (overlay) ──
+            _assetInspectorPanel = new AssetInspectorPanel();
+            _assetInspectorPanel.OnClose += () => ClosePanelAnimated(_assetInspectorPanel);
+            AddChild(_assetInspectorPanel);
 
             // ── Inventory overlay panel ──
             _inventoryOverlay = new InventoryPanel();
@@ -1689,6 +1695,7 @@ namespace AtomicWar.GodotApp
             _mainMenu.OnContinue += ContinueGame;
             _mainMenu.OnSettings += () => { _settingsPanel.Open(); };
             _mainMenu.OnCodex += () => { OpenPlayerPanel("codex"); };
+            _mainMenu.OnInspectorRequested += OpenAssetInspector;
             _mainMenu.OnQuit += () =>
             {
                 SaveAll();
@@ -1714,6 +1721,17 @@ namespace AtomicWar.GodotApp
 
             // ── Start in menu state ──
             _state = GameState.Menu;
+        }
+
+        /// <summary>
+        /// Opens the developer Item &amp; Asset Inspector overlay (presentation-only
+        /// read view over the authoritative catalogs + asset registry).
+        /// </summary>
+        private void OpenAssetInspector()
+        {
+            if (_assetInspectorPanel == null) return;
+            _assetInspectorPanel.Reload();
+            ShowPanelLifecycle(_assetInspectorPanel);
         }
 
         private void UpdateContinueButton()

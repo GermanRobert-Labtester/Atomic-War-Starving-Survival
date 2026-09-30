@@ -92,7 +92,6 @@ namespace AtomicWar.GodotApp
         {
             if (_itemLore == null) return;
             var state = _itemLore.CaptureState();
-            ItemLoreSaveStore.TrySave(state);
             if (CaptureSection(ItemLoreSaveStore.SectionName, ItemLoreSaveStore.TryCapturePersisted(state)))
                 _itemLoreDirty = false;
         }

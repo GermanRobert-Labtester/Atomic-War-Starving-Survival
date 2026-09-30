@@ -48,20 +48,21 @@ public sealed class PlanGovernanceContractTests
     }
 
     [Fact]
-    public void LegacyPlansRemainVisibleAsMetadataMissing()
+    public void E1CMigrationCompletesCurrentInventoryWithoutDuplicateIds()
     {
-        using var document = JsonDocument.Parse(File.ReadAllText(Path.Combine(RepositoryRoot, "docs", "roadmap", "PLAN_REGISTER.json")));
-        var legacy = document.RootElement.GetProperty("plans")
-            .EnumerateArray()
-            .Where(plan => plan.GetProperty("metadata_state").GetString() == "METADATA_MISSING")
-            .ToList();
+        var registerPath = Path.Combine(RepositoryRoot, "docs", "roadmap", "PLAN_REGISTER.json");
+        var baselinePath = Path.Combine(RepositoryRoot, "docs", "roadmap", "e1", "E1C_EXECUTION_BASELINE.json");
+        using var document = JsonDocument.Parse(File.ReadAllText(registerPath));
+        using var baseline = JsonDocument.Parse(File.ReadAllText(baselinePath));
+        var plans = document.RootElement.GetProperty("plans").EnumerateArray().ToList();
 
-        Assert.NotEmpty(legacy);
-        Assert.All(legacy, plan =>
-        {
-            Assert.Equal("METADATA_MISSING", plan.GetProperty("status").GetString());
-            Assert.StartsWith("LEGACY-", plan.GetProperty("plan_id").GetString());
-        });
+        Assert.Equal(baseline.RootElement.GetProperty("plan_count").GetInt32(), plans.Count);
+        Assert.All(plans, plan => Assert.Equal("COMPLETE", plan.GetProperty("metadata_state").GetString()));
+
+        var planIds = plans.Select(plan => plan.GetProperty("plan_id").GetString()).ToList();
+        Assert.DoesNotContain(planIds, string.IsNullOrWhiteSpace);
+        Assert.Equal(planIds.Count, planIds.Distinct(StringComparer.Ordinal).Count());
+        Assert.Empty(document.RootElement.GetProperty("validation").GetProperty("errors").EnumerateArray());
     }
 
     [Fact]

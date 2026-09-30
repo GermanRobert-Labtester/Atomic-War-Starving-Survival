@@ -124,7 +124,6 @@ namespace AtomicWar.GodotApp
         {
             if (_warlordResponse == null) return;
             var state = _warlordResponse.CaptureState();
-            WarlordResponseSaveStore.TrySave(state);
             if (CaptureSection(WarlordResponseSaveStore.SectionName, WarlordResponseSaveStore.TryCapturePersisted(state)))
                 _warlordResponseDirty = false;
         }

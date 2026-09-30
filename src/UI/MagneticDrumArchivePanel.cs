@@ -86,7 +86,7 @@ namespace AtomicWar.GodotApp.UI
             _statusBadgeLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
             headerHBox.AddChild(_statusBadgeLabel);
 
-            _closeButton = new Button { Text = "[X] CLOSE CONSOLE" };
+            _closeButton = new Button { Text = "[X] CLOSE CONSOLE", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _closeButton.Pressed += () =>
             {
                 Visible = false;
@@ -122,10 +122,10 @@ namespace AtomicWar.GodotApp.UI
             _buttonContainer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _buttonContainer.AddThemeConstantOverride("separation", 12);
             centerMargin.AddChild(_buttonContainer);
-            _buttonContainer.AddChild(new Button { Text = "[SEEK TRACK TO ENGINEERING BLUEPRINTS]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
-            _buttonContainer.AddChild(new Button { Text = "[PROJECT 35mm MICROFICHE SPOOL]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
-            _buttonContainer.AddChild(new Button { Text = "[DUMP CORE PARITY MEMORY TO TELETYPE]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
-            _buttonContainer.AddChild(new Button { Text = "[RE-MAGNETIZE DEGRADED DRUM TRACKS]", SizeFlagsHorizontal = SizeFlags.ExpandFill });
+            _buttonContainer.AddChild(new Button { Text = "[SEEK TRACK TO ENGINEERING BLUEPRINTS]", SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) });
+            _buttonContainer.AddChild(new Button { Text = "[PROJECT 35mm MICROFICHE SPOOL]", SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) });
+            _buttonContainer.AddChild(new Button { Text = "[DUMP CORE PARITY MEMORY TO TELETYPE]", SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) });
+            _buttonContainer.AddChild(new Button { Text = "[RE-MAGNETIZE DEGRADED DRUM TRACKS]", SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) });
 
             // Right Column (Data & Logistics)
             var rightPanel = CreatePanelFrame("MICROFICHE CASSETTES & DECODED PLANS", out var rightMargin);

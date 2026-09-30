@@ -66,6 +66,49 @@ namespace AtomicWar.GodotApp
                 Check(defaults.MaxFps == 60, "default MaxFPS is 60");
                 Check(defaults.ConfirmEndDay, "default ConfirmEndDay is enabled");
 
+                // Plan 37 residual: RESET edits the draft; APPLY restores live
+                // keys. Exercise the existing applicator without saving a file.
+                string resetAction = AshfallInputActions.Help;
+                var originalMap = AshfallInputActions.Contract
+                    .ToDictionary(c => c.Action, c => InputMap.ActionGetEvents(c.Action).ToArray());
+                try
+                {
+                    var padSentinel = new InputEventJoypadButton { ButtonIndex = JoyButton.RightShoulder };
+                    InputMap.ActionAddEvent(resetAction, padSentinel);
+                    var originalNonKeys = InputMap.ActionGetEvents(resetAction).Where(e => e is not InputEventKey).ToArray();
+                    var bindingDraft = new UserSettingsData();
+                    bindingDraft.KeyBindings[resetAction] = new List<int> { (int)Key.F8 };
+                    KeyBindingApplicator.Apply(bindingDraft);
+                    Check(InputMap.ActionGetEvents(resetAction).OfType<InputEventKey>().Single().Keycode == Key.F8,
+                        "keybinding override applies to the live map");
+                    bindingDraft.KeyBindings.Remove(resetAction);
+                    UserSettingsStore.PreviewAudio(bindingDraft);
+                    Check(InputMap.ActionGetEvents(resetAction).OfType<InputEventKey>().Single().Keycode == Key.F8,
+                        "reset draft and audio preview leave live binding unchanged before APPLY");
+                    KeyBindingApplicator.Apply(bindingDraft);
+                    Key defaultKey = AshfallInputActions.CanonicalDefaults[resetAction];
+                    Check(InputMap.ActionGetEvents(resetAction).OfType<InputEventKey>().Single().Keycode == defaultKey,
+                        "remove override then APPLY restores the canonical key");
+                    bindingDraft.KeyBindings[resetAction] = new List<int> { (int)Key.F9 };
+                    KeyBindingApplicator.Apply(bindingDraft);
+                    bindingDraft.KeyBindings[resetAction].Clear();
+                    KeyBindingApplicator.Apply(bindingDraft);
+                    KeyBindingApplicator.Apply(bindingDraft);
+                    Check(InputMap.ActionGetEvents(resetAction).OfType<InputEventKey>().Single().Keycode == defaultKey,
+                        "empty override and repeated APPLY restore exactly one default key");
+                    Check(InputMap.ActionGetEvents(resetAction).Where(e => e is not InputEventKey)
+                            .SequenceEqual(originalNonKeys),
+                        "keybinding reset preserves the existing non-key events");
+                }
+                finally
+                {
+                    foreach (var action in originalMap)
+                    {
+                        InputMap.ActionEraseEvents(action.Key);
+                        foreach (var inputEvent in action.Value) InputMap.ActionAddEvent(action.Key, inputEvent);
+                    }
+                }
+
                 // 2. Clone and Mutation
                 var modified = defaults.Clone();
                 modified.MasterVolume = 0.45f;
@@ -129,8 +172,8 @@ namespace AtomicWar.GodotApp
                       || Math.Abs(toColorCritical.G - themeCritical.g) > 0.01f
                       || Math.Abs(toColorCritical.B - themeCritical.b) > 0.01f,
                     "ToColor Critical differs from Theme.Critical constant under protanopia");
-                Check(Math.Abs(themeCritical.r - 0.902f) < 0.001f
-                      && Math.Abs(themeCritical.g - 0.200f) < 0.001f,
+                Check(Math.Abs(themeCritical.r - 1.000f) < 0.001f
+                      && Math.Abs(themeCritical.g - 0.322f) < 0.001f,
                     "Theme.Critical constant floors remain unchanged");
 
                 // 4. Save and Reload Round-trip

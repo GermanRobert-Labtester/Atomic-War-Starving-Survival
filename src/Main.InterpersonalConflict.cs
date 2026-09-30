@@ -81,7 +81,6 @@ namespace AtomicWar.GodotApp
         {
             if (_interpersonalConflict == null) return;
             var state = _interpersonalConflict.System.CaptureState();
-            InterpersonalConflictSaveStore.TrySave(state);
             if (CaptureSection(
                     InterpersonalConflictSaveStore.SectionName,
                     InterpersonalConflictSaveStore.TryCapturePersisted(state)))

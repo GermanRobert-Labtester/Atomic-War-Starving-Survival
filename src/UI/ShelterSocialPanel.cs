@@ -213,6 +213,7 @@ namespace AtomicWar.GodotApp.UI
                 var btn = new Button
                 {
                     Text = $"[{r.name}] Occupancy: {occupants} // {r.desc}",
+                    CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight),
                     Alignment = HorizontalAlignment.Left
                 };
                 string capturedRoom = r.id;
@@ -258,7 +259,8 @@ namespace AtomicWar.GodotApp.UI
 
                     var assignBtn = new Button
                     {
-                        Text = $"ASSIGN {_selectedRoomId.Replace("room_", "").ToUpperInvariant()}"
+                        Text = $"ASSIGN {_selectedRoomId.Replace("room_", "").ToUpperInvariant()}",
+                        CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight)
                     };
                     string capSurvivor = sId;
                     assignBtn.Pressed += () =>
@@ -312,6 +314,7 @@ namespace AtomicWar.GodotApp.UI
                     var btn = new Button
                     {
                         Text = $"[DISPUTE] {title} in {inc.RoomId} (Day {inc.Day})",
+                        CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight),
                         Alignment = HorizontalAlignment.Left
                     };
                     string capturedInc = inc.IncidentId;
@@ -407,7 +410,7 @@ namespace AtomicWar.GodotApp.UI
             };
             _internalCommunicationContainer.AddChild(_internalCommunicationStatus);
 
-            _postWaterAdvisoryButton = new Button { Text = "POST WATER ADVISORY" };
+            _postWaterAdvisoryButton = new Button { Text = "POST WATER ADVISORY", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _postWaterAdvisoryButton.Pressed += OnPostWaterAdvisoryPressed;
             _internalCommunicationContainer.AddChild(_postWaterAdvisoryButton);
 

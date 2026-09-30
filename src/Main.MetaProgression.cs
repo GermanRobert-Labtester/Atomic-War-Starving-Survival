@@ -110,7 +110,6 @@ namespace AtomicWar.GodotApp
         {
             if (_metaProgression == null) return;
             var state = _metaProgression.CaptureState();
-            MetaProgressionSaveStore.TrySave(state);
             if (CaptureSection("meta_progression", MetaProgressionSaveStore.TryCapturePersisted(state)))
             {
                 _metaProgressionDirty = false;

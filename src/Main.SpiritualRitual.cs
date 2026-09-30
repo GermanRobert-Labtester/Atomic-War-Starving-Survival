@@ -89,7 +89,6 @@ namespace AtomicWar.GodotApp
         {
             if (_spiritualRitual == null) return;
             var state = _spiritualRitual.CaptureState();
-            SpiritualRitualSaveStore.TrySave(state);
             if (CaptureSection("spiritual_ritual", SpiritualRitualSaveStore.TryCapturePersisted(state)))
                 _spiritualRitualDirty = false;
         }

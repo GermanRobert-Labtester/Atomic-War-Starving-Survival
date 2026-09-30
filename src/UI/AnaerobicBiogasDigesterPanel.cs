@@ -85,23 +85,23 @@ namespace AtomicWar.GodotApp.UI
             consoleBox.AddThemeConstantOverride("separation", 12);
             root.AddChild(consoleBox);
 
-            _feedButton = new Button { Text = "[FEED ORGANIC WASTE SLURRY]" };
+            _feedButton = new Button { Text = "[FEED ORGANIC WASTE SLURRY]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _feedButton.Pressed += () => ShowFeedback("Fed 50L organic biomass slurry to digester. Fermentation rate increased.");
             consoleBox.AddChild(_feedButton);
 
-            _scrubberButton = new Button { Text = "[REGENERATE H2S SCRUBBER]" };
+            _scrubberButton = new Button { Text = "[REGENERATE H2S SCRUBBER]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _scrubberButton.Pressed += () => ShowFeedback("Iron sponge desulfurization media backwashed and regenerated.");
             consoleBox.AddChild(_scrubberButton);
 
-            _compressButton = new Button { Text = "[COMPRESS METHANE TO CYLINDERS]" };
+            _compressButton = new Button { Text = "[COMPRESS METHANE TO CYLINDERS]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _compressButton.Pressed += () => ShowFeedback("Compressed 20 m³ purified biomethane to 200-Bar buffer storage.");
             consoleBox.AddChild(_compressButton);
 
-            _ventButton = new Button { Text = "[VENT OVERPRESSURE]" };
+            _ventButton = new Button { Text = "[VENT OVERPRESSURE]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _ventButton.Pressed += () => ShowFeedback("Emergency flare vent opened. Digester head pressure normalized.");
             consoleBox.AddChild(_ventButton);
 
-            _closeButton = new Button { Text = "[CLOSE PANEL]" };
+            _closeButton = new Button { Text = "[CLOSE PANEL]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _closeButton.Pressed += () => { Visible = false; OnClose?.Invoke(); };
             consoleBox.AddChild(_closeButton);
 

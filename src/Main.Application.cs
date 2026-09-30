@@ -680,6 +680,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.UnifiedEndingSelfTest:
                     GetTree().Quit(HostCliUnifiedEnding.RunSelfTest(_dataDir));
                     return;
+                case HostCliAction.YearTwoChapterSelfTest:
+                    GetTree().Quit(HostCliYearTwoChapter.RunSelfTest(_dataDir));
+                    return;
                 case HostCliAction.NpcMemorySelfTest:
                     GetTree().Quit(HostCliNpcMemory.RunSelfTest(_dataDir));
                     return;
@@ -1180,42 +1183,6 @@ namespace AtomicWar.GodotApp
             {
                 _diagnosticsLogAccum = 0.0;
             }
-
-            // Flush any journal writes that were coalesced since the last tick.
-            FlushJournalIfDirty();
-            // Flush the Holdfast S1 save the same way — one write per burst, not per event.
-            FlushHoldfastIfDirty();
-            FlushDutyRosterIfDirty();
-            FlushExpansionQuestsIfDirty();
-            FlushThirdonaryIfDirty();
-            FlushExpansionHubIfDirty();
-            FlushVerdictIfDirty();
-            FlushMaritimeIfDirty();
-            FlushExpeditionIfDirty();
-            FlushTravelEncountersIfDirty();
-            FlushNarrativeIfDirty();
-            FlushEventAdapterIfDirty();
-            FlushMedicalIfDirty();
-            FlushWorldIfDirty();
-            FlushCraftingIfDirty();
-            FlushCaravanIfDirty();
-            FlushYearOfAshIfDirty();
-            FlushPhase0IfDirty();
-            FlushMoralChoiceIfDirty();
-            FlushEndgameIfDirty();
-            FlushShelterFireIfDirty();
-            FlushPersonalQuestsIfDirty();
-            FlushNarrativeQuestlinesIfDirty();
-            FlushChemicalSynthesisIfDirty();
-            FlushCollectiblesIfDirty();
-            FlushCampaignDayIfDirty();
-            FlushOutpostSettlementIfDirty();
-            FlushTerritoryControlIfDirty();
-            FlushCookingIfDirty();
-            FlushRetentionIfDirty();
-            FlushCampaignLegacyIfDirty();
-            FlushShelterGovernanceIfDirty();
-            FlushAgingIfDirty();
 
             // ── Sleep / End Day countdown timer (Phase 2 continuation)
             if (_advanceTimerRemaining > 0 && !_advanceCancelled)

@@ -120,7 +120,6 @@ namespace AtomicWar.GodotApp
         {
             if (_genealogy == null) return;
             var state = _genealogy.CaptureState();
-            GenealogySaveStore.TrySave(state);
             if (CaptureSection("genealogy", GenealogySaveStore.TryCapturePersisted(state)))
             {
                 _genealogyDirty = false;

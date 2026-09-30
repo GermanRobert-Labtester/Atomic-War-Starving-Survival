@@ -92,7 +92,6 @@ namespace AtomicWar.GodotApp
         {
             if (_skillAtrophy == null) return;
             var state = _skillAtrophy.CaptureState();
-            SkillAtrophySaveStore.TrySave(state);
             if (CaptureSection(SkillAtrophySaveStore.SectionName, SkillAtrophySaveStore.TryCapturePersisted(state)))
                 _skillAtrophyDirty = false;
         }

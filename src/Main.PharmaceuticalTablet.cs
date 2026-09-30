@@ -44,7 +44,6 @@ namespace AtomicWar.GodotApp
         {
             if (_tabletWorks == null) return;
             var state = _tabletWorks.CaptureState();
-            PharmaceuticalTabletSaveStore.TrySave(state);
             if (CaptureSection("pharmaceutical_tablet", PharmaceuticalTabletSaveStore.TryCapturePersisted(state)))
             {
                 _tabletWorksDirty = false;

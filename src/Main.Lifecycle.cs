@@ -561,6 +561,16 @@ namespace AtomicWar.GodotApp
             _vehicleGarage = null;
             _vehicleGarageDirty = false;
 
+            // Plans 51–53: without these, Ensure* returned the previous campaign's
+            // instance and the loaded save section was never applied.
+            _shelterEspionage = null;
+            _shelterEspionageDirty = false;
+            _survivorMentalHealth = null;
+            _survivorMentalHealthDirty = false;
+            _shelterAcousticBridge?.Dispose();
+            _shelterAcousticBridge = null;
+            _shelterAcousticDirector = null;
+
             _silentFoundry = null!;
             _sharedSkillProgression = null;
             _sharedFactionStance = null;
@@ -617,6 +627,14 @@ namespace AtomicWar.GodotApp
             ResetMechanicalDriveline();
             ResetSleepAcousticRest();
             ResetShelterArchive();
+            ResetPlans62To65();
+            ResetEncounterChoice();
+            ResetCooking();
+            ResetSevenDaySlice();
+            ResetSurvivorLetterDelivery();
+            ResetTerritoryControl();
+            ResetPackageGGuards();
+            ResetPackageHBindings();
             ResetSurvivorDreams();
             ResetAccessibilitySettings();
             ResetPersonalQuests();

@@ -16,6 +16,7 @@ namespace Ashfall.Core
         public string name { get; set; } = string.Empty;
         public string description { get; set; } = string.Empty;
         public string discipline { get; set; } = string.Empty;
+        public string target_skill_id { get; set; } = string.Empty;
         public string required_room_tag { get; set; } = "workshop";
         public float daily_xp_rate { get; set; } = 15f;
         public string manual_item_id { get; set; } = string.Empty;
@@ -56,10 +57,23 @@ namespace Ashfall.Core
     }
 
     [Serializable]
+    public sealed class VocationalConsentResponse
+    {
+        public string childId = string.Empty;
+        public string mentorId = string.Empty;
+        public string mentorshipId = string.Empty;
+        public int chapterOpenDay;
+        public int quarterIndex;
+        public int responseDay;
+        public bool accepted;
+    }
+
+    [Serializable]
     public sealed class ApprenticeshipState
     {
         public string systemId = ApprenticeshipSystem.SystemId;
         public List<Apprenticeship> activePairs = new List<Apprenticeship>();
+        public List<VocationalConsentResponse> vocationalResponses = new List<VocationalConsentResponse>();
         public List<string> completedSkillIds = new List<string>();
         public List<TranscriptionTask> transcriptionTasks = new List<TranscriptionTask>();
         public List<SurvivorWill> registeredWills = new List<SurvivorWill>();
@@ -83,6 +97,8 @@ namespace Ashfall.Core
         public bool isComplete;
         public bool isCancelled;
         public bool isLegacyInherited;
+        public bool isVocationalPair;
+        public bool actingEligible;
         public string milestonePerkId = string.Empty;
     }
 
@@ -106,6 +122,7 @@ namespace Ashfall.Core
 
         public int MaxConcurrentPairs { get; set; } = 3;
         public Func<string, bool>? IsApprenticeEligible { get; set; }
+        public Func<string, ChildProfile?>? ChildProfileProvider { get; set; }
 
         public event Action<Apprenticeship>? OnApprenticeshipCompleted;
         public event Action? OnApprenticeshipChanged;
@@ -175,6 +192,7 @@ namespace Ashfall.Core
                 mentorship_id = "mentorship_generator_maintenance",
                 name = "Generator & Radiator Systems Engineering",
                 discipline = "engineering",
+                target_skill_id = "skill_hvac_tech",
                 required_room_tag = "workshop",
                 daily_xp_rate = 15f,
                 manual_item_id = "item_manual_generator_maintenance",
@@ -187,6 +205,7 @@ namespace Ashfall.Core
                 mentorship_id = "mentorship_field_medicine",
                 name = "Wasteland Trauma & Surgery Triage",
                 discipline = "medicine",
+                target_skill_id = "skill_field_dressing",
                 required_room_tag = "medical",
                 daily_xp_rate = 14f,
                 manual_item_id = "item_manual_field_medicine",
@@ -199,6 +218,7 @@ namespace Ashfall.Core
                 mentorship_id = "mentorship_rough_repairs",
                 name = "Emergency Shoring & Pneumatic Tooling",
                 discipline = "crafting",
+                target_skill_id = "skill_rough_repairs",
                 required_room_tag = "workshop",
                 daily_xp_rate = 16f,
                 manual_item_id = "item_manual_rough_repairs",
@@ -211,6 +231,7 @@ namespace Ashfall.Core
                 mentorship_id = "mentorship_seismology",
                 name = "Sub-Strata Geomechanics & Fault Sensing",
                 discipline = "seismology",
+                target_skill_id = "skill_structural_engineer",
                 required_room_tag = "laboratory",
                 daily_xp_rate = 12f,
                 manual_item_id = "item_manual_seismology",
@@ -220,8 +241,54 @@ namespace Ashfall.Core
             });
         }
 
-        public ActionResult StartPair(string mentorId, string apprenticeId, string targetSkillId, float targetXp = 100f, string? mentorshipId = null)
+        public bool CanOfferVocationalPair(ChildProfile child, int day, int chapterOpenDay)
         {
+            if (child == null || string.IsNullOrWhiteSpace(child.ChildId) || chapterOpenDay < 0 || day <= chapterOpenDay)
+                return false;
+            if (ChildDevelopmentSystem.ResolveCanonicalStage(child.BirthDay, day) < DevelopmentStage.Adolescent ||
+                child.Milestones == null || !child.Milestones.Contains("vocational_apprenticeship"))
+                return false;
+            int quarter = (day - chapterOpenDay - 1) / 90;
+            return !_state.vocationalResponses.Exists(r => r.childId == child.ChildId &&
+                r.chapterOpenDay == chapterOpenDay && (r.accepted || r.quarterIndex == quarter)) &&
+                !_state.activePairs.Exists(p => p.apprenticeId == child.ChildId && !p.isCancelled);
+        }
+
+        public ActionResult RespondVocationalPair(ChildProfile child, string mentorId, string mentorshipId,
+            bool accept, int day, int chapterOpenDay)
+        {
+            if (!CanOfferVocationalPair(child, day, chapterOpenDay))
+                return ActionResult.Blocked("vocational_offer_unavailable", "apprentice.vocational_offer_unavailable");
+            if (accept)
+            {
+                if (!_catalog.TryGetValue(mentorshipId ?? string.Empty, out var def) || string.IsNullOrEmpty(def.target_skill_id))
+                    return ActionResult.Failed("unknown_mentorship", "apprentice.unknown_mentorship");
+                if (string.IsNullOrWhiteSpace(mentorId) || mentorId == child.ChildId)
+                    return ActionResult.Failed("invalid_mentor", "apprentice.invalid_mentor");
+                var result = StartPairInternal(mentorId, child.ChildId, def.target_skill_id, 100f, mentorshipId, true);
+                if (result.Status != ActionResult.StatusKind.Success) return result;
+                var pair = _state.activePairs[_state.activePairs.Count - 1];
+                pair.isVocationalPair = true;
+                pair.dayStarted = day;
+            }
+            _state.vocationalResponses.Add(new VocationalConsentResponse
+            {
+                childId = child.ChildId, mentorId = mentorId ?? string.Empty, mentorshipId = mentorshipId ?? string.Empty,
+                chapterOpenDay = chapterOpenDay, quarterIndex = (day - chapterOpenDay - 1) / 90,
+                responseDay = day, accepted = accept
+            });
+            OnApprenticeshipChanged?.Invoke();
+            return ActionResult.Success(accept ? "apprentice.vocational_accepted" : "apprentice.vocational_declined");
+        }
+
+        public ActionResult StartPair(string mentorId, string apprenticeId, string targetSkillId, float targetXp = 100f, string? mentorshipId = null)
+            => StartPairInternal(mentorId, apprenticeId, targetSkillId, targetXp, mentorshipId, false);
+
+        private ActionResult StartPairInternal(string mentorId, string apprenticeId, string targetSkillId,
+            float targetXp, string? mentorshipId, bool consentAuthorized)
+        {
+            if (!consentAuthorized && ChildProfileProvider?.Invoke(apprenticeId) != null)
+                return ActionResult.Blocked("consent_required", "apprentice.consent_required");
             int activeCount = _state.activePairs.FindAll(p => !p.isComplete && !p.isCancelled).Count;
             if (activeCount >= MaxConcurrentPairs)
                 return ActionResult.Blocked("capacity_full", "apprentice.capacity_full");
@@ -377,9 +444,16 @@ namespace Ashfall.Core
 
         public void NotifyMentorDeath(string deceasedMentorId)
         {
-            var activePairs = _state.activePairs.FindAll(p => p.mentorId == deceasedMentorId && !p.isComplete && !p.isCancelled);
+            var activePairs = _state.activePairs.FindAll(p => p.mentorId == deceasedMentorId &&
+                !p.isCancelled && (!p.isComplete || p.isVocationalPair));
             foreach (var pair in activePairs)
             {
+                if (pair.isVocationalPair)
+                {
+                    pair.actingEligible = true;
+                    pair.isCancelled = true;
+                    continue;
+                }
                 float grantXp = 150f;
                 string traitId = "trait_hardened_disciple";
 
@@ -451,7 +525,7 @@ namespace Ashfall.Core
                 }
             }
 
-            _state.activePairs.RemoveAll(p => p.isCancelled);
+            _state.activePairs.RemoveAll(p => p.isCancelled && !p.actingEligible);
 
             // 2. Advance Transcription Tasks
             foreach (var task in _state.transcriptionTasks)

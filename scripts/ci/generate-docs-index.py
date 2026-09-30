@@ -45,11 +45,10 @@ def get_doc_files():
         docs.append(p)
     return docs
 
-def classify_doc(rel_path: str, content: str, title: str):
+def classify_doc(rel_path: str, title: str, summary: str, has_historical_marker: bool):
     """Classifies a document into (Status, Category, Summary)."""
     # 1. Status classification
     status = "CURRENT"
-    c_upper = content.upper()
     r_lower = rel_path.lower()
 
     if "deprecated_audits" in r_lower or "docs/archive" in r_lower or "junk_" in r_lower or "historical" in r_lower or "repo_review_report.md" in r_lower:
@@ -60,7 +59,7 @@ def classify_doc(rel_path: str, content: str, title: str):
         status = "GENERATED"
     elif "forensic" in r_lower or "phase_log" in r_lower or "audit_report" in r_lower or "deep_code_audit" in r_lower or "execution_log" in r_lower:
         status = "HISTORICAL"
-    elif "STATUS: HISTORICAL" in content or "STATUS:  HISTORICAL" in content:
+    elif has_historical_marker:
         status = "HISTORICAL"
 
     # Specific overrides
@@ -90,14 +89,6 @@ def classify_doc(rel_path: str, content: str, title: str):
         category = "9. General Project Guides & Archive Reference"
 
     # 3. Summary extraction
-    summary = ""
-    for line in content.splitlines():
-        line = line.strip()
-        if not line or line.startswith("#") or line.startswith("---") or line.startswith(">") or line.startswith("|") or line.startswith("<!--"):
-            continue
-        if len(line) > 15:
-            summary = line
-            break
     if not summary:
         summary = title
     # Summaries are copied into docs/INDEX.md, whose directory is different
@@ -108,6 +99,39 @@ def classify_doc(rel_path: str, content: str, title: str):
         summary = summary[:117] + "..."
 
     return status, category, summary
+
+def scan_doc(doc):
+    """Collect exact character count and index fields without holding large plans in memory."""
+    title = ""
+    summary = ""
+    char_count = 0
+    has_historical_marker = False
+    in_front_matter = False
+    first_line = True
+
+    with doc.open("r", encoding="utf-8", errors="ignore") as handle:
+        for raw_line in handle:
+            char_count += len(raw_line)
+            stripped = raw_line.strip()
+            if "STATUS: HISTORICAL" in raw_line.upper() or "STATUS:  HISTORICAL" in raw_line.upper():
+                has_historical_marker = True
+
+            if first_line:
+                first_line = False
+                if stripped.lstrip("\ufeff") == "---":
+                    in_front_matter = True
+                    continue
+            elif in_front_matter:
+                if stripped == "---":
+                    in_front_matter = False
+                continue
+
+            if not title and stripped.startswith("# "):
+                title = stripped.lstrip("# ").strip()
+            if not summary and stripped and not stripped.startswith(("#", "---", ">", "|", "<!--")) and len(stripped) > 15:
+                summary = stripped
+
+    return title, summary, char_count, has_historical_marker
 
 def find_duplicate_generations(docs):
     by_filename = collections.defaultdict(list)
@@ -124,19 +148,11 @@ def generate_index_markdown(docs, verified_date):
 
     for doc in docs:
         rel_path = doc.relative_to(REPO_ROOT).as_posix()
-        content = doc.read_text(encoding="utf-8", errors="ignore")
-
-        # Extract title
-        title = ""
-        for line in content.splitlines():
-            line = line.strip()
-            if line.startswith("# "):
-                title = line.lstrip("# ").strip()
-                break
+        title, summary_candidate, char_count, has_historical_marker = scan_doc(doc)
         if not title:
             title = doc.stem.replace("_", " ").title()
 
-        status, category, summary = classify_doc(rel_path, content, title)
+        status, category, summary = classify_doc(rel_path, title, summary_candidate, has_historical_marker)
         status_counts[status] = status_counts.get(status, 0) + 1
 
         if category not in categorized:
@@ -148,7 +164,7 @@ def generate_index_markdown(docs, verified_date):
             "summary": summary,
             # Exact character count (Unicode code points, matching `wc -m`) so
             # every document is tracked down to the character count.
-            "chars": len(content)
+            "chars": char_count
         })
 
     total_docs = len(docs)

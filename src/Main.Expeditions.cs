@@ -115,6 +115,9 @@ namespace AtomicWar.GodotApp
             _expeditions = ExpeditionHostSession.Create(_dataDir, _narrative.Engine, _travelEncounters, _campaignDay.Rng);
             _expeditions.Flags = _consequenceLedger;
             _expeditions.CurrentDay = _simDay;
+            SetupEncounterChoiceResolver();
+            _expeditions.ChoiceLedger = _encounterChoice;
+            _expeditions.FieldGuideUnlock = UnlockFieldGuideObservation;
             BindDiscoveryConsequences();
             // Plan 50 — the campaign-owned customization/maintenance garage is
             // the single source of fitted-modification effects and component
@@ -539,7 +542,7 @@ namespace AtomicWar.GodotApp
 
         private void SaveEncounterChoice()
         {
-            if (_encounterChoice == null || !_encounterChoiceDirty) return;
+            if (_encounterChoice == null) return;
             try
             {
                 if (CaptureSection("encounter_choice", EncounterChoiceSaveStore.TryCapturePersisted(_encounterChoice.CaptureState())))
@@ -553,7 +556,7 @@ namespace AtomicWar.GodotApp
 
         private void SaveTravelEncounters()
         {
-            if (_travelEncounters == null || !_travelEncountersDirty) return;
+            if (_travelEncounters == null) return;
             try
             {
                 if (CaptureSection("travel_encounters", TravelEncounterSaveStore.TryCapturePersisted(_travelEncounters.CaptureState())))
@@ -597,29 +600,26 @@ namespace AtomicWar.GodotApp
         private void SetupEncounterChoiceResolver()
         {
             if (_encounterChoice != null) return;
-            ApplyEncounterChoiceSaveIfAny();
-        }
-
-        private void ApplyEncounterChoiceSaveIfAny()
-        {
+            Ashfall.Core.Expeditions.EncounterChoiceState? saved = null;
             try
             {
-                var saved = EncounterChoiceSaveStore.TryLoad();
-                if (saved == null) return;
-                _encounterChoice = new Ashfall.Core.Expeditions.EncounterChoiceResolver(saved);
+                saved = EncounterChoiceSaveStore.TryLoad();
             }
             catch (Exception e)
             {
                 GD.PushWarning("[Ashfall Godot] EncounterChoice load failed: " + e.Message);
             }
+            _encounterChoice = new Ashfall.Core.Expeditions.EncounterChoiceResolver(
+                saved ?? new Ashfall.Core.Expeditions.EncounterChoiceState());
+            _encounterChoice.OnResolved += _ => _encounterChoiceDirty = true;
+            if (_expeditions != null) _expeditions.ChoiceLedger = _encounterChoice;
         }
 
-        private void SetupEncounterChoice()
+        private void ResetEncounterChoice()
         {
-            if (_encounterChoice != null) return;
-            _encounterChoice = new Ashfall.Core.Expeditions.EncounterChoiceResolver(
-                new Ashfall.Core.Expeditions.EncounterChoiceState());
-            _encounterChoice.OnResolved += _ => _encounterChoiceDirty = true;
+            if (_expeditions != null) _expeditions.ChoiceLedger = null;
+            _encounterChoice = null!;
+            _encounterChoiceDirty = false;
         }
 
         private void CloseExpeditionPanel()

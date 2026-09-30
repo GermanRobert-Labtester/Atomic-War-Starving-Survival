@@ -81,23 +81,23 @@ namespace AtomicWar.GodotApp.UI
             consoleBox.AddThemeConstantOverride("separation", 12);
             root.AddChild(consoleBox);
 
-            _equalizeButton = new Button { Text = "[BAROMETRIC EQUALIZATION]" };
+            _equalizeButton = new Button { Text = "[BAROMETRIC EQUALIZATION]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _equalizeButton.Pressed += () => ShowFeedback("Equalization valves cycled. Pressure balanced with subterranean sector.");
             consoleBox.AddChild(_equalizeButton);
 
-            _deconButton = new Button { Text = "[CYCLE DECON BLOWDOWN]" };
+            _deconButton = new Button { Text = "[CYCLE DECON BLOWDOWN]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _deconButton.Pressed += () => ShowFeedback("High-pressure pneumatic blowdown active. Fallout particulate trapped in sump.");
             consoleBox.AddChild(_deconButton);
 
-            _openInnerButton = new Button { Text = "[OPEN INNER BLAST DOOR]" };
+            _openInnerButton = new Button { Text = "[OPEN INNER BLAST DOOR]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _openInnerButton.Pressed += () => ShowFeedback("Mechanical locking cams disengaged. Inner 25-ton blast door opening.");
             consoleBox.AddChild(_openInnerButton);
 
-            _lockdownButton = new Button { Text = "[EMERGENCY AIRLOCK PURGE]" };
+            _lockdownButton = new Button { Text = "[EMERGENCY AIRLOCK PURGE]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _lockdownButton.Pressed += () => ShowFeedback("Emergency blast seal triggered. Dual doors mechanically bolted.");
             consoleBox.AddChild(_lockdownButton);
 
-            _closeButton = new Button { Text = "[CLOSE PANEL]" };
+            _closeButton = new Button { Text = "[CLOSE PANEL]", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             _closeButton.Pressed += () => { Visible = false; OnClose?.Invoke(); };
             consoleBox.AddChild(_closeButton);
 

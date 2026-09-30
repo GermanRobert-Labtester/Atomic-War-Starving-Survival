@@ -199,20 +199,18 @@ namespace AtomicWar.GodotApp
         /// A sighted species unlocks its "reading the land" entry. Session
         /// knowledge: persistence rides Plan 20A's save store (their GAP row).
         /// </summary>
-        private void UnlockFieldGuideObservation(string fieldEntryId)
+        private bool UnlockFieldGuideObservation(string fieldEntryId)
         {
-            if (_fieldGuide == null)
-            {
-                _fieldGuide = FieldGuideCatalog.LoadFromDirectory(
-                    _dataDir, new FileSystemIO());
-            }
-            if (_fieldGuide!.UnlockEntry(fieldEntryId))
-            {
-                SetupJournal();
-                var entry = _fieldGuide.TryGetEntry(fieldEntryId, out var e) ? e : null;
-                _journal.TryAddRawEntry($"field_guide_{fieldEntryId}",
-                    $"📖 {entry?.CommonName ?? fieldEntryId}: added to the field guide.", null!, _simDay);
-            }
+            // SetupFieldGuide restores saved unlocks; a bare catalog load would
+            // forget them and re-announce known entries.
+            SetupFieldGuide();
+            if (!_fieldGuide!.UnlockEntry(fieldEntryId)) return false;
+
+            SetupJournal();
+            var entry = _fieldGuide.TryGetEntry(fieldEntryId, out var e) ? e : null;
+            _journal.TryAddRawEntry($"field_guide_{fieldEntryId}",
+                $"📖 {entry?.CommonName ?? fieldEntryId}: added to the field guide.", null!, _simDay);
+            return true;
         }
 
         private void SetupFieldGuide()

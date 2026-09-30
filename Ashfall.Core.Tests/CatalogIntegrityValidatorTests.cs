@@ -208,6 +208,50 @@ namespace Ashfall.Core.Tests
                 + string.Join("\n", report.Errors));
         }
 
+        [Theory]
+        [InlineData("faction_branch", "ending_resolved")]
+        [InlineData("legacy_context", "fixed_day")]
+        [InlineData("muster_approach", "fixed_day")]
+        [InlineData("verdict_late_call", "fixed_day")]
+        public void ChapterProfileEnumsAreValidatedAsVocabulary(string source, string closeRule)
+        {
+            var report = ValidateScratch(scratch =>
+                File.WriteAllText(Path.Combine(scratch, "chapter_profiles.json"),
+                    "{\"schema_version\":1,\"profiles\":[{\"profile_id\":\"profile_base_v1\","
+                    + "\"year_one_ending_source\":\"" + source + "\",\"close_rule\":\"" + closeRule + "\"}]}"));
+            Assert.True(report.Clean, string.Join("\n", report.Errors));
+        }
+
+        [Fact]
+        public void ProfileVocabularyDoesNotExemptGenuineReferencesOrOtherCatalogs()
+        {
+            var report = ValidateScratch(scratch =>
+            {
+                File.WriteAllText(Path.Combine(scratch, "chapter_profiles.json"),
+                    "{\"schema_version\":1,\"profiles\":[{\"profile_id\":\"profile_base_v1\","
+                    + "\"year_one_ending_source\":\"faction_branch\",\"close_rule\":\"ending_resolved\","
+                    + "\"requiredItemId\":\"item_missing_profile_reference\"}]}");
+                File.WriteAllText(Path.Combine(scratch, "other.json"),
+                    "{\"schema_version\":1,\"close_rule\":\"ending_missing_other_catalog\"}");
+            });
+            Assert.Contains(report.Errors, e => e.Contains("item_missing_profile_reference"));
+            Assert.Contains(report.Errors, e => e.Contains("ending_missing_other_catalog"));
+            Assert.DoesNotContain(report.Errors, e => e.Contains("unresolved id 'faction_branch'")
+                || e.Contains("unresolved id 'ending_resolved'"));
+        }
+
+        [Theory]
+        [InlineData("ending_typo", "legacy_context", "close_rule")]
+        [InlineData("fixed_day", "faction_typo", "year_one_ending_source")]
+        public void ChapterProfileInvalidEnumsRemainIntegrityErrors(string closeRule, string source, string field)
+        {
+            var report = ValidateScratch(scratch =>
+                File.WriteAllText(Path.Combine(scratch, "chapter_profiles.json"),
+                    "{\"schema_version\":1,\"profiles\":[{\"profile_id\":\"profile_base_v1\","
+                    + "\"year_one_ending_source\":\"" + source + "\",\"close_rule\":\"" + closeRule + "\"}]}"));
+            Assert.Contains(report.Errors, e => e.Contains("unsupported " + field));
+        }
+
         private static CatalogIntegrityReport ValidateScratch(Action<string> seed)
         {
             string scratch = Path.Combine(Path.GetTempPath(), "ashfall_integrity_" + Guid.NewGuid().ToString("N"));
