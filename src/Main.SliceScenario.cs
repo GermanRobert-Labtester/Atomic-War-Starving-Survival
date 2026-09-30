@@ -77,6 +77,35 @@ namespace AtomicWar.GodotApp
         internal bool RecordSliceBeat(int day, string actionKey, string systemOutcome, string notes = "")
             => _sliceScenario?.RecordBeat(day, new SliceBeatMeasurement(actionKey, systemOutcome, notes)) ?? false;
 
+        /// <summary>
+        /// The authored beat for the given day of the seven-day slice — the
+        /// day's goal text for the opening modal and the daily briefing, so
+        /// the player is told what to do next. Reads the loaded instrument
+        /// only; a day without a beat produces no goal line, never an
+        /// invented one.
+        /// </summary>
+        internal bool TryGetSliceGoal(int day, out string title, out string description)
+        {
+            title = string.Empty;
+            description = string.Empty;
+            var session = EnsureSliceScenario();
+            if (session == null || !session.Scenario.TryGetBeatForDay(day, out var beat) || beat == null)
+                return false;
+            title = beat.Title;
+            description = beat.Description;
+            return true;
+        }
+
+        /// <summary>Pushes the current day's slice beat onto the opening protocol modal.</summary>
+        internal void RefreshOpeningProtocolDayGoal()
+        {
+            if (_openingProtocolModal == null) return;
+            if (TryGetSliceGoal(Math.Max(1, _simDay), out string title, out string body))
+                _openingProtocolModal.SetDayGoal(title, body);
+            else
+                _openingProtocolModal.SetDayGoal(null, null);
+        }
+
         /// <summary>Finalize the playtest slice and persist its scorecard.</summary>
         internal SliceScorecard? CompleteSlicePlaytest(int retainedSurvivors)
         {

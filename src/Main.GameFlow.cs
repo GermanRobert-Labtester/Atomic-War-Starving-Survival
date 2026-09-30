@@ -277,6 +277,8 @@ namespace AtomicWar.GodotApp
             }
 
             _openingProtocolModal.Bind(_startingLevel);
+            // Plan 54 — the Day 1 slice beat is the day's goal on the modal.
+            RefreshOpeningProtocolDayGoal();
             // Veteran mode (TutorialMode 2): land on the clean game view instead
             // of forcing the protocol modal. It stays openable via its registry
             // route and bind action (see RegisterPlayerSurfaces).
@@ -598,6 +600,7 @@ namespace AtomicWar.GodotApp
                 case "protocol":
                     SetupStartingLevel();
                     _openingProtocolModal.Bind(_startingLevel);
+                    RefreshOpeningProtocolDayGoal();
                     _openingProtocolModal.Open();
                     break;
                 case "greenhouse":

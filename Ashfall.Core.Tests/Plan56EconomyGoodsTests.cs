@@ -76,7 +76,7 @@ namespace Ashfall.Core.Tests
             var baseline = new[]
             {
                 "clean_water", "scrap_metal", "bandages", "antibiotics", "iodine_pills",
-                "fuel", "9mm_ammo", "crowbar", "gas_mask", "dosimeter", "canned_food",
+                "fuel", "ammo_9x19", "crowbar", "gas_mask", "dosimeter", "canned_food",
                 "diamond", "coal", "item_foundry_brine_pipe", "item_foundry_ice_anchor",
                 "item_foundry_winch_drum", "cooked_meat", "water_filter", "air_filter",
                 "item_frostbite_salve", "seed_packets", "chemicals", "electronic_scrap",
@@ -93,16 +93,17 @@ namespace Ashfall.Core.Tests
         public void Plan56_goods_resolve_to_canonical_items()
         {
             // Plan-56 goods follow the modern convention: the good id is a
-            // canonical item id in the merged item catalog. (The five legacy
-            // market-projection ids — bandages, 9mm_ammo, crowbar, diamond,
-            // coal — predate the convention and are grandfathered.)
+            // canonical item id in the merged item catalog. (The four legacy
+            // market-projection ids — bandages, crowbar, diamond, coal —
+            // predate the convention and are grandfathered. 9mm_ammo was
+            // renamed to the canonical ammo_9x19 on 2026-09-30.)
             string? dataDir = FindDataDir();
             var fileIO = new FileSystemIO();
             var serializer = new SystemTextJsonSerializer();
             var itemCatalog = Ashfall.Core.Inventory.ItemCatalogLoader.LoadCatalog(dataDir!, fileIO, serializer);
             var (_, goods) = Load();
-            foreach (var id in new[] { "ammo_556", "ammo_12g", "diesel_fuel", "item_smoked_meat", "item_pickled_tubers", "tobacco_pouch" })
-                Assert.True(itemCatalog.Get(id) != null, $"Plan 56 good '{id}' does not resolve to a canonical item");
+            foreach (var id in new[] { "ammo_556", "ammo_12g", "ammo_9x19", "diesel_fuel", "item_smoked_meat", "item_pickled_tubers", "tobacco_pouch" })
+                Assert.True(itemCatalog.Get(id) != null, $"good '{id}' does not resolve to a canonical item");
         }
 
         [Fact]
@@ -156,8 +157,8 @@ namespace Ashfall.Core.Tests
             var (_, goods) = Load();
             var byId = goods.ToDictionary(g => g.id, StringComparer.Ordinal);
             // 5.56 is scarcer than 9mm; 12g cheaper than 9mm.
-            Assert.True(byId["ammo_556"].basePrice > byId["9mm_ammo"].basePrice);
-            Assert.True(byId["ammo_12g"].basePrice < byId["9mm_ammo"].basePrice);
+            Assert.True(byId["ammo_556"].basePrice > byId["ammo_9x19"].basePrice);
+            Assert.True(byId["ammo_12g"].basePrice < byId["ammo_9x19"].basePrice);
             // Diesel sits between generic fuel and coal.
             Assert.InRange(byId["diesel_fuel"].basePrice, byId["coal"].basePrice, byId["fuel"].basePrice);
         }

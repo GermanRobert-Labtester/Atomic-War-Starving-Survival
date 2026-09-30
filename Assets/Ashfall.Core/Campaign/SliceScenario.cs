@@ -144,6 +144,23 @@ namespace Ashfall.Core.Campaign
         }
 
         /// <summary>
+        /// Returns the authored beat for the given day, if the scenario defines
+        /// one. The beat is authored playtest data (title + description) and
+        /// carries no verification state; hosts use it to tell the player what
+        /// the day asks of them.
+        /// </summary>
+        public bool TryGetBeatForDay(int day, out SliceBeatDef? beat)
+        {
+            if (day > 0 && _beatsByDay.TryGetValue(day, out var found))
+            {
+                beat = found;
+                return true;
+            }
+            beat = null;
+            return false;
+        }
+
+        /// <summary>
         /// Evaluates a beat for the specified day against authored requirements.
         /// </summary>
         public bool EvaluateDayBeat(int day, string actionKey, string systemOutcome, out SliceBeatResult result)

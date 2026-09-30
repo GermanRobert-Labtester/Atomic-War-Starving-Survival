@@ -280,6 +280,10 @@ onboarding.power.title,Restore power,Strom wiederherstellen,src/UI/OnboardingHin
 onboarding.power.objective,Throw a shelter breaker and watch the grid change.,Einen Bunkerschalter umlegen und die Änderung im Netz sehen.,src/UI/OnboardingHintPanel.cs
 onboarding.food.title,Use a food ration,Nahrungsration verwenden,src/UI/OnboardingHintPanel.cs
 onboarding.food.objective,Eat a food ration from stores.,Eine Nahrungsration aus den Vorräten verbrauchen.,src/UI/OnboardingHintPanel.cs
+onboarding.duty.title,Put someone on shift,Eine Schicht besetzen,src/UI/OnboardingHintPanel.cs
+onboarding.duty.objective,Open the duty roster and assign one survivor. Work does not happen by itself.,Dienstplan öffnen und einen Überlebenden zuweisen. Arbeit passiert nicht von allein.,src/UI/OnboardingHintPanel.cs
+onboarding.dose.title,Read your dose,Deine Dosis lesen,src/UI/OnboardingHintPanel.cs
+onboarding.dose.objective,Open the dose ledger or radiation detail. It accumulates quietly.,Dosisprotokoll oder Strahlungsdetail öffnen. Sie summiert sich leise.,src/UI/OnboardingHintPanel.cs
 onboarding.research.title,Start research,Forschung starten,src/UI/OnboardingHintPanel.cs
 onboarding.research.objective,Start one available research node. It takes days.,Einen verfügbaren Forschungsknoten starten. Das dauert Tage.,src/UI/OnboardingHintPanel.cs
 onboarding.expedition.title,Dispatch an expedition,Expedition entsenden,src/UI/OnboardingHintPanel.cs
@@ -294,6 +298,8 @@ onboarding.hint.day_advance,Confirm the advance. The morning briefing returns on
 onboarding.hint.water,Start a treatment batch at the water plant. The stores only change if a batch actually runs.,"Einen Aufbereitungszyklus in der Wasseranlage starten. Die Vorräte ändern sich nur, wenn ein Zyklus wirklich läuft.",src/UI/OnboardingHintPanel.cs
 onboarding.hint.power,Open the grid and throw one breaker. Watch the rooms change.,Netz öffnen und einen Schalter umlegen. Die Räume beobachten.,src/UI/OnboardingHintPanel.cs
 onboarding.hint.food,Eat one ration from stores. The count should drop.,Eine Nahrungsration aus den Vorräten essen. Der Bestand sollte sinken.,src/UI/OnboardingHintPanel.cs
+onboarding.hint.duty,Open the Duty Roster and put one survivor on a shift. Nothing in the shelter runs itself.,Dienstplan öffnen und einen Überlebenden auf eine Schicht legen. Nichts im Bunker läuft von allein.,src/UI/OnboardingHintPanel.cs
+onboarding.hint.dose,Open the dose ledger before the day ends. The number only moves one way.,Vor Tagesende das Dosisprotokoll öffnen. Die Zahl bewegt sich nur in eine Richtung.,src/UI/OnboardingHintPanel.cs
 onboarding.hint.research,Start an available research node. It appears in the queue.,Einen verfügbaren Forschungsknoten starten. Er erscheint in der Warteschlange.,src/UI/OnboardingHintPanel.cs
 onboarding.hint.expedition,Send a team with the expedition command. They leave the shelter.,Ein Team mit dem Expeditionsbefehl entsenden. Sie verlassen den Bunker.,src/UI/OnboardingHintPanel.cs
 wildlife.trap.trap_snare.name,Wire Snare,Drahtschlinge,Assets/StreamingAssets/Data/wildlife_trapping_catalog.json

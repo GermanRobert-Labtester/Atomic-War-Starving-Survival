@@ -22,6 +22,11 @@ namespace AtomicWar.GodotApp.UI
         private Label _maintenanceStatus = null!;
         private Label _radioStatus = null!;
         private VBoxContainer _logList = null!;
+        private Label _goalHeader = null!;
+        private Label _goalLabel = null!;
+        private HSeparator _goalSeparator = null!;
+        private string _goalTitle = string.Empty;
+        private string _goalBody = string.Empty;
 
         private StartingLevelHostSession? _startingHost;
 
@@ -29,6 +34,29 @@ namespace AtomicWar.GodotApp.UI
         {
             _startingHost = session;
             RefreshView();
+        }
+
+        /// <summary>
+        /// Sets the day's goal line from the authored Plan 54 seven-day slice
+        /// beat. Null or empty clears it; the block hides when the scenario
+        /// defines no beat for the current day.
+        /// </summary>
+        public void SetDayGoal(string? title, string? body)
+        {
+            _goalTitle = title ?? string.Empty;
+            _goalBody = body ?? string.Empty;
+            RefreshGoal();
+        }
+
+        private void RefreshGoal()
+        {
+            if (_goalLabel == null) return;
+            bool has = !string.IsNullOrEmpty(_goalTitle);
+            _goalHeader.Visible = has;
+            _goalLabel.Visible = has;
+            _goalSeparator.Visible = has;
+            if (has)
+                _goalLabel.Text = $"{_goalTitle} — {_goalBody}";
         }
 
         public void RefreshView()
@@ -111,6 +139,14 @@ namespace AtomicWar.GodotApp.UI
             var content = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingMd);
             content.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             scroll.AddChild(content);
+
+            // ── TODAY'S GOAL (Plan 54 seven-day slice beat) ──
+            _goalHeader = AshfallUiHelpers.MakeSectionHeader("TODAY'S GOAL");
+            content.AddChild(_goalHeader);
+            _goalLabel = AshfallUiHelpers.MakeBody(string.Empty);
+            content.AddChild(_goalLabel);
+            _goalSeparator = AshfallUiHelpers.MakeSeparator();
+            content.AddChild(_goalSeparator);
 
             // ── PART 1: MORNING RATION TRIAGE ──
             content.AddChild(AshfallUiHelpers.MakeSectionHeader("1. MORNING RATION TRIAGE"));
@@ -215,6 +251,7 @@ namespace AtomicWar.GodotApp.UI
             _logList = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingXs);
             content.AddChild(_logList);
 
+            RefreshGoal();
             RefreshView();
         }
 

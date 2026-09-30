@@ -146,7 +146,7 @@ public class Plan56FollowUpTests
         foreach (var id in new[]
                  {
                      "clean_water", "scrap_metal", "antibiotics", "iodine_pills", "fuel",
-                     "9mm_ammo", "crowbar", "gas_mask", "dosimeter", "canned_food",
+                     "ammo_9x19", "crowbar", "gas_mask", "dosimeter", "canned_food",
                      "diamond", "coal", "cooked_meat", "water_filter", "air_filter",
                      "seed_packets", "anti_rad", "tobacco_pouch", "ammo_556", "ammo_12g",
                      "diesel_fuel", "item_smoked_meat", "item_pickled_tubers",

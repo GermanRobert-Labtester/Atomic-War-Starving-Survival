@@ -411,7 +411,7 @@ namespace AtomicWar.GodotApp
 
             PanelRegistry.ConfigureActions("protocol",
                 bindAction: () => { SetupStartingLevel(); _openingProtocolModal.Bind(_startingLevel); },
-                openAction: () => _openingProtocolModal.Open(),
+                openAction: () => { RefreshOpeningProtocolDayGoal(); _openingProtocolModal.Open(); },
                 closeAction: () => CloseOpeningProtocolModal());
 
             PanelRegistry.ConfigureActions("greenhouse",

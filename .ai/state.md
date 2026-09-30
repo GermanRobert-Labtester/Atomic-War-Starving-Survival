@@ -1,5 +1,12 @@
 # Current Task State
 
+## Fifteen-asset generation — 2026-09-30 (IN PROGRESS)
+
+- User authorized a batch of 15 game assets. Approved bounded plan: `.ai/plans/asset-generation-batch15-2026-09-30.md`.
+- Scope: 12 surface lighting backdrops and 3 survivor walking sheet variants, staged under `artifacts/asset-generation/batch15-2026-09-30/`. All existing runtime/source/data paths are read-only.
+- Preflight: `bin/ashfall-dev validate-json` PASS 714/714, no violations. Existing equivalent/consumer check confirms explicit placeholder Surface and Character sets; foreign surface bake script preserved.
+- Remaining: generation, saved output validation, visual review and final report. No tests or runtime integration.
+
 ## Plan 53 E1C metadata migration — FULLY INTEGRATED (2026-09-30)
 
 - User explicitly authorized Plan 53, current-inventory reconciliation, and ownership reassignment. Transferred seven E1A plan paths and the additionally claimed Plan 41 current-inventory path (including matching `shipped_to_chat` copies) from PFGL to E1C in `WORKTREE_OWNERSHIP.md`.
@@ -9385,3 +9392,38 @@ Verification:
 
 The Developer Session (main-menu DEV SESSION) now surfaces: items/portraits/
 locations/factions asset resolution AND art placeholder-vs-final status. No commit.
+
+## First-hour items 3 + 4 — strings, 9mm_ammo, Day-1 goal — 2026-09-30
+
+User-authorized ("start working on these, code them!" — audit items 3 and 4).
+
+Item 3: (a) The Duty/Dose first-hour stages (added 2026-09-25) had no
+onboarding.* rows — status bar/hint panel fell back to English and the hint
+line showed "HINT: —". Added onboarding.duty/dose title+objective and
+onboarding.hint.duty/dose (en+de) to assets/l10n/strings.csv, wired the two
+BuildHintLine switch cases, and completed the l10n drift gate's dynamic
+stage-key family (all OnboardingCatalog stages now enumerated). (b) Renamed
+economy_goods.json id 9mm_ammo -> canonical ammo_9x19 (the id every other
+catalog already uses); repinned Plan56EconomyGoodsTests/Plan56FollowUpTests
+and the resolution test now proves the good resolves to the real item.
+
+Item 4: Day 1 now has a goal. Core SliceScenario gained TryGetBeatForDay
+(engine-free read of the authored slice_seven_days.json beats); Main gained
+TryGetSliceGoal/RefreshOpeningProtocolDayGoal; OpeningProtocolModal shows a
+"TODAY'S GOAL" block (hidden when no beat authored) at all three open sites
+(new game, protocol route, panel registry); ShowBriefingForDay leads the
+briefing with a "Today's Goal" section for days 1-7. No new save section, no
+parallel goal state — the slice instrument already loads in the campaign.
+
+Files: assets/l10n/strings.csv, src/UI/OnboardingHintPanel.cs,
+scripts/ci/l10n_drift_gate.py, Assets/StreamingAssets/Data/economy_goods.json,
+Ashfall.Core.Tests/Plan56EconomyGoodsTests.cs, Plan56FollowUpTests.cs,
+Assets/Ashfall.Core/Campaign/SliceScenario.cs, src/Main.SliceScenario.cs,
+src/UI/OpeningProtocolModal.cs, src/Main.GameFlow.cs, src/Main.PlayerSurfaces.cs,
+src/Main.Campaign.cs.
+
+Verification: dotnet build Ashfall.csproj 0 errors; focused xUnit 33/33;
+--seven-day-slice-selftest 25/25; --day1-selftest PASS; --data-integrity-selftest
+PASS (0 errors/430 catalogs); l10n drift gate PASS. No snapshot goldens cover
+these modals. Plan archived at
+.ai/plans/integrated/onboarding/first-hour-goal-and-noise-2026-09-30.md.

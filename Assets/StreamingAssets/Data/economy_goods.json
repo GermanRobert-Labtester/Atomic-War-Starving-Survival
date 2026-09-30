@@ -68,7 +68,7 @@
       "barterNote": "The generators drink it; so does the market. A full can means warmth through the night. An empty can means a long, cold watch."
     },
     {
-      "id": "9mm_ammo",
+      "id": "ammo_9x19",
       "displayName": "9mm Ammunition",
       "category": "ammo",
       "basePrice": 12.0,

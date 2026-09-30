@@ -49,7 +49,9 @@ def main() -> int:
                 source,
             )
         )
-        # Include the one dynamically constructed stage-key family.
+        # Include the dynamically constructed stage-key family: every stage
+        # declared in OnboardingCatalog (legacy + first-hour) builds its
+        # title/objective keys at runtime, so the gate must enumerate them.
         referenced.update(
             {
                 "onboarding.protocol.title",
@@ -66,6 +68,20 @@ def main() -> int:
                 "onboarding.inventory_use.objective",
                 "onboarding.day_advance.title",
                 "onboarding.day_advance.objective",
+                "onboarding.water.title",
+                "onboarding.water.objective",
+                "onboarding.power.title",
+                "onboarding.power.objective",
+                "onboarding.food.title",
+                "onboarding.food.objective",
+                "onboarding.duty.title",
+                "onboarding.duty.objective",
+                "onboarding.dose.title",
+                "onboarding.dose.objective",
+                "onboarding.research.title",
+                "onboarding.research.objective",
+                "onboarding.expedition.title",
+                "onboarding.expedition.objective",
             }
         )
         missing = sorted(key for key in referenced if key not in rows)

@@ -1,8 +1,8 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 5609 | **Total Characters:** 6,973,799,081 | **Last Verified:** 2026-09-30
-**Oversized (>= 100,000 characters):** 3553 documents carrying 6,942,128,599 characters — tracked in full, see the register below
+**Total Indexed Documents:** 5609 | **Total Characters:** 6,973,799,693 | **Last Verified:** 2026-09-30
+**Oversized (>= 100,000 characters):** 3553 documents carrying 6,942,129,211 characters — tracked in full, see the register below
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
@@ -12,7 +12,7 @@
 
 ---
 
-## Oversized Document Register (>= 100,000 characters) — 3553 documents, 6,942,128,599 characters
+## Oversized Document Register (>= 100,000 characters) — 3553 documents, 6,942,129,211 characters
 
 Authored plan and prose documents at or above the size threshold, recorded to the exact character count. These documents are tracked in full: the register reports their size so it stays visible and reviewable, and no document is excluded from the corpus or from this index.
 
@@ -1518,8 +1518,8 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 1,466,446 | [`docs/plans/integrated/content/INTEGRATED_cw127_01_names_for_a_cup_plan.md`](plans/integrated/content/INTEGRATED_cw127_01_names_for_a_cup_plan.md) |
 | 1,465,053 | [`docs/expansions/prose_wave135/cw135_18_the_delta_is_a_measured_boundary_plan.md`](expansions/prose_wave135/cw135_18_the_delta_is_a_measured_boundary_plan.md) |
 | 1,461,780 | [`docs/expansions/prose_wave135/cw135_19_trade_food_for_protection_plan.md`](expansions/prose_wave135/cw135_19_trade_food_for_protection_plan.md) |
+| 1,461,085 | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) |
 | 1,460,546 | [`docs/expansions/prose_wave131/cw131_13_the_weather_has_a_column_plan.md`](expansions/prose_wave131/cw131_13_the_weather_has_a_column_plan.md) |
-| 1,460,473 | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) |
 | 1,460,307 | [`docs/expansions/prose_wave129/cw129_04_the_name_and_the_empty_span_plan.md`](expansions/prose_wave129/cw129_04_the_name_and_the_empty_span_plan.md) |
 | 1,460,075 | [`docs/expansions/prose_wave135/cw135_05_eighty_five_seconds_under_ice_plan.md`](expansions/prose_wave135/cw135_05_eighty_five_seconds_under_ice_plan.md) |
 | 1,458,788 | [`docs/plans/integrated/content/INTEGRATED_cw127_04_the_ping_above_plan.md`](plans/integrated/content/INTEGRATED_cw127_04_the_ping_above_plan.md) |
@@ -6971,7 +6971,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`Seal-steps/ashfall-wave2-successor-corpus-tranche-two-and-ship-readiness-program-2026-09-19.md`](../Seal-steps/ashfall-wave2-successor-corpus-tranche-two-and-ship-readiness-program-2026-09-19.md) | 90,201 | **ASHFALL — Wave 2, Program B: Successor Corpus Tranche-2 & Ship-Readiness Program** — This is Wave 2 Program B, the final forward document in the 2026-09-19 |
 | 🟢 `CURRENT` | [`TEST_POLICY.md`](../TEST_POLICY.md) | 5,220 | **ASHFALL Test Policy** — Tests protect current behavior; they are not a production-count target. This |
 | 🟢 `CURRENT` | [`VIBE.md`](../VIBE.md) | 18,363 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
-| 🟢 `CURRENT` | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) | 1,460,473 | **ASHFALL Worktree Ownership** — DEFERRED; CLAIM RELEASED. User declined authored age changes and requested another plan. All P4b implementation/test ... |
+| 🟢 `CURRENT` | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) | 1,461,085 | **ASHFALL Worktree Ownership** — Root foreman/integrator; user-authorized fifteen-asset generation. Exact assets and metadata paths enumerated in `.ai... |
 | 🟢 `CURRENT` | [`addons/godot_mcp/commands/master_checklist.md`](../addons/godot_mcp/commands/master_checklist.md) | 1,457 | **Master Checklist** — - [x] 01. `project_creation_commands.gd` |
 | 🟢 `CURRENT` | [`addons/ziva_agent/LICENSE.md`](../addons/ziva_agent/LICENSE.md) | 282 | **Proprietary License** — All rights reserved. |
 | 🟢 `CURRENT` | [`addons/ziva_agent/README.md`](../addons/ziva_agent/README.md) | 2,787 | **Ziva AI Agent – The S-Tier AI Coding Assistant for Godot** — ![Godot 4.2+](https://godotengine.org/) |

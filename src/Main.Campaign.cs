@@ -486,6 +486,19 @@ namespace AtomicWar.GodotApp
             // briefing. Empty predictions leave the report untouched.
             DailyBriefingReportBuilder.AppendCrisisWarnings(report, BuildBriefingCrisisPredictions(day));
 
+            // Plan 54 — the seven-day slice beat is the day's goal: lead the
+            // briefing with it so the player is told what to do next. A day
+            // with no authored beat leaves the report untouched.
+            if (TryGetSliceGoal(day, out string goalTitle, out string goalBody))
+            {
+                report.Sections.Insert(0, new DailyBriefingSection(
+                    "Today's Goal",
+                    new[]
+                    {
+                        new DailyBriefingEntry("Today's Goal", string.Empty, $"{goalTitle} — {goalBody}", order: -1)
+                    }));
+            }
+
             if (report.IsEmpty) return;
             _dailyBriefing.Enqueue(report);
             _dailyBriefingDirty = true;
