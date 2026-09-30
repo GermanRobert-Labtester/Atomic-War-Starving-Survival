@@ -930,6 +930,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 _modalActive = false;
                 if (_encounterModal != null) _encounterModal.Visible = false;
+                AshfallFocusPolicy.FocusFirstDeferred(this);
                 return;
             }
 
@@ -999,6 +1000,10 @@ namespace AtomicWar.GodotApp.UI
 
             RenderChoiceButtons();
             _encounterModal.Visible = true;
+            // Nested overlay: never routed through ShowPanelLifecycle, so it
+            // needs its own initial focus (a11y pkg 19 — pkg-12 regression
+            // class; keyboard players previously had to click first).
+            AshfallFocusPolicy.OpenWithFocus(_encounterModal, opener: this);
         }
 
         private void RenderChoiceButtons()
