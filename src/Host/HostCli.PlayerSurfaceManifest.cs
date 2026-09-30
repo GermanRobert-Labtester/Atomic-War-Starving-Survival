@@ -30,29 +30,35 @@ namespace AtomicWar.GodotApp
                 Check(manifest != null && manifest.TotalSurfaces > 0,
                     $"Check 1: {manifest?.TotalSurfaces ?? 0} player-navigable surfaces enumerated from the live registry.");
                 passed += manifest != null && manifest.TotalSurfaces > 0 ? 1 : 0;
+                if (manifest == null)
+                {
+                    Console.WriteLine("[FAIL] Check 1: manifest generation failed — coverage checks skipped.");
+                    Console.WriteLine($"=== Player Surface Manifest Self-Test: {passed}/{total} passed ===");
+                    return 1;
+                }
 
                 // 2. Every player-navigable surface has a route.
-                Check(PlayerSurfaceManifestHostSession.IsEverySurfaceRouted(manifest),
-                    $"Check 2: all {manifest.RoutedSurfaces}/{manifest.TotalSurfaces} surfaces are routed.");
-                passed += PlayerSurfaceManifestHostSession.IsEverySurfaceRouted(manifest) ? 1 : 0;
+                Check(manifest != null && PlayerSurfaceManifestHostSession.IsEverySurfaceRouted(manifest),
+                    $"Check 2: all {manifest?.RoutedSurfaces ?? 0}/{manifest?.TotalSurfaces ?? 0} surfaces are routed.");
+                passed += manifest != null && PlayerSurfaceManifestHostSession.IsEverySurfaceRouted(manifest) ? 1 : 0;
 
                 // 3. Every surface can be dismissed (the Esc softlock class is asserted).
-                Check(PlayerSurfaceManifestHostSession.IsEverySurfaceClosable(manifest),
-                    $"Check 3: all {manifest.CloseableSurfaces}/{manifest.TotalSurfaces} surfaces are keyboard-closable.");
-                passed += PlayerSurfaceManifestHostSession.IsEverySurfaceClosable(manifest) ? 1 : 0;
+                Check(manifest != null && PlayerSurfaceManifestHostSession.IsEverySurfaceClosable(manifest),
+                    $"Check 3: all {manifest?.CloseableSurfaces ?? 0}/{manifest?.TotalSurfaces ?? 0} surfaces are keyboard-closable.");
+                passed += manifest != null && PlayerSurfaceManifestHostSession.IsEverySurfaceClosable(manifest) ? 1 : 0;
 
                 // 4. Coverage buckets are exhaustive, not overlapping guesses.
-                Check(manifest.InteractiveActionSurfaces + manifest.ReadOnlySurfaces == manifest.TotalSurfaces,
-                    $"Check 4: interactive {manifest.InteractiveActionSurfaces} + read-only {manifest.ReadOnlySurfaces} = total.");
-                passed += manifest.InteractiveActionSurfaces + manifest.ReadOnlySurfaces == manifest.TotalSurfaces ? 1 : 0;
+                Check(manifest != null && manifest.InteractiveActionSurfaces + manifest.ReadOnlySurfaces == manifest.TotalSurfaces,
+                    $"Check 4: interactive {manifest?.InteractiveActionSurfaces ?? 0} + read-only {manifest?.ReadOnlySurfaces ?? 0} = total {manifest?.TotalSurfaces ?? 0}.");
+                passed += manifest != null && manifest.InteractiveActionSurfaces + manifest.ReadOnlySurfaces == manifest.TotalSurfaces ? 1 : 0;
 
                 // 5. Binding coverage is measured against the same registry.
-                Check(manifest.BoundSurfaces <= manifest.TotalSurfaces && manifest.BoundSurfaces > 0,
-                    $"Check 5: {manifest.BoundSurfaces} surfaces name a binding target.");
-                passed += manifest.BoundSurfaces > 0 ? 1 : 0;
+                Check(manifest != null && manifest.BoundSurfaces <= manifest.TotalSurfaces && manifest.BoundSurfaces > 0,
+                    $"Check 5: {manifest?.BoundSurfaces ?? 0} surfaces name a binding target.");
+                passed += manifest != null && manifest.BoundSurfaces > 0 ? 1 : 0;
 
                 // 6. Snapshot coverage is reported honestly (not inflated to 100%).
-                Check(manifest.SnapshotCoveredSurfaces <= manifest.TotalSurfaces
+                Check(manifest!.SnapshotCoveredSurfaces <= manifest.TotalSurfaces // guarded above
                       && session.CoverageSummary().Contains("snapshot-covered", StringComparison.Ordinal),
                     $"Check 6: snapshot coverage reported as truth — {session.CoverageSummary()}.");
                 passed += manifest.SnapshotCoveredSurfaces <= manifest.TotalSurfaces ? 1 : 0;

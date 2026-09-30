@@ -40,7 +40,7 @@ namespace AtomicWar.GodotApp
                 else Console.WriteLine("[FAIL] Check 4: lockout not enforced.");
 
                 var sell = session.QuoteContrabandSell("item_narcotics", 3, 100, ContrabandClassification.Narcotics, 50);
-                if (sell != null && sell.UnitPriceChits > 0 && sell.UnitPriceChits <= buy.UnitPriceChits) { Console.WriteLine("[PASS] Check 5: Contraband sell quote ≤ buy quote."); passed++; }
+                if (buy != null && sell != null && sell.UnitPriceChits > 0 && sell.UnitPriceChits <= buy.UnitPriceChits) { Console.WriteLine("[PASS] Check 5: Contraband sell quote ≤ buy quote."); passed++; }
                 else Console.WriteLine("[FAIL] Check 5: sell quote wrong.");
 
                 // chit purity assay (pure, deterministic)

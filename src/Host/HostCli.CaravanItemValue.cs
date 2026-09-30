@@ -37,6 +37,12 @@ namespace AtomicWar.GodotApp
                 Check(itemCatalog != null && itemCatalog.Count > 0,
                     $"Check 1: canonical item catalog is the value source ({itemCatalog?.Count ?? 0} items).");
                 passed += itemCatalog != null && itemCatalog.Count > 0 ? 1 : 0;
+                if (itemCatalog == null)
+                {
+                    Console.WriteLine("[FAIL] Check 1: item catalog missing — value-source checks skipped.");
+                    Console.WriteLine($"=== Canonical Caravan Item Value Self-Test: {passed}/{total} passed ===");
+                    return 1;
+                }
 
                 var system = new CaravanTradeNetworkSystem(
                     routes, new Inventory(), new SeededRng(85), Ashfall.Core.NullLog.Instance);
@@ -54,19 +60,27 @@ namespace AtomicWar.GodotApp
                 passed += literalPrice > 0f ? 1 : 0;
 
                 // 3. The fallback table references item ids the authority does not have.
-                Check(itemCatalog.Get("sterile_gauze") == null,
+                var gauze = itemCatalog?.Get("sterile_gauze");
+                Check(gauze == null,
                     "Check 3: 'sterile_gauze' is not an authored item — proof the literal table is stale.");
-                passed += itemCatalog.Get("sterile_gauze") == null ? 1 : 0;
+                passed += gauze == null ? 1 : 0;
 
                 // 4. Bind the canonical resolver through the owner's own seam.
-                system.SetItemValueResolver(id => itemCatalog.Get(id)?.tradeValue ?? 0f);
-                var real = itemCatalog.Ids.FirstOrDefault(id => (itemCatalog.Get(id)?.tradeValue ?? 0f) > 0f);
+                var catalog = itemCatalog!; // declared nullability, not flow state, is what lambdas see
+                system.SetItemValueResolver(id => catalog.Get(id)?.tradeValue ?? 0f);
+                var real = catalog.Ids.FirstOrDefault(id => (catalog.Get(id)?.tradeValue ?? 0f) > 0f);
                 Check(!string.IsNullOrEmpty(real),
                     $"Check 4: an authored item with tradeValue exists ('{real}').");
                 passed += !string.IsNullOrEmpty(real) ? 1 : 0;
 
                 // 5. Base value now equals the authored tradeValue exactly.
-                float authored = itemCatalog.Get(real!)!.tradeValue;
+                if (string.IsNullOrEmpty(real))
+                {
+                    Console.WriteLine("[FAIL] Check 4: no authored tradeValue item — canonical-value checks skipped.");
+                    Console.WriteLine($"=== Canonical Caravan Item Value Self-Test: {passed}/{total} passed ===");
+                    return 1;
+                }
+                float authored = catalog.Get(real)!.tradeValue;
                 float crisis = 1.0f;
                 float priced = system.CalculateItemBuyPrice(manifest, real!, crisis);
                 float expectedRatio = priced / authored;

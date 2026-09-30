@@ -64,7 +64,7 @@ namespace AtomicWar.GodotApp
                     Console.WriteLine("[FAIL] Check 4: Self-directed offer accepted.");
                 }
 
-                var trade = session.AcceptOffer(offer.OfferId, 3);
+                var trade = offer == null ? null : session.AcceptOffer(offer.OfferId, 3);
                 if (trade != null && trade.OfferId == (offer?.OfferId ?? string.Empty))
                 {
                     Console.WriteLine("[PASS] Check 5: Offer accepted and trade recorded.");

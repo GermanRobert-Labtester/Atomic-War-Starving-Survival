@@ -67,8 +67,10 @@ namespace AtomicWar.GodotApp
                 passed += both.BarrierIntegrityBonus == 0.20f ? 1 : 0;
 
                 // 6. The bonus is actually consumed on a shot (the Core add-site).
-                Check(engine.DoctrineCapability.AccuracyBonus > 0f
-                      && Math.Abs(engine.DoctrineCapability.AccuracyBonus - 0.05f) < 0.0001f,
+                var liveCapability = engine.DoctrineCapability;
+                Check(liveCapability != null
+                      && liveCapability.AccuracyBonus > 0f
+                      && Math.Abs(liveCapability.AccuracyBonus - 0.05f) < 0.0001f,
                     "Check 6: the accuracy add-site in Actions.cs now reads a non-zero bonus.");
                 passed += 1;
 
@@ -85,13 +87,13 @@ namespace AtomicWar.GodotApp
                 revoke.State.unlockedIds.Add("knowledge_combat_training");
                 var s2 = new CombatDoctrineCapabilityHostSession(() => engine, () => revoke);
                 s2.Recompute();
-                bool hadIt = engine.DoctrineCapability.HasCombatTraining;
+                bool hadIt = engine.DoctrineCapability?.HasCombatTraining == true;
                 revoke.State.unlockedIds.Clear();
                 s2.Recompute();
-                Check(hadIt && !engine.DoctrineCapability.HasCombatTraining
-                      && engine.DoctrineCapability.AccuracyBonus == 0f,
+                Check(hadIt && engine.DoctrineCapability?.HasCombatTraining == false
+                      && engine.DoctrineCapability?.AccuracyBonus == 0f,
                     "Check 8: revoking knowledge revokes the combat bonus (single source of truth).");
-                passed += (hadIt && !engine.DoctrineCapability.HasCombatTraining) ? 1 : 0;
+                passed += (hadIt && engine.DoctrineCapability?.HasCombatTraining == false) ? 1 : 0;
 
                 // 9. An unbound research owner is a clean zero, never a crash.
                 var s3 = new CombatDoctrineCapabilityHostSession(() => engine, () => null);

@@ -46,7 +46,7 @@ namespace AtomicWar.GodotApp
                 // 5. Capture/restore
                 var state1 = session.CaptureState();
                 Check("capture_state", state1 != null);
-                Check("capture_entries", state1.entries.Count == 1);
+                Check("capture_entries", state1?.entries.Count == 1);
 
                 system.RestoreState(new VoluntaryRegisterSystemState());
                 Check("reset_clears", system.Entries.Count == 0);
