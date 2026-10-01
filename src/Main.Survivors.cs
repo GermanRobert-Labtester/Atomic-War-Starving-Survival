@@ -321,12 +321,12 @@ namespace AtomicWar.GodotApp
 
         private void CloseSurvivorsOverlay()
         {
-            _survivorsOverlay.Visible = false;
+            ClosePanelAnimated(_survivorsOverlay);
         }
 
         private void CloseSurvivorDetailPanel()
         {
-            _survivorDetailPanel.Visible = false;
+            ClosePanelAnimated(_survivorDetailPanel);
         }
 
     }

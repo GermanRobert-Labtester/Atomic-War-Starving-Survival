@@ -108,14 +108,6 @@ namespace AtomicWar.GodotApp
         public int GetShelterStabilityRating() =>
             _shelterGovernance?.StabilityRating ?? 100;
 
-        public void FlushShelterGovernanceIfDirty()
-        {
-            if (_shelterGovernanceDirty)
-            {
-                SaveShelterGovernance();
-            }
-        }
-
         public void ResetShelterGovernance()
         {
             _shelterGovernance = null;

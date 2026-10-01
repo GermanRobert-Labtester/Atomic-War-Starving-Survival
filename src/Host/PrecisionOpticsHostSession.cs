@@ -64,11 +64,5 @@ namespace AtomicWar.GodotApp
             return res;
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            PrecisionOpticsSaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
     }
 }

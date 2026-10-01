@@ -106,11 +106,6 @@ namespace AtomicWar.GodotApp
                 _cassettePlaybackDirty = false;
         }
 
-        public void FlushCassettePlaybackIfDirty()
-        {
-            if (_cassettePlaybackDirty) SaveCassettePlayback();
-        }
-
         public void ResetCassettePlayback()
         {
             _cassettePlayback = null;

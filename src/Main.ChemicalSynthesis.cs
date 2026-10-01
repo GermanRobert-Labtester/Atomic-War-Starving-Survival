@@ -47,9 +47,5 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        private void FlushChemicalSynthesisIfDirty()
-        {
-            if (_chemicalSynthesisDirty) SaveChemicalSynthesis();
-        }
     }
 }

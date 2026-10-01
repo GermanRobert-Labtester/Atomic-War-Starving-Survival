@@ -122,14 +122,6 @@ namespace AtomicWar.GodotApp
             // Heartbeat daily progression
         }
 
-        public void FlushMetaProgressionIfDirty()
-        {
-            if (_metaProgressionDirty)
-            {
-                SaveMetaProgression();
-            }
-        }
-
         public void ResetMetaProgression()
         {
             _metaProgression = null;

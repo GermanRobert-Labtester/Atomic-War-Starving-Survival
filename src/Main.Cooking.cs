@@ -44,7 +44,16 @@ namespace AtomicWar.GodotApp
                     GD.PrintErr($"[Cooking] Failed to load recipes: {string.Join("; ", session.LoadErrors)}");
                 }
 
-                session.RestoreState(CookingSaveStore.TryLoad());
+                // Legacy direct-file restore. A healthy campaign keeps this
+                // section inside the envelope (no loose cooking_save.json),
+                // so TryLoad() is null on a fresh boot — restoring null would
+                // wipe the discovered-recipe list the catalog load just
+                // populated. Only a real persisted state may replace it.
+                var persistedCooking = CookingSaveStore.TryLoad();
+                if (persistedCooking != null)
+                {
+                    session.RestoreState(persistedCooking);
+                }
 
                 session.System.OnCookingCompletedSeam += op =>
                 {
@@ -100,6 +109,11 @@ namespace AtomicWar.GodotApp
             // catalog through the same data-path authority as the recipes.
             session.LoadFoodTypeCatalog(_dataDir, CatalogPath.CreateFileIOForDataDir(_dataDir));
 
+            // Bind the live cooking authority to the kitchen panel's cooking
+            // strip so CookingSystem.StartCooking/Progress/Cancel are
+            // player-operable (PFGL W5 P2 kitchen bind). Idempotent.
+            _kitchenNutritionPanel?.BindCooking(session);
+
             var census = session.Census;
             GD.Print($"[Cooking] {census.DiscoveredRecipesCount} recipes loaded. Total meals: {census.TotalMealsPrepared}, Skill: {census.CookingSkillLevel:0.#}.");
         }
@@ -135,16 +149,9 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        private void FlushCookingIfDirty()
-        {
-            if (_cookingDirty)
-            {
-                SaveCooking();
-            }
-        }
-
         private void ResetCooking()
         {
+            _kitchenNutritionPanel?.UnbindCooking();
             _cooking = null;
             _cookingDirty = false;
         }

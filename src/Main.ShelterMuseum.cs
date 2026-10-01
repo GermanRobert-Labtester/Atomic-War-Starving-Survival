@@ -110,14 +110,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public void FlushShelterMuseumIfDirty()
-        {
-            if (_shelterMuseumDirty)
-            {
-                SaveShelterMuseum();
-            }
-        }
-
         public void ResetShelterMuseum()
         {
             if (_shelterMuseum != null)

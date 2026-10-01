@@ -198,11 +198,19 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
+        /// <summary>Publishes a failure on the LastEvent seam before returning a refusal.</summary>
+        private ActionResult Refuse(ActionResult result)
+        {
+            LastEvent = $"Watch action refused: {result.FailureCode}";
+            RaiseStateChanged();
+            return result;
+        }
+
         public ActionResult AssignWatchShift(string postId, string survivorId, int startHour, int durationHours)
         {
-            if (_catalog?.Post(postId) == null) return ActionResult.Failed("unknown_watch_post", "watch.unknown_post");
+            if (_catalog?.Post(postId) == null) return Refuse(ActionResult.Failed("unknown_watch_post", "watch.unknown_post"));
             var postState = _perimeter.FindWatchPost(postId);
-            if (postState == null || !postState.active) return ActionResult.Blocked("watch_post_inactive", "watch.post_inactive");
+            if (postState == null || !postState.active) return Refuse(ActionResult.Blocked("watch_post_inactive", "watch.post_inactive"));
             // The roster rejects duplicate shift ids before testing overlap, so the
             // host-generated id must encode the full time window. Otherwise a
             // second non-overlapping shift for the same survivor/post/day would be
@@ -223,13 +231,18 @@ namespace AtomicWar.GodotApp
                 WriteJournal("watch_shift_assigned", $"{survivorId} is assigned to {postId} on day {_currentDay}.");
                 RaiseStateChanged();
             }
+            else
+            {
+                LastEvent = $"Watch shift refused: {result.FailureCode}";
+                RaiseStateChanged();
+            }
             return result;
         }
 
         public ActionResult CompleteWatchShift(string shiftId)
         {
             var shift = _roster.FindWatchShift(shiftId);
-            if (shift == null) return ActionResult.Failed("unknown_watch_shift", "watch.unknown_shift");
+            if (shift == null) return Refuse(ActionResult.Failed("unknown_watch_shift", "watch.unknown_shift"));
             int before = SurvivorFatigueProvider?.Invoke(shift.survivorId) ?? shift.fatigue_before_permille;
             int after = NightWatchPatrolReadinessEngine.AdvanceWatchFatigue(before, shift.duration_hours, 500);
             var result = _roster.CompleteWatchShift(shiftId, after);
@@ -238,6 +251,11 @@ namespace AtomicWar.GodotApp
                 _perimeter.MarkWatchShiftCompleted(shift.post_id);
                 LastEvent = $"Watch shift completed: {shift.post_id}.";
                 WriteJournal("watch_shift_completed", $"{shift.survivorId} completed the {shift.post_id} shift.");
+                RaiseStateChanged();
+            }
+            else
+            {
+                LastEvent = $"Watch shift completion refused: {result.FailureCode}";
                 RaiseStateChanged();
             }
             return result;
@@ -252,6 +270,11 @@ namespace AtomicWar.GodotApp
                 WriteJournal("watch_route_completed", $"{routeId} was walked on day {day}.");
                 RaiseStateChanged();
             }
+            else
+            {
+                LastEvent = $"Patrol route refused: {result.FailureCode}";
+                RaiseStateChanged();
+            }
             return result;
         }
 
@@ -262,6 +285,11 @@ namespace AtomicWar.GodotApp
             {
                 LastEvent = $"Debrief recorded for {routeId}.";
                 WriteJournal("watch_route_debriefed", $"Debrief recorded for {routeId} on day {day}.");
+                RaiseStateChanged();
+            }
+            else
+            {
+                LastEvent = $"Debrief refused: {result.FailureCode}";
                 RaiseStateChanged();
             }
             return result;
@@ -276,6 +304,11 @@ namespace AtomicWar.GodotApp
                 WriteJournal(passed ? "watch_drill_passed" : "watch_drill_failed", $"{drillId} recorded on day {day}.");
                 RaiseStateChanged();
             }
+            else
+            {
+                LastEvent = $"Drill record refused: {result.FailureCode}";
+                RaiseStateChanged();
+            }
             return result;
         }
 
@@ -288,6 +321,11 @@ namespace AtomicWar.GodotApp
                 WriteJournal("watch_post_status_changed", $"Watch post {postId} {(active ? "activated" : "deactivated")}.");
                 RaiseStateChanged();
             }
+            else
+            {
+                LastEvent = $"Post status change refused: {result.FailureCode}";
+                RaiseStateChanged();
+            }
             return result;
         }
 
@@ -298,6 +336,11 @@ namespace AtomicWar.GodotApp
             {
                 LastEvent = $"{postId} repaired.";
                 WriteJournal("watch_post_repaired", $"Watch post {postId} was repaired on day {day}.");
+                RaiseStateChanged();
+            }
+            else
+            {
+                LastEvent = $"Post repair refused: {result.FailureCode}";
                 RaiseStateChanged();
             }
             return result;
@@ -330,13 +373,18 @@ namespace AtomicWar.GodotApp
         {
             string sectorIdValue = sectorId?.Trim().ToLowerInvariant() ?? string.Empty;
             if (!NightWatchOperationsCatalogLoader.Sectors.Contains(sectorIdValue))
-                return ActionResult.Failed("unknown_sector", "defense.unknown_sector");
+                return Refuse(ActionResult.Failed("unknown_sector", "defense.unknown_sector"));
             var result = _perimeter.ToggleSectorAlarm(sectorIdValue);
             if (result.IsSuccess)
             {
                 var sector = _perimeter.FindSector(sectorIdValue);
                 LastEvent = $"{sectorIdValue} alarm {(sector?.alarm_armed == true ? "armed" : "disarmed")}.";
                 WriteJournal("watch_alarm_toggle", $"The {sectorIdValue} perimeter alarm was toggled.");
+                RaiseStateChanged();
+            }
+            else
+            {
+                LastEvent = $"Sector alarm toggle refused: {result.FailureCode}";
                 RaiseStateChanged();
             }
             return result;

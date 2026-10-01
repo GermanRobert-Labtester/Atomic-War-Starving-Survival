@@ -21,8 +21,10 @@ namespace AtomicWar.GodotApp.UI
     public partial class CombatPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
+        // T16 — route to the live CombatHudOverlay monitor.
+        public event Action? OnMonitorRequested;
         // Route-reachability wave — deep links to the registered combat_detail /
-        // combat_history consoles (bind and open handled by the host funnel).
+        // combat_history consoles (bind + open handled by the host funnel).
         public event Action? OnOpenCombatDetailRequested;
         public event Action? OnOpenCombatHistoryRequested;
 
@@ -52,6 +54,17 @@ namespace AtomicWar.GodotApp.UI
         private Button _btnSuppressStance = null!;
         private Button _btnRetreat = null!;
         private Button _btnEndTurn = null!;
+        private Button _btnBandage = null!;
+
+        // T14 — downed squadmate chosen by the bandage preflight each refresh.
+        private string _bandageTargetId = string.Empty;
+        private string _bandageTargetName = string.Empty;
+
+        // T15 — end-state summary (aftermath casualties + loot lines).
+        private RichTextLabel _resultLog = null!;
+
+        // T13 — true while a nonzero movement input frame is armed on the pump.
+        private bool _movementSent;
 
         public bool IsBound => _bound;
 
@@ -61,13 +74,22 @@ namespace AtomicWar.GodotApp.UI
             _combat = combat;
             _bound = true;
             if (_combat != null)
+            {
+                // OpenCombatPanel re-binds on every open — never stack refresh
+                // subscriptions on the shared session.
+                _combat.StateChanged -= RefreshView;
                 _combat.StateChanged += RefreshView;
+            }
             RefreshView();
         }
 
         public void RefreshView()
         {
             if (_combat == null || _header == null) return;
+            // The realtime pump raises StateChanged ~20x/s while an encounter
+            // runs; skip the full grid rebuild while the panel is closed
+            // (Open() refreshes explicitly on open).
+            if (!Visible) return;
 
             var snap = _combat.Snapshot();
 
@@ -102,7 +124,8 @@ namespace AtomicWar.GodotApp.UI
                     : (c.IsPinned ? AshfallDataGrid.CellState.Warning : AshfallDataGrid.CellState.Normal);
 
                 var weaponState = c.WeaponJammed ? AshfallDataGrid.CellState.Critical : AshfallDataGrid.CellState.Normal;
-                string weaponDisplay = $"{c.WeaponName} ({c.WeaponConditionPct}%)" + (c.WeaponJammed ? " [JAM]" : "");
+                string weaponDisplay = $"{c.WeaponName} ({c.WeaponConditionPct}%)" + (c.WeaponJammed ? " [JAM]" : "")
+                    + (c.WeaponAmmoRemaining >= 0 ? $" [{c.WeaponAmmoRemaining} rds]" : "");
 
                 var cells = new List<AshfallDataGrid.Cell>
                 {
@@ -164,6 +187,36 @@ namespace AtomicWar.GodotApp.UI
             {
                 _outcome.Text = string.Empty;
             }
+
+            // T15 — full end-state: aftermath casualties + recovered loot.
+            RefreshResultLog(snap);
+        }
+
+        private void RefreshResultLog(CombatSnapshot snap)
+        {
+            if (_resultLog == null) return;
+            _resultLog.Clear();
+            if (!snap.Resolved)
+            {
+                _resultLog.Visible = false;
+                return;
+            }
+            var lines = new List<string>();
+            var aftermath = snap.Aftermath;
+            if (aftermath != null)
+            {
+                foreach (var death in aftermath.SurvivorDeaths) lines.Add("Lost — " + death);
+                foreach (var injury in aftermath.SurvivorInjuries) lines.Add("Injured — " + injury);
+            }
+            foreach (var loot in snap.Loot)
+                lines.Add($"Recovered: {loot.itemId} ×{loot.quantity} ({loot.weightKg:0.#} kg)");
+            if (lines.Count == 0)
+            {
+                _resultLog.Visible = false;
+                return;
+            }
+            foreach (var line in lines) _resultLog.AppendText(line + "\n");
+            _resultLog.Visible = true;
         }
 
         private void UpdateButtonPreflights(CombatSnapshot snap)
@@ -200,6 +253,24 @@ namespace AtomicWar.GodotApp.UI
 
             _btnLastStand.Disabled = !active;
             _btnLastStand.TooltipText = active ? "Enter terminal Last Stand stance (drastic offense, no retreat)" : "Encounter not active";
+
+            // T14 — bandage preflight (Core stays the bandage authority).
+            var bandPf = _combat.EvaluateBandage();
+            _bandageTargetId = string.Empty;
+            _bandageTargetName = string.Empty;
+            foreach (var c in snap.Combatants)
+            {
+                if (c.IsPlayer && c.IsDowned)
+                {
+                    _bandageTargetId = c.Id;
+                    _bandageTargetName = c.Name;
+                    break;
+                }
+            }
+            _btnBandage.Disabled = !bandPf.CanExecute;
+            _btnBandage.TooltipText = bandPf.CanExecute
+                ? $"Bandage and stabilize {_bandageTargetName} (consumes 1 bandage)"
+                : bandPf.Reason;
 
             _btnHold.Disabled = !active;
             _btnAdvance.Disabled = !active;
@@ -328,6 +399,12 @@ namespace AtomicWar.GodotApp.UI
             row2.AddChild(_btnDecon);
             _btnLastStand = Btn("LAST STAND", () => DoAction(() => _combat.ActionLastStand(_combat.DefaultPlayerSubjectId())));
             row2.AddChild(_btnLastStand);
+            _btnBandage = Btn("BANDAGE", () =>
+            {
+                string target = _bandageTargetId;
+                DoAction(() => _combat.ActionBandage(_combat.DefaultPlayerSubjectId(), target));
+            });
+            row2.AddChild(_btnBandage);
             vbox.AddChild(row2);
 
             var row3 = Row();
@@ -388,7 +465,15 @@ namespace AtomicWar.GodotApp.UI
             _outcome.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical));
             vbox.AddChild(_outcome);
 
+            _resultLog = new RichTextLabel { BbcodeEnabled = false, ScrollActive = true, Visible = false };
+            _resultLog.CustomMinimumSize = new Vector2(820, 90);
+            vbox.AddChild(_resultLog);
+
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+            var btnMonitor = AshfallUiHelpers.MakeButton("LIVE MONITOR [M]", () => OnMonitorRequested?.Invoke());
+            btnMonitor.CustomMinimumSize = new Vector2(200, 40);
+            vbox.AddChild(btnMonitor);
 
             var btnDetail = AshfallUiHelpers.MakeButton("ENGAGEMENT DETAIL", () => OnOpenCombatDetailRequested?.Invoke());
             btnDetail.CustomMinimumSize = new Vector2(200, 40);
@@ -402,7 +487,7 @@ namespace AtomicWar.GodotApp.UI
             btnClose.CustomMinimumSize = new Vector2(200, 40);
             vbox.AddChild(btnClose);
 
-            var hint = AshfallUiHelpers.MakeSmall("[Tab] Cycle Target · [1-5] Tactical Actions · [Esc] Close · Resolves via deterministic Core engine");
+            var hint = AshfallUiHelpers.MakeSmall("[Tab] Cycle Target · [1-5] Tactical Actions · [WASD/Arrows/L-Stick] Move · [Shift] Sprint · [PadA] Fire · [PadX] Reload · [M] Live Monitor · [Esc/PadB] Close · Resolves via deterministic Core engine");
             vbox.AddChild(hint);
 
             RefreshView();
@@ -413,6 +498,54 @@ namespace AtomicWar.GodotApp.UI
             Visible = true;
             RefreshView();
             QueueRedraw();
+        }
+
+        public override void _Process(double delta)
+        {
+            // T13 — realtime movement adapter: WASD/arrows (+Shift sprint) feed
+            // the pump's input frame while the panel is open. The frame is
+            // cleared whenever the panel hides or the encounter leaves
+            // realtime, so a background encounter never inherits stale input.
+            if (!Visible || _combat == null)
+            {
+                if (_movementSent) { _combat?.SetInputFrame(CombatInputFrame.Empty); _movementSent = false; }
+                return;
+            }
+            var state = _combat.Engine.State;
+            if (state == null || !state.RealtimeActive || state.Resolved)
+            {
+                if (_movementSent) { _combat.SetInputFrame(CombatInputFrame.Empty); _movementSent = false; }
+                return;
+            }
+            float mx = 0f;
+            float my = 0f;
+            if (Input.IsKeyPressed(Key.A) || Input.IsKeyPressed(Key.Left)) mx -= 1f;
+            if (Input.IsKeyPressed(Key.D) || Input.IsKeyPressed(Key.Right)) mx += 1f;
+            if (Input.IsKeyPressed(Key.W) || Input.IsKeyPressed(Key.Up)) my -= 1f;
+            if (Input.IsKeyPressed(Key.S) || Input.IsKeyPressed(Key.Down)) my += 1f;
+            // T18 — left stick movement, additive with the keyboard, deadzone
+            // applied before mixing so resting sticks never drift the squad.
+            float stickX = Input.GetJoyAxis(0, JoyAxis.LeftX);
+            float stickY = Input.GetJoyAxis(0, JoyAxis.LeftY);
+            const float StickDeadzone = 0.25f;
+            if (MathF.Abs(stickX) < StickDeadzone) stickX = 0f;
+            if (MathF.Abs(stickY) < StickDeadzone) stickY = 0f;
+            mx = Math.Clamp(mx + stickX, -1f, 1f);
+            my = Math.Clamp(my + stickY, -1f, 1f);
+            bool sprint = Input.IsKeyPressed(Key.Shift);
+            if (mx == 0f && my == 0f && !sprint)
+            {
+                if (_movementSent) { _combat.SetInputFrame(CombatInputFrame.Empty); _movementSent = false; }
+                return;
+            }
+            _combat.SetInputFrame(new CombatInputFrame
+            {
+                SubjectId = _combat.DefaultPlayerSubjectId(),
+                MoveX = mx,
+                MoveY = my,
+                Sprint = sprint
+            });
+            _movementSent = true;
         }
 
         public override void _UnhandledInput(InputEvent @event)
@@ -484,6 +617,32 @@ namespace AtomicWar.GodotApp.UI
                     {
                         DoAction(_combat.ActionEndTurn);
                         GetViewport().SetInputAsHandled();
+                    }
+                }
+                else if (key.Keycode == Key.M)
+                {
+                    OnMonitorRequested?.Invoke();
+                    GetViewport().SetInputAsHandled();
+                }
+                else if (@event is InputEventJoypadButton pad && pad.Pressed)
+                {
+                    // T18 — joypad parity: pad A fires, pad X reloads (pad B
+                    // close is handled above by IsCloseOrCancel).
+                    if (pad.ButtonIndex == JoyButton.A)
+                    {
+                        if (!_btnFire.Disabled)
+                        {
+                            DoAction(() => _combat.ActionFire(SelectedTargetId()));
+                            GetViewport().SetInputAsHandled();
+                        }
+                    }
+                    else if (pad.ButtonIndex == JoyButton.X)
+                    {
+                        if (!_btnReload.Disabled)
+                        {
+                            DoAction(() => _combat.ActionReload(_combat.DefaultPlayerSubjectId()));
+                            GetViewport().SetInputAsHandled();
+                        }
                     }
                 }
             }

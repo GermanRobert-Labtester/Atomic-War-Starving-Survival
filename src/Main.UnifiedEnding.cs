@@ -47,14 +47,6 @@ namespace AtomicWar.GodotApp
             if (_unifiedEnding == null) SetupUnifiedEnding();
         }
 
-        public void FlushUnifiedEndingIfDirty()
-        {
-            if (_unifiedEndingDirty)
-            {
-                SaveUnifiedEnding();
-            }
-        }
-
         public void ResetUnifiedEnding()
         {
             _unifiedEnding = null;

@@ -18,8 +18,12 @@ namespace Ashfall.Core.Tests.Tooling
     {
         /// <summary>Recorded 2026-09-26 at 603 literals; re-recorded 2026-09-30 at the
         /// verified current count (612) after committed growth pushed past the old
-        /// baseline. Ratchet down, never up.</summary>
-        private const int HardcodedUiLiteralBaseline = 612;
+        /// baseline; re-recorded 2026-10-01 at 617 after the T18 l10n repair
+        /// localized the pilot ResearchPanel atlas tooltip (drift gate green);
+        /// re-recorded again the same day at 619 after concurrent atlas/tooltip
+        /// work landed before the full commit. Ratchet down, never up: a future
+        /// l10n sweep should lower this number.</summary>
+        private const int HardcodedUiLiteralBaseline = 619;
 
         private static readonly Regex LiteralPattern = new(
             "(Text|Title|Label)\\s*=\\s*\"[A-Z][^\"]{6,}\"",

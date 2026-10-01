@@ -51,6 +51,7 @@ namespace Ashfall.Core.Tests
             "Errors.Add",
             "report.Error",
             "report.Warning",
+            "report.Warn",
             "Failure(",
             "[FAIL]",
             "return (false",

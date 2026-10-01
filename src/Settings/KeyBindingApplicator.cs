@@ -16,18 +16,27 @@ namespace AtomicWar.GodotApp.Settings
     public static class KeyBindingApplicator
     {
         /// <summary>
-        /// Diffs user overrides onto the live InputMap. Iterates the sorted
-        /// canonical action list (deterministic order). Never touches ui_*.
-        /// Returns applied-override count for diagnostics.
+        /// Diffs user overrides onto the live InputMap using the live safe-mode
+        /// check (Shift held at startup). Iterates the sorted canonical action
+        /// list (deterministic order). Never touches ui_*.
         /// </summary>
         public static int Apply(UserSettingsData data)
+            => Apply(data, safeMode: Input.IsKeyPressed(Key.Shift));
+
+        /// <summary>
+        /// Diffs user overrides onto the live InputMap. <paramref name="safeMode"/>
+        /// is true when the boot recovery key is physically held; custom
+        /// bindings are then skipped. Kept as an explicit parameter so
+        /// deterministic callers (selftests / headless) never depend on live
+        /// input state. Returns applied-override count for diagnostics.
+        /// </summary>
+        public static int Apply(UserSettingsData data, bool safeMode)
         {
             if (data == null) return 0;
 
-            // Safe-mode boot: holding Shift at startup skips applying custom bindings
-            if (Input.IsKeyPressed(Key.Shift))
+            if (safeMode)
             {
-                GD.Print("[KeyBindingApplicator] Shift held at startup; safe-mode active, skipping keybinding overrides.");
+                GD.Print("[KeyBindingApplicator] Safe-mode active; skipping keybinding overrides.");
                 return 0;
             }
 

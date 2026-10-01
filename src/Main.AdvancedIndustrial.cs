@@ -118,14 +118,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public void FlushAdvancedIndustrialIfDirty()
-        {
-            if (_advancedIndustrialDirty)
-            {
-                SaveAdvancedIndustrial();
-            }
-        }
-
         public void ResetAdvancedIndustrial()
         {
             _advancedIndustrial = null;

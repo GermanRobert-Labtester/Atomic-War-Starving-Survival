@@ -69,14 +69,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public void FlushRecruitment()
-        {
-            if (_recruitmentDirty)
-            {
-                SaveRecruitment();
-            }
-        }
-
         public void ResetRecruitment()
         {
             if (_recruitmentPanel != null && _recruitmentPanel.IsInsideTree())

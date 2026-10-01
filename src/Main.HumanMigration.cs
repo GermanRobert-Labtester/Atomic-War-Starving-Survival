@@ -90,14 +90,6 @@ namespace AtomicWar.GodotApp
             _humanMigration?.TickDay(day, phase);
         }
 
-        public void FlushHumanMigrationIfDirty()
-        {
-            if (_humanMigrationDirty)
-            {
-                SaveHumanMigration();
-            }
-        }
-
         public void ResetHumanMigration()
         {
             _humanMigration = null;

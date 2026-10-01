@@ -277,6 +277,15 @@ namespace AtomicWar.GodotApp
             if (Survivors != null)
             {
                 _inventorySession.Survivors = Survivors;
+                // The fallback overrides are strictly a no-survivors mode. If a
+                // earlier wire bound them (before the cohort attached) they would
+                // keep taking priority over the survivor Needs path in
+                // InventoryHostSession.ConsumeResult and silently swallow every
+                // need delta, so clear them on every survivors-attached wire.
+                _inventorySession.ApplyNeedOverride = null;
+                _inventorySession.ApplyRadCleanseOverride = null;
+                _inventorySession.ApplyIodineOverride = null;
+                _inventorySession.ApplyContaminationOverride = null;
             }
             else
             {

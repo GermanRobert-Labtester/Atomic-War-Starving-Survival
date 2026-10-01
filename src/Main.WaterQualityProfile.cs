@@ -59,11 +59,6 @@ namespace AtomicWar.GodotApp
                 _waterQualityDirty = false;
         }
 
-        public void FlushWaterQualityProfileIfDirty()
-        {
-            if (_waterQualityDirty) SaveWaterQualityProfile();
-        }
-
         public void ResetWaterQualityProfile()
         {
             _waterQuality = null;

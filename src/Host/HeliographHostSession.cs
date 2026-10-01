@@ -38,12 +38,6 @@ namespace AtomicWar.GodotApp
             string distressSignalId = "")
             => System.Transmit(messageId, originStationId, targetStationId, payloadKey, day, revealLocationId, distressSignalId);
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            if (HeliographSaveStore.TrySave(System.CaptureState()))
-                base.Save();
-        }
     }
 
     public static class HeliographSaveStore

@@ -96,12 +96,6 @@ namespace AtomicWar.GodotApp
                 _stormForecastDirty = false;
         }
 
-        public void FlushStormForecastIfDirty()
-        {
-            if (_stormForecastDirty)
-                SaveStormForecast();
-        }
-
         public void ResetStormForecast()
         {
             _stormForecast = null;

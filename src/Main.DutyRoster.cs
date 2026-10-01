@@ -204,19 +204,14 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        private void FlushDutyRosterIfDirty()
-        {
-            if (_dutyRosterDirty) SaveDutyRoster();
-        }
-
         private void CloseDutyRosterPanel()
         {
-            _dutyRosterPanel.Visible = false;
+            ClosePanelAnimated(_dutyRosterPanel);
         }
 
         private void CloseDutyRosterDetailPanel()
         {
-            _dutyRosterDetailPanel.Visible = false;
+            ClosePanelAnimated(_dutyRosterDetailPanel);
         }
     }
 }

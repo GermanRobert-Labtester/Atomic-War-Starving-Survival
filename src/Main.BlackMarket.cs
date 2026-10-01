@@ -49,11 +49,6 @@ namespace AtomicWar.GodotApp
             CaptureSection("black_market", BlackMarketSaveStore.TryCapturePersisted(_blackMarket.CaptureSave()));
         }
 
-        private void FlushBlackMarketIfDirty()
-        {
-            if (_blackMarketDirty) SaveBlackMarket();
-        }
-
         // ── Panel (Plan 211 Phase 9): created hidden; opened via the
         //    expanded-panel route. Presentation only.
         private UI.BlackMarketPanel? _blackMarketPanel;

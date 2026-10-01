@@ -84,12 +84,6 @@ namespace AtomicWar.GodotApp
                 _antenatalMaternalHealthDirty = false;
         }
 
-        public void FlushAntenatalMaternalHealthIfDirty()
-        {
-            if (_antenatalMaternalHealthDirty)
-                SaveAntenatalMaternalHealth();
-        }
-
         public void ResetAntenatalMaternalHealth()
         {
             _antenatalMaternalHealth = null;

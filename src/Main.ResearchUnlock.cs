@@ -59,14 +59,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public void FlushResearchUnlockIfDirty()
-        {
-            if (_researchUnlockDirty)
-            {
-                SaveResearchUnlock();
-            }
-        }
-
         public void ResetResearchUnlock()
         {
             _researchUnlock = null;

@@ -129,12 +129,6 @@ namespace AtomicWar.GodotApp
                 _railTrackMaintenanceDirty = false;
         }
 
-        public void FlushRailTrackMaintenanceIfDirty()
-        {
-            if (_railTrackMaintenanceDirty)
-                SaveRailTrackMaintenance();
-        }
-
         public void ResetRailTrackMaintenance()
         {
             _railTrackMaintenance = null;

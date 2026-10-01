@@ -419,8 +419,17 @@ namespace AtomicWar.GodotApp.UI
                 choose.Disabled = count <= 0;
                 choose.Modulate = string.Equals(itemId, _selectedItemId, StringComparison.Ordinal)
                     ? AshfallUiHelpers.ColorHighlight
-                    : Colors.White;
-                _storage.AddChild(choose);
+                    : AshfallUiHelpers.ColorNeutral;
+
+                // Item art — decor is recognisable at a glance. Resolves through
+                // the shared registry chain (canonical placeholder when none).
+                var row = AshfallUiHelpers.MakeHBox();
+                var artIcon = AshfallUiHelpers.MakeItemIcon(itemId, 22);
+                artIcon.TooltipText = itemId;
+                row.AddChild(artIcon);
+                choose.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+                row.AddChild(choose);
+                _storage.AddChild(row);
             }
         }
 

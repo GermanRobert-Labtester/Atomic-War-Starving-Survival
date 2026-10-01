@@ -1,8 +1,841 @@
 # ASHFALL Integration Plans
 
+## Open-flag cleanup: Endgame / Verdict / coordinator rollback / Drowned Coast F4 — FULLY INTEGRATED (2026-10-01)
+
+User-directed ("tackle the open flags, coordinator and drowned coast … the zero
+callers … and the dead fields wiring"). Four flags closed. **(1) Endgame:**
+`EndgameSystem.ContinueChapter` now stamps the previously-dead
+`ChapterRecord.sealedDay` (epilogue sealed day, fallback reading day) and
+`profileId`; `CaptureState`/`RestoreState` clone both; `ChroniclePanel` renders
+them; the zero-caller `EvaluateEndingWithProfile` now has a production caller —
+`EndgameHostSession.EvaluateEndingWithProfile` is invoked by
+`Main.Endgame.CheckAndTriggerEndgame` to journal the projected closure before the
+single authority commits it. **(2) Verdict:** `VerdictHostSession.ConfigureFromProfile`
+wires `ReckoningSystem.ConfigureFromProfile` + `ReckoningOffset` and is invoked
+from `Main.SetupVerdict`/`SetupEndgame`; `ReckoningOffset` now persists in the
+`verdict` section (`VerdictSave` v5 + frozen `VerdictSaveV4` migration, legacy
+offset 0). **(3) Coordinator:** new `inventory_custody` day owner snapshots and
+restores the whole inventory container, and the inventory-mutating owners
+(`StartingLevelRations`, `CraftingProduction`, `GreenhouseFoundry`,
+`Aquaponics`) now implement `IPreDaySnapshotRestore`, so a fail-closed day
+retry can no longer double-consume rations or lose producer output. **(4) Drowned
+Coast F4:** the "two naval owners" row and §2.1 bullet are corrected to the
+single owner (`ExpeditionHostSession._naval`; `Main.EnsureNavalSystem` and its
+partial were deleted). **Evidence:** host build 0 errors / 0 new warnings;
+`--verdict-selftest` PASS; `--year-two-chapter-selftest` 7/7;
+`--7-day-smoke-selftest` 10/10; `EndgameSystemTests` 9/9, `YearTwoPlayOnTests`
+9/9 (extended with chapter-field round-trip), `ChapterProfileTests` 17/17,
+`VerdictSaveMigrationTests` 14/14 (extended v4→v5 + offset round-trip),
+`VerdictSystemTests` 54/54, `CampaignDayCoordinatorTests` 20/20,
+`CampaignDayCoordinatorSourceGateTests` 5/5 (new inventory-rollback source gate).
+Plan archived
+`.ai/plans/integrated/campaign/INTEGRATED_flags-coordinator-drownedcoast-endgame-verdict-2026-10-01.md`.
+No commit; full suite not run; foreign dirty worktree preserved.
+
+## T18 chronic-condition accommodations — FULLY INTEGRATED (2026-10-01)
+
+User-directed T18 (`ChronicConditionSystem` orphan → decision-gated
+accommodations; PFGL W8; no parallel medical ledger). **Defect closed:** the
+Plan 193 host/save path existed and the care surface rendered chronic rows
+read-only, but `AssignAccommodation`/`RemoveAccommodation` had no `src/` caller
+outside the CLI probe and `GetChronicCapabilityModifier` had **zero live
+consumers** — the authored `maintenance_cost_items` were inert and three
+referenced non-canonical item ids. **Fix:** `AfflictionsPanel` now renders the
+recommended accommodation per tracked condition with FIT / REMOVE buttons, the
+authored cost, and an honest missing-material state; they route to new
+`Main.FitChronicAccommodation` / `Main.RemoveChronicAccommodation` commands that
+preflight and consume the authored items through the **real inventory
+authority** before the chronic authority records the fit (no parallel ledger, no
+save-section change). The chronic capability projection now feeds the live
+duty-fitness verdict through the existing `AfflictionDutyBridge` overlay
+(`FitnessReasonIds.ChronicImpairment` warning + conservative shift-hour cap); a
+fitted accommodation raises the capability and relaxes the cap (derived, never
+persisted). The three dead cost ids were retargeted to canonical `items.json`
+ids and a new Core gate pins every authored cost id. **Evidence:** host build 0
+errors; `--chronic-condition-selftest` 12/12; `--ui-layout-selftest` Failures: 0;
+`Plan193ChronicConditionIntegrationTests` 10/10 (3 new), `Plan24FitnessForDutyTests`
+11/11, `Plan24DutyRosterFitnessTests` 7/7, `Plan143AfflictionBridgeIntegrationTests`
+6/6, `UiA11yTargetSizeGateTests` 31/31, `PanelRouteReachabilityGateTests` 2/2,
+`ActionResultSurfacingGateTests` 3/3. External drift noted (not this package):
+shared `LocalizationRatchetTests` 617 vs 612 and `l10n_drift_gate.py` failing on a
+foreign dirty `ResearchPanel.cs`; `AfflictionsPanel.cs` contributes zero new
+hardcoded literals. Plan archived
+`.ai/plans/integrated/medical/INTEGRATED_chronic-accommodation-t18-2026-10-01.md`.
+No commit; full suite not run; foreign dirty worktree preserved.
+
+**Follow-up wave (same session) — limitations closed + 3 suggested tasks.**
+All six authored conditions now have a committed producer path through one
+`Main.RecordChronicConditionFact` seam: `cond_chronic_limp` ← leg amputation
+(`Main.Amputation.Integration.cs`), `cond_chronic_joint_pain` ← aging into
+`Elderly` (`Main.Aging.cs`), `cond_hearing_loss_moderate` ← combat
+`OnEncounterEnded` aftermath injuries (`Main.Expeditions.cs`); a reachability
+source gate pins all six. **T18b:** `DutyRosterPanel` now adds an actionable
+accommodation hint when `FitnessReasonIds.ChronicImpairment` is present.
+**T18c:** `CatalogIntegrityValidator.ValidateChronicConditionsCatalog` wired
+into the canonical pass (schema, unique ids, severity vocabulary, positive
+penalties, recommended-accommodation resolution, and `maintenance_cost_items`
+resolution against `items.json`). The pilot `ResearchPanel` atlas tooltip is
+localized (`ui.research.atlas_tooltip` + German, `l10n_drift_gate.py` PASS) and
+the ratchet baseline re-recorded to the verified 617. Sweep hardening:
+`FitChronicAccommodation` refuses an already-fitted accommodation before
+consuming materials; `AfflictionsPanel` live-refreshes on
+`OnConditionRecorded`. Evidence: `Plan193...` 13/13,
+`CatalogIntegrityValidatorTests` 17/17, `CatalogIntegrityWeatherGateTests` 10/10
+(full real-data), `Plan176AgingHostIntegrationTests` 10/10,
+`AmputationSystemTests` 7/7, `LocalizationRatchetTests` 2/2, `bin/run-scoped-tests`
+11/11 PASSED, `--chronic-condition-selftest` 12/12, `--ui-layout-selftest`
+Failures: 0, host build 0 errors.
+
+## T19 kitchen cooking bind (`CookingSystem`) — FULLY INTEGRATED (2026-10-01)
+
+User-directed checklist item T19 ("Cooking/kitchen UI mismatch → bind `CookingSystem`";
+the PFGL master-plan loop is W5 P2). **Defect closed:** the Plan 136
+`CookingHostSession` (`StartCooking` / `ProgressCooking` / `CancelCooking`, save
+section `cooking`) was host-complete and CLI-verified but unreachable from any
+player surface; `KitchenNutritionPanel` bound only `KitchenNutritionHostSession`,
+so the kitchen route had no cooking authority. **Fix:** the existing
+`kitchen_nutrition` panel now renders a **cooking strip** bound to the live
+`CookingHostSession` — the authored `recipes_cooking.json` roster plus START /
+ADVANCE 30 MIN / CANCEL, consuming real inventory ingredients through
+`InventoryCookingSource` and delivering real cooked items — while the nutrition
+prep/serve path is preserved unchanged (no new route, no new authority, no Core
+gameplay/save change). `Main` binds the strip at panel construction and after
+`SetupCooking`, and detaches it in `ResetCooking`. **Evidence:** build 0 errors
+(6 pre-existing CS0162 warnings); `--food-loop-selftest` PASS with 5 new
+cooking-strip gates (bound, START consumed the bill, ADVANCE completed +
+delivered, cancellable batch, CANCEL removed); `--ui-layout-selftest`
+Failures: 0 (679 buttons / 172 panels, interactive=676 unreachable=0);
+`PanelLiveRefreshGateTests` 2/2; `PanelSubscriptionHygieneTests` 2/2;
+`UiA11yTargetSizeGateTests` 31/31; `KitchenNutritionSystemTests` 12/12;
+`Plan136WildlifeCookingIntegrationTests` 5/5; `LocalizationRatchetTests` 2/2
+(≤ 612). **Follow-up repair wave (same session):** the five stale tests that
+asserted the retired per-frame `Flush*IfDirty` location in `Main.Application.cs`
+were repaired to the current durability contract (`SaveAll` enrollment /
+day-owner wiring) — `Plan136CookingHostIntegrationTests` 8/8,
+`Plan140CampaignLegacyHostIntegrationTests` 8/8,
+`Plan134TerritoryControlHostIntegrationTests` 6/6, `MoralChoiceJourneyTests` 4/4,
+`FireIncidentJourneyTests` 5/5, with `MainTriadDriftGateTests` 8/8 confirming the
+no-per-frame-flush architecture; the `DEBT-DEAD-FLUSH-IFDIRTY-METHODS` promotion
+condition was then executed in full — all **141** dead/redundant `Flush*` staging wrappers (131 `Flush*IfDirty` + 10 other dead `Flush*` methods) and **16** call statements removed across **131**
+`src/Main.*.cs` partials, with the two-entry durability contract
+(`SaveAll` + `FlushDirtyStoresForDayAdvance`) documented in
+`docs/architecture/TRIAD_GATE_AND_SAVE_OWNERSHIP.md`; `triad-drift-gate.sh` GATE
+PASS, `--7-day-smoke-selftest` PASS, `--dose-ledger-selftest` PASS,
+`--chronic-condition-selftest` 12/12, `--playable-metrics-selftest` 17/0.
+`CookingHostSession` gained the host `LastEvent`
+convention (success + refusal) and the strip renders it — `--food-loop-selftest`
+now also proves the refusal path reaches the player
+(`Cooking refused: missing_ingredients.`). A concurrent stream's two raw
+`ExpeditionPanel` tooltips had pushed the l10n ratchet to 613; both were
+localized (`ui.expedition.radar_tooltip`, `ui.expedition.camp_tooltip`) —
+`LocalizationRatchetTests` 2/2, `StringsCsvLocaleGateTests` 4/4, `l10n_drift_gate`
+PASS (375 keys). **Second dead-code wave:** 81 of 83 uncalled host `override void Save()` methods deleted across 67 `src/Host/*.cs` files (`DEBT-DEAD-HOST-SAVE-OVERRIDES`); `MedicalWardHostSession.Save()` kept (its `MedicalWardSaveSelfTest` was red at HEAD — saved a non-dirty session; now `MarkDirty()` first and PASS) and `WeatherHostSession.Save()` kept as a documented no-op; stale `.ai/state.md` flush/save “open/held” entries annotated `[RESOLVED 2026-10-01]` (`HostSessionConventionGateTests` 1/1, `HostSessionStateSemanticsTests` 9/9, `--save-load-ui-failure-selftest` PASS, `--cooking-selftest` 26/26). Plan archived
+`.ai/plans/integrated/kitchen/INTEGRATED_kitchen-cooking-bind-t19-2026-10-01.md`.
+No commit; full suite not run; foreign dirty worktree preserved.
+
+## T10 action-result surfacing sweep — FULLY INTEGRATED (2026-10-01)
+
+User-directed T10 ("Sweep remaining discarded `ActionResult`s; extend matrix |
+`docs/ACTION_RESULT_SURFACING_MATRIX.md`; flagged pattern"). Follows the
+2026-10-01 expedition/craft package that flagged `WorkshopPanel`/`PharmaLabPanel`
+and "outside the four audited families". **Two defect classes closed:** (1) host
+sessions whose panel renders `LastEvent` assigned it only inside
+`if (result.IsSuccess)`, leaving the previous success sentence on screen after a
+refusal (archive desk, contractor roster, apprenticeship, decontamination, defense, equipment
+condition, shelter scheduling, thermal/boiler, relations, morale, sump flooding,
+wildlife trapping, airlock security, radio program production, low-background
+metrology); (2) panels that
+bind a Core system directly discarded every `ActionResult`
+(`WorkshopPanel`, `PharmaLabPanel`, `WeatherForecastPanel`) plus the expedition
+vehicle-prep `CommandResult` paths (refuel, track gear). **Deliverable:** new
+shared formatter `src/UI/ActionRefusalText.cs`; failure-branch `LastEvent` on 73
+pinned host methods across 26 host sessions (the full convention hardening of
+every host method that publishes a success `LastEvent`; scanner now reports 0
+remaining hits); refusal labels in the
+three direct panels; "Last event"
+rendering added to five host-backed panels whose host already produced the
+failure sentence (amphibious draisine, CVD diamond, SOFC, sound ranging,
+low-background metrology); expedition prep
+refusals routed through `_dispatchStatusLabel`; matrix extended with 16 new
+surface rows plus the Host `LastEvent` convention and direct-panel sections.
+**TDD guard:** new `ActionResultSurfacingGateTests` 3/3 (fails on the pre-fix
+source). **Evidence:** build 0 errors; `--ui-layout-selftest` Failures: 0;
+`--workshop-relic-uitest` PASS; `--expedition-panel-uitest` PASS;
+`--player-panels-uitest` 22/22; `--cloud-seeding-selftest` 7/7;
+`--plans-122-125-selftest` 41/41; `--precision-metrology-selftest` 12/12;
+`git diff --check` clean. **Ratchet-down pass:** the 8 foreign-grown UI literals
+were localized into `assets/l10n/strings.csv` (8 EN/DE rows) and a dead
+`FeedbackPanel` tooltip removed; `LocalizationRatchetTests` 620 → 611 (≤ 612,
+GREEN), `StringsCsvLocaleGateTests` 4/4, l10n drift gate PASS. No Core
+gameplay/save change; no commit; full suite not run. Plan archived
+`.ai/plans/integrated/ui/INTEGRATED_action-result-surfacing-sweep-t10-2026-10-01.md`.
+
+## T05 expand a11y self-test to first-hour stage panels — FULLY INTEGRATED (2026-10-01)
+
+User-directed T05 ("Expand a11y self-test to first-hour panels | 561-control
+focusability gate; verify the 7 stage panels"). **Blind spot:** the focusability
+corpus filtered on `IBindablePanel`, so `PowerGridPanel`/`ResearchPanel`/
+`ExpeditionPanel` (3 of the 7 first-hour stage panels) were unaudited, and the
+a11y smoke set covered only `DutyRosterPanel`. **Fix:** all 7 stage panels added
+to `UiAccessibilitySelfTest` with a new Gate 6 driven by
+`OnboardingCatalog.FirstHourOrder`; `FirstHourStagePanelNames` folded into the
+`AuditPanelInteractivity` filter. **Result:** focusability corpus 561 → 676
+controls / 169 → 172 panels, `unreachable=0`; a11y selftest 6/6 gates with Gate
+6 `7/7`. New 3-test guard `FirstHourStagePanelAccessibilityGateTests` pins the
+route→panel contract and both coverages (TDD-proven). Evidence:
+`--ui-accessibility-selftest` PASS, `--ui-layout-selftest` Failures: 0, guard
+3/3, `UiAccessibilityGateTests` 3/3, `OnboardingWiringGateTests` 4/4, generator
+`--check` in sync, build 0 errors, `git diff --check` clean. Plan archived
+`.ai/plans/integrated/ui/INTEGRATED_first-hour-stage-panel-a11y-2026-10-01.md`.
+No commit; full suite not run; foreign dirty worktree preserved.
+
+## T04 ashfall-tutorial-review on the 7-stage onboarding — FULLY INTEGRATED (2026-10-01)
+
+User-directed T04 ("Run `ashfall-tutorial-review` on the 7-stage onboarding |
+Teach-vs-demand audit before more content | Please code, repair and harden, via
+multiple sweep loops as well as seeing if anything is missing!"). **Defect
+found & closed (crash):** `OnboardingHintPanel.CycleAssistance()` raised
+`OnAssistanceChanged` while the host handler `Main.SetOnboardingAssistance`
+(wired `Main.Onboarding.cs:95`) calls back into `CycleAssistance` — a
+synchronous unbounded loop → stack overflow on a single press of the panel's
+ASSISTANCE cycle button. No headless UI test ever pressed it. **Fix:**
+`CycleAssistance` is now a one-way reactive update (label + refresh);
+`OnCycleAssistanceClicked` is the single raise site. **Harden:** removed
+never-read `_onboardingFailedActions` / `_onboardingLastInteractionSeconds` and
+the stale "contextual-hint heuristic" comment in `Main.Onboarding`. **Sweeps
+re-verified:** all 7 first-hour sigil producers and all 7 show-me-where routes
+(resolve in the typed `PanelRegistry`/GameFlow); `--onboarding-journey-selftest`
+PASS (20/20, save/load resume); host build 0 errors / 6 pre-existing warnings.
+**TDD:** new `OnboardingAssistanceLoopGateTests` 3/3 — fails on the old raise,
+green after the fix. **Deliverable:** audit refreshed at
+`docs/onboarding/TUTORIAL_REVIEW.md`; the single `UNTAUGHT_LETHAL` is Mikhail's
+day-1 acute radiation (`starting_survivors.json` #2: acuteRad true, health 72)
+— ranked proposal #1 (contextual Medical lesson via the existing
+`RequestContextualTutorial` seam; trigger site `Main.Medical.cs`);
+copy-threshold drift flagged (code truth: `RadiationSystem.AcuteThreshold = 80`
+on the 0–100 acute scale, not 50 mSv; day-tick water 3 Standard/2 Half, not
+~3.6) → `ashfall-write`/l10n proposal, not silently edited; `SkipAllOnboardingStages`
+has no callers (panel surfaces only per-step Skip) → ranked proposal #3. No
+Core, data, save-schema, or determinism change; no new authority. Plan archived
+`.ai/plans/integrated/onboarding/INTEGRATED_onboarding-tutorial-review-t04-2026-10-01.md`.
+No commit; full suite not run; foreign dirty worktree preserved.
+
+**Follow-up brush sweep (same session):** two more truthfulness repairs landed.
+(1) Status-bar completion copy — `RefreshOnboardingStatusBar` returned early on
+`JourneyComplete` and left the final "CURRENT: …" objective stuck on the status
+label as a live claim; it now renders the localized
+`onboarding.status.first_hour_complete` copy (new gate in
+`OnboardingTruthfulnessGateTests`, 4→5). (2) GUIDED no-op tier —
+`OnboardingAssistance.Guided` had no distinct behavior (no auto-highlight
+exists), yet the panel offered it as a third cycle press and the tooltip/CSV
+promised "extra help"; the cycle is now truthful two-tier MINIMAL⇄STANDARD,
+legacy Guided saves render the STANDARD label, and the enum doc
+(`OnboardingSaveState.cs`) plus the CSV `onboarding.tooltip.assistance_cycle`
+row (EN+DE) were corrected. 3 new TDD gates in
+`OnboardingAssistanceLoopGateTests` (3→6, red→green). Verified: loop 6/6,
+truth 5/5, wiring 4/4, journey 34/34, strings-csv 4/4, localization-pilot 4/4,
+l10n drift PASS (365 keys), host build 0 errors / 6 pre-existing warnings,
+`--onboarding-journey-selftest` PASS, `--ui-accessibility-selftest` PASS,
+`git diff --check` clean.
+
+## T03b onboarding/slice truthfulness 5-loop repair + hardening sweep — FULLY INTEGRATED (2026-10-01)
+
+User-directed T03b ("pass a repairing and hardening sweep, 5 loops and then
+deep validation"). **Four real defects repaired:** (1) a stale "append"
+comment vs overwrite in `Main.Onboarding`; (2) a naive `$"{title} — {body}"`
+slice-goal join in `OpeningProtocolModal` and `Main.Campaign` (dangling `—` for
+a body-less beat — the `ae6e54387` empty-join class) and a hidden body-only
+beat; (3) the onboarding hint line still showing the terminal hint after
+`JOURNEY COMPLETE`; (4) `TryGetSliceGoal` accepting a copy-less beat so an
+empty "Today's Goal" could reach the modal/briefing. **Hardening:** new
+`SliceGoalText.Join` Core authority, `TryGetSliceGoal` empty-beat rejection, a
+5-case join `[Theory]`, and a host-wiring source gate. **Contract check:**
+`OnboardingCatalog` title/objective exactly matches `strings.csv` en (0
+mismatches). Evidence: build 0 errors, Plan54 integration 10/10, Plan54 host
+7/7, `OnboardingTruthfulnessGateTests` 4/4, `OnboardingWiringGateTests` 4/4,
+`StringsCsvLocaleGateTests` 4/4, fabrication gate 4/4, l10n gate PASS,
+`--day1-selftest` PASS, `--seven-day-slice-selftest` 25/25,
+`--onboarding-journey-selftest` PASS, `--ui-layout-selftest` Failures: 0,
+`git diff --check` clean. Plan archived
+`.ai/plans/integrated/ui/INTEGRATED_onboarding-truthfulness-hardening-sweep-2026-10-01.md`.
+No commit; full suite not run; foreign dirty worktree preserved.
+
+## T03 onboarding truthfulness guard — FULLY INTEGRATED (2026-10-01)
+
+User-directed T03 ("Onboarding-truthfulness guard (no `HINT: —` / empty
+objectives); regression guard for the `ae6e54387` fix class"). **Guard:** a new
+catalog-driven `OnboardingTruthfulnessGateTests` enumerates every
+`OnboardingStage` and fails if a stage lacks non-empty localized
+title/objective/hint copy, lacks a non-sentinel authored hint fallback, or if
+the hint panel fabricates `"HINT: —"`. **Repair:** `OnboardingHintPanel.BuildHintLine`
+now reads one authoritative `StageHintCopy` map instead of two parallel switches
+(so a half-wired stage is structurally impossible) and returns no hint for an
+unknown stage rather than the sentinel; `StageLocalizationId` is the single
+normalization shared by the panel and the `Main.Onboarding.cs` status bar;
+`onboarding.hint.empty` is now `NO HINT YET` / `NOCH KEIN HINWEIS`. The Python
+`scripts/ci/l10n_drift_gate.py` no longer hardcodes the stage-key family:
+`stage_family_keys()` derives it from `OnboardingCatalog` and the panel's
+`StageHintCopy` literals, so the gate now also covers the 14 per-stage
+`onboarding.hint.*` keys it previously ignored (83 → 97 references). No new
+save section, Core change, or authority. **TDD-proven:** removing the Duty
+mapping failed 2/4; a reintroduced code `"HINT: —"` failed the sentinel gate;
+restored 4/4; the derived key set exactly matches the old hardcoded set and a
+fake catalog stage surfaces `onboarding.newthing.title`/`.objective` as missing.
+Evidence: new gate 4/4, `OnboardingWiringGateTests` 4/4,
+`StringsCsvLocaleGateTests` 3/3, `LocalizationPilotTests` 4/4, l10n drift gate
+PASS (365 keys, 97 refs), `--onboarding-journey-selftest` PASS,
+`--ui-layout-selftest` Failures: 0, `dotnet build Ashfall.csproj` 0 errors.
+Plan archived
+`.ai/plans/integrated/ui/INTEGRATED_onboarding-truthfulness-guard-2026-10-01.md`.
+No commit; full suite not run; foreign dirty worktree preserved.
+
+## T02 l10n micro-location drift repair — FULLY INTEGRATED (2026-10-01)
+
+User-directed T02 ("Fix l10n drift (`discovery.micro_frozen_bus.description`);
+known FAIL in `--expedition-panel-uitest`; stale at HEAD"). **Root cause:** the
+Godot runtime loads `assets/l10n/strings.csv` through
+`LocalizationService.LoadFromCsv`, whose `RegisterString` overwrites Core's
+defaults; the round-54/55 prose trims folded a final clause into seven
+`micro_locations.json` descriptions and mirrored it into `LocalizationService.cs`
+but not into the CSV, so `ExpeditionPanel` rendered the pre-trim text and the
+uitest's full-description `Contains` check failed. **Fix:** synced all seven EN
+descriptions to the authoritative JSON and the seven DE descriptions to the
+folded-clause form (Core literal where one exists); added two gates to
+`StringsCsvLocaleGateTests` — `Catalog_MicroLocationEnglishMatchesAuthoritativeJson`
+(CSV↔JSON runtime seam) and
+`Catalog_MicroLocationMatchesCoreDefaults_EnglishAndGerman` (CSV↔Core authority
+seam over all 135 micro-location keys, closing the Task-6 "two copies can
+drift" finding); regenerated the two `.translation` resources via the Godot
+csv_translation importer; regenerated `docs/INDEX.md` with its owning
+generator; synced the same three stale German exemplars in
+`docs/discovery/MICRO_LOCATION_LOCALIZATION.md`; corrected the stale
+`198`-char/"longest" wording in `docs/discovery/MICRO_LOCATION_TEST_MATRIX.md`,
+`docs/discovery/MICRO_LOCATION_UI.md` and the `src/Main.UiTests.Expeditions.cs`
+check label (actual length 246; the current longest catalog description is
+`micro_hospital_chapel_ledger` at 307). No Core, data, or save change;
+no new authority. **TDD proof:** reverting the bus EN clause failed the JSON
+gate with exactly `discovery.micro_frozen_bus.description: strings.csv EN does
+not match JSON`; reverting the bus DE clause failed the Core-parity gate with
+exactly `discovery.micro_frozen_bus.description: CSV DE overrides Core DE with
+different text`. Evidence: gates 4/4, localization suite 25/25,
+`l10n_drift_gate.py` PASS, `generate-docs-index.py --check` PASS,
+`--expedition-panel-uitest` 59/59 (was 58/1),
+`--string-freeze-selftest` 8/8, `dotnet build` 0 errors, `git diff --check`
+clean. Plan archived
+`.ai/plans/integrated/i18n/INTEGRATED_l10n-micro-location-drift-repair-2026-10-01.md`.
+No commit; full suite not run; foreign dirty worktree preserved.
+
+## T01 keyboard-only first-hour playtest + triage ≤3 fixes — FULLY INTEGRATED (2026-10-01)
+
+User-directed T01 ("Play keyboard-only first-hour session; triage ≤3 fixes"),
+played in the strongest available automated form
+(`docs/alpha/FIRST_HOUR_PLAYTEST_KIT.md`): the live funnel (7/7), the
+focusability/clickability/tab-trap/accessibility gates, and a forensic
+route↔sigil audit of all seven stage surfaces. **Two live defects found and
+fixed (2 of ≤3).** (1) The `inventory` route's player-facing overlay never
+subscribed `OnItemSelected`, so every row SELECT was a dead affordance and the
+only consume path (`food.ration_consumed`) was unreachable — invisible to the
+clickability gate because the button *has* a `pressed` connection. (2)
+`DutyRosterPanel.HandleRowSelected` raised `OnAssignmentChanged` (→
+`ObserveSigil("duty.assigned")`) while the real assignment mutations raised it
+never, so the Duty stage completed from merely selecting a row and a genuine
+assignment produced no signal; `OnboardingWiringGateTests` passed because the
+sigil string exists and the automated funnel drives `RecordSigil` directly.
+Fixes extend existing owners only (host subscription seam; panel event
+discipline) — no new authority, save section, or determinism change. A new
+2-test source gate fails pre-fix and passes post-fix (TDD-proven). Evidence:
+new gate 2/2, `OnboardingWiringGateTests` 4/4, `dotnet build` 0 errors,
+`--duty-roster-uitest` / `--inventory-uitest` / `--onboarding-journey-selftest`
+/ `--playable-metrics-selftest` (17/17) / `--ui-accessibility-selftest` (5/5) /
+`--player-panels-uitest` (22/22) / `--ui-layout-selftest` (0 failures) all
+PASS, `git diff --check` clean. Plan archived
+`.ai/plans/integrated/ui/INTEGRATED_first-hour-keyboard-playtest-2026-10-01.md`.
+Recorded not fixed: `DailyBriefingModal` `[Tab]` dead-zone (Plan 37 owns it) and
+`water_treatment`'s missing dashboard-rail entry (product decision). No commit;
+full suite not run; foreign dirty worktree preserved.
+
 ## Plan 53 E1C metadata migration — FULLY INTEGRATED (2026-09-30)
 
 User-authorized ownership handoff and current-inventory reconciliation completed. All 621 current plan files now have schema metadata; E1A's 609-path historical snapshot remains unchanged and its eight missing paths and twenty additions are explicitly reconciled. The canonical register validates 621 plans with zero errors and duplicate IDs. The migration report records unchanged body hashes, zero inferred `DONE`, and the 621-entry human review queue for inferred metadata. The streaming docs-index generator excludes front matter from summaries and verifies 5,609 documents. Focused PlanGovernanceContractTests passed 5/5; no full suite or commit. E1A/E1B/E1C are complete; E1E is next in Plan 53.
+
+## UI MOTION — PASS 11 seal every close path + navigation cue — FULLY INTEGRATED (2026-09-30)
+
+Eleventh pass (`claim-ui-motion-pass11-seal-close-paths-2026-09-30`, user
+directive: "another pass! aim to seal UI transitions and animate subtle UI
+visual ques!"), continuing the motion remit. PASS 10 sealed the *seam*; this
+pass closed the *call sites* that never reached it. **Finding:** 45 `Close*`
+methods across 25 `Main.*.cs` files hid their panel **without calling the
+animated seam at all** — `CloseOpeningProtocolModal`, `CloseTradePanel`,
+`CloseEconomyPanel`, `CloseExpeditionPanel`, `CloseMapPanel`, `CloseCombatPanel`,
+`CloseChroniclePanel`, `CloseDutyRosterPanel`, `CloseWorkshopPanel`,
+`CloseInventoryOverlay`, `CloseSurvivorsOverlay` and siblings — while 53
+neighbouring methods did route through `ClosePanelAnimated`. The close path was
+inconsistent, so some panels faded out and their neighbours hard-popped.
+**Fix:** one mechanical, verified transform rewrote every direct hide in those
+methods to the existing shared helper (`ClosePanelAnimated` null-checks, so the
+`if (x != null)` guard collapses away): `ClosePanelAnimated` call sites
+**53 → 98**, methods still hiding directly **45 → 0**, re-verified with the same
+scanner. The transform collapsed the opening brace onto the statement for
+single-line bodies; a follow-up pass normalised the indentation and
+`git diff --check` is clean. Because it was mechanical it was validated by
+**build + the full UI battery** rather than by reading 45 diffs. **Subtle cue:**
+`AshfallSidebar.SetRowHighlight` swapped background, border and label colour
+instantly; selection now also plays a restrained settle on the row's **label**
+through the shared `UiPanelFlow.Pulse` seam — deliberately not the row, because
+rows are full-width and scaling one would overflow its column. **Evidence:**
+`dotnet build` 0 errors / 6 pre-existing warnings in untouched
+`src/Host/HostCli.*`; 13 headless targets all PASS with issues=0
+(`--player-panels-uitest`, `--ui-accessibility-selftest`, `--ui-layout-selftest`
+Failures: 0, `--dashboard-uitest`, `--settings-selftest`,
+`--inventory-uitest`, `--economy-uitest`, `--panel-bind-lifecycle-selftest`,
+`--shelter-decor-selftest` 19 checks, `--workshop-relic-selftest`,
+`--warlord-ui-selftest` 17 checks, `--shelter-maintenance-selftest` 12 checks,
+`--barter-selftest` 7 checks); `bin/run-scoped-tests` 3/3 suites; `git diff
+--check` clean. **Verification limit, unchanged from PASS 10:**
+`UiMotion.CanAnimate` is false under `--headless`, so `AnimateClose` returns
+early and the fades themselves cannot be exercised by these tests — they prove
+no regression and no behavioural break. Plan marked with repeated FULLY
+INTEGRATED headers at
+`.ai/plans/integrated/ui/INTEGRATED_ui-motion-pass11-seal-close-paths-2026-09-30.md`.
+No commit; full suite not run; foreign dirty worktree preserved.
+
+## UI MOTION — PASS 10 seal transitions + subtle visual cues — FULLY INTEGRATED (2026-09-30)
+
+Tenth pass (`claim-ui-motion-pass10-seal-transitions-2026-09-30`, user
+directive: "seal UI transitions and animate subtle UI visual ques!"), scoped to
+motion. **Finding 1 — the close transition was unsealed at ~100 call sites.**
+The dominant panel close pattern is `Visible = false; OnClose?.Invoke();`, which
+hides the panel *before* the close seam runs; `UiMotion.AnimateClose` opened
+with `if (!panel.Visible) return false;`, so it never animated and every such
+panel hard-popped despite the animation existing and being correct. Fixed at
+the seam rather than at 100 call sites: `AnimateClose` revives a self-hidden
+panel and fades it out — seamless, because the panel has not been drawn since
+it hid and was at full opacity in the previous frame — guarded by a new
+`_opened` set populated by `AnimateOpen`, so a panel that was never shown can
+never flash into existence on close. **Finding 2 — an interaction bug in that
+fix, caught before shipping:** reviving `Visible` raises `VisibilityChanged`,
+whose registered open hook calls `AnimateOpen` and `EnsureInitialFocus`; left
+alone the panel would have faded IN while being faded OUT and stolen focus from
+wherever the player had moved. Fixed in two places — `AnimateClose` registers
+the closing state *before* reviving visibility so `AnimateOpen`'s existing
+`IsClosing` guard stands down, and the visibility hook now skips when
+`IsClosing(captured)`. **Finding 3 — the open side was already sealed; my
+concern was unfounded.** Routes using bare `panel.Open()` looked unanimated,
+but `RegisterOpenMotionRecursive` registers a `VisibilityChanged` hook on every
+`IBindablePanel` / `IModalPanel` that fires `AnimateOpen` + `EnsureInitialFocus`
+whenever a panel becomes visible. Recorded rather than "fixed" into duplication.
+**Subtle cues, deliberately restrained:** metric-card urgency escalation plays a
+settle pulse (Normal→Caution→Warn→Critical) while **de-escalation stays silent**
+(good news should not call attention to itself); the five dashboard gauges ease
+over 0.18 s via new `AshfallUiHelpers.SetBarValue` (one tween per bar — newer
+updates supersede rather than stack — falling back to an instant set under
+ReducedMotion / headless / capture); status and alert lines pulse **on change
+only**, while the numeric stores summaries are deliberately left unpulsed
+because they move every update and would read as jitter. **Evidence:** `dotnet
+build` 0 errors / 6 pre-existing warnings in untouched `src/Host/HostCli.*`;
+`--player-panels-uitest`, `--ui-accessibility-selftest`, `--dashboard-uitest`,
+`--inventory-uitest`, `--economy-uitest` all PASS with issues=0;
+`--ui-layout-selftest` Failures: 0 (12 ObjectDB / 6 CanvasItem residue is
+pre-existing and unchanged); `--settings-selftest` Failures: 0;
+`bin/run-scoped-tests` 2/2 suites; `git diff --check` clean. **Verification
+limit, stated plainly:** `UiMotion.CanAnimate` is false under `--headless`, so
+`AnimateOpen` / `AnimateClose` return early and the animations cannot be
+exercised by these tests — they prove no regression, and the motion behaviour
+is reasoned from the seam logic. `--ui-snapshot-uitest` (rendered frames) still
+requires a real renderer. Plan marked with repeated FULLY INTEGRATED headers at
+`.ai/plans/integrated/ui/INTEGRATED_ui-motion-pass10-seal-transitions-2026-09-30.md`.
+No commit; full suite not run; foreign dirty worktree preserved.
+
+## UI audit polish — PASS 9 (deeper) verification-infrastructure hardening — FULLY INTEGRATED (2026-09-30)
+
+Ninth pass (`claim-ui-audit-polish-pass9-2026-09-30`, user directive "another
+deeper pass!"), deliberately aimed below the product at the verification
+infrastructure itself: the gate that shipped blind in PASS 7 was a systemic
+hazard, so the question was what else in the audit layer can silently pass
+while being wrong. **Hazard A — "any-of" blindness in gates:** every
+`Ashfall.Core.Tests` gate using `.Any(` to decide pass/fail was inspected; all
+observed uses check *existence*, which is the correct semantic. The PASS-7 bug
+was `Any` over a set of declared **obligations**, a different kind. No further
+instances found. **Hazard B — REAL and systemic:** `generate-selftest-manifest.py`
+and `generate-cli-catalog.sh` both query the *compiled* host (`godot --headless
+--path . -- --selftest-manifest` / `--host-help`), so editing C# without
+rebuilding makes their `--check` report **"OK" against stale data** — invisible
+because both sides are equally stale. This is precisely the failure that
+silently skipped four newly authored aliases in PASS 8. **Fix at the single
+seam:** every headless Godot invocation used by verification already routes
+through `scripts/ci/run-godot-bounded.sh`; a build-staleness guard was added
+there. It blocks only when staleness is **provable** (`.godot/mono/temp/bin/Debug/Ashfall.dll`
+exists AND is older than the newest `src/**.cs` / `Assets/Ashfall.Core/**.cs`),
+so a missing assembly can never false-positive into blocking a valid run. It
+prints the exact assembly, the reason and the fix, with
+`ASHFALL_SKIP_BUILD_STALENESS=1` as an escape hatch. **Proof it works:** a
+current build runs normally; `touch src/Host/HostCli.cs` (mtime only, no content
+change, `git diff` stays clean) blocks the run with exit code 2 and the exact
+diagnosis; the override is honoured; `dotnet build` restores normal operation.
+**Coverage audit — does anything bypass the seam?** Six scripts merely *mention*
+`godot` in documentation strings (`generate-catalog-registry.py`,
+`generate-core-systems-catalog.py`, `generate-ui-panel-catalog.py`,
+`sync-agent-rulebooks.py`, `scripts/ci/git-hooks/pre-commit`,
+`asset-orphan-sweep.sh`) and none execute it; `input-map-gate.sh` and
+`version-gate.py` have no Godot execution at all. The wrapper therefore really
+is a single seam and the guard covers the whole class. **Evidence:**
+`bin/run-scoped-tests` 2/2 targets (`HostCliActionParityGateTests`,
+`UserSettingsRecoveryTests`); `generate-selftest-manifest.py --check` OK (317
+tests); `generate-cli-catalog.sh --check` OK (358 entries / 590 flag tokens);
+five headless targets (`settings`, `ui-accessibility`, `ui-layout`,
+`player-panels`, `warlord-ui`) all PASS with staleBlocked=0; `dotnet build` 0
+errors; `git diff --check` clean. Plan marked with repeated FULLY INTEGRATED
+headers at `.ai/plans/integrated/ui/INTEGRATED_ui-audit-polish-pass9-2026-09-30.md`.
+Owned one file (`scripts/ci/run-godot-bounded.sh`, 29 additive lines); no C#,
+data, test or generated-output changes. No commit; full suite not run; foreign
+dirty worktree preserved.
+
+## UI audit polish — PASS 8 parity-gate coverage hole closed — FULLY INTEGRATED (2026-09-30)
+
+Eighth bounded pass (`claim-ui-audit-polish-pass8-2026-09-30`, user directive
+"another pass!"), closing the single item left open after PASS 7:
+`HostCliActionParityGateTests` had been green both before and after the alias
+drift was fixed, so its alias↔Parse coverage had a demonstrable hole. **Root
+cause:** `EveryManifestFlag_IsParsedByHostCli` used `Any(...)` — an entry passed
+as long as ONE flag in its set parsed, so a registered-but-dead alias could
+never be reported and the gate could not fail by construction. **Fix (both
+directions):** per-flag checking that names the exact `test_id -> flag`, plus a
+new reverse gate `EveryParsedProbeFlag_IsDeclaredInTheManifest` requiring every
+probe-shaped flag literal (`--*selftest|uitest|selfcheck|ui-test`) that
+`HostCli.Parse` accepts to be declared in the manifest (runtime flags such as
+`--headless` deliberately out of scope). **The tightened gate immediately
+surfaced 4 more real instances of the same drift class** —
+`--outposts-selftest`, `--port-contracts-selftest`, `--the-network-selftest`,
+`--the-underneath-selftest` — all parsed and advertised in `--host-help` but
+missing from their `HostCliActionDescriptor` alias arrays, so the generated
+`SELFTEST_MANIFEST.json` omitted them. Declared and regenerated. **Proof the
+gate catches the shipped defect (TDD verification):** temporarily reverting the
+PASS-7 parse fix made the gate fail with exactly
+`ui_accessibility_selftest -> --ui-a11y-selftest`, the flag that had silently
+shipped dead; the fix was then restored. **Generator pitfall recorded:**
+`generate-selftest-manifest.py` shells out to the *built* host, so regenerating
+before rebuilding after a `HostCliRegistry.cs` edit silently yields a stale
+manifest that still reports "OK" — `--check` cannot detect it because both
+sides are equally stale. **Evidence:** `HostCliActionParityGateTests` 5/5 (was
+4), `HostCliHelpContractTests` 2/2, `generate-selftest-manifest.py --check` OK
+(317 tests), `generate-cli-catalog.sh --check` OK (358 entries / 590 flag
+tokens), all four newly-declared aliases run at runtime instead of being
+undocumented, `dotnet build` 0 errors, scoped `git diff --check` clean. Plan
+marked with repeated FULLY INTEGRATED headers at
+`.ai/plans/integrated/ui/INTEGRATED_ui-audit-polish-pass8-2026-09-30.md`.
+`src/Host/HostCli.cs` was modified only transiently for the TDD proof and
+restored byte-identically. No commit; full suite not run; foreign dirty
+worktree preserved.
+
+## UI audit polish — PASS 7 CLI alias drift + warlord harness teardown — FULLY INTEGRATED (2026-09-30)
+
+Seventh bounded pass (`claim-ui-audit-polish-pass7-2026-09-30`, user directive
+"another pass!"), executed as an evidence-driven hunt across probes not
+previously run rather than a re-tread. **Defect 1 — a catalogued CLI flag that
+does nothing:** `--ui-a11y-selftest` is registered as an alias of
+`HostCliAction.UiAccessibilitySelfTest` (`HostCliRegistry.cs:2220`) but
+`HostCli.cs:812` never parsed it — the host printed `Unrecognized headless
+argument(s)` and silently did nothing. The drift ran both ways: the parser also
+accepted `--ui-access-selftest`, which the registry never advertised. Both
+sides are now reconciled and the help text lists all four spellings. This
+survived `HostCliActionParityGateTests` (4/4 green before and after), so the
+alias↔Parse gate has a coverage hole — recorded rather than silently widened
+into a gate change. **Defect 2 — harness teardown:** `RunWarlordUiSelfTest`
+constructed a `FactionsPanel`, called `_Ready()`/`Bind()`/`Open()` and
+abandoned it, leaking 590 ObjectDB instances, 243 CanvasItem RIDs, 8
+DummyTexture / 22 ShapedTextData / 3 FontAdvanced RIDs and 11 resources at
+exit; the panel is now held outside the `try` and released in a `finally`.
+**Generated-output hygiene (policy-compliant):** the alias change invalidated
+`docs/cli/HOST_CLI_COMMAND_CATALOG.md` and `docs/ci/SELFTEST_MANIFEST.json`;
+both were regenerated through their owning generators (never hand-edited) and
+their `--check` modes now report OK (358 entries / 590 flag tokens; 317 tests).
+**Honest false positives, recorded so they are not re-chased:** 100 panels with
+`OnClose` but no keyboard close handler — close is centralized in
+`Main.PanelLifecycle.CloseAllOverlayPanels`, and the 45-panel Esc softlock was
+fixed centrally in WHOLEGAME-P1B; 25 apparent `Bind`/`Unbind` subscription
+imbalances — `Unbind()` removes via multi-level access (`_host.Roster.X -= …`)
+that the one-level regex missed, spot-checked `DutyRosterPanel` removing 3/3
+external subscriptions; 24 "item surfaces without art" — inspected
+`TravelingCaravanPanel` (train voice lines), `VehicleGaragePanel` (mod /
+armor-grade ids) and `RailwayTerminalPanel` (train ids): none are item
+catalogs, so **the item-art tail deferred in two earlier passes does not exist**
+and item art is complete across the true item surfaces; and the three
+"competing" empty-state helpers are two deliberate levels of one design
+language (framed panel vs inline label), not competitors — an earlier claim of
+mine that was overstated. **Measured:** `--ui-a11y-selftest` unrecognised →
+runs `ui_accessibility_selftest`; warlord-ui ObjectDB 590→0, CanvasItem 243→0,
+all RID/resource counts →0; both generator `--check` FAIL → OK.
+**Evidence:** `HostCliActionParityGateTests` 4/4, `HostCliHelpContractTests`
+2/2, and 12 headless targets green (`--ui-accessibility-selftest`,
+`--ui-a11y-selftest`, `--ui-layout-selftest` Failures: 0, `--player-panels-uitest`,
+`--dashboard-uitest`, `--settings-selftest`, `--inventory-uitest`,
+`--warlord-ui-selftest`, `--journal-uitest`, `--survivors-uitest`,
+`--save-load-ui-failure-selftest`, `--bestiary-ui-selftest`); `dotnet build` 0
+errors; scoped `git diff --check` clean. Plan marked with repeated FULLY
+INTEGRATED headers at
+`.ai/plans/integrated/ui/INTEGRATED_ui-audit-polish-pass7-2026-09-30.md`. No
+commit; full suite not run; pre-existing foreign edits in `src/Host/HostCli.cs`
+and `Assets/Ashfall.Core/HostCliRegistry.cs` preserved verbatim.
+
+## UI audit polish — PASS 6 optional-hook API drift + harness teardown — FULLY INTEGRATED (2026-09-30)
+
+Sixth bounded pass (`claim-ui-audit-polish-pass6-2026-09-30`, user directive
+"another pass"), closing the two items deliberately left open after PASS 5 and
+the leak fix. **API drift:** four sites called `panel.Call("Open")` guarded only
+by `catch` — `HostCli.AuditPanelInteractivity` (×3) and `SnapshotOrchestrator`
+(×1). The C# exception was swallowed, but the **engine** had already logged
+"Nonexistent function 'Open'" for the 47 panels that omit the convention; the
+test output was 47 error lines that masked real failures. `IBindablePanel`
+contracts only `IsBound` and `Unbind()`, so `Open()` is a convention, not API —
+the callers were invoking an interface they only assumed existed. New
+`AshfallUiHelpers.InvokePanelHook(node, method, fallback?)` reflects first and
+only invokes a hook the panel declares. All 47 panels expose `RefreshView()`, so
+the interactivity audit now falls back to it: the clickability / focusability /
+truthfulness sweep inspects populated content instead of bare `_Ready()` output,
+widening coverage while the gate stayed green (`inert=0`, `unreachable=0`,
+`blankUnboundPanels=0`). **Harness teardown:** the `ui-layout-selftest`
+8-resolution loop constructed 8 panels per resolution and freed none —
+24,731 leaked ObjectDB instances, 7,822 CanvasItem RIDs, 4,496 ShapedTextData
+RIDs — now tracked and freed in a `finally`, including on exception.
+**Risk-managed asymmetry, recorded deliberately:** `SnapshotOrchestrator` gets
+no `RefreshView()` fallback, unlike the audit. That path captures golden
+snapshots; a panel that previously rendered only `_Ready()` content would start
+rendering populated content and silently invalidate the committed baseline. It
+could not be verified headlessly (`--ui-snapshot-uitest` fails with "renderer
+unavailable — SubViewport reads need a real display/renderer, not --headless"),
+so the safe option was taken over an unverifiable improvement — snapshot
+behaviour is byte-identical, only the error spam removed. **Measured:**
+`Nonexistent function` 47→0; ObjectDB 24,731→12; CanvasItem 7,822→6;
+ShapedTextData 4,496→0; Shape2D/Body2D/Area2D/Viewport/DummyTexture/Font RIDs
+all →0; resources-in-use 26→0; `ui-layout-selftest` Failures: 0 on both sides.
+**Evidence:** 12 headless targets PASS with zero locked/nonexistent/leak issues
+(`player-panels-uitest`, `panel-bind-lifecycle-selftest`, `dashboard-uitest`,
+`inventory-uitest`, `ui-accessibility-selftest`, `settings-selftest`,
+`economy-uitest`, `shelter-decor-selftest`, `workshop-relic-selftest`,
+`barter-selftest`, `accessibility-settings-selftest` 12/12,
+`shelter-maintenance-selftest` 12/12) plus `ui-layout-selftest` Failures: 0;
+`bin/run-scoped-tests` 2/2 suites; `dotnet build` 0 errors; scoped
+`git diff --check` clean. Plan marked with repeated FULLY INTEGRATED headers at
+`.ai/plans/integrated/ui/INTEGRATED_ui-audit-polish-pass6-2026-09-30.md`.
+**Open, unchanged:** `--ui-snapshot-uitest` cannot run headless (32 `no-image`
+failures are environmental); the 47 panels still do not expose `Open()` — not a
+defect, since it is not part of `IBindablePanel`, and making it uniform would be
+a deliberate contract change rather than a bug-fix side effect. No commit; full
+suite not run; pre-existing dirty worktree preserved.
+
+## FIX — free-during-signal orphan leak (PASS-5 flag closed) — FULLY INTEGRATED (2026-09-30)
+
+User-directed ("fix the flag!") closure of the bug flagged in `.ai/state.md` for
+a bug validator: `--workshop-relic-selftest` at-exit RID/ObjectDB leak
+diagnostics. **Root cause proved, and it corrected the flag's own guess.** The
+flag said the selftest "constructs `_workshopPanel` and never frees it" —
+falsified: `--player-panels-uitest` and `--dashboard-uitest` build the same UI
+tree and report zero leaks. `--verbose` named the true orphans (two `Button`s
+with empty node paths) and the engine error identified the mechanism:
+`WorkshopPanel` rebuilds its own container from inside the signal dispatch of a
+button that lives in that container (`StartRepair` → `OnWorkshopStateChanged` →
+`RefreshView` → `AshfallUiHelpers.EmptyChildren` → `Free()` on the
+mid-dispatch button). Godot locks objects during dispatch so the free is
+**refused**, but `RemoveChild` has already run — the node is detached and never
+freed, i.e. a permanent orphan. **Fix:** (1) a `FreeDetached` seam used by
+`EmptyChildren` / `EmptyChildrenExcept` that calls `Free()` and falls back to
+`QueueFree()` **only** when the node is still valid afterwards, preserving the
+immediate-free contract that ownership gates assert; (2) `WorkshopPanel` defers
+its rebuild out of the dispatch (`RefreshViewDeferred` for both Core event
+subscriptions and all five button handlers), removing the engine error at its
+source; (3) selftest teardown plus an explicit rebuild flush before assertions;
+(4) `TryLoadTexture` disposes the native `Godot.Image` after
+`ImageTexture.CreateFromImage` copies it (two filesystem-fallback call sites).
+**Measured:** ObjectDB 30→0, CanvasItem RIDs 2→0, DummyTexture 3→0,
+ShapedTextData 6→0, FontAdvanced 1→0, resources-in-use 1→0, "Object is locked"
+and "Nonexistent function 'free'" errors eliminated, 14/14 assertions PASS.
+**Regression sweep over the changed global seam:** 14 headless targets
+(`player-panels-uitest`, `panel-bind-lifecycle-selftest`, `dashboard-uitest`,
+`inventory-uitest`, `ui-accessibility-selftest`, `settings-selftest`,
+`economy-uitest`, `shelter-decor-selftest`, `workshop-relic-selftest`,
+`workshop-relic-uitest`, `barter-selftest`, `accessibility-settings-selftest`,
+`shelter-maintenance-selftest`, `ui-layout-selftest`) all PASS with zero
+locked/leak issues, and `bin/run-scoped-tests` 3/3 suites PASS.
+**Regression caused and fixed within this work (recorded honestly):** a first
+attempt that always `QueueFree()`d broke `--player-panels-uitest` Gate 19
+("panel leaked 3 node(s) after Ready/Free") in 5 panels, because a queued free
+outlives the ownership assertion; reverted to the fallback form, Gate 19 green
+again. **Pre-existing, not changed:** `--ui-layout-selftest` logs 47
+"Nonexistent function 'Open'" errors from `HostCli.AuditPanelInteractivity`
+calling `Open()` on panels that define none (the test still reports Failures: 0),
+and leaves large at-exit RID accounting from instantiating the whole panel set
+across 8 resolutions without teardown. Plan marked with repeated FULLY
+INTEGRATED headers at
+`.ai/plans/integrated/ui/INTEGRATED_free-during-signal-orphan-leak-fix-2026-09-30.md`.
+No commit; full suite not run; pre-existing dirty worktree preserved.
+
+## UI audit polish — PASS 5 theme tokens + disabled affordances + item-art tail — FULLY INTEGRATED (2026-09-30)
+
+Fifth bounded pass (`claim-ui-audit-polish-pass5-2026-09-30`, user directive
+"another pass!"), scoped to four files. **Theme tokens:** `ShelterDecorPanel`
+spelled a raw `Colors.White` for modulate identity; a named
+`AshfallUiHelpers.ColorNeutral` seam now carries it (documented — white here is
+modulate identity, not "white text"), so raw engine colours in `src/UI` reduce
+to one named constant plus comments. **Disabled affordances:** 251 `.Disabled =`
+sites across 30+ panels left disabled controls silently unexplained;
+`AshfallUiTheme.EnforceControlDefaults` (the existing shared a11y-default seam,
+run on every panel open) now supplies a fallback tooltip when a disabled button
+has none — explicitly a fallback, never overwriting an authored one.
+`WorkshopPanel`'s REPAIR button additionally gained authored per-state reasons
+(beyond repair / at repair ceiling / spend the bill). **Item-art tail:**
+`WorkshopPanel` protective-gear rows and `ShelterDecorPanel` decor chooser rows
+carry resolved item art. **Probed clean:** Esc input-parity — 0 panels handle
+close via raw `InputEventKey`, so pad B / rebound keys all reach close. **Probed
+real, deliberately not churned:** three competing empty-state presentations
+(`MakeEmptyState` 17 files, `MakeEmptyStateLabel` 14, ad-hoc `MakeMetadata("No …")`
+32) — converging them means churning 32 files or breaking 14
+signature-dependent callers; recorded as accepted consistency debt rather than
+fake-closed. **Evidence:** host build 0 errors / 6 pre-existing warnings in
+untouched `src/Host/HostCli.*`; `--ui-accessibility-selftest` 5/5 (static lint
+over 267 UI files); `--player-panels-uitest`; `--panel-bind-lifecycle-selftest`;
+`--shelter-decor-selftest` failed=0; `--shelter-maintenance-selftest` 12/12;
+`--workshop-relic-selftest` — all PASS; scoped `git diff --check` clean. Plan
+marked with repeated FULLY INTEGRATED headers at
+`.ai/plans/integrated/ui/INTEGRATED_ui-audit-polish-pass5-2026-09-30.md`.
+**Flagged, not fixed (outside claim):** `--workshop-relic-selftest` prints
+at-exit RID/ObjectDB leak diagnostics caused by
+`src/Main.UiTests.WorkshopRelic.cs` never freeing `_workshopPanel`; proven
+pre-existing by a control run (`--settings-selftest`, which builds no nodes,
+prints none). No commit; full suite not run; pre-existing dirty worktree
+preserved.
+
+## UI audit polish — PASS 4 developer-session depth (detail inspector + sorting) — FULLY INTEGRATED (2026-09-30)
+
+Fourth bounded pass (`claim-ui-audit-polish-pass4-2026-09-30`, user directive
+"another pass!"), scoped to `src/UI/AssetInspectorPanel.cs` only. Focus is the
+user's explicit ask — a developer session to "check all items and their assets
+and etc" — deepened rather than churning more panels. **Delivered:** every
+inspector card gains a keyboard-accessible `VIEW` button opening a per-entry
+detail overlay (220px art preview, resolved asset path in mono, id / kind /
+art-status / authored stats); `Esc` is layered so it dismisses the detail first
+and the panel second (a close never skips a surface); a sort control (`Id` /
+`Name` / `Missing art first`) re-sorts the grid in place; the dialog body uses
+the shared `UiMotion.AnimateOpen` entrance while its exit stays synchronous per
+the codebase convention (dismissal is never delayed by motion) and the scrim
+does not slide with the body. **False positives recorded, not "fixed":** three
+plausible-looking defect classes were probed against source and deliberately
+left alone — event-subscription "leaks" (31 `OnSelected +=` hits, all sidebar
+children owned by and dying with their panel), panels whose `Open()` never
+refreshes (29 hits, but `PanelRegistry.ConfigureActions` runs `bindAction` →
+`Bind` → `RefreshView` before `openAction` on every open), and lists with no
+empty state (20 hits, inspected samples all have real fallbacks or static
+content). **Evidence:** host build 0 errors / 6 pre-existing warnings in
+untouched `src/Host/HostCli.*`; `--ui-accessibility-selftest` 5/5;
+`--player-panels-uitest` 22/22; `--settings-selftest` Failures 0;
+`--asset-registry-selftest` checked=55 passed=55 missing=0 load-failed=0
+probe-failures=0; scoped `git diff --check` clean. Plan marked with repeated
+FULLY INTEGRATED headers at
+`.ai/plans/integrated/ui/INTEGRATED_ui-audit-polish-pass4-2026-09-30.md`. No
+commit; full suite not run; pre-existing dirty worktree preserved.
+
+## UI audit polish — PASS 3 dead readouts + grid icon wiring + a11y tooltips — FULLY INTEGRATED (2026-09-30)
+
+Third bounded pass (`claim-ui-audit-polish-pass3-2026-09-30`, user directive
+"another pass!"). **Dead readout repaired:** `InventoryPanel._weightLabel` was
+built once as `"CAPACITY // —"` and never written again — a whole-UI scan for
+"declared, referenced, never written" labels isolated it (now returns zero); it
+tracks live weight against the carry limit with the same criticality ladder as
+the status rail and pulses on change. **Inventory asset wiring:** the grid
+already rendered `AshfallDataGrid.Cell.IconTexture` but **no caller ever
+supplied one** — a wiring gap, not a component gap. New shared
+`AshfallUiHelpers.ResolveItemTexture` returns the raw texture from the canonical
+registry chain and `MakeItemIcon` now delegates to it, so every surface resolves
+item art through exactly one chain; `SurvivalWorkstationPanel` recipe outputs
+and `EconomyDetailPanel` market demand rows now carry resolved good art
+(`AshfallDataGrid` itself untouched). **a11y:** accessible tooltips added to
+every symbol-only button (Settings ✕ / volume ± / rebind capture, FeedbackPanel
+toast ×, ShelterBarter offer & request ±). **Settings correctness:** the
+resolution dropdown defaulted to index 3, so a saved non-preset resolution was
+silently relabelled 1920×1080 while the working copy kept the custom size — it
+now shows `Custom (W × H)`. **Latent-failure sweep:** the wider UI battery
+(`--panel-lifecycle-selftest`, `--panel-bind-selftest`, `--ui-layout-selftest`,
+`--accessibility-settings-selftest`) was run and is green — no latent failures.
+No Core change, no data JSON, no save section, no new gameplay owner, no
+shared-component behavior change. **Evidence:** host build 0 errors / 6
+pre-existing warnings in untouched `src/Host/HostCli.*`; scoped xUnit 2/2
+suites; `--inventory-uitest`, `--economy-uitest`, `--dashboard-uitest`,
+`--player-panels-uitest` 22/22, `--ui-accessibility-selftest` 5/5,
+`--panel-lifecycle-selftest`, `--panel-bind-selftest`, `--ui-layout-selftest`,
+`--accessibility-settings-selftest` 12/12 all PASS; `--settings-selftest`
+Failures 0; scoped `git diff --check` clean. Plan marked with repeated FULLY
+INTEGRATED headers at
+`.ai/plans/integrated/ui/INTEGRATED_ui-audit-polish-pass3-2026-09-30.md`. No
+commit; full suite not run; pre-existing dirty worktree preserved.
+
+## UI audit polish — PASS 2 gap sweep & repair — FULLY INTEGRATED (2026-09-30)
+
+User-directed second pass over every gap the first UI audit surfaced but did
+not close (`claim-ui-audit-polish-pass2-2026-09-30`). **UI correction:** 13
+`private … = null!;` controls that were declared and never constructed were
+removed after proving each was single-file and reference-free (unfinished
+refactor residue). **Missing UI built:** `GameDashboardPanel._radonLabel` was a
+declared-but-unbuilt readout — RADON is now its own row, and the previously
+fused `AIR QUALITY: …% · RADON: … Bq/m³` string is split into two readable
+rows. Its thresholds are the canonical `YearOfAshRadonSystem.SafeRadonThreshold`
+(200) / `DangerousRadonThreshold` (800) constants read from the radon owner —
+no numbers invented. **Functionality repair:** the `RESET TUTORIALS` button
+wrote `TUTORIALS RESET` onto itself *before* the confirmation modal resolved,
+so cancelling still left a false success claim — the label mutation is removed.
+`EnabledMods` gained a readout of what the toggle actually covers. **Dev
+session:** `EXPORT MISSING-ART REPORT` writes a read-only
+`user://asset_inspector_report.json` enumerating every authored id whose art
+does not resolve, and the summary now shows coverage percentage. **Inventory
+assets:** item art wired into `ShelterBarterPanel` merchant/player offer rows
+and `PhantomMemoryPanel` relic rows. **Animations:** a shared
+`AshfallUiHelpers.SetTextPulsed` value-change seam (mirroring
+`AshfallMetricCard.SetValue`) now covers plain readout labels — applied to the
+dashboard stores/atmosphere rows — and `UiPanelFlow.Pulse` is centre-pivoted so
+it no longer grows from the top-left corner. No Core change (one existing
+`public const` read), no data JSON, no save section, no new gameplay owner.
+**Evidence:** host build 0 errors / 6 pre-existing warnings in untouched
+`src/Host/HostCli.*`; `bin/run-scoped-tests` 3/3 suites
+(`UserSettingsRecoveryTests`, `CraftingSystemTests`, `InventorySystemTests`);
+headless `--settings-selftest` Failures 0, `--dashboard-uitest` PASS,
+`--economy-uitest` PASS, `--barter-selftest` 7/7, `--player-panels-uitest`
+22/22, `--ui-accessibility-selftest` 5/5 (490 text elements, 267 UI files);
+scoped `git diff --check` clean. Plan marked with repeated FULLY INTEGRATED
+headers at `.ai/plans/integrated/ui/INTEGRATED_ui-audit-polish-pass2-2026-09-30.md`.
+No commit; full suite not run; pre-existing dirty worktree preserved.
+
+## UI audit polish — settings completeness + inventory asset wiring + dev session — FULLY INTEGRATED (2026-09-30)
+
+User-authorized UI audit / diagnose / repair / polish package, executed as a
+bounded integrator claim (`claim-ui-audit-polish-settings-dev-session-2026-09-30`).
+Premise-audited before editing and four real gaps confirmed against source:
+`auto_save_on_day`, `visual_audio_alerts`, `audio_mix_preset` and `mods_enabled`
+were persisted settings with **no settings UI at all** (the panel even declared
+a `_btnAutoSave` field it never constructed); `AshfallUiHelpers.MakeItemIcon`
+fell back to the medical `icon_pill_dependency.svg` sprite instead of the
+canonical `AssetRegistry.FallbackIconPath`; the item detail view rendered **no
+item art**; and the dev inspector cards showed no item numbers. **Settings:**
+four new working-copy controls, an `● UNSAVED CHANGES` indicator driven by a
+codec round-trip diff (future-proof against settings-field additions), and a
+`SETTINGS RECOVERY` banner surfacing `UserSettingsStore.LastDiagnosticMessage`
+so corrupt-file recovery is no longer log-only silent. **Inventory assets:**
+canonical placeholder fallback restored; inventory detail leads with resolved
+item art; crafting recipe cards carry output and per-ingredient art.
+**Animations:** shared `UiPanelFlow.Pulse` value-change feedback applied to
+settings volume readouts and the inspector coverage summary; the centralized
+`Main.PanelLifecycle` → `UiMotion` open/close seam was audited and deliberately
+not duplicated. **Dev session:** `START GAME — DEV SESSION (RUN + INSPECT)`
+main-menu entry composes the canonical `StartNewGame()` with the read-only Item
+& Asset Inspector; inspector cards now show authored weight / value / stack /
+rad protection / durability read straight from the authoritative catalog row.
+No Core, data JSON, save section, or gameplay owner was introduced or changed.
+**Evidence:** host build 0 errors / 6 pre-existing warnings in untouched
+`src/Host/HostCli.*`; `UserSettingsRecoveryTests` 20/20;
+`CraftingSystemTests` + `InventorySystemTests` 2/2 suites;
+`--settings-selftest` Failures 0; `--inventory-uitest` PASS;
+`--player-panels-uitest` 22/22; `--ui-accessibility-selftest` 5/5 (267 UI
+files scanned); scoped `git diff --check` clean. Plan marked with repeated
+FULLY INTEGRATED headers and immediately archived at
+`.ai/plans/integrated/ui/INTEGRATED_ui-audit-polish-settings-dev-session-2026-09-30.md`.
+No commit; full suite not run; pre-existing dirty worktree preserved.
 
 ## Plan37 live keybinding reset — FULLY INTEGRATED (2026-09-30)
 

@@ -80,11 +80,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        private void FlushSurvivorLetterDeliveryIfDirty()
-        {
-            if (_survivorLetterDeliveryDirty) SaveSurvivorLetterDelivery();
-        }
-
         private void ResetSurvivorLetterDelivery()
         {
             _survivorLetterDelivery = null;

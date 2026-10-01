@@ -4,6 +4,7 @@ using System.Collections.Generic;
 #pragma warning disable CS8618
 using Ashfall.Core;
 using Ashfall.Core.Clock;
+using Ashfall.Core.Endgame;
 using Ashfall.Core.Events;
 using Ashfall.Core.Flags;
 using Ashfall.Core.Verdict;
@@ -134,6 +135,7 @@ namespace AtomicWar.GodotApp
                 // Observability: remember which save version loaded and whether it migrated (C).
                 session.LoadedSaveVersion = save.saveVersion;
                 session.WasSaveMigrated = save.saveVersion != VerdictSave.CurrentSaveVersion;
+                session.ReckoningOffset = save.reckoningOffset;
                 session.LastEvent = "Verdict state restored from save.";
             }
 
@@ -162,6 +164,19 @@ namespace AtomicWar.GodotApp
 
         /// <summary>Sets the reckoning day offset applied to campaign days when ticking Reckoning and Radio.</summary>
         public void SetReckoningOffset(int offset) => ReckoningOffset = offset;
+
+        /// <summary>
+        /// Applies the chapter profile's reckoning timing and day offset to the
+        /// live Reckoning authority. The offset shifts campaign days into the
+        /// profile's reckoning calendar; timing thresholds come from the same
+        /// profile. Null profile keeps the legacy Year 1 baseline (offset 0).
+        /// </summary>
+        public void ConfigureFromProfile(ChapterProfileDef? profile)
+        {
+            if (profile == null) return;
+            Reckoning.ConfigureFromProfile(profile);
+            ReckoningOffset = profile.reckoning_offset;
+        }
 
         /// <summary>Coarse game-time step — call once per sim-day, not per-frame.</summary>
         public void AdvanceDay(int day, int livingCount, int logReadCount)
@@ -249,12 +264,13 @@ namespace AtomicWar.GodotApp
             return VerdictSaveCodec.Capture(
                 CurrentDaySafe(), MachineLog, Reckoning, Evidence,
                 Census != null ? Census.LastWindowDay : -1,
-                Npcs, Radio, Quests);
+                Npcs, Radio, Quests, reckoningOffset: ReckoningOffset);
         }
 
         public void RestoreSave(VerdictSave save)
         {
             VerdictSaveCodec.Restore(save, MachineLog, Reckoning, Evidence, Npcs, Radio, Quests);
+            ReckoningOffset = save.reckoningOffset;
             EvidenceChain.ReconcileReadEntries();
             LastEvent = "Verdict state restored.";
         }

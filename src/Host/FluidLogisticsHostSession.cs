@@ -55,11 +55,15 @@ namespace AtomicWar.GodotApp
             Func<string?>? pickLivingSurvivorId)
         {
             System.EnsureDefaultShelterTopology();
+            string transferNote = string.Empty;
             if (treatment != null)
             {
                 var transfer = FluidDeliveryApplicator.TransferBoundedCleanWater(treatment, System);
-                if (transfer.IsSuccess)
-                    LastEvent = "Fluid transfer: " + transfer.MessageKey;
+                // Keep the transfer outcome in the tick line: writing it first and
+                // then overwriting LastEvent below would silently drop a refusal.
+                transferNote = transfer.IsSuccess
+                    ? " | transfer: " + transfer.MessageKey
+                    : $" | transfer refused: {transfer.FailureCode}";
             }
 
             var report = System.Tick(day, temperatureC, powerAvailability01);
@@ -72,7 +76,8 @@ namespace AtomicWar.GodotApp
             LastEvent = $"Fluid tick @ day {day}: {report.deliveredVolume:F1} units delivered"
                 + (LastDelivery != null
                     ? $" (gh={LastDelivery.greenhouseLiters:F1}, drink={LastDelivery.drinkingLiters:F1})"
-                    : string.Empty);
+                    : string.Empty)
+                + transferNote;
             RaiseStateChanged();
             return report;
         }

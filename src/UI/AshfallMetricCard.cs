@@ -110,8 +110,13 @@ public partial class AshfallMetricCard : PanelContainer
 
     public void SetCriticality(Criticality c)
     {
+        // Urgency escalation gets a restrained settle pulse so crossing a
+        // threshold is noticeable without a flash or colour strobe. De-escalation
+        // stays silent — good news should not call attention to itself.
+        bool escalated = (int)c > (int)_criticality;
         _criticality = c;
         ApplyCriticality();
+        if (escalated) UiPanelFlow.Pulse(this, 1.07f);
     }
 
     public void Set(string label, string value, Criticality c)

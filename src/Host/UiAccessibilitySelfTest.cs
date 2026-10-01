@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Godot;
 using Ashfall.Core;
+using Ashfall.Core.Onboarding;
 using AtomicWar.GodotApp.UI;
 
 namespace AtomicWar.GodotApp
@@ -25,7 +26,7 @@ namespace AtomicWar.GodotApp
         {
             GD.Print("── UI PANEL ACCESSIBILITY SMOKE SELF-TEST ──");
             int passedGates = 0;
-            const int totalGates = 5;
+            const int totalGates = 6;
 
             try
             {
@@ -180,6 +181,61 @@ namespace AtomicWar.GodotApp
                 }
                 passedGates++;
 
+                // ── GATE 6: First-Hour Stage Panels ────────────────────────────────
+                // Drive the seven onboarding stage routes from the Core catalog so
+                // a future stage cannot silently ship without an accessible panel.
+                GD.Print("\n[Gate 6] Verifying the seven first-hour stage panels...");
+                var stageFailures = new List<string>();
+                int stageVerified = 0;
+                foreach (var stage in OnboardingCatalog.FirstHourOrder)
+                {
+                    var def = OnboardingCatalog.DefFor(OnboardingProfile.FirstHour, stage);
+                    string route = def.ShowMeWhereRoute;
+                    if (!FirstHourStagePanelNames.TryGetValue(route, out string? panelName))
+                    {
+                        stageFailures.Add($"{stage}: route '{route}' has no panel mapping in this self-test.");
+                        continue;
+                    }
+
+                    var match = testPanels.FirstOrDefault(p => p.Name == panelName);
+                    if (match.Panel == null)
+                    {
+                        stageFailures.Add($"{stage}/{panelName}: not present in the representative panel set.");
+                        continue;
+                    }
+
+                    // Open the panel so hidden interactive controls become visible
+                    // for the focus-entry check (same seam the focusability gate uses).
+                    // Some panels are shown by the host lifecycle rather than an
+                    // Open() method (e.g. WaterTreatmentPanel); make the shown
+                    // state explicit so the audit sees the real control tree.
+                    AshfallUiHelpers.InvokePanelHook(match.Panel, "Open", "RefreshView");
+                    match.Panel.Visible = true;
+
+                    int interactive = FindChildrenOfType<Control>(match.Panel)
+                        .Count(c => c.Visible
+                                    && (c is Button || c is LineEdit || c is OptionButton
+                                        || c is CheckButton || c is ItemList || c is Slider)
+                                    && !(c is Button b && b.Disabled));
+                    if (interactive > 0 && AshfallFocusPolicy.FindFocusableControls(match.Panel).Count == 0)
+                        stageFailures.Add($"{stage}/{panelName} ({route}): interactive controls present but none focusable.");
+
+                    int readable = FindChildrenOfType<Control>(match.Panel)
+                        .Count(c => c.Visible && c is Label l && !string.IsNullOrWhiteSpace(l.Text));
+                    if (readable == 0)
+                        stageFailures.Add($"{stage}/{panelName} ({route}): no readable text when opened.");
+
+                    stageVerified++;
+                }
+
+                if (stageFailures.Count > 0)
+                {
+                    GD.PrintErr($"[FAIL] Gate 6: first-hour stage panel violations:\n  {string.Join("\n  ", stageFailures)}");
+                    return 1;
+                }
+                GD.Print($"[PASS] Gate 6: {stageVerified}/{OnboardingCatalog.FirstHourOrder.Length} first-hour stage panels verified with a focusable entry and readable state.");
+                passedGates++;
+
                 // Cleanup
                 foreach (var (_, panel) in testPanels)
                 {
@@ -205,6 +261,23 @@ namespace AtomicWar.GodotApp
             }
         }
 
+        /// <summary>
+        /// First-hour onboarding stage route -> panel class. Mirrors the
+        /// OnboardingCatalog.FirstHourOrder ShowMeWhereRoute values so Gate 6 can
+        /// prove every stage a new player is routed to has an audited panel.
+        /// </summary>
+        private static readonly Dictionary<string, string> FirstHourStagePanelNames =
+            new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                ["water_treatment"] = "WaterTreatmentPanel",
+                ["power_grid"] = "PowerGridPanel",
+                ["inventory"] = "InventoryPanel",
+                ["duty_roster"] = "DutyRosterPanel",
+                ["dose_ledger"] = "DoseLedgerPanel",
+                ["research"] = "ResearchPanel",
+                ["expeditions"] = "ExpeditionPanel",
+            };
+
         private static List<(string Name, Control Panel)> CreateRepresentativePanels()
         {
             var list = new List<(string Name, Control Panel)>
@@ -222,7 +295,17 @@ namespace AtomicWar.GodotApp
                 ("SkyDefenseBatteryPanel", new SkyDefenseBatteryPanel()),
                 ("DynamicQuestlinePanel", new DynamicQuestlinePanel()),
                 ("VehicleGaragePanel", new VehicleGaragePanel()),
-                ("DailyBriefingModal", new DailyBriefingModal())
+                ("DailyBriefingModal", new DailyBriefingModal()),
+                // T05 — the seven first-hour onboarding stage panels: a new
+                // player is routed here by the journey's ShowMeWhereRoute, so
+                // they must pass the same accessibility smoke checks as the
+                // rest of the shell (not only the focusability corpus).
+                ("WaterTreatmentPanel", new WaterTreatmentPanel()),
+                ("PowerGridPanel", new PowerGridPanel()),
+                ("InventoryPanel", new InventoryPanel()),
+                ("DoseLedgerPanel", new DoseLedgerPanel()),
+                ("ResearchPanel", new ResearchPanel()),
+                ("ExpeditionPanel", new ExpeditionPanel())
             };
 
             // Safely load scene-backed panels via PanelSceneLoader

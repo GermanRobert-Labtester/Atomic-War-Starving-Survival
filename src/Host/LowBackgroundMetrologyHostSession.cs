@@ -46,57 +46,63 @@ namespace AtomicWar.GodotApp
         public string InstallModule(string profileId, int modules, int day)
         {
             var result = System.InstallShieldModule(profileId, modules, day);
-            RaiseStateChanged();
-            return result.Status == ActionResult.StatusKind.Success
+            LastEvent = result.Status == ActionResult.StatusKind.Success
                 ? $"Shield module installed ({profileId} x{modules})."
                 : $"Cannot install module ({result.FailureCode}).";
+            RaiseStateChanged();
+            return LastEvent;
         }
 
         public string Calibrate(int day)
         {
             var result = System.Calibrate(day);
-            RaiseStateChanged();
-            return result.Status == ActionResult.StatusKind.Success
+            LastEvent = result.Status == ActionResult.StatusKind.Success
                 ? "Detector calibrated."
                 : $"Cannot calibrate ({result.FailureCode}).";
+            RaiseStateChanged();
+            return LastEvent;
         }
 
         public string StartBatch(string profileId, int units, int day)
         {
             var result = System.StartBatch(profileId, units, day);
-            RaiseStateChanged();
-            return result.Status == ActionResult.StatusKind.Success
+            LastEvent = result.Status == ActionResult.StatusKind.Success
                 ? $"Smelting batch started ({profileId} x{units})."
                 : $"Cannot start batch ({result.FailureCode}).";
+            RaiseStateChanged();
+            return LastEvent;
         }
 
         public string AddFeedstock(string batchId, string profileId, int units)
         {
             var result = System.AddFeedstock(batchId, profileId, units);
-            RaiseStateChanged();
-            return result.Status == ActionResult.StatusKind.Success
+            LastEvent = result.Status == ActionResult.StatusKind.Success
                 ? $"Feedstock added ({profileId} x{units})."
                 : $"Cannot add feedstock ({result.FailureCode}).";
+            RaiseStateChanged();
+            return LastEvent;
         }
 
         public string CommitBatch(string batchId)
         {
             var result = System.CommitBatch(batchId);
-            RaiseStateChanged();
-            return result.Status == ActionResult.StatusKind.Success
+            LastEvent = result.Status == ActionResult.StatusKind.Success
                 ? $"Batch committed ({batchId})."
                 : $"Cannot commit batch ({result.FailureCode}).";
+            RaiseStateChanged();
+            return LastEvent;
         }
 
         public string RunAssay(AssaySample sample, int nativeBackgroundBp, int environmentalBp, int assayTicks, double prepQuality, double skill, int day)
         {
             var outcome = System.RunAssay(sample, nativeBackgroundBp, environmentalBp, assayTicks, prepQuality, skill, day);
+            LastEvent = outcome.Confidence <= 0.0
+                ? $"Assay unavailable ({outcome.EstimatedBand})."
+                : outcome.BelowDetectionLimit
+                    ? $"Assay below detection limit (confidence {outcome.Confidence:P0})."
+                    : $"Assay: {outcome.EstimatedBand} (confidence {outcome.Confidence:P0}).";
             RaiseStateChanged();
-            if (outcome.Confidence <= 0.0)
-                return $"Assay unavailable ({outcome.EstimatedBand}).";
-            return outcome.BelowDetectionLimit
-                ? $"Assay below detection limit (confidence {outcome.Confidence:P0})."
-                : $"Assay: {outcome.EstimatedBand} (confidence {outcome.Confidence:P0}).";
+            return LastEvent;
         }
 
         public LowBackgroundMetrologyState CaptureSave() => System.CaptureState();
@@ -109,9 +115,5 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
-        public override void Save()
-        {
-            LowBackgroundMetrologySaveStore.TrySave(CaptureSave());
-        }
     }
 }

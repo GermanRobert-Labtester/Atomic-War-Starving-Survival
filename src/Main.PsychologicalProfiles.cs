@@ -65,14 +65,6 @@ namespace AtomicWar.GodotApp
             _psychologicalProfilesDirty = false;
         }
 
-        public void FlushPsychologicalProfilesSave()
-        {
-            if (_psychologicalProfilesDirty)
-            {
-                SavePsychologicalProfiles();
-            }
-        }
-
         public void ResetPsychologicalProfiles()
         {
             _psychologicalProfiles = null;

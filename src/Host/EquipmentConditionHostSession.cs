@@ -35,33 +35,30 @@ namespace AtomicWar.GodotApp
         public ActionResult RegisterItem(string instanceId, string itemId, string ownerId, EquipmentFamily family, float maxCondition = 100f)
         {
             var res = System.RegisterItem(instanceId, itemId, ownerId, family, maxCondition);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Equipment registered: {itemId} ({instanceId})";
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? $"Equipment registered: {itemId} ({instanceId})"
+                : $"Equipment registration refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
         public ActionResult UseItem(string instanceId, float wearAmount = 1f)
         {
             var res = System.UseItem(instanceId, wearAmount);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Equipment used: {instanceId} (-{wearAmount} wear)";
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? $"Equipment used: {instanceId} (-{wearAmount} wear)"
+                : $"Equipment use refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
         public ActionResult StartMaintenance(string instanceId, string stationId, MaintenanceType type, List<string> requiredParts)
         {
             var res = System.StartMaintenance(instanceId, stationId, type, requiredParts);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Maintenance started: {instanceId} ({type})";
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? $"Maintenance started: {instanceId} ({type})"
+                : $"Maintenance refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
@@ -93,12 +90,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            EquipmentConditionSaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
     }
 
     /// <summary>

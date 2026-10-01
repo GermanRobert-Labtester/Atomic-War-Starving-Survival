@@ -80,7 +80,7 @@ namespace AtomicWar.GodotApp
                 CaptureSection("desperation", DesperationSaveStore.TryCapturePersisted(_desperation.CaptureState()));
             }
         }
-        private void CloseDesperationCrisisPanel() { _desperationCrisisPanel?.Visible = false; }
+        private void CloseDesperationCrisisPanel() { ClosePanelAnimated(_desperationCrisisPanel); }
 
         // ── Plans 186/187: desperation + fallout console commands ──────────
 

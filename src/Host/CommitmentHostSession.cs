@@ -66,12 +66,6 @@ namespace AtomicWar.GodotApp
         public IReadOnlyList<CommitmentReadModel> GetCommitments(int currentDay)
             => System.GetCommitments(currentDay);
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            if (CommitmentSaveStore.TrySave(System.CaptureState()))
-                base.Save();
-        }
     }
 
     public static class CommitmentSaveStore

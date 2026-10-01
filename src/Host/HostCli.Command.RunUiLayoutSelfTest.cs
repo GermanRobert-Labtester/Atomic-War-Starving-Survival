@@ -67,17 +67,23 @@ namespace AtomicWar.GodotApp
 
             foreach (var (w, h, aspect) in resolutions)
             {
+                // These panels are constructed standalone (never added to a tree),
+                // so nothing else will free them. Without this teardown the sweep
+                // accumulates the whole panel set once per resolution and Godot
+                // reports tens of thousands of leaked instances at exit.
+                var built = new System.Collections.Generic.List<Control>();
+                T Track<T>(T node) where T : Control { built.Add(node); return node; }
                 try
                 {
                     // 1. MainMenuPanel
-                    var mainMenu = new MainMenuPanel();
+                    var mainMenu = Track(new MainMenuPanel());
                     mainMenu.CustomMinimumSize = new Vector2(w, h);
                     mainMenu.Size = new Vector2(w, h);
                     mainMenu._Ready();
                     Check(mainMenu.Size.X >= w && mainMenu.Size.Y >= h, $"MainMenuPanel bounds valid at {w}x{h} ({aspect})");
 
                     // 2. GameDashboardPanel
-                    var dashboard = new GameDashboardPanel();
+                    var dashboard = Track(new GameDashboardPanel());
                     dashboard.CustomMinimumSize = new Vector2(w, h);
                     dashboard.Size = new Vector2(w, h);
                     dashboard._Ready();
@@ -97,7 +103,7 @@ namespace AtomicWar.GodotApp
                     Check(dashboard.Size.X >= w && dashboard.Size.Y >= h, $"GameDashboardPanel bounds valid at {w}x{h} ({aspect})");
 
                     // 3. SettingsPanel
-                    var settings = new SettingsPanel();
+                    var settings = Track(new SettingsPanel());
                     settings.CustomMinimumSize = new Vector2(w, h);
                     settings.Size = new Vector2(w, h);
                     settings._Ready();
@@ -106,27 +112,27 @@ namespace AtomicWar.GodotApp
                     settings.Close();
 
                     // 4. InventoryPanel
-                    var invPanel = new InventoryPanel();
+                    var invPanel = Track(new InventoryPanel());
                     invPanel.CustomMinimumSize = new Vector2(w, h);
                     invPanel.Size = new Vector2(w, h);
                     invPanel._Ready();
                     Check(invPanel.Size.X >= w && invPanel.Size.Y >= h, $"InventoryPanel bounds valid at {w}x{h} ({aspect})");
 
                     // 5. SurvivorsPanel
-                    var survPanel = new SurvivorsPanel();
+                    var survPanel = Track(new SurvivorsPanel());
                     survPanel.CustomMinimumSize = new Vector2(w, h);
                     survPanel.Size = new Vector2(w, h);
                     survPanel._Ready();
                     Check(survPanel.Size.X >= w && survPanel.Size.Y >= h, $"SurvivorsPanel bounds valid at {w}x{h} ({aspect})");
 
                     // 6. MaritimePanel (Exp 09) + DeepCoastPanel (Exp 01 sibling layer)
-                    var maritimePanel = new MaritimePanel();
+                    var maritimePanel = Track(new MaritimePanel());
                     maritimePanel.CustomMinimumSize = new Vector2(w, h);
                     maritimePanel.Size = new Vector2(w, h);
                     maritimePanel._Ready();
                     Check(maritimePanel.Size.X >= w && maritimePanel.Size.Y >= h, $"MaritimePanel bounds valid at {w}x{h} ({aspect})");
 
-                    var deepCoastPanel = new DeepCoastPanel();
+                    var deepCoastPanel = Track(new DeepCoastPanel());
                     deepCoastPanel.CustomMinimumSize = new Vector2(w, h);
                     deepCoastPanel.Size = new Vector2(w, h);
                     deepCoastPanel._Ready();
@@ -135,7 +141,7 @@ namespace AtomicWar.GodotApp
                     // 7. ShelterPanel — includes the 2D HoldfastInteriorView layout
                     // anchor. Bind a seeded roster so the survivor actors + room
                     // hotspots actually render against authoritative state.
-                    var shelterPanel = new ShelterPanel();
+                    var shelterPanel = Track(new ShelterPanel());
                     shelterPanel.CustomMinimumSize = new Vector2(w, h);
                     shelterPanel.Size = new Vector2(w, h);
                     shelterPanel._Ready();
@@ -150,6 +156,11 @@ namespace AtomicWar.GodotApp
                 {
                     GD.PrintErr($"  [FAIL] Exception at {w}x{h}: {ex.Message}");
                     failures++;
+                }
+                finally
+                {
+                    foreach (var c in built)
+                        if (c != null && GodotObject.IsInstanceValid(c)) c.Free();
                 }
             }
 
@@ -197,6 +208,23 @@ namespace AtomicWar.GodotApp
         };
 
         /// <summary>
+        /// First-hour onboarding stage panels (T05). Four already implement
+        /// IBindablePanel and are audited; PowerGridPanel/ResearchPanel/
+        /// ExpeditionPanel are added by name so the focusability corpus verifies
+        /// all seven routes a new player is sent to by the journey.
+        /// </summary>
+        private static readonly System.Collections.Generic.HashSet<string> FirstHourStagePanelNames = new(StringComparer.Ordinal)
+        {
+            "WaterTreatmentPanel",
+            "PowerGridPanel",
+            "InventoryPanel",
+            "DutyRosterPanel",
+            "DoseLedgerPanel",
+            "ResearchPanel",
+            "ExpeditionPanel",
+        };
+
+        /// <summary>
         /// UI interactivity audit (UI/UX audit follow-up): every panel type is
         /// instantiated unbound and checked for (a) buttons with no wired click
         /// route and (b) interactive controls that keyboard/controller players
@@ -209,7 +237,8 @@ namespace AtomicWar.GodotApp
             var panelTypes = typeof(HostCli).Assembly.GetTypes()
                 .Where(t => t.IsClass && !t.IsAbstract
                             && typeof(Control).IsAssignableFrom(t)
-                            && typeof(IBindablePanel).IsAssignableFrom(t)
+                            && (typeof(IBindablePanel).IsAssignableFrom(t)
+                                || FirstHourStagePanelNames.Contains(t.Name))
                             && t.GetConstructor(Type.EmptyTypes) != null)
                 .OrderBy(t => t.Name)
                 .ToList();
@@ -230,7 +259,8 @@ namespace AtomicWar.GodotApp
                 {
                     panel = (Control)Activator.CreateInstance(type)!;
                     panel._Ready();
-                    try { panel.Call("Open"); } catch { /* host-bound panels may refuse */ }
+                    // Optional hook: IBindablePanel does not contract Open().
+                    AtomicWar.GodotApp.UI.AshfallUiHelpers.InvokePanelHook(panel, "Open", "RefreshView");
                 }
                 catch (Exception ex)
                 {
@@ -244,7 +274,7 @@ namespace AtomicWar.GodotApp
                         {
                             panel = PanelSceneLoader.Load<Control>(resPath);
                             panel._Ready();
-                            try { panel.Call("Open"); } catch { /* host-bound panels may refuse */ }
+                            AtomicWar.GodotApp.UI.AshfallUiHelpers.InvokePanelHook(panel, "Open", "RefreshView");
                         }
                         catch (Exception sceneEx)
                         {
@@ -279,7 +309,7 @@ namespace AtomicWar.GodotApp
                             panel.Free();
                             panel = PanelSceneLoader.Load<Control>(scenePath);
                             panel._Ready();
-                            try { panel.Call("Open"); } catch { /* host-bound panels may refuse */ }
+                            AtomicWar.GodotApp.UI.AshfallUiHelpers.InvokePanelHook(panel, "Open", "RefreshView");
                         }
                         catch
                         {

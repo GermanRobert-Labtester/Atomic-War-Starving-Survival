@@ -35,22 +35,20 @@ namespace AtomicWar.GodotApp
         public ActionResult TriggerCrisis(string survivorId, float stressInput, CrisisProfile profile)
         {
             var res = System.TriggerCrisis(survivorId, stressInput, profile);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Crisis triggered: {survivorId}";
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? $"Crisis triggered: {survivorId}"
+                : $"Crisis trigger refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
         public ActionResult BeginTreatment(string caseId, string caregiverId, string intervention)
         {
             var res = System.BeginTreatment(caseId, caregiverId, intervention);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Treatment begun: {caseId} by {caregiverId}";
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? $"Treatment begun: {caseId} by {caregiverId}"
+                : $"Treatment refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
@@ -63,12 +61,6 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            MentalHealthCrisisSaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
     }
 
     /// <summary>

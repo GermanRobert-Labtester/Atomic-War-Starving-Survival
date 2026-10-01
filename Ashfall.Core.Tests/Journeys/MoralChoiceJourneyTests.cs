@@ -258,15 +258,19 @@ namespace Ashfall.Core.Tests.Journeys
         }
 
         [Fact]
-        public void HostWiring_SaveAllAndProcessFlush_EnrollMoralChoice()
+        public void HostWiring_SaveAllEnrollsMoralChoice()
         {
+            // Durability contract (2026-09-30 architecture): per-frame
+            // Flush*IfDirty is retired — MainTriadDriftGateTests.
+            // ProcessLoop_DoesNotRunPerFrameFlushes forbids it, because Save*
+            // only stages into the SaveAll transaction buffer and SaveAll
+            // recaptures every section. MoralChoice has no day-owner tick, so
+            // SaveAll enrollment is its lifecycle/persistence contract.
             string? srcRoot = FindSrcRoot();
             Assert.NotNull(srcRoot);
 
             string orch = File.ReadAllText(Path.Combine(srcRoot!, "Main.SaveOrchestrator.cs"));
-            string app = File.ReadAllText(Path.Combine(srcRoot!, "Main.Application.cs"));
             Assert.Contains("SaveMoralChoice()", orch);
-            Assert.Contains("FlushMoralChoiceIfDirty()", app);
         }
 
         private static string? FindSrcRoot()

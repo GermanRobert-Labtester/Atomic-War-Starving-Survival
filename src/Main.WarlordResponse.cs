@@ -128,11 +128,6 @@ namespace AtomicWar.GodotApp
                 _warlordResponseDirty = false;
         }
 
-        public void FlushWarlordResponseIfDirty()
-        {
-            if (_warlordResponseDirty) SaveWarlordResponse();
-        }
-
         public void ResetWarlordResponse()
         {
             _warlordResponse = null;

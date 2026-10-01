@@ -78,6 +78,8 @@ namespace AtomicWar.GodotApp.UI
                 + $"Route: {(string.IsNullOrEmpty(state.ActiveRouteClassId) ? "—" : state.ActiveRouteClassId)}. "
                 + "Strong current, bad weather, or a failing pump can force an emergency recovery. Boats remain the right tool for open water."
                 : "No amphibious kit installed on this vehicle. Kits install in a workshop against compatible vehicle classes; every crossing is a loadout tradeoff.";
+            if (!string.IsNullOrEmpty(_host.LastEvent))
+                _detailText.Text += $"\nLast event: {_host.LastEvent}";
 
             bool hasKit = state != null && state.Phase != AmphibiousCrossingPhase.NoKit;
             _installBtn.Disabled = hasKit;

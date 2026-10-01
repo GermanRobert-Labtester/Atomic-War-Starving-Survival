@@ -128,11 +128,6 @@ namespace AtomicWar.GodotApp
             _survivorVoiceDirty = false;
         }
 
-        private void FlushSurvivorVoiceIfDirty()
-        {
-            if (_survivorVoiceDirty) SaveSurvivorVoice();
-        }
-
         private void ResetSurvivorVoice()
         {
             UnbindSurvivorVoiceTriggers();

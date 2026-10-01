@@ -51,14 +51,6 @@ namespace AtomicWar.GodotApp
             if (_vehicleCustomization == null) SetupVehicleCustomization();
         }
 
-        public void FlushVehicleCustomizationIfDirty()
-        {
-            if (_vehicleCustomizationDirty)
-            {
-                SaveVehicleCustomization();
-            }
-        }
-
         public void ResetVehicleCustomization()
         {
             _vehicleCustomization = null;

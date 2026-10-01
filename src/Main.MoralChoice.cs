@@ -336,9 +336,5 @@ namespace AtomicWar.GodotApp
                 _moralChoiceDirty = false;
         }
 
-        private void FlushMoralChoiceIfDirty()
-        {
-            if (_moralChoiceDirty) SaveMoralChoice();
-        }
     }
 }

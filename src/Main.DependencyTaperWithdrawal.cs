@@ -82,12 +82,6 @@ namespace AtomicWar.GodotApp
                 _dependencyTaperDirty = false;
         }
 
-        public void FlushDependencyTaperWithdrawalIfDirty()
-        {
-            if (_dependencyTaperDirty)
-                SaveDependencyTaperWithdrawal();
-        }
-
         public void ResetDependencyTaperWithdrawal()
         {
             _dependencyTaper = null;

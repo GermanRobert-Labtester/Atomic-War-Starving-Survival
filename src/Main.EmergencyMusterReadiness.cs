@@ -79,11 +79,6 @@ namespace AtomicWar.GodotApp
                 _musterReadinessDirty = false;
         }
 
-        public void FlushEmergencyMusterReadinessIfDirty()
-        {
-            if (_musterReadinessDirty) SaveEmergencyMusterReadiness();
-        }
-
         public void ResetEmergencyMusterReadiness()
         {
             _musterReadiness = null;

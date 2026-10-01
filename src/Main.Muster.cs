@@ -189,7 +189,10 @@ namespace AtomicWar.GodotApp
             _combat.StartCombat(
                 "loc_iron_raiders_den", "The Toll — Den Raid",
                 enemyCombatantIds: enemyIds,
-                isSelfDefense: true);
+                isSelfDefense: true,
+                // T24 — the den is fortified: a barricaded gate and debris
+                // choke the approach (realtime breaching applies).
+                obstacleProfileIds: new[] { "obstacle_barricaded_gate", "obstacle_debris_choke" });
             _combatDirty = true;
             GD.Print($"[Ashfall Godot] Iron Raiders raid escalated to combat: {string.Join(", ", enemyIds)} ({engagement.RemainingRaiders} of {engagement.InitialRaiderStrength} raiders reached the door).");
         }
@@ -460,8 +463,7 @@ namespace AtomicWar.GodotApp
 
         private void CloseMusterPanel()
         {
-            if (_musterPanel != null)
-                _musterPanel.Visible = false;
+            ClosePanelAnimated(_musterPanel);
         }
 
         private sealed class ShelterFactionActionItemSink : IFactionActionItemSink

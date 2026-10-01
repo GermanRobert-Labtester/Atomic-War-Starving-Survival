@@ -32,12 +32,6 @@ namespace AtomicWar.GodotApp
             => System.Repair(plantIntegrity, filterCondition);
         public void TickDay(int day) => System.TickDay(day);
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            if (CryogenicAirSeparationSaveStore.TrySave(System.CaptureState()))
-                base.Save();
-        }
     }
 
     public static class CryogenicAirSeparationSaveStore

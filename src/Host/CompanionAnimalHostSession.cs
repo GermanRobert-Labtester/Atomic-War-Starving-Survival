@@ -139,11 +139,6 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
-        public override void Save()
-        {
-            CompanionSaveStore.TrySave(CaptureSave());
-        }
-
         public static CompanionAnimalHostSession Create(
             string dataDir,
             ISeededRng rng,

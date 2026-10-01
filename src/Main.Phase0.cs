@@ -265,11 +265,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        private void FlushPhase0IfDirty()
-        {
-            if (_phase0Dirty) SavePhase0();
-        }
-
         /// <summary>
         /// Bridge a completed production craft into trade specialty progression.
         /// A player-assigned crafter is authoritative; an unassigned shelter craft
@@ -423,7 +418,7 @@ namespace AtomicWar.GodotApp
             _doseLedger.SealDemoSurvivors();
             _statusLabel.Text = "Dosimeters sealed: Gunner Mikhail (tag_1), Elena Vasquez (tag_2).";
             _codexViewer.Text = _doseLedger.DoseStatusLine();
-            FlushDoseLedgerIfDirty();
+
         }
 
         private void OnDoseScribeClicked()
@@ -432,7 +427,7 @@ namespace AtomicWar.GodotApp
             string result = _doseLedger.ScribeReading(180f, highEnergy: false);
             _statusLabel.Text = result;
             _codexViewer.Text = _doseLedger.DoseStatusLine();
-            FlushDoseLedgerIfDirty();
+
         }
 
         private void OnDoseDiagnoseClicked()
@@ -441,7 +436,7 @@ namespace AtomicWar.GodotApp
             string result = _doseLedger.DiagnoseDemo(DoseLedgerSystem.BandRed);
             _statusLabel.Text = result;
             _codexViewer.Text = _doseLedger.DoseStatusLine();
-            FlushDoseLedgerIfDirty();
+
         }
 
         private void OnDoseCohortClicked()
@@ -450,7 +445,7 @@ namespace AtomicWar.GodotApp
             string result = _doseLedger.BookDemoChild();
             _statusLabel.Text = result;
             _codexViewer.Text = _doseLedger.DoseStatusLine();
-            FlushDoseLedgerIfDirty();
+
         }
 
         private void OnDoseVolunteerClicked()
@@ -459,7 +454,7 @@ namespace AtomicWar.GodotApp
             string result = _doseLedger.SignDemoVolunteer();
             _statusLabel.Text = result;
             _codexViewer.Text = _doseLedger.DoseStatusLine();
-            FlushDoseLedgerIfDirty();
+
         }
 
         private void SaveDoseLedger()
@@ -473,14 +468,9 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        private void FlushDoseLedgerIfDirty()
-        {
-            if (_doseLedgerDirty) SaveDoseLedger();
-        }
-
         private void ClosePhase0Panel()
         {
-            _phase0Panel.Visible = false;
+            ClosePanelAnimated(_phase0Panel);
         }
 
     }

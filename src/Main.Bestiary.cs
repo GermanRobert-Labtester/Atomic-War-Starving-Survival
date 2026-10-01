@@ -46,14 +46,6 @@ namespace AtomicWar.GodotApp
             _bestiaryDirty = false;
         }
 
-        public void FlushBestiarySave()
-        {
-            if (_bestiaryDirty)
-            {
-                SaveBestiary();
-            }
-        }
-
         public void ResetBestiary()
         {
             _bestiary = null;

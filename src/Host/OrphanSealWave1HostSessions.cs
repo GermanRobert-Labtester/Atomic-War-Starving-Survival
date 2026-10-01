@@ -51,12 +51,6 @@ namespace AtomicWar.GodotApp
 
         public void TickDay(int day) { /* command-driven; no autonomous default */ }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            if (SurvivorAutonomySaveStore.TrySave(System.CaptureState()))
-                base.Save();
-        }
     }
 
     public static class SurvivorAutonomySaveStore
@@ -92,12 +86,6 @@ namespace AtomicWar.GodotApp
         public float CalculateExpeditionRisk(float baseRisk, int day) => System.CalculateExpeditionRisk(baseRisk, day);
         public float CalculateCropYieldMultiplier(int day, bool hasGreenhouse) => System.CalculateCropYieldMultiplier(day, hasGreenhouse);
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            if (NuclearWinterSaveStore.TrySave(System.CaptureState()))
-                base.Save();
-        }
     }
 
     public static class NuclearWinterSaveStore
@@ -152,12 +140,6 @@ namespace AtomicWar.GodotApp
         public float CommemorateAnniversary(string typeId, string entityName, int day)
             => System.CommemorateAnniversary(typeId, entityName, day);
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            if (SeasonalCelebrationSaveStore.TrySave(System.CaptureState()))
-                base.Save();
-        }
     }
 
     public static class SeasonalCelebrationSaveStore
@@ -196,12 +178,6 @@ namespace AtomicWar.GodotApp
         public bool DeactivateProtocol(EmergencyProtocolType type) => System.DeactivateProtocol(type);
         public IReadOnlyList<DisasterEventDto> Disasters => System.GetAllDisasters();
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            if (DisasterResponseSaveStore.TrySave(System.CaptureState()))
-                base.Save();
-        }
     }
 
     public static class DisasterResponseSaveStore
@@ -242,12 +218,6 @@ namespace AtomicWar.GodotApp
 
         public double ReceptionRangeKm => System.GetEffectiveReceptionRangeKm();
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            if (CommunicationsSaveStore.TrySave(System.CaptureState()))
-                base.Save();
-        }
     }
 
     public static class CommunicationsSaveStore
@@ -277,12 +247,6 @@ namespace AtomicWar.GodotApp
 
         public void TickDay(int day) => System.TickDay(day);
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            if (ColonySaveStore.TrySave(System.CaptureState()))
-                base.Save();
-        }
     }
 
     public static class ColonySaveStore
@@ -317,12 +281,6 @@ namespace AtomicWar.GodotApp
 
         public void TickDay(int day) { /* session-driven; no daily default */ }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            if (HobbySaveStore.TrySave(System.CaptureState()))
-                base.Save();
-        }
     }
 
     public static class HobbySaveStore
@@ -368,12 +326,6 @@ namespace AtomicWar.GodotApp
 
         public void TickDay(int day) { /* session-driven; assignments gate progress */ }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            if (SurvivorEducationSaveStore.TrySave(System.CaptureState()))
-                base.Save();
-        }
     }
 
     public static class SurvivorEducationSaveStore
@@ -449,12 +401,6 @@ namespace AtomicWar.GodotApp
 
         public void TickDay(int day) { /* labor is explicit; no free progress */ }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            if (ShelterExpansionSaveStore.TrySave(System.CaptureState()))
-                base.Save();
-        }
     }
 
     public static class ShelterExpansionSaveStore
@@ -498,12 +444,6 @@ namespace AtomicWar.GodotApp
 
         public void TickDay(int day) => System.ProcessDailyTick(day);
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            if (ShelterFestivalSaveStore.TrySave(System.CaptureState()))
-                base.Save();
-        }
     }
 
     public static class ShelterFestivalSaveStore
@@ -543,13 +483,6 @@ namespace AtomicWar.GodotApp
 
         public float GetSuspicion(string factionId) => System.GetSuspicion(factionId);
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            var payload = new CovertOpsPersistedPayload { json = System.CaptureState() };
-            if (FactionCovertOpsSaveStore.TrySave(payload))
-                base.Save();
-        }
     }
 
     [Serializable]
@@ -597,12 +530,6 @@ namespace AtomicWar.GodotApp
 
         public void TickDay(int day) { /* discovery-driven; no daily default */ }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            if (ConfessionSecretSaveStore.TrySave(System.CaptureState()))
-                base.Save();
-        }
     }
 
     public static class ConfessionSecretSaveStore

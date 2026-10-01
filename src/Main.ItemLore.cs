@@ -96,11 +96,6 @@ namespace AtomicWar.GodotApp
                 _itemLoreDirty = false;
         }
 
-        public void FlushItemLoreIfDirty()
-        {
-            if (_itemLoreDirty) SaveItemLore();
-        }
-
         public void ResetItemLore()
         {
             if (_inventory != null)

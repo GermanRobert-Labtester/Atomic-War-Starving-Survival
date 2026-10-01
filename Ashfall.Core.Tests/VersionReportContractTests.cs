@@ -200,11 +200,11 @@ namespace Ashfall.Core.Tests
             // B5–B8 Phase 6 and subsequent registered sections are included;
             // VersionReport is the authority for the current count.
             // Measured 2026-09-26 (Quad Package L gate-seal): the registered
-            // section list has grown to 314, of which 6 are versioned Core codecs
-            // and the remaining 308 are unversioned checksum envelopes. These
+            // section list has grown to 315, of which 6 are versioned Core codecs
+            // and the remaining 309 are unversioned checksum envelopes. These
             // pins are refreshed to that measured truth rather than left at the
             // stale 261/267 pair so they keep naming the real inventory.
-            Assert.Equal(308, envelopes.Count);
+            Assert.Equal(309, envelopes.Count);
             foreach (var envelope in envelopes)
             {
                 Assert.Null(envelope.Version);
@@ -217,7 +217,7 @@ namespace Ashfall.Core.Tests
         {
             string inventory = VersionReport.FormatPersistenceInventory();
 
-            Assert.Contains("Save Persistence Inventory (314 sections: 6 versioned codecs, 308 checksum envelopes):", inventory);
+            Assert.Contains("Save Persistence Inventory (315 sections: 6 versioned codecs, 309 checksum envelopes):", inventory);
             Assert.Contains("holdfast", inventory);
             Assert.Contains("dose_ledger", inventory);
             Assert.Contains("journal", inventory);

@@ -60,22 +60,20 @@ namespace AtomicWar.GodotApp
         public ActionResult QueueTranscription(string evidenceId, string archivistId, string inkId)
         {
             var res = System.QueueTranscription(evidenceId, archivistId, inkId);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Transcription queued: {evidenceId} by {archivistId}";
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? $"Transcription queued: {evidenceId} by {archivistId}"
+                : $"Transcription refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
         public ActionResult CancelJob(string jobId)
         {
             var res = System.CancelJob(jobId);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Transcription cancelled: {jobId}";
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? $"Transcription cancelled: {jobId}"
+                : $"Transcription cancel refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
@@ -85,12 +83,6 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            ArchiveDeskSaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
     }
 
     /// <summary>

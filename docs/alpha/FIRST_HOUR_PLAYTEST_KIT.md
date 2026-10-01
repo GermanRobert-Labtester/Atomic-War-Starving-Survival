@@ -44,8 +44,9 @@ Also watch for (report anything odd):
 `Tab` / `Shift+Tab` and arrows move focus, `Enter` / `Space` activate, `Esc` closes. On every
 opened panel the first `Tab` must land **inside** the panel (initial focus is granted on open).
 If focus escapes behind a panel or a control cannot be reached, record the panel name and the
-control — that is a defect against the focusability gate (currently 561 interactive controls,
-0 unreachable in the automated audit).
+control — that is a defect against the focusability gate (currently 676 interactive controls
+across 172 panels, including the seven first-hour stage panels, 0 unreachable in the automated
+audit).
 
 ## 4. Capture the funnel
 

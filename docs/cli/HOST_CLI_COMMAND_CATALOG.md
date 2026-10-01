@@ -1,7 +1,7 @@
 # ASHFALL — Host CLI Command Catalog
 
-**Last Verified:** 2026-09-27<br>
-**Total Registered Actions:** 345 entries / 563 flag tokens (aliases included)
+**Last Verified:** 2026-10-01<br>
+**Total Registered Actions:** 358 entries / 590 flag tokens (aliases included)
 
 > **GENERATED FILE — do not edit by hand.**
 > Source of truth: the live `godot --headless --path . -- --host-help`
@@ -14,7 +14,7 @@
 | Primary Flag | Aliases | Description |
 |---|---|---|
 | `--7-day-smoke-selftest` | `--seven-day-smoke-selftest`, `--deterministic-smoke-selftest`, `--deterministic-smoke-run` | 7-day deterministic smoke run: map discovery + weather rolls + survivor needs drift + mid-run save/reload round-trip across 10 verification gates |
-| `--accessibility-selftest` | `--ui-accessibility-selftest`, `--ui-access-selftest` | Verify focus order, non-empty labels, modal close handling, and accessibility compliance across UI panels |
+| `--accessibility-selftest` | `--ui-accessibility-selftest`, `--ui-access-selftest`, `--ui-a11y-selftest` | Verify focus order, non-empty labels, modal close handling, and accessibility compliance across UI panels |
 | `--asset-coverage-report` | — | Full non-gating sweep of every catalog id (core + expansions) vs loadable art; prints per-category coverage and the missing list |
 | `--asset-registry-selftest` | — | Verify that catalog IDs (items/survivors/locations) resolve to actual texture assets under assets/ |
 | `--starting-cohort-lifecycle-selftest` | `--cohort-lifecycle-selftest` | Plan 138 fresh-vs-restore lifecycle: preserve old slots, apply an alternate cohort, honor an empty saved roster, and reject failed restores without reseeding |
@@ -37,6 +37,10 @@
 | `--campaign-fuzz-selftest` | — | Core-level campaign fuzz harness gate (Task #129); delegates to Ashfall.Core.Tests.CampaignFuzz suite |
 | `--composition-root-selftest` | — | Composition root architecture gate: verifies ComposeCampaign() is the single entry point (Task #131) |
 | `--real-campaign-journey-selftest` | `--campaign-journey-selftest`, `--real-main-journey-selftest` | Real Main-composed player journey: New Game -> ComposeCampaign() -> real gameplay action -> real day advance through the coordinator -> SaveAll -> full in-memory reset -> Continue -> restored composed state (Plan #5) |
+| `--failure-restart-selftest` | `--restart-journey-selftest`, `--gameover-restart-selftest` | Failure & restart path proof: survivor deaths -> ShowGameOver terminal seal -> ReturnToMenu -> fresh New Game (no stale state) -> Continue after a simulated crash -> corrupt campaign.json fails closed with the live session intact -> verified backup recovery (Task 9) |
+| `--food-loop-selftest` | — | Food loop from the UI: fresh-game starter cooking recipes known, kitchen panel prep -> day advance -> serve-all, holdfast eat/drink seam, Plan 136 cooking authority live |
+| `--year-two-chapter-selftest` | `--play-on-selftest`, `--chapter-selftest` | Year-two chapter continuation probe |
+| `--reasonable-player-selftest` | `--reasonable-player-bot-selftest` | Reasonable player week-1 bot: deterministic ration/cook/plant/fortify policy across seeds and difficulty presets vs the no-action baseline |
 | `--rail-track-maintenance-selftest` | `--iron-road-selftest` | Expansion 25 Iron Road: gauge stability, track/bridge wear, dispatch feasibility advisory, workgang repair, and the per-segment maintenance ledger |
 | `--glassworks-selftest` | `--the-glass-selftest` | Expansion 29 The Glass: vitrification batch annealing, purity tiers, corrective lens grinding, theodolite calibration, and vision prescriptions |
 | `--broadsheet-press-selftest` | `--the-press-selftest` | Expansion 30 The Press: movable-type wear and reset, ink and paper consumables, print runs by publication kind, audience reach and morale stabilization, rumor debunk correction, and the bound archive of what the shelter printed |
@@ -257,6 +261,7 @@
 | `--memory-decay-selftest` | `--memory-system-selftest` | Memory decay integration probe |
 | `--interpersonal-conflict-selftest` | `--conflict-system-selftest` | Interpersonal conflict integration probe |
 | `--exercise-selftest` | `--physical-training-selftest` | Exercise and physical training integration probe |
+| `--world-incidents-selftest` | `--events-picker-selftest` | World incidents (events.json) weighted picker, gating, schedule, and save probe |
 | `--survivor-roles-selftest` | `--specialization-roles-selftest` | Survivor specialization roles integration probe |
 | `--shelter-museum-selftest` | `--museum-selftest` | Shelter museum & historical archive probe |
 | `--rationing-selftest` | `--ration-selftest` | Crisis rationing overlay probe |
@@ -356,5 +361,13 @@
 | `--trade-route-selftest` | `--trade-routes-selftest` | Trade route compatibility probes |
 | `--tunnel-selftest` | `--tunnel-network-selftest` | Tunnel network compatibility probes |
 | `--visitors-selftest` | — | Visitor integration compatibility probes |
+| `--power-load-shedding-selftest` | `--grid-shedding-selftest`, `--brownout-selftest` | Power load shedding integration probes |
+| `--spiritual-ritual-selftest` | `--ritual-calendar-selftest` | Ritual calendar integration probes |
+| `--trauma-bond-selftest` | `--trauma-bonds-selftest` | Trauma bond integration probes |
+| `--migration-consequence-selftest` | `--migration-consequences-selftest` | Migration consequence integration probes |
+| `--voluntary-register-selftest` | `--volunteers-selftest` | Voluntary register integration probes |
+| `--world-evolution-selftest` | `--evolution-events-selftest` | World evolution event integration probes |
+| `--the-network-selftest` | — | Informant network integration alias |
+| `--the-underneath-selftest` | — | Subsidence integration alias |
 | `--host-help` | `--help` | This list |
 | `--version` | `-v` | Show build, data schema, and save schema versions |

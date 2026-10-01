@@ -37,6 +37,13 @@ namespace Ashfall.Core.Tests
             "verdict_radio.json",
             "starting_survivor_cohorts.json",
             "starting_supplies.json",
+            // Expansion 05 audio logs and the faction-war radio corpus bind
+            // camelCase DTO fields (bodyText; dayTrigger/signalStrength/
+            // isEmergency) alongside snake_case catalog keys. Migration is a
+            // schema + C# DTO change, not a rename, so they are pinned with a
+            // disposition rather than mass-renamed.
+            "audio_logs_expansion_05.json",
+            "faction_war_radio.json",
         };
 
         /// <summary>

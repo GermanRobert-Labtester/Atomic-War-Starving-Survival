@@ -47,14 +47,6 @@ namespace AtomicWar.GodotApp
             _healthHistoryDirty = false;
         }
 
-        public void FlushHealthHistorySave()
-        {
-            if (_healthHistoryDirty)
-            {
-                SaveHealthHistory();
-            }
-        }
-
         public void ResetHealthHistory()
         {
             _healthHistory = null;

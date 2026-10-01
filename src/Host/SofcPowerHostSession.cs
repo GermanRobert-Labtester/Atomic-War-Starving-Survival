@@ -134,9 +134,5 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
-        public override void Save()
-        {
-            SofcPowerSaveStore.TrySave(CaptureSave());
-        }
 }
 }

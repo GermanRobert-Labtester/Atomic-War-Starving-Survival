@@ -101,12 +101,6 @@ namespace AtomicWar.GodotApp
                 _clinicalWardTriageDirty = false;
         }
 
-        public void FlushClinicalWardTriageIfDirty()
-        {
-            if (_clinicalWardTriageDirty)
-                SaveClinicalWardTriage();
-        }
-
         public void ResetClinicalWardTriage()
         {
             _clinicalWardTriage = null;

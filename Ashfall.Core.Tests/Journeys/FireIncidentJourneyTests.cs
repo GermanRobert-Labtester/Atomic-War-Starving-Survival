@@ -209,15 +209,20 @@ namespace Ashfall.Core.Tests.Journeys
         }
 
         [Fact]
-        public void HostWiring_SaveAllAndProcessFlush_EnrollShelterFire()
+        public void HostWiring_SaveAllEnrollsShelterFire()
         {
+            // Durability contract (2026-09-30 architecture): the per-frame
+            // Flush*IfDirty block was retired (forbidden by
+            // MainTriadDriftGateTests.ProcessLoop_DoesNotRunPerFrameFlushes).
+            // ShelterFire persists through SaveAll enrollment and advances
+            // through its registered day owner.
             string? srcRoot = FindSrcRoot();
             Assert.NotNull(srcRoot);
 
             string orch = File.ReadAllText(Path.Combine(srcRoot!, "Main.SaveOrchestrator.cs"));
-            string app = File.ReadAllText(Path.Combine(srcRoot!, "Main.Application.cs"));
+            string owners = File.ReadAllText(Path.Combine(srcRoot!, "Main.CampaignOwners.cs"));
             Assert.Contains("SaveShelterFire()", orch);
-            Assert.Contains("FlushShelterFireIfDirty()", app);
+            Assert.Contains("ShelterFireDayOwner", owners);
         }
 
         private static string? FindSrcRoot()

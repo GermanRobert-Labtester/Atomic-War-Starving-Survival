@@ -170,14 +170,64 @@ namespace Ashfall.Core.Tests.Tooling
                 flags.AddRange(entry.aliases ?? new List<string>());
                 if (flags.Count == 0)
                     continue;
-                if (!flags.Any(f => parseBody.Contains("\"" + f + "\"", StringComparison.Ordinal)))
-                    unparsed.Add($"{entry.test_id} ({string.Join(" | ", flags)})");
+
+                // EVERY declared flag must be recognized, not merely one per test.
+                // The previous `Any(...)` form let an entry pass as long as its
+                // primary flag parsed, so a registered alias the parser rejected
+                // (e.g. --ui-a11y-selftest) shipped as a silently dead flag.
+                foreach (var f in flags)
+                {
+                    if (!parseBody.Contains("\"" + f + "\"", StringComparison.Ordinal))
+                        unparsed.Add($"{entry.test_id} -> {f}");
+                }
             }
 
             Assert.True(unparsed.Count == 0,
-                $"Cataloged tests expose {unparsed.Count} flag sets that HostCli.Parse never recognizes " +
-                "(undeclared probes in the machine-readable catalog):\n  " +
+                $"Cataloged tests declare {unparsed.Count} flags that HostCli.Parse never recognizes " +
+                "(the machine-readable catalog advertises a flag the host silently rejects):\n  " +
                 string.Join("\n  ", unparsed));
+        }
+
+        /// <summary>
+        /// Reverse direction of <see cref="EveryManifestFlag_IsParsedByHostCli"/>:
+        /// every probe-shaped flag string literal that <c>HostCli.Parse</c>
+        /// recognizes must be declared in the manifest as a primary flag or an
+        /// alias. Without this a flag can be parsed but undocumented (e.g.
+        /// <c>--ui-access-selftest</c>), so the machine-readable catalog silently
+        /// under-reports what the host actually accepts.
+        ///
+        /// Scoped to probe-shaped flags (<c>--*selftest</c>, <c>--*uitest</c>,
+        /// <c>--*selfcheck</c>, <c>--*ui-test</c>): runtime flags such as
+        /// <c>--headless</c> are out of the manifest's scope.
+        /// </summary>
+        [Fact]
+        public void EveryParsedProbeFlag_IsDeclaredInTheManifest()
+        {
+            var manifest = LoadManifest(out string root);
+            string code = StripComments(File.ReadAllText(Path.Combine(root, "src", "Host", "HostCli.cs")));
+
+            int parseIdx = code.IndexOf("Parse(", StringComparison.Ordinal);
+            int helpIdx = code.IndexOf("PrintHelp(", StringComparison.Ordinal);
+            Assert.True(parseIdx >= 0 && helpIdx > parseIdx, "Could not delimit HostCli.Parse body");
+            string parseBody = code.Substring(parseIdx, helpIdx - parseIdx);
+
+            var declared = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var entry in manifest.tests)
+            {
+                if (!string.IsNullOrWhiteSpace(entry.primary_flag)) declared.Add(entry.primary_flag);
+                foreach (var a in entry.aliases ?? new List<string>()) declared.Add(a);
+            }
+
+            var undeclared = Regex.Matches(parseBody, "\"(--[a-z0-9-]*(?:selftest|uitest|selfcheck|ui-test))\"")
+                .Select(m => m.Groups[1].Value)
+                .Distinct(StringComparer.Ordinal)
+                .OrderBy(s => s, StringComparer.Ordinal)
+                .Where(f => !declared.Contains(f))
+                .ToList();
+
+            Assert.True(undeclared.Count == 0,
+                $"HostCli.Parse accepts {undeclared.Count} probe flags that docs/ci/SELFTEST_MANIFEST.json " +
+                "does not declare (parsed but undocumented):\n  " + string.Join("\n  ", undeclared));
         }
         [Fact]
         public void EveryHostEnumMember_IsDispatched()

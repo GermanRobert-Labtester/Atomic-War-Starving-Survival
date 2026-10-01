@@ -112,7 +112,11 @@ namespace Ashfall.Core.Combat
             float equipmentCondition01 = 1f)
         {
             if (_state.Resolved) return ActionPreflight.Blocked("Encounter is resolved");
-            if (_state.Phase != (int)CombatPhase.PlayerTurn) return ActionPreflight.Blocked("Not player turn");
+            // T21 — breaching is legal in realtime as well as turn-based; the
+            // realtime clock auto-advances active breaches (TickRealtimeBreach).
+            if (_state.Phase != (int)CombatPhase.PlayerTurn
+                && _state.Phase != (int)CombatPhase.ActiveRealtime)
+                return ActionPreflight.Blocked("Not player turn");
             var barrier = FindBarrier(barrierId);
             if (barrier == null) return ActionPreflight.Blocked("Barrier not found");
             var eval = EnsureBreachingEngine().Evaluate(
@@ -131,7 +135,8 @@ namespace Ashfall.Core.Combat
         {
             var res = new CombatActionResult();
             if (_state.Resolved) { res.Message = "Encounter is over."; return res; }
-            if (_state.Phase != (int)CombatPhase.PlayerTurn)
+            if (_state.Phase != (int)CombatPhase.PlayerTurn
+                && _state.Phase != (int)CombatPhase.ActiveRealtime)
             {
                 res.Message = "Not player turn.";
                 return res;
@@ -170,7 +175,8 @@ namespace Ashfall.Core.Combat
         {
             var res = new CombatActionResult();
             if (_state.Resolved) { res.Message = "Encounter is over."; return res; }
-            if (_state.Phase != (int)CombatPhase.PlayerTurn)
+            if (_state.Phase != (int)CombatPhase.PlayerTurn
+                && _state.Phase != (int)CombatPhase.ActiveRealtime)
             {
                 res.Message = "Not player turn.";
                 return res;

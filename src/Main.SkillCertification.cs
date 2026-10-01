@@ -65,14 +65,6 @@ namespace AtomicWar.GodotApp
             _skillCertificationsDirty = false;
         }
 
-        public void FlushSkillCertificationsSave()
-        {
-            if (_skillCertificationsDirty)
-            {
-                SaveSkillCertifications();
-            }
-        }
-
         public void ResetSkillCertifications()
         {
             _skillCertifications = null;

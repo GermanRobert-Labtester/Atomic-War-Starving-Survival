@@ -56,11 +56,5 @@ namespace AtomicWar.GodotApp
             return res;
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            SolarConcentratorSaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
     }
 }

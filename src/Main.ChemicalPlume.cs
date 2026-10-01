@@ -35,11 +35,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public void FlushChemicalPlumeIfDirty()
-        {
-            if (_chemicalPlumeDirty) SaveChemicalPlume();
-        }
-
         public void ResetChemicalPlume()
         {
             _chemicalPlume = null;

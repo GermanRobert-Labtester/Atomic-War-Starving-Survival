@@ -3,6 +3,7 @@ using System;
 using Godot;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
+using AtomicWar.GodotApp.Localization;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
 using Ashfall.Core.IO;
@@ -22,6 +23,12 @@ namespace AtomicWar.GodotApp
         public event Action? OnCodex;
         public event Action? OnQuit;
         public event Action? OnInspectorRequested;
+        /// <summary>
+        /// Developer session: boot a fresh campaign and open the Item &amp; Asset
+        /// Inspector over it. Composition of two existing commands; no new
+        /// gameplay authority is introduced.
+        /// </summary>
+        public event Action? OnDevSessionStartRequested;
 
         private Button _btnNewGame = null!;
         private Button _btnContinue = null!;
@@ -178,6 +185,16 @@ namespace AtomicWar.GodotApp
             // item and whether its art asset resolves. Presentation-only.
             if (OS.IsDebugBuild())
             {
+                var btnDevRun = AshfallUiHelpers.MakeButton(
+                    "START GAME — DEV SESSION (RUN + INSPECT)",
+                    () => OnDevSessionStartRequested?.Invoke());
+                btnDevRun.CustomMinimumSize = new Vector2(320, 36);
+                btnDevRun.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);
+                btnDevRun.TooltipText = AshfallLocalization.Tr(
+                    "ui.mainmenu.dev_run_tooltip",
+                    "Boot a fresh campaign and open the Item & Asset Inspector over it.");
+                vbox.AddChild(btnDevRun);
+
                 var btnInspector = AshfallUiHelpers.MakeButton(
                     "DEV SESSION — ITEM & ASSET INSPECTOR",
                     () => OnInspectorRequested?.Invoke());

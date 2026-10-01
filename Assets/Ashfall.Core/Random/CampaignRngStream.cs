@@ -86,6 +86,9 @@ namespace Ashfall.Core.Random
         // Plan 55 / 58 — retention is deterministic (no stream); outpost hostile
         // pressure is the one seeded consumer, forked per day and per outpost.
         public const string OutpostRisk = "outpost_risk";
+        // World incidents (events.json) — third fallback of the per-day decision
+        // stream (arc, echo, incident); forked per day, snake_case; no dots.
+        public const string WorldIncident = "world_incident";
     }
 
     /// <summary>Domain-isolated deterministic RNG stream derived from a campaign master seed.</summary>

@@ -36,16 +36,14 @@ namespace AtomicWar.GodotApp
         private VerdictPanel _verdictPanel = null!;
         private bool _verdictDirty;
 
-        private void FlushVerdictIfDirty()
-        {
-            if (_verdictDirty) SaveVerdict();
-        }
-
         private void SetupVerdict()
         {
             if (_verdict != null) return;
             _verdict = AtomicWar.GodotApp.VerdictHostSession.Create(_dataDir, flags: _consequenceLedger);
             _verdict.StateChanged += () => { _verdictDirty = true; RefreshVerdictReadout(); };
+            // Chapter profile timing/offset: the endgame host owns the profile
+            // authority; apply it to the reckoning clock at composition (idempotent).
+            if (_endgame != null) _verdict.ConfigureFromProfile(_endgame.GetCurrentProfile());
             UnlockVerdictLore();
             RefreshVerdictReadout();
 
@@ -174,7 +172,7 @@ namespace AtomicWar.GodotApp
 
         private void CloseVerdictPanel()
         {
-            if (_verdictPanel != null) _verdictPanel.Visible = false;
+            ClosePanelAnimated(_verdictPanel);
         }
 
         private void OnVerdictOpenClicked()

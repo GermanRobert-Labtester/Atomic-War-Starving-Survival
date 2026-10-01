@@ -329,10 +329,10 @@ namespace Ashfall.Core.Tests.Save
             // the Plans 46-49 lane (DynamicQuestSaveStore + DynamicQuestlinePanel +
             // the registered dynamic_quests section), so a second host session, store and
             // section would have been a duplicate authority.
-            // Measured: 314 registered sections.
-            Assert.Equal(314, SaveSectionRegistry.All.Count);
+            // Measured: 315 registered sections.
+            Assert.Equal(315, SaveSectionRegistry.All.Count);
             var keys = SaveSectionRegistry.SectionKeys;
-            Assert.Equal(314, keys.Count);
+            Assert.Equal(315, keys.Count);
 
         }
 

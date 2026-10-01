@@ -81,14 +81,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public void FlushAccessibilitySettingsIfDirty()
-        {
-            if (_accessibilitySettingsDirty)
-            {
-                SaveAccessibilitySettings();
-            }
-        }
-
         public void ResetAccessibilitySettings()
         {
             _accessibilitySettings = null;

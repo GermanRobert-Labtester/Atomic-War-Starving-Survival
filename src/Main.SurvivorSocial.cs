@@ -90,11 +90,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        private void FlushSurvivorSocialIfDirty()
-        {
-            if (_survivorSocialDirty) SaveSurvivorSocial();
-        }
-
         /// <summary>
         /// Advance the survivor-social cluster by one day. Called from
         /// <see cref="TickSimDay"/> after survivors and duty-roster tick.

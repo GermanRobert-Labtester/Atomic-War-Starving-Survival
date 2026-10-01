@@ -72,6 +72,7 @@ namespace AtomicWar.GodotApp
             if (Perimeter == null) return ActionResult.Failed("no_perimeter", "defense.no_perimeter");
             var res = Perimeter.DisarmSector(sectorId);
             if (res.IsSuccess) LastEvent = $"{sectorId} sector alarm {(Perimeter.FindSector(sectorId)?.alarm_armed == true ? "armed" : "disarmed")}.";
+            else LastEvent = "Sector arm toggle blocked: " + res.FailureCode;
             RaiseStateChanged();
             return res;
         }
@@ -105,11 +106,5 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            DefenseSaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
     }
 }

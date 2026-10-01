@@ -126,7 +126,7 @@ namespace AtomicWar.GodotApp
 
                 if (exemplarId == "micro_frozen_bus")
                 {
-                    Check(exDef.description.Length >= 190, "micro_frozen_bus has longest description (~198 chars)");
+                    Check(exDef.description.Length >= 190, "micro_frozen_bus long description preserved (246 chars)");
                     Check(_expeditionPanel.EncounterBodyLabel?.Text.Contains(exDef.description) == true, "longest description text preserved without truncation");
                 }
 

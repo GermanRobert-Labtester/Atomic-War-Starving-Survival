@@ -2060,6 +2060,20 @@ ARCHITECTURE_GRAPH = {
         "cli": [],
         "tests": ["NarrativeQuestlineSystemTests"]
     },
+    "world_incidents": {
+        "domain": "Narrative",
+        "core": ["WorldIncidentSystem", "WorldIncidentDefinition", "WorldIncidentState", "WorldIncidentCatalogLoader"],
+        "catalog": ["events.json"],
+        "host": ["Main", "WorldIncidentHostSession"],
+        "setup": "SetupWorldIncidents",
+        "ticked": True,
+        "tick_type": "Daily Sim Tick (third fallback of the shared arc→echo→incident decision stream)",
+        "store": ["WorldIncidentSaveStore"],
+        "ui": [],
+        "routes": [],
+        "cli": ["--world-incidents-selftest"],
+        "tests": ["WorldIncidentSystemTests"]
+    },
     "chemical_synthesis": {
         "domain": "Crafting & Chemistry",
         "core": ["ChemicalSynthesisSystem"],

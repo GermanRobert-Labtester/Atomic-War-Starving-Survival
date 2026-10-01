@@ -79,11 +79,5 @@ namespace AtomicWar.GodotApp
             return res;
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            BallisticShieldSaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
     }
 }

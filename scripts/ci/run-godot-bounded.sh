@@ -8,6 +8,35 @@ set -euo pipefail
 
 MAX_SECONDS=180
 KILL_GRACE_SECONDS=5
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+
+# ── Build-staleness guard ─────────────────────────────────────────────────
+# Generators and gates that shell out through this wrapper query the *compiled*
+# host (--host-help, --selftest-manifest, ...). If C# was edited without a
+# rebuild they read stale code, and their --check reports "OK" against stale
+# data — the failure is invisible because both sides are equally stale
+# (observed 2026-09-30 on generate-selftest-manifest.py, which reported
+# "in sync" while silently omitting four newly authored aliases).
+#
+# Conservative by design: only blocks when staleness is *provable* (the loaded
+# assembly exists AND is older than the newest C# source). A missing assembly is
+# not proof, so this can never false-positive into blocking a valid run.
+# Escape hatch for unusual workflows: ASHFALL_SKIP_BUILD_STALENESS=1.
+if [[ "${ASHFALL_SKIP_BUILD_STALENESS:-0}" != "1" ]]; then
+    ASSEMBLY="$ROOT/.godot/mono/temp/bin/Debug/Ashfall.dll"
+    if [[ -f "$ASSEMBLY" ]]; then
+        newest_src=$(find "$ROOT/src" "$ROOT/Assets/Ashfall.Core" -name '*.cs' -printf '%T@\n' 2>/dev/null | sort -rn | head -1 || true)
+        dll_mtime=$(stat -c %Y "$ASSEMBLY" 2>/dev/null || echo 0)
+        if [[ -n "${newest_src:-}" ]] && awk -v s="$newest_src" -v d="$dll_mtime" 'BEGIN{exit !(s>d)}'; then
+            echo "ERROR: compiled host is STALE — C# sources are newer than" >&2
+            echo "       $ASSEMBLY" >&2
+            echo "       This run would execute, and verify, stale code." >&2
+            echo "Fix:   dotnet build Ashfall.csproj   # then re-run" >&2
+            echo "       (or set ASHFALL_SKIP_BUILD_STALENESS=1 to override)" >&2
+            exit 2
+        fi
+    fi
+fi
 
 command -v godot >/dev/null 2>&1 || {
     echo "ERROR: godot is not available on PATH" >&2

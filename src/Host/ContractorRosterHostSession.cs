@@ -42,30 +42,27 @@ namespace AtomicWar.GodotApp
         public ActionResult GenerateOffer(string candidateId, string role, List<string> requiredSkills, int initialFee, int dailyPay, int termDays)
         {
             var res = System.GenerateOffer(candidateId, role, requiredSkills, initialFee, dailyPay, termDays);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Offer generated for {candidateId} ({role})";
-            }
+            LastEvent = res.IsSuccess
+                ? $"Offer generated for {candidateId} ({role})"
+                : $"Offer refused: {res.FailureCode}";
             return res;
         }
 
         public ActionResult AcceptOffer(string offerId)
         {
             var res = System.AcceptOffer(offerId);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Offer accepted: {offerId}";
-            }
+            LastEvent = res.IsSuccess
+                ? $"Offer accepted: {offerId}"
+                : $"Offer acceptance refused: {res.FailureCode}";
             return res;
         }
 
         public ActionResult Dismiss(string contractorId)
         {
             var res = System.Dismiss(contractorId);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Contractor dismissed: {contractorId}";
-            }
+            LastEvent = res.IsSuccess
+                ? $"Contractor dismissed: {contractorId}"
+                : $"Dismissal refused: {res.FailureCode}";
             return res;
         }
 
@@ -74,12 +71,6 @@ namespace AtomicWar.GodotApp
             System.TickDay(day);
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            ContractorRosterSaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
     }
 
     /// <summary>

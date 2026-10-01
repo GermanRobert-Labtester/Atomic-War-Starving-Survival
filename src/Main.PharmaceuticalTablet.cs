@@ -50,11 +50,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public void FlushPharmaceuticalTabletIfDirty()
-        {
-            if (_tabletWorksDirty) SavePharmaceuticalTablet();
-        }
-
         public void ResetPharmaceuticalTablet()
         {
             _tabletWorks = null;

@@ -17,7 +17,6 @@ namespace AtomicWar.GodotApp.UI
     {
         public event Action? OnClose;
 
-        private VBoxContainer _contentVBox = null!;
         private Label _lblRecentTitle;
         private VBoxContainer _recentList;
         private Label _lblIncidentsTitle;

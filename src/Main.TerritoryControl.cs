@@ -121,11 +121,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        private void FlushTerritoryControlIfDirty()
-        {
-            if (_territoryControlDirty) SaveTerritoryControl();
-        }
-
         private void ResetTerritoryControl()
         {
             _territoryControl?.Dispose();

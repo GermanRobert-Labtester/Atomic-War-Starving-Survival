@@ -35,6 +35,15 @@ namespace AtomicWar.GodotApp
 
             _aging.StateChanged += () => _agingDirty = true;
 
+            // T18a — a committed chronological transition into Elderly is a
+            // permanent age fact: record the degenerative joint-pain chronic
+            // condition once so the accommodation decision is reachable.
+            _aging.System.OnStageTransitioned += (survivorId, oldStage, newStage) =>
+            {
+                if (newStage == SurvivorLifeStage.Elderly)
+                    RecordChronicConditionFact(survivorId, ChronicConditionIds.JointPain, "aging");
+            };
+
             if (_survivorDetailPanel != null)
             {
                 _survivorDetailPanel.AgeProfileProvider = id =>
@@ -129,14 +138,6 @@ namespace AtomicWar.GodotApp
 
         public AgingCensus GetAgingCensus() =>
             _aging?.Census ?? default;
-
-        public void FlushAgingIfDirty()
-        {
-            if (_agingDirty)
-            {
-                SaveAging();
-            }
-        }
 
         public void ResetAging()
         {

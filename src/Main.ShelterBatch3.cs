@@ -169,6 +169,11 @@ namespace AtomicWar.GodotApp
                 return _survivors.RosterState.Where(s => s != null && s.IsAliveState).Select(s => s.Id).ToList();
             };
             _kitchenNutritionPanel.Bind(_kitchenNutrition);
+            // PFGL W5 P2 — the kitchen panel also shows the live Plan 136
+            // cooking authority (recipes_cooking.json) as a cooking strip, so
+            // CookingSystem.StartCooking/Progress/Cancel are player-operable
+            // without replacing the nutrition prep/serve path above.
+            _kitchenNutritionPanel.BindCooking(EnsureCooking());
             _kitchenNutritionPanel.Visible = false;
             AddChild(_kitchenNutritionPanel);
         }

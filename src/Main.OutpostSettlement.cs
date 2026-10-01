@@ -119,11 +119,6 @@ namespace AtomicWar.GodotApp
             _outpostSettlementDirty = false;
         }
 
-        private void FlushOutpostSettlementIfDirty()
-        {
-            if (_outpostSettlementDirty) SaveOutpostSettlement();
-        }
-
         private void ResetOutpostSettlement()
         {
             _outpostSettlement?.Dispose();

@@ -42,11 +42,5 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            WildlifeEcosystemSaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
     }
 }

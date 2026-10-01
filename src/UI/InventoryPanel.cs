@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Godot;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
+using AtomicWar.GodotApp.Localization;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
@@ -49,6 +50,33 @@ namespace AtomicWar.GodotApp.UI
             RefreshStatusRail();
             RefreshStorageList();
             RefreshGearList();
+            RefreshCapacity();
+        }
+
+        /// <summary>
+        /// Capacity readout in the storage-principles column. This label was built
+        /// once as "CAPACITY // —" and never written again, so it read as a permanent
+        /// placeholder. It now tracks the live weight against the carry limit using
+        /// the same criticality ladder as the status rail.
+        /// </summary>
+        private void RefreshCapacity()
+        {
+            if (_weightLabel == null || !GodotObject.IsInstanceValid(_weightLabel)) return;
+            if (_inventoryHost == null)
+            {
+                _weightLabel.Text = AshfallLocalization.Tr("ui.inventory.capacity_placeholder", "CAPACITY // —");
+                return;
+            }
+
+            float cw = _inventoryHost.Inventory.GetCurrentWeight();
+            float mw = _inventoryHost.Inventory.MaxWeight;
+            AshfallUiHelpers.SetTextPulsed(_weightLabel, $"CAPACITY // {cw:0.0}/{mw:0} KG");
+            _weightLabel.AddThemeColorOverride(
+                "font_color",
+                AshfallUiHelpers.ToColor(
+                    cw >= mw ? DesignTheme.Critical
+                    : cw >= mw * 0.85f ? DesignTheme.Entropy
+                    : DesignTheme.Hot));
         }
 
         private void RefreshStatusRail()

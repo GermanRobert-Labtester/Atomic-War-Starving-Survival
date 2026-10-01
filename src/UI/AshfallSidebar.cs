@@ -99,7 +99,27 @@ public partial class AshfallSidebar : PanelContainer
 
         SelectedId = id;
         SetRowHighlight(id, true);
+        SettleRowLabel(id);
         OnSelected?.Invoke(id);
+    }
+
+    /// <summary>
+    /// Subtle settle on the newly selected row's label so navigation registers as
+    /// motion rather than a silent colour swap. Deliberately pulses the label, not
+    /// the row: rows are full-width, so scaling one would overflow its column.
+    /// No-op under ReducedMotion through the shared pulse seam.
+    /// </summary>
+    private void SettleRowLabel(string id)
+    {
+        if (_list == null) return;
+        foreach (var child in _list.GetChildren())
+        {
+            if (child is not Button row || row.Name != $"row_{id}") continue;
+            var labelNode = row.FindChild("label", recursive: false, owned: false);
+            if (labelNode is Label lbl)
+                AtomicWar.GodotApp.UI.UiPanelFlow.Pulse(lbl, 1.06f);
+            return;
+        }
     }
 
     private void AddRow(Item item)

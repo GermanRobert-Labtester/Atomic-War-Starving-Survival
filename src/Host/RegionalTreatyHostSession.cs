@@ -27,22 +27,20 @@ namespace AtomicWar.GodotApp
         public ActionResult ProposeTreaty(string treatyId, int currentDay)
         {
             var res = System.Propose(treatyId);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Proposed regional treaty: {treatyId}";
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? $"Proposed regional treaty: {treatyId}"
+                : $"Treaty proposal refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
         public ActionResult RatifyTreaty(string treatyId, int scrapCost)
         {
             var res = System.Ratify(treatyId, scrapCost);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Ratified regional treaty: {treatyId}";
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? $"Ratified regional treaty: {treatyId}"
+                : $"Treaty ratification refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
@@ -52,11 +50,5 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            RegionalTreatySaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
     }
 }

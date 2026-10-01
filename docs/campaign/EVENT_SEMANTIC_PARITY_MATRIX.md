@@ -43,6 +43,7 @@ Plan 31 may replace it with a typed semantic-kind vocabulary.
 | `duty_vacated` | DutyRosterHostSession.cs | yes | via briefing panel | HANDLED |
 | `echo_consequence_due` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (visible — echo-consequence surface from in-flight worktree work) |
 | `echo_surfaced` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (visible — echo-consequence surface from in-flight worktree work) |
+| `world_incident_surfaced` | Main.CampaignOwners.cs | generic default | via briefing panel | GENERIC (visible — authored `events.json` incident surfaced through the shared arc→echo→incident decision stream) |
 | `weather_forecast_miss` | Main.CampaignOwners.cs | yes | via briefing panel | HANDLED |
 | `weather_unexpected_storm` | Main.CampaignOwners.cs | yes | via briefing panel | HANDLED |
 | `espionage_ticked` | Main.Plans166_169.cs | generic default | via briefing panel | GENERIC (internal heartbeat — intentionally non-player-facing) |

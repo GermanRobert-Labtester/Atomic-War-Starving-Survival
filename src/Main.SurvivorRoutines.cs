@@ -88,12 +88,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public void FlushSurvivorRoutinesIfDirty()
-        {
-            if (_survivorRoutinesDirty)
-                SaveSurvivorRoutines();
-        }
-
         public SurvivorRoutineCensus GetSurvivorRoutinesCensus() =>
             _survivorRoutines?.Census ?? default;
 

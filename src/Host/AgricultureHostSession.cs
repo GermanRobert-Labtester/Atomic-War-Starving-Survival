@@ -78,15 +78,5 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            AgricultureSaveStore.TrySave(new AgricultureCampaignState
-            {
-                agriculture = System.CaptureState(),
-                nutrition = Nutrition.CaptureState()
-            });
-            base.Save();
-        }
     }
 }

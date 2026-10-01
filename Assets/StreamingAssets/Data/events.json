@@ -83,7 +83,7 @@
       "title": "Dry Pipes",
       "bodyText": "The water barrel is down to the last few centimetres, a dark circle in the bottom that reflects the light when you lean over. Rationing began nine days ago, a cup per person per day, and the cups have gotten smaller twice. Thirst is setting in: lips crack, the arguments come faster, and the children have stopped asking for more. The nearest clean source is the creek two hours east, and the last person who walked that road came back empty and limping. Melted snow is a gamble, the rain barrels are half ash, and every option costs either distance or risk or both. People are watching you measure the cups now. The barrel does not care about the count. It is just empty.",
       "weight": 2.5,
-      "minDay": 5
+      "minDay": 4
     },
     {
       "id": "heater_malfunction",
@@ -152,7 +152,7 @@
       "id": "lucky_find",
       "title": "Lucky Find",
       "bodyText": "A sealed crate in the corner of the store room, behind the empty racks, overlooked for years. The lid comes off with a groan: canned food, the labels faded but the tins bright, a water filter still in its box, and a flashlight that works on the first press. The beam is solid and steady, the first new light this bunker has seen in a long time. It is a small fortune and it asks a question: distribute it now and the bunker eats well for a week and sees the morale lift; hold it in reserve and it stays a floorboard under everyone's feet, a secret with a weight. The tins are dated. The filter is dry. Nothing here keeps forever, and the wasteland does not care about luck.",
-      "weight": 0.5,
+      "weight": 1.0,
       "minDay": 3
     },
     {

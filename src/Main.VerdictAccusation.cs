@@ -30,11 +30,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public void FlushVerdictAccusationIfDirty()
-        {
-            if (_verdictAccusationDirty) SaveVerdictAccusation();
-        }
-
         public void ResetVerdictAccusation()
         {
             _verdictAccusation = null;

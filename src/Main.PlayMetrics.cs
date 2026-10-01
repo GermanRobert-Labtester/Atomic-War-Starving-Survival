@@ -78,11 +78,6 @@ namespace AtomicWar.GodotApp
             _playMetricsDirty = false;
         }
 
-        private void FlushPlayMetricsIfDirty()
-        {
-            if (_playMetricsDirty) SavePlayMetrics();
-        }
-
         private void ResetPlayMetrics()
         {
             _playMetrics?.Dispose();
@@ -142,7 +137,7 @@ namespace AtomicWar.GodotApp
             session.RecordSaveOutcome(Math.Max(1, _simDay));
             session.RecordQuit(Math.Max(1, _simDay));
             _playMetricsDirty = true;
-            FlushPlayMetricsIfDirty();
+
         }
 
         // ── Aggregation ────────────────────────────────────────────────────

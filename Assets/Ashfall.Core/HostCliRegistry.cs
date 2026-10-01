@@ -230,6 +230,9 @@ namespace Ashfall.Core
         VerdictUiTest,
         OnboardingJourneySelfTest,
         RealCampaignJourneySelfTest,
+        FailureRestartSelfTest,
+        FoodLoopSelfTest,
+        ReasonablePlayerSelfTest,
         EbPvdCoatingUiTest,
         MicrofluidicDiagnosticUiTest,
         MineFlailUiTest,
@@ -247,6 +250,7 @@ namespace Ashfall.Core
         MemoryDecaySelfTest,
         InterpersonalConflictSelfTest,
         ExerciseSelfTest,
+        WorldIncidentsSelfTest,
         SurvivorRolesSelfTest,
         ShelterMuseumSelfTest,
         RationingSelfTest,
@@ -561,7 +565,7 @@ namespace Ashfall.Core
                     HostCliAction.PortContractSelfTest,
                     "Core & System Gates",
                     "--port-contract-selftest",
-                    null,
+                    new[] { "--port-contracts-selftest" },
                     "Plan 36: Port Contracts & Host Wiring — validates all Core integration seams against docs/ci/port_contract_policy.json and runtime host collaborator/port wiring"),
                 new HostCliActionDescriptor(
                     HostCliAction.CampaignFuzzSelfTest,
@@ -878,7 +882,7 @@ namespace Ashfall.Core
                     HostCliAction.OutpostSettlementSelfTest,
                     "Expansions & Campaign Modules",
                     "--outpost-settlement-selftest",
-                    null,
+                    new[] { "--outposts-selftest" },
                     "Plan 58 outposts & second holdfast: authored catalog, establish/garrison/supply lifecycle, daily consume, capture round-trip"),
                 new HostCliActionDescriptor(
                     HostCliAction.WeatherCascadeSelfTest,
@@ -1076,13 +1080,13 @@ namespace Ashfall.Core
                     HostCliAction.InformantNetworkSelfTest,
                     "Expansions & Campaign Modules",
                     "--informant-network-selftest",
-                    Array.Empty<string>(),
+                    new[] { "--the-network-selftest" },
                     "Plan 146 batch-4 / A.83: informant tradecraft — recruitment, method exposure, deterministic ops, drift, interrogation doctrine, sweeps, save ride"),
                 new HostCliActionDescriptor(
                     HostCliAction.SubsidenceSelfTest,
                     "Expansions & Campaign Modules",
                     "--subsidence-selftest",
-                    Array.Empty<string>(),
+                    new[] { "--the-underneath-selftest" },
                     "Plan 146 batch-4 / A.56: subterranean subsidence strata crosswalk, daily integrity decay, shoring mitigation, evacuation gate, and topology evaluation"),
                 new HostCliActionDescriptor(
                     HostCliAction.YoaIceRoadSelfTest,
@@ -1653,6 +1657,12 @@ namespace Ashfall.Core
                     new[] { "--physical-training-selftest" },
                     "Plan 216: Survivor exercise & physical training, athletic conditioning, workout routines, deconditioning, save persistence, and UI binding"),
                 new HostCliActionDescriptor(
+                    HostCliAction.WorldIncidentsSelfTest,
+                    "Host Domains & Save Stores",
+                    "--world-incidents-selftest",
+                    new[] { "--events-picker-selftest" },
+                    "World incidents (events.json): weighted runtime picker as the third fallback of the per-day decision stream, day/flag/weather gating, scheduled follow-ups, consequence port routing, and save persistence"),
+                new HostCliActionDescriptor(
                     HostCliAction.SurvivorRolesSelfTest,
                     "Host Domains & Save Stores",
                     "--survivor-roles-selftest",
@@ -2207,7 +2217,7 @@ namespace Ashfall.Core
                     HostCliAction.UiAccessibilitySelfTest,
                     "UI Tests, Layout & Gameplay Smoke",
                     "--ui-accessibility-selftest",
-                    new[] { "--accessibility-selftest", "--ui-a11y-selftest" },
+                    new[] { "--accessibility-selftest", "--ui-access-selftest", "--ui-a11y-selftest" },
                     "Verify focus order, keyboard close action, readable labels, and modal dismissal paths"),
                 new HostCliActionDescriptor(
                     HostCliAction.UiLayoutSelfTest,
@@ -2251,6 +2261,24 @@ namespace Ashfall.Core
                     "--real-campaign-journey-selftest",
                     new[] { "--campaign-journey-selftest", "--real-main-journey-selftest" },
                     "Real Main-composed player journey (Plans #5/#7/#8/#9): New Game -> ComposeCampaign() -> typed gameplay action -> real day advance -> SaveAll -> reset -> Continue -> restored state -> post-load action; combat auto-spawn via expedition encounter trigger -> victory loot & weapon-condition write-back (Plan #9); Holdfast trade against the shared inventory -> day advance -> save/reload (Plan #7); radiation exposure -> treatment -> save/reload (Plan #8)"),
+                new HostCliActionDescriptor(
+                    HostCliAction.FailureRestartSelfTest,
+                    "UI Tests, Layout & Gameplay Smoke",
+                    "--failure-restart-selftest",
+                    new[] { "--restart-journey-selftest", "--gameover-restart-selftest" },
+                    "Failure & restart path proof (Task 9): New Game -> survivor deaths through the fate pipeline -> ShowGameOver terminal seal -> ReturnToMenu -> second New Game with no stale state -> Continue after a simulated crash -> corrupt campaign.json fails closed with the live session intact -> verified backup recovery"),
+                new HostCliActionDescriptor(
+                    HostCliAction.FoodLoopSelfTest,
+                    "UI Tests, Layout & Gameplay Smoke",
+                    "--food-loop-selftest",
+                    null,
+                    "Food loop from the UI: fresh-game starter cooking recipes are known (discovery list regression gate), kitchen panel prep -> real day advance -> pantry portions -> serve-all reduces hunger, holdfast consume seam eats/drinks, Plan 136 cooking authority live in the composed game"),
+                new HostCliActionDescriptor(
+                    HostCliAction.ReasonablePlayerSelfTest,
+                    "UI Tests, Layout & Gameplay Smoke",
+                    "--reasonable-player-selftest",
+                    new[] { "--reasonable-player-bot-selftest" },
+                    "Reasonable player week-1 bot: deterministic ration/cook/plant/fortify policy over real Core systems and authored data, swept across seeds and difficulty presets against the no-action baseline"),
                 new HostCliActionDescriptor(
                     HostCliAction.EbPvdCoatingUiTest,
                     "UI Tests, Layout & Gameplay Smoke",

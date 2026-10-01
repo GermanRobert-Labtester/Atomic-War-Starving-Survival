@@ -84,11 +84,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        private void FlushRelationshipDecayIfDirty()
-        {
-            if (_relationshipDecayDirty) SaveRelationshipDecay();
-        }
-
         private void SetupRelationshipDecayPanel()
         {
             if (_relationshipDecayPanel != null && _relationshipDecayPanel.IsInsideTree())

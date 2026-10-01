@@ -22,7 +22,6 @@ namespace AtomicWar.GodotApp.UI
         public event Action? OnClose;
         public event Action<string>? OnContextualAcknowledged;
 
-        private VBoxContainer _contentVBox = null!;
         private Label _lblControlsTitle;
         private VBoxContainer _controlsList;
         private Label _lblBasicsTitle;
@@ -155,6 +154,8 @@ namespace AtomicWar.GodotApp.UI
                     "Radiation does not announce itself. Check the party's protection and dose \u2014 gear, anti-rad, or a shorter route.",
                 Ashfall.Core.Localization.OnboardingLessonLocalization.SevereWeatherPrepId =>
                     "Weather carries the dose with it. A severe day raises exposure and cuts travel; read the forecast before you commit people or supplies.",
+                Ashfall.Core.Localization.OnboardingLessonLocalization.CombatBasicsId =>
+                    "The fight runs in real time. Pick a target, FIRE, and reload when the magazine runs dry; WASD or the left stick repositions the squad. If contact turns bad, RETREAT to the extract zone \u2014 you can still be shot while running.",
                 _ => "A new lesson is ready. Check the related shelter panel before you continue."
             };
             _contextualDialog.Title = title;

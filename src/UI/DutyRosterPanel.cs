@@ -189,7 +189,9 @@ public partial class DutyRosterPanel : Control, IBindablePanel
         var (roleId, survivorId) = ResolveVisibleRow(idx);
         if (!string.IsNullOrEmpty(roleId))
             OnRoleSelected?.Invoke(roleId);
-        OnAssignmentChanged?.Invoke();
+        // Row selection is inspection, not mutation. The assignment signal is
+        // raised by the assignment mutations below (first-hour Duty stage must
+        // not complete from merely selecting a row).
         OnDetailsRequested?.Invoke();
         RefreshDetail();
     }
@@ -452,6 +454,24 @@ public partial class DutyRosterPanel : Control, IBindablePanel
                 if (!string.IsNullOrEmpty(reasons))
                     _detailContent.AddChild(AshfallUiHelpers.MakeMetadata(
                         "Why: " + reasons.Replace('_', ' ') + $" · max {fitness.RecommendedMaxHours:0}h", autowrap: true));
+
+                // T18b — chronic-impairment transparency: the machine reason is
+                // already surfaced above; this adds the actionable next step so
+                // the player understands the capped shift is an accommodation
+                // decision, not a dead end.
+                bool chronicImpairment = false;
+                for (int i = 0; i < fitness.WarningReasons.Count; i++)
+                {
+                    if (fitness.WarningReasons[i] == FitnessReasonIds.ChronicImpairment)
+                    {
+                        chronicImpairment = true;
+                        break;
+                    }
+                }
+                if (chronicImpairment)
+                    _detailContent.AddChild(AshfallUiHelpers.MakeMetadata(
+                        "Chronic impairment caps shift hours — fit the recommended accommodation on the Afflictions board to restore capacity.",
+                        autowrap: true));
             }
 
             // Plan 24B A2 — measured duty hours: the committed shift load vs
@@ -545,7 +565,9 @@ public partial class DutyRosterPanel : Control, IBindablePanel
             string role = roleId;
             vacate.Pressed += () =>
             {
-                _host?.Roster.AssignWithResult(role, string.Empty);
+                if (_host == null) return;
+                var result = _host.Roster.AssignWithResult(role, string.Empty);
+                if (result.IsSuccess) OnAssignmentChanged?.Invoke();
                 CancelPendingAssignment();
                 RefreshView();
             };
@@ -562,6 +584,7 @@ public partial class DutyRosterPanel : Control, IBindablePanel
         var result = _host.Roster.AssignWithResult(roleId, survivorId, confirmFitnessWarning: false);
         if (result.IsSuccess)
         {
+            OnAssignmentChanged?.Invoke();
             CancelPendingAssignment();
             RefreshView();
             return;
@@ -596,6 +619,10 @@ public partial class DutyRosterPanel : Control, IBindablePanel
         {
             _detailContent.AddChild(AshfallUiHelpers.MakeMetadata(
                 "Assignment failed at commit: " + (result.MessageKey ?? result.FailureCode ?? "unknown"), autowrap: true));
+        }
+        else
+        {
+            OnAssignmentChanged?.Invoke();
         }
         RefreshView();
     }

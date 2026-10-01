@@ -150,6 +150,13 @@ namespace AtomicWar.GodotApp.UI
 
             // Header row: name + duration
             var headerRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+            // Output item art — the recipe is identifiable by its product.
+            if (recipe.result != null && !string.IsNullOrEmpty(recipe.result.id))
+            {
+                var resultIcon = AshfallUiHelpers.MakeItemIcon(recipe.result.id, 28);
+                resultIcon.TooltipText = recipe.result.displayName ?? recipe.result.id;
+                headerRow.AddChild(resultIcon);
+            }
             var nameLabel = AshfallUiHelpers.MakeSmall(recipe.recipeName.ToUpperInvariant());
             nameLabel.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             nameLabel.AddThemeColorOverride("font_color",
@@ -181,6 +188,10 @@ namespace AtomicWar.GodotApp.UI
                 statusMark.AddThemeColorOverride("font_color",
                     AshfallUiHelpers.ToColor(sufficient ? Ashfall.Core.UI.Theme.Lethe : Ashfall.Core.UI.Theme.Critical));
                 ingRow.AddChild(statusMark);
+
+                var ingIcon = AshfallUiHelpers.MakeItemIcon(ing.item.id, 20);
+                ingIcon.TooltipText = ing.item.displayName ?? ing.item.id;
+                ingRow.AddChild(ingIcon);
 
                 var ingLabel = AshfallUiHelpers.MakeSmall(
                     $"{ing.item.displayName} ×{ing.amount}  (held: {held})");

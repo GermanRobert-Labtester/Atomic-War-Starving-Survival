@@ -93,11 +93,6 @@ namespace AtomicWar.GodotApp
                 _spiritualRitualDirty = false;
         }
 
-        public void FlushSpiritualRitualIfDirty()
-        {
-            if (_spiritualRitualDirty) SaveSpiritualRitual();
-        }
-
         public void ResetSpiritualRitual()
         {
             _spiritualRitual = null;

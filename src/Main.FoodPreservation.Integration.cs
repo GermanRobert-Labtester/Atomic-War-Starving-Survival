@@ -26,12 +26,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        private void FlushFoodPreservationIfDirty()
-        {
-            if (_foodPreservation64Dirty)
-                SaveFoodPreservation();
-        }
-
         // ── CORE-MECH W1 · foodborne disease bridge ──────────────────────────
         // One translation point from preserved-food spoilage (FoodPreservationSystem
         // owns the spoilage truth) into the disease authority's exposure pipeline

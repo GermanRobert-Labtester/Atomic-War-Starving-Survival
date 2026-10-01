@@ -85,14 +85,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public void FlushBackstoryIfDirty()
-        {
-            if (_backstoryDirty)
-            {
-                SaveBackstory();
-            }
-        }
-
         public void ResetBackstory()
         {
             _backstory = null;

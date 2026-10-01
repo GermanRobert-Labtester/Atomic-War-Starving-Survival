@@ -97,6 +97,18 @@ namespace AtomicWar.GodotApp
             return _system.TriggerEnding(ctx);
         }
 
+        /// <summary>
+        /// Profile-aware ending projection without committing it. The one
+        /// evaluation authority stays <see cref="EndgameSystem"/>; callers use
+        /// this to preview/journal the closure before
+        /// <see cref="TriggerEnding(CampaignEvaluationContext, ChapterProfileDef?, string?)"/>
+        /// publishes it.
+        /// </summary>
+        public EndingDef EvaluateEndingWithProfile(CampaignEvaluationContext ctx, ChapterProfileDef? profile, string? branchEndingId = null)
+        {
+            return _system.EvaluateEndingWithProfile(ctx, profile, branchEndingId);
+        }
+
         public bool TriggerEnding(CampaignEvaluationContext ctx, ChapterProfileDef? profile, string? branchEndingId = null)
         {
             return _system.TriggerEnding(ctx, profile, branchEndingId);

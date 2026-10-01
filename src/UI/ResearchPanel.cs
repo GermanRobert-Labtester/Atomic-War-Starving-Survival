@@ -416,7 +416,7 @@ namespace AtomicWar.GodotApp.UI
             var btnAtlas = AshfallUiHelpers.MakeButton("RESEARCH ATLAS", () => OnOpenResearchAtlasRequested?.Invoke());
             btnAtlas.CustomMinimumSize = new Vector2(200, 40);
             btnAtlas.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-            btnAtlas.TooltipText = "Research technology atlas — every project, tier, and unlock.";
+            btnAtlas.TooltipText = T("ui.research.atlas_tooltip", "Research technology atlas — every project, tier, and unlock.");
             bottomHBox.AddChild(btnAtlas);
 
             var btnClose = AshfallUiHelpers.MakeButton(T("ui.common.close_short",

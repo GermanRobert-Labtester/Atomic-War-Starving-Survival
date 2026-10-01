@@ -126,11 +126,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public void FlushGenealogyIfDirty()
-        {
-            if (_genealogyDirty) SaveGenealogy();
-        }
-
         public void ResetGenealogy()
         {
             if (_genealogy != null && _genealogyStateChangedHandler != null)

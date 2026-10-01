@@ -77,12 +77,6 @@ namespace AtomicWar.GodotApp
                 _wildlifeHarvestDirty = false;
         }
 
-        public void FlushWildlifeHarvestIfDirty()
-        {
-            if (_wildlifeHarvestDirty)
-                SaveWildlifeHarvest();
-        }
-
         public void ResetWildlifeHarvest()
         {
             _wildlifeHarvest = null;

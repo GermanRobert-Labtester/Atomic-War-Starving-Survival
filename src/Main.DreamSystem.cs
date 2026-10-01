@@ -120,14 +120,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public void FlushSurvivorDreamsIfDirty()
-        {
-            if (_dreamSystemDirty)
-            {
-                SaveSurvivorDreams();
-            }
-        }
-
         public void ResetSurvivorDreams()
         {
             _dreamSystem = null;

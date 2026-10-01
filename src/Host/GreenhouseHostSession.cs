@@ -179,14 +179,17 @@ namespace AtomicWar.GodotApp
                         StateVersion, StateVersion + 1);
                 }
 
-                LastEvent = "Cannot treat blight: no blight treatment or iodine pills available.";
+                var noTreatment = ActionResult.Failed("no_treatment", "greenhouse.no_treatment");
+                LastEvent = $"Cannot treat blight: no blight treatment or iodine pills available ({noTreatment.FailureCode}).";
+                RaiseStateChanged();
                 return new CommandResult(
                     PlayerCommandCode.GreenhouseTreatBlight,
-                    ActionResult.Failed("no_treatment", "greenhouse.no_treatment"),
+                    noTreatment,
                     StateVersion, StateVersion);
             }
 
-            if (System.ExecuteTreatBlight(plotIndex, expectedStateVersion: StateVersion, currentStateVersion: StateVersion).IsSuccess)
+            var executeResult = System.ExecuteTreatBlight(plotIndex, expectedStateVersion: StateVersion, currentStateVersion: StateVersion);
+            if (executeResult.IsSuccess)
             {
                 string consumed = treatmentId;
                 InventoryHost?.Remove(consumed, 1);
@@ -198,9 +201,12 @@ namespace AtomicWar.GodotApp
                     StateVersion, StateVersion + 1);
             }
 
+            var failed = ActionResult.Failed("execute_failed", "greenhouse.execute_failed");
+            LastEvent = $"Plot {plotIndex + 1}: blight treatment failed ({failed.FailureCode}).";
+            RaiseStateChanged();
             return new CommandResult(
                 PlayerCommandCode.GreenhouseTreatBlight,
-                ActionResult.Failed("execute_failed", "greenhouse.execute_failed"),
+                failed,
                 StateVersion, StateVersion);
         }
 

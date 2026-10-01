@@ -63,11 +63,6 @@ namespace AtomicWar.GodotApp
                 _forecastDirty = false;
         }
 
-        public void FlushWeatherForecastReliabilityIfDirty()
-        {
-            if (_forecastDirty) SaveWeatherForecastReliability();
-        }
-
         public void ResetWeatherForecastReliability()
         {
             _forecast = null;

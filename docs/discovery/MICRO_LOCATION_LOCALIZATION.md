@@ -36,13 +36,13 @@ Every string follows the canonical scheme:
 
 ### 3.1 Roadside Memorial (`micro_roadside_memorial`)
 - `discovery.micro_roadside_memorial.title` -> `"Straßenrand-Gedenkstätte"`
-- `discovery.micro_roadside_memorial.description` -> `"Geschmolzene Talgreste sitzen in verrosteten Rationsdosen um einen verbogenen Pfahl. Ein Foto wurde weggerissen, nur eine blutbefleckte Ecke blieb unter einem Stein zurück. Das Wachs ist zu blassen, grauen Scheiben erstarrt."`
+- `discovery.micro_roadside_memorial.description` -> `"Geschmolzene Talgreste sitzen in verrosteten Rationsdosen um einen verbogenen Pfahl. Ein Foto wurde weggerissen, nur eine blutbefleckte Ecke blieb unter einem Stein zurück. Das Wachs ist zu blassen, grauen Scheiben erstarrt, und die Dosen stehen in einem groben Kreis."`
 - `discovery.micro_roadside_memorial.choice.leave_memorial` -> `"Unberührt lassen."`
 - `discovery.micro_roadside_memorial.choice.take_offering` -> `"Die Kerzenreste und alle kleinen Opfergaben mitnehmen."`
 
 ### 3.2 Crashed Supply Truck (`micro_crashed_truck`)
 - `discovery.micro_crashed_truck.title` -> `"Abgestürzter Versorgungslaster"`
-- `discovery.micro_crashed_truck.description` -> `"Ein militärischer Logistiktransporter liegt zerschmettert im gefrorenen Graben, die Windschutzscheibe nach außen geborsten. Zerrissene Strahlungswarnschilder klammern sich an die verbogenen Hecktüren. Der Laderaum wurde längst geplündert, aber eine Kiste liegt aufgebrochen im Frost."`
+- `discovery.micro_crashed_truck.description` -> `"Ein militärischer Logistiktransporter liegt zerschmettert im gefrorenen Graben, die Windschutzscheibe nach außen geborsten. Zerrissene Strahlungswarnschilder klammern sich an die verbogenen Hecktüren. Der Laderaum wurde längst geplündert, aber eine Kiste liegt aufgebrochen im Frost, und niemand hat sie wieder geschlossen."`
 - `discovery.micro_crashed_truck.choice.search_truck_cargo` -> `"Die aufgebrochene Kiste und das Fahrerhaus nach Brauchbarem durchsuchen."`
 - `discovery.micro_crashed_truck.choice.search_truck_cab` -> `"Das Fahrerhaus nach Dokumenten oder persönlichen Gegenständen untersuchen."`
 - `discovery.micro_crashed_truck.choice.ignore_truck` -> `"Weitergehen. Jemand hat bereits alles Brauchbare mitgenommen."`
@@ -56,7 +56,7 @@ Every string follows the canonical scheme:
 
 ### 3.4 Frozen Evacuation Bus (`micro_frozen_bus`)
 - `discovery.micro_frozen_bus.title` -> `"Gefrorener Evakuierungsbus"`
-- `discovery.micro_frozen_bus.description` -> `"Die Bustüren sind weit aufgefroren, sodass der aschebeladene Wind durch die Kabine heult. Der Einzelschuh eines Kindes steht aufrecht unter einer Gepäckablage. Die Fenster sind auf der Innenseite von dickem, schmierigem Frost überzogen."`
+- `discovery.micro_frozen_bus.description` -> `"Die Bustüren sind weit aufgefroren, sodass der aschebeladene Wind durch die Kabine heult. Der Einzelschuh eines Kindes steht aufrecht unter einer Gepäckablage. Die Fenster sind auf der Innenseite von dickem, schmierigem Frost überzogen, und nichts wurde freigewischt."`
 - `discovery.micro_frozen_bus.choice.search_bus_luggage` -> `"Die Gepäckablage nach Vorräten durchsuchen."`
 - `discovery.micro_frozen_bus.choice.leave_bus` -> `"Den Bus unberührt lassen."`
 - `discovery.micro_frozen_bus.choice.read_bus_tag` -> `"Die Transitmarke auf dem Armaturenbrett nach einem Bestimmungsort prüfen."`

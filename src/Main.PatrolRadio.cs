@@ -80,11 +80,6 @@ namespace AtomicWar.GodotApp
                 _patrolRadioDirty = false;
         }
 
-        public void FlushPatrolRadioIfDirty()
-        {
-            if (_patrolRadioDirty) SavePatrolRadioHooks();
-        }
-
         public void ResetPatrolRadioHooks()
         {
             if (_patrolRadio != null && _patrolRadioSubscribed != null)

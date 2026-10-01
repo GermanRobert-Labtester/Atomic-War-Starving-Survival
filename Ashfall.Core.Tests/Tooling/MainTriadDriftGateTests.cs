@@ -229,8 +229,6 @@ namespace Ashfall.Core.Tests
             var documentedTransient = new HashSet<string>(StringComparer.Ordinal)
             {
                 "FlushDirtyStoresForDayAdvance",
-                "FlushFactionBranch",
-                "FlushPlans50To53",
                 "FlushContextualTutorialQueue",
             };
 

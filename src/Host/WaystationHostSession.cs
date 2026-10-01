@@ -96,11 +96,5 @@ namespace AtomicWar.GodotApp
             Network.BindShortagePolicy(catalog, isSuppliesShort);
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            WaystationSaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
     }
 }

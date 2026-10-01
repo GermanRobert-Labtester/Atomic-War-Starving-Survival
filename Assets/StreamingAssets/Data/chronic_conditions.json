@@ -101,7 +101,7 @@
       "display_name": "Monocular Jeweler Loupe",
       "accommodation_type": "sensory",
       "effective_bonus": 0.20,
-      "maintenance_cost_items": ["glass_lens"],
+      "maintenance_cost_items": ["item_cast_borosilicate_glass_blank"],
       "description": "Precision magnifying optical lens assisting close-up crafting and reading."
     },
     {
@@ -109,7 +109,7 @@
       "display_name": "Nebulizing Herbal Inhaler",
       "accommodation_type": "medical",
       "effective_bonus": 0.18,
-      "maintenance_cost_items": ["medicinal_herbs"],
+      "maintenance_cost_items": ["crop_medicinal_herb"],
       "description": "Portable aerosol inhaler delivering bronchodilator extract for respiratory relief."
     },
     {
@@ -117,7 +117,7 @@
       "display_name": "Tendon-Tension Forearm Brace",
       "accommodation_type": "physical",
       "effective_bonus": 0.20,
-      "maintenance_cost_items": ["leather_straps", "scrap_metal"],
+      "maintenance_cost_items": ["leather_strap", "scrap_metal"],
       "description": "Rigid aluminum-and-leather arm harness damping peripheral involuntary tremors."
     },
     {
@@ -133,7 +133,7 @@
       "display_name": "Willow-Bark Analgesic Salve",
       "accommodation_type": "medical",
       "effective_bonus": 0.12,
-      "maintenance_cost_items": ["medicinal_herbs", "clean_water"],
+      "maintenance_cost_items": ["crop_medicinal_herb", "clean_water"],
       "description": "Topical salicylic compound dulling chronic joint pain during work shifts."
     }
   ]

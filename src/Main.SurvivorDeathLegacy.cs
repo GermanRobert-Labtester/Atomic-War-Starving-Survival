@@ -61,11 +61,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        private void FlushDeathLegacyIfDirty()
-        {
-            if (_deathLegacyDirty) SaveDeathLegacy();
-        }
-
         private void SetupDeathLegacyPanel()
         {
             if (_deathLegacyPanel != null && _deathLegacyPanel.IsInsideTree())

@@ -143,11 +143,6 @@ namespace AtomicWar.GodotApp
             _commitmentsDirty = false;
         }
 
-        private void FlushCommitmentsIfDirty()
-        {
-            if (_commitmentsDirty) SaveCommitments();
-        }
-
         private void ResetCommitments()
         {
             _commitments?.Dispose();

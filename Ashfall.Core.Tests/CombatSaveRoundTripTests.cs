@@ -81,7 +81,9 @@ namespace Ashfall.Core.Tests
             };
             var migrated = TacticalCombatSystem.Migrate(legacy);
             Assert.Equal(CombatState.CurrentSaveVersion, migrated.SaveVersion);
-            Assert.True(migrated.Phase >= (int)CombatPhase.Setup && migrated.Phase <= (int)CombatPhase.Retreated,
+            // DEC-358 extended the phase enum with ActiveRealtime, which is the
+            // Migrate clamp ceiling — the old ≤Retreated assertion went stale.
+            Assert.True(migrated.Phase >= (int)CombatPhase.Setup && migrated.Phase <= (int)CombatPhase.ActiveRealtime,
                 "out-of-range phase clamped");
             Assert.Equal(TacticalCombatSystem.StanceId(TacticalStance.HoldPosition), migrated.PlayerStance);
             Assert.True(migrated.Combatants[0].Lane <= 2, "out-of-range lane clamped");

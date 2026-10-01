@@ -21,6 +21,25 @@ namespace Ashfall.Core.Campaign
     }
 
     /// <summary>
+    /// Presentation-safe formatting for an authored slice goal line. A beat may
+    /// legitimately carry only a title or only a body; joining them naively
+    /// renders a dangling " — " separator (the empty-join class fixed for the
+    /// first-hour hint copy in ae6e54387). This is the one authority for the
+    /// join so the opening modal and the daily briefing cannot drift.
+    /// </summary>
+    public static class SliceGoalText
+    {
+        public static string Join(string? title, string? body)
+        {
+            bool hasTitle = !string.IsNullOrWhiteSpace(title);
+            bool hasBody = !string.IsNullOrWhiteSpace(body);
+            if (hasTitle && hasBody) return $"{title} — {body}";
+            if (hasTitle) return title!;
+            return hasBody ? body! : string.Empty;
+        }
+    }
+
+    /// <summary>
     /// Authored catalog data for the seven-day slice scenario.
     /// </summary>
     public sealed class SliceScenarioData

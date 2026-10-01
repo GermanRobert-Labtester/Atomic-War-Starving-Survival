@@ -25,7 +25,7 @@ namespace Ashfall.Core.Verdict
     [Serializable]
     public class VerdictSave
     {
-        public const int CurrentSaveVersion = 4;
+        public const int CurrentSaveVersion = 5;
         public const int MigrationFromVersion = 1;
 
         public int saveVersion = CurrentSaveVersion;
@@ -41,6 +41,30 @@ namespace Ashfall.Core.Verdict
         // v4 section.
         public VerdictAccusationState accusations = new VerdictAccusationState();
 
+        // v5 section — chapter-profile reckoning day offset (0 = legacy Year 1 baseline).
+        public int reckoningOffset;
+
+        public string Checksum = string.Empty;
+    }
+
+    /// <summary>
+    /// Frozen v4 envelope shape (npcs + radio + quests + accusations, no
+    /// reckoning offset). Do not add fields here — it must match what v4 wrote
+    /// byte-for-byte in field set.
+    /// </summary>
+    [Serializable]
+    public class VerdictSaveV4
+    {
+        public int saveVersion = 4;
+        public int simDay;
+        public MachineLogSystemState machineLog = new MachineLogSystemState();
+        public ReckoningState reckoning = new ReckoningState();
+        public EvidenceLedgerState evidence = new EvidenceLedgerState();
+        public VerdictNpcState npcs = new VerdictNpcState();
+        public VerdictRadioSystem.VerdictRadioState radio = new VerdictRadioSystem.VerdictRadioState();
+        public QuestlineSystemState quests = new QuestlineSystemState();
+        public int censusLastWindowDay = -1;
+        public VerdictAccusationState accusations = new VerdictAccusationState();
         public string Checksum = string.Empty;
     }
 
@@ -110,7 +134,8 @@ namespace Ashfall.Core.Verdict
 VerdictNpcSystem? npcs = null,
 VerdictRadioSystem? radio = null,
 QuestlineSystem? quests = null,
-VerdictAccusationSystem? accusations = null)
+VerdictAccusationSystem? accusations = null,
+            int reckoningOffset = 0)
         {
             var save = new VerdictSave
             {
@@ -122,7 +147,8 @@ VerdictAccusationSystem? accusations = null)
                 radio = radio != null ? radio.CaptureState() : new VerdictRadioSystem.VerdictRadioState(),
                 quests = quests != null ? quests.CaptureState() : new QuestlineSystemState(),
                 accusations = accusations != null ? accusations.CaptureState() : new VerdictAccusationState(),
-                censusLastWindowDay = censusLastWindowDay
+                censusLastWindowDay = censusLastWindowDay,
+                reckoningOffset = reckoningOffset
             };
             save.Checksum = SaveChecksum.Compute(save);
             return save;
@@ -155,6 +181,7 @@ VerdictAccusationSystem? accusations = null)
                 if (decoded.saveVersion == 1) return MigrateV1(json, serializer, out save);
                 if (decoded.saveVersion == 2) return MigrateV2(json, serializer, out save);
                 if (decoded.saveVersion == 3) return MigrateV3(json, serializer, out save);
+                if (decoded.saveVersion == 4) return MigrateV4(json, serializer, out save);
 
                 // Current version: validate over the current shape.
                 if (string.IsNullOrEmpty(decoded.Checksum)) return false;   // tamper/legacy
@@ -239,6 +266,34 @@ VerdictAccusationSystem? accusations = null)
                 quests = v3.quests ?? new QuestlineSystemState(),
                 // accusations stays at its field initialiser (fresh empty state).
                 censusLastWindowDay = v3.censusLastWindowDay
+            };
+            migrated.Checksum = SaveChecksum.Compute(migrated);
+            save = migrated;
+            return true;
+        }
+
+        private static bool MigrateV4(string json, IJsonSerializer serializer, out VerdictSave save)
+        {
+            save = null!;
+            var v4 = serializer.Deserialize<VerdictSaveV4>(json);
+            if (v4 == null) return false;
+            if (string.IsNullOrEmpty(v4.Checksum)) return false;
+            if (!string.Equals(SaveChecksum.Compute(v4), v4.Checksum, StringComparison.Ordinal)) return false;
+
+            var migrated = new VerdictSave
+            {
+                saveVersion = VerdictSave.CurrentSaveVersion,
+                simDay = v4.simDay,
+                machineLog = v4.machineLog,
+                reckoning = v4.reckoning,
+                evidence = v4.evidence,
+                npcs = v4.npcs ?? new VerdictNpcState(),
+                radio = v4.radio ?? new VerdictRadioSystem.VerdictRadioState(),
+                quests = v4.quests ?? new QuestlineSystemState(),
+                accusations = v4.accusations ?? new VerdictAccusationState(),
+                censusLastWindowDay = v4.censusLastWindowDay,
+                // v5 offsets: a pre-v5 save has no chapter profile offset (legacy Year 1).
+                reckoningOffset = 0
             };
             migrated.Checksum = SaveChecksum.Compute(migrated);
             save = migrated;

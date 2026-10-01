@@ -49,11 +49,6 @@ namespace AtomicWar.GodotApp
                 _personalQuestsDirty = false;
         }
 
-        private void FlushPersonalQuestsIfDirty()
-        {
-            if (_personalQuestsDirty) SavePersonalQuests();
-        }
-
         private void SetupPersonalQuestPanel()
         {
             if (_personalQuestPanel != null && _personalQuestPanel.IsInsideTree())

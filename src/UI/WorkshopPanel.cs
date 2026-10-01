@@ -41,6 +41,10 @@ namespace AtomicWar.GodotApp.UI
         private ItemCatalog? _itemCatalog;
         private string _currentRoomId = "room_workshop";
 
+        // T10 — last typed refusal, rendered at the top of the detail column so a
+        // discarded ActionResult can never leave the player with a silent no-op.
+        private string _refusalLine = string.Empty;
+
         public void Bind(
             ShelterWorkshopSystem workshop,
             Ashfall.Core.Inventory.Inventory inventory,
@@ -54,8 +58,12 @@ namespace AtomicWar.GodotApp.UI
             _vehicles = vehicles;
             _survivors = survivors;
 
-            _shelterWorkshop.OnWorkshopChanged -= RefreshView;
-            _shelterWorkshop.OnWorkshopChanged += RefreshView;
+            // Deferred: this event fires from inside a control's own Pressed
+            // dispatch (button → StartRepair → OnWorkshopStateChanged). Rebuilding
+            // there frees the very button that is mid-dispatch; the engine refuses
+            // ("Object is locked and can't be freed") and the node is orphaned.
+            _shelterWorkshop.OnWorkshopChanged -= RefreshViewDeferred;
+            _shelterWorkshop.OnWorkshopChanged += RefreshViewDeferred;
 
             RefreshView();
         }
@@ -84,7 +92,7 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_legacyWorkshop != null)
             {
-                _legacyWorkshop.OnWorkshopStateChanged -= RefreshView;
+                _legacyWorkshop.OnWorkshopStateChanged -= RefreshViewDeferred;
             }
             _legacyWorkshop = workshop;
             _inventory = inventory;
@@ -93,7 +101,7 @@ namespace AtomicWar.GodotApp.UI
 
             if (_legacyWorkshop != null)
             {
-                _legacyWorkshop.OnWorkshopStateChanged += RefreshView;
+                _legacyWorkshop.OnWorkshopStateChanged += RefreshViewDeferred;
             }
 
             RefreshView();
@@ -101,10 +109,10 @@ namespace AtomicWar.GodotApp.UI
 
         public void Unbind()
         {
-            if (_shelterWorkshop != null) _shelterWorkshop.OnWorkshopChanged -= RefreshView;
+            if (_shelterWorkshop != null) _shelterWorkshop.OnWorkshopChanged -= RefreshViewDeferred;
             if (_legacyWorkshop != null)
             {
-                _legacyWorkshop.OnWorkshopStateChanged -= RefreshView;
+                _legacyWorkshop.OnWorkshopStateChanged -= RefreshViewDeferred;
             }
             _shelterWorkshop = null;
             _legacyWorkshop = null;
@@ -159,6 +167,13 @@ namespace AtomicWar.GodotApp.UI
             AshfallUiHelpers.EmptyChildren(_detailContainer);
             if (_machineConditionContainer != null) AshfallUiHelpers.EmptyChildren(_machineConditionContainer);
 
+            if (!string.IsNullOrEmpty(_refusalLine))
+            {
+                var refusal = new Label { Text = _refusalLine, AutowrapMode = TextServer.AutowrapMode.WordSmart };
+                refusal.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Critical));
+                _detailContainer.AddChild(refusal);
+            }
+
             // Legacy-only layout (no shelter crafting system bound).
             if (_shelterWorkshop == null)
             {
@@ -196,7 +211,7 @@ namespace AtomicWar.GodotApp.UI
                     _cancelJobButton.Visible = true;
                     _cancelJobButton.Text = "COLLECT JOB";
                     if (_cancelJobButton.IsConnected("pressed", new Callable(this, MethodName.OnCancelJobClicked))) _cancelJobButton.Disconnect("pressed", new Callable(this, MethodName.OnCancelJobClicked));
-                    _cancelJobButton.Pressed += () => { _shelterWorkshop.TryCollectCompletedJob(activeJob.JobId); RefreshView(); };
+                    _cancelJobButton.Pressed += () => { RecordRefusal(_shelterWorkshop.TryCollectCompletedJob(activeJob.JobId), "COLLECT REFUSED"); RefreshView(); };
                 }
                 else
                 {
@@ -232,7 +247,7 @@ namespace AtomicWar.GodotApp.UI
                 _machineConditionContainer.AddChild(gaugeBox);
 
                 var overhaulBtn = new Button { Text = "OVERHAUL TOOLING", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
-                overhaulBtn.Pressed += () => { _shelterWorkshop.TryOverhaulTooling(_currentRoomId); RefreshView(); };
+                overhaulBtn.Pressed += () => { RecordRefusal(_shelterWorkshop.TryOverhaulTooling(_currentRoomId), "OVERHAUL REFUSED"); RefreshView(); };
                 _machineConditionContainer.AddChild(overhaulBtn);
 
                 // C2 / Plan 22 Phase 4 — protective-gear repair through the
@@ -257,6 +272,11 @@ namespace AtomicWar.GodotApp.UI
                         : repairableNow ? "repairable" : "serviceable";
 
                     var gearRow = new HBoxContainer();
+                    // Item art — protective gear is recognisable at a glance.
+                    // Resolves through the shared registry chain.
+                    var gearIcon = AshfallUiHelpers.MakeItemIcon(equipped.Item.id, 22);
+                    gearIcon.TooltipText = equipped.Item.id;
+                    gearRow.AddChild(gearIcon);
                     var gearLabel = new Label
                     {
                         Text = $"{equipped.Item.displayName} · condition {equipped.CurrentDurability:0}/{equipped.Item.durability:0} · {stateText}"
@@ -266,6 +286,11 @@ namespace AtomicWar.GodotApp.UI
 
                     var repairBtn = new Button { Text = "REPAIR", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
                     repairBtn.Disabled = !repairableNow;
+                    repairBtn.TooltipText = failed
+                        ? "This gear is beyond repair — replace it instead."
+                        : repairableNow
+                            ? "Spend the authored repair bill to restore this item's condition."
+                            : "Already at its repair ceiling for this recipe.";
                     var equippedRef = equipped;
                     repairBtn.Pressed += () =>
                     {
@@ -283,7 +308,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 var btn = new Button { Text = r.DisplayName, CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
                 if (r.Id == _selectedRecipeId) btn.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
-                btn.Pressed += () => { _selectedRecipeId = r.Id; _selectedRelicId = string.Empty; RefreshView(); };
+                btn.Pressed += () => { _selectedRecipeId = r.Id; _selectedRelicId = string.Empty; RefreshViewDeferred(); };
                 _relicListContainer.AddChild(btn);
             }
 
@@ -300,8 +325,9 @@ namespace AtomicWar.GodotApp.UI
                 {
                     string? targetId = null;
                     if (recipe.Kind == WorkshopJobKind.WeaponService && _equipment?.State?.items?.Count > 0) targetId = _equipment.State.items.First().instanceId;
-                    _shelterWorkshop.TryStartJob(recipe.Id, _currentRoomId, targetId, new List<string>(), out var _);
-                    RefreshView();
+                    var startResult = _shelterWorkshop.TryStartJob(recipe.Id, _currentRoomId, targetId, new List<string>(), out _);
+                    RecordRefusal(startResult, "START REFUSED");
+                    RefreshViewDeferred();
                 };
                 _detailContainer.AddChild(startBtn);
             }
@@ -377,7 +403,7 @@ namespace AtomicWar.GodotApp.UI
                 var btn = new Button { Text = label, CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
                 if (relic.relic_id == _selectedRelicId) btn.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
                 var capturedId = relic.relic_id;
-                btn.Pressed += () => { _selectedRelicId = capturedId; _selectedRecipeId = string.Empty; RefreshView(); };
+                btn.Pressed += () => { _selectedRelicId = capturedId; _selectedRecipeId = string.Empty; RefreshViewDeferred(); };
                 _relicListContainer.AddChild(btn);
             }
         }
@@ -431,16 +457,39 @@ namespace AtomicWar.GodotApp.UI
             var startBtn = new Button { Text = "START RESTORATION", Disabled = !allAvailable, CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             startBtn.Pressed += () =>
             {
-                _legacyWorkshop.StartRepair(relicId, PickResearcherId());
-                RefreshView();
+                RecordRefusal(_legacyWorkshop.StartRepair(relicId, PickResearcherId()), "RESTORATION REFUSED");
+                RefreshViewDeferred();
             };
             _detailContainer.AddChild(startBtn);
         }
 
+        /// <summary>
+        /// Rebuild after the current signal dispatch unwinds.
+        ///
+        /// A button whose handler refreshes the container that holds it would
+        /// otherwise free itself mid-dispatch: the engine has the object locked,
+        /// <c>Free()</c> is refused ("Object is locked and can't be freed"), and the
+        /// button is left orphaned. Deferring one frame keeps the immediate-free
+        /// contract of <c>AshfallUiHelpers.EmptyChildren</c> intact while never
+        /// freeing a control during its own callback.
+        /// </summary>
+        private void RefreshViewDeferred()
+        {
+            Callable.From(RefreshView).CallDeferred();
+        }
+
         private void OnLegacyCancelClicked()
         {
-            _legacyWorkshop?.CancelJob();
-            RefreshView();
+            if (_legacyWorkshop != null)
+            {
+                RecordRefusal(_legacyWorkshop.CancelJob(), "ABANDON REFUSED");
+            }
+            RefreshViewDeferred();
+        }
+
+        private void RecordRefusal(ActionResult result, string prefix)
+        {
+            _refusalLine = ActionRefusalText.Line(result, prefix);
         }
 
         private string PickResearcherId()
@@ -498,7 +547,7 @@ namespace AtomicWar.GodotApp.UI
             if (_shelterWorkshop != null)
             {
                 var active = _shelterWorkshop.State.jobs.FirstOrDefault(j => j.Status == WorkshopJobStatus.Active);
-                if (active != null) _shelterWorkshop.TryCancelJob(active.JobId);
+                if (active != null) RecordRefusal(_shelterWorkshop.TryCancelJob(active.JobId), "ABORT REFUSED");
             }
             RefreshView();
         }

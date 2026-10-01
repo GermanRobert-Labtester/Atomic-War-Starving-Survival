@@ -85,11 +85,6 @@ namespace AtomicWar.GodotApp
             _weatherCascadeDirty = false;
         }
 
-        private void FlushWeatherCascadeIfDirty()
-        {
-            if (_weatherCascadeDirty) SaveWeatherCascade();
-        }
-
         private void RestoreWeatherCascade(string? json)
         {
             var session = EnsureWeatherCascade();

@@ -322,29 +322,24 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        private void FlushExpansionHubIfDirty()
-        {
-            if (_expansionHubDirty || _foundryDirty) SaveExpansionHub();
-        }
-
         private void CloseExpansionsHubPanel()
         {
-            if (_expansionsHubPanel != null) _expansionsHubPanel.Visible = false;
+            ClosePanelAnimated(_expansionsHubPanel);
         }
 
         private void CloseStandingRecordPanel()
         {
-            if (_standingRecordPanel != null) _standingRecordPanel.Visible = false;
+            ClosePanelAnimated(_standingRecordPanel);
         }
 
         private void CloseCenturySeedPanel()
         {
-            if (_centurySeedPanel != null) _centurySeedPanel.Visible = false;
+            ClosePanelAnimated(_centurySeedPanel);
         }
 
         private void CloseEpiloguePanel()
         {
-            if (_epiloguePanel != null) _epiloguePanel.Visible = false;
+            ClosePanelAnimated(_epiloguePanel);
         }
     }
 }

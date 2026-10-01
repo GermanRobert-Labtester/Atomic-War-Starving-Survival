@@ -78,14 +78,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public void FlushExerciseIfDirty()
-        {
-            if (_exerciseDirty)
-            {
-                SaveExercise();
-            }
-        }
-
         public void ResetExercise()
         {
             _exercise = null;

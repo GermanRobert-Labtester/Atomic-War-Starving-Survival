@@ -34,7 +34,6 @@ namespace AtomicWar.GodotApp.UI
         private bool _pendingReset;
 
         private SaveLoadHostSession? _session;
-        private VBoxContainer _contentVBox = null!;
         private Label _lblSlotsTitle = null!;
         private VBoxContainer _slotsList = null!;
         private Label _lblInfoTitle = null!;

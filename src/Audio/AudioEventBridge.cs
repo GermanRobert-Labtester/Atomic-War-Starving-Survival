@@ -185,6 +185,12 @@ namespace AtomicWar.GodotApp.Audio
                 "defeat" => AudioCueCatalog.CombatDefeat,
                 "trap" => AudioCueCatalog.CombatHit,
                 "retreat_fail" => AudioCueCatalog.CombatHit,
+                // T25 — realtime flee + breach cues (events existed with no
+                // audio mapping; retreat completion is covered by outcome text).
+                "flee_start" => AudioCueCatalog.FootstepDirt,
+                "breach_begin" => AudioCueCatalog.ActionRepair,
+                "breach_advance" => AudioCueCatalog.ActionRepair,
+                "breach_cleared" => AudioCueCatalog.DangerExplosion,
                 "enemy_fire" when evt.Detail.Contains("hits") => AudioCueCatalog.CombatHit,
                 "repair" => AudioCueCatalog.ActionRepair,
                 "bandage" => AudioCueCatalog.ActionInjection,

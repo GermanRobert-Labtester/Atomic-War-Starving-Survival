@@ -83,11 +83,5 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            ChemicalReconSaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
     }
 }

@@ -376,7 +376,7 @@ namespace AtomicWar.GodotApp
 
         private void CloseNarrativeArcModal()
         {
-            if (_narrativeArcModal != null) _narrativeArcModal.Visible = false;
+            ClosePanelAnimated(_narrativeArcModal);
         }
 
         private void CloseFactionDetailPanel()

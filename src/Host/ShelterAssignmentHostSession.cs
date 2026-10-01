@@ -83,12 +83,6 @@ namespace AtomicWar.GodotApp
             return true;
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            TrySave();
-            base.Save();
-        }
     }
 
     /// <summary>

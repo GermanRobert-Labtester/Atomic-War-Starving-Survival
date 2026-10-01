@@ -259,6 +259,15 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.RealCampaignJourneySelfTest:
                     RunRealCampaignJourneySelfTestAndQuit();
                     return;
+                case HostCliAction.FailureRestartSelfTest:
+                    RunFailureRestartSelfTestAndQuit();
+                    return;
+                case HostCliAction.FoodLoopSelfTest:
+                    RunFoodLoopSelfTestAndQuit();
+                    return;
+                case HostCliAction.ReasonablePlayerSelfTest:
+                    GetTree().Quit(HostCli.RunReasonablePlayerSelfTest(_dataDir));
+                    return;
                 case HostCliAction.StartingCohortLifecycleSelfTest:
                     RunStartingCohortLifecycleSelfTestAndQuit();
                     return;
@@ -848,6 +857,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.ExerciseSelfTest:
                     GetTree().Quit(HostCliExercise.RunSelfTest(_dataDir));
                     return;
+                case HostCliAction.WorldIncidentsSelfTest:
+                    GetTree().Quit(HostCliWorldIncidents.RunSelfTest(_dataDir));
+                    return;
                 case HostCliAction.SurvivorRolesSelfTest:
                     GetTree().Quit(HostCliSurvivorRoles.RunSelfTest(_dataDir));
                     return;
@@ -1162,6 +1174,13 @@ namespace AtomicWar.GodotApp
             // point. What it changes in the simulation is a boolean (kept / not kept),
             // so frame rate can never move a campaign outcome.
             _medical?.TickVigil(delta);
+            // T12 — realtime combat clock. StartCombat always arms realtime,
+            // so an unpumped encounter freezes mid-fight: enemies never act,
+            // the flee extract never completes, and the still-active encounter
+            // silently suppresses every later ambush handoff. PumpRealtime
+            // no-ops unless an encounter is realtime-active and unresolved.
+            if (_state == GameState.Playing)
+                _combat?.PumpRealtime((float)delta);
             // The diagnostics strip used to rebuild its string every frame AND call
             // Engine.GetVersionInfo(), which allocates a Godot Dictionary — 60 allocations
             // a second for a version that never changes. Cache the version, refresh ~4x/sec.
@@ -1352,17 +1371,39 @@ namespace AtomicWar.GodotApp
             string goldenRoot = HostCli.SnapshotGoldenRoot();
             var orch = new SnapshotOrchestrator();
             AddChild(orch);
+            // T27 — optional scope limiter: `-- --ui-snapshot-ids=id1,id2`
+            // restricts the run to those StableIds so a single new golden can
+            // be regenerated without touching any existing one.
+            SnapshotHarness.Target[] targets = FilterSnapshotTargets(SnapshotHarness.Targets);
             if (regenerate)
             {
-                GD.Print($"[UiSnapshot] REGENERATE — overwriting goldens in {goldenRoot}");
-                orch.BeginRegenerate(SnapshotHarness.Targets, goldenRoot);
+                GD.Print($"[UiSnapshot] REGENERATE — overwriting goldens in {goldenRoot} ({targets.Length}/{SnapshotHarness.Targets.Length} targets)");
+                orch.BeginRegenerate(targets, goldenRoot);
             }
             else
             {
                 string captureRoot = HostCli.SnapshotCaptureRoot();
                 GD.Print($"[UiSnapshot] DIFF — captures in {captureRoot}, goldens in {goldenRoot}");
-                orch.BeginDiff(SnapshotHarness.Targets, goldenRoot, captureRoot);
+                orch.BeginDiff(targets, goldenRoot, captureRoot);
             }
+        }
+
+        private static SnapshotHarness.Target[] FilterSnapshotTargets(SnapshotHarness.Target[] all)
+        {
+            string? idsSpec = null;
+            foreach (var arg in OS.GetCmdlineUserArgs())
+            {
+                if (arg.StartsWith("--ui-snapshot-ids=", StringComparison.Ordinal))
+                {
+                    idsSpec = arg.Substring("--ui-snapshot-ids=".Length);
+                    break;
+                }
+            }
+            if (string.IsNullOrWhiteSpace(idsSpec)) return all;
+            var wanted = new HashSet<string>(
+                idsSpec.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries));
+            var filtered = System.Array.FindAll(all, t => wanted.Contains(t.StableId));
+            return filtered.Length > 0 ? filtered : all;
         }
 
 #endif

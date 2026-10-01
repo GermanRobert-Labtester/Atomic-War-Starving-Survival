@@ -52,32 +52,30 @@ namespace AtomicWar.GodotApp
         public ActionResult SetBoilerActive(bool active)
         {
             var res = System.SetBoilerActive(active);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Boiler status set to: {(active ? "ACTIVE" : "OFF")}";
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? $"Boiler status set to: {(active ? "ACTIVE" : "OFF")}"
+                : $"Boiler change refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
         public ActionResult SetRadiatorValve(string roomId, float openRatio)
         {
             var res = System.SetRadiatorValve(roomId, openRatio);
-            if (res.IsSuccess)
-            {
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? $"Radiator valve set to {openRatio:P0} in {roomId}."
+                : $"Radiator change refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
         public CommandResult RepairPipe(string pipeId, float repairAmount = 20f)
         {
             var result = System.ExecuteRepairPipe(pipeId, repairAmount, expectedStateVersion: StateVersion, currentStateVersion: StateVersion);
-            if (result.IsSuccess)
-            {
-                LastEvent = $"Pipe repaired: {result.FailureCode}";
-                RaiseStateChanged();
-            }
+            LastEvent = result.IsSuccess
+                ? $"Pipe repaired: {pipeId}"
+                : $"Pipe repair refused: {result.FailureCode}";
+            RaiseStateChanged();
             return result;
         }
 
@@ -132,11 +130,5 @@ namespace AtomicWar.GodotApp
             System.SetAssignments(assignment);
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            ShelterThermalSaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
     }
 }

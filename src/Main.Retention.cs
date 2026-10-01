@@ -79,11 +79,6 @@ namespace AtomicWar.GodotApp
             _retentionDirty = false;
         }
 
-        private void FlushRetentionIfDirty()
-        {
-            if (_retentionDirty) SaveRetention();
-        }
-
         private void ResetRetention()
         {
             _retention?.Dispose();

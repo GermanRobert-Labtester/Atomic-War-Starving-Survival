@@ -97,14 +97,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public void FlushChemicalReagentSynthesisIfDirty()
-        {
-            if (_chemicalReagentSynthesisDirty)
-            {
-                SaveChemicalReagentSynthesis();
-            }
-        }
-
         public void ResetChemicalReagentSynthesis()
         {
             _chemicalReagentSynthesis = null;

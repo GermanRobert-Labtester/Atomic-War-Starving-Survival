@@ -148,17 +148,17 @@ namespace AtomicWar.GodotApp.UI
                 ? "THE HOLDFAST"
                 : state.Location.Replace('_', ' ').ToUpperInvariant();
             _weatherLabel.Text = $"WEATHER // {weather} · VIS {visibility:P0} · RAD +{outdoorRadiation:0}";
-            _emergencyAlertLabel.Text = state.ActiveEmergencyAlerts <= 0
+            AshfallUiHelpers.SetTextPulsed(_emergencyAlertLabel, state.ActiveEmergencyAlerts <= 0
                 ? "ALERTS // NONE ACTIVE"
                 : $"ALERTS // {state.ActiveEmergencyAlerts} ACTIVE"
-                    + (string.IsNullOrWhiteSpace(state.EmergencyAlertText) ? string.Empty : " · " + state.EmergencyAlertText);
+                    + (string.IsNullOrWhiteSpace(state.EmergencyAlertText) ? string.Empty : " · " + state.EmergencyAlertText));
             _emergencyAlertLabel.AddThemeColorOverride(
                 "font_color",
                 AshfallUiHelpers.ToColor(state.ActiveEmergencyAlerts > 0 ? DesignTheme.Critical : DesignTheme.Lethe));
 
             _healthValue.Text = $"{safeHealth}/{safeMaxHealth}";
             _healthBar.MaxValue = safeMaxHealth;
-            _healthBar.Value = safeHealth;
+            AshfallUiHelpers.SetBarValue(_healthBar, safeHealth);
             _healthValue.AddThemeColorOverride(
                 "font_color",
                 AshfallUiHelpers.ToColor(safeHealth <= safeMaxHealth * 0.25f
@@ -169,7 +169,7 @@ namespace AtomicWar.GodotApp.UI
 
             _radiationValue.Text = $"{safeRadiation:0.0} mSv";
             _radiationBar.MaxValue = 100f;
-            _radiationBar.Value = Math.Clamp(safeRadiation, 0f, 100f);
+            AshfallUiHelpers.SetBarValue(_radiationBar, Math.Clamp(safeRadiation, 0f, 100f));
             _radiationValue.AddThemeColorOverride(
                 "font_color",
                 AshfallUiHelpers.ToColor(safeRadiation >= 100f
@@ -180,7 +180,7 @@ namespace AtomicWar.GodotApp.UI
 
             _hungerValue.Text = $"{safeHunger}/100";
             _hungerBar.MaxValue = 100f;
-            _hungerBar.Value = safeHunger;
+            AshfallUiHelpers.SetBarValue(_hungerBar, safeHunger);
             _hungerValue.AddThemeColorOverride(
                 "font_color",
                 AshfallUiHelpers.ToColor(safeHunger >= 80
@@ -191,7 +191,7 @@ namespace AtomicWar.GodotApp.UI
 
             _thirstValue.Text = $"{safeThirst}/100";
             _thirstBar.MaxValue = 100f;
-            _thirstBar.Value = safeThirst;
+            AshfallUiHelpers.SetBarValue(_thirstBar, safeThirst);
             _thirstValue.AddThemeColorOverride(
                 "font_color",
                 AshfallUiHelpers.ToColor(safeThirst >= 80
@@ -210,19 +210,23 @@ namespace AtomicWar.GodotApp.UI
                 ? "ROSTER // NO SURVIVORS REGISTERED"
                 : $"ROSTER // {livingSurvivors}/{totalSurvivors} LIVING{cohortExtra} · AVG HP {Math.Max(0f, state.AverageSurvivorHealth):0}%";
 
-            _shelterState.Text = state.FilterSpares <= 0
+            // Status transitions only: these lines change when the situation
+            // changes, not every tick, so a settle pulse is signal rather than
+            // noise. The numeric stores summaries deliberately stay unpulsed —
+            // they move every update and would read as jitter.
+            AshfallUiHelpers.SetTextPulsed(_shelterState, state.FilterSpares <= 0
                 ? "SHELTER STATUS // NO FILTER SPARES"
                 : safeHealth <= safeMaxHealth * 0.25f
                 ? "SHELTER STATUS // MEDICAL ATTENTION REQUIRED"
                 : safeRadiation >= 50f
                     ? "SHELTER STATUS // DECONTAMINATION ADVISED"
-                    : "SHELTER STATUS // HOLDING";
+                    : "SHELTER STATUS // HOLDING");
 
             _resourceSummary.Text = $"STORES // VALUE {state.Value:N0} · WATER {Math.Max(0, state.CleanWater):00} · FOOD {Math.Max(0, state.Food):00}";
-            _waterValue.Text = $"{Math.Max(0, state.CleanWater):00} units";
-            _foodValue.Text = $"{Math.Max(0, state.Food):00} units";
-            _medicalValue.Text = $"{Math.Max(0, state.MedicalStock):00} doses";
-            _filterValue.Text = $"{Math.Max(0, state.FilterSpares):00} spares";
+            AshfallUiHelpers.SetTextPulsed(_waterValue, $"{Math.Max(0, state.CleanWater):00} units");
+            AshfallUiHelpers.SetTextPulsed(_foodValue, $"{Math.Max(0, state.Food):00} units");
+            AshfallUiHelpers.SetTextPulsed(_medicalValue, $"{Math.Max(0, state.MedicalStock):00} doses");
+            AshfallUiHelpers.SetTextPulsed(_filterValue, $"{Math.Max(0, state.FilterSpares):00} spares");
             if (_machineTellLabel != null)
             {
                 _machineTellLabel.Text = string.IsNullOrWhiteSpace(state.MachineTellText)
@@ -236,14 +240,14 @@ namespace AtomicWar.GodotApp.UI
                             ? DesignTheme.Entropy
                             : DesignTheme.Pale));
             }
-            if (_scrapValue != null) _scrapValue.Text = $"{Math.Max(0, state.MechanicalScrap):00} scrap";
+            if (_scrapValue != null) AshfallUiHelpers.SetTextPulsed(_scrapValue, $"{Math.Max(0, state.MechanicalScrap):00} scrap");
 
             // ── Air Filtration & Atmosphere ──
             if (_airFilterValue != null && _airFilterBar != null)
             {
                 float safeFilter = Math.Clamp(state.AirFilterHealth, 0f, 100f);
                 _airFilterValue.Text = $"{safeFilter:0}%";
-                _airFilterBar.Value = safeFilter;
+                AshfallUiHelpers.SetBarValue(_airFilterBar, safeFilter);
                 _airFilterValue.AddThemeColorOverride(
                     "font_color",
                     AshfallUiHelpers.ToColor(safeFilter < 50f
@@ -256,10 +260,31 @@ namespace AtomicWar.GodotApp.UI
             if (_airQualityValue != null)
             {
                 string qualityTag = state.AirWarning ? "[WARNING: CONTAMINATED]" : "[STABLE]";
-                _airQualityValue.Text = $"AIR QUALITY: {state.AirQuality:0}% · RADON: {state.RadonLevel:0} Bq/m³ {qualityTag}";
+                AshfallUiHelpers.SetTextPulsed(_airQualityValue, $"AIR QUALITY: {state.AirQuality:0}% {qualityTag}");
                 _airQualityValue.AddThemeColorOverride(
                     "font_color",
                     AshfallUiHelpers.ToColor(state.AirWarning ? DesignTheme.Critical : DesignTheme.Warm));
+            }
+
+            if (_radonLabel != null)
+            {
+                // Thresholds are the canonical ones owned by the radon authority
+                // (YearOfAshRadonSystem): Safe < 200 Bq/m³, Dangerous ≥ 800 Bq/m³.
+                float radon = Math.Max(0f, state.RadonLevel);
+                string radonTag = radon >= Ashfall.Core.YearOfAsh.YearOfAshRadonSystem.DangerousRadonThreshold
+                    ? "[DANGEROUS]"
+                    : radon >= Ashfall.Core.YearOfAsh.YearOfAshRadonSystem.SafeRadonThreshold
+                        ? "[ELEVATED]"
+                        : "[STABLE]";
+                AshfallUiHelpers.SetTextPulsed(_radonLabel, $"RADON: {radon:0} Bq/m³ {radonTag}");
+                _radonLabel.AddThemeColorOverride(
+                    "font_color",
+                    AshfallUiHelpers.ToColor(
+                        radon >= Ashfall.Core.YearOfAsh.YearOfAshRadonSystem.DangerousRadonThreshold
+                            ? DesignTheme.Critical
+                            : radon >= Ashfall.Core.YearOfAsh.YearOfAshRadonSystem.SafeRadonThreshold
+                                ? DesignTheme.Entropy
+                                : DesignTheme.Lethe));
             }
 
             if (_btnServiceFilter != null)
@@ -422,15 +447,29 @@ namespace AtomicWar.GodotApp.UI
         {
             var content = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingXs);
             content.CustomMinimumSize = new Vector2(196, 0);
-            content.AddChild(AshfallUiHelpers.MakeSectionHeader("SYSTEMS"));
+
+            // Week-one essentials (first-week panel set): the ~8 surfaces a
+            // player needs in the first days sit at the top of the rail,
+            // visible without scrolling. Every other registered surface stays
+            // reachable in the sections below — just not foregrounded.
+            content.AddChild(AshfallUiHelpers.MakeSectionHeader("WEEK ONE"));
+            content.AddChild(AshfallUiHelpers.MakeMetadata("THE SURFACES YOU NEED FIRST"));
+            AddNavButton(content, "OVERVIEW", "overview", true);
+            AddNavButton(content, "INVENTORY", "inventory");
+            AddNavButton(content, "GREENHOUSE", "greenhouse");
+            AddNavButton(content, "SURVIVORS", "survivors");
+            AddNavButton(content, "MAP", "map");
+            AddNavButton(content, "JOURNAL", "journal");
+            AddNavButton(content, "SAVE / LOAD", "save");
+            AddNavButton(content, "SETTINGS", "settings");
+
+            content.AddChild(AshfallUiHelpers.MakeSeparator());
+            content.AddChild(AshfallUiHelpers.MakeSectionHeader("ALL SURFACES"));
             content.AddChild(AshfallUiHelpers.MakeMetadata("SELECT A SURFACE"));
             content.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            AddNavButton(content, "OVERVIEW", "overview", true);
             AddNavButton(content, "STATUS", "status");
-            AddNavButton(content, "SURVIVORS", "survivors");
             AddNavButton(content, "SURVIVAL", "survival_detail");
-            AddNavButton(content, "INVENTORY", "inventory");
             AddNavButton(content, "CRAFTING", "crafting");
             AddNavButton(content, "MEDICAL", "medical");
             AddNavButton(content, "AFFLICTIONS", "afflictions");
@@ -438,13 +477,11 @@ namespace AtomicWar.GodotApp.UI
             AddNavButton(content, "WEATHER", "weather");
             AddNavButton(content, "WEATHER DETAIL", "weather_detail");
             AddNavButton(content, "RADIO", "radio");
-            AddNavButton(content, "MAP", "map");
             AddNavButton(content, "SHELTER", "shelter");
             AddNavButton(content, "ATMOSPHERE", "shelter_atmosphere");
             AddNavButton(content, "TRADE", "trade");
             AddNavButton(content, "ECONOMY", "economy_detail");
             AddNavButton(content, "RESEARCH", "research");
-            AddNavButton(content, "GREENHOUSE", "greenhouse");
             AddNavButton(content, "FACTIONS", "factions");
             AddNavButton(content, "COMMUNIQUÉS", "faction_communique_board");
             AddNavButton(content, "MUSTER", "muster");
@@ -457,7 +494,7 @@ namespace AtomicWar.GodotApp.UI
             AddNavButton(content, "QUESTS", "quests");
             AddNavButton(content, "EVENTS", "event_detail");
             AddNavButton(content, "NARRATIVE ARCS", "narrative_arc");
-            AddNavButton(content, "JOURNAL", "journal_detail");
+            AddNavButton(content, "JOURNAL DETAIL", "journal_detail");
             AddNavButton(content, "BLACK PROJECTS", "black_projects_archive");
             AddNavButton(content, "RADIATION", "radiation_detail");
             AddNavButton(content, "RAD HISTORY", "radiation_history");
@@ -598,9 +635,16 @@ namespace AtomicWar.GodotApp.UI
             // ── Air Filtration Card ──
             var airStack = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingSm);
             airStack.AddChild(AshfallUiHelpers.MakeSectionHeader("AIR FILTRATION & ATMOSPHERE"));
-            _airQualityValue = AshfallUiHelpers.MakeMetadata("AIR QUALITY: 100% · RADON: 12 Bq/m³ [STABLE]");
+            _airQualityValue = AshfallUiHelpers.MakeMetadata("AIR QUALITY: 100% [STABLE]");
             _airQualityValue.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
             airStack.AddChild(_airQualityValue);
+            // Radon is a distinct environmental hazard with its own authored
+            // thresholds (YearOfAshRadonSystem). It was previously fused into the
+            // air-quality string while a dedicated _radonLabel field sat declared
+            // but never built — so it is now its own readable row.
+            _radonLabel = AshfallUiHelpers.MakeMetadata("RADON: 12 Bq/m³ [STABLE]");
+            _radonLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Lethe));
+            airStack.AddChild(_radonLabel);
             airStack.AddChild(AshfallUiHelpers.MakeSeparator());
             airStack.AddChild(MakeGaugeRow("HEPA FILTER", out _airFilterBar, out _airFilterValue, DesignTheme.Entropy));
 

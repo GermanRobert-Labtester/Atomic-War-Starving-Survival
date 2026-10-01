@@ -84,14 +84,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public void FlushMemoryDecayIfDirty()
-        {
-            if (_memoryDecayDirty)
-            {
-                SaveMemoryDecay();
-            }
-        }
-
         public void ResetMemoryDecay()
         {
             _memoryDecay = null;

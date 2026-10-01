@@ -140,14 +140,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public void FlushSurvivorRolesIfDirty()
-        {
-            if (_survivorRolesDirty)
-            {
-                SaveSurvivorRoles();
-            }
-        }
-
         public void ResetSurvivorRoles()
         {
             if (_survivorRolesSkillBound && _survivorRolesSkillHandler != null)

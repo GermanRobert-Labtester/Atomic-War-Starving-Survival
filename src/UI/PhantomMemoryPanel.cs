@@ -267,7 +267,14 @@ namespace AtomicWar.GodotApp.UI
                             _host.InspectRelic(curSv.survivorId, itemId, out string res, consumeItem: false);
                             RefreshView();
                         });
-                        _relicInspector.AddChild(btnPresent);
+                        // Item art — the relic is recognisable at a glance.
+                        var relicRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
+                        var relicIcon = AshfallUiHelpers.MakeItemIcon(itemId, 24);
+                        relicIcon.TooltipText = itemId;
+                        relicRow.AddChild(relicIcon);
+                        btnPresent.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+                        relicRow.AddChild(btnPresent);
+                        _relicInspector.AddChild(relicRow);
                     }
                 }
             }

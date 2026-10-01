@@ -18,6 +18,13 @@ namespace Ashfall.Core.Medical
         public const string ReasonTraumaPerimeterHazard = "affliction_trauma_perimeter_hazard";
         public const string ReasonDependencyImpairment = "affliction_dependency_impairment";
         public const string ReasonMedicalContagionRisk = "affliction_medical_contagion_risk";
+        /// <summary>
+        /// Plan 193 / T18 — the survivor carries a tracked chronic condition
+        /// whose capability projection is below 1.0 (the recommended
+        /// accommodation is not fitted). Derived from
+        /// <see cref="FitnessEvaluationFacts.ChronicCapabilityMultiplier"/>.
+        /// </summary>
+        public const string ReasonChronicImpairment = "chronic_impairment";
 
         /// <summary>
         /// Tighten an already evaluated role verdict with medical-to-duty rules.
@@ -56,11 +63,24 @@ namespace Ashfall.Core.Medical
             if (facts.HasActiveWithdrawal && requirements.PrecisionWork)
                 addedWarning |= Add(warnings, ReasonDependencyImpairment);
 
+            // Plan 193 / T18 — chronic-condition capability overlay. The base
+            // model remains the sole fitness authority; this only adds a warning
+            // and caps sustainable shift hours in proportion to the survivor's
+            // most-limiting duty capability. Fitting the recommended
+            // accommodation raises the capability and relaxes the cap.
+            if (facts.ChronicCapabilityMultiplier < 0.999f)
+                addedWarning |= Add(warnings, ReasonChronicImpairment);
+
             bool allowed = baseVerdict.Allowed && !addedBlocker;
             bool warning = allowed && (baseVerdict.Warning || addedWarning);
             float hours = allowed ? baseVerdict.RecommendedMaxHours : 0f;
             if (allowed && addedWarning)
                 hours = Math.Min(hours, 6f);
+            if (allowed && facts.ChronicCapabilityMultiplier < 0.999f && hours > 0f)
+            {
+                float capped = (float)Math.Floor(hours * facts.ChronicCapabilityMultiplier);
+                hours = Math.Max(1f, Math.Min(hours, capped));
+            }
 
             return new RoleFitnessVerdict(
                 baseVerdict.SurvivorId,

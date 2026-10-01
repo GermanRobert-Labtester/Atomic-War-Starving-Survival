@@ -73,11 +73,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        private void FlushYearOfAshIfDirty()
-        {
-            if (_yearOfAshDirty) SaveYearOfAsh();
-        }
-
         /// <summary>
         /// Plan 146 residual — ice-road window line for the codex readout.
         /// Truthful projection of the Core owner's state: open/closed, the

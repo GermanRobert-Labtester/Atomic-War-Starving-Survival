@@ -338,6 +338,12 @@ namespace AtomicWar.GodotApp
             // ── Inventory overlay panel ──
             _inventoryOverlay = new InventoryPanel();
             _inventoryOverlay.OnClose += CloseInventoryOverlay;
+            // Food stage of the first-hour journey: the overlay is the panel the
+            // "Show me where" route opens, so its row SELECT must reach the same
+            // detail/consume path the legacy right-column widget used. Without
+            // this the SELECT button is a dead affordance and food.ration_consumed
+            // can never fire from the player-facing inventory.
+            _inventoryOverlay.OnItemSelected += OnInventoryItemSelected;
             AddChild(_inventoryOverlay);
 
             // ── Survivors overlay panel ──
@@ -739,6 +745,14 @@ namespace AtomicWar.GodotApp
             // ── Combat panel (overlay) ──
             _combatPanel = new CombatPanel();
             _combatPanel.OnClose += CloseCombatPanel;
+            // T16 — LIVE MONITOR routes the adopted CombatHudOverlay, bound to
+            // the same session (Bind is idempotent, so repeated opens are safe).
+            _combatPanel.OnMonitorRequested += () =>
+            {
+                SetupCombat();
+                _combatHudOverlay.Bind(_combat);
+                _combatHudOverlay.Open();
+            };
             // Route-reachability wave — the registered "combat_detail" /
             // "combat_history" consoles. Bind + Open directly (T16 convention):
             // OpenPlayerPanel would close this combat console mid-encounter.
@@ -1297,18 +1311,31 @@ namespace AtomicWar.GodotApp
 
             _combatHudOverlay = new CombatHudOverlay { Visible = false };
             _combatHudOverlay.OnClose += () => _combatHudOverlay.Visible = false;
+            // T16/T10 — overlay actions surface their real result strings.
             _combatHudOverlay.OnFireRequested += () =>
             {
                 if (_combat == null) return;
-                _combat.ActionFire(_combat.DefaultHostileTargetId());
+                ShowAdvanceFeedback(_combat.ActionFire(_combat.DefaultHostileTargetId()),
+                    Ashfall.Core.Feedback.FeedbackSeverity.Info);
             };
-            _combatHudOverlay.OnSuppressRequested += () => _combat?.ActionSuppress();
+            _combatHudOverlay.OnSuppressRequested += () =>
+            {
+                if (_combat == null) return;
+                ShowAdvanceFeedback(_combat.ActionSuppress(),
+                    Ashfall.Core.Feedback.FeedbackSeverity.Info);
+            };
             _combatHudOverlay.OnClearJamRequested += () =>
             {
                 if (_combat == null) return;
-                _combat.ActionClearJam(_combat.DefaultPlayerSubjectId());
+                ShowAdvanceFeedback(_combat.ActionClearJam(_combat.DefaultPlayerSubjectId()),
+                    Ashfall.Core.Feedback.FeedbackSeverity.Info);
             };
-            _combatHudOverlay.OnEndTurnRequested += () => _combat?.ActionEndTurn();
+            _combatHudOverlay.OnEndTurnRequested += () =>
+            {
+                if (_combat == null) return;
+                ShowAdvanceFeedback(_combat.ActionEndTurn(),
+                    Ashfall.Core.Feedback.FeedbackSeverity.Info);
+            };
             AddChild(_combatHudOverlay);
 
             _biogasDigesterPanel = new AnaerobicBiogasDigesterPanel { Visible = false };
@@ -1746,6 +1773,7 @@ namespace AtomicWar.GodotApp
             _mainMenu.OnSettings += () => { _settingsPanel.Open(); };
             _mainMenu.OnCodex += () => { OpenPlayerPanel("codex"); };
             _mainMenu.OnInspectorRequested += OpenAssetInspector;
+            _mainMenu.OnDevSessionStartRequested += StartDevSession;
             _mainMenu.OnQuit += () =>
             {
                 SaveAll();
@@ -1782,6 +1810,18 @@ namespace AtomicWar.GodotApp
             if (_assetInspectorPanel == null) return;
             _assetInspectorPanel.Reload();
             ShowPanelLifecycle(_assetInspectorPanel);
+        }
+
+        /// <summary>
+        /// Developer session: boot a fresh campaign through the canonical new-game
+        /// command, then open the read-only Item &amp; Asset Inspector over it so every
+        /// authored item and its art can be checked against live session state.
+        /// Pure composition of two existing commands — no new gameplay authority.
+        /// </summary>
+        private void StartDevSession()
+        {
+            StartNewGame();
+            OpenAssetInspector();
         }
 
         private void UpdateContinueButton()

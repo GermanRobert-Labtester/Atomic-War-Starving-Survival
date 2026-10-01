@@ -184,12 +184,6 @@ namespace AtomicWar.GodotApp
                 _broadsheetPressDirty = false;
         }
 
-        public void FlushBroadsheetPressIfDirty()
-        {
-            if (_broadsheetPressDirty)
-                SaveBroadsheetPress();
-        }
-
         public void ResetBroadsheetPress()
         {
             _broadsheetPress = null;

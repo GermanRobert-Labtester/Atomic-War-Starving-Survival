@@ -68,6 +68,8 @@ namespace AtomicWar.GodotApp.UI
                 + $"Plasma stability: {state.PlasmaStabilityBp / 100.0:0.0}% — instability can void the batch and damage the chamber.\n"
                 + $"Output grades are checked against the precision-metrology ladder: master-grade inserts need certification before release.\n"
                 + $"Only registered high-wear consumers (deep-excavation cutter, precision lathe) receive the wear benefit.";
+            if (!string.IsNullOrEmpty(_host.LastEvent))
+                _detailText.Text += $"\nLast event: {_host.LastEvent}";
 
             _startBtn.Disabled = state.ActiveBatch != null || state.Mode is CvdReactorMode.Faulted or CvdReactorMode.Offline;
             _advanceBtn.Disabled = state.ActiveBatch == null;

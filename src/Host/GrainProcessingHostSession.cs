@@ -36,12 +36,6 @@ namespace AtomicWar.GodotApp
 
         public void TickDay(int day) => System.TickDay(day);
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            if (GrainProcessingSaveStore.TrySave(System.CaptureState()))
-                base.Save();
-        }
     }
 
     public static class GrainProcessingSaveStore

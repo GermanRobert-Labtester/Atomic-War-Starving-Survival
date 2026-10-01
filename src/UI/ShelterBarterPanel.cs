@@ -711,6 +711,11 @@ namespace AtomicWar.GodotApp.UI
                 row.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
                 row.SizeFlagsHorizontal = SizeFlags.ExpandFill;
 
+                // Item art — the traded good is recognisable at a glance.
+                var artIcon = AshfallUiHelpers.MakeItemIcon(itemId, 22);
+                artIcon.TooltipText = itemId;
+                row.AddChild(artIcon);
+
                 // Name & Type
                 var nameLbl = AshfallUiHelpers.MakeMetadata(FormatItemName(itemId, _itemLookup));
                 nameLbl.SizeFlagsHorizontal = SizeFlags.ExpandFill;
@@ -743,6 +748,7 @@ namespace AtomicWar.GodotApp.UI
                     }
                 }, disabled: currentReq <= 0);
                 minusBtn.CustomMinimumSize = new Vector2(28, 28);
+                minusBtn.TooltipText = $"Request one fewer {FormatItemName(itemId, _itemLookup)}";
                 counterBox.AddChild(minusBtn);
 
                 var qtyLbl = AshfallUiHelpers.MakeMetadata(currentReq.ToString());
@@ -763,6 +769,7 @@ namespace AtomicWar.GodotApp.UI
                     }
                 }, disabled: !isAtAirlock || currentReq >= available);
                 plusBtn.CustomMinimumSize = new Vector2(28, 28);
+                plusBtn.TooltipText = $"Request one more {FormatItemName(itemId, _itemLookup)}";
                 counterBox.AddChild(plusBtn);
 
                 row.AddChild(counterBox);
@@ -851,6 +858,11 @@ namespace AtomicWar.GodotApp.UI
                 row.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
                 row.SizeFlagsHorizontal = SizeFlags.ExpandFill;
 
+                // Item art — the offered good is recognisable at a glance.
+                var artIcon = AshfallUiHelpers.MakeItemIcon(itemId, 22);
+                artIcon.TooltipText = itemId;
+                row.AddChild(artIcon);
+
                 // Name & Demand tag
                 var nameVbox = new VBoxContainer();
                 nameVbox.SizeFlagsHorizontal = SizeFlags.ExpandFill;
@@ -894,6 +906,7 @@ namespace AtomicWar.GodotApp.UI
                     }
                 }, disabled: currentOffer <= 0);
                 minusBtn.CustomMinimumSize = new Vector2(28, 28);
+                minusBtn.TooltipText = $"Offer one fewer {FormatItemName(itemId, _itemLookup)}";
                 counterBox.AddChild(minusBtn);
 
                 var qtyLbl = AshfallUiHelpers.MakeMetadata(currentOffer.ToString());
@@ -914,6 +927,7 @@ namespace AtomicWar.GodotApp.UI
                     }
                 }, disabled: currentOffer >= available);
                 plusBtn.CustomMinimumSize = new Vector2(28, 28);
+                plusBtn.TooltipText = $"Offer one more {FormatItemName(itemId, _itemLookup)}";
                 counterBox.AddChild(plusBtn);
 
                 row.AddChild(counterBox);

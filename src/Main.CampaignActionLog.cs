@@ -71,11 +71,6 @@ namespace AtomicWar.GodotApp
                 _actionLogDirty = false;
         }
 
-        public void FlushCampaignActionLogIfDirty()
-        {
-            if (_actionLogDirty) SaveCampaignActionLog();
-        }
-
         public void ResetCampaignActionLog()
         {
             _actionLog = null;

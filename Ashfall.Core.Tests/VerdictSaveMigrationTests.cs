@@ -103,6 +103,40 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
+        public void V4Save_MigratesToV5_WithZeroOffset()
+        {
+            // A genuine v4 save: npcs + radio + quests + accusations, no
+            // reckoning offset, hashed over the frozen v4 field set.
+            var v4 = new VerdictSaveV4
+            {
+                saveVersion = 4,
+                simDay = 260,
+                reckoning = new ReckoningState { phase = ReckoningPhase.Counted },
+                accusations = new VerdictAccusationState()
+            };
+            v4.Checksum = SaveChecksum.Compute(v4);
+            string json = s_json.Serialize(v4);
+            Assert.DoesNotContain("reckoningOffset", json, StringComparison.Ordinal);
+
+            Assert.True(VerdictSaveCodec.TryDecode(json, s_json, out var loaded), "v4 save must migrate");
+            Assert.Equal(VerdictSave.CurrentSaveVersion, loaded.saveVersion);
+            Assert.Equal(ReckoningPhase.Counted, loaded.reckoning.phase);
+            Assert.Equal(0, loaded.reckoningOffset); // legacy Year 1 baseline
+        }
+
+        [Fact]
+        public void V5Save_RoundTripsReckoningOffset()
+        {
+            var save = VerdictSaveCodec.Capture(
+                61, new MachineLogSystem(), new ReckoningSystem(), new EvidenceLedger(), -1,
+                reckoningOffset: 45);
+            string json = s_json.Serialize(save);
+
+            Assert.True(VerdictSaveCodec.TryDecode(json, s_json, out var loaded));
+            Assert.Equal(45, loaded.reckoningOffset);
+        }
+
+        [Fact]
         public void TooOldSave_BelowMigrationFloor_IsRejected()
         {
             var v0 = new VerdictSave { saveVersion = 0 };

@@ -86,14 +86,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public void FlushSleepAcousticRestIfDirty()
-        {
-            if (_sleepAcousticRestDirty)
-            {
-                SaveSleepAcousticRest();
-            }
-        }
-
         public void ResetSleepAcousticRest()
         {
             _sleepAcousticRest = null;

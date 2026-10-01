@@ -337,25 +337,6 @@ namespace AtomicWar.GodotApp
             _hostEventAdapter.StateChanged += () => _hostEventAdapterDirty = true;
         }
 
-        /// <summary>
-        /// Writes the journal only when something actually changed. Called from the
-        /// throttled _Process tick so a burst of entries costs one file write.
-        /// </summary>
-        private void FlushJournalIfDirty()
-        {
-            if (_journalDirty) SaveJournal();
-        }
-
-        private void FlushNarrativeIfDirty()
-        {
-            if (_narrativeDirty) SaveNarrative();
-        }
-
-        private void FlushEventAdapterIfDirty()
-        {
-            if (_hostEventAdapterDirty) SaveEventAdapter();
-        }
-
         private void SetupNarrative(bool reloadEventAdapter = false)
         {
             EnsureNarrativeSession();
@@ -525,6 +506,17 @@ namespace AtomicWar.GodotApp
             if (!string.IsNullOrEmpty(eventId) && eventId.StartsWith("echo_", StringComparison.Ordinal))
             {
                 ResolveEchoChoice(eventId, choiceId);
+                return;
+            }
+
+            // World incidents share the arc modal without an id prefix; a
+            // pending incident is routed to its own resolver before the arc
+            // resolve so incident ids can never fall through to the arc system.
+            SetupWorldIncidents();
+            if (_worldIncidents != null &&
+                string.Equals(_worldIncidents.PendingIncident?.Id, eventId, StringComparison.Ordinal))
+            {
+                ResolveWorldIncidentChoice(eventId, choiceId);
                 return;
             }
 
@@ -711,17 +703,17 @@ namespace AtomicWar.GodotApp
 
         private void CloseRadioPanel()
         {
-            _radioPanel.Visible = false;
+            ClosePanelAnimated(_radioPanel);
         }
 
         private void CloseJournalPanel()
         {
-            _journalPanel.Visible = false;
+            ClosePanelAnimated(_journalPanel);
         }
 
         private void CloseJournalDetailPanel()
         {
-            _journalDetailPanel.Visible = false;
+            ClosePanelAnimated(_journalDetailPanel);
         }
 
     }

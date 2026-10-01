@@ -33,6 +33,7 @@ namespace AtomicWar.GodotApp.UI
         private Label _labStatusHeader = null!;
         private ProgressBar _distillationProgressBar = null!;
         private Label _phaseMetricsLabel = null!;
+        private Label _refusalLabel = null!;
         private Button _cancelBatchButton = null!;
 
         private string _selectedRecipeId = string.Empty;
@@ -129,6 +130,15 @@ namespace AtomicWar.GodotApp.UI
             footerHBox.AddChild(_cancelBatchButton);
 
             statusBox.AddChild(footerHBox);
+
+            // T10 — typed refusal surfacing: a refused compounding run or abort
+            // must say why instead of silently doing nothing.
+            _refusalLabel = new Label();
+            _refusalLabel.Text = string.Empty;
+            _refusalLabel.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+            _refusalLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Critical));
+            statusBox.AddChild(_refusalLabel);
+
             mainVBox.AddChild(statusCard);
 
             // Categories bar
@@ -348,7 +358,12 @@ namespace AtomicWar.GodotApp.UI
             startBtn.Pressed += () =>
             {
                 string chemist = GetBestChemist();
-                _pharma?.StartBatch(recipe.recipe_id, chemist);
+                var result = _pharma?.StartBatch(recipe.recipe_id, chemist);
+                _refusalLabel.Text = result.HasValue
+                    ? ActionRefusalText.Line(result.Value, "COMPOUND REFUSED")
+                    : ActionRefusalText.Line(
+                        Ashfall.Core.ActionResult.Failed("unbound", "pharma.unbound"),
+                        "COMPOUND REFUSED");
                 RefreshView();
             };
             actionBox.AddChild(startBtn);
@@ -370,7 +385,11 @@ namespace AtomicWar.GodotApp.UI
 
         private void OnCancelBatchClicked()
         {
-            _pharma?.CancelBatch();
+            var result = _pharma?.CancelBatch();
+            if (result.HasValue)
+            {
+                _refusalLabel.Text = ActionRefusalText.Line(result.Value, "ABORT REFUSED");
+            }
             RefreshView();
         }
     }

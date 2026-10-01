@@ -31,11 +31,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public void FlushOilseedPressingIfDirty()
-        {
-            if (_oilseedPressingDirty) SaveOilseedPressing();
-        }
-
         public void ResetOilseedPressing()
         {
             _oilseedPressing = null;

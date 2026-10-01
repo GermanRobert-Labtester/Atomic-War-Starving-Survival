@@ -222,6 +222,9 @@ namespace AtomicWar.GodotApp
         CampaignFuzzSelfTest,
         CompositionRootSelfTest,
         RealCampaignJourneySelfTest,
+        FailureRestartSelfTest,
+        FoodLoopSelfTest,
+        ReasonablePlayerSelfTest,
         StartingCohortLifecycleSelfTest,
         WorldExplorationSelfTest,
         CartographySelfTest,
@@ -284,6 +287,7 @@ namespace AtomicWar.GodotApp
         MemoryDecaySelfTest,
         InterpersonalConflictSelfTest,
         ExerciseSelfTest,
+        WorldIncidentsSelfTest,
         SurvivorRolesSelfTest,
         ShelterMuseumSelfTest,
         RationingSelfTest,
@@ -805,7 +809,7 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.RuntimeScaleSelfTest;
             if (Has(args, "--7-day-smoke-selftest") || Has(args, "--seven-day-smoke-selftest") || Has(args, "--deterministic-smoke-selftest") || Has(args, "--deterministic-smoke-run"))
                 return HostCliAction.SevenDayDeterministicSmokeSelfTest;
-            if (Has(args, "--ui-accessibility-selftest") || Has(args, "--ui-access-selftest") || Has(args, "--accessibility-selftest"))
+            if (Has(args, "--ui-accessibility-selftest") || Has(args, "--ui-access-selftest") || Has(args, "--accessibility-selftest") || Has(args, "--ui-a11y-selftest"))
                 return HostCliAction.UiAccessibilitySelfTest;
             if (Has(args, "--scene-binding-selftest") || Has(args, "--scene-bindings-selftest"))
                 return HostCliAction.SceneBindingSelfTest;
@@ -815,6 +819,12 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.CompositionRootSelfTest;
             if (Has(args, "--real-campaign-journey-selftest") || Has(args, "--campaign-journey-selftest") || Has(args, "--real-main-journey-selftest"))
                 return HostCliAction.RealCampaignJourneySelfTest;
+            if (Has(args, "--failure-restart-selftest") || Has(args, "--restart-journey-selftest") || Has(args, "--gameover-restart-selftest"))
+                return HostCliAction.FailureRestartSelfTest;
+            if (Has(args, "--food-loop-selftest"))
+                return HostCliAction.FoodLoopSelfTest;
+            if (Has(args, "--reasonable-player-selftest") || Has(args, "--reasonable-player-bot-selftest"))
+                return HostCliAction.ReasonablePlayerSelfTest;
             if (Has(args, "--starting-cohort-lifecycle-selftest") || Has(args, "--cohort-lifecycle-selftest"))
                 return HostCliAction.StartingCohortLifecycleSelfTest;
             if (Has(args, "--expansion-depth-selftest") || Has(args, "--plan18-selftest"))
@@ -967,6 +977,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.InterpersonalConflictSelfTest;
             if (Has(args, "--exercise-selftest") || Has(args, "--physical-training-selftest"))
                 return HostCliAction.ExerciseSelfTest;
+            if (Has(args, "--world-incidents-selftest") || Has(args, "--events-picker-selftest"))
+                return HostCliAction.WorldIncidentsSelfTest;
             if (Has(args, "--survivor-roles-selftest") || Has(args, "--specialization-roles-selftest"))
                 return HostCliAction.SurvivorRolesSelfTest;
             if (Has(args, "--shelter-museum-selftest") || Has(args, "--museum-selftest"))
@@ -1094,7 +1106,7 @@ namespace AtomicWar.GodotApp
 
             GD.Print("\n--- Core & System Gates ---");
             GD.Print("  --7-day-smoke-selftest / --seven-day-smoke-selftest / --deterministic-smoke-selftest / --deterministic-smoke-run 7-day deterministic smoke run: map discovery + weather rolls + survivor needs drift + mid-run save/reload round-trip across 10 verification gates");
-            GD.Print("  --accessibility-selftest / --ui-accessibility-selftest / --ui-access-selftest Verify focus order, non-empty labels, modal close handling, and accessibility compliance across UI panels");
+            GD.Print("  --accessibility-selftest / --ui-accessibility-selftest / --ui-access-selftest / --ui-a11y-selftest Verify focus order, non-empty labels, modal close handling, and accessibility compliance across UI panels");
             GD.Print("  --asset-coverage-report  Full non-gating sweep of every catalog id (core + expansions) vs loadable art; prints per-category coverage and the missing list");
             GD.Print("  --asset-registry-selftest Verify that catalog IDs (items/survivors/locations) resolve to actual texture assets under assets/");
             GD.Print("  --starting-cohort-lifecycle-selftest / --cohort-lifecycle-selftest  Plan 138 fresh-vs-restore lifecycle: preserve old slots, apply an alternate cohort, honor an empty saved roster, and reject failed restores without reseeding");
@@ -1117,6 +1129,10 @@ namespace AtomicWar.GodotApp
             GD.Print("  --campaign-fuzz-selftest      Core-level campaign fuzz harness gate (Task #129); delegates to Ashfall.Core.Tests.CampaignFuzz suite");
             GD.Print("  --composition-root-selftest   Composition root architecture gate: verifies ComposeCampaign() is the single entry point (Task #131)");
             GD.Print("  --real-campaign-journey-selftest / --campaign-journey-selftest / --real-main-journey-selftest Real Main-composed player journey: New Game -> ComposeCampaign() -> real gameplay action -> real day advance through the coordinator -> SaveAll -> full in-memory reset -> Continue -> restored composed state (Plan #5)");
+            GD.Print("  --failure-restart-selftest / --restart-journey-selftest / --gameover-restart-selftest  Failure & restart path proof: survivor deaths -> ShowGameOver terminal seal -> ReturnToMenu -> fresh New Game (no stale state) -> Continue after a simulated crash -> corrupt campaign.json fails closed with the live session intact -> verified backup recovery (Task 9)");
+            GD.Print("  --food-loop-selftest          Food loop from the UI: fresh-game starter cooking recipes known, kitchen panel prep -> day advance -> serve-all, holdfast eat/drink seam, Plan 136 cooking authority live");
+            GD.Print("  --year-two-chapter-selftest / --play-on-selftest / --chapter-selftest  Year-two chapter continuation probe");
+            GD.Print("  --reasonable-player-selftest / --reasonable-player-bot-selftest  Reasonable player week-1 bot: deterministic ration/cook/plant/fortify policy across seeds and difficulty presets vs the no-action baseline");
 
             GD.Print("\n--- Expansions & Campaign Modules ---");
             GD.Print("  --rail-track-maintenance-selftest / --iron-road-selftest  Expansion 25 Iron Road: gauge stability, track/bridge wear, dispatch feasibility advisory, workgang repair, and the per-segment maintenance ledger");
@@ -1349,6 +1365,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --memory-decay-selftest / --memory-system-selftest  Memory decay integration probe");
             GD.Print("  --interpersonal-conflict-selftest / --conflict-system-selftest  Interpersonal conflict integration probe");
             GD.Print("  --exercise-selftest / --physical-training-selftest  Exercise and physical training integration probe");
+            GD.Print("  --world-incidents-selftest / --events-picker-selftest  World incidents (events.json) weighted picker, gating, schedule, and save probe");
             GD.Print("  --survivor-roles-selftest / --specialization-roles-selftest  Survivor specialization roles integration probe");
             GD.Print("  --shelter-museum-selftest / --museum-selftest  Shelter museum & historical archive probe");
             GD.Print("  --rationing-selftest / --ration-selftest  Crisis rationing overlay probe");

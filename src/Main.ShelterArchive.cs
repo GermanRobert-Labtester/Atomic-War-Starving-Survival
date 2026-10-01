@@ -112,14 +112,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public void FlushShelterArchiveIfDirty()
-        {
-            if (_shelterArchiveDirty)
-            {
-                SaveShelterArchive();
-            }
-        }
-
         public void ResetShelterArchive()
         {
             _shelterArchive = null;

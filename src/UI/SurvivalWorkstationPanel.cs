@@ -43,6 +43,7 @@ public partial class SurvivalWorkstationPanel : Control, IBindablePanel
     private Label _detailTitle = null!;
     private VBoxContainer _detailBox = null!;
     private Label _queueFooter = null!;
+    private Label _startStatus = null!;
     private Button _btnOpenInventory = null!;
     private Button _btnOpenCrafting = null!;
     private Button _btnStartSelected = null!;
@@ -285,10 +286,25 @@ public partial class SurvivalWorkstationPanel : Control, IBindablePanel
             if (recipe == null) return;
             // Read at click time so a bench-operator change after the row was
             // drawn still applies to this craft.
-            _craftingHost?.Start(recipe.id, SelectedCrafterId);
+            var result = _craftingHost?.Start(recipe.id, SelectedCrafterId);
+            if (_startStatus == null) return;
+            if (result is { IsSuccess: false })
+            {
+                // A refused craft must reach the screen as readable text.
+                _startStatus.Text = $"START REFUSED — {CraftingPanel.FormatCraftRefusal(result.Value.FailureCode)}";
+            }
+            else
+            {
+                _startStatus.Text = string.Empty;
+            }
         });
         _btnStartSelected.CustomMinimumSize = new Vector2(160, 32);
         actionRow.AddChild(_btnStartSelected);
+        _startStatus = AshfallUiHelpers.MakeMetadata(string.Empty);
+        _startStatus.AddThemeColorOverride("font_color",
+            AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical));
+        _startStatus.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+        actionRow.AddChild(_startStatus);
         leftCol.AddChild(actionRow);
 
         content.AddChild(leftCol);
@@ -405,9 +421,14 @@ public partial class SurvivalWorkstationPanel : Control, IBindablePanel
             cellList.Add(new AshfallDataGrid.Cell(recipe.recipeName, AshfallDataGrid.CellState.Normal));
 
             string outputName = recipe.result != null ? recipe.result.displayName : "[?]";
-            cellList.Add(new AshfallDataGrid.Cell(
+            // The grid already renders Cell.IconTexture; it was simply never
+            // populated. The output item's art now travels with its row.
+            var outputCell = new AshfallDataGrid.Cell(
                 $"×{recipe.resultAmount} {outputName}",
-                canCraft ? AshfallDataGrid.CellState.Positive : AshfallDataGrid.CellState.Normal));
+                canCraft ? AshfallDataGrid.CellState.Positive : AshfallDataGrid.CellState.Normal);
+            if (recipe.result != null && !string.IsNullOrEmpty(recipe.result.id))
+                outputCell.IconTexture = AshfallUiHelpers.ResolveItemTexture(recipe.result.id);
+            cellList.Add(outputCell);
 
             foreach (var ing in recipe.ingredients)
             {

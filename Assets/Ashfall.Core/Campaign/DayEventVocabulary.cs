@@ -223,6 +223,7 @@ namespace Ashfall.Core.Campaign
 
             // ── Narrative & Story ──
             { "echo_surfaced", SemanticKind.Narrative },
+            { "world_incident_surfaced", SemanticKind.Narrative },
             { "echo_consequence_due", SemanticKind.Narrative },
             { "narrative_arc_selected", SemanticKind.Narrative },
             { "personal_quest_progressed", SemanticKind.Narrative },

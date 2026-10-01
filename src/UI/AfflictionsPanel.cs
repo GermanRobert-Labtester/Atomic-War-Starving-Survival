@@ -2,9 +2,11 @@
 using System;
 using System.Collections.Generic;
 using Godot;
+using Ashfall.Core;
 using Ashfall.Core.UI;
 using Ashfall.Core.Medical;
 using AtomicWar.GodotApp.Host;
+using AtomicWar.GodotApp.Localization;
 
 namespace AtomicWar.GodotApp.UI
 {
@@ -38,6 +40,9 @@ namespace AtomicWar.GodotApp.UI
         private RespiratoryDegenerationSystem? _respiratory;
         private MedicalTextCatalog? _medicalTexts;
         private ChronicConditionHostSession? _chronic;
+        private Func<string, string, string, ActionResult>? _fitAccommodation;
+        private Func<string, string, ActionResult>? _removeAccommodation;
+        private string _accommodationFeedback = string.Empty;
 
         public void Bind(
             MedicalHostSession? medical = null,
@@ -45,12 +50,21 @@ namespace AtomicWar.GodotApp.UI
             InventoryHostSession? inventory = null,
             RespiratoryDegenerationSystem? respiratory = null,
             MedicalTextCatalog? medicalTexts = null,
-            ChronicConditionHostSession? chronicConditions = null)
+            ChronicConditionHostSession? chronicConditions = null,
+            Func<string, string, string, ActionResult>? fitAccommodation = null,
+            Func<string, string, ActionResult>? removeAccommodation = null)
         {
-            _chronic = chronicConditions;
-            // Live refresh: affliction rows track survivor state while open.
+            // Live refresh: affliction rows track survivor/inventory state and
+            // newly recorded chronic conditions while the panel is open.
             if (_survivors != null) _survivors.StateChanged -= RefreshView;
             if (_inventory != null) _inventory.StateChanged -= RefreshView;
+            if (_chronic != null) _chronic.OnConditionRecorded -= OnChronicConditionRecorded;
+
+            _chronic = chronicConditions;
+            _fitAccommodation = fitAccommodation;
+            _removeAccommodation = removeAccommodation;
+            _accommodationFeedback = string.Empty;
+            if (_chronic != null) _chronic.OnConditionRecorded += OnChronicConditionRecorded;
 
             _medical = medical;
             _survivors = survivors;
@@ -108,6 +122,9 @@ namespace AtomicWar.GodotApp.UI
             RenderChronic();
             RenderTreatments();
         }
+
+        /// <summary>Bridges the chronic session's condition event to the subscription-safe refresh.</summary>
+        private void OnChronicConditionRecorded(string message) => RefreshView();
 
         private void RenderActive()
         {
@@ -387,16 +404,23 @@ namespace AtomicWar.GodotApp.UI
                 }
             }
 
-            // Plan 193: tracked chronic conditions + fitted accommodations are
-            // truthful rows in the existing CHRONIC list, each tied to the
-            // clinical attribution (cause) already held by the record.
+            // Plan 193 / T18: tracked chronic conditions + fitted accommodations
+            // are truthful rows in the existing CHRONIC list, and each condition
+            // now carries the player's accommodation decision (FIT / REMOVE)
+            // routed to the host command. The cost gate reads the real inventory
+            // authority; nothing is written here.
             if (_chronic != null && _survivors?.RosterState != null)
             {
+                if (!string.IsNullOrEmpty(_accommodationFeedback))
+                    AddDimSubline(_chronicList, _accommodationFeedback);
+
                 foreach (var s in _survivors.RosterState)
                 {
                     if (s == null || !s.IsAlive) continue;
+                    var trackedConditionIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
                     foreach (var c in _chronic.GetSurvivorConditions(s.Id))
                     {
+                        trackedConditionIds.Add(c.ConditionId);
                         var def = _chronic.System.GetConditionDef(c.ConditionId);
                         AddAffliction(_chronicList,
                             $"{Name(s.Id)} — {def?.display_name ?? c.ConditionId}",
@@ -404,9 +428,16 @@ namespace AtomicWar.GodotApp.UI
                         AddDimSubline(_chronicList,
                             $"   ↳ cause: {c.Cause} · since day {c.OnsetDay} · {def?.severity ?? c.Severity}");
                         chronicCount++;
+
+                        RenderAccommodationDecision(s.Id, c.ConditionId, def?.recommended_accommodation_id);
                     }
+
+                    // Fitted accommodations whose condition is not tracked as a
+                    // row above stay visible (legacy/orphan fits are not hidden).
                     foreach (var a in _chronic.GetSurvivorAccommodations(s.Id))
                     {
+                        if (!string.IsNullOrEmpty(a.ConditionRefId)
+                            && trackedConditionIds.Contains(a.ConditionRefId)) continue;
                         var def = _chronic.System.GetAccommodationDef(a.AccommodationId);
                         AddAffliction(_chronicList,
                             $"(+ {Name(s.Id)} — {def?.display_name ?? a.AccommodationId})",
@@ -418,6 +449,126 @@ namespace AtomicWar.GodotApp.UI
 
             if (chronicCount == 0)
                 _chronicList.AddChild(MakeDimLine("No chronic conditions."));
+        }
+
+        /// <summary>
+        /// T18 — the per-condition accommodation decision row. The recommended
+        /// accommodation is shown with its authored maintenance cost; FIT is
+        /// enabled only when the real inventory authority has every item, and a
+        /// fitted accommodation offers REMOVE. The row writes nothing itself.
+        /// </summary>
+        private void RenderAccommodationDecision(string survivorId, string conditionId, string? recommendationId)
+        {
+            if (string.IsNullOrWhiteSpace(recommendationId)) return;
+            var def = _chronic?.System.GetAccommodationDef(recommendationId);
+            if (def == null)
+            {
+                AddDimSubline(_chronicList,
+                    $"   ↳ recommended accommodation '{recommendationId}' is not in the catalog.");
+                return;
+            }
+
+            var row = AshfallUiHelpers.MakeHBox();
+            string cost = def.maintenance_cost_items != null && def.maintenance_cost_items.Count > 0
+                ? string.Join(", ", def.maintenance_cost_items)
+                : "no materials";
+            bool fitted = IsAccommodationFitted(survivorId, def.accommodation_id);
+
+            var label = new Label
+            {
+                Text = fitted
+                    ? $"   ↳ accommodation fitted: {def.display_name}"
+                    : $"   ↳ accommodation: {def.display_name} · requires {cost}"
+            };
+            label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeSmall);
+            label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
+            row.AddChild(label);
+
+            if (fitted)
+            {
+                string accId = def.accommodation_id;
+                row.AddChild(AshfallUiHelpers.MakeButton(
+                    AshfallLocalization.Tr("ui.afflictions.remove_accommodation", "REMOVE"),
+                    () => RemoveAccommodation(survivorId, accId)));
+            }
+            else
+            {
+                var missing = MissingAccommodationCostItems(def);
+                bool affordable = missing.Count == 0;
+                string cond = conditionId;
+                var fit = AshfallUiHelpers.MakeButton(
+                    AshfallLocalization.Tr("ui.afflictions.fit_accommodation", "FIT"),
+                    () => FitAccommodation(survivorId, cond, def.accommodation_id),
+                    disabled: !affordable);
+                fit.TooltipText = affordable
+                    ? $"Fit {def.display_name} (consumes {cost})."
+                    : $"Missing: {string.Join(", ", missing)}.";
+                row.AddChild(fit);
+            }
+            _chronicList.AddChild(row);
+        }
+
+        /// <summary>True when the survivor has this accommodation fitted and active.</summary>
+        private bool IsAccommodationFitted(string survivorId, string accommodationId)
+        {
+            if (_chronic == null) return false;
+            var active = _chronic.GetSurvivorAccommodations(survivorId);
+            for (int i = 0; i < active.Count; i++)
+            {
+                if (string.Equals(active[i].AccommodationId, accommodationId, StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+            return false;
+        }
+
+        /// <summary>Authored cost items the inventory authority does not currently hold.</summary>
+        private List<string> MissingAccommodationCostItems(AccommodationDef def)
+        {
+            var missing = new List<string>();
+            if (def?.maintenance_cost_items == null) return missing;
+            foreach (var itemId in def.maintenance_cost_items)
+            {
+                if (string.IsNullOrWhiteSpace(itemId)) continue;
+                if ((_inventory?.Inventory?.CountById(itemId) ?? 0) < 1)
+                    missing.Add(itemId);
+            }
+            return missing;
+        }
+
+        /// <summary>Routes the accommodation decision through the host command.</summary>
+        private void FitAccommodation(string survivorId, string conditionId, string accommodationId)
+        {
+            var def = _chronic?.System.GetAccommodationDef(accommodationId);
+            string name = def?.display_name ?? accommodationId;
+            if (_fitAccommodation == null)
+            {
+                _accommodationFeedback = $"Cannot fit {name}: accommodation command not wired.";
+                RefreshView();
+                return;
+            }
+            var result = _fitAccommodation(survivorId, conditionId, accommodationId);
+            _accommodationFeedback = result.IsSuccess
+                ? $"Fitted {name} for {Name(survivorId)}."
+                : ActionRefusalText.Line(result, $"Cannot fit {name}");
+            RefreshView();
+        }
+
+        /// <summary>Routes the accommodation removal through the host command.</summary>
+        private void RemoveAccommodation(string survivorId, string accommodationId)
+        {
+            var def = _chronic?.System.GetAccommodationDef(accommodationId);
+            string name = def?.display_name ?? accommodationId;
+            if (_removeAccommodation == null)
+            {
+                _accommodationFeedback = $"Cannot remove {name}: accommodation command not wired.";
+                RefreshView();
+                return;
+            }
+            var result = _removeAccommodation(survivorId, accommodationId);
+            _accommodationFeedback = result.IsSuccess
+                ? $"Removed {name} from {Name(survivorId)}."
+                : ActionRefusalText.Line(result, $"Cannot remove {name}");
+            RefreshView();
         }
 
         private void RenderTreatments()

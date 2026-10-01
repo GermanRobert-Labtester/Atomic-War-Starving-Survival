@@ -88,12 +88,6 @@ namespace AtomicWar.GodotApp
                 _kilnworksDirty = false;
         }
 
-        public void FlushKilnworksIfDirty()
-        {
-            if (_kilnworksDirty)
-                SaveKilnworks();
-        }
-
         public void ResetKilnworks()
         {
             _kilnworks = null;

@@ -49,6 +49,11 @@ namespace AtomicWar.GodotApp
             {
                 RaiseStateChanged();
             }
+            else
+            {
+                LastEvent = $"[Vinyl] Playback refused: {res.FailureCode}";
+                RaiseStateChanged();
+            }
             return res;
         }
 
@@ -57,6 +62,11 @@ namespace AtomicWar.GodotApp
             var res = System.Stop();
             if (res.IsSuccess)
             {
+                RaiseStateChanged();
+            }
+            else
+            {
+                LastEvent = $"[Vinyl] Stop refused: {res.FailureCode}";
                 RaiseStateChanged();
             }
             return res;
@@ -68,11 +78,5 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            VinylMoraleSaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
     }
 }

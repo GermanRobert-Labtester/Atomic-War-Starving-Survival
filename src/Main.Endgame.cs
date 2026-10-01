@@ -29,6 +29,11 @@ namespace AtomicWar.GodotApp
             {
                 _endgame.RestoreState(save);
             }
+
+            // The chapter profile drives the Verdict reckoning timing/offset;
+            // apply it here too so a Continue that builds the endgame first
+            // still configures the verdict clock (idempotent).
+            _verdict?.ConfigureFromProfile(_endgame.GetCurrentProfile());
         }
 
         private void SaveEndgame()
@@ -55,13 +60,7 @@ namespace AtomicWar.GodotApp
 
         private void CloseChroniclePanel()
         {
-            if (_chroniclePanel != null)
-                _chroniclePanel.Visible = false;
-        }
-
-        private void FlushEndgameIfDirty()
-        {
-            if (_endgameDirty) SaveEndgame();
+            ClosePanelAnimated(_chroniclePanel);
         }
 
         /// <summary>
@@ -237,6 +236,14 @@ namespace AtomicWar.GodotApp
                     ForceExtinction = living == 0
                 };
                 var profile = _endgame.GetCurrentProfile();
+                // Project the profile-aware closure first so the journal records
+                // the ending that is about to be committed; the trigger then
+                // publishes the same ending through the single authority.
+                var projected = _endgame.EvaluateEndingWithProfile(ctx, profile);
+                _journal?.TryAddRawEntry(
+                    "campaign_ending_projected",
+                    $"Projected closure: {projected.title} ({projected.id}) on day {day} (chapter {_endgame.ChapterIndex}).",
+                    null!, System.Math.Max(1, day));
                 _endgame.TriggerEnding(ctx, profile);
                 _endgameDirty = true;
                 GD.Print($"[Main.Endgame] Endgame triggered on Day {day} (Chapter {_endgame.ChapterIndex}): {_endgame.System.State.selectedEndingId}");

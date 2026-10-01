@@ -35,6 +35,17 @@ Universal behaviour on every overlay surface:
 | Accessibility incl. focus/contrast | `godot --headless --path . -- --ui-accessibility-selftest` | **PASS** (5/5) |
 | Motion preference gate | `ReducedMotion` selftest check in the same suite | `ReducedMotion disables AccessibilityPresentation.MotionAllowed` PASS |
 
+> **T05 (2026-10-01) — first-hour stage panels covered.** The focusability
+> corpus now also audits the seven onboarding stage panels
+> (`WaterTreatmentPanel`, `PowerGridPanel`, `InventoryPanel`, `DutyRosterPanel`,
+> `DoseLedgerPanel`, `ResearchPanel`, `ExpeditionPanel`):
+> `[UiFocusability] panels audited=172 interactive=676 unreachable=0
+> panelsWithNoFocus=0`, and `--ui-accessibility-selftest` gained **Gate 6**
+> (`7/7 first-hour stage panels verified with a focusable entry and readable
+> state`, 6 gates total). `PowerGridPanel`, `ResearchPanel`, and
+> `ExpeditionPanel` were previously absent because they do not implement
+> `IBindablePanel`; the gate now includes them by name.
+
 ## Motion / comfort defaults (first run)
 
 `Assets/Ashfall.Core/Settings/UserSettingsData.cs` defaults: `WindowMode=1` (1920×1080 borderless),

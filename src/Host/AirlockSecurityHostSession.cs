@@ -38,41 +38,40 @@ namespace AtomicWar.GodotApp
         public ActionResult CycleDoor(AirlockDoorState newState)
         {
             var res = System.CycleDoor(newState);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Airlock blast door cycled to {newState}";
-            }
+            LastEvent = res.IsSuccess
+                ? $"Airlock blast door cycled to {newState}"
+                : $"Airlock door cycle refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
         public ActionResult VisitorArrives(string visitorId, string visitorType)
         {
             var res = System.VisitorArrives(visitorId, visitorType);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Visitor arrived at airlock: {visitorType} ({visitorId})";
-            }
+            LastEvent = res.IsSuccess
+                ? $"Visitor arrived at airlock: {visitorType} ({visitorId})"
+                : $"Visitor arrival refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
         public ActionResult ResolveIncident(VisitorDecision decision)
         {
             var res = System.ResolveIncident(decision);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Security incident resolved: {decision}";
-            }
+            LastEvent = res.IsSuccess
+                ? $"Security incident resolved: {decision}"
+                : $"Visitor decision refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
         public CommandResult RepairDoor(float amount)
         {
             var result = System.ExecuteRepairDoor(amount, expectedStateVersion: StateVersion, currentStateVersion: StateVersion);
-            if (result.IsSuccess)
-            {
-                LastEvent = $"Blast door repaired: {result.FailureCode}";
-                RaiseStateChanged();
-            }
+            LastEvent = result.IsSuccess
+                ? $"Blast door repaired (+{amount:F0})."
+                : $"Blast door repair refused: {result.FailureCode}";
+            RaiseStateChanged();
             return result;
         }
 
@@ -81,11 +80,5 @@ namespace AtomicWar.GodotApp
             System.TickDay(day);
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            AirlockSecuritySaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
     }
 }

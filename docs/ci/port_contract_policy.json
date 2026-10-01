@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "description": "Authoritative policy classifying all Core integration seams (REM-002 / Plan 36).",
-  "total_seams": 308,
+  "total_seams": 310,
   "ports": [
     {
       "class_name": "WeatherRouteGateCatalog",
@@ -2491,6 +2491,38 @@
       "owner": "narrative",
       "reason": "Integration seam in SurvivorLetterDeliverySystem.",
       "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "WorldIncidentSystem",
+      "method_name": "RegisterRange",
+      "file_path": "Assets/Ashfall.Core/Narrative/WorldIncidentSystem.cs",
+      "owner": "narrative",
+      "reason": "Integration seam in WorldIncidentSystem — WorldIncidentHostSession registers the authored events.json incident range.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "YearOfAshTimelineSystem",
+      "method_name": "BindYearTwoClimateCatalog",
+      "file_path": "Assets/Ashfall.Core/YearOfAsh/YearOfAshTimelineSystem.cs",
+      "owner": "year-two",
+      "reason": "Integration seam in YearOfAshTimelineSystem — YearOfAshHostSession binds the chapter-two climate catalog.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "ReckoningSystem",
+      "method_name": "ConfigureFromProfile",
+      "file_path": "Assets/Ashfall.Core/Verdict/ReckoningSystem.cs",
+      "owner": "verdict",
+      "reason": "Integration seam in ReckoningSystem — VerdictHostSession.ConfigureFromProfile applies the chapter profile's timing/offset to the reckoning clock.",
+      "classification": "HOST_REQUIRED"
+    },
+    {
+      "class_name": "ReckoningSystem",
+      "method_name": "ConfigureTiming",
+      "file_path": "Assets/Ashfall.Core/Verdict/ReckoningSystem.cs",
+      "owner": "verdict",
+      "reason": "Core-internal timing seam invoked by ReckoningSystem.ConfigureFromProfile; not called directly from the host.",
+      "classification": "LIVE_VIA_CORE"
     }
   ]
 }

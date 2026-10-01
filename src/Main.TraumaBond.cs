@@ -137,11 +137,6 @@ namespace AtomicWar.GodotApp
                 _traumaBondDirty = false;
         }
 
-        public void FlushTraumaBondIfDirty()
-        {
-            if (_traumaBondDirty) SaveTraumaBond();
-        }
-
         public void ResetTraumaBond()
         {
             _traumaBond = null;

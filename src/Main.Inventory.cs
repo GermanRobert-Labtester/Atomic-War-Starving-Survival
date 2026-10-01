@@ -270,12 +270,12 @@ namespace AtomicWar.GodotApp
 
         private void CloseInventoryOverlay()
         {
-            _inventoryOverlay.Visible = false;
+            ClosePanelAnimated(_inventoryOverlay);
         }
 
         private void CloseInventoryDetailPanel()
         {
-            _inventoryDetailPanel.Visible = false;
+            ClosePanelAnimated(_inventoryDetailPanel);
         }
 
     }

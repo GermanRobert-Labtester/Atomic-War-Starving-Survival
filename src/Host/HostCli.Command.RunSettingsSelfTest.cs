@@ -78,22 +78,22 @@ namespace AtomicWar.GodotApp
                     var originalNonKeys = InputMap.ActionGetEvents(resetAction).Where(e => e is not InputEventKey).ToArray();
                     var bindingDraft = new UserSettingsData();
                     bindingDraft.KeyBindings[resetAction] = new List<int> { (int)Key.F8 };
-                    KeyBindingApplicator.Apply(bindingDraft);
+                    KeyBindingApplicator.Apply(bindingDraft, safeMode: false);
                     Check(InputMap.ActionGetEvents(resetAction).OfType<InputEventKey>().Single().Keycode == Key.F8,
                         "keybinding override applies to the live map");
                     bindingDraft.KeyBindings.Remove(resetAction);
                     UserSettingsStore.PreviewAudio(bindingDraft);
                     Check(InputMap.ActionGetEvents(resetAction).OfType<InputEventKey>().Single().Keycode == Key.F8,
                         "reset draft and audio preview leave live binding unchanged before APPLY");
-                    KeyBindingApplicator.Apply(bindingDraft);
+                    KeyBindingApplicator.Apply(bindingDraft, safeMode: false);
                     Key defaultKey = AshfallInputActions.CanonicalDefaults[resetAction];
                     Check(InputMap.ActionGetEvents(resetAction).OfType<InputEventKey>().Single().Keycode == defaultKey,
                         "remove override then APPLY restores the canonical key");
                     bindingDraft.KeyBindings[resetAction] = new List<int> { (int)Key.F9 };
-                    KeyBindingApplicator.Apply(bindingDraft);
+                    KeyBindingApplicator.Apply(bindingDraft, safeMode: false);
                     bindingDraft.KeyBindings[resetAction].Clear();
-                    KeyBindingApplicator.Apply(bindingDraft);
-                    KeyBindingApplicator.Apply(bindingDraft);
+                    KeyBindingApplicator.Apply(bindingDraft, safeMode: false);
+                    KeyBindingApplicator.Apply(bindingDraft, safeMode: false);
                     Check(InputMap.ActionGetEvents(resetAction).OfType<InputEventKey>().Single().Keycode == defaultKey,
                         "empty override and repeated APPLY restore exactly one default key");
                     Check(InputMap.ActionGetEvents(resetAction).Where(e => e is not InputEventKey)
@@ -108,6 +108,13 @@ namespace AtomicWar.GodotApp
                         foreach (var inputEvent in action.Value) InputMap.ActionAddEvent(action.Key, inputEvent);
                     }
                 }
+
+                // Safe-mode is now an explicit parameter: this probe must not
+                // depend on live input state, and safe-mode must skip bindings.
+                var safeModeDraft = new UserSettingsData();
+                safeModeDraft.KeyBindings[AshfallInputActions.Help] = new List<int> { (int)Key.F8 };
+                Check(KeyBindingApplicator.Apply(safeModeDraft, safeMode: true) == 0,
+                    "safe-mode APPLY skips custom bindings deterministically");
 
                 // 2. Clone and Mutation
                 var modified = defaults.Clone();

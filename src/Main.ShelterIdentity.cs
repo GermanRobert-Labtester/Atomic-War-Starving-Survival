@@ -159,12 +159,6 @@ namespace AtomicWar.GodotApp
         public ShelterIdentityCensus GetShelterIdentityCensus() =>
             _shelterIdentity?.Census ?? default;
 
-        public void FlushShelterIdentityIfDirty()
-        {
-            if (_shelterIdentityDirty)
-                SaveShelterIdentity();
-        }
-
         public void ResetShelterIdentity()
         {
             if (_shelterIdentityDayBridgeWired && _campaignDay != null)

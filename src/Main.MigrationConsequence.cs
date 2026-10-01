@@ -136,11 +136,6 @@ namespace AtomicWar.GodotApp
                 _migrationConsequenceDirty = false;
         }
 
-        public void FlushMigrationConsequenceIfDirty()
-        {
-            if (_migrationConsequenceDirty) SaveMigrationConsequence();
-        }
-
         public void ResetMigrationConsequence()
         {
             _migrationConsequence = null;

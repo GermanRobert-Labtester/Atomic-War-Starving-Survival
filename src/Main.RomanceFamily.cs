@@ -137,14 +137,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public void FlushRomanceFamilyIfDirty()
-        {
-            if (_romanceFamilyDirty)
-            {
-                SaveRomanceFamily();
-            }
-        }
-
         public void ResetRomanceFamily()
         {
             _romanceFamily = null;

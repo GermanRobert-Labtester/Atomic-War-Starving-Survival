@@ -26,6 +26,13 @@ namespace AtomicWar.GodotApp
 
         public CookingCensus Census => System.GetCensus();
 
+        /// <summary>
+        /// Last cooking action sentence (success or refusal), surfaced by the
+        /// kitchen cooking strip. Follows the host `LastEvent` convention so a
+        /// refusal never leaves the previous success sentence on screen.
+        /// </summary>
+        public string LastEvent { get; private set; } = string.Empty;
+
         // ── Food freshness & spoilage (Plan 196 / FoodTypeSystem) ─────────
 
         private readonly Ashfall.Core.Kitchen.FoodTypeSystem _foodTypes = new Ashfall.Core.Kitchen.FoodTypeSystem();
@@ -137,7 +144,14 @@ namespace AtomicWar.GodotApp
             var res = System.StartCooking(recipeId, cookId, equipmentType, Source, currentMinute);
             if (res.IsSuccess)
             {
+                LastEvent = System.TryGetRecipe(recipeId, out var recipe) && recipe != null
+                    ? $"Cooking started: {recipe.displayName} → {recipe.outputQuantity}x {recipe.outputItemId} ({cookId})."
+                    : $"Cooking started: {recipeId} ({cookId}).";
                 RaiseStateChanged();
+            }
+            else
+            {
+                LastEvent = $"Cooking refused: {res.FailureCode}.";
             }
             return res;
         }
@@ -145,6 +159,9 @@ namespace AtomicWar.GodotApp
         public int ProgressCooking(float deltaMinutes)
         {
             int completed = System.ProgressCooking(deltaMinutes, Source);
+            LastEvent = completed > 0
+                ? $"Cooking completed: {completed} batch(es) delivered to the inventory."
+                : $"Cooking advanced {deltaMinutes:0} min.";
             if (completed > 0)
             {
                 RaiseStateChanged();
@@ -157,7 +174,12 @@ namespace AtomicWar.GodotApp
             var res = System.CancelCooking(operationId);
             if (res.IsSuccess)
             {
+                LastEvent = $"Cancelled cooking operation {operationId}.";
                 RaiseStateChanged();
+            }
+            else
+            {
+                LastEvent = $"Cooking cancel refused: {res.FailureCode}.";
             }
             return res;
         }

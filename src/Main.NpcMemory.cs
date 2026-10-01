@@ -45,14 +45,6 @@ namespace AtomicWar.GodotApp
             _npcMemory?.TickDailyDecay(day);
         }
 
-        public void FlushNpcMemoryIfDirty()
-        {
-            if (_npcMemoryDirty)
-            {
-                SaveNpcMemory();
-            }
-        }
-
         public void ResetNpcMemory()
         {
             _npcMemory = null;

@@ -19,7 +19,6 @@ namespace AtomicWar.GodotApp.UI
     {
         public event Action? OnClose;
 
-        private VBoxContainer _contentVBox = null!;
         private Label _lblStatsTitle;
         private VBoxContainer _statsList;
         private Label _lblAchievementsTitle;

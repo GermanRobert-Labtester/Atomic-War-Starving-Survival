@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 using Godot;
+using AtomicWar.GodotApp.Localization;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
@@ -67,11 +68,23 @@ namespace AtomicWar.GodotApp.UI
         {
             if (root == null) return;
 
-            if (root is Button button
-                && button.CustomMinimumSize.Y < DesignTheme.MinInteractiveHeight)
+            if (root is Button button)
             {
-                button.CustomMinimumSize = new Vector2(
-                    button.CustomMinimumSize.X, DesignTheme.MinInteractiveHeight);
+                if (button.CustomMinimumSize.Y < DesignTheme.MinInteractiveHeight)
+                {
+                    button.CustomMinimumSize = new Vector2(
+                        button.CustomMinimumSize.X, DesignTheme.MinInteractiveHeight);
+                }
+
+                // Disabled-control affordance (audit convention: a disabled control
+                // must never be silently unexplained). This is a *fallback* only —
+                // panels that know the real reason should author a tooltip, and an
+                // authored tooltip is never overwritten. Applied at the shared open
+                // seam so it also covers panels built with raw `new`.
+                if (button.Disabled && string.IsNullOrEmpty(button.TooltipText))
+                    button.TooltipText = AshfallLocalization.Tr(
+                        "ui.tooltip.prerequisites_unmet",
+                        "Currently unavailable — prerequisites not met.");
             }
             else if (root is LineEdit edit
                 && edit.CustomMinimumSize.Y < DesignTheme.MinInteractiveHeight)

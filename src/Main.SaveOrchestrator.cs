@@ -213,6 +213,7 @@ namespace AtomicWar.GodotApp
             SetupCombat();
             SetupNarrative(reloadEventAdapter: true);
             SetupEchoes();
+            SetupWorldIncidents();
             SetupEconomy();
             SetupSanitation();
             SetupDeepWell();
@@ -568,6 +569,7 @@ namespace AtomicWar.GodotApp
                 SaveCombat();
                 SaveNarrative();
                 SaveEchoes();
+                SaveWorldIncidents();
                 SaveEventAdapter();
                 SaveMedical();
                 SaveMedicalPipeline();

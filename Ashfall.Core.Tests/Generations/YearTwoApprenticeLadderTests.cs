@@ -101,6 +101,24 @@ namespace Ashfall.Core.Tests.Generations
         }
 
         [Fact]
+        public void AssignActingDesignation_QualifiesApprenticeAndClearsRetention()
+        {
+            var system = Create(out var skills);
+            system.RespondVocationalPair(Child(), "mentor", Mentorship, true, 501, 360);
+            system.NotifyMentorDeath("mentor");
+            var pairId = system.State.activePairs[0].pairId;
+
+            var result = system.AssignActingDesignation(pairId);
+
+            Assert.Equal(ActionResult.StatusKind.Success, result.Status);
+            Assert.Empty(system.State.activePairs);            // no unbounded retention
+            Assert.Contains("skill_rough_repairs", system.State.completedSkillIds);
+            Assert.True(skills.GetXp("child", "skill_rough_repairs") > 0f);
+            // The pair is gone, so a second assignment is refused.
+            Assert.Equal(ActionResult.StatusKind.Blocked, system.AssignActingDesignation(pairId).Status);
+        }
+
+        [Fact]
         public void AdultMentorDeathPreservesExistingLegacyInheritance()
         {
             var system = Create(out var skills);

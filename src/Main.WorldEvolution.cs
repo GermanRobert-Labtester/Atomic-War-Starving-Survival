@@ -53,14 +53,6 @@ namespace AtomicWar.GodotApp
             _worldEvolution.Tick(day, ActiveWorldFlags(), _world?.WastelandMap);
         }
 
-        public void FlushWorldEvolutionIfDirty()
-        {
-            if (_worldEvolutionDirty && _worldEvolution != null)
-            {
-                SaveWorldEvolution();
-            }
-        }
-
         public void ResetWorldEvolution()
         {
             _worldEvolution?.Reset();

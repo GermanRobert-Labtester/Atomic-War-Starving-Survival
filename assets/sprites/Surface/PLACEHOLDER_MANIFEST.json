@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
   "collection": "wasteland_surface_placeholders",
-  "status": "PLACEHOLDER \u2014 NOT FINAL ART",
+  "status": "FINAL \u2014 Blender headless 3D bake (AgX tonemap), placeholder watermark removed",
   "scope": "Intact wasteland surface, days 1-7 (no impact sites, craters, or mushroom clouds)",
-  "generator": "scripts/tools/generate-surface-placeholders.py",
-  "generated_by": "Pillow, programmatic line art",
+  "generator": "scripts/tools/bake-surface.py (with scripts/tools/blender-ocio-fix.sh)",
+  "generated_by": "Blender 5.2 headless Cycles bake (AgX) + cinematic grade (ImageMagick), 2026-09-30",
   "lighting_phases": [
     "day1_7",
     "dawn",
@@ -16,63 +16,63 @@
   "files": [
     {
       "file": "wasteland_sky_day1_7.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake + AgX (bake-surface.py) then cinematic grade (post-surface-grade.sh), 2026-09-30"
     },
     {
       "file": "wasteland_sky_dawn.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake + AgX (bake-surface.py) then cinematic grade (post-surface-grade.sh), 2026-09-30"
     },
     {
       "file": "wasteland_sky_dusk.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake + AgX (bake-surface.py) then cinematic grade (post-surface-grade.sh), 2026-09-30"
     },
     {
       "file": "wasteland_sky_night.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake + AgX (bake-surface.py) then cinematic grade (post-surface-grade.sh), 2026-09-30"
     },
     {
       "file": "surface_hatch_approach_day1_7.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake + AgX (bake-surface.py) then cinematic grade (post-surface-grade.sh), 2026-09-30"
     },
     {
       "file": "surface_hatch_approach_dawn.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake + AgX (bake-surface.py) then cinematic grade (post-surface-grade.sh), 2026-09-30"
     },
     {
       "file": "surface_hatch_approach_dusk.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake + AgX (bake-surface.py) then cinematic grade (post-surface-grade.sh), 2026-09-30"
     },
     {
       "file": "surface_hatch_approach_night.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake + AgX (bake-surface.py) then cinematic grade (post-surface-grade.sh), 2026-09-30"
     },
     {
       "file": "expedition_departure_day1_7.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake + AgX (bake-surface.py) then cinematic grade (post-surface-grade.sh), 2026-09-30"
     },
     {
       "file": "expedition_departure_dawn.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake + AgX (bake-surface.py) then cinematic grade (post-surface-grade.sh), 2026-09-30"
     },
     {
       "file": "expedition_departure_dusk.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake + AgX (bake-surface.py) then cinematic grade (post-surface-grade.sh), 2026-09-30"
     },
     {
       "file": "expedition_departure_night.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "Blender headless bake + AgX (bake-surface.py) then cinematic grade (post-surface-grade.sh), 2026-09-30"
     }
   ]
 }

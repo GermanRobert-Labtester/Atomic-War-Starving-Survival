@@ -272,3 +272,15 @@ _verify_*.csproj
 # addons/ziva_agent ships ~470MB of CEF/binaries incl. >100MB files that
 # GitHub rejects) — never commit; each machine installs its own tools.
 /addons/
+
+# Massive non-code directories & dumps (prevent AI/file watcher indexing thrash)
+/artifacts/asset-generation/
+/dist/
+/docs/plans/
+/docs/expansions/
+/Seal-steps/
+/piagentsplans/
+/Next-steps-plans/
+/C-integration-plans/
+/WORKTREE_OWNERSHIP.md
+/INTEGRATION_PLANS.md

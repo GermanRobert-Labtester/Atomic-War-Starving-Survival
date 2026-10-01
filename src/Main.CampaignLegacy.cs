@@ -69,12 +69,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public void FlushCampaignLegacyIfDirty()
-        {
-            if (!_campaignLegacyDirty || _campaignLegacy == null) return;
-            SaveCampaignLegacy();
-        }
-
         public void ResetCampaignLegacy()
         {
             _campaignLegacy?.Dispose();

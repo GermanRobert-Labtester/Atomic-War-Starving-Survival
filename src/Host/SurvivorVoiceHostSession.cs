@@ -184,12 +184,6 @@ namespace AtomicWar.GodotApp
             return File.Exists(path) ? File.ReadAllText(path) : "{}";
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            if (SurvivorVoiceSaveStore.TrySave(CaptureState()))
-                base.Save();
-        }
     }
 
     public static class SurvivorVoiceSaveStore

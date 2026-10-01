@@ -19,7 +19,7 @@ All tests operate under the canonical ASHFALL invariants:
 
 | Test Suite | Class / Runner | Test Count | Status | Key Coverage |
 |---|---|---|---|---|
-| **UI Presentation** | `Main.UiTests.Expeditions.cs` (`--expedition-panel-uitest`) | 4 exemplars | **PASS** | Auto-wrapping (WordSmart, 198 chars), badge rendering (`Gain`, `Cost`, `[CODEX]`, `[MAP]`, `[ONE-TIME]`), keyboard navigation focus, German translation |
+| **UI Presentation** | `Main.UiTests.Expeditions.cs` (`--expedition-panel-uitest`) | 4 exemplars | **PASS** | Auto-wrapping (WordSmart, 246 chars), badge rendering (`Gain`, `Cost`, `[CODEX]`, `[MAP]`, `[ONE-TIME]`), keyboard navigation focus, German translation |
 | **Localization Readiness** | `MicroLocationLocalizationTests.cs` | 4 tests | **PASS** | English baseline, German translations, fallback behavior, pseudo-localization expansion, gameplay ID/value invariance |
 | **Export & Packaging Parity** | `MicroLocationExportParityTests.cs` | 4 tests | **PASS** | `export_presets.cfg` packaging filter (`*.json, *.csv`), schema version 1, 100% item referential integrity, ID disjointness |
 | **Lifecycle Smoke Tests** | `MicroLocationLifecycleSmokeTests.cs` | 3 tests | **PASS** | 8-tick organic trace determinism, crashed-truck select-resolve-grant-deplete-save-restore lifecycle, duplicate resolution prevention |
@@ -34,7 +34,7 @@ All tests operate under the canonical ASHFALL invariants:
   1. `micro_roadside_memorial`: Moral choice, offerings, journal codex clue unlock badge `[CODEX]`.
   2. `micro_crashed_truck`: Cargo recovery (`Gain: Canned Food ×2`), cab inspection (guilt), one-time depletion badge `[ONE-TIME]`.
   3. `micro_observation_post`: Radio triangulation, cartography map discovery badge `[MAP]`.
-  4. `micro_frozen_bus`: Maximum text length description (198 characters), WordSmart autowrap verification, no text truncation or clipping.
+  4. `micro_frozen_bus`: long-text description (246 characters), WordSmart autowrap verification, no text truncation or clipping.
 - **Interaction Contracts**:
   - Modal min width 480px, auto-wrapped body text.
   - Context header: `DISCOVERY · MICRO-LOCATION` (no faction badge for anonymous discoveries).

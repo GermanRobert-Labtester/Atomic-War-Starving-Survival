@@ -20,7 +20,6 @@ namespace AtomicWar.GodotApp.UI
         private CombatHostSession _combat = null!;
         private bool _bound;
 
-        private VBoxContainer _contentVBox = null!;
         private VBoxContainer _battleInfo = null!;
         private VBoxContainer _tacticsData = null!;
         private VBoxContainer _casualtyData = null!;

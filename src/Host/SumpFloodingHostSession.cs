@@ -65,22 +65,20 @@ namespace AtomicWar.GodotApp
         public ActionResult AddNode(string nodeId, string displayName, float maxWaterLevelCm = 200f)
         {
             var res = System.AddNode(nodeId, displayName, maxWaterLevelCm);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Sump node registered: {displayName} (cap {maxWaterLevelCm}cm)";
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? $"Sump node registered: {displayName} (cap {maxWaterLevelCm}cm)"
+                : $"Node registration refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
         public ActionResult InstallPump(string nodeId)
         {
             var res = System.InstallPump(nodeId);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Sump pump installed at node {nodeId}";
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? $"Sump pump installed at node {nodeId}"
+                : $"Pump install refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
@@ -88,11 +86,10 @@ namespace AtomicWar.GodotApp
         public ActionResult AssignStratum(string nodeId, string stratumId)
         {
             var res = System.AssignStratum(nodeId, stratumId);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Drainage stratum {stratumId} bound to node {nodeId}";
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? $"Drainage stratum {stratumId} bound to node {nodeId}"
+                : $"Stratum binding refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
@@ -148,33 +145,30 @@ namespace AtomicWar.GodotApp
         public ActionResult SetNodePower(string nodeId, bool powered)
         {
             var res = System.SetNodePower(nodeId, powered);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Sump pump power set: node {nodeId} -> {(powered ? "ON" : "OFF")}";
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? $"Sump pump power set: node {nodeId} -> {(powered ? "ON" : "OFF")}"
+                : $"Sump power change refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
         public ActionResult AddMitigation(string nodeId, string mitigationType)
         {
             var res = System.AddMitigation(nodeId, mitigationType);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Sump mitigation added: {mitigationType} on node {nodeId}";
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? $"Sump mitigation added: {mitigationType} on node {nodeId}"
+                : $"Mitigation refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
         public ActionResult DrainNode(string nodeId)
         {
             var res = System.DrainNode(nodeId);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Sump node drained: {nodeId}";
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? $"Sump node drained: {nodeId}"
+                : $"Drain refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
@@ -184,12 +178,6 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            SumpFloodingSaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
     }
 
     /// <summary>

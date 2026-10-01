@@ -50,14 +50,6 @@ namespace AtomicWar.GodotApp
             _voluntaryRegister.Tick(day);
         }
 
-        public void FlushVoluntaryRegisterIfDirty()
-        {
-            if (_voluntaryRegisterDirty && _voluntaryRegister != null)
-            {
-                SaveVoluntaryRegister();
-            }
-        }
-
         public void ResetVoluntaryRegister()
         {
             _voluntaryRegister?.Reset();

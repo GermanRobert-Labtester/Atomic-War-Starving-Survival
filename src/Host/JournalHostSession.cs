@@ -31,21 +31,6 @@ namespace AtomicWar.GodotApp
             };
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            try
-            {
-                var save = System.CaptureState();
-                JournalSaveStore.Save(save);
-                base.Save();
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[Journal] save failed: " + e.Message);
-            }
-        }
-
         public void RestoreSave(JournalSave state)
         {
             if (state == null) return;

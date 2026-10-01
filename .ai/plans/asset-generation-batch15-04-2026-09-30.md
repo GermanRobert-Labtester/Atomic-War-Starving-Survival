@@ -1,0 +1,15 @@
+# ASHFALL batch 04 — fifteen new location scenes
+
+> **STATUS: APPROVED BY USER — GENERATION COMPLETE; STAGED, NOT RUNTIME INTEGRATED**
+
+Authorization: “Please start generating a batch of 15 game assets! Next ones!”
+
+Outcome: 15 catalog-anchored scene candidates from locations.json entries 31–45, distinct from the three prior batches. Existing sprites are 256×144, 545–565 bytes; direct and independent samples confirm geometric placeholders. Catalog-specific mini-specs are stored in prompts.json.
+
+Scope: built-in generation, local technical resize, size/opacity and visual candidate checks, labeled preview/report/provenance. No runtime import, wiring, replacements, authored data/source edits, tests or commit. Generation complete differs from integration.
+
+Exact owned files: artifacts/asset-generation/batch15-04-2026-09-30/scene_location_magnetic_anomaly_crater.png; artifacts/asset-generation/batch15-04-2026-09-30/scene_location_abandoned_convoy_yard.png; artifacts/asset-generation/batch15-04-2026-09-30/scene_location_acoustic_testing_facility.png; artifacts/asset-generation/batch15-04-2026-09-30/scene_location_substation_omega.png; artifacts/asset-generation/batch15-04-2026-09-30/scene_location_the_dead_hand_core.png; artifacts/asset-generation/batch15-04-2026-09-30/scene_location_lethe_water_treatment.png; artifacts/asset-generation/batch15-04-2026-09-30/scene_location_observatory_dome.png; artifacts/asset-generation/batch15-04-2026-09-30/scene_location_submerged_arcology.png; artifacts/asset-generation/batch15-04-2026-09-30/scene_location_concrete_batching_plant.png; artifacts/asset-generation/batch15-04-2026-09-30/scene_location_seed_vault_antechamber.png; artifacts/asset-generation/batch15-04-2026-09-30/scene_location_hospital_psych_wing.png; artifacts/asset-generation/batch15-04-2026-09-30/scene_location_mirror_factory.png; artifacts/asset-generation/batch15-04-2026-09-30/scene_location_radio_telescope_array.png; artifacts/asset-generation/batch15-04-2026-09-30/scene_location_ash_whale_carcass.png; artifacts/asset-generation/batch15-04-2026-09-30/scene_location_the_memory_vault.png; artifacts/asset-generation/batch15-04-2026-09-30/prompts.json; artifacts/asset-generation/batch15-04-2026-09-30/REPORT.md; artifacts/asset-generation/batch15-04-2026-09-30/preview.png; this plan; bounded state/claim entries. Scratch thumbnails under /tmp/ashfall-batch15-04.
+
+Verification: pre-generation Go JSON validator PASS 714 files / zero violations; ImageMagick dimensions and opacity; image review and independent candidate audit. Done: all 15 saved and checked, prompts and remaining art/runtime limits recorded.
+
+Result: 15 built-in initial generations, zero corrections; all 15 opaque 1280×720 PNGs saved with exact prompts/source provenance, labeled preview and REPORT.md. Root reviewed incoming full scenes and preview; independent auditor accepted the preview and three critical full-size scenes. Fine detail, lighting and runtime overlay readability remain promotion QA. No runtime integration, tests or commit.

@@ -89,11 +89,6 @@ namespace AtomicWar.GodotApp
                 _rationConflictDirty = false;
         }
 
-        public void FlushRationConflictIfDirty()
-        {
-            if (_rationConflictDirty) SaveRationConflict();
-        }
-
         public void ResetRationConflict()
         {
             _rationConflict = null;

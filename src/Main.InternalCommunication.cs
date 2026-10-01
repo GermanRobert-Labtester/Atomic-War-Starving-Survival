@@ -124,12 +124,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public void FlushInternalCommunicationIfDirty()
-        {
-            if (_internalCommunicationDirty)
-                SaveInternalCommunication();
-        }
-
         public void ResetInternalCommunication()
         {
             if (_internalCommunication != null)

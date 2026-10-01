@@ -39,7 +39,7 @@ micro_locations.json
 - Layout sizing: `SizeFlagsHorizontal = Control.SizeFlags.ExpandFill`
 - Container: Scrollable with `HorizontalScrollMode = ScrollMode.Disabled` and `VerticalScrollMode = ScrollMode.Auto`
 - Card dimensions: `CustomMinimumSize = Vector2(480, 0)`
-- **Longest Text Guarantee:** Certified against `micro_frozen_bus` (198 characters) without visual clipping or text overflow.
+- **Long-Text Guarantee:** Certified against `micro_frozen_bus` (246 characters) without visual clipping or text overflow.
 
 ### 2.3 Choice Badges & Semantic Colors
 
@@ -84,7 +84,7 @@ micro_locations.json
 
 ### Exemplar 4: Frozen Evacuation Bus (`micro_frozen_bus`)
 - **Title:** Frozen Evacuation Bus
-- **Description Length:** 198 characters (Longest production exemplar)
+- **Description Length:** 246 characters (long-text exemplar)
 - **Wrapping:** WordSmart autowrap across full width
 - **Choice 3 (`read_bus_tag`):**
   - Badges: `[CODEX] Clue Unlocked: Micro Frozen Bus Transit Tag`

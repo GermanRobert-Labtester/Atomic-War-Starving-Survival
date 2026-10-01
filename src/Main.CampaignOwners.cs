@@ -36,6 +36,11 @@ namespace AtomicWar.GodotApp
             // Plan B68 — geological pulse progression precedes production
             // (foundry sees the quake's interruption context the same day).
             _campaignDay.Register("seismic_geology", new SeismicGeologyDayOwner(this), phase: 1);
+            // Plan 38 rollback: the inventory custody baseline. Producers and
+            // consumers roll back their own pre-day state; this owner restores
+            // the container they mutate so a fail-closed retry cannot
+            // double-consume rations or double-add producer output.
+            _campaignDay.Register("inventory_custody", new InventoryDayOwner(this), phase: 1);
 
             // Phase 2: Production, Infrastructure & Survival Basics
             _campaignDay.Register("crafting_production", new CraftingProductionDayOwner(this), phase: 2);
@@ -659,7 +664,6 @@ namespace AtomicWar.GodotApp
         }
 
 
-
         /// <summary>Plan 167 underground tunnel network day owner (ownerId <c>tunnel_network</c>, phase 5).</summary>
         private sealed class TunnelNetworkDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
         {
@@ -788,7 +792,7 @@ namespace AtomicWar.GodotApp
             public void TickDay(int day, List<DayStateChangeEvent> events)
             {
                 _m.SetupSpiritualRitual();
-                _m.FlushSpiritualRitualIfDirty();
+
                 events.Add(new DayStateChangeEvent(
                     "spiritual_ritual_ticked", "spiritual_ritual", null, null,
                     _m.SpiritualRitual?.LastPerformedDay.Count ?? 0));
@@ -817,7 +821,7 @@ namespace AtomicWar.GodotApp
             {
                 _m.SetupTraumaBond();
                 _m.TickTraumaBond(day);
-                _m.FlushTraumaBondIfDirty();
+
                 events.Add(new DayStateChangeEvent(
                     "trauma_bond_ticked", "trauma_bond", null, null,
                     _m.TraumaBond?.GetTotalBondCount() ?? 0));
@@ -846,7 +850,7 @@ namespace AtomicWar.GodotApp
             {
                 _m.SetupMigrationConsequence();
                 _m.TickMigrationConsequence(day);
-                _m.FlushMigrationConsequenceIfDirty();
+
                 events.Add(new DayStateChangeEvent(
                     "migration_consequence_ticked", "migration_consequence", null, null,
                     _m.MigrationConsequence?.CaptureState().AppliedConsequenceKeys.Count ?? 0));
@@ -875,7 +879,7 @@ namespace AtomicWar.GodotApp
             {
                 _m.SetupCassettePlayback();
                 int acquired = _m.TickCassettePlayback();
-                _m.FlushCassettePlaybackIfDirty();
+
                 events.Add(new DayStateChangeEvent(
                     "cassette_playback_ticked", "cassette_playback", null, null, acquired));
             }
@@ -905,7 +909,7 @@ namespace AtomicWar.GodotApp
                 // A new ask must never be blocked by last week's issued response.
                 int week = _m._yearOfAsh?.Warlord?.State.totalWeeksAsked ?? 0;
                 _m.WarlordResponse?.PruneSuperseded(week);
-                _m.FlushWarlordResponseIfDirty();
+
                 events.Add(new DayStateChangeEvent(
                     "warlord_response_ticked", "warlord_response", null, null,
                     _m.WarlordResponse?.ResponseCount ?? 0));
@@ -934,7 +938,7 @@ namespace AtomicWar.GodotApp
             {
                 _m.SyncRationConflictFromRationing();
                 int ticked = _m.TickRationConflict();
-                _m.FlushRationConflictIfDirty();
+
                 events.Add(new DayStateChangeEvent(
                     "ration_conflict_ticked", "ration_conflict", null, null, ticked));
             }
@@ -961,7 +965,7 @@ namespace AtomicWar.GodotApp
             public void TickDay(int day, List<DayStateChangeEvent> events)
             {
                 _m.TickVoluntaryRegister(day);
-                _m.FlushVoluntaryRegisterIfDirty();
+
                 events.Add(new DayStateChangeEvent(
                     "voluntary_register_ticked", "voluntary_register", null, null, day));
             }
@@ -988,13 +992,12 @@ namespace AtomicWar.GodotApp
             public void TickDay(int day, List<DayStateChangeEvent> events)
             {
                 _m.TickWorldEvolution(day);
-                _m.FlushWorldEvolutionIfDirty();
+
                 int triggered = _m.WorldEvolution?.TriggeredEventIds.Count ?? 0;
                 events.Add(new DayStateChangeEvent(
                     "world_evolution_ticked", "world_evolution_events", null, null, triggered));
             }
         }
-
 
         /// <summary>Patrol radio bridge day owner (ownerId <c>patrol_radio_hooks</c>, phase 5).</summary>
         private sealed class PatrolRadioHooksDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
@@ -1018,7 +1021,7 @@ namespace AtomicWar.GodotApp
             {
                 _m.SetupPatrolRadio();
                 int delivered = _m.TickPatrolRadio();
-                _m.FlushPatrolRadioIfDirty();
+
                 events.Add(new DayStateChangeEvent(
                     "patrol_radio_hooks_ticked", "patrol_radio_hooks", null, null,
                     delivered));
@@ -1342,11 +1345,54 @@ namespace AtomicWar.GodotApp
 
         // ── Phase 2 Owners ───────────────────────────────────────────────
 
-        private sealed class StartingLevelRationsDayOwner : IDayAdvanceOwner
+        /// <summary>
+        /// Plan 38 rollback support — the inventory custody baseline. A
+        /// fail-closed day-advance retry must not leave the first attempt's
+        /// inventory mutations applied, so this owner snapshots the whole
+        /// container before the day and restores it on rollback. The
+        /// inventory-mutating owners implement <see cref="IPreDaySnapshotRestore"/> too,
+        /// so the retried tick re-creates the same delta on the restored baseline.
+        /// </summary>
+        private sealed class InventoryDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
         {
             private readonly Main _m;
+            private Ashfall.Core.Inventory.InventorySaveState? _snapshot;
+            public InventoryDayOwner(Main m) => _m = m;
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupInventory();
+                _snapshot = _m._inventory.Inventory.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot == null) return;
+                _m.SetupInventory();
+                _m._inventory.Inventory.RestoreState(_snapshot, id => _m._inventory.Catalog.Get(id));
+            }
+
+            public void TickDay(int day, List<DayStateChangeEvent> events)
+            {
+                // The survivors owner owns CurrentDay/DrainDayEvents; this owner
+                // exists only so a retry can roll the inventory baseline back.
+            }
+        }
+
+        private sealed class StartingLevelRationsDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
+        {
+            private readonly Main _m;
+            private Ashfall.Core.StartingLevel.StartingLevelSaveState? _snapshot;
             public StartingLevelRationsDayOwner(Main m) => _m = m;
-            public void CapturePreDaySnapshot(int day) { }
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupStartingLevel();
+                _snapshot = _m._startingLevel.System.CaptureState();
+            }
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._startingLevel.System.RestoreState(_snapshot);
+            }
             public void TickDay(int day, List<DayStateChangeEvent> events)
             {
                 _m.SetupStartingLevel();
@@ -1375,11 +1421,20 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        private sealed class CraftingProductionDayOwner : IDayAdvanceOwner
+        private sealed class CraftingProductionDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
         {
             private readonly Main _m;
+            private Ashfall.Core.Crafting.CraftingSystemSave? _snapshot;
             public CraftingProductionDayOwner(Main m) => _m = m;
-            public void CapturePreDaySnapshot(int day) { }
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupCrafting();
+                _snapshot = _m._crafting.CaptureSave();
+            }
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._crafting.RestoreSave(_snapshot);
+            }
             public void TickDay(int day, List<DayStateChangeEvent> events)
             {
                 _m.SetupCrafting();
@@ -1388,11 +1443,38 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        private sealed class GreenhouseFoundryDayOwner : IDayAdvanceOwner
+        private sealed class GreenhouseFoundryDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
         {
             private readonly Main _m;
+            private GreenhouseState? _greenhouseSnapshot;
+            private AgricultureState? _agricultureSnapshot;
+            private Ashfall.Core.Foundry.SilentFoundryState? _foundrySnapshot;
             public GreenhouseFoundryDayOwner(Main m) => _m = m;
-            public void CapturePreDaySnapshot(int day) { }
+
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupGreenhouse();
+                _greenhouseSnapshot = _m._greenhouse.CaptureSave();
+                _m.SetupAgriculture();
+                _agricultureSnapshot = _m._agriculture?.System.CaptureState();
+                _m.SetupSilentFoundry();
+                _foundrySnapshot = _m._silentFoundry.Engine.CaptureState();
+            }
+
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_greenhouseSnapshot != null)
+                {
+                    _m._greenhouse.System.RestoreState(_greenhouseSnapshot);
+                    if (_greenhouseSnapshot.apiculture != null)
+                        _m._greenhouse.Apiculture.RestoreState(_greenhouseSnapshot.apiculture);
+                }
+                if (_agricultureSnapshot != null)
+                    _m._agriculture?.System.RestoreState(_agricultureSnapshot);
+                if (_foundrySnapshot != null)
+                    _m._silentFoundry.Engine.RestoreState(_foundrySnapshot);
+            }
+
             public void TickDay(int day, List<DayStateChangeEvent> events)
             {
                 // Single growth authority: player GreenhouseHostSession (shared
@@ -1481,11 +1563,20 @@ namespace AtomicWar.GodotApp
         /// Plan B87 — closed-loop aquaponics daily ecology tick. Phase 2 so
         /// power/thermal query results for the day are already settled.
         /// </summary>
-        private sealed class AquaponicsDayOwner : IDayAdvanceOwner
+        private sealed class AquaponicsDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
         {
             private readonly Main _m;
+            private AquaponicsState? _snapshot;
             public AquaponicsDayOwner(Main m) => _m = m;
-            public void CapturePreDaySnapshot(int day) { }
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.SetupAquaponics();
+                _snapshot = _m._aquaponics?.CaptureState();
+            }
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m._aquaponics?.RestoreState(_snapshot);
+            }
             public void TickDay(int day, List<DayStateChangeEvent> events)
             {
                 _m.TickAquaponics(day);
@@ -2563,6 +2654,26 @@ namespace AtomicWar.GodotApp
                         echo.Id,
                         null,
                         day));
+                }
+
+                // World incidents (events.json) are the third fallback of the
+                // same decision stream: only when neither an arc nor an echo
+                // was selected does the incident engine draw for the day.
+                if (arc == null && echo == null)
+                {
+                    _m.SetupWorldIncidents();
+                    var incident = _m._worldIncidents?.SelectForDay(
+                        day,
+                        _m._campaignDay.Rng.Fork(Ashfall.Core.Random.CampaignStreamIds.WorldIncident, day, 0));
+                    if (incident != null)
+                    {
+                        events.Add(new DayStateChangeEvent(
+                            "world_incident_surfaced",
+                            "narrative_quests_verdict",
+                            incident.Id,
+                            null,
+                            day));
+                    }
                 }
 
                 events.Add(new DayStateChangeEvent("narrative_ticked", "narrative_quests_verdict", null, null, day));

@@ -177,14 +177,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public void FlushClothingWarmthIfDirty()
-        {
-            if (_clothingWarmthDirty)
-            {
-                SaveClothingWarmth();
-            }
-        }
-
         public void ResetClothingWarmth()
         {
             if (_survivors?.Needs != null)

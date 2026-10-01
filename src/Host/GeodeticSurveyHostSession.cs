@@ -45,11 +45,5 @@ namespace AtomicWar.GodotApp
             return res;
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            GeodeticSurveySaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
     }
 }

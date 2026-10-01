@@ -157,16 +157,6 @@ namespace AtomicWar.GodotApp
             RefreshExpansionsStatus();
         }
 
-        private void FlushWorldIfDirty()
-        {
-            if (_worldDirty) SaveWorld();
-        }
-
-        private void FlushCraftingIfDirty()
-        {
-            if (_craftingDirty) SaveCrafting();
-        }
-
         private void SetupWorld()
         {
             if (_world != null) return;
@@ -665,7 +655,7 @@ namespace AtomicWar.GodotApp
 
         private void CloseOpeningProtocolModal()
         {
-            _openingProtocolModal.Visible = false;
+            ClosePanelAnimated(_openingProtocolModal);
         }
 
         private void SetupGreenhouse()
@@ -708,7 +698,7 @@ namespace AtomicWar.GodotApp
 
         private void CloseGreenhousePanel()
         {
-            _greenhousePanel.Visible = false;
+            ClosePanelAnimated(_greenhousePanel);
         }
         private void CloseDeconAirlockPanel() { _deconAirlockPanel.Visible = false; }
         private void CloseGeodeticSurveyPanel() { _geodeticSurveyPanel.Visible = false; }
@@ -727,49 +717,48 @@ namespace AtomicWar.GodotApp
 
         private void CloseCraftingPanel()
         {
-            if (_craftingPanel != null) _craftingPanel.Visible = false;
+            ClosePanelAnimated(_craftingPanel);
         }
 
         private void CloseWorkshopPanel()
         {
-            if (_workshopPanel != null) _workshopPanel.Visible = false;
+            ClosePanelAnimated(_workshopPanel);
         }
 
         private void CloseRadioIntelligencePanel()
         {
-            if (_radioIntelligencePanel != null) _radioIntelligencePanel.Visible = false;
+            ClosePanelAnimated(_radioIntelligencePanel);
         }
 
         private void CloseShelterSocialPanel()
         {
-            if (_shelterSocialPanel != null) _shelterSocialPanel.Visible = false;
+            ClosePanelAnimated(_shelterSocialPanel);
         }
 
         private void CloseSubterraneanOperationsPanel()
         {
-            if (_subterraneanOperationsPanel != null) _subterraneanOperationsPanel.Visible = false;
+            ClosePanelAnimated(_subterraneanOperationsPanel);
         }
 
         private void ClosePharmaLabPanel()
         {
-            if (_pharmaLabPanel != null) _pharmaLabPanel.Visible = false;
+            ClosePanelAnimated(_pharmaLabPanel);
         }
 
         private void CloseWeatherPanel()
         {
-            _weatherPanel.Visible = false;
+            ClosePanelAnimated(_weatherPanel);
         }
 
         private void CloseWeatherDetailPanel()
         {
-            _weatherDetailPanel.Visible = false;
+            ClosePanelAnimated(_weatherDetailPanel);
         }
 
         private void CloseWeatherForecastPanel()
         {
-            _weatherForecastPanel.Visible = false;
+            ClosePanelAnimated(_weatherForecastPanel);
         }
-
 
         private void HandleDeconAirlockAction(string action, string param = "")
         {

@@ -196,11 +196,6 @@ namespace AtomicWar.GodotApp
                 _collectiblesDirty = false;
         }
 
-        private void FlushCollectiblesIfDirty()
-        {
-            if (_collectiblesDirty) SaveCollectibles();
-        }
-
         /// <summary>Marks collectible ledgers dirty after a discovery or unique claim.</summary>
         public void MarkCollectiblesDirty() => _collectiblesDirty = true;
     }

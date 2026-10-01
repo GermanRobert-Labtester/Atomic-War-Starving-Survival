@@ -93,6 +93,18 @@ namespace Ashfall.Core.Tests.Campaign
             }
         }
 
+        [Theory]
+        [InlineData("Day 1: Orientation", "Assess provisions.", "Day 1: Orientation — Assess provisions.")]
+        [InlineData("Day 1: Orientation", "", "Day 1: Orientation")]
+        [InlineData("", "Assess provisions.", "Assess provisions.")]
+        [InlineData("  ", "Assess provisions.", "Assess provisions.")]
+        [InlineData(null, null, "")]
+        public void SliceGoalText_JoinOmitsTheSeparatorWhenEitherSideIsEmpty(
+            string? title, string? body, string expected)
+        {
+            Assert.Equal(expected, SliceGoalText.Join(title, body));
+        }
+
         [Fact]
         public void SliceScenario_ComputeScenarioHash_ProducesDeterministicFingerprint()
         {

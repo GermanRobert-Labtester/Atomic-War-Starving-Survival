@@ -138,6 +138,9 @@ namespace Ashfall.Core.Tests
             Assert.Equal(360, ch1.readingDay);
             Assert.NotNull(ch1.epilogueReport);
             Assert.Equal(360, ch1.epilogueReport.daysSurvived);
+            // ChapterRecord carries the profile and the sealed/reading day.
+            Assert.Equal(sys.ProfileId, ch1.profileId);
+            Assert.Equal(360, ch1.sealedDay);
         }
 
         [Fact]
@@ -222,6 +225,9 @@ namespace Ashfall.Core.Tests
             Assert.Equal(1, newSys.Chapters[0].chapterIndex);
             Assert.Equal(360, newSys.Chapters[0].readingDay);
             Assert.Equal("Year One: The Long Ash", newSys.Chapters[0].chapterTitle);
+            // The profile + sealed day survive the save round-trip.
+            Assert.Equal(sys.ProfileId, newSys.Chapters[0].profileId);
+            Assert.Equal(360, newSys.Chapters[0].sealedDay);
         }
 
         [Fact]

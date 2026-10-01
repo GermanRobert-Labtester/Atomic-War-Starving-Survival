@@ -28,11 +28,5 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        private void FlushPrewarArchivesIfDirty()
-        {
-            if (_archiveDecryption62Dirty)
-                SavePrewarArchives();
-        }
-
     }
 }

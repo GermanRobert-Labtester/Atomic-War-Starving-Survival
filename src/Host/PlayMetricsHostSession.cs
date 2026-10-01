@@ -215,13 +215,6 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            if (PlayMetricsSaveStore.TrySave(CaptureState()))
-                base.Save();
-        }
-
         public override void Dispose()
         {
             if (Recorder != null)

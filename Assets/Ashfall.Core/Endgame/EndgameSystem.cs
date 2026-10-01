@@ -339,6 +339,12 @@ namespace Ashfall.Core.Endgame
                     readingDay = _state.epilogueReport.daysSurvived,
                     endingId = _state.selectedEndingId,
                     endingTitle = _state.epilogueReport.endingTitle,
+                    // sealedDay is the day the campaign officially sealed; fall back
+                    // to the reading day when the epilogue was never sealed.
+                    sealedDay = _state.epilogueReport.sealedDay > 0
+                        ? _state.epilogueReport.sealedDay
+                        : _state.epilogueReport.daysSurvived,
+                    profileId = _state.profileId,
                     epilogueReport = CloneReport(_state.epilogueReport)
                 };
                 _state.chapters.Add(record);
@@ -452,6 +458,8 @@ namespace Ashfall.Core.Endgame
                         readingDay = c.readingDay,
                         endingId = c.endingId,
                         endingTitle = c.endingTitle,
+                        sealedDay = c.sealedDay,
+                        profileId = c.profileId,
                         epilogueReport = c.epilogueReport != null ? CloneReport(c.epilogueReport) : null
                     });
                 }
@@ -487,6 +495,8 @@ namespace Ashfall.Core.Endgame
                         readingDay = c.readingDay,
                         endingId = c.endingId,
                         endingTitle = c.endingTitle,
+                        sealedDay = c.sealedDay,
+                        profileId = c.profileId,
                         epilogueReport = c.epilogueReport != null ? CloneReport(c.epilogueReport) : null
                     });
                 }

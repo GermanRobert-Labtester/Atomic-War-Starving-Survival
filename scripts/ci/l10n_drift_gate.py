@@ -15,6 +15,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 CSV_PATH = ROOT / "assets" / "l10n" / "strings.csv"
+ONBOARDING_CATALOG = ROOT / "Assets" / "Ashfall.Core" / "Onboarding" / "OnboardingJourney.cs"
 PILOTS = [
     ROOT / "src" / "UI" / "ResearchPanel.cs",
     ROOT / "src" / "UI" / "OnboardingHintPanel.cs",
@@ -24,6 +25,44 @@ PILOTS = [
 
 def placeholders(value: str) -> set[str]:
     return set(re.findall(r"\{([A-Za-z_][A-Za-z0-9_]*|\d+)(?::[^}]*)?\}", value))
+
+
+def stage_family_keys(pilot_source: str) -> set[str]:
+    """Derive the dynamically constructed onboarding stage keys from the
+    authoritative catalog instead of a hardcoded list that can silently drift
+    when a stage is added (the ae6e54387 "HINT: —" failure class).
+
+    ``OnboardingCatalog.Order``/``FirstHour`` build their title/objective keys
+    at runtime from each stage id; ``OnboardingHintPanel.StageHintCopy`` holds
+    the per-stage hint keys as literals. Both are enumerated here so a new
+    stage without its localization rows fails the gate.
+    """
+    catalog = ONBOARDING_CATALOG.read_text(encoding="utf-8")
+    stages = re.findall(
+        r"new\s+OnboardingStageDef\(\s*OnboardingStage\.([A-Za-z0-9_]+)",
+        catalog,
+    )
+    if not stages:
+        raise AssertionError(
+            "could not enumerate onboarding stages from "
+            f"{ONBOARDING_CATALOG.relative_to(ROOT)}"
+        )
+
+    def normalize(stage: str) -> str:
+        # Mirrors OnboardingHintPanel.StageLocalizationId.
+        if stage == "InventoryUse":
+            return "inventory_use"
+        if stage == "DayAdvance":
+            return "day_advance"
+        return stage.lower()
+
+    keys: set[str] = set()
+    for stage in stages:
+        stem = f"onboarding.{normalize(stage)}"
+        keys.add(f"{stem}.title")
+        keys.add(f"{stem}.objective")
+    keys.update(re.findall(r'"(onboarding\.hint\.[A-Za-z0-9_]+)"', pilot_source))
+    return keys
 
 
 def load_rows() -> dict[str, tuple[str, str]]:
@@ -49,41 +88,11 @@ def main() -> int:
                 source,
             )
         )
-        # Include the dynamically constructed stage-key family: every stage
-        # declared in OnboardingCatalog (legacy + first-hour) builds its
-        # title/objective keys at runtime, so the gate must enumerate them.
-        referenced.update(
-            {
-                "onboarding.protocol.title",
-                "onboarding.protocol.objective",
-                "onboarding.inspect.title",
-                "onboarding.inspect.objective",
-                "onboarding.rationing.title",
-                "onboarding.rationing.objective",
-                "onboarding.assignment.title",
-                "onboarding.assignment.objective",
-                "onboarding.weather.title",
-                "onboarding.weather.objective",
-                "onboarding.inventory_use.title",
-                "onboarding.inventory_use.objective",
-                "onboarding.day_advance.title",
-                "onboarding.day_advance.objective",
-                "onboarding.water.title",
-                "onboarding.water.objective",
-                "onboarding.power.title",
-                "onboarding.power.objective",
-                "onboarding.food.title",
-                "onboarding.food.objective",
-                "onboarding.duty.title",
-                "onboarding.duty.objective",
-                "onboarding.dose.title",
-                "onboarding.dose.objective",
-                "onboarding.research.title",
-                "onboarding.research.objective",
-                "onboarding.expedition.title",
-                "onboarding.expedition.objective",
-            }
-        )
+        # Include the dynamically constructed stage-key family. It is derived
+        # from the authoritative OnboardingCatalog (legacy + first-hour) and
+        # the panel's hint map, so adding a stage without its localization rows
+        # fails this gate instead of shipping the ae6e54387 "HINT: —" class.
+        referenced.update(stage_family_keys(source))
         missing = sorted(key for key in referenced if key not in rows)
         if missing:
             raise AssertionError("pilot keys missing from strings.csv: " + ", ".join(missing))

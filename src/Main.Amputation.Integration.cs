@@ -59,6 +59,11 @@ namespace AtomicWar.GodotApp
             _amputation.OnAmputationComplete += (survivorId, limb, condition) =>
             {
                 _journal?.TryAddRawEntry("amputation_performed", $"Emergency amputation performed on {survivorId}'s {limb} (State: {condition}).", null!, _simDay);
+                // T18a — a committed lower-limb loss is a permanent mobility
+                // fact: record the chronic limp so the accommodation decision
+                // becomes reachable. Upper-limb loss does not produce a limp.
+                if (limb == Ashfall.Core.Medical.LimbId.LeftLeg || limb == Ashfall.Core.Medical.LimbId.RightLeg)
+                    RecordChronicConditionFact(survivorId, ChronicConditionIds.Limp, "amputation");
             };
 
             _amputation.OnGangreneDeclared += (survivorId, limb) =>

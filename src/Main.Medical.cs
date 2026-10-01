@@ -49,11 +49,6 @@ namespace AtomicWar.GodotApp
                 (s.total_contagious > 0 ? "  ★ " + s.total_contagious + " CONTAGIOUS UNISOLATED" : "");
         }
 
-        private void FlushMedicalIfDirty()
-        {
-            if (_medicalDirty) SaveMedical();
-        }
-
         private void SetupMedical()
         {
             if (_medical != null) return;
@@ -653,7 +648,7 @@ namespace AtomicWar.GodotApp
 
         private void CloseMedicalPanel()
         {
-            _medicalPanel.Visible = false;
+            ClosePanelAnimated(_medicalPanel);
         }
 
     }

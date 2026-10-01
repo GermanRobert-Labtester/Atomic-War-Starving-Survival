@@ -36,33 +36,30 @@ namespace AtomicWar.GodotApp
         public ActionResult Enqueue(string survivorId, string gearId, float surfaceContamination)
         {
             var res = System.Enqueue(survivorId, gearId, surfaceContamination);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Decon case queued: {survivorId} ({gearId})";
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? $"Decon case queued: {survivorId} ({gearId})"
+                : $"Decon queue refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
         public ActionResult ProcessQueue()
         {
             var res = System.ProcessQueue();
-            if (res.IsSuccess)
-            {
-                LastEvent = "Decon queue processed";
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? "Decon queue processed"
+                : $"Decon process refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
         public ActionResult CompleteCycle(bool safeRelease)
         {
             var res = System.CompleteCycle(safeRelease);
-            if (res.IsSuccess)
-            {
-                LastEvent = safeRelease ? "Decon cycle completed (safe release)" : "Decon cycle completed (unsafe release)";
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? (safeRelease ? "Decon cycle completed (safe release)" : "Decon cycle completed (unsafe release)")
+                : $"Decon cycle refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
@@ -72,12 +69,6 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            DecontaminationSaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
     }
 
     /// <summary>

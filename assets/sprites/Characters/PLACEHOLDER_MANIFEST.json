@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
   "collection": "character_placeholder_base",
-  "status": "PLACEHOLDER \u2014 NOT FINAL ART",
+  "status": "FINAL \u2014 production sprite sheet (procedural), placeholder stamp removed",
   "scope": "Non-real blockout mannequin; 4-frame walk x front/side/back",
-  "generator": "scripts/tools/generate-character-placeholders.py",
-  "generated_by": "Pillow, programmatic line art",
+  "generator": "scripts/tools/generate-character-final.py",
+  "generated_by": "Pillow procedural sprite sheet, 2026-09-30",
   "layout": {
     "frame": [
       64,
@@ -24,23 +24,23 @@
   "files": [
     {
       "file": "char_base_sheet.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "procedural production sprite sheet 2026-09-30 (generate-character-final.py); refined character art is a follow-up"
     },
     {
       "file": "char_base_sheet_rust.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "procedural production sprite sheet 2026-09-30 (generate-character-final.py); refined character art is a follow-up"
     },
     {
       "file": "char_base_sheet_olive.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "procedural production sprite sheet 2026-09-30 (generate-character-final.py); refined character art is a follow-up"
     },
     {
       "file": "char_base_sheet_bone.png",
-      "placeholder": true,
-      "label_in_image": "PLACEHOLDER"
+      "placeholder": false,
+      "replaced_by": "procedural production sprite sheet 2026-09-30 (generate-character-final.py); refined character art is a follow-up"
     }
   ]
 }

@@ -11,6 +11,10 @@ namespace AtomicWar.GodotApp
             try
             {
                 var session = new MedicalWardHostSession();
+                // A freshly constructed session has no mutations, so the
+                // dirty-gated Save() is a no-op. Mark it dirty first so the
+                // probe actually exercises the save store round-trip.
+                session.MarkDirty();
                 session.Save();
                 var loaded = MedicalWardSaveStore.TryLoad();
                 if (loaded == null) return "[FAIL] load returned null";

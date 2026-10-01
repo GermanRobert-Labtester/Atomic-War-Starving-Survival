@@ -96,11 +96,6 @@ namespace AtomicWar.GodotApp
             CaptureSection("sanitation", SanitationSaveStore.TryCapturePersisted(_sanitation.CaptureSave()));
         }
 
-        private void FlushSanitationIfDirty()
-        {
-            if (_sanitationDirty) SaveSanitation();
-        }
-
         // ── Panels (Plan 210 Phase 9): created hidden; opened via the
         //    expanded-panel route. Presentation only.
         private UI.SanitationPanel? _sanitationPanel;

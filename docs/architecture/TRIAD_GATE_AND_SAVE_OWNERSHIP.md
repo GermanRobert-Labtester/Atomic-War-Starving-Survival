@@ -1,7 +1,21 @@
 # ASHFALL — Triad Drift Gate & Subsystem Save Ownership
 
-**Date:** 2026-09-10
-**Scope:** Documents the architectural rationale, save store bindings, and domain ownership for the `SetupXxx` / `SaveXxx` / `FlushXxxIfDirty` contract. The authoritative default-suite gate is `Ashfall.Core.Tests.MainTriadDriftGateTests`; the legacy shell scan remains supplementary.
+**Date:** 2026-09-10 (updated 2026-10-01 — `FlushXxxIfDirty` retired)
+**Scope:** Documents the architectural rationale, save store bindings, and domain ownership for the `SetupXxx` / `SaveXxx` contract. The authoritative default-suite gate is `Ashfall.Core.Tests.MainTriadDriftGateTests`; the legacy shell scan remains supplementary.
+
+> **2026-10-01 update — `FlushXxxIfDirty` retired.** The per-frame `Flush*IfDirty()`
+> block was removed from `Main.Application.cs` by the `31e2e6fa6` checkpoint
+> (now enforced by `MainTriadDriftGateTests.ProcessLoop_DoesNotRunPerFrameFlushes`),
+> and the remaining 119 dead + 12 redundant `Flush*IfDirty()` methods and their
+> call sites were deleted on 2026-10-01 (`DEBT-DEAD-FLUSH-IFDIRTY-METHODS`
+> RETIRED). The reason: `SaveXxx()` only stages a section into the in-memory
+> `_sectionPayloads` buffer, and `SaveAll()` clears and recaptures every section
+> from live state, so a flush serializes a payload that the next `SaveAll` replaces.
+> Durability now has exactly two entry points: the ordinary `SaveAll()` and
+> `FlushDirtyStoresForDayAdvance()` → `SaveAll(playCue: false)` before the
+> briefing modal. Any historical “Save Trigger: … on daily rollover flush”
+> line below should be read as “captured by `SaveAll`”. Dirty flags remain as
+> cheap change markers but no longer gate a write.
 
 ---
 
@@ -12,8 +26,10 @@ In the ASHFALL Godot host architecture ([`src/Main.cs`](../../src/Main.cs) and i
 ```
 SetupXxx()          ── Constructs & wires the domain host session and dependencies
 SaveXxx()           ── Captures state snapshot into a versioned, checksummed SaveStore
-FlushXxxIfDirty()   ── (Optional) Performs deferred write-to-disk when dirty flags trip
 ```
+
+> **Retired:** the former optional third leg `FlushXxxIfDirty()` (deferred
+> write-to-disk on a dirty flag) was removed 2026-10-01; see the update note above.
 
 ### The Declarative Save Section Authority (`Invariant H7`)
 If a developer implements a `SetupXxx()` method without a corresponding `SaveXxx()` method declared in [`Assets/Ashfall.Core/Save/SaveSectionRegistry.cs`](../../Assets/Ashfall.Core/Save/SaveSectionRegistry.cs), that subsystem will operate during runtime but silently drop its state upon save or shutdown.
@@ -22,7 +38,9 @@ The default xUnit gate runs in the canonical test suite and enforces that:
 1. Every save section declared in `SaveSectionRegistry.cs` has a matching `SaveXxx()` method in `src/Main*.cs`.
 2. Every declared save section requiring setup has its matching `SetupXxx()` method in `src/Main*.cs`.
 3. Every registered save method is reachable from `SaveAll()`, including composite `SaveAllExpandedShelterSystems()` and `PersistPlans*()` delegates.
-4. Flush methods contain a dirty/save guard or a documented transient/composite disposition.
+4. Any remaining `Flush*` helper (e.g. `FlushDirtyStoresForDayAdvance`) contains a
+   dirty/save guard or a documented transient/composite disposition. The optional
+   `FlushXxxIfDirty` triad leg was retired 2026-10-01.
 5. The lifecycle and architecture-citation files remain present.
 
 The gate is deliberately source-based rather than line-number-based. It

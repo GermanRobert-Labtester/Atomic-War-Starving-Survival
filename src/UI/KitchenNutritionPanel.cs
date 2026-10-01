@@ -28,6 +28,15 @@ namespace AtomicWar.GodotApp.UI
         private VBoxContainer _serviceLogContainer = null!;
         private Label _eventLogLabel = null!;
 
+        // Plan 136 cooking authority (recipes_cooking.json) bound as a cooking
+        // strip alongside the nutrition prep/serve path. The strip is the only
+        // player-operable surface for CookingSystem.StartCooking/Progress/Cancel;
+        // meal serving keeps routing through KitchenNutritionSystem.
+        private VBoxContainer _cookingStrip = null!;
+        private CookingHostSession? _cooking;
+        private string _selectedCookingRecipeId = string.Empty;
+        private string _cookingFeedbackLine = string.Empty;
+
         private KitchenNutritionHostSession? _host;
         private string _selectedRecipeId = "recipe_fungal_stew";
 
@@ -43,6 +52,22 @@ namespace AtomicWar.GodotApp.UI
 
         public bool IsBound => _host != null;
 
+        /// <summary>True when the live Plan 136 cooking authority is bound to the strip.</summary>
+        public bool IsCookingBound => _cooking != null;
+
+        /// <summary>Recipe id the cooking strip will start; selected by the chip buttons.</summary>
+        public string SelectedCookingRecipeId
+        {
+            get => _selectedCookingRecipeId;
+            set { _selectedCookingRecipeId = value; RefreshView(); }
+        }
+
+        /// <summary>Last cooking-strip feedback sentence (success or refusal), or empty.</summary>
+        public string LastCookingFeedback => _cookingFeedbackLine;
+
+        /// <summary>Active CookingSystem operations owned by the bound authority.</summary>
+        public int ActiveCookingOperationCount => _cooking?.Census.ActiveOperationsCount ?? 0;
+
         public void Bind(KitchenNutritionHostSession session)
         {
             if (_host != null)
@@ -57,6 +82,41 @@ namespace AtomicWar.GodotApp.UI
             RefreshView();
         }
 
+        /// <summary>
+        /// Binds the live cooking authority to the kitchen panel's cooking strip.
+        /// Idempotent and re-bind safe: drops the previous subscription first.
+        /// </summary>
+        public void BindCooking(CookingHostSession? session)
+        {
+            if (_cooking != null)
+            {
+                _cooking.StateChanged -= RefreshView;
+            }
+            _cooking = session;
+            if (_cooking != null)
+            {
+                _cooking.StateChanged += RefreshView;
+                if (string.IsNullOrEmpty(_selectedCookingRecipeId))
+                {
+                    var first = _cooking.System.Recipes
+                        .OrderBy(r => r.id, StringComparer.Ordinal)
+                        .FirstOrDefault();
+                    if (first != null) _selectedCookingRecipeId = first.id;
+                }
+            }
+            RefreshView();
+        }
+
+        /// <summary>Detaches only the cooking strip; the nutrition session binding is untouched.</summary>
+        public void UnbindCooking()
+        {
+            if (_cooking != null)
+            {
+                _cooking.StateChanged -= RefreshView;
+                _cooking = null;
+            }
+        }
+
         public void Unbind()
         {
             if (_host != null)
@@ -64,6 +124,7 @@ namespace AtomicWar.GodotApp.UI
                 _host.StateChanged -= RefreshView;
                 _host = null;
             }
+            UnbindCooking();
         }
 
 
@@ -86,6 +147,7 @@ namespace AtomicWar.GodotApp.UI
 
             _statusRail = _shell.SetStatusRail();
             _statusRail.AddCard("prep_jobs", "ACTIVE PREP", "0", AshfallMetricCard.Criticality.Normal, minWidth: 120);
+            _statusRail.AddCard("cook_ops", "COOK OPS", "0", AshfallMetricCard.Criticality.Normal, minWidth: 120);
             _statusRail.AddCard("cooked", "MEALS COOKED", "0", AshfallMetricCard.Criticality.Normal, minWidth: 120);
             _statusRail.AddCard("served", "MEALS SERVED", "0", AshfallMetricCard.Criticality.Normal, minWidth: 120);
             _statusRail.AddCard("morale", "NUTRITION BUFF", "+0", AshfallMetricCard.Criticality.Normal, minWidth: 130);
@@ -130,6 +192,12 @@ namespace AtomicWar.GodotApp.UI
             var centerVbox = new VBoxContainer();
             centerVbox.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
             centerMargin.AddChild(centerVbox);
+            centerVbox.AddChild(AshfallUiHelpers.MakeSectionHeader("GALLEY COOKING STATION — RAW INGREDIENTS TO COOKED MEALS"));
+            _cookingStrip = new VBoxContainer();
+            _cookingStrip.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
+            _cookingStrip.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            centerVbox.AddChild(_cookingStrip);
+            centerVbox.AddChild(AshfallUiHelpers.MakeSeparator());
             centerVbox.AddChild(AshfallUiHelpers.MakeSectionHeader("MEAL PREPARATION & DISPATCH"));
             var centerScroll = new ScrollContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _prepStation = new VBoxContainer();
@@ -181,6 +249,7 @@ namespace AtomicWar.GodotApp.UI
             AshfallUiHelpers.EmptyChildren(_recipeList);
             AshfallUiHelpers.EmptyChildren(_prepStation);
             AshfallUiHelpers.EmptyChildren(_serviceLogContainer);
+            RefreshCookingStrip();
 
             if (_host == null || _statusRail == null)
             {
@@ -372,6 +441,198 @@ namespace AtomicWar.GodotApp.UI
                     _serviceLogContainer.AddChild(AshfallUiHelpers.MakeMono($"Day {serv.day}: {serv.recipeId} -> {serv.survivorId} (+{serv.moraleBonus} morale)"));
                 }
             }
+        }
+
+        /// <summary>
+        /// Renders the Plan 136 cooking station: the authored recipe roster from
+        /// the live <see cref="CookingSystem"/> plus start/advance/cancel verbs.
+        /// The strip is the player-operable link the food pipeline was missing;
+        /// it consumes real inventory ingredients and delivers real cooked items,
+        /// while the nutrition prep/serve path above is preserved unchanged.
+        /// </summary>
+        private void RefreshCookingStrip()
+        {
+            if (_cookingStrip == null || !GodotObject.IsInstanceValid(_cookingStrip)) return;
+            AshfallUiHelpers.EmptyChildren(_cookingStrip);
+
+            if (_cooking == null)
+            {
+                _statusRail?.Set("cook_ops", "0", AshfallMetricCard.Criticality.Normal);
+                _cookingStrip.AddChild(AshfallUiHelpers.MakeEmptyStateLabel(
+                    "Cooking authority not bound", "start a campaign to load recipes_cooking.json"));
+                return;
+            }
+
+            var recipes = _cooking.System.Recipes
+                .OrderBy(r => r.id, StringComparer.Ordinal)
+                .ToList();
+            if (recipes.Count == 0)
+            {
+                _statusRail?.Set("cook_ops", "0", AshfallMetricCard.Criticality.Warn);
+                _cookingStrip.AddChild(AshfallUiHelpers.MakeEmptyStateLabel(
+                    "No authored cooking recipes loaded", "recipes_cooking.json did not bind"));
+                return;
+            }
+
+            if (string.IsNullOrEmpty(_selectedCookingRecipeId)
+                || !recipes.Any(r => r.id == _selectedCookingRecipeId))
+            {
+                _selectedCookingRecipeId = recipes[0].id;
+            }
+            var selected = recipes.First(r => r.id == _selectedCookingRecipeId);
+
+            int activeOps = _cooking.System.State.activeOperations.Count;
+            _statusRail?.Set("cook_ops", activeOps.ToString(),
+                activeOps > 0 ? AshfallMetricCard.Criticality.Caution : AshfallMetricCard.Criticality.Normal);
+
+            // ── Recipe roster (bounded, wrapping chip strip) ──
+            var chipScroll = new ScrollContainer
+            {
+                CustomMinimumSize = new Vector2(0, 76),
+                SizeFlagsHorizontal = SizeFlags.ExpandFill,
+                HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled,
+                VerticalScrollMode = ScrollContainer.ScrollMode.Auto
+            };
+            var chipFlow = new HFlowContainer();
+            chipFlow.AddThemeConstantOverride("h_separation", DesignTheme.SpacingXs);
+            chipFlow.AddThemeConstantOverride("v_separation", DesignTheme.SpacingXs);
+            chipFlow.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            chipScroll.AddChild(chipFlow);
+            foreach (var recipe in recipes)
+            {
+                string recipeId = recipe.id;
+                bool isSelected = recipeId == selected.id;
+                var chip = AshfallUiHelpers.MakeButton(
+                    isSelected ? $"[{recipe.displayName}]" : recipe.displayName,
+                    () => { _selectedCookingRecipeId = recipeId; RefreshView(); });
+                chip.TooltipText = $"{recipe.id} · equipment: {recipe.requiredEquipment} · {recipe.cookTimeMinutes:0} min";
+                chipFlow.AddChild(chip);
+            }
+            _cookingStrip.AddChild(chipScroll);
+
+            // ── Selected recipe truth ──
+            string inputsText = selected.inputItems != null && selected.inputItems.Count > 0
+                ? string.Join(", ", selected.inputItems.Select(i => $"{i.quantity}x {i.itemId}"))
+                : "no ingredients";
+            _cookingStrip.AddChild(AshfallUiHelpers.MakeMono(
+                $"SELECTED: {selected.displayName} [{selected.id}] · {selected.cookTimeMinutes:0} min · {selected.requiredEquipment}"));
+            _cookingStrip.AddChild(AshfallUiHelpers.MakeSmall(
+                $"REQUIRES: {inputsText}  →  {selected.outputQuantity}x {selected.outputItemId}"));
+            _cookingStrip.AddChild(AshfallUiHelpers.MakeSmall(
+                $"EFFECT: −{selected.radiationRemoval * 100f:0}% radiation · +{selected.moraleBonus:0} morale · nutrition {selected.nutritionValue:0}"));
+            bool hasInputs = _cooking.Source?.HasIngredients(selected.inputItems) ?? false;
+            _cookingStrip.AddChild(AshfallUiHelpers.MakeDataRow(
+                "Ingredients on hand", hasInputs ? "READY" : "MISSING",
+                AshfallUiHelpers.ToColor(hasInputs ? DesignTheme.Lethe : DesignTheme.Hot)));
+
+            // ── Verbs ──
+            var actions = AshfallUiHelpers.MakeActionBar();
+            actions.AddChild(AshfallUiHelpers.MakeButton("START COOK", () =>
+            {
+                string cookId = DefaultSurvivorResolver?.Invoke() ?? "cook_shelter";
+                StartSelectedCooking(cookId);
+            }));
+            actions.AddChild(AshfallUiHelpers.MakeButton("ADVANCE 30 MIN", () => AdvanceCooking(30f)));
+            _cookingStrip.AddChild(actions);
+
+            // ── Active operations ──
+            if (activeOps == 0)
+            {
+                _cookingStrip.AddChild(AshfallUiHelpers.MakeMetadata("No active cooking operations."));
+            }
+            else
+            {
+                foreach (var op in _cooking.System.State.activeOperations
+                             .OrderBy(o => o.operationId, StringComparer.Ordinal))
+                {
+                    string name = _cooking.System.TryGetRecipe(op.recipeId, out var opRecipe) && opRecipe != null
+                        ? opRecipe.displayName
+                        : op.recipeId;
+                    float pct = op.totalMinutesRequired > 0f
+                        ? Mathf.Clamp(op.progressMinutes / op.totalMinutesRequired, 0f, 1f)
+                        : 0f;
+                    var row = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
+                    var progress = AshfallUiHelpers.MakeMono(
+                        $"{name} · {op.progressMinutes:0}/{op.totalMinutesRequired:0} min ({pct * 100f:0}%) · cook {op.assignedCookId}");
+                    progress.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+                    row.AddChild(progress);
+                    string opId = op.operationId;
+                    row.AddChild(AshfallUiHelpers.MakeButton("CANCEL", () => CancelCooking(opId)));
+                    _cookingStrip.AddChild(row);
+                }
+            }
+
+            _cookingStrip.AddChild(AshfallUiHelpers.MakeMetadata(
+                string.IsNullOrEmpty(_cookingFeedbackLine) ? "No cooking action yet." : _cookingFeedbackLine));
+        }
+
+        /// <summary>
+        /// Starts the selected authored recipe through the bound
+        /// <see cref="CookingHostSession"/> (inventory ingredients in, cooked items out).
+        /// </summary>
+        public ActionResult StartSelectedCooking(string cookId)
+        {
+            if (_cooking == null)
+            {
+                _cookingFeedbackLine = "Cannot cook: cooking authority not bound.";
+                RefreshView();
+                return ActionResult.Blocked("no_cooking_session", "cooking.session_offline");
+            }
+            if (!_cooking.System.TryGetRecipe(_selectedCookingRecipeId, out var recipe) || recipe == null)
+            {
+                _cookingFeedbackLine = $"Cannot cook: unknown recipe {_selectedCookingRecipeId}.";
+                RefreshView();
+                return ActionResult.Blocked("unknown_recipe", "cooking.unknown_recipe");
+            }
+
+            var result = _cooking.StartCooking(recipe.id, cookId, recipe.requiredEquipment);
+            _cookingFeedbackLine = string.IsNullOrEmpty(_cooking.LastEvent)
+                ? (result.IsSuccess
+                    ? $"Cooking started: {recipe.displayName} ({cookId})."
+                    : $"Cannot cook: {result.FailureCode}.")
+                : _cooking.LastEvent;
+            RefreshView();
+            return result;
+        }
+
+        /// <summary>Advances every active cooking operation by <paramref name="minutes"/>.</summary>
+        public int AdvanceCooking(float minutes)
+        {
+            if (_cooking == null)
+            {
+                _cookingFeedbackLine = "Cannot advance cooking: authority not bound.";
+                RefreshView();
+                return 0;
+            }
+
+            int completed = _cooking.ProgressCooking(minutes);
+            _cookingFeedbackLine = string.IsNullOrEmpty(_cooking.LastEvent)
+                ? (completed > 0
+                    ? $"Completed {completed} cooking batch(es), delivered to the inventory."
+                    : $"Cooking advanced {minutes:0} min.")
+                : _cooking.LastEvent;
+            RefreshView();
+            return completed;
+        }
+
+        /// <summary>Cancels one active cooking operation by id.</summary>
+        public ActionResult CancelCooking(string operationId)
+        {
+            if (_cooking == null)
+            {
+                _cookingFeedbackLine = "Cannot cancel: cooking authority not bound.";
+                RefreshView();
+                return ActionResult.Blocked("no_cooking_session", "cooking.session_offline");
+            }
+
+            var result = _cooking.CancelCooking(operationId);
+            _cookingFeedbackLine = string.IsNullOrEmpty(_cooking.LastEvent)
+                ? (result.IsSuccess
+                    ? $"Cancelled cooking operation {operationId}."
+                    : $"Cannot cancel: {result.FailureCode}.")
+                : _cooking.LastEvent;
+            RefreshView();
+            return result;
         }
 
         public override void _UnhandledInput(InputEvent @event)

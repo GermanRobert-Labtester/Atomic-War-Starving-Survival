@@ -1,0 +1,15 @@
+# ASHFALL batch 03 — fifteen location scenes
+
+> **STATUS: APPROVED BY USER — GENERATION COMPLETE; STAGED, NOT RUNTIME INTEGRATED**
+
+Outcome: all 15 opaque 1280×720 PNGs saved with provenance and labeled preview. Two additional built-in edits removed the deep-core signature and corrected the plane camp nose-down orientation. Size/opacity checks pass 15/15; visual candidate review recorded in REPORT.md. Runtime integration was not attempted, so this plan is not marked FULLY INTEGRATED.
+
+Authorization: “Please start generating a batch of 15 game assets! Next ones!”
+
+Outcome: fifteen distinct location-scene candidates from locations.json entries 16–30, extending the completed batches without duplication. Current corresponding location sprites are 256×144 and 542–566 bytes; flooded subway sprite visually inspected as a geometric placeholder. Authored descriptions supply scene identity and constraints.
+
+Scope: built-in image_gen; save 15 opaque 1280×720 PNGs, prompt provenance, preview and report; technical and visual candidate review. No runtime integration, replacement of live assets, authored data/source changes, tests or commit.
+
+Exact owned output files: artifacts/asset-generation/batch15-03-2026-09-30/scene_location_flooded_subway_depot.png; artifacts/asset-generation/batch15-03-2026-09-30/scene_location_sub_level_4_transit.png; artifacts/asset-generation/batch15-03-2026-09-30/scene_location_municipal_sewage.png; artifacts/asset-generation/batch15-03-2026-09-30/scene_location_collapsed_salt_mine.png; artifacts/asset-generation/batch15-03-2026-09-30/scene_location_bio_remediation_lab.png; artifacts/asset-generation/batch15-03-2026-09-30/scene_location_submerged_data_center.png; artifacts/asset-generation/batch15-03-2026-09-30/scene_location_geothermal_vent_shaft.png; artifacts/asset-generation/batch15-03-2026-09-30/scene_location_the_sump_cathedral.png; artifacts/asset-generation/batch15-03-2026-09-30/scene_location_abandoned_desalination.png; artifacts/asset-generation/batch15-03-2026-09-30/scene_location_deep_core_borehole.png; artifacts/asset-generation/batch15-03-2026-09-30/scene_location_uxo_highway_choke.png; artifacts/asset-generation/batch15-03-2026-09-30/scene_location_radar_array_spire.png; artifacts/asset-generation/batch15-03-2026-09-30/scene_location_drone_hive_silo.png; artifacts/asset-generation/batch15-03-2026-09-30/scene_location_automated_mortar_pit.png; artifacts/asset-generation/batch15-03-2026-09-30/scene_location_scrap_neuromancer_camp.png; artifacts/asset-generation/batch15-03-2026-09-30/prompts.json; artifacts/asset-generation/batch15-03-2026-09-30/preview.png; artifacts/asset-generation/batch15-03-2026-09-30/REPORT.md. Also this plan and bounded additive claim/state entries. Scratch thumbnails only under /tmp/ashfall-batch15-03.
+
+Verification: pre-generation bin/ashfall-dev validate-json PASS 714 files / 0 violations; ImageMagick dimensions/opacity; preview and independent read-only candidate review. Done means all 15 saved and verified, provenance and QA limits recorded. Staging is not production integration.

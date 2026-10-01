@@ -100,12 +100,19 @@ namespace AtomicWar.GodotApp
         public ActionResult SetTrap(string siteId, string baitType, string hunterId)
         {
             var res = System.SetTrap(siteId, baitType, hunterId);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Set {baitType} snare at {siteId} (Hunter: {hunterId})";
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? $"Set {baitType} snare at {siteId} (Hunter: {hunterId})"
+                : $"Set trap refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
+        }
+
+        /// <summary>T10 — surface a typed refusal on the host LastEvent seam before returning.</summary>
+        private ActionResult Refuse(string failureCode, string messageKey)
+        {
+            LastEvent = $"Trapping refused: {failureCode}";
+            RaiseStateChanged();
+            return ActionResult.Blocked(failureCode, messageKey);
         }
 
         /// <summary>Shared site replaceability query for host/UI preflight.</summary>
@@ -124,16 +131,16 @@ namespace AtomicWar.GodotApp
         public ActionResult TrySetTrap(string siteId, string trapId, string baitType, string hunterId)
         {
             if (Catalog == null)
-                return ActionResult.Blocked("no_catalog", "trapping.no_catalog");
+                return Refuse("no_catalog", "trapping.no_catalog");
             if (Inventory == null)
-                return ActionResult.Blocked("no_inventory", "trapping.no_inventory");
+                return Refuse("no_inventory", "trapping.no_inventory");
 
             if (!Catalog.Traps.TryGetValue(trapId, out var trapDef))
-                return ActionResult.Blocked("unknown_trap", "trapping.unknown_trap");
+                return Refuse("unknown_trap", "trapping.unknown_trap");
 
             // Preflight check: active trap cannot be replaced while active and operational
             if (!CanSetTrapAtSite(siteId, out string failureCode))
-                return ActionResult.Blocked(failureCode, "trapping." + failureCode);
+                return Refuse(failureCode, "trapping." + failureCode);
 
             // Determine billing: prefer finished trap item if held; otherwise consume setup materials
             var bill = new InventoryBill();
@@ -150,7 +157,7 @@ namespace AtomicWar.GodotApp
             using var tx = Inventory.Inventory.BeginTransaction(bill);
             if (!tx.Validation.IsValid)
             {
-                return ActionResult.Blocked("insufficient_materials", "trapping.insufficient_materials");
+                return Refuse("insufficient_materials", "trapping.insufficient_materials");
             }
 
             // Deploy trap with catalog parameters
@@ -160,6 +167,8 @@ namespace AtomicWar.GodotApp
             if (!setResult.IsSuccess)
             {
                 tx.Cancel();
+                LastEvent = $"Set trap refused: {setResult.FailureCode}";
+                RaiseStateChanged();
                 return setResult;
             }
 
@@ -168,7 +177,7 @@ namespace AtomicWar.GodotApp
                 // Domain already mutated; materials must not silently vanish or
                 // report success when the inventory commit failed.
                 System.RemoveTrap(siteId);
-                return ActionResult.Blocked("commit_failed", "trapping.commit_failed");
+                return Refuse("commit_failed", "trapping.commit_failed");
             }
             if (!consumedFinishedTrap)
                 OnTrapCrafted?.Invoke(trapId);
@@ -240,13 +249,12 @@ namespace AtomicWar.GodotApp
         public ActionResult CheckTraps(float? densityMultiplier = null)
         {
             var res = System.CheckTraps(densityMultiplier ?? WildlifeDensityMultiplier);
-            if (res.IsSuccess)
-            {
-                LastEvent = (densityMultiplier ?? WildlifeDensityMultiplier) == 1f
+            LastEvent = res.IsSuccess
+                ? ((densityMultiplier ?? WildlifeDensityMultiplier) == 1f
                     ? "Inspected all perimeter snares."
-                    : $"Inspected all perimeter snares (wildlife pressure x{densityMultiplier:0.00}).";
-                RaiseStateChanged();
-            }
+                    : $"Inspected all perimeter snares (wildlife pressure x{densityMultiplier:0.00}).")
+                : $"Snare check refused: {res.FailureCode}";
+            RaiseStateChanged();
             DeliverPendingEvents();
             return res;
         }
@@ -404,6 +412,11 @@ namespace AtomicWar.GodotApp
                     : $"Butchered game catch at site {siteId} (butcher: {butcherId})";
                 RaiseStateChanged();
             }
+            else
+            {
+                LastEvent = $"Butchery refused: {res.FailureCode}";
+                RaiseStateChanged();
+            }
             DeliverPendingEvents();
             return res;
         }
@@ -417,11 +430,10 @@ namespace AtomicWar.GodotApp
         public ActionResult RemoveToxin(string siteId)
         {
             var res = System.RemoveToxin(siteId);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Purged radiation glands and toxins from catch at {siteId}";
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? $"Purged radiation glands and toxins from catch at {siteId}"
+                : $"Toxin purge refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
@@ -433,7 +445,11 @@ namespace AtomicWar.GodotApp
         {
             var res = System.PreserveHide(siteId, out string hideItemId, out float hideQuantity);
             if (!res.IsSuccess)
+            {
+                LastEvent = $"Hide preservation refused: {res.FailureCode}";
+                RaiseStateChanged();
                 return res;
+            }
 
             int qty = Math.Max(0, (int)Math.Round(hideQuantity, MidpointRounding.AwayFromZero));
             if (!string.IsNullOrEmpty(hideItemId) && qty > 0)
@@ -528,10 +544,10 @@ namespace AtomicWar.GodotApp
         public ActionResult TryRepairTrap(string siteId)
         {
             if (Inventory == null)
-                return ActionResult.Blocked("no_inventory", "trapping.no_inventory");
+                return Refuse("no_inventory", "trapping.no_inventory");
 
             if (!TryGetRepairBill(siteId, out var bill, out var reason))
-                return ActionResult.Blocked("repair_unavailable", reason);
+                return Refuse("repair_unavailable", reason);
 
             var site = System.State.trapSites.Find(s => s.siteId == siteId)!;
             var trapDef = Catalog!.Traps[site.trapId];
@@ -539,7 +555,7 @@ namespace AtomicWar.GodotApp
             // Execute atomic transaction
             using var tx = Inventory.Inventory.BeginTransaction(bill);
             if (!tx.Validation.IsValid)
-                return ActionResult.Blocked("insufficient_materials", "trapping.insufficient_materials");
+                return Refuse("insufficient_materials", "trapping.insufficient_materials");
 
             ActionResult repairResult = ActionResult.Blocked("repair_unavailable", "trapping.repair_unavailable");
             try
@@ -551,11 +567,13 @@ namespace AtomicWar.GodotApp
                             throw new InvalidOperationException(repairResult.FailureCode ?? "trapping.repair_failed");
                     }))
                 {
-                    return ActionResult.Blocked("commit_failed", "trapping.commit_failed");
+                    return Refuse("commit_failed", "trapping.commit_failed");
                 }
             }
             catch (InvalidOperationException)
             {
+                LastEvent = $"Repair trap refused: {repairResult.FailureCode}";
+                RaiseStateChanged();
                 return repairResult;
             }
             LastEvent = $"Repaired {trapDef.displayName} at {siteId}";
@@ -566,11 +584,10 @@ namespace AtomicWar.GodotApp
         public ActionResult RemoveTrap(string siteId)
         {
             var result = System.RemoveTrap(siteId);
-            if (result.IsSuccess)
-            {
-                LastEvent = $"Removed trap at {siteId}";
-                RaiseStateChanged();
-            }
+            LastEvent = result.IsSuccess
+                ? $"Removed trap at {siteId}"
+                : $"Remove trap refused: {result.FailureCode}";
+            RaiseStateChanged();
             return result;
         }
 
@@ -633,11 +650,5 @@ namespace AtomicWar.GodotApp
         private int _lastSeenCatchTotal;
         private int _currentDay;
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            WildlifeTrappingSaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
     }
 }

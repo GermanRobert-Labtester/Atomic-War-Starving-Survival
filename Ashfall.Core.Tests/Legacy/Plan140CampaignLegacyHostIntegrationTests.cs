@@ -161,7 +161,6 @@ namespace Ashfall.Core.Tests.Legacy
 
             string mainApp = ReadRepoFile("src", "Main.Application.cs");
             Assert.Contains("HostCliAction.CampaignLegacySelfTest", mainApp);
-            Assert.Contains("FlushCampaignLegacyIfDirty", mainApp);
         }
 
         [Fact]

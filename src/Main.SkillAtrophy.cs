@@ -96,11 +96,6 @@ namespace AtomicWar.GodotApp
                 _skillAtrophyDirty = false;
         }
 
-        public void FlushSkillAtrophyIfDirty()
-        {
-            if (_skillAtrophyDirty) SaveSkillAtrophy();
-        }
-
         public void ResetSkillAtrophy()
         {
             _skillAtrophy = null;

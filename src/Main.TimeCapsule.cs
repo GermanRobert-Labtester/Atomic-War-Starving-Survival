@@ -69,11 +69,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        private void FlushTimeCapsulesIfDirty()
-        {
-            if (_timeCapsuleDirty) SaveTimeCapsules();
-        }
-
         private void SetupTimeCapsulePanel()
         {
             if (_timeCapsulePanel != null && _timeCapsulePanel.IsInsideTree())

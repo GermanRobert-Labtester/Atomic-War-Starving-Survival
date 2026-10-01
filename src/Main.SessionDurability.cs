@@ -73,11 +73,6 @@ namespace AtomicWar.GodotApp
             _sessionDurabilityDirty = false;
         }
 
-        private void FlushSessionDurabilityIfDirty()
-        {
-            if (_sessionDurabilityDirty) SaveSessionDurability();
-        }
-
         private void ResetSessionDurability()
         {
             _sessionDurability?.Dispose();

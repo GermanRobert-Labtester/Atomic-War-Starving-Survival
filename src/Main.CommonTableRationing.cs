@@ -97,11 +97,6 @@ namespace AtomicWar.GodotApp
                 _commonTableDirty = false;
         }
 
-        public void FlushCommonTableRationingIfDirty()
-        {
-            if (_commonTableDirty) SaveCommonTableRationing();
-        }
-
         public void ResetCommonTableRationing()
         {
             _commonTable = null;

@@ -85,8 +85,17 @@ namespace AtomicWar.GodotApp
         public SalvageResult TryTeardown(string itemId, int count = 1)
         {
             var result = System.TryTeardown(_inventory.Inventory, itemId, count);
-            LastEvent = result.Message;
-            if (result.IsSuccess) RaiseStateChanged();
+            if (result.IsSuccess)
+            {
+                LastEvent = result.Message;
+            }
+            else
+            {
+                // SalvageResult carries its own refusal text; publish it so the
+                // detail surface shows the refusal instead of a stale success.
+                LastEvent = $"Salvage refused ({result.Outcome}): {result.Message}";
+            }
+            RaiseStateChanged();
             return result;
         }
     }

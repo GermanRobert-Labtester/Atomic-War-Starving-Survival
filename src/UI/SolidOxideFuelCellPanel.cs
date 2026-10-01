@@ -79,6 +79,8 @@ namespace AtomicWar.GodotApp.UI
                 + $"Stack thermal level: {state.ThermalLevel:0.00} · thermal cycles: {state.ThermalCycles}\n"
                 + $"Acoustic signature: {result?.AcousticSignatureClass} — very low, not silent: pumps and machinery still emit sound.\n"
                 + $"Waste heat is routed to the shelter thermal loop through the canonical coordinator.";
+            if (!string.IsNullOrEmpty(_host.LastEvent))
+                _detailText.Text += $"\nLast event: {_host.LastEvent}";
 
             bool busy = state.Mode is SofcOperatingMode.Preheating or SofcOperatingMode.Online
                 or SofcOperatingMode.Derated or SofcOperatingMode.Stabilizing;

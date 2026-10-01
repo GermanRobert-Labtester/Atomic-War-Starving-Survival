@@ -116,7 +116,7 @@ namespace AtomicWar.GodotApp
                 CaptureSection("mercenary_bounties", MercenarySaveStore.TryCapturePersisted(_mercenary.CaptureState()));
             }
         }
-        private void CloseMercenaryBountyBoardPanel() { _mercenaryBountyBoardPanel?.Visible = false; }
+        private void CloseMercenaryBountyBoardPanel() { ClosePanelAnimated(_mercenaryBountyBoardPanel); }
 
         // ── Plan 188: mercenary bounty board commands ──────────────────────
 

@@ -47,6 +47,7 @@ namespace Ashfall.Core.Survivors
         public const string RoleDoseLimit = "role_dose_limit";
         public const string RoleQuarantine = "role_quarantine";
         public const string LowConditioning = "low_conditioning";
+        public const string ChronicImpairment = "chronic_impairment";
     }
 
     /// <summary>Sanctioned hazard classes used by the live duty-role catalog.</summary>
@@ -110,6 +111,15 @@ namespace Ashfall.Core.Survivors
         public int DaysSinceDischarge { get; set; } = -1;
         /// <summary>Active illness-sourced sick-list band, or -1 when absent/released.</summary>
         public int ActiveIllnessBand { get; set; } = -1;
+        /// <summary>
+        /// Chronic-condition capability projection from the
+        /// ChronicConditionSystem authority: the survivor's most-limiting
+        /// duty capability in [0.10, 1.0], where 1.0 means no tracked
+        /// impairment or a fully accommodated condition. Derived each
+        /// evaluation from the existing authority; never persisted here and
+        /// never a second ledger.
+        /// </summary>
+        public float ChronicCapabilityMultiplier { get; set; } = 1f;
         public IReadOnlyDictionary<string, float> SkillLevels { get; set; } =
             new Dictionary<string, float>(StringComparer.Ordinal);
     }

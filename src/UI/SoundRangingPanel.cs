@@ -84,6 +84,8 @@ namespace AtomicWar.GodotApp.UI
                 + "Stale readings decay and expire — old intel is not safe intel.\n"
                 + "This is early-warning information for evacuation, readiness, and route planning. It is not a firing solution, and no weapon cueing consumes it."
                 : "No live hostile-fire estimate. The array listens passively; observations decay after five days.";
+            if (!string.IsNullOrEmpty(_host.LastEvent))
+                _detailText.Text += $"\nLast event: {_host.LastEvent}";
 
             _deployBtn.Disabled = engine.State.Nodes.Count > 0;
             _recalibrateBtn.Disabled = false;

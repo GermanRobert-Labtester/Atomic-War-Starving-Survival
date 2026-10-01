@@ -7,6 +7,7 @@ using Godot;
 using Ashfall.Core.IO;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
+using AtomicWar.GodotApp.Localization;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
@@ -15,7 +16,7 @@ namespace AtomicWar.GodotApp.UI
     /// ASHFALL — Developer Session: Asset Inspector.
     ///
     /// A read-only diagnostic overlay that enumerates authored content from the
-    /// authoritative JSON catalogs in <c>Assets/StreamingAssets/Data</c> across
+    /// authoritative JSON catalogs (resolved through <see cref="CatalogPath"/>) across
     /// every asset category (items, portraits, locations, factions) and, for each
     /// entry, whether its art resolves through the <see cref="AssetRegistry"/>
     /// (and to which path) or falls back to a placeholder. Presentation-only: it
@@ -40,14 +41,17 @@ namespace AtomicWar.GodotApp.UI
             public readonly string Kind;
             public readonly string ResolvedPath;
             public readonly bool HasArt;
+            /// <summary>Authored item stats for the dev session (empty when unknown).</summary>
+            public readonly string Stats;
 
-            public EntryRow(string id, string displayName, string kind, string resolvedPath, bool hasArt)
+            public EntryRow(string id, string displayName, string kind, string resolvedPath, bool hasArt, string stats = "")
             {
                 Id = id;
                 DisplayName = displayName;
                 Kind = kind;
                 ResolvedPath = resolvedPath;
                 HasArt = hasArt;
+                Stats = stats ?? "";
             }
         }
 
@@ -90,10 +94,24 @@ namespace AtomicWar.GodotApp.UI
         private Label _summaryLabel = null!;
         private LineEdit _searchBox = null!;
         private CheckBox _missingOnly = null!;
+        private OptionButton _sortMode = null!;
         private GridContainer _grid = null!;
         private HBoxContainer _catBar = null!;
         private readonly Dictionary<Cat, Button> _catButtons = new();
         private bool _built;
+
+        // Detail overlay (dev session: inspect one entry closely).
+        private Control _detailOverlay = null!;
+        private Control _detailPanel = null!;
+        private Label _detailTitle = null!;
+        private TextureRect _detailArt = null!;
+        private Label _detailBody = null!;
+        private Label _detailPath = null!;
+
+        private const int SortById = 0;
+        private const int SortByName = 1;
+        private const int SortMissingFirst = 2;
+        private int _sort = SortById;
 
         public override void _Ready()
         {
@@ -126,6 +144,14 @@ namespace AtomicWar.GodotApp.UI
             if (!Visible) return;
             if (AshfallInputActions.IsCloseOrCancel(@event))
             {
+                // The detail overlay is the topmost surface: Esc dismisses it
+                // first so a close never skips a layer.
+                if (_detailOverlay != null && _detailOverlay.Visible)
+                {
+                    CloseDetail();
+                    GetViewport().SetInputAsHandled();
+                    return;
+                }
                 OnClose?.Invoke();
                 GetViewport().SetInputAsHandled();
             }
@@ -233,7 +259,8 @@ namespace AtomicWar.GodotApp.UI
                     AssetResult res = Resolve(cat, id);
                     bool hasArt = res.IsValid && res.Texture != null;
                     string path = string.IsNullOrEmpty(res.ResolvedPath) ? "(none)" : res.ResolvedPath;
-                    rows.Add(new EntryRow(id, name, kind, path, hasArt));
+                    string stats = cat == Cat.Items ? ReadItemStats(it) : "";
+                    rows.Add(new EntryRow(id, name, kind, path, hasArt, stats));
                 }
             }
         }
@@ -282,6 +309,42 @@ namespace AtomicWar.GodotApp.UI
             _             => AssetRegistry.GetItem(id),
         };
 
+        /// <summary>
+        /// Dev-session item stats, read straight from the authoritative catalog
+        /// row (snake_case and legacy camelCase both accepted). Presentation-only:
+        /// nothing here mutates or re-derives gameplay values.
+        /// </summary>
+        private static string ReadItemStats(JsonElement row)
+        {
+            var parts = new List<string>();
+
+            if (FirstNumber(row, out float weight, "weight"))
+                parts.Add($"wt {weight:0.##}");
+            if (FirstNumber(row, out float value, "value", "base_value", "baseValue", "trade_value", "tradeValue"))
+                parts.Add($"val {value:0.##}");
+            if (FirstNumber(row, out float stack, "stack_max", "stackMax", "max_stack", "maxStack"))
+                parts.Add($"stack {(int)stack}");
+            if (FirstNumber(row, out float rad, "rad_protection", "radProtection", "radiation_protection"))
+                parts.Add($"rad {rad:0.##}");
+            if (FirstNumber(row, out float dur, "durability"))
+                parts.Add($"dur {dur:0.##}");
+
+            return string.Join(" · ", parts);
+        }
+
+        private static bool FirstNumber(JsonElement el, out float value, params string[] keys)
+        {
+            foreach (string k in keys)
+            {
+                if (!el.TryGetProperty(k, out JsonElement v)) continue;
+                if (v.ValueKind == JsonValueKind.Number && v.TryGetSingle(out value)) return true;
+                if (v.ValueKind == JsonValueKind.String &&
+                    float.TryParse(v.GetString(), out value)) return true;
+            }
+            value = 0f;
+            return false;
+        }
+
         private static string? FirstString(JsonElement el, params string[] keys)
         {
             foreach (string k in keys)
@@ -293,6 +356,60 @@ namespace AtomicWar.GodotApp.UI
                 }
             }
             return null;
+        }
+
+        // ── Dev session: coverage report export ─────────────────────────
+
+        private sealed class ReportEntry
+        {
+            public string id { get; set; } = "";
+            public string name { get; set; } = "";
+            public string kind { get; set; } = "";
+            public string resolved_path { get; set; } = "";
+            public bool has_art { get; set; }
+            public string stats { get; set; } = "";
+        }
+
+        private sealed class ReportCategory
+        {
+            public int total { get; set; }
+            public int with_art { get; set; }
+            public int missing_art { get; set; }
+            public List<ReportEntry> missing { get; set; } = new();
+        }
+
+        /// <summary>
+        /// Writes a read-only coverage report to <c>user://</c> so a dev can diff
+        /// or grep exactly which authored ids have no resolving art. Presentation
+        /// only: nothing here mutates catalogs, game state, or the asset registry.
+        /// </summary>
+        private string ExportReport()
+        {
+            var payload = new Dictionary<string, ReportCategory>(StringComparer.Ordinal);
+            foreach (var (cat, label) in Categories)
+            {
+                var rows = _rowsByCat.TryGetValue(cat, out var l) ? l : new List<EntryRow>();
+                var bucket = new ReportCategory { total = rows.Count };
+                foreach (EntryRow r in rows)
+                {
+                    if (r.HasArt) { bucket.with_art++; continue; }
+                    bucket.missing_art++;
+                    bucket.missing.Add(new ReportEntry
+                    {
+                        id = r.Id,
+                        name = r.DisplayName,
+                        kind = r.Kind,
+                        resolved_path = r.ResolvedPath,
+                        has_art = r.HasArt,
+                        stats = r.Stats
+                    });
+                }
+                payload[label] = bucket;
+            }
+
+            string path = ProjectSettings.GlobalizePath("user://asset_inspector_report.json");
+            File.WriteAllText(path, JsonSerializer.Serialize(payload, new JsonSerializerOptions { WriteIndented = true }));
+            return path;
         }
 
         // ── Layout ───────────────────────────────────────────────────────
@@ -356,6 +473,29 @@ namespace AtomicWar.GodotApp.UI
             _missingOnly.Toggled += _ => ApplyFilter();
             filterRow.AddChild(_missingOnly);
 
+            var btnExport = AshfallUiHelpers.MakeButton("EXPORT MISSING-ART REPORT", () =>
+            {
+                string written = ExportReport();
+                _summaryLabel.Text = $"{_summaryLabel.Text}\nREPORT WRITTEN — {written}";
+            });
+            btnExport.CustomMinimumSize = new Vector2(230, 34);
+            btnExport.TooltipText = AshfallLocalization.Tr(
+                "ui.devinspector.export_report_tooltip",
+                "Write a read-only JSON coverage report to user:// listing every " +
+                "authored id whose art does not resolve.");
+            filterRow.AddChild(btnExport);
+
+            _sortMode = new OptionButton { CustomMinimumSize = new Vector2(170, 34) };
+            _sortMode.AddItem("Sort: Id", SortById);
+            _sortMode.AddItem("Sort: Name", SortByName);
+            _sortMode.AddItem("Sort: Missing art first", SortMissingFirst);
+            _sortMode.ItemSelected += idx =>
+            {
+                _sort = (int)_sortMode.GetItemId((int)idx);
+                ApplyFilter();
+            };
+            filterRow.AddChild(_sortMode);
+
             var btnClose = AshfallUiHelpers.MakeButton("CLOSE", () => OnClose?.Invoke());
             btnClose.CustomMinimumSize = new Vector2(140, 34);
             filterRow.AddChild(btnClose);
@@ -373,6 +513,106 @@ namespace AtomicWar.GodotApp.UI
             _grid.AddThemeConstantOverride("h_separation", DesignTheme.SpacingSm);
             _grid.AddThemeConstantOverride("v_separation", DesignTheme.SpacingSm);
             scroll.AddChild(_grid);
+
+            BuildDetailOverlay();
+        }
+
+        /// <summary>
+        /// Full-screen detail overlay: large art, resolved path, and every authored
+        /// stat for one entry. Read-only; Esc or CLOSE dismisses it back to the grid.
+        /// </summary>
+        private void BuildDetailOverlay()
+        {
+            _detailOverlay = new Control { Visible = false, Name = "InspectorDetail" };
+            _detailOverlay.SetAnchorsPreset(LayoutPreset.FullRect);
+            AddChild(_detailOverlay);
+
+            var scrim = new ColorRect { Color = AshfallUiHelpers.PanelScrim() };
+            scrim.SetAnchorsPreset(LayoutPreset.FullRect);
+            _detailOverlay.AddChild(scrim);
+
+            var center = new CenterContainer();
+            center.SetAnchorsPreset(LayoutPreset.FullRect);
+            _detailOverlay.AddChild(center);
+
+            var panel = AshfallUiHelpers.MakePanel(860, 560);
+            center.AddChild(panel);
+            _detailPanel = panel;
+
+            var root = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingMd);
+            root.CustomMinimumSize = new Vector2(820, 520);
+            panel.AddChild(root);
+
+            _detailTitle = AshfallUiHelpers.MakeTitle("—", DesignTheme.FontSizeH2);
+            root.AddChild(_detailTitle);
+
+            var body = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingLg);
+            root.AddChild(body);
+
+            _detailArt = new TextureRect
+            {
+                CustomMinimumSize = new Vector2(220, 220),
+                StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
+                ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize
+            };
+            body.AddChild(_detailArt);
+
+            var textCol = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingSm);
+            textCol.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            body.AddChild(textCol);
+
+            _detailPath = AshfallUiHelpers.MakeMono("—");
+            _detailPath.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+            textCol.AddChild(_detailPath);
+
+            _detailBody = AshfallUiHelpers.MakeBody("");
+            _detailBody.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+            _detailBody.SizeFlagsVertical = Control.SizeFlags.ExpandFill;
+            textCol.AddChild(_detailBody);
+
+            var btnClose = AshfallUiHelpers.MakeButton("CLOSE DETAIL", CloseDetail);
+            btnClose.CustomMinimumSize = new Vector2(180, 36);
+            btnClose.TooltipText = AshfallLocalization.Tr("ui.devinspector.close_tooltip", "Return to the grid (Esc)");
+            root.AddChild(btnClose);
+        }
+
+        private void CloseDetail()
+        {
+            if (_detailOverlay == null) return;
+            // Synchronous by convention: global Esc dismissal is never delayed by
+            // motion (see UiMotion). The entrance is animated; the exit is not.
+            _detailOverlay.Visible = false;
+        }
+
+        private void OpenDetail(EntryRow row)
+        {
+            if (_detailOverlay == null) return;
+
+            _detailTitle.Text = row.DisplayName;
+            _detailArt.Texture = _activeCat == Cat.Art
+                ? AshfallUiHelpers.TryLoadTexture($"res://assets/sprites/{row.Kind}/{row.Id}")
+                  ?? AshfallUiHelpers.TryLoadTexture(AssetRegistry.FallbackIconPath)
+                : Resolve(_activeCat, row.Id).Texture
+                  ?? AshfallUiHelpers.TryLoadTexture(AssetRegistry.FallbackIconPath);
+            _detailPath.Text = string.IsNullOrEmpty(row.ResolvedPath) ? "(no path resolved)" : row.ResolvedPath;
+
+            string status = _activeCat == Cat.Art
+                ? (row.HasArt ? "FINAL" : "PLACEHOLDER")
+                : (row.HasArt ? "ART OK" : "MISSING — fallback used");
+            var lines = new List<string>
+            {
+                $"Id:   {row.Id}",
+                $"Kind: {(string.IsNullOrEmpty(row.Kind) ? "—" : row.Kind)}",
+                $"Art:  {status}"
+            };
+            if (!string.IsNullOrEmpty(row.Stats))
+                lines.Add($"Stats: {row.Stats}");
+            _detailBody.Text = string.Join("\n", lines);
+
+            _detailOverlay.Visible = true;
+            // Shared entrance transition on the dialog body only, so the scrim
+            // does not slide with it.
+            if (_detailPanel != null) UiMotion.AnimateOpen(_detailPanel);
         }
 
         private void SelectCategory(Cat cat)
@@ -411,9 +651,30 @@ namespace AtomicWar.GodotApp.UI
                     continue;
                 _visible.Add(row);
             }
+            _visible.Sort(CompareRows);
 
             RenderGrid();
             UpdateSummary(all);
+            // Value-change feedback on the coverage readout (shared pulse seam).
+            if (_summaryLabel != null && GodotObject.IsInstanceValid(_summaryLabel))
+            {
+                _summaryLabel.PivotOffset = _summaryLabel.Size / 2f;
+                UiPanelFlow.Pulse(_summaryLabel);
+            }
+        }
+
+        private int CompareRows(EntryRow a, EntryRow b)
+        {
+            switch (_sort)
+            {
+                case SortByName:
+                    return string.CompareOrdinal(a.DisplayName, b.DisplayName);
+                case SortMissingFirst:
+                    int missing = a.HasArt.CompareTo(b.HasArt);
+                    return missing != 0 ? missing : string.CompareOrdinal(a.Id, b.Id);
+                default:
+                    return string.CompareOrdinal(a.Id, b.Id);
+            }
         }
 
         private void UpdateSummary(List<EntryRow> all)
@@ -433,7 +694,7 @@ namespace AtomicWar.GodotApp.UI
 
             string metric = _activeCat == Cat.Art
                 ? $"final: {resolved}   ·   placeholder: {missing}"
-                : $"art resolved: {resolved}   ·   fallback / missing: {missing}";
+                : $"art resolved: {resolved} ({(all.Count == 0 ? 100f : resolved * 100f / all.Count):0}%)   ·   fallback / missing: {missing}";
             _summaryLabel.Text =
                 $"{_activeCat}: {all.Count}   ·   {metric}   ·   showing: {_visible.Count}\n" +
                 "Coverage by category — " + string.Join("   ·   ", counts);
@@ -480,6 +741,20 @@ namespace AtomicWar.GodotApp.UI
             kind.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Lethe));
             v.AddChild(kind);
 
+            // Authored item stats (dev session: "check all items … and etc").
+            if (!string.IsNullOrEmpty(row.Stats))
+            {
+                var stats = new Label
+                {
+                    Text = row.Stats,
+                    ClipText = true
+                };
+                stats.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeLabel);
+                stats.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
+                stats.TooltipText = row.Stats;
+                v.AddChild(stats);
+            }
+
             // Status line (no Colors.Red / Colors.Green — theme tokens only).
             string statusText = _activeCat == Cat.Art
                 ? (row.HasArt ? "FINAL" : "PLACEHOLDER")
@@ -490,6 +765,12 @@ namespace AtomicWar.GodotApp.UI
                 "font_color",
                 AshfallUiHelpers.ToColor(row.HasArt ? DesignTheme.Lethe : DesignTheme.Warm));
             v.AddChild(status);
+
+            // Keyboard-accessible entry to the detail overlay.
+            var btnDetail = AshfallUiHelpers.MakeButton("VIEW", () => OpenDetail(row));
+            btnDetail.CustomMinimumSize = new Vector2(0, 30);
+            btnDetail.TooltipText = $"Inspect {row.Id} — art, resolved path, and authored stats";
+            v.AddChild(btnDetail);
 
             return card;
         }

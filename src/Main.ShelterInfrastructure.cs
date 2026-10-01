@@ -345,7 +345,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-
         private void SetupWaterTreatment()
         {
             if (_waterTreatment != null) return;
@@ -641,11 +640,6 @@ namespace AtomicWar.GodotApp
             {
                 _shelterFireDirty = false;
             }
-        }
-
-        private void FlushShelterFireIfDirty()
-        {
-            if (_shelterFireDirty) SaveShelterFire();
         }
 
         public Ashfall.Core.Shelter.ShelterFireHazardSystem GetShelterFireHazardSystem()

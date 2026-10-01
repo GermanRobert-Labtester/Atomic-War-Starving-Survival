@@ -91,12 +91,6 @@ namespace AtomicWar.GodotApp
                 _glassworksDirty = false;
         }
 
-        public void FlushGlassworksIfDirty()
-        {
-            if (_glassworksDirty)
-                SaveGlassworks();
-        }
-
         public void ResetGlassworks()
         {
             _glassworks = null;

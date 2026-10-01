@@ -103,11 +103,6 @@ namespace AtomicWar.GodotApp
                 _lettersDirty = false;
         }
 
-        public void FlushLettersIfDirty()
-        {
-            if (_lettersDirty) SaveLetters();
-        }
-
         public void ResetLetters()
         {
             _letters = null;

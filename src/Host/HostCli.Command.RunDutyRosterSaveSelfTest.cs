@@ -102,6 +102,7 @@ namespace AtomicWar.GodotApp
                 }
                 catch (ArgumentNullException)
                 {
+                    // probe: RestoreSave(null) must throw; the throw is the asserted behavior.
                     nullThrew = true;
                 }
                 Check(nullThrew, "RestoreSave(null) throws ArgumentNullException");

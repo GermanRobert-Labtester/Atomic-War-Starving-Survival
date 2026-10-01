@@ -70,11 +70,5 @@ namespace AtomicWar.GodotApp
 
         public BestiaryCensus GetCensus() => System.GetCensus();
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            BestiarySaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
     }
 }

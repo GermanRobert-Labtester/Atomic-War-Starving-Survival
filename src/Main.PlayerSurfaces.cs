@@ -179,7 +179,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => ClosePanelAnimated(_winterFreezePanel));
 
             PanelRegistry.ConfigureActions("afflictions",
-                bindAction: () => { SetupSurvivors(); SetupInventory(); SetupMedical(); SetupPhase0(); _afflictionsPanel.Bind(_medical, _survivors, _inventory, _phase0?.Respiratory, chronicConditions: _chronicConditions); },
+                bindAction: () => { SetupSurvivors(); SetupInventory(); SetupMedical(); SetupPhase0(); SetupChronicConditions(); _afflictionsPanel.Bind(_medical, _survivors, _inventory, _phase0?.Respiratory, chronicConditions: _chronicConditions, fitAccommodation: FitChronicAccommodation, removeAccommodation: RemoveChronicAccommodation); },
                 openAction: () => _afflictionsPanel.Open(),
                 closeAction: () => CloseAfflictionsPanel());
 
@@ -950,7 +950,11 @@ namespace AtomicWar.GodotApp
                     Control captured = control;
                     captured.VisibilityChanged += () =>
                     {
-                        if (captured.Visible)
+                        // IsClosing: a panel revived by the shared exit transition
+                        // re-raises VisibilityChanged mid-fade. It must not be
+                        // re-opened (AnimateOpen would fade it in against the fade
+                        // out) nor steal focus from whatever the player moved to.
+                        if (captured.Visible && !UiMotion.IsClosing(captured))
                         {
                             _lastVisibilityGranted = captured;
                             UiMotion.AnimateOpen(captured);

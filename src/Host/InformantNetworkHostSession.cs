@@ -114,11 +114,5 @@ namespace AtomicWar.GodotApp
             return $"Informants active {active} (burned {burned}) · intel banked {System.State.totalIntelPoints}";
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            InformantNetworkSaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
     }
 }

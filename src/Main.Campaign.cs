@@ -195,11 +195,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        private void FlushCampaignDayIfDirty()
-        {
-            if (_campaignDayDirty) SaveCampaignDay();
-        }
-
         private void OnBriefingAcknowledged(int day)
         {
             _briefingPending = false;
@@ -219,6 +214,12 @@ namespace AtomicWar.GodotApp
                 SetupEchoes();
                 if (_echoes?.PendingEcho != null)
                     OpenEchoModal();
+                else
+                {
+                    SetupWorldIncidents();
+                    if (_worldIncidents?.PendingIncident != null)
+                        OpenWorldIncidentModal();
+                }
             }
         }
 
@@ -495,7 +496,7 @@ namespace AtomicWar.GodotApp
                     "Today's Goal",
                     new[]
                     {
-                        new DailyBriefingEntry("Today's Goal", string.Empty, $"{goalTitle} — {goalBody}", order: -1)
+                        new DailyBriefingEntry("Today's Goal", string.Empty, SliceGoalText.Join(goalTitle, goalBody), order: -1)
                     }));
             }
 

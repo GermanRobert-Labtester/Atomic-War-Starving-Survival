@@ -43,11 +43,6 @@ namespace AtomicWar.GodotApp
                 _narrativeQuestlinesDirty = false;
         }
 
-        private void FlushNarrativeQuestlinesIfDirty()
-        {
-            if (_narrativeQuestlinesDirty) SaveNarrativeQuestlines();
-        }
-
         private int NarrativeArcDay() => _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay;
 
         private void SetNarrativeArcFeedback(string message)

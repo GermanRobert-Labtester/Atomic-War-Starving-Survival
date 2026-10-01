@@ -101,8 +101,12 @@ namespace AtomicWar.GodotApp
                 {
                     InventoryHost.Remove(filterItemId, 1);
                     LastEvent = "Replaced sediment/charcoal filter membrane.";
-                    RaiseStateChanged();
                 }
+                else
+                {
+                    LastEvent = $"Filter replacement refused: {result.FailureCode}";
+                }
+                RaiseStateChanged();
                 return new CommandResult(
                     PlayerCommandCode.TreatmentReplaceFilter,
                     result,
@@ -111,11 +115,10 @@ namespace AtomicWar.GodotApp
             }
 
             var legacy = System.ReplaceFilter();
-            if (legacy.IsSuccess)
-            {
-                LastEvent = "Replaced sediment/charcoal filter membrane.";
-                RaiseStateChanged();
-            }
+            LastEvent = legacy.IsSuccess
+                ? "Replaced sediment/charcoal filter membrane."
+                : $"Filter replacement refused: {legacy.FailureCode}";
+            RaiseStateChanged();
             return new CommandResult(
                 PlayerCommandCode.TreatmentReplaceFilter,
                 legacy,
@@ -151,11 +154,5 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            WaterTreatmentSaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
     }
 }

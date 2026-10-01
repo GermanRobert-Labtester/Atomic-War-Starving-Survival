@@ -36,7 +36,6 @@ namespace AtomicWar.GodotApp.UI
         private int _currentDay = 1;
 
         private VBoxContainer _modulesContainer = null!;
-        private Label _headerSubtitle = null!;
         private Label _statusLabel = null!;
 
         public override void _Ready()

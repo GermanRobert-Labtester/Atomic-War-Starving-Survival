@@ -50,11 +50,10 @@ namespace AtomicWar.GodotApp
         public ActionResult Mediate(string conflictId, string mediatorId, MediationStyle style)
         {
             var res = System.Mediate(conflictId, mediatorId, style);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Mediation completed for conflict {conflictId} by {mediatorId} ({style})";
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? $"Mediation completed for conflict {conflictId} by {mediatorId} ({style})"
+                : $"Mediation refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
@@ -64,11 +63,5 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            SurvivorRelationsSaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
     }
 }

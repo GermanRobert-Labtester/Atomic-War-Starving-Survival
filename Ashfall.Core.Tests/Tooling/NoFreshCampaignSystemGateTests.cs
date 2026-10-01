@@ -43,6 +43,12 @@ namespace Ashfall.Core.Tests.Tooling
             // Panel lifecycle tests isolated node bindings with mock/minimal sessions
             "src/Host/PanelBindLifecycleSelfTest.cs",
             "src/Host/WeatherSaveSelfTest.cs",
+            // WP-09 synthetic 20-step Day-1→Day-2 scenario: deliberately isolates
+            // the starting-level/crafting/inventory/duty authorities to assert exact
+            // per-system deltas and single-fire semantics. It is a mechanism probe,
+            // not a campaign-composition integration test, so it cannot obtain a
+            // roster from the live campaign.
+            "src/Host/HostCli.Command.RunDay1ToDay2MilestoneSelfTest.cs",
         };
 
         public static List<(string file, int line, string type)> ScanFiles(string rootDir)

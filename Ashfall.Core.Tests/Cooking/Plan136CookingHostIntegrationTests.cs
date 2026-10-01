@@ -220,7 +220,6 @@ namespace Ashfall.Core.Tests.Cooking
 
             string mainApp = ReadRepoFile("src", "Main.Application.cs");
             Assert.Contains("HostCliAction.CookingSelfTest", mainApp);
-            Assert.Contains("FlushCookingIfDirty", mainApp);
         }
     }
 }

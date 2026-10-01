@@ -182,12 +182,6 @@ namespace AtomicWar.GodotApp
                 GD.Print("[Ashfall Godot] Holdfast player/trade state written.");
         }
 
-        /// <summary>Writes the S1 save only when a system changed since the last flush.</summary>
-        private void FlushHoldfastIfDirty()
-        {
-            if (_holdfastDirty) SaveHoldfast();
-        }
-
         private void RefreshIceRoadLabel()
         {
             if (_core == null) return;

@@ -98,9 +98,5 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
-        public override void Save()
-        {
-            SoundRangingSaveStore.TrySave(CaptureSave());
-        }
 }
 }

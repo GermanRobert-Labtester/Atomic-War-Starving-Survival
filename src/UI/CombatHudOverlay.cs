@@ -53,6 +53,9 @@ public partial class CombatHudOverlay : Control, IBindablePanel
         _host = host;
         if (_host != null)
         {
+            // The monitor can be re-opened many times — never stack
+            // refresh subscriptions on the shared session.
+            _host.StateChanged -= RefreshView;
             _host.StateChanged += RefreshView;
         }
         RefreshView();
@@ -185,6 +188,10 @@ public partial class CombatHudOverlay : Control, IBindablePanel
 
     public void RefreshView()
     {
+        // The realtime pump raises StateChanged ~20 Hz while an encounter
+        // runs; skip full rebuilds while the monitor is hidden (Open()
+        // refreshes explicitly).
+        if (!Visible) return;
         RefreshStatusRail();
         BuildLaneRows();
         BuildActionRows();
@@ -284,7 +291,53 @@ public partial class CombatHudOverlay : Control, IBindablePanel
     private void BuildActionRows()
     {
         if (_actionBarGrid == null) return;
-        _actionBarGrid.SetRows(BuildActionFixtureRows());
+        if (_host == null)
+        {
+            _actionBarGrid.SetRows(BuildActionFixtureRows());
+            return;
+        }
+        // T16 — bound monitor shows truthful live preflight rows instead of
+        // the hard-coded fixture rows.
+        _actionBarGrid.SetRows(BuildLiveActionRows());
+    }
+
+    private List<AshfallDataGrid.Row> BuildLiveActionRows()
+    {
+        var rows = new List<AshfallDataGrid.Row>();
+        var state = _host!.Engine.State;
+        bool realtime = state != null && state.RealtimeActive && !state.Resolved;
+
+        var fire = _host.EvaluateFire(_host.DefaultHostileTargetId());
+        rows.Add(ActionRow("Fire", fire.CanExecute ? "Ready" : "Blocked",
+            fire.CanExecute ? "Fire equipped weapon at hostile target" : fire.Reason, fire.CanExecute));
+
+        var suppress = _host.EvaluateSuppress();
+        rows.Add(ActionRow("Suppress", suppress.CanExecute ? "Ready" : "Blocked",
+            suppress.CanExecute ? "Area fire · pins targets · heavy ammo + jam risk" : suppress.Reason, suppress.CanExecute));
+
+        var jam = _host.EvaluateClearJam(_host.DefaultPlayerSubjectId());
+        rows.Add(ActionRow("Clear Jam", jam.CanExecute ? "Ready" : "Blocked",
+            jam.CanExecute ? "Clear weapon jam" : jam.Reason, jam.CanExecute));
+
+        var endTurn = _host.EvaluateEndTurn();
+        rows.Add(ActionRow("End Turn", realtime ? "Realtime" : endTurn.CanExecute ? "Ready" : "Blocked",
+            realtime ? "The realtime clock runs on its own — no turn to end" : endTurn.Reason,
+            !realtime && endTurn.CanExecute));
+        return rows;
+    }
+
+    private static AshfallDataGrid.Row ActionRow(string action, string status, string hint, bool selectable)
+    {
+        return new AshfallDataGrid.Row
+        {
+            Cells = new List<AshfallDataGrid.Cell>
+            {
+                new(action, selectable ? AshfallDataGrid.CellState.Normal : AshfallDataGrid.CellState.Muted),
+                new(status, AshfallDataGrid.CellState.Muted),
+                new(hint, AshfallDataGrid.CellState.Muted),
+            },
+            Selectable = selectable
+        };
     }
 
     private void RefreshDetail()

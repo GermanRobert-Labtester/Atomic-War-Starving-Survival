@@ -22,6 +22,7 @@ public partial class WeatherForecastPanel : Control
     private Action<WeatherKind>? _onWeatherChanged;
 
     private VBoxContainer _forecastData = null!;
+    private Label _actionFeedback = null!;
     private VBoxContainer _temperatureTrend = null!;
     private VBoxContainer _precipitationData = null!;
     private VBoxContainer _windForecast = null!;
@@ -138,10 +139,13 @@ public partial class WeatherForecastPanel : Control
                         {
                             seedBtn.Pressed += () =>
                             {
-                                _intelligence.CloudSeeding.Deploy(
+                                var seedResult = _intelligence.CloudSeeding.Deploy(
                                     intel.predictedCrisisDay,
                                     intel.predictedWeatherKind.Value,
                                     intel.predictedCrisisDay);
+                                _actionFeedback.Text = seedResult.Success
+                                    ? string.Empty
+                                    : $"SEEDING REFUSED — {ActionRefusalText.Describe(seedResult.FailureReason)}";
                                 RefreshView();
                             };
                         }
@@ -158,7 +162,8 @@ public partial class WeatherForecastPanel : Control
                     installBtn.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);
                     installBtn.Pressed += () =>
                     {
-                        _intelligence.CloudSeeding.Install(intel.predictedCrisisDay > 0 ? intel.predictedCrisisDay : 1);
+                        var installResult = _intelligence.CloudSeeding.Install(intel.predictedCrisisDay > 0 ? intel.predictedCrisisDay : 1);
+                        _actionFeedback.Text = ActionRefusalText.Line(installResult, "INSTALL REFUSED");
                         RefreshView();
                     };
                     _forecastData.AddChild(installBtn);
@@ -313,6 +318,11 @@ public partial class WeatherForecastPanel : Control
         _forecastData.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
         _forecastData.CustomMinimumSize = new Vector2(400, 0);
         vbox.AddChild(_forecastData);
+
+        // T10 — typed refusal surfacing for the cloud-seeding action surface.
+        _actionFeedback = new Label { Text = string.Empty, AutowrapMode = TextServer.AutowrapMode.WordSmart };
+        _actionFeedback.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Critical));
+        vbox.AddChild(_actionFeedback);
 
         vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 

@@ -125,14 +125,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public void FlushEmergencyAlertsIfDirty()
-        {
-            if (_emergencyAlertsDirty)
-            {
-                SaveEmergencyAlerts();
-            }
-        }
-
         public void ResetEmergencyAlerts()
         {
             _emergencyAlerts = null;

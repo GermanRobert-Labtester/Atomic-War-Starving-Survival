@@ -61,11 +61,6 @@ namespace AtomicWar.GodotApp
             _sliceScenarioDirty = false;
         }
 
-        private void FlushSevenDaySliceIfDirty()
-        {
-            if (_sliceScenarioDirty) SaveSevenDaySlice();
-        }
-
         private void ResetSevenDaySlice()
         {
             _sliceScenario?.Dispose();
@@ -81,8 +76,8 @@ namespace AtomicWar.GodotApp
         /// The authored beat for the given day of the seven-day slice — the
         /// day's goal text for the opening modal and the daily briefing, so
         /// the player is told what to do next. Reads the loaded instrument
-        /// only; a day without a beat produces no goal line, never an
-        /// invented one.
+        /// only; a day without a beat, or a beat without copy, produces no goal
+        /// line, never an invented or empty one.
         /// </summary>
         internal bool TryGetSliceGoal(int day, out string title, out string description)
         {
@@ -90,6 +85,10 @@ namespace AtomicWar.GodotApp
             description = string.Empty;
             var session = EnsureSliceScenario();
             if (session == null || !session.Scenario.TryGetBeatForDay(day, out var beat) || beat == null)
+                return false;
+            // A beat with neither a title nor a body is not a goal; reporting
+            // false keeps an empty "Today's Goal" off the modal and briefing.
+            if (string.IsNullOrWhiteSpace(beat.Title) && string.IsNullOrWhiteSpace(beat.Description))
                 return false;
             title = beat.Title;
             description = beat.Description;

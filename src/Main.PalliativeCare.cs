@@ -93,11 +93,6 @@ namespace AtomicWar.GodotApp
                 _palliativeDirty = false;
         }
 
-        public void FlushPalliativeCareIfDirty()
-        {
-            if (_palliativeDirty) SavePalliativeCare();
-        }
-
         public void ResetPalliativeCare()
         {
             _palliative = null;

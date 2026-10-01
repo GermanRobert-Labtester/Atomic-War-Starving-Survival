@@ -79,11 +79,6 @@ namespace AtomicWar.GodotApp
                 _soilReclamationDirty = false;
         }
 
-        public void FlushSoilReclamationProfileIfDirty()
-        {
-            if (_soilReclamationDirty) SaveSoilReclamationProfile();
-        }
-
         public void ResetSoilReclamationProfile()
         {
             _soilReclamation = null;

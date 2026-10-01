@@ -109,11 +109,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        private void FlushCipherQuestChain()
-        {
-            if (_cipherQuestChainDirty) SaveCipherQuestChain();
-        }
-
         private void ResetCipherQuestChain()
         {
             _cipherQuestChain = null;

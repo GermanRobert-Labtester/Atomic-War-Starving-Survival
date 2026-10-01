@@ -73,8 +73,8 @@ namespace Ashfall.Core.Onboarding
     public enum OnboardingAssistance
     {
         Minimal = 0,   // Objective text only.
-        Standard = 1,  // Objective + contextual hints after inactivity/failure.
-        Guided = 2     // Steps are auto-highlighted; hints offer "show me where".
+        Standard = 1,  // Objective + contextual hint line.
+        Guided = 2     // Reserved; behaves exactly like Standard (no auto-highlight exists).
     }
 
     /// <summary>

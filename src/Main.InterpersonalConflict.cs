@@ -89,14 +89,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public void FlushInterpersonalConflictIfDirty()
-        {
-            if (_interpersonalConflictDirty)
-            {
-                SaveInterpersonalConflict();
-            }
-        }
-
         public void ResetInterpersonalConflict()
         {
             _interpersonalConflict = null;

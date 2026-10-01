@@ -342,6 +342,39 @@ namespace Ashfall.Core
             return ActionResult.Success("apprentice.pair_cancelled");
         }
 
+        /// <summary>
+        /// Promotes an apprentice whose vocational mentor died to the acting
+        /// designation. The retained <see cref="Apprenticeship.actingEligible"/> pair
+        /// is completed, the apprentice is credited the remaining skill XP so the
+        /// role can be worked, the designation flag is cleared, and the pair
+        /// leaves the active ledger (no unbounded retention).
+        /// </summary>
+        public ActionResult AssignActingDesignation(string pairId)
+        {
+            var pair = _state.activePairs.Find(p => p.pairId == pairId);
+            if (pair == null || !pair.actingEligible)
+                return ActionResult.Blocked("no_acting_pair", "apprentice.no_acting_pair");
+
+            float remainingXp = Math.Max(0f, pair.targetXp - pair.progressXp);
+            if (remainingXp > 0f)
+            {
+                _skills.RecordAction(
+                    new SimpleSkillActor(pair.apprenticeId), pair.targetSkillId, remainingXp, _currentDay);
+            }
+
+            pair.progressXp = pair.targetXp;
+            pair.isComplete = true;
+            pair.actingEligible = false;
+            if (!_state.completedSkillIds.Contains(pair.targetSkillId))
+                _state.completedSkillIds.Add(pair.targetSkillId);
+            _state.activePairs.Remove(pair);
+
+            _log.Info($"[Apprentice] {pair.apprenticeId} assumed the acting designation for {pair.targetSkillId} after mentor {pair.mentorId} was lost.");
+            OnApprenticeshipCompleted?.Invoke(pair);
+            OnApprenticeshipChanged?.Invoke();
+            return ActionResult.Success("apprentice.acting_designation_assigned");
+        }
+
         public ActionResult StartTranscription(string survivorId, string mentorshipId, InventoryContainer? inv = null)
         {
             if (!_catalog.TryGetValue(mentorshipId, out var def))

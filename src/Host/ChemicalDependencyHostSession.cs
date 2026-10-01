@@ -56,20 +56,6 @@ namespace AtomicWar.GodotApp
             System.OnDetoxFailed += _ondetoxfailed_handler;
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            try
-            {
-                if (ChemicalDependencySaveStore.TrySave(System.CaptureState()))
-                    base.Save();
-            }
-            catch (Exception e)
-            {
-                GD.PrintErr("[ChemicalDependency] save failed: " + e.Message);
-            }
-        }
-
         public void RestoreSave(ChemicalDependencyLedgerState? state)
         {
             if (state == null) return;
@@ -87,22 +73,20 @@ namespace AtomicWar.GodotApp
         public CommandResult BeginManagedDetox(string survivorId, string itemId)
         {
             var result = System.ExecuteBeginManagedDetox(survivorId, itemId, expectedStateVersion: StateVersion, currentStateVersion: StateVersion);
-            if (result.IsSuccess)
-            {
-                LastEvent = $"Managed detox begun for {survivorId} ({itemId}).";
-                RaiseStateChanged();
-            }
+            LastEvent = result.IsSuccess
+                ? $"Managed detox begun for {survivorId} ({itemId})."
+                : $"Managed detox refused: {result.FailureCode}";
+            RaiseStateChanged();
             return result;
         }
 
         public CommandResult BeginColdTurkey(string survivorId, string itemId)
         {
             var result = System.ExecuteBeginColdTurkey(survivorId, itemId, expectedStateVersion: StateVersion, currentStateVersion: StateVersion);
-            if (result.IsSuccess)
-            {
-                LastEvent = $"Cold turkey begun for {survivorId} ({itemId}).";
-                RaiseStateChanged();
-            }
+            LastEvent = result.IsSuccess
+                ? $"Cold turkey begun for {survivorId} ({itemId})."
+                : $"Cold turkey refused: {result.FailureCode}";
+            RaiseStateChanged();
             return result;
         }
 

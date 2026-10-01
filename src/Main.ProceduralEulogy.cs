@@ -77,11 +77,6 @@ namespace AtomicWar.GodotApp
                 _eulogyDirty = false;
         }
 
-        public void FlushProceduralEulogyIfDirty()
-        {
-            if (_eulogyDirty) SaveProceduralEulogy();
-        }
-
         public void ResetProceduralEulogy()
         {
             _eulogy = null;

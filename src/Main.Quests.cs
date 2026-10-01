@@ -83,11 +83,6 @@ namespace AtomicWar.GodotApp
                 _expansionQuestsDirty = false;
         }
 
-        private void FlushExpansionQuestsIfDirty()
-        {
-            if (_expansionQuestsDirty) SaveExpansionQuests();
-        }
-
         private void SetupThirdonary()
         {
             if (_thirdonary != null) return;
@@ -115,9 +110,5 @@ namespace AtomicWar.GodotApp
                 _thirdonaryDirty = false;
         }
 
-        private void FlushThirdonaryIfDirty()
-        {
-            if (_thirdonaryDirty) SaveThirdonary();
-        }
     }
 }

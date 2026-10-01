@@ -61,8 +61,12 @@ namespace AtomicWar.GodotApp
                     missing.BlockingReasons, Array.Empty<string>(), 0f);
             }
 
-            var verdict = _fitnessForDuty.EvaluateForRole(BuildFitnessFacts(survivorId), requirements);
+            // Plan 193 / T18 — bind the medical + chronic authorities before the
+            // facts snapshot so the chronic capability projection is live on the
+            // first evaluation, not only after a later refresh.
             SetupMedical();
+            SetupChronicConditions();
+            var verdict = _fitnessForDuty.EvaluateForRole(BuildFitnessFacts(survivorId), requirements);
             if (_medical?.Bridge != null)
             {
                 var activeAfflictions = GetActiveAfflictionIds(survivorId);
@@ -95,6 +99,10 @@ namespace AtomicWar.GodotApp
         private FitnessVerdict EvaluateSurvivorFitness(string survivorId)
         {
             SetupFitnessForDuty();
+            // Plan 193 / T18 — keep the chronic capability projection live on the
+            // worker-productivity path as well as the role path.
+            SetupMedical();
+            SetupChronicConditions();
             if (_fitnessForDuty == null)
             {
                 return new FitnessVerdict(
@@ -191,7 +199,11 @@ namespace AtomicWar.GodotApp
                     ? Math.Max(0, _simDay - row.lastSleptDay)
                     : -1,
                 DaysSinceDischarge = daysSinceDischarge,
-                ActiveIllnessBand = activeIllnessBand
+                ActiveIllnessBand = activeIllnessBand,
+                // Plan 193 / T18 — chronic-condition capability projection from
+                // the existing authority (1.0 when unbound or fully
+                // accommodated). Derived here; consumed by AfflictionDutyBridge.
+                ChronicCapabilityMultiplier = GetChronicDutyCapabilityModifier(survivorId)
             };
 
             var skillLevels = new Dictionary<string, float>(StringComparer.Ordinal);

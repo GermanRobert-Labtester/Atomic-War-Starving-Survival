@@ -49,12 +49,6 @@ namespace AtomicWar.GodotApp
             float maxAllowedSlopeBytesPerDay = 50000f)
             => System.EvaluateSoakStability(maxAllowedP95Ms, maxAllowedSlopeBytesPerDay);
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            if (SessionDurabilitySaveStore.TrySave(System.CaptureState()))
-                base.Save();
-        }
     }
 
     public static class SessionDurabilitySaveStore

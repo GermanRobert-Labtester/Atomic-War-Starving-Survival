@@ -18,6 +18,35 @@ namespace AtomicWar.GodotApp
     /// </summary>
     public partial class Main : Control
     {
+        /// <summary>
+        /// Teardown for headless selftests: releases the UI tree that
+        /// <c>BuildUserInterface()</c> allocated so Godot's shutdown accounting is
+        /// clean. Without this the harness reports orphaned Buttons, textures and
+        /// styleboxes as "leaked at exit" even though the assertions passed.
+        ///
+        /// Frees immediately rather than via <c>AshfallUiHelpers.EmptyChildren</c>
+        /// (which queues): teardown is not inside a signal dispatch, so an
+        /// immediate free is legal here, and the process is about to exit before a
+        /// queued free could drain.
+        /// </summary>
+        private void ReleaseUiForSelfTest()
+        {
+            try
+            {
+                int safety = GetChildCount() + 8;
+                while (GetChildCount() > 0 && safety-- > 0)
+                {
+                    var child = GetChild(0);
+                    RemoveChild(child);
+                    if (GodotObject.IsInstanceValid(child)) child.Free();
+                }
+            }
+            catch (System.Exception ex)
+            {
+                GD.PrintErr("[WorkshopRelicUiTest] teardown notice: " + ex.Message);
+            }
+        }
+
         private void RunWorkshopRelicUiTestAndQuit()
         {
             bool pass = true;
@@ -49,6 +78,7 @@ namespace AtomicWar.GodotApp
             if (_shelterWorkshop == null || _crafting == null || _workshopPanel == null)
             {
                 GD.Print("WorkshopRelicUiTest FAIL");
+                ReleaseUiForSelfTest();
                 GetTree().Quit(1);
                 return;
             }
@@ -74,6 +104,11 @@ namespace AtomicWar.GodotApp
             Button? clockButton = FindButtonByText(relicList, "Mantel Clock");
             Check(clockButton != null, "mantel clock relic button present");
             clockButton!.EmitSignal(BaseButton.SignalName.Pressed);
+            // WorkshopPanel defers its rebuild out of the button's own dispatch
+            // (freeing a control mid-dispatch is engine-refused and orphans it),
+            // so the harness flushes the pending rebuild before asserting on the
+            // rebuilt detail pane.
+            _workshopPanel.Open();
 
             var detail = _workshopPanel.GetNode<VBoxContainer>("%DetailContainer");
             var startBtn = FindButtonByText(detail, "START RESTORATION");
@@ -102,6 +137,7 @@ namespace AtomicWar.GodotApp
             };
 
             startBtn!.EmitSignal(BaseButton.SignalName.Pressed);
+            _workshopPanel.Open();
             Check(_crafting.Workshop.IsBusy, "repair job started and reserved components");
             Check(_inventory.Inventory.CountById("spring_mechanism") == 0, "components consumed atomically at start");
 
@@ -145,8 +181,19 @@ namespace AtomicWar.GodotApp
             var reAgain = _crafting.Workshop.StartRepair(relicId, string.Empty);
             Check(!reAgain.IsSuccess, "re-repair still blocked after reload");
 
+            // Drop the managed wrappers this test held across RefreshView() calls
+            // (each refresh frees the buttons they pointed at). Holding them until
+            // process exit keeps their native GodotObject registrations alive and
+            // shows up as orphaned Buttons in the shutdown leak report.
+            clockButton = null;
+            startBtn = null;
+            relicList = null;
+            detail = null;
+            reAgain = default;
+
             if (pass) GD.Print("WorkshopRelicUiTest PASS");
             else GD.Print("WorkshopRelicUiTest FAIL");
+            ReleaseUiForSelfTest();
             GetTree().Quit(pass ? 0 : 1);
         }
 

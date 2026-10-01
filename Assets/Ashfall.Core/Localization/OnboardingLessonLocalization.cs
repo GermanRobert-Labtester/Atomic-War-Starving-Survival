@@ -15,6 +15,9 @@ namespace Ashfall.Core.Localization
         /// <summary>Fired when the player checks the weather during a severe-weather day.</summary>
         public const string SevereWeatherPrepId = "weather.storm_prep";
 
+        /// <summary>Fired on the first realtime combat encounter of a campaign.</summary>
+        public const string CombatBasicsId = "combat.basics";
+
         /// <summary>Localization key for a lesson title (falls back to the authored English copy).</summary>
         public static string TutorialTitleKey(string tutorialId) => $"{tutorialId}.title";
 

@@ -47,3 +47,15 @@ mono_crash.*.blob
 *.so
 *.dll
 *.dylib
+
+# Massive non-code directories & dumps (prevent search indexer thrash)
+artifacts/asset-generation/
+dist/
+docs/plans/
+docs/expansions/
+Seal-steps/
+piagentsplans/
+Next-steps-plans/
+C-integration-plans/
+WORKTREE_OWNERSHIP.md
+INTEGRATION_PLANS.md

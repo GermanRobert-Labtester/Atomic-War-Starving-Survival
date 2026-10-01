@@ -54,11 +54,6 @@ namespace AtomicWar.GodotApp
                 _trophiesDirty = false;
         }
 
-        public void FlushTrophiesIfDirty()
-        {
-            if (_trophiesDirty) SaveTrophies();
-        }
-
         public void ResetTrophies()
         {
             _trophies = null;

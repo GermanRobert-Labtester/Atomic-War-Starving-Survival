@@ -76,11 +76,6 @@ namespace AtomicWar.GodotApp
                 _curriculumDirty = false;
         }
 
-        public void FlushApprenticeshipCurriculumIfDirty()
-        {
-            if (_curriculumDirty) SaveApprenticeshipCurriculum();
-        }
-
         public void ResetApprenticeshipCurriculum()
         {
             _curriculum = null;

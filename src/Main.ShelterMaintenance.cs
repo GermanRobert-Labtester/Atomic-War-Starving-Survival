@@ -55,12 +55,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public void FlushShelterMaintenanceIfDirty()
-        {
-            if (_shelterMaintenanceDirty)
-                SaveShelterMaintenance();
-        }
-
         public ShelterMaintenanceCensus GetShelterMaintenanceCensus() =>
             _shelterMaintenance?.Census ?? default;
 

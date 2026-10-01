@@ -89,11 +89,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        private void FlushEcologicalInfestationIfDirty()
-        {
-            if (_ecologicalInfestationsDirty) SaveEcologicalInfestation();
-        }
-
         // ── Preconditions (authored, site-driven) ───────────────────────
 
         private bool InfestationEligible(EcologicalInfestationDefinition def, int day, SeasonWindowDef? season)
@@ -233,11 +228,5 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        private void FlushFieldGuideIfDirty()
-        {
-            // Day-advance flush performs a full silent SaveAll; this keeps the
-            // triad shape consistent for the registry gate.
-            SaveFieldGuide();
-        }
     }
 }

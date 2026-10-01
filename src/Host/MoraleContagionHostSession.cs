@@ -158,9 +158,5 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
-        public override void Save()
-        {
-            MoraleContagionSaveStore.TrySave(CaptureSave());
-        }
     }
 }

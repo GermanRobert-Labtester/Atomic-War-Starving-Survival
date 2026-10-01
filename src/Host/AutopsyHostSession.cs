@@ -55,20 +55,20 @@ namespace AtomicWar.GodotApp
         public ActionResult QueueCase(string specimenId, string procedureId, string medicId, int currentDay)
         {
             var res = System.QueueAutopsy(specimenId, procedureId, medicId);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Queued autopsy for {specimenId} with {procedureId}";
-            }
+            LastEvent = res.IsSuccess
+                ? $"Queued autopsy for {specimenId} with {procedureId}"
+                : $"Autopsy queue refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
         public ActionResult BeginAutopsy(string caseId)
         {
             var res = System.BeginAutopsy(caseId);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Started procedure on case {caseId}";
-            }
+            LastEvent = res.IsSuccess
+                ? $"Started procedure on case {caseId}"
+                : $"Autopsy start refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
@@ -91,11 +91,5 @@ namespace AtomicWar.GodotApp
             System.TickDay(day);
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            AutopsySaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
     }
 }

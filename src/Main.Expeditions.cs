@@ -49,16 +49,6 @@ namespace AtomicWar.GodotApp
         private bool _reconTelemetryDirty;
         private bool _discoveryConsequencesBound;
 
-        private void FlushExpeditionIfDirty()
-        {
-            if (_expeditionDirty) SaveExpeditions();
-        }
-
-        internal void FlushTravelEncountersIfDirty()
-        {
-            if (_travelEncountersDirty) SaveTravelEncounters();
-        }
-
         /// <summary>
         /// Projects the wasteland map authority's water routes (travel_domain
         /// "water" from the home holdfast) into the expedition session so
@@ -412,6 +402,33 @@ namespace AtomicWar.GodotApp
                 };
                 // Expedition encounters auto-populate a real combat encounter.
                 SetupExpeditionCombatHandoff(_combat);
+                // T12 — resolve outcome must reach a player who closed the panel.
+                _combat.Engine.OnEncounterEnded += s =>
+                {
+                    ShowAdvanceFeedback(
+                        "Combat ended — " + s.OutcomeText + ". Details in the Combat panel.",
+                        Ashfall.Core.Feedback.FeedbackSeverity.Info, persistent: true);
+                    // T18a — a committed firearm/ordnance exposure that left a
+                    // survivor injured is a permanent acoustic fact: record the
+                    // blast hearing-loss chronic condition so its accommodation
+                    // is reachable. Deaths and uninjured combatants are skipped.
+                    var injuries = s?.Aftermath?.SurvivorInjuries;
+                    if (injuries != null)
+                    {
+                        for (int i = 0; i < injuries.Count; i++)
+                            RecordChronicConditionFact(injuries[i], ChronicConditionIds.HearingLoss, "acoustic_blast");
+                    }
+                };
+                // T26 — the first combat encounter teaches the basics through
+                // the persisted onboarding authority (seen-once dedupe is
+                // Core-owned in OnboardingJourney).
+                SetupOnboarding();
+                _combat.Engine.OnCombatEvent += (s, e) =>
+                {
+                    if (e.Kind != "encounter_start") return;
+                    _onboardingJourney?.RequestContextualTutorial(
+                        Ashfall.Core.Localization.OnboardingLessonLocalization.CombatBasicsId);
+                };
             }
             GD.Print("[Ashfall Godot] Combat host ready: tactical combat expansion.");
         }
@@ -442,11 +459,6 @@ namespace AtomicWar.GodotApp
                 _combatDirty = false;
                 GD.Print("[Ashfall Godot] Combat save written.");
             }
-        }
-
-        private void FlushCombatIfDirty()
-        {
-            if (_combatDirty) SaveCombat();
         }
 
         /// <summary>
@@ -481,6 +493,11 @@ namespace AtomicWar.GodotApp
                     ? state.locationId
                     : state.survivorId;
                 _combatDirty = true;
+                // T12 — the encounter runs live (realtime pump); the player
+                // must know it started even with the Combat panel closed.
+                ShowAdvanceFeedback(
+                    $"Ambush at {state.displayName} — combat has begun. Open the Combat panel (LIVE MONITOR available).",
+                    Ashfall.Core.Feedback.FeedbackSeverity.Warning, persistent: true);
                 GD.Print($"[Ashfall Godot] Expedition encounter at {state.locationId} spawned combat (danger {state.dangerLevel}: {string.Join(", ", enemyIds)}).");
             };
 
@@ -498,6 +515,9 @@ namespace AtomicWar.GodotApp
                     string.IsNullOrEmpty(trigger.Title) ? "Hostile Encounter" : trigger.Title,
                     enemyCombatantIds: trigger.CombatantIds);
                 _combatDirty = true;
+                ShowAdvanceFeedback(
+                    $"Hostile contact — {trigger.Title} turned violent. Open the Combat panel (LIVE MONITOR available).",
+                    Ashfall.Core.Feedback.FeedbackSeverity.Warning, persistent: true);
                 GD.Print($"[Ashfall Godot] Travel encounter '{trigger.EncounterId}' escalated to combat: {string.Join(", ", trigger.CombatantIds)}.");
             };
         }
@@ -596,7 +616,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-
         private void SetupEncounterChoiceResolver()
         {
             if (_encounterChoice != null) return;
@@ -624,7 +643,7 @@ namespace AtomicWar.GodotApp
 
         private void CloseExpeditionPanel()
         {
-            _expeditionPanel.Visible = false;
+            ClosePanelAnimated(_expeditionPanel);
         }
 
         private void OnExpeditionEncounterSurfaced(ExpeditionEncounterBridge.EncounterSurfaced surfaced)
@@ -685,27 +704,27 @@ namespace AtomicWar.GodotApp
 
         private void CloseCombatPanel()
         {
-            _combatPanel.Visible = false;
+            ClosePanelAnimated(_combatPanel);
         }
 
         private void CloseMapPanel()
         {
-            _mapPanel.Visible = false;
+            ClosePanelAnimated(_mapPanel);
         }
 
         private void CloseCombatDetailPanel()
         {
-            _combatDetailPanel.Visible = false;
+            ClosePanelAnimated(_combatDetailPanel);
         }
 
         private void CloseCombatHistoryPanel()
         {
-            _combatHistoryPanel.Visible = false;
+            ClosePanelAnimated(_combatHistoryPanel);
         }
 
         private void CloseMapDetailPanel()
         {
-            _mapDetailPanel.Visible = false;
+            ClosePanelAnimated(_mapDetailPanel);
         }
 
         private void OpenReconTelemetryPanel()
@@ -716,7 +735,7 @@ namespace AtomicWar.GodotApp
 
         private void CloseReconTelemetryPanel()
         {
-            if (_reconTelemetryPanel != null) _reconTelemetryPanel.Visible = false;
+            ClosePanelAnimated(_reconTelemetryPanel);
         }
 
         private void HandleReconTelemetryAction(string action, string param = "")
@@ -836,14 +855,6 @@ namespace AtomicWar.GodotApp
                 $"expedition_breakdown_{outcome.VehicleId}_{survivorId}_{_simDay}",
                 $"{outcome.VehicleId} broke down on dispatch — {effect}.",
                 null!, _simDay);
-        }
-
-        // Debounced flush hooks for systems that mutate each frame. They run
-        // every tick and bail out unless the matching dirty flag is set.
-        internal void FlushEncounterChoiceIfDirty()
-        {
-            if (!_encounterChoiceDirty) return;
-            SaveEncounterChoice();
         }
 
     }

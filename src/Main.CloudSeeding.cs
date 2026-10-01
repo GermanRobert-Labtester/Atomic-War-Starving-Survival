@@ -36,11 +36,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public void FlushCloudSeedingIfDirty()
-        {
-            if (_cloudSeedingDirty) SaveCloudSeeding();
-        }
-
         public void ResetCloudSeeding()
         {
             _cloudSeeding = null;

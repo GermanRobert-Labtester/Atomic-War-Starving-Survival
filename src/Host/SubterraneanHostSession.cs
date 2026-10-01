@@ -209,11 +209,6 @@ namespace AtomicWar.GodotApp
 
         // ------------------------------------------------------------ day/save
 
-        public override void Save()
-        {
-            SubterraneanSaveStore.TrySave(SubterraneanSaveCodec.ToSaveState(System.CaptureState()));
-        }
-
         public SubterraneanSaveState CaptureSave() =>
             SubterraneanSaveCodec.ToSaveState(System.CaptureState());
 

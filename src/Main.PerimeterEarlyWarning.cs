@@ -85,11 +85,6 @@ namespace AtomicWar.GodotApp
                 _perimeterDirty = false;
         }
 
-        public void FlushPerimeterEarlyWarningIfDirty()
-        {
-            if (_perimeterDirty) SavePerimeterEarlyWarning();
-        }
-
         public void ResetPerimeterEarlyWarning()
         {
             _perimeter = null;

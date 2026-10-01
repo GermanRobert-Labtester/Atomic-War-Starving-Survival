@@ -145,5 +145,30 @@ namespace Ashfall.Core.Tests.Campaign
             // Unmeasured beats stay honest.
             Assert.Contains("NotMeasuredInProbe", probe);
         }
+
+        [Fact]
+        public void HostGoalSurfaces_UseTheSharedGoalLineJoin()
+        {
+            string modal = ReadRepoFile("src", "UI", "OpeningProtocolModal.cs");
+            string campaign = ReadRepoFile("src", "Main.Campaign.cs");
+
+            // Both goal surfaces must route through the one join authority.
+            Assert.Contains("SliceGoalText.Join", modal);
+            Assert.Contains("SliceGoalText.Join", campaign);
+
+            // A raw "title — body" interpolation must not reappear and render a
+            // dangling separator for a body-less beat (the ae6e54387 class).
+            Assert.False(modal.Contains("_goalTitle} — {_goalBody", StringComparison.Ordinal),
+                "OpeningProtocolModal must not join the goal line by hand.");
+            Assert.False(campaign.Contains("goalTitle} — {goalBody", StringComparison.Ordinal),
+                "Main.Campaign must not join the goal line by hand.");
+
+            // A beat with neither title nor body must never surface as an empty
+            // goal on the modal or the briefing.
+            string slice = ReadRepoFile("src", "Main.SliceScenario.cs");
+            Assert.Contains(
+                "string.IsNullOrWhiteSpace(beat.Title) && string.IsNullOrWhiteSpace(beat.Description)",
+                slice);
+        }
     }
 }

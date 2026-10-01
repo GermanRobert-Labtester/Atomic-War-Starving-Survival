@@ -17,6 +17,7 @@ namespace AtomicWar.GodotApp.UI
         private AshfallStatusRail? _statusRail;
         private VBoxContainer _contentStack = null!;
         private Label _detailText = null!;
+        private VBoxContainer _actingRows = null!;
         private VBoxContainer _vocationalRows = null!;
         private string _vocationalSignature = string.Empty;
 
@@ -66,6 +67,13 @@ namespace AtomicWar.GodotApp.UI
             _detailText = new Label();
             _detailText.AutowrapMode = TextServer.AutowrapMode.WordSmart;
             _contentStack.AddChild(_detailText);
+
+            // Actionable acting-designation rows for apprentices whose
+            // vocational mentor was lost. Without this the actingEligible
+            // pairs were a label-only stub retained forever.
+            _actingRows = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill };
+            _actingRows.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
+            _contentStack.AddChild(_actingRows);
 
             var vocationalScroll = new ScrollContainer
             {
@@ -118,6 +126,39 @@ namespace AtomicWar.GodotApp.UI
                 _detailText.Text = text;
             }
             RefreshVocationalRows();
+            RefreshActingRows();
+        }
+
+        /// <summary>
+        /// Renders an ASSIGN action for every retained acting-eligible pair
+        /// (vocational apprentice whose mentor died). Assigning completes the
+        /// pair and removes it from the active ledger.
+        /// </summary>
+        private void RefreshActingRows()
+        {
+            if (_actingRows == null || _host == null) return;
+            foreach (Node row in _actingRows.GetChildren())
+            {
+                _actingRows.RemoveChild(row);
+                row.QueueFree();
+            }
+
+            var acting = _host.System.State.activePairs.Where(p => p.actingEligible).ToList();
+            if (acting.Count == 0) return;
+
+            _actingRows.AddChild(AshfallUiHelpers.MakeTitle("ACTING DESIGNATIONS"));
+            foreach (var pair in acting)
+            {
+                string pairId = pair.pairId;
+                var row = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
+                var label = AshfallUiHelpers.MakeBody(
+                    $"{pair.apprenticeId} — {pair.targetSkillId} (mentor {pair.mentorId} lost; assign to qualify the apprentice).");
+                label.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+                row.AddChild(label);
+                row.AddChild(AshfallUiHelpers.MakeButton("ASSIGN ACTING DESIGNATION", () =>
+                    _host?.AssignActingDesignation(pairId)));
+                _actingRows.AddChild(row);
+            }
         }
 
         private void RefreshVocationalRows()

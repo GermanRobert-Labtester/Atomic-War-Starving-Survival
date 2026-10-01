@@ -43,11 +43,5 @@ namespace AtomicWar.GodotApp
             return res;
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            ChlorAlkaliSaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
     }
 }

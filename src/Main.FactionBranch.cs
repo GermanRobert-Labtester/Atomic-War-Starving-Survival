@@ -78,17 +78,6 @@ namespace AtomicWar.GodotApp
                 _informantNetworkDirty = false;
         }
 
-        private void FlushInformantNetwork()
-        {
-            if (_informantNetworkDirty) SaveInformantNetwork();
-        }
-
-        private void FlushFactionBranch()
-        {
-            if (_factionBranchDirty)
-                SaveFactionBranch();
-        }
-
         public bool CommitFactionBranch(string branchId)
         {
             SetupFactionBranch();

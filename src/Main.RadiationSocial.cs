@@ -52,11 +52,6 @@ namespace AtomicWar.GodotApp
                 _radiationSocialDirty = false;
         }
 
-        public void FlushRadiationSocialIfDirty()
-        {
-            if (_radiationSocialDirty) SaveRadiationSocial();
-        }
-
         public void ResetRadiationSocial()
         {
             _radiationSocial = null;

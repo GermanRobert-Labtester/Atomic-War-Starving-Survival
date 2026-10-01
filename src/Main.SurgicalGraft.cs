@@ -39,11 +39,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public void FlushSurgicalGraftIfDirty()
-        {
-            if (_surgicalGraftDirty) SaveSurgicalGraft();
-        }
-
         public void ResetSurgicalGraft()
         {
             _surgicalGraft = null;

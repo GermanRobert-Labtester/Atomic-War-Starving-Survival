@@ -99,11 +99,6 @@ namespace AtomicWar.GodotApp
                 _barterDirty = false;
         }
 
-        public void FlushSurvivorBarterIfDirty()
-        {
-            if (_barterDirty) SaveSurvivorBarter();
-        }
-
         public void ResetSurvivorBarter()
         {
             _barter = null;

@@ -127,12 +127,6 @@ namespace AtomicWar.GodotApp
             _difficultySettings?.ActiveDisplayName()
             ?? (_difficultyScalars != null ? _difficultyScalars.PresetId : DifficultyScalarsProvider.Legacy.PresetId);
 
-        public void FlushDifficultySettingsIfDirty()
-        {
-            if (_difficultySettingsDirty)
-                SaveDifficultySettings();
-        }
-
         public void ResetDifficultySettings()
         {
             _difficultySettings = null;

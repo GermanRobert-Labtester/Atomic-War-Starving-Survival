@@ -66,6 +66,10 @@ namespace AtomicWar.GodotApp.UI
             if (IsClosing(panel))
                 return;
 
+            // Remember that this panel has actually been shown, so its close can
+            // be animated even if the panel hid itself first (see AnimateClose).
+            _opened.Add(panel.GetInstanceId());
+
             // Capture the exact rest state so the tween is a strict round trip
             // even for panels that carry a deliberate position/scale/tint.
             Vector2 restPosition = panel.Position;
@@ -109,6 +113,13 @@ namespace AtomicWar.GodotApp.UI
         private static readonly Dictionary<ulong, ClosingState> _closing = new();
 
         /// <summary>
+        /// Panels that entered through <see cref="AnimateOpen"/>. Distinguishes
+        /// "this panel hid itself a moment ago and should still fade out" from
+        /// "this panel was never shown and must not flash into existence".
+        /// </summary>
+        private static readonly HashSet<ulong> _opened = new();
+
+        /// <summary>
         /// Plays the shared exit animation on <paramref name="panel"/>: a short
         /// fade to transparent with a small scale-down, after which the panel is
         /// hidden and its exact rest state restored. Returns <c>true</c> when the
@@ -123,8 +134,6 @@ namespace AtomicWar.GodotApp.UI
             if (panel == null || !GodotObject.IsInstanceValid(panel) || !panel.IsInsideTree())
                 return false;
             if (!CanAnimate)
-                return false;
-            if (!panel.Visible)
                 return false;
             if (_closing.ContainsKey(panel.GetInstanceId()))
                 return true; // already fading out; it will hide itself
@@ -141,24 +150,49 @@ namespace AtomicWar.GodotApp.UI
             panel.PivotOffset = panel.Size / 2f;
             panel.MouseFilter = Control.MouseFilterEnum.Ignore;
 
+            // Register the closing state BEFORE reviving visibility below: the
+            // revive fires VisibilityChanged, whose open hook must see IsClosing
+            // and stand down, or AnimateOpen would fade the panel IN while this
+            // fades it OUT.
+            _closing[instanceId] = state;
+
+            if (!panel.Visible)
+            {
+                // The dominant panel close pattern is
+                // `Visible = false; OnClose?.Invoke();` — it hides the panel before
+                // this seam runs. The panel has not been drawn since, so reviving
+                // it and fading is seamless and gives the close its intended
+                // motion instead of a hard pop. Without this, AnimateClose bailed
+                // out and every such panel snapped shut despite the animation
+                // existing. Only panels that entered through AnimateOpen are
+                // revived: one that was never shown must never flash into being.
+                if (!_opened.Contains(instanceId))
+                {
+                    _closing.Remove(instanceId);
+                    return false;
+                }
+                panel.Visible = true;
+            }
+
             Tween tween = panel.CreateTween();
             tween.SetTrans(Tween.TransitionType.Cubic).SetEase(Tween.EaseType.In);
             tween.TweenProperty(panel, "modulate:a", 0d, CloseDurationSeconds);
             tween.Parallel().TweenProperty(panel, "scale", state.Scale * 0.985f, CloseDurationSeconds);
             tween.Parallel().TweenProperty(panel, "position", state.Position + new Vector2(0f, 4f), CloseDurationSeconds);
             state.Tween = tween;
-            _closing[instanceId] = state;
 
             tween.Finished += () =>
             {
                 if (!GodotObject.IsInstanceValid(panel))
                 {
                     _closing.Remove(instanceId);
+                    _opened.Remove(instanceId);
                     return;
                 }
                 if (!_closing.TryGetValue(instanceId, out var current) || !ReferenceEquals(current, state))
                     return; // superseded by a cancel
                 _closing.Remove(instanceId);
+                _opened.Remove(instanceId);
                 Restore(panel, state);
                 panel.Visible = false;
             };

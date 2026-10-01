@@ -80,13 +80,6 @@ namespace AtomicWar.GodotApp
         public string? GetCaregiverForPatient(string patientId) => System.GetCaregiverForPatient(patientId);
         public float GetBondStrength(string patientId) => System.GetBondStrength(patientId);
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            CaregivingSaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
-
         protected override void UnsubscribeSystemEvents()
         {
             // Events are anonymous lambdas; clearing is handled via Dispose base.

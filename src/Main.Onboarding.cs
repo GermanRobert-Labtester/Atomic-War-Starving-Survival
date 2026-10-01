@@ -22,13 +22,12 @@ namespace AtomicWar.GodotApp
     {
         // ── Fields ────────────────────────────────────────────────────────
         // The [journey] remains engine-free in Core and survives save/load.
-        // Failed actions are tracked per scenario for the contextual-hint
-        // heuristic invoked by the hint panel; persisted with the journey
-        // are stage / assistance / dismiss / completion.
+        // Persisted with the journey are stage / assistance / dismiss /
+        // completion; the host additionally tracks only the dirty flag that
+        // triggers a save. (No per-scenario failure counter exists: failed
+        // commands simply refresh the hint panel.)
         private OnboardingJourney? _onboardingJourney;
         private bool _onboardingDirty;
-        private int _onboardingFailedActions;
-        private double _onboardingLastInteractionSeconds;
         private OnboardingHintPanel? _onboardingHintPanel;
 
         // ── Setup / Save / Restore (substeps 5 + 11) ────────────────────
@@ -134,11 +133,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        private void FlushOnboardingIfDirty()
-        {
-            if (_onboardingDirty) SaveOnboarding();
-        }
-
         // ── Observation hooks (substep 4) ────────────────────────────────
 
         /// <summary>Records a real, reproducible sigil against a genuine
@@ -153,16 +147,14 @@ namespace AtomicWar.GodotApp
             // local play-session recorder; the JSONL stream stays an audit read
             // model and never feeds gameplay.
             RecordPlayMetricSigil(sigil);
-            _onboardingLastInteractionSeconds = 0;
         }
 
         public void ObserveFailedAction(string label)
         {
-            _onboardingFailedActions++;
-            _onboardingLastInteractionSeconds = 0;
-            // Hints are surfacing controlled solely by the hint panel; the
-            // host signals the panel that something failed so it can offer
-            // a contextual cue on next refresh.
+            // Hints are surfaced solely by the hint panel; the host signals the
+            // panel that a command failed so it refreshes (the panel renders the
+            // current objective/hint copy). There is deliberately no per-scenario
+            // counter or cooldown bookkeeping here — the panel owns presentation.
             _onboardingHintPanel?.RefreshView();
         }
 
@@ -255,16 +247,22 @@ namespace AtomicWar.GodotApp
         {
             if (_onboardingJourney == null || _statusLabel == null) return;
             var j = _onboardingJourney;
-            if (j.JourneyComplete) return;
-            var def = j.CurrentStageDef;
-            // Append rather than overwrite so the existing daily briefing
-            // line stays visible.
-            string stageId = def.Id switch
+            if (j.JourneyComplete)
             {
-                OnboardingStage.InventoryUse => "inventory_use",
-                OnboardingStage.DayAdvance => "day_advance",
-                _ => def.Id.ToString().ToLowerInvariant()
-            };
+                // Truthful terminal state: the final objective no longer applies,
+                // so surface the completion copy instead of leaving a stale
+                // "CURRENT: …" claim on the status label forever.
+                _statusLabel.Text = AshfallLocalization.Tr(
+                    "onboarding.status.first_hour_complete",
+                    "The first-hour sequence is complete. The shelter is yours to manage.");
+                return;
+            }
+            var def = j.CurrentStageDef;
+            // Replace the status line with the current objective so a new player
+            // sees a reminder even when the hint panel is closed.
+            // One normalization shared with the hint panel so the status bar
+            // and the panel name the same localization row.
+            string stageId = OnboardingHintPanel.StageLocalizationId(def.Id);
             string title = AshfallLocalization.Tr($"onboarding.{stageId}.title", def.Title);
             string objective = AshfallLocalization.Tr($"onboarding.{stageId}.objective", def.Objective);
             _statusLabel.Text = AshfallLocalization.TrFormat(

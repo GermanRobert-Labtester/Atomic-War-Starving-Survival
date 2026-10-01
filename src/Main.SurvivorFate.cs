@@ -172,11 +172,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        private void FlushSurvivorFateIfDirty()
-        {
-            if (_survivorFateDirty) SaveSurvivorFate();
-        }
-
         public void ResetSurvivorFate()
         {
             if (_survivorFate != null)

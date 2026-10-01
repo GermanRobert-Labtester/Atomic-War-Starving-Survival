@@ -78,11 +78,5 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            MineClearingFlailSaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
     }
 }

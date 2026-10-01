@@ -61,11 +61,10 @@ namespace AtomicWar.GodotApp
         public ActionResult StartStudy(string manualId, string readerId)
         {
             var res = System.StartStudy(manualId, readerId);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Study started: {manualId} by {readerId}";
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? $"Study started: {manualId} by {readerId}"
+                : $"Study refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
@@ -75,12 +74,6 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            LibraryStudySaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
     }
 
     /// <summary>

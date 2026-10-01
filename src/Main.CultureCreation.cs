@@ -46,14 +46,6 @@ namespace AtomicWar.GodotApp
             _cultureCreationDirty = false;
         }
 
-        public void FlushCultureCreationSave()
-        {
-            if (_cultureCreationDirty)
-            {
-                SaveCultureCreation();
-            }
-        }
-
         public void ResetCultureCreation()
         {
             _cultureCreation = null;

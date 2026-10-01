@@ -87,10 +87,19 @@ namespace Ashfall.Core.Combat
             {
                 TryRealtimeFire(input, rng);
                 TickRealtimeAi(arena, dt, rng);
+                TickRealtimeBreach(dt, rng);
             }
 
             if (!_state.Resolved)
                 TickRealtimePinDecay(dt);
+
+            // T23 — realtime bleed-out. Turn-based ticks bleed only in
+            // EndTurn; without a realtime counterpart a downed last enemy
+            // blocked resolution forever (the auto-fire sweep stalled on
+            // every seed that downed rather than outright killed). Anyone
+            // downed bleeds on the same deterministic one-second cadence.
+            if (!_state.Resolved)
+                TickRealtimeBleedOut(dt);
 
             _state.SimTime += dt;
             _state.SimTick++;
@@ -128,6 +137,10 @@ namespace Ashfall.Core.Combat
             {
                 var c = _state.Combatants[i];
                 if (c == null) continue;
+                // T17 — never overwrite a preserved pose (fresh encounters have
+                // none, so behavior there is unchanged; a mid-fight restore
+                // keeps the positions that were captured).
+                if (c.PoseSeeded) continue;
                 if (c.IsDowned)
                 {
                     c.MotionMode = (int)CombatMotionMode.Downed;
@@ -170,6 +183,106 @@ namespace Ashfall.Core.Combat
                 c.ExtractProgress01 = 0f;
                 c.Lane = MathfCompat.Clamp(spawn.lane, 0, 2);
                 c.PoseSeeded = true;
+            }
+        }
+
+        /// <summary>
+        /// T17 — after restoring a realtime-active unresolved save, seed ONLY
+        /// the combatants whose poses were never captured (legacy/foreign
+        /// saves). Deterministic: no jitter rng. Returns true when a seed pass
+        /// ran. Already-seeded poses are never touched.
+        /// </summary>
+        public bool EnsureRealtimePosesSeeded(ISeededRng? rng = null)
+        {
+            if (_state == null || !_state.RealtimeActive || _state.Resolved)
+                return false;
+            bool anyUnseeded = false;
+            for (int i = 0; i < _state.Combatants.Count; i++)
+            {
+                var c = _state.Combatants[i];
+                if (c != null && !c.PoseSeeded) { anyUnseeded = true; break; }
+            }
+            if (!anyUnseeded) return false;
+
+            var arena = CombatArenaCatalog.GetOrDefault(_state.ArenaId);
+            _activeArena = arena;
+            SeedPoses(arena, rng);
+            AddEvent("realtime_poses_seeded", _state.EncounterId,
+                "Restored realtime encounter re-seeded missing arena poses.");
+            Notify();
+            return true;
+        }
+
+        /// <summary>
+        /// T21 — realtime breaching clock: every active breach advances once
+        /// per <see cref="RealtimeBreachAdvanceSeconds"/> of sim time, using
+        /// the tick rng and the same default operator skill/condition the
+        /// turn-based advance uses. Deterministic for a fixed tick sequence.
+        /// </summary>
+        public const float RealtimeBreachAdvanceSeconds = 1f;
+        private float _realtimeBreachAccum;
+
+        /// <summary>
+        /// T23 — realtime bleed-out for every downed combatant (mirrors the
+        /// turn-based TickBleedOut cadence, extended to enemies so a downed
+        /// last hostile cannot block resolution forever). Deterministic.
+        /// </summary>
+        public const float BleedOutIntervalSeconds = 1f;
+        private float _bleedOutAccum;
+
+        private void TickRealtimeBleedOut(float dt)
+        {
+            _bleedOutAccum += dt;
+            while (_bleedOutAccum >= BleedOutIntervalSeconds)
+            {
+                _bleedOutAccum -= BleedOutIntervalSeconds;
+                for (int i = 0; i < _state.Combatants.Count; i++)
+                {
+                    var c = _state.Combatants[i];
+                    if (c == null || !c.IsDowned) continue;
+                    c.BleedTurnsRemaining--;
+                    AddEvent("bleed", c.Id, c.Name + " bleeding out (" + Math.Max(0, c.BleedTurnsRemaining) + " turns).");
+                    if (c.BleedTurnsRemaining <= 0)
+                        Kill(c);
+                }
+                if (_state.Resolved)
+                {
+                    _bleedOutAccum = 0f;
+                    return;
+                }
+            }
+        }
+
+        private void TickRealtimeBreach(float dt, ISeededRng rng)
+        {            if (_state.Barriers == null || _state.Barriers.Count == 0) return;
+            bool anyActive = false;
+            for (int i = 0; i < _state.Barriers.Count; i++)
+            {
+                var b = _state.Barriers[i];
+                if (b != null && !string.IsNullOrEmpty(b.ActiveBreachToolId)
+                    && (b.BreachPhase == BreachPhaseIds.SettingUp || b.BreachPhase == BreachPhaseIds.Clearing))
+                {
+                    anyActive = true;
+                    break;
+                }
+            }
+            if (!anyActive)
+            {
+                _realtimeBreachAccum = 0f;
+                return;
+            }
+
+            _realtimeBreachAccum += dt;
+            if (_realtimeBreachAccum < RealtimeBreachAdvanceSeconds) return;
+            _realtimeBreachAccum -= RealtimeBreachAdvanceSeconds;
+
+            for (int i = 0; i < _state.Barriers.Count; i++)
+            {
+                var b = _state.Barriers[i];
+                if (b == null || string.IsNullOrEmpty(b.ActiveBreachToolId)
+                    || (b.BreachPhase != BreachPhaseIds.SettingUp && b.BreachPhase != BreachPhaseIds.Clearing))
+                    continue;
+                AdvanceBreach(b.Id, rng);
             }
         }
 

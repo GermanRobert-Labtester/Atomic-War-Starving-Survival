@@ -428,6 +428,28 @@ namespace Ashfall.Core.Combat
             return ActionPreflight.Ok;
         }
 
+        /// <summary>
+        /// T14 — bandage preflight: requires a downed squadmate and a standing
+        /// rescuer. Core stays the sole bandage authority (PlayerBandage).
+        /// </summary>
+        public ActionPreflight EvaluateBandage()
+        {
+            if (_state.Resolved) return ActionPreflight.Blocked("Encounter is resolved");
+            CombatantState? downed = null;
+            bool anyStanding = false;
+            var players = LivingPlayers();
+            for (int i = 0; i < players.Count; i++)
+            {
+                var c = players[i];
+                if (c == null) continue;
+                if (c.IsDowned) { if (downed == null) downed = c; }
+                else anyStanding = true;
+            }
+            if (downed == null) return ActionPreflight.Blocked("No downed squadmate to stabilize");
+            if (!anyStanding) return ActionPreflight.Blocked("No standing survivor to apply the bandage");
+            return ActionPreflight.Ok;
+        }
+
         public ActionPreflight EvaluateEndTurn()
         {
             if (_state.Resolved) return ActionPreflight.Blocked("Encounter is resolved");

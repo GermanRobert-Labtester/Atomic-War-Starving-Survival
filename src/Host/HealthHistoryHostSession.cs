@@ -115,11 +115,5 @@ namespace AtomicWar.GodotApp
 
         public HealthHistoryCensus GetCensus() => System.GetCensus();
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            HealthHistorySaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
     }
 }

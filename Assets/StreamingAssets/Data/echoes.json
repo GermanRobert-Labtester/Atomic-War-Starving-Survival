@@ -876,9 +876,9 @@
             "title": "The Nameplates",
             "bodyText": "A tin behind the filtration stack, the kind that held boiled sweets. Fourteen brass nameplates inside, each with two screw holes and a surname. None of the surnames belong to anyone here. Somebody took them down in the first week and could not make themselves throw them away, and neither could anyone since. Fourteen names is a small number to keep, and nobody here has said why it stayed that way.",
             "weight": 1.2,
-            "minDay": 5,
+            "minDay": 2,
             "conditions": {
-                "MinDay": 5
+                "MinDay": 2
             },
             "choices": [
                 {
@@ -923,9 +923,9 @@
             "title": "Unallocated Thermal Footwear",
             "bodyText": "A steel-banded crate in the lower storage sector. The manifest reads: ALLOC-12/DEP. Inside are eight pairs of small thermal insulators designed for pedal extremities. The allocation code corresponds to a sector that was sealed due to atmospheric venting.",
             "weight": 1.0,
-            "minDay": 5,
+            "minDay": 4,
             "conditions": {
-                "MinDay": 5
+                "MinDay": 4
             },
             "choices": [
                 {
@@ -977,9 +977,9 @@
             "title": "Abandoned Caloric Consumption Station",
             "bodyText": "A cold cooking surface holds an oxidized iron pan containing carbonized organic matter. On the adjacent table, eating utensils are symmetrically aligned. The primary consumption space is occupied; the secondary is empty. Operations ceased mid-cycle. The second place is set as carefully as the first.",
             "weight": 1.2,
-            "minDay": 15,
+            "minDay": 6,
             "conditions": {
-                "MinDay": 15
+                "MinDay": 6
             },
             "choices": [
                 {
@@ -1026,9 +1026,9 @@
             "title": "Obsolescent Personnel Ledger",
             "bodyText": "A bound ledger containing 406 phonetic identifiers. A graphite line has been drawn through 42 of them. The graphite implement rests nearby. The ledger tracks the presence of sub-adult units in a centralized facility. The data is no longer relevant.",
             "weight": 1.3,
-            "minDay": 15,
+            "minDay": 7,
             "conditions": {
-                "MinDay": 15
+                "MinDay": 7
             },
             "choices": [
                 {

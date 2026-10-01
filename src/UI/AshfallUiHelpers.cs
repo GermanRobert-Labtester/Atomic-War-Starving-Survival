@@ -253,6 +253,13 @@ namespace AtomicWar.GodotApp.UI
         public static Color ColorSurfaceCard => ToColor(Theme.SurfaceCard);
         public static Color ColorPrimary => ToColor(Theme.Warm);
         public static Color ColorHighlight => ToColor(Theme.Hot);
+
+        /// <summary>
+        /// Neutral modulate (no tint / identity). Named so panels never spell a raw
+        /// engine colour — <c>Colors.White</c> is modulate identity, not a theme
+        /// decision, and reading it as "white text" is a standing misinterpretation.
+        /// </summary>
+        public static Color ColorNeutral => Colors.White;
         public static Color ColorText => ToColor(Theme.Pale);
         public static Color ColorMuted => ToColor(Theme.Muted);
         public static Color ColorDim => ToColor(Theme.Dim);
@@ -763,14 +770,87 @@ namespace AtomicWar.GodotApp.UI
                 ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize
             };
             string key = itemId.StartsWith("item_") ? itemId : $"item_{itemId}";
-            rect.Texture = AssetRegistry.GetItem(itemId).Texture
-                        ?? AssetRegistry.GetItem(key).Texture
-                        ?? TryLoadTexture($"res://assets/art/{key}.jpg")
-                        ?? TryLoadTexture($"res://assets/art/{itemId}.jpg")
-                        ?? TryLoadTexture($"res://assets/art/{key}.png")
-                        ?? TryLoadTexture($"res://assets/art/{itemId}.png")
-                        ?? TryLoadTexture($"res://assets/ui/Icons/icon_pill_dependency.svg");
+            rect.Texture = ResolveItemTexture(itemId);
             return rect;
+        }
+
+        /// <summary>
+        /// Resolves an item's art through the canonical registry chain and falls
+        /// back to the shared placeholder icon. Presentation-only.
+        ///
+        /// <see cref="MakeItemIcon"/> wraps this in a <see cref="TextureRect"/>;
+        /// callers that need a raw texture (e.g.
+        /// <c>AshfallDataGrid.Cell.IconTexture</c>) use this directly, so every
+        /// surface resolves item art through exactly one chain.
+        /// </summary>
+        public static Texture2D? ResolveItemTexture(string itemId)
+        {
+            if (string.IsNullOrEmpty(itemId))
+                return TryLoadTexture(AssetRegistry.FallbackIconPath);
+
+            string key = itemId.StartsWith("item_") ? itemId : $"item_{itemId}";
+            return AssetRegistry.GetItem(itemId).Texture
+                ?? AssetRegistry.GetItem(key).Texture
+                ?? TryLoadTexture($"res://assets/art/{key}.jpg")
+                ?? TryLoadTexture($"res://assets/art/{itemId}.jpg")
+                ?? TryLoadTexture($"res://assets/art/{key}.png")
+                ?? TryLoadTexture($"res://assets/art/{itemId}.png")
+                // Canonical placeholder — never a domain-specific sprite.
+                // The old pill icon made every un-arted item look medical.
+                ?? TryLoadTexture(AssetRegistry.FallbackIconPath);
+        }
+
+        /// <summary>
+        /// Shared value-change feedback for plain readout labels: assigns the text
+        /// and, only when it actually changed, plays the shared settle pulse.
+        /// Same convention as <c>AshfallMetricCard.SetValue</c>, for readouts that
+        /// are not metric cards. Callers keep ownership of colour/criticality.
+        /// </summary>
+        public static void SetTextPulsed(Label label, string text)
+        {
+            if (label == null || !GodotObject.IsInstanceValid(label)) return;
+            string next = text ?? string.Empty;
+            if (string.Equals(label.Text, next, StringComparison.Ordinal)) return;
+            label.Text = next;
+            UiPanelFlow.Pulse(label);
+        }
+
+        private static readonly System.Collections.Concurrent.ConcurrentDictionary<ulong, Tween> _barTweens = new();
+
+        /// <summary>
+        /// Shared value-change cue for gauge / progress fills: eases the bar to its
+        /// new value instead of snapping, so a moving meter reads as motion rather
+        /// than a redraw. No-op when unchanged, and falls back to an instant set
+        /// under ReducedMotion, headless, or capture — the accessible path is
+        /// always available.
+        /// </summary>
+        public static void SetBarValue(ProgressBar bar, float value)
+        {
+            if (bar == null || !GodotObject.IsInstanceValid(bar)) return;
+
+            float target = Math.Clamp(value, (float)bar.MinValue, (float)bar.MaxValue);
+            ulong id = bar.GetInstanceId();
+
+            if (!UiMotion.CanAnimate || Math.Abs(bar.Value - target) < 0.01f)
+            {
+                if (_barTweens.TryRemove(id, out var stale)) stale?.Kill();
+                bar.Value = target;
+                return;
+            }
+
+            // One tween per bar: a newer update supersedes the running one rather
+            // than stacking, so rapid refreshes stay smooth instead of jittering.
+            if (_barTweens.TryRemove(id, out var previous)) previous?.Kill();
+
+            var tween = bar.CreateTween();
+            tween.SetTrans(Tween.TransitionType.Cubic).SetEase(Tween.EaseType.Out);
+            tween.TweenProperty(bar, "value", target, 0.18f);
+            _barTweens[id] = tween;
+            tween.Finished += () =>
+            {
+                if (_barTweens.TryGetValue(id, out var cur) && ReferenceEquals(cur, tween))
+                    _barTweens.TryRemove(id, out _);
+            };
         }
 
         // ── Color Conversion ────────────────────────────────────────────
@@ -905,6 +985,10 @@ namespace AtomicWar.GodotApp.UI
                     if (img != null)
                     {
                         var tex = ImageTexture.CreateFromImage(img);
+                        // Image is a native Godot object. CreateFromImage copies the
+                        // pixel data, so dropping the managed wrapper here would leak
+                        // the native Image at exit — release it explicitly.
+                        img.Dispose();
                         _fallbackTextureCache[path] = tex;
                         return tex;
                     }
@@ -927,6 +1011,9 @@ namespace AtomicWar.GodotApp.UI
                         if (img != null)
                         {
                             var tex = ImageTexture.CreateFromImage(img);
+                            // See above: the native Image must be released once the
+                            // texture has copied its data.
+                            img.Dispose();
                             _fallbackTextureCache[path] = tex;
                             return tex;
                         }
@@ -987,8 +1074,72 @@ namespace AtomicWar.GodotApp.UI
             {
                 var child = parent.GetChild(0);
                 parent.RemoveChild(child);
-                child.Free();
+                FreeDetached(child);
             }
+        }
+
+        /// <summary>
+        /// Frees a node that has already been detached from its parent.
+        ///
+        /// Immediate free is the contract — callers (and the ownership gates) rely
+        /// on the node being gone right away. But a refresh triggered from inside a
+        /// control's own signal dispatch (the common <c>button.Pressed += RefreshView</c>
+        /// pattern) reaches here while that very control is still being dispatched;
+        /// the engine has it locked, so <c>Free()</c> fails with "Object is locked
+        /// and can't be freed" and the node is orphaned forever. Detect that case
+        /// and queue the free instead, so the node still dies this frame.
+        /// </summary>
+        private static void FreeDetached(Node child)
+        {
+            if (child == null || !GodotObject.IsInstanceValid(child)) return;
+            child.Free();
+            // Still valid ⇒ the free was refused (locked during its own dispatch).
+            if (GodotObject.IsInstanceValid(child) && !child.IsQueuedForDeletion())
+                child.QueueFree();
+        }
+
+        // ── Optional panel lifecycle hooks ──────────────────────────────────
+
+        /// <summary>
+        /// Invokes an optional panel lifecycle hook by name, only when the panel
+        /// actually declares it; <paramref name="fallbackMethod"/> is tried when
+        /// the primary hook is absent.
+        ///
+        /// <see cref="IBindablePanel"/> contracts only <c>IsBound</c> and
+        /// <c>Unbind()</c>: <c>Open()</c> and <c>RefreshView()</c> are conventions,
+        /// not API. An unguarded <c>Call("Open")</c> makes the engine log
+        /// "Nonexistent function 'Open'" for every panel that omits the convention
+        /// (47 at time of writing) even when the caller swallows the C# exception
+        /// — pure error spam that masks real failures. Reflecting first keeps the
+        /// engine log clean and lets callers prefer a hook the panel really has.
+        /// </summary>
+        public static void InvokePanelHook(Node panel, string method, string? fallbackMethod = null)
+        {
+            if (panel == null || !GodotObject.IsInstanceValid(panel)) return;
+            if (TryInvokePanelHook(panel, method)) return;
+            if (!string.IsNullOrEmpty(fallbackMethod)) TryInvokePanelHook(panel, fallbackMethod!);
+        }
+
+        private static bool TryInvokePanelHook(Node panel, string method)
+        {
+            var m = panel.GetType().GetMethod(
+                method,
+                System.Reflection.BindingFlags.Instance
+                    | System.Reflection.BindingFlags.Public
+                    | System.Reflection.BindingFlags.NonPublic);
+            if (m == null || m.GetParameters().Length != 0) return false;
+            try
+            {
+                m.Invoke(panel, null);
+            }
+            catch (Exception ex)
+            {
+                // Declared but refused (typically an unbound session). Reported as
+                // a warning, not an error: the caller explicitly asked for an
+                // optional hook and the panel answered.
+                CatalogDiagnostics.Warn(panel.GetType().Name, $"panel hook '{method}'", ex);
+            }
+            return true;
         }
 
         /// <summary>
@@ -1008,7 +1159,7 @@ namespace AtomicWar.GodotApp.UI
                     continue;
 
                 parent.RemoveChild(child);
-                child.Free();
+                FreeDetached(child);
             }
         }
 

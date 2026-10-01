@@ -70,11 +70,6 @@ namespace AtomicWar.GodotApp
                 _diplomacyDirty = false;
         }
 
-        public void FlushDiplomacyIfDirty()
-        {
-            if (_diplomacyDirty) SaveDiplomacy();
-        }
-
         public void ResetDiplomacy()
         {
             _diplomacy = null;

@@ -87,14 +87,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public void FlushMechanicalDrivelineIfDirty()
-        {
-            if (_mechanicalDrivelineDirty)
-            {
-                SaveMechanicalDriveline();
-            }
-        }
-
         public void ResetMechanicalDriveline()
         {
             _mechanicalDriveline = null;

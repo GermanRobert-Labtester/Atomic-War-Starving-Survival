@@ -414,6 +414,8 @@ namespace AtomicWar.GodotApp
             var fitness = Roster.PreviewRoleFitness(survivorId, role);
             if (fitness != null && fitness.RequiresConfirmation && !confirmFitnessWarning)
             {
+                LastEvent = "Duty assignment blocked: fitness_warning_confirmation_required";
+                RaiseStateChanged();
                 return new CommandResult(
                     PlayerCommandCode.AssignRole,
                     ActionResult.Blocked("fitness_warning_confirmation_required", "duty_roster.fitness_warning_confirmation_required"),
@@ -432,8 +434,12 @@ namespace AtomicWar.GodotApp
                 if (fitness != null && fitness.RequiresConfirmation && confirmFitnessWarning)
                     Roster.AcknowledgeFitnessWarning(role, survivorId, Clock.Day);
                 LastEvent = $"Duty assigned: {role} = {survivorId}";
-                RaiseStateChanged();
             }
+            else
+            {
+                LastEvent = $"Duty assignment refused: {result.FailureCode}";
+            }
+            RaiseStateChanged();
             return result;
         }
     }

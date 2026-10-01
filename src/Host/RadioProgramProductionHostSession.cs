@@ -42,37 +42,41 @@ namespace AtomicWar.GodotApp
         public string StartPrep(string templateId, string presenterId, int day)
         {
             var result = System.StartPrep(templateId, presenterId, day);
-            RaiseStateChanged();
-            return result.Status == ActionResult.StatusKind.Success
+            LastEvent = result.Status == ActionResult.StatusKind.Success
                 ? $"Prep started for {templateId}."
                 : $"Cannot start prep ({result.FailureCode}).";
+            RaiseStateChanged();
+            return LastEvent;
         }
 
         public string CancelJob(string jobId)
         {
             var result = System.CancelJob(jobId);
-            RaiseStateChanged();
-            return result.Status == ActionResult.StatusKind.Success
+            LastEvent = result.Status == ActionResult.StatusKind.Success
                 ? "Program prep cancelled."
                 : $"Cannot cancel ({result.FailureCode}).";
+            RaiseStateChanged();
+            return LastEvent;
         }
 
         public string TryDeliver(string jobId, ScheduledBroadcastResult delivery, int day)
         {
             var result = System.TryDeliver(jobId, delivery, day);
-            RaiseStateChanged();
-            return result.Status == ActionResult.StatusKind.Success
+            LastEvent = result.Status == ActionResult.StatusKind.Success
                 ? "Program delivered."
                 : $"Delivery blocked ({result.FailureCode}).";
+            RaiseStateChanged();
+            return LastEvent;
         }
 
         public string ResolveFollowUp(string hookId, string resolutionAction, int day)
         {
             var result = System.ResolveFollowUpHook(hookId, resolutionAction, day);
-            RaiseStateChanged();
-            return result.Status == ActionResult.StatusKind.Success
+            LastEvent = result.Status == ActionResult.StatusKind.Success
                 ? $"Follow-up resolved ({hookId})."
                 : $"Cannot resolve follow-up ({result.FailureCode}).";
+            RaiseStateChanged();
+            return LastEvent;
         }
 
         public System.Collections.Generic.IReadOnlyList<RadioProgramFollowUpHook> GetUnresolvedFollowUps() =>
@@ -91,9 +95,5 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
-        public override void Save()
-        {
-            RadioProgramProductionSaveStore.TrySave(CaptureSave());
-        }
     }
 }

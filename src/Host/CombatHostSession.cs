@@ -80,6 +80,8 @@ namespace AtomicWar.GodotApp
             Engine.OnEncounterEnded += s =>
             {
                 LastEvent = "Combat ended: " + s.OutcomeText;
+                // T12 — a resolved encounter must not keep consuming pump ticks.
+                SetRealtimePumpEnabled(false);
                 SyncBoundWeaponsAfterCombat(s);
                 int factionConsequences = ApplyFactionConsequences(s);
                 if (factionConsequences > 0)
@@ -304,6 +306,12 @@ namespace AtomicWar.GodotApp
             {
                 session.Engine.RestoreState(save);
                 session.LastEvent = "Combat state restored from save.";
+                // T17 — a restored mid-realtime encounter must keep ticking:
+                // the pump flag is per-session, so without this the loaded
+                // fight would freeze exactly like the pre-T12 dead-end.
+                var rs = session.Engine.State;
+                if (rs != null && rs.RealtimeActive && !rs.Resolved)
+                    session.SetRealtimePumpEnabled(true);
             }
             return session;
         }
@@ -339,7 +347,8 @@ namespace AtomicWar.GodotApp
             int enemyHealth = 0,
             int? seed = null,
             IReadOnlyList<string>? enemyCombatantIds = null,
-            bool isSelfDefense = false)
+            bool isSelfDefense = false,
+            IReadOnlyList<string>? obstacleProfileIds = null)
         {
             if (!Engine.State.Resolved && !string.IsNullOrEmpty(Engine.State.EncounterId)
                 && Engine.State.Phase != (int)CombatPhase.Setup)
@@ -466,6 +475,20 @@ namespace AtomicWar.GodotApp
             }
 
             if (ok) Engine.State.IsSelfDefense = isSelfDefense;
+
+            // T24 — authored obstacles: a scenario may fortify the arena
+            // (den raids). Profiles resolve from the breaching catalog.
+            if (ok && obstacleProfileIds != null)
+            {
+                for (int i = 0; i < obstacleProfileIds.Count; i++)
+                {
+                    string profileId = obstacleProfileIds[i];
+                    if (string.IsNullOrEmpty(profileId)) continue;
+                    var barrier = Engine.EnsureObstacleBarrier("bar_" + profileId + "_" + i, profileId);
+                    if (barrier == null)
+                        GD.Print($"[Combat] obstacle profile '{profileId}' not in breaching catalog — skipped.");
+                }
+            }
 
             // DEC-358: arm fixed-tick realtime clock after a successful engage.
             if (ok)
@@ -619,7 +642,8 @@ namespace AtomicWar.GodotApp
         /// </summary>
         public int PumpRealtime(float wallDt)
         {
-            if (!_realtimePumpEnabled || Engine.State == null || !Engine.State.RealtimeActive)
+            if (!_realtimePumpEnabled || Engine.State == null
+                || !Engine.State.RealtimeActive || Engine.State.Resolved)
                 return 0;
 
             if (wallDt < 0f) wallDt = 0f;
@@ -701,6 +725,7 @@ namespace AtomicWar.GodotApp
         public ActionPreflight EvaluateReload(string subjectId) => Engine.EvaluateReload(subjectId);
         public ActionPreflight EvaluateRepair(string subjectId) => Engine.EvaluateRepair(subjectId);
         public ActionPreflight EvaluateRetreat() => Engine.EvaluateRetreat();
+        public ActionPreflight EvaluateBandage() => Engine.EvaluateBandage();
         public ActionPreflight EvaluateEndTurn() => Engine.EvaluateEndTurn();
 
         /// <summary>Deterministic roll seed for this action (host owns seeding).</summary>

@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 312,
-  "headless_test_count": 310,
+  "total_tests": 317,
+  "headless_test_count": 315,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -244,7 +244,9 @@
       "action": "PortContractSelfTest",
       "category": "Core & System Gates",
       "primary_flag": "--port-contract-selftest",
-      "aliases": [],
+      "aliases": [
+        "--port-contracts-selftest"
+      ],
       "description": "Plan 36: Port Contracts & Host Wiring \u2014 validates all Core integration seams against docs/ci/port_contract_policy.json and runtime host collaborator/port wiring",
       "headless_compatible": true,
       "expected_summary_id": "port_contract_selftest",
@@ -845,7 +847,9 @@
       "action": "OutpostSettlementSelfTest",
       "category": "Expansions & Campaign Modules",
       "primary_flag": "--outpost-settlement-selftest",
-      "aliases": [],
+      "aliases": [
+        "--outposts-selftest"
+      ],
       "description": "Plan 58 outposts & second holdfast: authored catalog, establish/garrison/supply lifecycle, daily consume, capture round-trip",
       "headless_compatible": true,
       "expected_summary_id": "outpost_settlement_selftest",
@@ -949,6 +953,20 @@
       "description": "Plan 145 unified ending resolution & epilogue personalization: political, social, moral, personal, and expedition resolution",
       "headless_compatible": true,
       "expected_summary_id": "unified_ending_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "year_two_chapter_selftest",
+      "action": "YearTwoChapterSelfTest",
+      "category": "Expansions & Campaign Modules",
+      "primary_flag": "--year-two-chapter-selftest",
+      "aliases": [
+        "--play-on-selftest",
+        "--chapter-selftest"
+      ],
+      "description": "Year Two Package P2: Play On chapter continuation, dual verb reading, and non-terminal continuation gate",
+      "headless_compatible": true,
+      "expected_summary_id": "year_two_chapter_selftest",
       "timeout_seconds": 30
     },
     {
@@ -1253,7 +1271,9 @@
       "action": "InformantNetworkSelfTest",
       "category": "Expansions & Campaign Modules",
       "primary_flag": "--informant-network-selftest",
-      "aliases": [],
+      "aliases": [
+        "--the-network-selftest"
+      ],
       "description": "Plan 146 batch-4 / A.83: informant tradecraft \u2014 recruitment, method exposure, deterministic ops, drift, interrogation doctrine, sweeps, save ride",
       "headless_compatible": true,
       "expected_summary_id": "informant_network_selftest",
@@ -1264,7 +1284,9 @@
       "action": "SubsidenceSelfTest",
       "category": "Expansions & Campaign Modules",
       "primary_flag": "--subsidence-selftest",
-      "aliases": [],
+      "aliases": [
+        "--the-underneath-selftest"
+      ],
       "description": "Plan 146 batch-4 / A.56: subterranean subsidence strata crosswalk, daily integrity decay, shoring mitigation, evacuation gate, and topology evaluation",
       "headless_compatible": true,
       "expected_summary_id": "subsidence_selftest",
@@ -2413,6 +2435,19 @@
       "description": "Plan 216: Survivor exercise & physical training, athletic conditioning, workout routines, deconditioning, save persistence, and UI binding",
       "headless_compatible": true,
       "expected_summary_id": "exercise_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "world_incidents_selftest",
+      "action": "WorldIncidentsSelfTest",
+      "category": "Host Domains & Save Stores",
+      "primary_flag": "--world-incidents-selftest",
+      "aliases": [
+        "--events-picker-selftest"
+      ],
+      "description": "World incidents (events.json): weighted runtime picker as the third fallback of the per-day decision stream, day/flag/weather gating, scheduled follow-ups, consequence port routing, and save persistence",
+      "headless_compatible": true,
+      "expected_summary_id": "world_incidents_selftest",
       "timeout_seconds": 30
     },
     {
@@ -3605,6 +3640,7 @@
       "primary_flag": "--ui-accessibility-selftest",
       "aliases": [
         "--accessibility-selftest",
+        "--ui-access-selftest",
         "--ui-a11y-selftest"
       ],
       "description": "Verify focus order, keyboard close action, readable labels, and modal dismissal paths",
@@ -3698,6 +3734,44 @@
       "description": "Real Main-composed player journey (Plans #5/#7/#8/#9): New Game -> ComposeCampaign() -> typed gameplay action -> real day advance -> SaveAll -> reset -> Continue -> restored state -> post-load action; combat auto-spawn via expedition encounter trigger -> victory loot & weapon-condition write-back (Plan #9); Holdfast trade against the shared inventory -> day advance -> save/reload (Plan #7); radiation exposure -> treatment -> save/reload (Plan #8)",
       "headless_compatible": true,
       "expected_summary_id": "real_campaign_journey_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "failure_restart_selftest",
+      "action": "FailureRestartSelfTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--failure-restart-selftest",
+      "aliases": [
+        "--restart-journey-selftest",
+        "--gameover-restart-selftest"
+      ],
+      "description": "Failure & restart path proof (Task 9): New Game -> survivor deaths through the fate pipeline -> ShowGameOver terminal seal -> ReturnToMenu -> second New Game with no stale state -> Continue after a simulated crash -> corrupt campaign.json fails closed with the live session intact -> verified backup recovery",
+      "headless_compatible": true,
+      "expected_summary_id": "failure_restart_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "food_loop_selftest",
+      "action": "FoodLoopSelfTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--food-loop-selftest",
+      "aliases": [],
+      "description": "Food loop from the UI: fresh-game starter cooking recipes are known (discovery list regression gate), kitchen panel prep -> real day advance -> pantry portions -> serve-all reduces hunger, holdfast consume seam eats/drinks, Plan 136 cooking authority live in the composed game",
+      "headless_compatible": true,
+      "expected_summary_id": "food_loop_selftest",
+      "timeout_seconds": 30
+    },
+    {
+      "test_id": "reasonable_player_selftest",
+      "action": "ReasonablePlayerSelfTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--reasonable-player-selftest",
+      "aliases": [
+        "--reasonable-player-bot-selftest"
+      ],
+      "description": "Reasonable player week-1 bot: deterministic ration/cook/plant/fortify policy over real Core systems and authored data, swept across seeds and difficulty presets against the no-action baseline",
+      "headless_compatible": true,
+      "expected_summary_id": "reasonable_player_selftest",
       "timeout_seconds": 30
     },
     {

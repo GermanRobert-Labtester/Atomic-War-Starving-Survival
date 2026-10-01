@@ -129,6 +129,8 @@ namespace AtomicWar.GodotApp.UI
             if (target == null || !GodotObject.IsInstanceValid(target)) return;
             if (!UiMotion.CanAnimate) return;
 
+            target.PivotOffset = target.Size / 2f;
+
             var tweener = target.CreateTween();
             tweener.TweenProperty(target, "scale", new Vector2(strength, strength), 0.06f)
                 .SetTrans(Tween.TransitionType.Cubic).SetEase(Tween.EaseType.Out);

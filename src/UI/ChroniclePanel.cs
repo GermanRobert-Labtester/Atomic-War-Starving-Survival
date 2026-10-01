@@ -212,7 +212,7 @@ namespace AtomicWar.GodotApp.UI
                 foreach (var ch in chapters)
                 {
                     _priorChaptersContainer.AddChild(AshfallUiHelpers.MakeBody(
-                        $"[Chapter {ch.chapterIndex}] {ch.chapterTitle} — Reading Day {ch.readingDay} — Ending: {ch.endingTitle}"));
+                        $"[Chapter {ch.chapterIndex}] {ch.chapterTitle} — Reading Day {ch.readingDay} — Sealed Day {ch.sealedDay} — Profile {ch.profileId} — Ending: {ch.endingTitle}"));
                 }
             }
             else

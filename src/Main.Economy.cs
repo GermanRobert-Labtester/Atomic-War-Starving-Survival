@@ -39,11 +39,6 @@ namespace AtomicWar.GodotApp
         private Ashfall.Core.Radio.FactionRadioEngine _tradeRadio = null!;
         private TradeVoiceResolver _tradeVoiceResolver = null!;
 
-        private void FlushCaravanIfDirty()
-        {
-            if (_caravansDirty) SaveCaravans();
-        }
-
         private void SetupEconomy()
         {
             if (_economy != null) return;
@@ -166,11 +161,6 @@ namespace AtomicWar.GodotApp
                 _economyDirty = false;
                 GD.Print("[Ashfall Godot] Economy save written.");
             }
-        }
-
-        private void FlushEconomyIfDirty()
-        {
-            if (_economyDirty) SaveEconomy();
         }
 
         /// <summary>
@@ -298,14 +288,14 @@ namespace AtomicWar.GodotApp
 
         private void CloseSilentFoundryPanel()
         {
-            _silentFoundryPanel.Visible = false;
+            ClosePanelAnimated(_silentFoundryPanel);
         }
 
         private void CloseTradePanel()
         {
             if (_silentFoundry != null)
                 _silentFoundry.StateChanged -= _tradePanel.RefreshView;
-            _tradePanel.Visible = false;
+            ClosePanelAnimated(_tradePanel);
         }
 
         private TradeVoiceResolver GetTradeVoiceResolver()
@@ -384,12 +374,12 @@ namespace AtomicWar.GodotApp
 
         private void CloseEconomyPanel()
         {
-            _economyPanel.Visible = false;
+            ClosePanelAnimated(_economyPanel);
         }
 
         private void CloseEconomyDetailPanel()
         {
-            _economyDetailPanel.Visible = false;
+            ClosePanelAnimated(_economyDetailPanel);
         }
 
     }

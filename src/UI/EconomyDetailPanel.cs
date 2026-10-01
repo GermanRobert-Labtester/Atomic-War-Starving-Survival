@@ -130,7 +130,7 @@ namespace AtomicWar.GodotApp.UI
                     var quote = _economy.ExplainPrice(d.itemId);
                     string name = good?.displayName ?? d.itemId;
                     string why = FormatTopFactors(quote);
-                    AddRow(_marketList,
+                    AddItemRow(_marketList, d.itemId,
                         $"{name} — {quote.finalPrice:0.0} · demand ×{d.multiplier:0.00}{why}",
                         Ashfall.Core.UI.Theme.Pale);
                     demandShown++;
@@ -344,6 +344,28 @@ namespace AtomicWar.GodotApp.UI
             label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
             label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(col));
             parent.AddChild(label);
+        }
+
+        /// <summary>
+        /// Item variant of <see cref="AddRow"/>: leads with the good's resolved art
+        /// so market rows are recognisable at a glance. Art resolves through the
+        /// shared registry chain (canonical placeholder when nothing matches).
+        /// </summary>
+        private void AddItemRow(VBoxContainer parent, string itemId, string text, (float r, float g, float b, float a) col)
+        {
+            var row = new HBoxContainer();
+            row.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingXs);
+            var icon = AshfallUiHelpers.MakeItemIcon(itemId, 20);
+            icon.TooltipText = itemId;
+            row.AddChild(icon);
+
+            var label = new Label { Text = text };
+            label.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            label.CustomMinimumSize = new Vector2(380, 0);
+            label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(col));
+            row.AddChild(label);
+            parent.AddChild(row);
         }
 
         private Label MakeDimLine(string text)

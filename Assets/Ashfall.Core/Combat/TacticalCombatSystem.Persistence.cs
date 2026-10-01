@@ -49,7 +49,8 @@ namespace Ashfall.Core.Combat
                     WeaponName = w != null ? (CombatCatalog.GetWeapon(w.WeaponId)?.displayName ?? w.WeaponId) : "—",
                     WeaponConditionPct = w != null ? (int)Math.Round(w.ConditionPct * 100f) : 0,
                     WeaponJammed = w != null && w.IsJammed,
-                    WeaponAmmo = w != null ? w.AmmoId : string.Empty
+                    WeaponAmmo = w != null ? w.AmmoId : string.Empty,
+                    WeaponAmmoRemaining = w != null ? w.AmmoRemaining : -1
                 };
                 if (c.IsDowned) csnap.Status = "DOWNED (" + c.BleedTurnsRemaining + ")";
                 else if (c.IsPinned) csnap.Status = "PINNED";
@@ -131,6 +132,9 @@ namespace Ashfall.Core.Combat
             if (saved == null) return;
             var migrated = Migrate(saved);
             _state = migrated;
+            // T17 — legacy/foreign realtime saves keep zero poses; seed only
+            // what is missing so a restored mid-fight encounter stays playable.
+            EnsureRealtimePosesSeeded();
             Notify();
         }
 

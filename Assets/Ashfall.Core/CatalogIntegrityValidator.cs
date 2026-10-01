@@ -996,6 +996,13 @@ namespace Ashfall.Core
             // terrain vocabulary, neutral default, and upkeep constraints.
             ValidateVehicleArmorGradeCatalog(dataDirectory, files, report);
 
+            // T18c — chronic-conditions authority. The generic walker cannot
+            // resolve bare condition/accommodation/item ids, so this typed pass
+            // owns schema, unique ids, severity vocabulary, positive capability
+            // penalties, recommended-accommodation resolution, and canonical
+            // item references for maintenance costs.
+            ValidateChronicConditionsCatalog(dataDirectory, files, report);
+
             // Expansion 36: strict watch operations catalog and canonical
             // location references. The runtime loader is the same contract.
             ValidateNightWatchOperationsCatalog(dataDirectory, files, report);
@@ -1471,6 +1478,191 @@ namespace Ashfall.Core
                 document?.Dispose();
             }
         }
+
+        /// <summary>
+        /// T18c — chronic-conditions catalog integrity. The generic walker cannot
+        /// resolve these references (bare condition ids, accommodation ids, and
+        /// unprefixed item ids), so this typed pass owns: schema, unique ids,
+        /// severity vocabulary, positive capability penalties,
+        /// recommended-accommodation resolution, and canonical item references
+        /// for maintenance costs. A dead maintenance cost makes an accommodation
+        /// unfittable, which is exactly the T18 defect this gate prevents.
+        /// </summary>
+        public static void ValidateChronicConditionsCatalog(
+            string dataDirectory,
+            IFileIO files,
+            CatalogIntegrityReport report)
+        {
+            const string fileName = "chronic_conditions.json";
+            if (string.IsNullOrEmpty(dataDirectory) || files == null || report == null)
+                return;
+
+            string path = files.Combine(dataDirectory, fileName);
+            if (!files.FileExists(path))
+                return;
+
+            JsonDocument? document = null;
+            try
+            {
+                string raw = files.ReadAllText(path);
+                if (string.IsNullOrWhiteSpace(raw))
+                {
+                    report.Error(fileName + ": catalog is empty");
+                    return;
+                }
+                document = JsonDocument.Parse(raw);
+                JsonElement root = document.RootElement;
+                if (root.ValueKind != JsonValueKind.Object)
+                {
+                    report.Error(fileName + ": root must be an object");
+                    return;
+                }
+
+                if (!root.TryGetProperty("schema_version", out var schema)
+                    || schema.ValueKind != JsonValueKind.Number
+                    || !schema.TryGetInt32(out int schemaVersion)
+                    || schemaVersion != 1)
+                    report.Error(fileName + ": schema_version must be 1");
+
+                var itemIds = new HashSet<string>(StringComparer.Ordinal);
+                string itemsPath = files.Combine(dataDirectory, "items.json");
+                if (files.FileExists(itemsPath))
+                {
+                    try
+                    {
+                        using var itemsDocument = JsonDocument.Parse(files.ReadAllText(itemsPath));
+                        CollectCatalogIds(itemsDocument.RootElement, itemIds);
+                    }
+                    catch (Exception ex)
+                    {
+                        report.Warn(fileName + ": could not parse items.json for maintenance-cost check: " + ex.Message);
+                    }
+                }
+
+                var accommodationIds = new HashSet<string>(StringComparer.Ordinal);
+                if (root.TryGetProperty("accommodations", out var accommodations)
+                    && accommodations.ValueKind == JsonValueKind.Array)
+                {
+                    for (int i = 0; i < accommodations.GetArrayLength(); i++)
+                    {
+                        JsonElement row = accommodations[i];
+                        string rowPath = fileName + ".accommodations[" + i + "]";
+                        if (row.ValueKind != JsonValueKind.Object)
+                        {
+                            report.Error(rowPath + ": row must be an object");
+                            continue;
+                        }
+
+                        string id = ChronicString(row, "accommodation_id");
+                        if (string.IsNullOrEmpty(id))
+                            report.Error(rowPath + ": accommodation_id is required");
+                        else if (!accommodationIds.Add(id))
+                            report.Error(rowPath + ": duplicate accommodation_id '" + id + "'");
+
+                        if (string.IsNullOrEmpty(ChronicString(row, "display_name")))
+                            report.Error(rowPath + ": display_name is required");
+
+                        if (!row.TryGetProperty("maintenance_cost_items", out var costs)
+                            || costs.ValueKind != JsonValueKind.Array)
+                        {
+                            report.Error(rowPath + ": maintenance_cost_items must be an array");
+                            continue;
+                        }
+
+                        for (int c = 0; c < costs.GetArrayLength(); c++)
+                        {
+                            string costId = costs[c].ValueKind == JsonValueKind.String
+                                ? costs[c].GetString() ?? string.Empty
+                                : string.Empty;
+                            if (string.IsNullOrEmpty(costId))
+                            {
+                                report.Error(rowPath + ": maintenance_cost_items[" + c + "] must be a string");
+                                continue;
+                            }
+                            // Only enforce when items.json actually parsed; a missing
+                            // items.json is reported by the generic pass, not here.
+                            if (itemIds.Count > 0 && !itemIds.Contains(costId))
+                                report.Error(rowPath + ": maintenance_cost_items references unknown item '" + costId + "'");
+                        }
+                    }
+                }
+                else
+                {
+                    report.Error(fileName + ": accommodations array is required");
+                }
+
+                if (!root.TryGetProperty("conditions", out var conditions)
+                    || conditions.ValueKind != JsonValueKind.Array)
+                {
+                    report.Error(fileName + ": conditions array is required");
+                    return;
+                }
+
+                var conditionIds = new HashSet<string>(StringComparer.Ordinal);
+                for (int i = 0; i < conditions.GetArrayLength(); i++)
+                {
+                    JsonElement row = conditions[i];
+                    string rowPath = fileName + ".conditions[" + i + "]";
+                    if (row.ValueKind != JsonValueKind.Object)
+                    {
+                        report.Error(rowPath + ": row must be an object");
+                        continue;
+                    }
+
+                    string id = ChronicString(row, "condition_id");
+                    if (string.IsNullOrEmpty(id))
+                        report.Error(rowPath + ": condition_id is required");
+                    else if (!conditionIds.Add(id))
+                        report.Error(rowPath + ": duplicate condition_id '" + id + "'");
+
+                    if (string.IsNullOrEmpty(ChronicString(row, "display_name")))
+                        report.Error(rowPath + ": display_name is required");
+
+                    string severity = ChronicString(row, "severity");
+                    if (severity != "mild" && severity != "moderate" && severity != "severe")
+                        report.Error(rowPath + ": severity must be one of mild/moderate/severe");
+
+                    string recommended = ChronicString(row, "recommended_accommodation_id");
+                    if (!string.IsNullOrEmpty(recommended) && !accommodationIds.Contains(recommended))
+                        report.Error(rowPath + ": recommended_accommodation_id '" + recommended + "' does not resolve");
+
+                    if (!row.TryGetProperty("capability_penalties", out var penalties)
+                        || penalties.ValueKind != JsonValueKind.Object)
+                    {
+                        report.Error(rowPath + ": capability_penalties must be an object");
+                        continue;
+                    }
+
+                    foreach (var penalty in penalties.EnumerateObject())
+                    {
+                        if (penalty.Value.ValueKind != JsonValueKind.Number)
+                        {
+                            report.Error(rowPath + ": capability_penalties." + penalty.Name + " must be numeric");
+                            continue;
+                        }
+                        float value = penalty.Value.GetSingle();
+                        if (value <= 0f || value > 1f)
+                            report.Error(rowPath + ": capability_penalties." + penalty.Name + " must be in (0,1]");
+                    }
+                }
+            }
+            catch (JsonException ex)
+            {
+                report.Error(fileName + ": malformed JSON: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                report.Error(fileName + ": validator error: " + ex.Message);
+            }
+            finally
+            {
+                document?.Dispose();
+            }
+        }
+
+        private static string ChronicString(JsonElement row, string property) =>
+            row.TryGetProperty(property, out var value) && value.ValueKind == JsonValueKind.String
+                ? value.GetString() ?? string.Empty : string.Empty;
 
         private static string GetArmorString(JsonElement row, string property) =>
             row.TryGetProperty(property, out var value) && value.ValueKind == JsonValueKind.String

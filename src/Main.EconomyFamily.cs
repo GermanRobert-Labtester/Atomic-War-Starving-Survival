@@ -33,11 +33,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public void FlushEconomyFamilyIfDirty()
-        {
-            if (_economyFamilyDirty) SaveEconomyFamily();
-        }
-
         public void ResetEconomyFamily()
         {
             _economyFamily = null;

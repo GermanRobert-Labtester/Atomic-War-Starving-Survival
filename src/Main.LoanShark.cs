@@ -29,11 +29,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public void FlushLoanSharkIfDirty()
-        {
-            if (_loanSharkDirty) SaveLoanShark();
-        }
-
         public void ResetLoanShark()
         {
             _loanShark = null;

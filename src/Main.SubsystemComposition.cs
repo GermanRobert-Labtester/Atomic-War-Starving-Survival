@@ -743,13 +743,6 @@ namespace AtomicWar.GodotApp
             EnsureShelterAcoustics();
         }
 
-        public void FlushPlans50To53()
-        {
-            if (_vehicleGarageDirty) SaveVehicleGarage();
-            if (_shelterEspionageDirty) SaveShelterEspionage();
-            if (_survivorMentalHealthDirty) SaveSurvivorMentalHealth();
-        }
-
         public void TickPlans50To53(int currentDay)
         {
             if (_shelterEspionage != null)

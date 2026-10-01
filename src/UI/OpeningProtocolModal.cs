@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 using System;
 using Godot;
+using Ashfall.Core.Campaign;
 using Ashfall.Core.StartingLevel;
 using Ashfall.Core.UI;
 using DesignTheme = Ashfall.Core.UI.Theme;
@@ -51,12 +52,12 @@ namespace AtomicWar.GodotApp.UI
         private void RefreshGoal()
         {
             if (_goalLabel == null) return;
-            bool has = !string.IsNullOrEmpty(_goalTitle);
+            bool has = !string.IsNullOrWhiteSpace(_goalTitle) || !string.IsNullOrWhiteSpace(_goalBody);
             _goalHeader.Visible = has;
             _goalLabel.Visible = has;
             _goalSeparator.Visible = has;
             if (has)
-                _goalLabel.Text = $"{_goalTitle} — {_goalBody}";
+                _goalLabel.Text = SliceGoalText.Join(_goalTitle, _goalBody);
         }
 
         public void RefreshView()

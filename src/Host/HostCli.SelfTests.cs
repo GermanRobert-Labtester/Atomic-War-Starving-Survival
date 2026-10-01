@@ -509,6 +509,10 @@ namespace AtomicWar.GodotApp
                 }
             }
 
+            // Held outside the try so the finally below can always release it.
+            // The panel is constructed standalone (never added to a tree), so
+            // nothing else will free it.
+            AtomicWar.GodotApp.UI.FactionsPanel? panel = null;
             try
             {
                 var session = YearOfAshHostSession.Create(dataDirectory, loadExistingSave: false);
@@ -550,7 +554,7 @@ namespace AtomicWar.GodotApp
 
                 // FactionsPanel warlord card: bind a fresh session with a clean
                 // inventory and verify construction + refresh do not throw.
-                var panel = new AtomicWar.GodotApp.UI.FactionsPanel();
+                panel = new AtomicWar.GodotApp.UI.FactionsPanel();
                 panel.CustomMinimumSize = new Godot.Vector2(1920, 1080);
                 panel.Size = new Godot.Vector2(1920, 1080);
                 panel._Ready();
@@ -563,6 +567,10 @@ namespace AtomicWar.GodotApp
             catch (Exception e)
             {
                 Check(false, "warlord ui selftest threw: " + e.Message);
+            }
+            finally
+            {
+                if (panel != null && GodotObject.IsInstanceValid(panel)) panel.Free();
             }
 
             return EmitSummary("warlord_ui_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");

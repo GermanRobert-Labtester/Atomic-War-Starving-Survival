@@ -128,6 +128,42 @@ namespace Ashfall.Core.Tests.Campaign
                 string.Join("\n  ", violations));
         }
 
+        [Fact]
+        public void SourceGate_InventoryMutatingOwners_RollBackOnRetry()
+        {
+            // Plan 38 follow-up: a fail-closed day-advance retry must not leave
+            // the first attempt's inventory mutations applied. The host registers
+            // an inventory custody owner and every inventory-mutating owner
+            // implements IPreDaySnapshotRestore so the retry re-creates the same
+            // delta on the restored baseline.
+            string? root = Directory.GetCurrentDirectory();
+            while (!string.IsNullOrEmpty(root) && !Directory.Exists(Path.Combine(root, "src")))
+            {
+                var parent = Directory.GetParent(root);
+                root = parent?.FullName;
+            }
+
+            if (string.IsNullOrEmpty(root) || !Directory.Exists(Path.Combine(root, "src")))
+                return; // Not running in repo tree
+
+            string owners = File.ReadAllText(Path.Combine(root, "src", "Main.CampaignOwners.cs"));
+            Assert.Contains("\"inventory_custody\"", owners);
+            Assert.Contains("new InventoryDayOwner(this)", owners);
+            Assert.Contains("Inventory.RestoreState(_snapshot", owners);
+
+            foreach (string owner in new[]
+            {
+                "StartingLevelRationsDayOwner",
+                "CraftingProductionDayOwner",
+                "GreenhouseFoundryDayOwner",
+                "AquaponicsDayOwner",
+            })
+            {
+                var declaration = new Regex("class " + owner + @"\s*:\s*IDayAdvanceOwner,\s*IPreDaySnapshotRestore");
+                Assert.Matches(declaration, owners);
+            }
+        }
+
         private sealed class DummyOwner : IDayAdvanceOwner
         {
             public void CapturePreDaySnapshot(int day) { }

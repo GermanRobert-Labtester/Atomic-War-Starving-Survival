@@ -116,9 +116,5 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
-        public override void Save()
-        {
-            CvdDiamondSaveStore.TrySave(CaptureSave());
-        }
 }
 }

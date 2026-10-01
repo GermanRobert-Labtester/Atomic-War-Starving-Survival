@@ -72,11 +72,5 @@ namespace AtomicWar.GodotApp
             return res;
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            KineticStorageSaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
     }
 }

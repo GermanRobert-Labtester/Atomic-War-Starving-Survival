@@ -440,6 +440,8 @@ namespace Ashfall.Core.Combat
         public int WeaponConditionPct;
         public bool WeaponJammed;
         public string WeaponAmmo = string.Empty;
+        // T20 — rounds left in the magazine (-1 when the combatant has no weapon).
+        public int WeaponAmmoRemaining = -1;
     }
 
     /// <summary>A weapon row for the UI (jury-rigged / armory monitor).</summary>

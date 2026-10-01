@@ -56,33 +56,30 @@ namespace AtomicWar.GodotApp
         public ActionResult StartPrepJob(string recipeId, string assignedCookId, Dictionary<string, int> inputRequirements)
         {
             var res = System.StartPrepJob(recipeId, assignedCookId, inputRequirements);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Prep started: {recipeId} by {assignedCookId}";
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? $"Prep started: {recipeId} by {assignedCookId}"
+                : $"Prep refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
         public ActionResult ServeMeal(string survivorId, string recipeId)
         {
             var res = System.ServeMeal(survivorId, recipeId);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Meal served: {recipeId} to {survivorId}";
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? $"Meal served: {recipeId} to {survivorId}"
+                : $"Serve refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
         public ActionResult ServeAllMeals(IReadOnlyList<string> survivorIds, string recipeId)
         {
             var res = System.ServeAllMeals(survivorIds, recipeId);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"All crew served: {recipeId} ({survivorIds.Count} survivors)";
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? $"All crew served: {recipeId} ({survivorIds.Count} survivors)"
+                : $"Serve-all refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
@@ -92,12 +89,6 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            KitchenNutritionSaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
     }
 
     /// <summary>

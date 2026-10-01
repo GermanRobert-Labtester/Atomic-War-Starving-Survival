@@ -128,7 +128,7 @@ namespace AtomicWar.GodotApp.UI
             _objectiveLabel.AutowrapMode = TextServer.AutowrapMode.WordSmart;
             vbox.AddChild(_objectiveLabel);
 
-            _hintLabel = AshfallUiHelpers.MakeMono(T("onboarding.hint.empty", "HINT: —"));
+            _hintLabel = AshfallUiHelpers.MakeMono(T("onboarding.hint.empty", "NO HINT YET"));
             _hintLabel.TooltipText = T("onboarding.tooltip.hint",
                 "A short hint if you stall on this step.");
             _hintLabel.AutowrapMode = TextServer.AutowrapMode.WordSmart;
@@ -165,7 +165,7 @@ namespace AtomicWar.GodotApp.UI
             _cycleAssistBtn = AshfallUiHelpers.MakeButton(T("onboarding.assistance.standard",
                 "ASSISTANCE: STANDARD"), OnCycleAssistanceClicked, false);
             _cycleAssistBtn.TooltipText = T("onboarding.tooltip.assistance_cycle",
-                "Cycle between MINIMAL (objective only), STANDARD (default), GUIDED (extra help).");
+                "Cycle between MINIMAL (objective only) and STANDARD (with hints).");
             _cycleAssistBtn.CustomMinimumSize = new Vector2(200, 36);
             actionRow.AddChild(_cycleAssistBtn);
 
@@ -211,7 +211,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 _titleLabel.Text = T("onboarding.status.offline", "ONBOARDING OFFLINE");
                 _objectiveLabel.Text = T("onboarding.status.booting", "Booting the renderer…");
-                _hintLabel.Text = T("onboarding.hint.empty", "HINT: —");
+                _hintLabel.Text = T("onboarding.hint.empty", "NO HINT YET");
                 _assistanceLabel.Text = T("onboarding.assistance.standard", "ASSISTANCE: STANDARD");
                 EmptyChecklist();
                 SetActionEnabledStates(false);
@@ -235,7 +235,7 @@ namespace AtomicWar.GodotApp.UI
                         ? "The first-hour sequence is complete. The shelter is yours to manage."
                         : "You reached Day 2. Returning the ledger to your command.")
                 : LocalizedStageObjective(def);
-            _hintLabel.Text = BuildHintLine(j, def);
+            _hintLabel.Text = complete ? string.Empty : BuildHintLine(j, def);
             _assistanceLabel.Text = AssistanceLabel(j.Assistance);
 
             RebuildChecklist(j);
@@ -264,8 +264,12 @@ namespace AtomicWar.GodotApp.UI
 
         public void CycleAssistance(OnboardingAssistance level)
         {
+            // Reactive update path driven by the host (SetOnboardingAssistance):
+            // label + view refresh only. Never raise OnAssistanceChanged here —
+            // the host handler funnels back into CycleAssistance, and a raise on
+            // this path would re-enter forever (stack overflow). The user-initiated
+            // button (OnCycleAssistanceClicked) is the single raise site.
             UpdateAssistanceButtonLabel(level);
-            OnAssistanceChanged?.Invoke(level);
             RefreshView();
         }
 
@@ -292,10 +296,14 @@ namespace AtomicWar.GodotApp.UI
         {
             var j = _journey;
             if (j == null) return;
+            // Two real tiers today: MINIMAL (objective only) and STANDARD (with
+            // hints). GUIDED is a reserved enum value that behaves exactly like
+            // STANDARD — no auto-highlight exists in the codebase — so it is not
+            // offered as a distinct press (a label-only change would be the
+            // silent-mismatch class the truthfulness gates exist to prevent).
             OnboardingAssistance next = j.Assistance switch
             {
                 OnboardingAssistance.Minimal => OnboardingAssistance.Standard,
-                OnboardingAssistance.Standard => OnboardingAssistance.Guided,
                 _ => OnboardingAssistance.Minimal,
             };
             UpdateAssistanceButtonLabel(next);
@@ -305,7 +313,7 @@ namespace AtomicWar.GodotApp.UI
         private void UpdateAssistanceButtonLabel(OnboardingAssistance value)
         {
             if (_cycleAssistBtn == null) return;
-            _cycleAssistBtn.Text = $"ASSISTANCE: {value.ToString().ToUpperInvariant()}";
+            _cycleAssistBtn.Text = AssistanceLabel(value);
         }
 
         private void SetActionEnabledStates(bool journeyOpen)
@@ -351,52 +359,47 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
-        private static string BuildHintLine(OnboardingJourney j, OnboardingStageDef def)
-        {
-            string contextualKey = def.Id switch
+        /// <summary>
+        /// Authored hint copy per onboarding stage. One authoritative map — not
+        /// two parallel switches — so a newly added stage cannot receive a
+        /// localization key without copy (or vice versa), which is the silent
+        /// failure the 2026-09-30 first-hour audit fixed for Duty/Dose. An
+        /// unknown stage yields no hint; the panel never fabricates the
+        /// "HINT: —" sentinel.
+        /// </summary>
+        private static readonly IReadOnlyDictionary<OnboardingStage, (string Key, string Fallback)> StageHintCopy =
+            new Dictionary<OnboardingStage, (string Key, string Fallback)>
             {
-                OnboardingStage.Protocol => "onboarding.hint.protocol",
-                OnboardingStage.Inspect => "onboarding.hint.inspect",
-                OnboardingStage.Rationing => "onboarding.hint.rationing",
-                OnboardingStage.Assignment => "onboarding.hint.assignment",
-                OnboardingStage.Weather => "onboarding.hint.weather",
-                OnboardingStage.InventoryUse => "onboarding.hint.inventory",
-                OnboardingStage.DayAdvance => "onboarding.hint.day_advance",
-                OnboardingStage.Water => "onboarding.hint.water",
-                OnboardingStage.Power => "onboarding.hint.power",
-                OnboardingStage.Food => "onboarding.hint.food",
-                OnboardingStage.Duty => "onboarding.hint.duty",
-                OnboardingStage.Dose => "onboarding.hint.dose",
-                OnboardingStage.Research => "onboarding.hint.research",
-                OnboardingStage.Expedition => "onboarding.hint.expedition",
-                _ => "onboarding.hint.empty",
-            };
-            string fallback = def.Id switch
-            {
-                OnboardingStage.Protocol => "Pick ration, maintenance, and radio. The bunker stores adjust around your choices.",
-                OnboardingStage.Inspect => "Inspect any three rooms — every confirming note is a fallback if the next storm cuts light.",
-                OnboardingStage.Rationing => "Open the stores. Read the food and water you are rationing against.",
-                OnboardingStage.Assignment => "Pull one survivor onto a duty from the Duty Roster. Their shifts move the bunker forward.",
-                OnboardingStage.Weather => "Read the forecast before you end the day — fallout storms change outdoor rad.",
-                OnboardingStage.InventoryUse => "Equip something real. The geiger or gas mask only protects the hands that wear them.",
-                OnboardingStage.DayAdvance => "Confirm the advance. The morning briefing returns once Day 2 lands.",
-                OnboardingStage.Water => "Start a treatment batch at the water plant. The stores only change if a batch actually runs.",
-                OnboardingStage.Power => "Open the grid and throw one breaker. Watch the rooms change.",
-                OnboardingStage.Food => "Eat one ration from stores. The count should drop.",
-                OnboardingStage.Duty => "Open the Duty Roster and put one survivor on a shift. Nothing in the shelter runs itself.",
-                OnboardingStage.Dose => "Open the dose ledger before the day ends. The number only moves one way.",
-                OnboardingStage.Research => "Start an available research node. It appears in the queue.",
-                OnboardingStage.Expedition => "Send a team with the expedition command. They leave the shelter.",
-                _ => "HINT: —",
+                [OnboardingStage.Protocol] = ("onboarding.hint.protocol", "Pick ration, maintenance, and radio. The bunker stores adjust around your choices."),
+                [OnboardingStage.Inspect] = ("onboarding.hint.inspect", "Inspect any three rooms — every confirming note is a fallback if the next storm cuts light."),
+                [OnboardingStage.Rationing] = ("onboarding.hint.rationing", "Open the stores. Read the food and water you are rationing against."),
+                [OnboardingStage.Assignment] = ("onboarding.hint.assignment", "Pull one survivor onto a duty from the Duty Roster. Their shifts move the bunker forward."),
+                [OnboardingStage.Weather] = ("onboarding.hint.weather", "Read the forecast before you end the day — fallout storms change outdoor rad."),
+                [OnboardingStage.InventoryUse] = ("onboarding.hint.inventory", "Equip something real. The geiger or gas mask only protects the hands that wear them."),
+                [OnboardingStage.DayAdvance] = ("onboarding.hint.day_advance", "Confirm the advance. The morning briefing returns once Day 2 lands."),
+                [OnboardingStage.Water] = ("onboarding.hint.water", "Start a treatment batch at the water plant. The stores only change if a batch actually runs."),
+                [OnboardingStage.Power] = ("onboarding.hint.power", "Open the grid and throw one breaker. Watch the rooms change."),
+                [OnboardingStage.Food] = ("onboarding.hint.food", "Eat one ration from stores. The count should drop."),
+                [OnboardingStage.Duty] = ("onboarding.hint.duty", "Open the Duty Roster and put one survivor on a shift. Nothing in the shelter runs itself."),
+                [OnboardingStage.Dose] = ("onboarding.hint.dose", "Open the dose ledger before the day ends. The number only moves one way."),
+                [OnboardingStage.Research] = ("onboarding.hint.research", "Start an available research node. It appears in the queue."),
+                [OnboardingStage.Expedition] = ("onboarding.hint.expedition", "Send a team with the expedition command. They leave the shelter."),
             };
 
-            string hintKey = MakeHintKey(def.Id);
-            bool dismissed = j.IsHintDismissed(hintKey);
-            if (dismissed) return T("onboarding.hint.dismissed", "HINT: (dismissed)");
+        private static string BuildHintLine(OnboardingJourney j, OnboardingStageDef def)
+        {
+            if (j.IsHintDismissed(MakeHintKey(def.Id)))
+                return T("onboarding.hint.dismissed", "HINT: (dismissed)");
 
             if (j.Assistance == OnboardingAssistance.Minimal)
                 return string.Empty;
-            return $"{T("onboarding.hint.prefix", "HINT:")} {T(contextualKey, fallback)}";
+
+            // Truthful absence: a stage without authored copy shows nothing
+            // rather than the fabricated "HINT: —" sentinel.
+            if (!StageHintCopy.TryGetValue(def.Id, out var copy))
+                return string.Empty;
+
+            return $"{T("onboarding.hint.prefix", "HINT:")} {T(copy.Key, copy.Fallback)}";
         }
 
         private static string T(string key, string fallback) =>
@@ -408,19 +411,28 @@ namespace AtomicWar.GodotApp.UI
         private static string LocalizedStageObjective(OnboardingStageDef def) =>
             T(StageKey(def.Id, "objective"), def.Objective);
 
+        /// <summary>
+        /// Stable localization id for a stage — the one normalization shared by
+        /// the hint panel and the status bar so both surfaces name the same row.
+        /// </summary>
+        public static string StageLocalizationId(OnboardingStage id) => id switch
+        {
+            OnboardingStage.InventoryUse => "inventory_use",
+            OnboardingStage.DayAdvance => "day_advance",
+            _ => id.ToString().ToLowerInvariant(),
+        };
+
         private static string StageKey(OnboardingStage id, string part) =>
-            $"onboarding.{id switch
-            {
-                OnboardingStage.InventoryUse => "inventory_use",
-                OnboardingStage.DayAdvance => "day_advance",
-                _ => id.ToString().ToLowerInvariant()
-            }}.{part}";
+            $"onboarding.{StageLocalizationId(id)}.{part}";
 
         private static string AssistanceLabel(OnboardingAssistance assistance) =>
             assistance switch
             {
                 OnboardingAssistance.Minimal => T("onboarding.assistance.minimal", "ASSISTANCE: MINIMAL"),
-                OnboardingAssistance.Guided => T("onboarding.assistance.guided", "ASSISTANCE: GUIDED"),
+                // GUIDED is a reserved no-op tier today — it behaves exactly like
+                // STANDARD (no auto-highlight exists) — so legacy saves that carry
+                // it render the standard label rather than re-asserting the tier.
+                OnboardingAssistance.Guided => T("onboarding.assistance.standard", "ASSISTANCE: STANDARD"),
                 _ => T("onboarding.assistance.standard", "ASSISTANCE: STANDARD"),
             };
 

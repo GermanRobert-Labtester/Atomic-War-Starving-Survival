@@ -26,33 +26,30 @@ namespace AtomicWar.GodotApp
         public ActionResult AddSite(string siteId, string blueprintId, float requiredProgress = 100f, float risk = 0.2f)
         {
             var res = System.AddSite(siteId, blueprintId, requiredProgress, risk);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Surveyed new excavation site: {siteId}";
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? $"Surveyed new excavation site: {siteId}"
+                : $"Survey refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
         public ActionResult AssignWorkers(string siteId, int workerCount)
         {
             var res = System.AssignWorkers(siteId, workerCount);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Assigned {workerCount} workers to excavation site {siteId}";
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? $"Assigned {workerCount} workers to excavation site {siteId}"
+                : $"Worker assignment refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
         public ActionResult ApplyShoring(string siteId)
         {
             var res = System.ApplyShoring(siteId);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Reinforced shoring on excavation site {siteId}";
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? $"Reinforced shoring on excavation site {siteId}"
+                : $"Shoring refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
@@ -62,11 +59,5 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            ExcavationSaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
     }
 }

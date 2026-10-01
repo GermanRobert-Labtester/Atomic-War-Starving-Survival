@@ -137,6 +137,19 @@ public partial class InventoryDetailPanel : Control
         var inspection = ItemInspectionModel.Create(def, _descriptions ?? _inventory?.DescriptionCatalog, _enrichment ?? _inventory?.EnrichmentCatalog);
         CurrentInspection = inspection;
 
+        // ── Item art (wired through the canonical asset registry) ──
+        // The detail view was text-only: the authored art now leads the card so
+        // an item is recognisable at a glance, and the registry's canonical
+        // placeholder shows when no art resolves.
+        var artRow = new HBoxContainer();
+        artRow.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingMd);
+        var art = AshfallUiHelpers.MakeItemIcon(_itemId, 72);
+        art.Name = "ItemArt";
+        art.TooltipText = AssetRegistry.GetItem(_itemId).ResolvedPath;
+        artRow.AddChild(art);
+        _itemInfo.AddChild(artRow);
+        RenderedRowCount++;
+
         // ── Item info ──
         AddRow(_itemInfo, $"Name: {inspection.DisplayName}", Ashfall.Core.UI.Theme.Pale);
         AddRow(_itemInfo, $"ID: {inspection.ItemId}", Ashfall.Core.UI.Theme.Dim);

@@ -171,11 +171,6 @@ namespace AtomicWar.GodotApp
             _nightWatchDirty = false;
         }
 
-        public void FlushNightWatchIfDirty()
-        {
-            if (_nightWatchDirty) SaveNightWatch();
-        }
-
         public void SetupNightWatchPanel()
         {
             if (_nightWatchPanel != null && _nightWatchPanel.IsInsideTree()) return;

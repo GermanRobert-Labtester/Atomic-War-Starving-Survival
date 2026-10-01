@@ -51,11 +51,6 @@ namespace AtomicWar.GodotApp
                 _radiationEconomyDirty = false;
         }
 
-        public void FlushRadiationEconomyIfDirty()
-        {
-            if (_radiationEconomyDirty) SaveRadiationEconomy();
-        }
-
         public void ResetRadiationEconomy()
         {
             _radiationEconomy = null;

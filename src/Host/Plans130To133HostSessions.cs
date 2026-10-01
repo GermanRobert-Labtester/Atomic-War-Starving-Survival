@@ -32,12 +32,6 @@ namespace AtomicWar.GodotApp
         public ActionResult TickDay(int day)
             => System.TickDay(day);
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            if (PowderMetallurgySaveStore.TrySave(System.CaptureState()))
-                base.Save();
-        }
     }
 
     public static class PowderMetallurgySaveStore
@@ -92,12 +86,6 @@ namespace AtomicWar.GodotApp
 
         public void TickDay(int day) => System.TickDay(day);
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            if (NvisCommunicationsSaveStore.TrySave(System.CaptureState()))
-                base.Save();
-        }
     }
 
     public static class NvisCommunicationsSaveStore
@@ -137,12 +125,6 @@ namespace AtomicWar.GodotApp
         public ActionResult TickDay(int day)
             => System.TickDay(day);
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            if (LyophilizationSaveStore.TrySave(System.CaptureState()))
-                base.Save();
-        }
     }
 
     public static class LyophilizationSaveStore
@@ -184,12 +166,6 @@ namespace AtomicWar.GodotApp
 
         public ActionResult Abandon() => System.Abandon();
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            if (DraisineRerailingSaveStore.TrySave(System.CaptureState()))
-                base.Save();
-        }
     }
 
     public static class DraisineRerailingSaveStore

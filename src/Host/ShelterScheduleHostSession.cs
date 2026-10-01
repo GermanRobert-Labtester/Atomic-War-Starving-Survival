@@ -41,33 +41,30 @@ namespace AtomicWar.GodotApp
         public ActionResult SetCurfew(bool active)
         {
             var res = System.SetCurfew(active);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Shelter curfew set to: {(active ? "ACTIVE" : "INACTIVE")}";
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? $"Shelter curfew set to: {(active ? "ACTIVE" : "INACTIVE")}"
+                : $"Curfew change refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
         public ActionResult SetEmergencyOverride(bool active)
         {
             var res = System.SetEmergencyOverride(active);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Emergency schedule override set to: {(active ? "ACTIVE" : "OFF")}";
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? $"Emergency schedule override set to: {(active ? "ACTIVE" : "OFF")}"
+                : $"Emergency override refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
         public ActionResult AssignBed(string survivorId, string bedId)
         {
             var res = System.AssignBed(survivorId, bedId);
-            if (res.IsSuccess)
-            {
-                LastEvent = $"Assigned dweller {survivorId} to bunk {bedId}";
-                RaiseStateChanged();
-            }
+            LastEvent = res.IsSuccess
+                ? $"Assigned dweller {survivorId} to bunk {bedId}"
+                : $"Bunk assignment refused: {res.FailureCode}";
+            RaiseStateChanged();
             return res;
         }
 
@@ -101,11 +98,5 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
-        public override void Save()
-        {
-            if (!IsDirty) return;
-            ShelterScheduleSaveStore.TrySave(System.CaptureState());
-            base.Save();
-        }
     }
 }

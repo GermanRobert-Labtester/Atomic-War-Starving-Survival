@@ -250,7 +250,7 @@
       "title": "The Defector's Story",
       "bodyText": "A Garrison soldier stumbles into the airlock, uniform torn, rifle empty. 'I couldn't do it anymore,' they gasp. 'The executions. The tribute collections. Colonel Voss ordered us to burn a settlement that was three days late on food quotas. I — I walked away. They're probably hunting me.' They hand over a data chip. 'Patrol routes. Supply schedules. Everything I know.'",
       "weight": 1.5,
-      "minDay": 10,
+      "minDay": 1,
       "choices": [
         {
           "choiceId": "grant_asylum_intel",
@@ -281,7 +281,7 @@
       "title": "The Prophet Sighting",
       "bodyText": "A traveler at the Grain Exchange repeats a frightening claim: 'I saw The Vessel — the Cult's prophet. Walking through Reactor Site 4 as if it were a garden. I never saw a suit or checked the reading myself. The Geiger counter was screaming and they were just... walking. Smiling.' The traveler's hands are shaking. 'They said to tell everyone: the Clear World is coming.'",
       "weight": 1.0,
-      "minDay": 20,
+      "minDay": 5,
       "choices": [
         {
           "choiceId": "dismiss_rumor",
@@ -307,7 +307,7 @@
       "title": "The Council Invitation",
       "bodyText": "A Militia courier arrives with a handwritten letter. 'The Ash Militia Council requests the presence of a representative from your shelter at our monthly assembly. Proposed topics include mutual defense, water purification methods, and whether a formal trade route is practical. Food and lodging are offered. Weapons checked at the door.' The letter is signed by twelve different hands.",
       "weight": 1.5,
-      "minDay": 15,
+      "minDay": 3,
       "choices": [
         {
           "choiceId": "attend_council",

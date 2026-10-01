@@ -124,9 +124,5 @@ namespace AtomicWar.GodotApp
             RaiseStateChanged();
         }
 
-        public override void Save()
-        {
-            AmphibiousDraisineSaveStore.TrySave(CaptureSave());
-        }
 }
 }

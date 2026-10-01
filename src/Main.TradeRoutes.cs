@@ -45,14 +45,6 @@ namespace AtomicWar.GodotApp
             _tradeRoutes?.TickDay(day);
         }
 
-        public void FlushTradeRoutesIfDirty()
-        {
-            if (_tradeRoutesDirty)
-            {
-                SaveTradeRoutes();
-            }
-        }
-
         public void ResetTradeRoutes()
         {
             _tradeRoutes = null;

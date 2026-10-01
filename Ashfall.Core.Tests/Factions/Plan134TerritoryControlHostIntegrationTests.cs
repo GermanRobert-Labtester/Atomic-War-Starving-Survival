@@ -175,7 +175,6 @@ namespace Ashfall.Core.Tests.Factions
 
             string app = ReadRepoFile("src", "Main.Application.cs");
             Assert.Contains("HostCliAction.TerritoryControlSelfTest:", app);
-            Assert.Contains("FlushTerritoryControlIfDirty();", app);
 
             string mainPartial = ReadRepoFile("src", "Main.TerritoryControl.cs");
             Assert.Contains("territory_control_changed", mainPartial);

@@ -84,6 +84,10 @@ namespace AtomicWar.GodotApp.UI
             // Phase 22 — Tier-3 Combat HUD overlay (#58 Stitch).
             new Target{ StableId="combat_hud_default",            Title="Combat HUD Overlay (#58)",           PanelCtor="AtomicWar.GodotApp.UI.CombatHudOverlay",               StateHint="default", Width=1920, Height=1080 },
 
+            // T27 — bound live-encounter monitor: seeded realtime fight so the
+            // LIVE preflight action rows are visually regression-gated.
+            new Target{ StableId="combat_hud_bound",              Title="Combat HUD Overlay (live encounter)",  PanelCtor="AtomicWar.GodotApp.UI.CombatHudOverlay",               StateHint="live_encounter", Width=1920, Height=1080, FixtureFactory=CombatHudSnapshotFixture.Bind },
+
             // Phase 23 — Tier-3 Map Atlas (#5 Stitch).
             new Target{ StableId="map_atlas_default",             Title="Map Atlas (#5)",                       PanelCtor="AtomicWar.GodotApp.UI.MapAtlasPanel",                  StateHint="default", Width=1920, Height=1080 },
 

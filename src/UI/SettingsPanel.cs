@@ -6,6 +6,7 @@ using Ashfall.Core.Settings;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp.Host;
 using AtomicWar.GodotApp.Settings;
+using AtomicWar.GodotApp.Localization;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
@@ -77,6 +78,22 @@ namespace AtomicWar.GodotApp.UI
         private Button _btnConfirmEndDay = null!;
         private Button _btnVerboseRadio = null!;
         private Button _btnAutoSave = null!;
+        private Button _btnVisualAudioAlerts = null!;
+        private OptionButton _optAudioMixPreset = null!;
+        private Button _btnModsEnabled = null!;
+        private Label _lblMods = null!;
+
+        // Status affordances (unsaved-changes + settings recovery visibility)
+        private Label _lblDirty = null!;
+        private Label _lblDiagnostic = null!;
+
+        /// <summary>Acoustic mix presets (Plan 169) in authored id → label order.</summary>
+        private static readonly (string Id, string Label)[] AudioMixPresets =
+        {
+            ("preset_full_dynamic", "Full Dynamic"),
+            ("preset_compressed", "Compressed (reduced peaks)"),
+            ("preset_reduced_stimulation", "Reduced Stimulation")
+        };
 
         private static readonly (int W, int H, string Label)[] Resolutions = new[]
         {
@@ -191,12 +208,27 @@ namespace AtomicWar.GodotApp.UI
             var title = AshfallUiHelpers.MakeTitle("SETTINGS", DesignTheme.FontSizeH2);
             headerHBox.AddChild(title);
             headerHBox.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
+
+            // Unsaved-changes affordance: the panel is a working-copy editor,
+            // so the player must be able to see that APPLY & SAVE is pending.
+            _lblDirty = AshfallUiHelpers.MakeLabel("", DesignTheme.FontSizeLabel, DesignTheme.Lethe);
+            _lblDirty.Name = "SettingsDirtyIndicator";
+            headerHBox.AddChild(_lblDirty);
+
             var btnCloseTop = AshfallUiHelpers.MakeButton("✕", CancelAndClose);
+            btnCloseTop.TooltipText = AshfallLocalization.Tr("ui.settings.close_tooltip", "Close settings (Esc) — discards unsaved changes");
             btnCloseTop.CustomMinimumSize = new Vector2(36, 32);
             headerHBox.AddChild(btnCloseTop);
             mainVBox.AddChild(headerHBox);
 
             mainVBox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+            // Settings recovery diagnostic (load/save corruption is otherwise silent).
+            _lblDiagnostic = AshfallUiHelpers.MakeLabel("", DesignTheme.FontSizeSmall, DesignTheme.Warm);
+            _lblDiagnostic.Name = "SettingsDiagnosticBanner";
+            _lblDiagnostic.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+            _lblDiagnostic.Visible = false;
+            mainVBox.AddChild(_lblDiagnostic);
 
             // Scrollable settings body
             var scroll = new ScrollContainer
@@ -295,6 +327,26 @@ namespace AtomicWar.GodotApp.UI
             _btnMute.CustomMinimumSize = new Vector2(200, 32);
             contentVBox.AddChild(_btnMute);
 
+            // Acoustic mix preset (Plan 169) — applied through the existing
+            // AudioAccessibility owner; the panel only forwards the selected id.
+            var rowMix = MakeSettingRow("Acoustic Mix Preset");
+            _optAudioMixPreset = new OptionButton { CustomMinimumSize = new Vector2(240, 32) };
+            for (int i = 0; i < AudioMixPresets.Length; i++)
+            {
+                _optAudioMixPreset.AddItem(AudioMixPresets[i].Label, i);
+            }
+            _optAudioMixPreset.ItemSelected += idx =>
+            {
+                if (idx >= 0 && idx < AudioMixPresets.Length)
+                {
+                    _working.AudioMixPreset = AudioMixPresets[idx].Id;
+                    RefreshDirty();
+                    UserSettingsStore.PreviewAudio(_working);
+                }
+            };
+            rowMix.AddChild(_optAudioMixPreset);
+            contentVBox.AddChild(rowMix);
+
             contentVBox.AddChild(MakeVolumeRow("Master Volume", v => _working.MasterVolume = v, () => _working.MasterVolume, out _lblMasterVol));
             contentVBox.AddChild(MakeVolumeRow("Music / Ambience", v => _working.MusicVolume = v, () => _working.MusicVolume, out _lblMusicVol));
             contentVBox.AddChild(MakeVolumeRow("Sound Effects", v => _working.SfxVolume = v, () => _working.SfxVolume, out _lblSfxVol));
@@ -338,6 +390,20 @@ namespace AtomicWar.GodotApp.UI
             _btnHazardLabels.CustomMinimumSize = new Vector2(240, 32);
             rowHz.AddChild(_btnHazardLabels);
             contentVBox.AddChild(rowHz);
+
+            var rowVaa = MakeSettingRow("Visual Audio Alerts");
+            _btnVisualAudioAlerts = AshfallUiHelpers.MakeButton("ENABLED", () =>
+            {
+                _working.VisualAudioAlerts = !_working.VisualAudioAlerts;
+                _btnVisualAudioAlerts.Text = _working.VisualAudioAlerts ? "ENABLED" : "DISABLED";
+                RefreshDirty();
+            });
+            _btnVisualAudioAlerts.CustomMinimumSize = new Vector2(240, 32);
+            _btnVisualAudioAlerts.TooltipText = AshfallLocalization.Tr(
+                "ui.settings.visual_audio_alerts_tooltip",
+                "Emit concise visual equivalents for critical audio cues (Plan 169).");
+            rowVaa.AddChild(_btnVisualAudioAlerts);
+            contentVBox.AddChild(rowVaa);
 
             var rowRm = MakeSettingRow("Reduced Motion");
             _btnReducedMotion = AshfallUiHelpers.MakeButton("DISABLED", () =>
@@ -397,8 +463,10 @@ namespace AtomicWar.GodotApp.UI
             var rowResetTut = MakeSettingRow("Reset Tutorial Progress");
             _btnResetTutorials = AshfallUiHelpers.MakeButton("RESET TUTORIALS", () =>
             {
+                // Deliberately does NOT claim success on the button label: the
+                // request opens a confirmation modal that the player may cancel.
+                // The old label mutation asserted "TUTORIALS RESET" even on cancel.
                 OnTutorialResetRequested?.Invoke();
-                _btnResetTutorials.Text = "TUTORIALS RESET";
             });
             _btnResetTutorials.CustomMinimumSize = new Vector2(240, 32);
             rowResetTut.AddChild(_btnResetTutorials);
@@ -424,6 +492,35 @@ namespace AtomicWar.GodotApp.UI
             rowRadioLog.AddChild(_btnVerboseRadio);
             contentVBox.AddChild(rowRadioLog);
 
+            var rowAutoSave = MakeSettingRow("Auto-Save Each Day");
+            _btnAutoSave = AshfallUiHelpers.MakeButton("ENABLED", () =>
+            {
+                _working.AutoSaveOnDay = !_working.AutoSaveOnDay;
+                _btnAutoSave.Text = _working.AutoSaveOnDay ? "ENABLED" : "DISABLED";
+                RefreshDirty();
+            });
+            _btnAutoSave.CustomMinimumSize = new Vector2(240, 32);
+            rowAutoSave.AddChild(_btnAutoSave);
+            contentVBox.AddChild(rowAutoSave);
+
+            var rowMods = MakeSettingRow("Mods Enabled");
+            _btnModsEnabled = AshfallUiHelpers.MakeButton("ENABLED", () =>
+            {
+                _working.ModsEnabled = !_working.ModsEnabled;
+                _btnModsEnabled.Text = _working.ModsEnabled ? "ENABLED" : "DISABLED";
+                RefreshDirty();
+            });
+            _btnModsEnabled.CustomMinimumSize = new Vector2(240, 32);
+            rowMods.AddChild(_btnModsEnabled);
+            contentVBox.AddChild(rowMods);
+
+            // Read-only roster of what "Mods Enabled" actually covers — the
+            // toggle alone left the player with no way to see what was loaded.
+            _lblMods = AshfallUiHelpers.MakeLabel("", DesignTheme.FontSizeLabel, DesignTheme.Dim);
+            _lblMods.Name = "EnabledModsReadout";
+            _lblMods.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+            contentVBox.AddChild(_lblMods);
+
             contentVBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
             // ── 5. INPUT & CONTROLS SECTION (Plan 37) ──────────────────────
@@ -447,6 +544,7 @@ namespace AtomicWar.GodotApp.UI
                     RefreshControls();
                 });
                 btnBind.CustomMinimumSize = new Vector2(160, 32);
+                btnBind.TooltipText = $"Rebind '{labelText}'. Esc cancels the capture.";
                 _bindingButtons[actionKey] = btnBind;
                 row.AddChild(btnBind);
 
@@ -504,6 +602,35 @@ namespace AtomicWar.GodotApp.UI
             bottomHBox.AddChild(btnApply);
 
             mainVBox.AddChild(bottomHBox);
+
+            // Any interaction with a setting control marks the working copy
+            // dirty. Subscribed last so it observes the control's own handler
+            // result. Scoped to the scroll body, so the APPLY/CANCEL/RESET
+            // action bar cannot self-flag, and the one action-only control
+            // (Reset Tutorials) is excluded because it mutates no working copy.
+            AttachDirtyTracking(contentVBox);
+        }
+
+        private void AttachDirtyTracking(Node root)
+        {
+            foreach (Node child in root.GetChildren())
+            {
+                if (child == _btnResetTutorials)
+                    continue;
+
+                switch (child)
+                {
+                    case OptionButton option:
+                        option.ItemSelected += _ => RefreshDirty();
+                        break;
+                    case BaseButton button:
+                        button.Pressed += RefreshDirty;
+                        break;
+                }
+
+                if (child.GetChildCount() > 0)
+                    AttachDirtyTracking(child);
+            }
         }
 
         private HBoxContainer MakeSettingRow(string labelText)
@@ -535,9 +662,11 @@ namespace AtomicWar.GodotApp.UI
                 float newVal = Math.Clamp(getter() - 0.1f, 0f, 1f);
                 setter(newVal);
                 valLbl.Text = $"{(int)(newVal * 100)}%";
+                UiPanelFlow.Pulse(valLbl);
                 UserSettingsStore.PreviewAudio(_working);
             });
             minusBtn.CustomMinimumSize = new Vector2(32, 28);
+            minusBtn.TooltipText = $"Lower {labelText} by 10%";
             row.AddChild(minusBtn);
 
             row.AddChild(valLbl);
@@ -547,9 +676,11 @@ namespace AtomicWar.GodotApp.UI
                 float newVal = Math.Clamp(getter() + 0.1f, 0f, 1f);
                 setter(newVal);
                 valLbl.Text = $"{(int)(newVal * 100)}%";
+                UiPanelFlow.Pulse(valLbl);
                 UserSettingsStore.PreviewAudio(_working);
             });
             plusBtn.CustomMinimumSize = new Vector2(32, 28);
+            plusBtn.TooltipText = $"Raise {labelText} by 10%";
             row.AddChild(plusBtn);
 
             return row;
@@ -560,13 +691,29 @@ namespace AtomicWar.GodotApp.UI
             _optWindowMode.Selected = Math.Clamp(_working.WindowMode, 0, 2);
 
             int resIndex = 3; // 1920x1080 default
+            bool resMatched = false;
             for (int i = 0; i < Resolutions.Length; i++)
             {
                 if (Resolutions[i].W == _working.ResolutionWidth && Resolutions[i].H == _working.ResolutionHeight)
                 {
                     resIndex = i;
+                    resMatched = true;
                     break;
                 }
+            }
+            // A saved resolution outside the preset list is real state. Previously
+            // it was silently relabelled as the 1920×1080 default while the working
+            // copy kept the custom size — so the control lied about what was saved.
+            if (!resMatched)
+            {
+                _optResolution.AddItem(
+                    $"Custom ({_working.ResolutionWidth} × {_working.ResolutionHeight})",
+                    Resolutions.Length);
+                resIndex = _optResolution.ItemCount - 1;
+            }
+            else if (_optResolution.ItemCount > Resolutions.Length)
+            {
+                _optResolution.RemoveItem(_optResolution.ItemCount - 1);
             }
             _optResolution.Selected = resIndex;
 
@@ -617,6 +764,37 @@ namespace AtomicWar.GodotApp.UI
             }
             _btnConfirmEndDay.Text = _working.ConfirmEndDay ? "ENABLED" : "DISABLED";
             _btnVerboseRadio.Text = _working.VerboseRadioLog ? "ENABLED" : "DISABLED";
+            if (_btnAutoSave != null)
+                _btnAutoSave.Text = _working.AutoSaveOnDay ? "ENABLED" : "DISABLED";
+            if (_btnModsEnabled != null)
+                _btnModsEnabled.Text = _working.ModsEnabled ? "ENABLED" : "DISABLED";
+            if (_lblMods != null)
+            {
+                var mods = _working.EnabledMods ?? new List<string>();
+                _lblMods.Text = !_working.ModsEnabled
+                    ? "Mods disabled — no authored mod content is loaded."
+                    : mods.Count == 0
+                        ? "Mods enabled — no authored mods configured."
+                        : $"Mods enabled — {mods.Count} configured: {string.Join(", ", mods)}";
+            }
+            if (_btnVisualAudioAlerts != null)
+                _btnVisualAudioAlerts.Text = _working.VisualAudioAlerts ? "ENABLED" : "DISABLED";
+            if (_optAudioMixPreset != null)
+            {
+                int mixIndex = 0;
+                for (int i = 0; i < AudioMixPresets.Length; i++)
+                {
+                    if (string.Equals(AudioMixPresets[i].Id, _working.AudioMixPreset, StringComparison.Ordinal))
+                    {
+                        mixIndex = i;
+                        break;
+                    }
+                }
+                _optAudioMixPreset.Selected = mixIndex;
+            }
+
+            RefreshDirty();
+            RefreshDiagnostic();
 
             // Keybindings (Plan 37)
             foreach (var contract in AshfallInputActions.Contract)
@@ -635,6 +813,50 @@ namespace AtomicWar.GodotApp.UI
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// True when the working copy differs from the loaded baseline. Uses the
+        /// canonical settings codec so field additions can never silently drop
+        /// out of the dirty check.
+        /// </summary>
+        private bool SettingsDiffer()
+        {
+            try
+            {
+                return !string.Equals(
+                    UserSettingsCodec.Serialize(_working),
+                    UserSettingsCodec.Serialize(_initial),
+                    StringComparison.Ordinal);
+            }
+            catch
+            {
+                // Never let the indicator itself break the panel.
+                return false;
+            }
+        }
+
+        private void RefreshDirty()
+        {
+            if (_lblDirty == null) return;
+            bool dirty = SettingsDiffer();
+            _lblDirty.Text = dirty ? "● UNSAVED CHANGES" : "";
+            _lblDirty.AddThemeColorOverride(
+                "font_color",
+                AshfallUiHelpers.ToColor(dirty ? DesignTheme.Warm : DesignTheme.Lethe));
+        }
+
+        /// <summary>
+        /// Surfaces settings load/save recovery (corrupt file, clamped values).
+        /// Previously this was only printed to the log — a silent failure for
+        /// anyone who never opens the output pane.
+        /// </summary>
+        private void RefreshDiagnostic()
+        {
+            if (_lblDiagnostic == null) return;
+            string? msg = UserSettingsStore.LastDiagnosticMessage;
+            _lblDiagnostic.Visible = !string.IsNullOrWhiteSpace(msg);
+            _lblDiagnostic.Text = string.IsNullOrWhiteSpace(msg) ? string.Empty : $"SETTINGS RECOVERY — {msg}";
         }
 
         private void ResetToDefaults()

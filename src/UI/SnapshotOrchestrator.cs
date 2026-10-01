@@ -224,7 +224,16 @@ namespace AtomicWar.GodotApp.UI
                 mounted = inst;
             }
             _fixtureOwner = _current.FixtureFactory?.Invoke(mounted);
-            try { mounted!.Call("Open"); } catch (Exception ex) { GD.PrintErr($"[SnapshotOrchestrator] Open call failed: {ex.Message}"); }
+            // Optional hook: IBindablePanel does not contract Open(). An unguarded
+            // Call("Open") made the engine log "Nonexistent function 'Open'" for
+            // every panel that omits the convention, even with the exception caught.
+            //
+            // Deliberately NO RefreshView() fallback here, unlike the interactivity
+            // audit. This path captures golden snapshots: a panel that previously
+            // rendered only its _Ready() content would start rendering populated
+            // content and invalidate the committed baseline. Snapshot behaviour
+            // stays byte-identical to before — only the error spam is removed.
+            AshfallUiHelpers.InvokePanelHook(mounted!, "Open");
 
             var hostRoot = (Engine.GetMainLoop() as SceneTree)?.Root;
             if (hostRoot == null) { throw new InvalidOperationException("no-SceneTree-root"); }

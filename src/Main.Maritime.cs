@@ -35,11 +35,6 @@ namespace AtomicWar.GodotApp
         private bool _maritimeDirty;
         private DeepCoastHostSession _deepCoast = null!;
 
-        private void FlushMaritimeIfDirty()
-        {
-            if (_maritimeDirty) SaveMaritime();
-        }
-
         /// <summary>
         /// Thin host wiring: shares the CoreDemoSession's District8DeepCoastSystem
         /// (so the HoldfastSave v5 envelope is the single authority), the real
@@ -170,12 +165,12 @@ namespace AtomicWar.GodotApp
 
         private void CloseMaritimePanel()
         {
-            if (_maritimePanel != null) _maritimePanel.Visible = false;
+            ClosePanelAnimated(_maritimePanel);
         }
 
         private void CloseDeepCoastPanel()
         {
-            if (_deepCoastPanel != null) _deepCoastPanel.Visible = false;
+            ClosePanelAnimated(_deepCoastPanel);
         }
 
     }

@@ -418,7 +418,9 @@ namespace AtomicWar.GodotApp
                     SetupInventory();
                     SetupMedical();
                     SetupPhase0();
-                    _afflictionsPanel.Bind(_medical, _survivors, _inventory, _phase0?.Respiratory, chronicConditions: _chronicConditions);
+                    SetupChronicConditions();
+                    _afflictionsPanel.Bind(_medical, _survivors, _inventory, _phase0?.Respiratory, chronicConditions: _chronicConditions,
+                        fitAccommodation: FitChronicAccommodation, removeAccommodation: RemoveChronicAccommodation);
                     _afflictionsPanel.Open();
                     break;
                 case "radiation_detail":

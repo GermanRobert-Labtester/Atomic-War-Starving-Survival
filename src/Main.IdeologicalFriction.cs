@@ -84,14 +84,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public void FlushIdeologicalFrictionIfDirty()
-        {
-            if (_ideologicalFrictionDirty)
-            {
-                SaveIdeologicalFriction();
-            }
-        }
-
         public void ResetIdeologicalFriction()
         {
             _ideologicalFriction = null;

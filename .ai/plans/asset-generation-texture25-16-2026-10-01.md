@@ -1,0 +1,9 @@
+# ASHFALL batch16 texture and graphical generation
+
+> STATUS: APPROVED BY USER — GENERATION DELIVERABLE FINISHED / STAGED
+
+Completedabout14:31UTC (~26minutes):25subjects,20opaqueRGBtextures+5nonopaqueRGBAdetails all1254square.25PNGs/67,690,802bytes/64.55MiB with Go hashinventory, fullpreview, prompts/provenance/source records/report. No revisions or pendinggeneration; claimreleased. Materialidentity, bakedrelief, scale/tiling/blending limits documented in REPORT.md. Staged generation stays outside integratedarchive.
+
+Premise reviewer rejected cup-stain rings as overlapping previous ring graphics; substituted five torn aluminiumfoil fragments before generation. All25 requests accepted in cell73; pipeline saves each PNG/source record. First velvet copy missed its directory and was recovered from the original without regeneration. No other generation retry.
+
+User authorized25more textures/graphics, maximum60minutes. Start14:05UTC, harddeadline15:05UTC on2026-10-01. Outcome20opaque material samples+5transparent details. Done when25saved/reviewed, dimensions/alpha inspected, Go hashinventory, fullpreview/provenance/report supplied and claimreleased. Preserve originals. No runtime/source/data/liveasset/registry edits; material choices artistic, no newcanon/catalogrequirements; tiling/blending/scale unverified. Source ae6e54387; JSONpreflight714/714 valid0violations. Prior165subjectpromptsets inspected; current live item paintings do not supply these flat samples. Similarfamilies distinguished by structure. Independent auditor read-only premise/finalreview. Newpack owns assets/<25IDs>.png and optional sibling revisions, sources/, prompts.json, provenance.json, manifest.json, preview.jpg, REPORT.md; thisplan; own state/claim entries. Staged plan stays outside integratedarchive. No code tests needed; focused whitespacecheck.
