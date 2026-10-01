@@ -333,6 +333,10 @@ namespace Ashfall.Core.Combat
         public List<CombatEvent> Events = new List<CombatEvent>();
         public List<CombatLootEntry> Loot = new List<CombatLootEntry>();
 
+        // War ledger (additive; legacy saves restore to an empty ledger): one
+        // entry per resolved encounter, carried across StartCombat resets.
+        public List<CombatEncounterRecord> EncounterHistory = new List<CombatEncounterRecord>();
+
         // DEC-358 realtime clock (additive; legacy saves default RealtimeActive=false).
         public bool RealtimeActive;
         public float SimTime;
@@ -418,6 +422,16 @@ namespace Ashfall.Core.Combat
         public List<WeaponSnapshot> Weapons = new List<WeaponSnapshot>();
         public List<CombatEvent> Events = new List<CombatEvent>();
         public List<CombatLootEntry> Loot = new List<CombatLootEntry>();
+        public List<string> History = new List<string>();
+    }
+
+    /// <summary>One resolved encounter in the cross-encounter war ledger.</summary>
+    public sealed class CombatEncounterRecord
+    {
+        public int Day;
+        public string LocationName = string.Empty;
+        public string OutcomeText = string.Empty;
+        public int RoundNumber;
     }
 
     /// <summary>A combatant row for the UI.</summary>

@@ -25,6 +25,11 @@ namespace Ashfall.Core.Combat
                 Aftermath = CloneAftermath(_state.Aftermath)
             };
             snap.FactionConsequences = CloneFactionConsequences(_state.FactionConsequences);
+            if (_state.EncounterHistory != null)
+            {
+                foreach (var h in _state.EncounterHistory)
+                    snap.History.Add($"D{h.Day} · {(string.IsNullOrEmpty(h.LocationName) ? "unknown ground" : h.LocationName)}: {h.OutcomeText} (round {h.RoundNumber})");
+            }
 
             var combatants = new List<CombatantState>(_state.Combatants);
             combatants.Sort((a, b) => string.CompareOrdinal(a.Id, b.Id));
@@ -120,6 +125,7 @@ namespace Ashfall.Core.Combat
             copy.Barriers = CloneBarriers(_state.Barriers);
             copy.Events = CloneEvents(_state.Events);
             copy.Loot.AddRange(_state.Loot);
+            copy.EncounterHistory = new List<CombatEncounterRecord>(_state.EncounterHistory ?? new List<CombatEncounterRecord>());
             return copy;
         }
 
@@ -173,6 +179,7 @@ namespace Ashfall.Core.Combat
             m.Barriers = CloneBarriers(s.Barriers);
             m.Events = CloneEvents(s.Events);
             if (s.Loot != null) m.Loot.AddRange(s.Loot);
+            m.EncounterHistory = new List<CombatEncounterRecord>(s.EncounterHistory ?? new List<CombatEncounterRecord>());
 
             // Old saves mid PlayerTurn/EnemyTurn with realtime intent: keep legacy phases unless
             // RealtimeActive was already set. Pose defaults remain zero until EnableRealtime.

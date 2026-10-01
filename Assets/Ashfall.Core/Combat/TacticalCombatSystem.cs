@@ -153,6 +153,9 @@ namespace Ashfall.Core.Combat
                 || enemyCount < 1)
                 return false;
 
+            // War ledger survives the per-encounter reset — the history a
+            // player carries is the war, not the fight.
+            var carriedWarLedger = _state.EncounterHistory;
             _state = new CombatState
             {
                 SaveVersion = CombatState.CurrentSaveVersion,
@@ -169,6 +172,7 @@ namespace Ashfall.Core.Combat
                 Resolved = false,
                 ResolutionId = "cres_" + encounterId
             };
+            _state.EncounterHistory = carriedWarLedger ?? new List<CombatEncounterRecord>();
 
             // Deep-copy players into state with stable ids.
             for (int i = 0; i < players.Count; i++)

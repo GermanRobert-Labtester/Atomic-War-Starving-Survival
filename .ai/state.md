@@ -2,6 +2,91 @@
 
 # Current Task State
 
+## Dispatch wave 3 + war ledger + salvage rumors + economy telemetry (W1-W5) — FULLY INTEGRATED (2026-10-01)
+
+User-authorized ("Lets tackle the next 5 suggestions and foreman, i authorise
+it, make it unique and creative!") — foreman host-pick authority granted for
+the pending-route decision bucket. Plan archived
+`.ai/plans/integrated/ui/INTEGRATED_dispatch-wave3-war-ledger-salvage-rumors-economy-w1-w5-2026-10-01.md`.
+**W1/W3 — dispatch wave 3 (7 routes, all decision-only routes now wired):**
+emergency_response→EventsLogPanel CRISIS RESPONSE CONSOLE (manual funnel, T19
+doctrine — no auto-open), chem_warfare_defense + winter_freeze→WeatherPanel
+(atmosphere family), desperation_crisis→ShelterPanel SANCTUARY CRISIS MONITOR,
+archaeology_excavation→JournalPanel ARCHAEOLOGICAL DIG REGISTRY,
+ceremony_ritual→MusterPanel CEREMONIES & RITUALS,
+robotics_assembly→WorkshopPanel RoboticsButton (tscn + binder + contract
+row). Reachability census 15 → **8**; every remaining entry is hard-blocked
+by an ACTIVE claim (pfgl dashboard trio, skill_matrix, survivor_downtime,
+amputation_surgery) or unwired debt (justice_tribunal, verdict_dashboard) —
+census comment updated to say exactly that.
+**W4 — cross-encounter war ledger (the "history" panel finally has history):**
+premise verified — engine state (incl. Events) is rebuilt by every
+BeginEncounter, so CombatHistoryPanel only ever showed one fight. Fix on the
+EXISTING CombatState save authority (no parallel store): additive
+`CombatEncounterRecord` + `CombatState.EncounterHistory` (cap 30, legacy
+saves restore empty), append at all four resolution sites (Won/Lost in
+Damage.cs, turn-retreat in Actions.cs, realtime flee-extract in
+RealtimeFlee.cs), carry-over across the StartCombat reset,
+CaptureState/Migrate copy, BuildSnapshot exposes formatted `History`
+("D{day} · {location}: {outcome} (round {n})"), CombatHistoryPanel renders
+an "ACROSS THE WAR" section above the per-encounter log.
+CombatEncounterLedgerTests 4/4 (append fields, reset survival, save
+round-trip + legacy-null, snapshot format). CombatSaveRoundTrip 4/4,
+RealtimeRestoreHardening 3/3.
+**W5 — authored rumor lines (creative, data-driven):** 20 in-world hearsay
+lines (one per salvage-bearing node — "Trappers swear the loading dock still
+holds pallets nobody has touched since the ceasefire.") added as an optional
+`rumor` field in wasteland_map_v1.json (byte-identical round-trip verified);
+`WastelandMapCatalogLoader` + `MapNode.Rumor`; `GetNodeIntel` Rumored branch
+projects the authored line instead of the hardcoded "Unconfirmed scrap /
+rumor" (fallback kept for unauthored nodes); OpenMapDetailPanel funnel adds
+a Rumored branch so a Rumored sector shows its hearsay line as the most it
+can honestly say. Plan76 map gate pins non-empty rumors on all 20 nodes;
+truthfulness funnel fact pins Rumored + salvageNode.Rumor.
+**W2 — salvage economy telemetry:** new SalvageEconomyBalanceTests (5/5) —
+fully analytic (no rolls): strict tier ordering common < electronics < trade
+< rare < weapons; each table pinned to its authored analog band
+(common≈collapsed_structure 0.5-2.0×, weapons≈military_depot 0.75-2.0×,
+trade≈convoy_cache 0.6-2.0×); hazard must not invert against reward.
+Computed reference points: common 6.1 / electronics 19.7 / trade 20.7 /
+rare 23.4 / weapons 73.3 barter-per-roll vs analogs 7.5 / 18.9 / 55.7.
+**Verification:** build 0 errors; gates — ledger 4/4, economy 5/5, Plan76
+6/6, truthfulness 6/6, reachability 2/2 (census 8), contract 1/1, CombatSave
+4/4, RealtimeRestore 3/3; validate-json 714/714; `--ui-layout-selftest`
+PASS. No full suite.
+
+## Open-item closeout + repair-sweep finding audit — FULLY INTEGRATED (2026-10-01)
+
+User-directed ("continue with those 2 open … Then do repair sweeping finding
+audit … including tool calls missing or tool call receiving not existent!").
+Plan archived
+`.ai/plans/integrated/systems/INTEGRATED_open-items-and-repair-sweep-2026-10-01.md`.
+
+**Two open items closed:** (1) `KeyBindingApplicator.Apply(data, bool safeMode)`
+now exposes the Shift safe-mode check explicitly; `--settings-selftest` passes
+`safeMode: false` (5 sites) and asserts the `safeMode: true` skip — no more
+live-input dependence. (2) `ApprenticeshipSystem.AssignActingDesignation(pairId)`
++ host forward + `ApprenticeshipPanel` **ASSIGN ACTING DESIGNATION** row make
+the `actingEligible` stub actionable (pair completed, XP credited, ledger
+cleared); `YearTwoApprenticeLadderTests` 9/9.
+
+**Repair sweep (8 findings fixed/hardened):** catch-policy disposition +
+`report.Warn` keyword; `AssetInspectorPanel` raw data-path comment → `CatalogPath`;
+`RunDay1ToDay2MilestoneSelfTest` allowlisted as an isolated scenario; 4 Core
+integration seams added to `port_contract_policy.json` (310 entries);
+`world_incident_surfaced` classified `Narrative` + parity-matrix row;
+`world_incidents` added to the architecture graph + map regenerated (315
+subsystems); 2 DTO-bound camelCase catalogs pinned. Tool-call parity gates found
+no missing command / non-existent receiver.
+
+**Verification:** host build 0 errors / 0 new warnings; `--settings-selftest`
+PASS; `--day1-to-day2-milestone-selftest` PASS; `--7-day-smoke-selftest` 10/10;
+focused xUnit all green (apprenticeship 9/8/3; catch 3/3; catalog-path 2/2;
+no-fresh 2/2; port-contract 8/8; day-event 2/2; arch-map 6/6; json-mix 4/4;
+CLI parity 5/5; manifest 4/4; a11y 3/3; composition 4/4; lifecycle 5/5;
+surface-liveness 5/5; wave4 7/7; snapshots 2/2; quarantine 1/1; doc-links 2/2;
+fast-verify 2/2); generated contracts all in sync.
+
 ## T17 recruitment verify-close + combat consoles + salvage survey + route dispatch (S1-S3) — FULLY INTEGRATED (2026-10-01)
 
 User-authorized ("aim for full integration... check the previous 5 suggested
@@ -9984,7 +10069,7 @@ implemented here. No gameplay/Core/save changes. No commit made.
 - FIXED (P2-2): CatalogIntegrityValidator 135-branch-endings check was vacuous (ResolveStandingModifier never returns empty). Now errors when the resolved modifier id is not in the catalog's StandingModifiers registry. CatalogIntegrityValidatorTests 17/17; --data-integrity-selftest 430/430.
 - FIXED (P2-8): four in-code default MentorshipDefs lacked target_skill_id (vocational accepts would fail with unknown_mentorship if apprenticeship_catalog.json failed to load); filled from catalog values.
 - FIXED: LocalizationRatchetTests stale baseline 603 -> verified current 612 (≈8 committed growth + 1 worktree; recount verified HEAD-vs-worktree), ratchet re-armed.
-- Audited via subagent sweep of all dirty Core/Host diffs: no P1s. Left (documented, not fixed): EndgameSystem.EvaluateEndingWithProfile zero callers + dead ChapterRecord.sealedDay/profileId (foreign uncommitted stream, don't touch); VerdictHostSession reckoning plumbing (ConfigureFromProfile/SetReckoningOffset) unwired in production + ReckoningOffset not captured/restored (design decision, needs foreman); apprenticeship cancelled+actingEligible pairs retained forever (deliberate retention, bounded by children count); RunSettingsSelfTest Shift-held exposure (headless only). **[RESOLVED 2026-10-01: ~33 dead `Flush*IfDirty` methods (and the rest of the 141) + 81 uncalled host `Save()` overrides deleted; `EvaluateEndingWithProfile` wired + `ChapterRecord.sealedDay`/`profileId` round-tripped; `VerdictHostSession.ConfigureFromProfile` + `ReckoningOffset` persistence wired (VerdictSave v5). Coordinator inventory rollback also sealed 2026-10-01. Remaining open: apprenticeship retention (deliberate), RunSettingsSelfTest Shift-held (headless only).]**
+- Audited via subagent sweep of all dirty Core/Host diffs: no P1s. Left (documented, not fixed): EndgameSystem.EvaluateEndingWithProfile zero callers + dead ChapterRecord.sealedDay/profileId (foreign uncommitted stream, don't touch); VerdictHostSession reckoning plumbing (ConfigureFromProfile/SetReckoningOffset) unwired in production + ReckoningOffset not captured/restored (design decision, needs foreman); apprenticeship cancelled+actingEligible pairs retained forever (deliberate retention, bounded by children count); RunSettingsSelfTest Shift-held exposure (headless only). **[RESOLVED 2026-10-01: ~33 dead `Flush*IfDirty` methods (and the rest of the 141) + 81 uncalled host `Save()` overrides deleted; `EvaluateEndingWithProfile` wired + `ChapterRecord.sealedDay`/`profileId` round-tripped; `VerdictHostSession.ConfigureFromProfile` + `ReckoningOffset` persistence wired (VerdictSave v5). Coordinator inventory rollback also sealed 2026-10-01. **[All closed 2026-10-01: apprenticeship actingEligible is now actionable via `AssignActingDesignation` + panel row; `RunSettingsSelfTest` safe-mode is an explicit parameter (`Apply(data, safeMode)`) so the probe is deterministic.]**
 - Verification: build 0 err; scoped 4/4 targets (152 Endgame tests); journey, 7-day smoke, expedition (43/43), data-integrity (430/430) all PASS.
 
 ## Pass 2 — Developer Session generalized to all asset categories — 2026-09-30

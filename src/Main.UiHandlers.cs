@@ -224,7 +224,8 @@ namespace AtomicWar.GodotApp
             // category, Visited adds the yield tiers actually rolled against;
             // Rumored/Unknown sectors keep the truthful empty state.
             List<string>? salvageSurvey = null;
-            var salvageTableId = canonicalMap?.GetNode(locationId)?.LootTableId ?? string.Empty;
+            var salvageNode = canonicalMap?.GetNode(locationId);
+            var salvageTableId = salvageNode?.LootTableId ?? string.Empty;
             if (canonicalMap != null && !string.IsNullOrEmpty(salvageTableId))
             {
                 var salvageFog = canonicalMap.GetFogState(locationId);
@@ -246,6 +247,14 @@ namespace AtomicWar.GodotApp
                             salvageSurvey.Add("Yield tiers: " + string.Join(", ", tiers).ToUpperInvariant());
                         }
                     }
+                }
+                else if (salvageFog == Ashfall.Core.World.MapFogState.Rumored
+                    && salvageNode != null
+                    && !string.IsNullOrEmpty(salvageNode.Rumor))
+                {
+                    // W5: an authored rumor line is the most a Rumored sector
+                    // can honestly say — hearsay, not survey.
+                    salvageSurvey = new List<string> { salvageNode.Rumor };
                 }
             }
             _mapDetailPanel.Bind(holdfastLoc, journalLoc, GetBunkerGraffitiCatalog(), currentDay, uncharted, subLayouts, salvageSurvey);

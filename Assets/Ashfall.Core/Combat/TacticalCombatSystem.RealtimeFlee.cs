@@ -183,6 +183,7 @@ namespace Ashfall.Core.Combat
             _state.Resolved = true;
             _state.OutcomeText = "Your people fall back and break contact under fire.";
             AddEvent("retreat", _state.EncounterId, "The squad holds extract and breaks contact.");
+            RecordWarLedgerEntry();
             BuildAndApplyAftermath("Retreated", -2f);
             OnEncounterEnded?.Invoke(_state);
             Notify();

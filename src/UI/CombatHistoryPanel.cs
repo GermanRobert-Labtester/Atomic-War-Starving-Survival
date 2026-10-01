@@ -53,6 +53,16 @@ namespace AtomicWar.GodotApp.UI
 
             var snap = _combat.Snapshot();
 
+            // War ledger (W4): encounters this shelter has already fought —
+            // history that survives the end of any single fight.
+            if (snap.History != null && snap.History.Count > 0)
+            {
+                _combatHistory.AddChild(AshfallUiHelpers.MakeSectionHeader("ACROSS THE WAR"));
+                foreach (var warEntry in snap.History)
+                    AddLine(_combatHistory, warEntry);
+                _combatHistory.AddChild(AshfallUiHelpers.MakeSeparator());
+            }
+
             // Battle log (real combat history).
             if (snap.Events == null || snap.Events.Count == 0)
             {

@@ -16,6 +16,7 @@ namespace AtomicWar.GodotApp.UI
     public partial class EventsLogPanel : Control
     {
         public event Action? OnClose;
+        public event Action? OnOpenCrisisConsoleRequested;
 
         private Label _lblRecentTitle;
         private VBoxContainer _recentList;
@@ -167,6 +168,11 @@ namespace AtomicWar.GodotApp.UI
             vbox.AddChild(_narrativeList);
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+            var btnCrisis = AshfallUiHelpers.MakeButton("CRISIS RESPONSE CONSOLE", () => OnOpenCrisisConsoleRequested?.Invoke());
+            btnCrisis.CustomMinimumSize = new Vector2(220, 40);
+            btnCrisis.TooltipText = "Emergency response desk — live crises across power, disease, fire, flood, and exposure.";
+            vbox.AddChild(btnCrisis);
 
             var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
             btnClose.CustomMinimumSize = new Vector2(200, 40);

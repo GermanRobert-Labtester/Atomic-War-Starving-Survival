@@ -29,9 +29,10 @@ namespace Ashfall.Core.Tests.UI
             "combat_hud",       // auto-opened and bound with the combat session
         };
 
-        // Verified 2026-10-01 as registered-but-unreachable with blocked or
-        // ambiguous hosts. Each needs a foreman decision (claimed host,
-        // claimed launcher, or actively-foreign seam) before wiring.
+        // Census after dispatch wave 3 (2026-10-01, foreman-authorized host
+        // picks): every decision-only route is wired; ALL remaining entries
+        // are hard-blocked by an ACTIVE claim or a known unwired debt — do
+        // not wire them before that claim releases or that debt closes.
         private static readonly (string Id, string Reason)[] PendingForeman =
         {
             ("verdict_dashboard", "host unclear; verdict surface is event-driven (tribunal reckoning unwired per debt ledger)"),
@@ -39,20 +40,13 @@ namespace Ashfall.Core.Tests.UI
             ("brine_extraction", "natural launcher GameDashboardPanel is ACTIVE-claimed (claim-pfgl-codex-luna6-octet)"),
             ("aquifer_treaty_concession", "natural launcher GameDashboardPanel is ACTIVE-claimed (claim-pfgl-codex-luna6-octet)"),
             ("slurry_dewatering_sump", "natural launcher GameDashboardPanel is ACTIVE-claimed (claim-pfgl-codex-luna6-octet)"),
-            ("emergency_response", "crisis HUD; auto-open trigger not yet wired — needs event-owner decision"),
             // Found by this gate on first run (2026-10-01) — ids previously
             // quoted only in dev/test surfaces, not player emitters:
-            ("chem_warfare_defense", "toxic hazard monitor; host surface ambiguous (shelter vs. medical) — foreman pick"),
-            ("ceremony_ritual", "festival/ceremony surface; seasonal event owner decision needed"),
-            ("robotics_assembly", "workshop family surface; WorkshopPanel deep link needs foreman sign-off (workshop seam recently repaired)"),
             ("survivor_downtime", "hobbies/downtime; survivors surface family is C1-claimed territory"),
-            ("winter_freeze", "deep freeze watch; weather vs. shelter host ambiguous — foreman pick"),
             ("amputation_surgery", "surgical triage; medical seam is ACTIVE-claimed (Main.Medical.cs) and tied to unwired verdict/medical debt"),
             ("justice_tribunal", "tribunal surface; Verdict tribunal reckoning is a known unwired debt item — wire with that debt, not before"),
             // Found by this gate on second run (2026-10-01) — previously
             // quoted only in dev surfaces that have since churned:
-            ("archaeology_excavation", "archaeology surface; no player emitter — follow-up wiring batch"),
-            ("desperation_crisis", "desperation/taboo monitor; host ambiguous (medical vs. moral) — foreman pick"),
         };
 
         private static string RepoRoot()

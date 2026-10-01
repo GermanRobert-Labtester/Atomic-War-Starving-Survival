@@ -1,5 +1,24 @@
 # ASHFALL Worktree Ownership
 
+## claim-openitems-repair-sweep-2026-10-01
+
+User-directed ("continue with those 2 open … Then do repair sweeping finding
+audit … including tool calls missing or tool call receiving not existent!").
+Owned paths: `src/Settings/KeyBindingApplicator.cs`,
+`src/Host/HostCli.Command.RunSettingsSelfTest.cs`,
+`Assets/Ashfall.Core/ApprenticeshipSystem.cs`, `src/Host/ApprenticeshipHostSession.cs`,
+`src/UI/ApprenticeshipPanel.cs`, `src/Host/HostCli.Command.RunDutyRosterSaveSelfTest.cs`,
+`src/UI/AssetInspectorPanel.cs`, `Ashfall.Core.Tests/Tooling/CatchPolicyLintGateTests.cs`,
+`Ashfall.Core.Tests/Tooling/NoFreshCampaignSystemGateTests.cs`,
+`Ashfall.Core.Tests/Tooling/JsonNamingMixPinTests.cs`,
+`Ashfall.Core.Tests/Generations/YearTwoApprenticeLadderTests.cs`,
+`docs/ci/port_contract_policy.json`, `Assets/Ashfall.Core/Campaign/DayEventVocabulary.cs`,
+`docs/campaign/EVENT_SEMANTIC_PARITY_MATRIX.md`, `scripts/ci/generate-architecture-map.py`,
+`docs/architecture/ARCHITECTURE_TEST_MAP.md`, the plan
+`.ai/plans/integrated/systems/INTEGRATED_open-items-and-repair-sweep-2026-10-01.md`,
+this claim, `.ai/state.md`, and the `INTEGRATION_PLANS.md` entry. Status:
+**COMPLETE / FULLY INTEGRATED; paths released.** Captured in commit `a14c2c22e`.
+
 ## claim-chronic-accommodation-t18-2026-10-01
 
 User-directed T18 (`ChronicConditionSystem` orphan → decision-gated
@@ -16397,3 +16416,38 @@ landed line-filtered via temporary index (foreign staged hunks in
 CombatPanel.cs / Main.UiPanels.cs / CombatDetailPanel.cs excluded).
 
 | claim-combat-playability-t23-t27-2026-10-01 | `COMBAT-PLAYABILITY-T23-T27` (user-directed follow-up wave to T18-T22, 2026-10-01) | Builder (this stream) | **Plan:** `.ai/plans/integrated/combat/INTEGRATED_combat-playability-t23-t27-2026-10-01.md` (STATUS: APPROVED BY USER). **T23 ROOT-CAUSE FIX:** realtime had no bleed-out tick — a downed last enemy blocked resolution forever (the T22 sweep stalemates were this bug). `TacticalCombatSystem.Realtime.cs` `TickRealtimeBleedOut`: every downed combatant bleeds 1 turn per 1.0 sim-second (deterministic), dies via existing `Kill`, then resolves; post-fix sweep 12/12/12 terminate (seeds 7/12 Won @t60). Regression test `DownedLastEnemy_BleedsOut_AndResolvesWon`. **T24:** `StartCombat` optional `obstacleProfileIds` → `EnsureObstacleBarrier`; Iron Raiders den raid fortified (barricaded_gate + debris_choke); `combat_arenas.json` load seam left dormant (separate plan). **T25:** `AudioEventBridge` cues for flee_start/breach_begin/breach_advance/breach_cleared. **T26:** `CombatBasicsId` lesson + TutorialPanel fallback + first-encounter trigger in SetupCombat (dedupe Core-owned). **T27:** `CombatHudSnapshotFixture` + `combat_hud_bound` target + `--ui-snapshot-ids=` scoped run filter in `BeginSnapshotRun`; golden regenerated scoped (1/33); diff 2/2 match incl. untouched unbound golden. **Status: COMPLETE / FULLY INTEGRATED 2026-10-01; paths released.** 71/71 combat Core tests; build 0 errors; `--combat-selftest` 26/26; `--real-campaign-journey-selftest` PASS; `--ui-layout-selftest` PASS; boot 0 script errors; `git diff --check` clean. Foreign T18a hearing-loss hunk in the same OnEncounterEnded handler preserved. No commit, no full suite. |
+
+## claim-dispatch-wave3-war-ledger-rumors-economy-w1-w5-2026-10-01
+
+User-authorized ("Lets tackle the next 5 suggestions and foreman, i authorise
+it, make it unique and creative!") — foreman host-pick authority granted for
+the pending-route decision bucket. W1/W3: dispatch wave 3 (7 routes:
+emergency_response→EventsLogPanel, chem_warfare_defense→WeatherPanel,
+winter_freeze→WeatherPanel, desperation_crisis→ShelterPanel,
+archaeology_excavation→JournalPanel, ceremony_ritual→MusterPanel,
+robotics_assembly→WorkshopPanel — emitter hunks only on those panels).
+W2: new `Ashfall.Core.Tests/Expeditions/SalvageEconomyBalanceTests.cs`
+(analytic EV banding over the 5 authored salvage tables). W4: engine war
+ledger — `Assets/Ashfall.Core/Combat/CombatTypes.cs` (CombatEncounterRecord
++ CombatState.EncounterHistory, additive),
+`TacticalCombatSystem.cs`/`.Damage.cs` (ledger carry-over on new encounter +
+append on resolution), `TacticalCombatSystem.Persistence.cs` (capture/
+restore), `src/Host/CombatHostSession.cs` snapshot History mapping,
+`src/UI/CombatHistoryPanel.cs` (ACROSS THE WAR section), new
+`Ashfall.Core.Tests/Combat/CombatEncounterLedgerTests.cs`. W5: authored
+`rumor` field on the 20 lootTable nodes in
+`Assets/StreamingAssets/Data/wasteland_map_v1.json` (rumor strings only),
+`WastelandMapCatalogLoader.cs` + `WastelandMapSystem.cs` (Rumor field +
+Rumored intel projection), `src/Main.UiHandlers.cs` (Rumored rumor row in
+the salvage funnel). Plus `Main.UiPanels.cs` wiring hunks,
+`PanelRouteReachabilityGateTests.cs` census update (15→8),
+`Plan76DestinationLootReferenceTests.cs` rumor pins, the plan file, a
+bounded `.ai/state.md` entry, this claim, and the wave commit. Explicitly
+NOT touched (ACTIVE pfgl claim): `PanelRegistryBootstrap.cs`,
+`Main.PlayerSurfaces.cs`, `GameDashboardPanel.cs`, `Main.PanelLifecycle.cs`.
+Acceptance: build 0 errors; all focused gates green; validate-json PASS;
+no full suite. Status: COMPLETE / FULLY INTEGRATED — paths released
+(2026-10-01). Ledger 4/4, economy 5/5, Plan76 6/6, truthfulness 6/6,
+reachability 2/2 (census 8), contract 1/1, CombatSave 4/4,
+RealtimeRestore 3/3, validate-json 714/714, ui-layout PASS; plan
+archived at `.ai/plans/integrated/ui/INTEGRATED_dispatch-wave3-war-ledger-salvage-rumors-economy-w1-w5-2026-10-01.md`.

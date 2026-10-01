@@ -20,6 +20,7 @@ public partial class JournalPanel : Control
 {
     public event Action? OnClose;
     public event Action? OnOpenStandingRecordAtlasRequested;
+    public event Action? OnOpenArchaeologyRequested;
 
     private AshfallDashboardShell _shell = null!;
     private AshfallSidebar? _sidebar;
@@ -328,6 +329,9 @@ public partial class JournalPanel : Control
         var btnStandingAtlas = AshfallUiHelpers.MakeButton("STANDING RECORD ATLAS", () => OnOpenStandingRecordAtlasRequested?.Invoke());
         btnStandingAtlas.TooltipText = "Standing-record atlas: site layouts, memory strata, and survey archives.";
         atlasRow.AddChild(btnStandingAtlas);
+        var btnDigs = AshfallUiHelpers.MakeButton("ARCHAEOLOGICAL DIG REGISTRY", () => OnOpenArchaeologyRequested?.Invoke());
+        btnDigs.TooltipText = "Pre-war archives and dig sites — surveys, excavations, and recovered records.";
+        atlasRow.AddChild(btnDigs);
         scrollRoot.AddChild(atlasRow);
 
         _shell.SetContent(scrollRoot);

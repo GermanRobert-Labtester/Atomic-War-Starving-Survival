@@ -210,6 +210,7 @@ namespace Ashfall.Core.Tests.Expeditions
         {
             public string id { get; set; } = string.Empty;
             public string? lootTable { get; set; }
+            public string? rumor { get; set; }
         }
 
         private sealed class WastelandMapContainerDto
@@ -247,6 +248,18 @@ namespace Ashfall.Core.Tests.Expeditions
             Assert.True(broken.Count == 0,
                 "wasteland map lootTable ids must resolve to Plan 46 tables. Unresolved:\n" + string.Join("\n", broken));
             Assert.Equal(20, bound);
+
+            // W5: every salvage-bearing node carries an authored rumor line —
+            // the honest ceiling of what a Rumored sector can say.
+            var rumorless = new List<string>();
+            foreach (var node in map!.nodes!)
+            {
+                if (string.IsNullOrEmpty(node.lootTable)) continue;
+                if (string.IsNullOrWhiteSpace(node.rumor) || node.rumor!.Length > 200)
+                    rumorless.Add(node.id);
+            }
+            Assert.True(rumorless.Count == 0,
+                "salvage nodes must carry a non-empty rumor line (<=200 chars). Missing/oversized:\n" + string.Join("\n", rumorless));
 
             // The five salvage tables must themselves be loot-real: every
             // entry's item id resolves against the merged item catalog.

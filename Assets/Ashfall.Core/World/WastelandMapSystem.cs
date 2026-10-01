@@ -447,7 +447,7 @@ namespace Ashfall.Core.World
                     Danger = MapNodeDanger.None,
                     DangerBand = dangerBand,
                     FactionId = string.Empty,
-                    LootDescription = "Unconfirmed scrap / rumor",
+                    LootDescription = string.IsNullOrEmpty(node.Rumor) ? "Unconfirmed scrap / rumor" : node.Rumor,
                     Traits = Array.Empty<string>(),
                     Provenance = knowledge?.Provenance,
                     LastConfirmedDay = knowledge?.LastConfirmedDay ?? 0,
@@ -972,6 +972,8 @@ namespace Ashfall.Core.World
 
         /// <summary>Loot table identifier for scavenging and salvage rewards.</summary>
         public string LootTableId;
+        /// <summary>Authored hearsay line shown while a sector is only Rumored (W5).</summary>
+        public string Rumor = string.Empty;
 
         /// <summary>X coordinate on the world map canvas.</summary>
         public float PositionX;

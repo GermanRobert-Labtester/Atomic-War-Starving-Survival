@@ -520,6 +520,7 @@ namespace Ashfall.Core.Combat
                 _state.Resolved = true;
                 _state.OutcomeText = "Your people fall back and break contact.";
                 AddEvent("retreat", _state.EncounterId, "The squad disengages and retreats.");
+                RecordWarLedgerEntry();
                 BuildAndApplyAftermath("Retreated", -2f);
                 OnEncounterEnded?.Invoke(_state);
                 Notify();

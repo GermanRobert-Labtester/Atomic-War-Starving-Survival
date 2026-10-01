@@ -22,6 +22,7 @@ namespace AtomicWar.GodotApp.UI
     public partial class ShelterPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
+        public event Action? OnOpenDesperationCrisisRequested;
         /// <summary>Plan 29 29A: a shelter room hotspot was clicked (canonical or legacy runtime id).</summary>
         public event Action<string>? RoomSelected;
 
@@ -350,6 +351,14 @@ namespace AtomicWar.GodotApp.UI
             contentBox.AddChild(AshfallUiHelpers.MakeSectionHeader("MAINTENANCE & UPGRADE QUEUE"));
             _upgradesList = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingXs);
             contentBox.AddChild(_upgradesList);
+
+            // Sanctuary crisis console — desperation and taboo are shelter
+            // conditions, so the shelter surface launches their monitor.
+            var crisisRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
+            var btnCrisis = AshfallUiHelpers.MakeButton("SANCTUARY CRISIS MONITOR", () => OnOpenDesperationCrisisRequested?.Invoke());
+            btnCrisis.TooltipText = "Desperation and taboo watch — what the shelter's people are being pushed toward.";
+            crisisRow.AddChild(btnCrisis);
+            contentBox.AddChild(crisisRow);
 
             if (_sidebar != null)
             {

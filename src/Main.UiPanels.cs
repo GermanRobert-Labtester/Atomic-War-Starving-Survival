@@ -890,10 +890,18 @@ namespace AtomicWar.GodotApp
             _musterPanel.OnOpenBountyBoardRequested += () => OpenPlayerPanel("mercenary_bounty_board");
             _expeditionPanel.OnOpenRailwayTerminalRequested += () => OpenPlayerPanel("railway_logistics");
             _radiationDetailPanel.OnOpenPlumeProjectionRequested += () => OpenPlayerPanel("expansion_fallout_plume");
+            // Dispatch wave 3 (W1/W3, foreman-authorized host picks):
+            _weatherPanel.OnOpenChemWarfareRequested += () => OpenPlayerPanel("chem_warfare_defense");
+            _weatherPanel.OnOpenWinterFreezeRequested += () => OpenPlayerPanel("winter_freeze");
+            _shelterPanel.OnOpenDesperationCrisisRequested += () => OpenPlayerPanel("desperation_crisis");
+            _journalPanel.OnOpenArchaeologyRequested += () => OpenPlayerPanel("archaeology_excavation");
+            _musterPanel.OnOpenCeremoniesRequested += () => OpenPlayerPanel("ceremony_ritual");
+            _workshopPanel.OnOpenRoboticsRequested += () => OpenPlayerPanel("robotics_assembly");
 
             // ── Events Log panel (overlay) ──
             _eventsLogPanel = new EventsLogPanel();
             _eventsLogPanel.OnClose += CloseEventsLogPanel;
+            _eventsLogPanel.OnOpenCrisisConsoleRequested += () => OpenPlayerPanel("emergency_response");
             AddChild(_eventsLogPanel);
 
             // ── Duty Roster Detail panel (overlay) ──

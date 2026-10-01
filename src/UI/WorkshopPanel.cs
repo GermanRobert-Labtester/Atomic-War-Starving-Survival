@@ -16,6 +16,7 @@ namespace AtomicWar.GodotApp.UI
     public partial class WorkshopPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
+        public event Action? OnOpenRoboticsRequested;
 
         public bool IsBound => _shelterWorkshop != null || _legacyWorkshop != null;
 
@@ -142,6 +143,7 @@ namespace AtomicWar.GodotApp.UI
             _closeButton = binder.Get<Button>("CloseButton");
 
             _closeButton.Pressed += () => { Visible = false; OnClose?.Invoke(); };
+            binder.Get<Button>("RoboticsButton").Pressed += () => OnOpenRoboticsRequested?.Invoke();
 
             // Optional new nodes for the new system
             if (HasNode("%MachineConditionContainer")) _machineConditionContainer = GetNode<VBoxContainer>("%MachineConditionContainer");

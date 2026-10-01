@@ -21,6 +21,8 @@ namespace AtomicWar.GodotApp.UI
     {
         public event Action? OnClose;
         public event Action? OnOpenWeatherSondeRequested;
+        public event Action? OnOpenChemWarfareRequested;
+        public event Action? OnOpenWinterFreezeRequested;
 
         public WeatherKind? BoundWeather => ActiveWeather?.Current;
         public bool IsBound => _worldHost != null || _weatherHost != null;
@@ -441,6 +443,12 @@ namespace AtomicWar.GodotApp.UI
             var btnSonde = AshfallUiHelpers.MakeButton("WEATHER SONDE CONSOLE", () => OnOpenWeatherSondeRequested?.Invoke());
             btnSonde.TooltipText = "Upper-air sonde telemetry: launch windows, drift, and calibration.";
             sondeRow.AddChild(btnSonde);
+            var btnChem = AshfallUiHelpers.MakeButton("TOXIC ATMOSPHERE WATCH", () => OnOpenChemWarfareRequested?.Invoke());
+            btnChem.TooltipText = "Chemical warfare defense: agent classes, shelter sealing, and prophylaxis stock.";
+            sondeRow.AddChild(btnChem);
+            var btnFreeze = AshfallUiHelpers.MakeButton("DEEP FREEZE WATCH", () => OnOpenWinterFreezeRequested?.Invoke());
+            btnFreeze.TooltipText = "Deep-winter freeze watch: frost depth, heating budget, and burst-pipe risk.";
+            sondeRow.AddChild(btnFreeze);
             contentStack.AddChild(sondeRow);
 
             _shell.SetContent(contentStack);

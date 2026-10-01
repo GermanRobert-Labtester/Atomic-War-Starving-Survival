@@ -142,6 +142,8 @@ namespace Ashfall.Core.Tests.UI
             Assert.Contains("MapFogState.Surveyed", funnel, StringComparison.Ordinal);
             Assert.Contains("MapFogState.Visited", funnel, StringComparison.Ordinal);
             Assert.Contains("salvageSurvey", funnel, StringComparison.Ordinal);
+            Assert.Contains("MapFogState.Rumored", funnel, StringComparison.Ordinal);
+            Assert.Contains("salvageNode.Rumor", funnel, StringComparison.Ordinal);
         }
 
         [Fact]

@@ -1,18 +1,18 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 5612 | **Total Characters:** 6,974,053,842 | **Last Verified:** 2026-10-01
-**Oversized (>= 100,000 characters):** 3553 documents carrying 6,942,262,520 characters — tracked in full, see the register below
+**Total Indexed Documents:** 5613 | **Total Characters:** 6,974,063,991 | **Last Verified:** 2026-10-01
+**Oversized (>= 100,000 characters):** 3553 documents carrying 6,942,268,324 characters — tracked in full, see the register below
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 5557 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 5558 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 53 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 2 |
 
 ---
 
-## Oversized Document Register (>= 100,000 characters) — 3553 documents, 6,942,262,520 characters
+## Oversized Document Register (>= 100,000 characters) — 3553 documents, 6,942,268,324 characters
 
 Authored plan and prose documents at or above the size threshold, recorded to the exact character count. These documents are tracked in full: the register reports their size so it stays visible and reviewable, and no document is excluded from the corpus or from this index.
 
@@ -1476,8 +1476,8 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 1,555,560 | [`docs/plans/integrated/content/INTEGRATED_cw128_06_still_here_on_plaster_plan.md`](plans/integrated/content/INTEGRATED_cw128_06_still_here_on_plaster_plan.md) |
 | 1,550,221 | [`docs/content/PLAN134_PLAN138_RECONCILIATION.md`](content/PLAN134_PLAN138_RECONCILIATION.md) |
 | 1,541,254 | [`docs/plans/integrated/content/INTEGRATED_cw128_07_a_name_in_brass_plan.md`](plans/integrated/content/INTEGRATED_cw128_07_a_name_in_brass_plan.md) |
+| 1,536,150 | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) |
 | 1,534,169 | [`docs/plans/integrated/content/INTEGRATED_cw129_12_a_clerk_with_a_rifle_plan.md`](plans/integrated/content/INTEGRATED_cw129_12_a_clerk_with_a_rifle_plan.md) |
-| 1,532,625 | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) |
 | 1,515,307 | [`docs/plans/integrated/content/INTEGRATED_cw128_12_home_by_six_plan.md`](plans/integrated/content/INTEGRATED_cw128_12_home_by_six_plan.md) |
 | 1,512,521 | [`docs/plans/integrated/content/INTEGRATED_cw127_15_the_measure_at_the_fence_plan.md`](plans/integrated/content/INTEGRATED_cw127_15_the_measure_at_the_fence_plan.md) |
 | 1,495,930 | [`docs/plans/integrated/content/INTEGRATED_cw127_08_a_town_that_is_gone_plan.md`](plans/integrated/content/INTEGRATED_cw127_08_a_town_that_is_gone_plan.md) |
@@ -2288,9 +2288,9 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 446,495 | [`docs/world/ORBITAL_DAMAGE_PROVENANCE.md`](world/ORBITAL_DAMAGE_PROVENANCE.md) |
 | 444,762 | [`piagentsplans/12-social-shelter-life.md`](../piagentsplans/12-social-shelter-life.md) |
 | 444,580 | [`docs/progression/RESEARCH_BALANCE_MATRIX.md`](progression/RESEARCH_BALANCE_MATRIX.md) |
+| 440,793 | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) |
 | 439,819 | [`docs/plans/expansion_wave1/EXPANSION_PLAN_20_AUTHORED_DIALOGUE_GRAPHS_AND_PROSE.md`](plans/expansion_wave1/EXPANSION_PLAN_20_AUTHORED_DIALOGUE_GRAPHS_AND_PROSE.md) |
 | 438,995 | [`piagentsplans/98-standing-record-factions-expansion.md`](../piagentsplans/98-standing-record-factions-expansion.md) |
-| 438,514 | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) |
 | 433,455 | [`piagentsplans/14-ux-onboarding-accessibility.md`](../piagentsplans/14-ux-onboarding-accessibility.md) |
 | 431,350 | [`docs/bodymind/AUTOPSY_CONSENT_MATRIX.md`](bodymind/AUTOPSY_CONSENT_MATRIX.md) |
 | 431,070 | [`piagentsplans/08-visual-art-completion.md`](../piagentsplans/08-visual-art-completion.md) |
@@ -6357,7 +6357,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/systems/SURVIVOR_JOURNEY_OWNERSHIP.md`](systems/SURVIVOR_JOURNEY_OWNERSHIP.md) | 6,650 | **Survivor Journey Ownership** — This document records the live ownership seams for Plan 24 — the survivor |
 | 🟢 `CURRENT` | [`docs/systems/SURVIVOR_STATE_AUTHORITY_MATRIX.md`](systems/SURVIVOR_STATE_AUTHORITY_MATRIX.md) | 7,812 | **Survivor State Authority Matrix** — Plan 24 integration reference. This matrix names the current owner for each |
 
-## 8. Developer Tooling, Skills & QA (14 documents)
+## 8. Developer Tooling, Skills & QA (15 documents)
 
 | Status | Document | Characters | Title / Summary |
 |---|---|---|---|
@@ -6370,6 +6370,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/hygiene/PLAN_BLOAT_REDUCTION_2026-09-27.md`](hygiene/PLAN_BLOAT_REDUCTION_2026-09-27.md) | 3,107 | **Plan Bloat Reduction — Three Unintegrated Plans (2026-09-27)** — User-authorized creative bloat analysis ("pick 3 plans, determine what is bloat |
 | 🟢 `CURRENT` | [`docs/hygiene/REPO_HYGIENE_REPORT.md`](hygiene/REPO_HYGIENE_REPORT.md) | 6,569 | **ASHFALL — Repository Hygiene Report** — These directories are owned by AI coding assistants, aider, composio, etc. |
 | 🟢 `CURRENT` | [`docs/qa/AUDIO_AND_SETTINGS_RECOVERY_SMOKE_TEST.md`](qa/AUDIO_AND_SETTINGS_RECOVERY_SMOKE_TEST.md) | 8,362 | **Manual Smoke-Test Checklist — Audio & User Settings Recovery Behavior** — **Date:** 2026-08-27 |
+| 🟢 `CURRENT` | [`docs/qa/FIRST_HOUR_SMOKE_TEST.md`](qa/FIRST_HOUR_SMOKE_TEST.md) | 2,931 | **ASHFALL — First 30 Minutes Human Smoke Checklist** — Use this checklist to verify the game is **graphically seeable and playable** |
 | 🟢 `CURRENT` | [`docs/qa/MANUAL_PLAYTHROUGH_CHECKLIST.md`](qa/MANUAL_PLAYTHROUGH_CHECKLIST.md) | 18,915 | **Manual Playthrough Checklist — Day 1 → Day 2 Milestone** — **Environment:** Desktop Godot 4.7+ (.NET), launch via `godot --path .` or editor Play. |
 | 🟢 `CURRENT` | [`docs/qa/TEST_LAYOUT_CONVENTIONS.md`](qa/TEST_LAYOUT_CONVENTIONS.md) | 3,102 | **ASHFALL Test Suite Layout & Conventions** — All unit, integration, simulation, and contract test files are organized by domain under `Ashfall.Core.Tests/`: |
 | 🟢 `CURRENT` | [`docs/skills/ASHFALL_SKILL_REVIEW.md`](skills/ASHFALL_SKILL_REVIEW.md) | 2,655 | **ASHFALL Skill Review** — **Date:** 2026-08-22 |
@@ -6635,8 +6636,8 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`DESIGN.md`](../DESIGN.md) | 3,238 | **Design** — ASHFALL is a 2D atomic-war survival management game. The UI must reflect a cold, exhausted, human, restrained, materi... |
 | 🟢 `CURRENT` | [`GEMINI.md`](../GEMINI.md) | 18,363 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
 | 🟢 `CURRENT` | [`GOOSE.md`](../GOOSE.md) | 18,363 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
-| 🟢 `CURRENT` | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) | 438,514 | **ASHFALL Integration Plans** — User-directed ("tackle the open flags, coordinator and drowned coast … the zero |
-| 🟢 `CURRENT` | [`KNOWN_DEBT.md`](../KNOWN_DEBT.md) | 41,609 | **ASHFALL Known Debt** — Only current, decision-relevant debt belongs here. Historical detail lives in |
+| 🟢 `CURRENT` | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) | 440,793 | **ASHFALL Integration Plans** — User-directed ("continue with those 2 open … Then do repair sweeping finding |
+| 🟢 `CURRENT` | [`KNOWN_DEBT.md`](../KNOWN_DEBT.md) | 43,023 | **ASHFALL Known Debt** — Only current, decision-relevant debt belongs here. Historical detail lives in |
 | 🟢 `CURRENT` | [`MIMOCODE.md`](../MIMOCODE.md) | 18,363 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
 | 🟢 `CURRENT` | [`Next-steps-plans/Plan_132_Survivor_Hidden_Agendas_Betrayal_Arc.md`](../Next-steps-plans/Plan_132_Survivor_Hidden_Agendas_Betrayal_Arc.md) | 13,653 | **Plan 132 — Survivor Hidden Agendas & Betrayal Arc** — Create a persistent hidden-agenda system where survivors carry secret motivations, loyalties, and goals that unfold o... |
 | 🟢 `CURRENT` | [`Next-steps-plans/Plan_133_Expedition_Discovery_Persistent_World_Consequences.md`](../Next-steps-plans/Plan_133_Expedition_Discovery_Persistent_World_Consequences.md) | 136,680 | **Plan 133 — Expedition Discovery → Persistent World Consequences** — docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md. |
@@ -6972,7 +6973,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`Seal-steps/ashfall-wave2-successor-corpus-tranche-two-and-ship-readiness-program-2026-09-19.md`](../Seal-steps/ashfall-wave2-successor-corpus-tranche-two-and-ship-readiness-program-2026-09-19.md) | 90,201 | **ASHFALL — Wave 2, Program B: Successor Corpus Tranche-2 & Ship-Readiness Program** — This is Wave 2 Program B, the final forward document in the 2026-09-19 |
 | 🟢 `CURRENT` | [`TEST_POLICY.md`](../TEST_POLICY.md) | 5,220 | **ASHFALL Test Policy** — Tests protect current behavior; they are not a production-count target. This |
 | 🟢 `CURRENT` | [`VIBE.md`](../VIBE.md) | 18,363 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
-| 🟢 `CURRENT` | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) | 1,532,625 | **ASHFALL Worktree Ownership** — User-directed T18 (`ChronicConditionSystem` orphan → decision-gated |
+| 🟢 `CURRENT` | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) | 1,536,150 | **ASHFALL Worktree Ownership** — User-directed ("continue with those 2 open … Then do repair sweeping finding |
 | 🟢 `CURRENT` | [`addons/godot_mcp/commands/master_checklist.md`](../addons/godot_mcp/commands/master_checklist.md) | 1,457 | **Master Checklist** — - [x] 01. `project_creation_commands.gd` |
 | 🟢 `CURRENT` | [`addons/ziva_agent/LICENSE.md`](../addons/ziva_agent/LICENSE.md) | 282 | **Proprietary License** — All rights reserved. |
 | 🟢 `CURRENT` | [`addons/ziva_agent/README.md`](../addons/ziva_agent/README.md) | 2,787 | **Ziva AI Agent – The S-Tier AI Coding Assistant for Godot** — ![Godot 4.2+](https://godotengine.org/) |

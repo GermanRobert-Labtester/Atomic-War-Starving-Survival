@@ -193,6 +193,21 @@ namespace Ashfall.Core.Combat
             }
         }
 
+        private void RecordWarLedgerEntry()
+        {
+            // War ledger (cross-encounter history): one entry per resolved
+            // encounter, newest last, capped at 30 so long wars stay bounded.
+            var ledger = _state.EncounterHistory ?? (_state.EncounterHistory = new List<CombatEncounterRecord>());
+            ledger.Add(new CombatEncounterRecord
+            {
+                Day = _state.Day,
+                LocationName = _state.LocationName,
+                OutcomeText = _state.OutcomeText,
+                RoundNumber = _state.RoundNumber
+            });
+            if (ledger.Count > 30) ledger.RemoveRange(0, ledger.Count - 30);
+        }
+
         private void CheckResolution()
         {
             if (_state.Resolved) return;
@@ -210,6 +225,7 @@ namespace Ashfall.Core.Combat
                 GrantVictoryLoot();
                 RecordSurvivorsSurvived();
                 AddEvent("victory", _state.EncounterId, "Victory — " + _state.Loot.Count + " loot captured.");
+                RecordWarLedgerEntry();
                 BuildAndApplyAftermath("Won", +5f);
                 OnEncounterEnded?.Invoke(_state);
                 Notify();
@@ -229,6 +245,7 @@ namespace Ashfall.Core.Combat
                 if (_ports.ApplyMoraleDelta != null)
                     _ports.ApplyMoraleDelta(_state.EncounterId, -12f);
                 AddEvent("defeat", _state.EncounterId, "Defeat — no survivors standing.");
+                RecordWarLedgerEntry();
                 BuildAndApplyAftermath("Lost", -12f);
                 OnEncounterEnded?.Invoke(_state);
                 Notify();

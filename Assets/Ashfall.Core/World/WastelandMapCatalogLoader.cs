@@ -40,6 +40,7 @@ namespace Ashfall.Core.World
 
         /// <summary>Loot table identifier for scavenging rolls, or null if none.</summary>
         public string? lootTable { get; set; }
+        public string? rumor { get; set; }
 
         /// <summary>Horizontal position (X coordinate) on the wasteland map canvas.</summary>
         public float positionX { get; set; }
@@ -289,6 +290,7 @@ namespace Ashfall.Core.World
                         Danger = ParseDanger(n.danger),
                         FactionId = n.faction ?? string.Empty,
                         LootTableId = n.lootTable ?? string.Empty,
+                        Rumor = n.rumor ?? string.Empty,
                         PositionX = n.positionX,
                         PositionY = n.positionY,
                         Discoverable = n.discoverable,
