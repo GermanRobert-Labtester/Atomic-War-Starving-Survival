@@ -123,7 +123,7 @@ public partial class SilentFoundryPanel : Control, IBindablePanel
         _detailBox.SizeFlagsVertical = SizeFlags.ExpandFill;
         body.AddChild(_detailBox);
 
-        _detailTitle = AshfallUiHelpers.MakeSectionHeader("CAST DETAIL");
+        _detailTitle = AshfallUiHelpers.MakeSectionHeader(T("ui.foundry.cast_detail", "CAST DETAIL"));
         _detailTitle.HorizontalAlignment = HorizontalAlignment.Left;
         _detailBox.AddChild(_detailTitle);
         _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
@@ -154,11 +154,11 @@ public partial class SilentFoundryPanel : Control, IBindablePanel
         // Plan 213 follow-up — FORGING PASS strip: interactive commands over the
         // Core-owned deterministic pass. Feedback is textual (LastEvent), never color-only.
         _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
-        _detailBox.AddChild(AshfallUiHelpers.MakeSectionHeader("FORGING PASS"));
+        _detailBox.AddChild(AshfallUiHelpers.MakeSectionHeader(T("ui.foundry.section.forging", "FORGING PASS")));
         var forgeRow = new HBoxContainer();
         forgeRow.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
         forgeRow.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-        var forgeBeginBtn = AshfallUiHelpers.MakeButton("BEGIN", () =>
+        var forgeBeginBtn = AshfallUiHelpers.MakeButton(T("ui.foundry.begin", "BEGIN"), () =>
         {
             if (_host == null || _forgeFeedback == null || _forgeOutputEdit == null) return;
             _forgeFeedback.Text = _host.BeginForging(_forgeOutputEdit.Text.Trim(), _currentDay);
@@ -196,7 +196,7 @@ public partial class SilentFoundryPanel : Control, IBindablePanel
 
         var completeRow = new HBoxContainer();
         completeRow.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
-        var completeBtn = AshfallUiHelpers.MakeButton("COMPLETE PASS", () =>
+        var completeBtn = AshfallUiHelpers.MakeButton(T("ui.foundry.complete_pass", "COMPLETE PASS"), () =>
         {
             if (_host == null || _forgeFeedback == null) return;
             _forgeFeedback.Text = _host.CompleteForging(_currentDay);
@@ -449,21 +449,21 @@ public partial class SilentFoundryPanel : Control, IBindablePanel
         var p = products[visibleIdx];
 
         _detailTitle.Text = $"{(string.IsNullOrEmpty(p.display_name) ? p.product_id : p.display_name).ToUpperInvariant()} DETAIL";
-        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow("Sink", string.IsNullOrEmpty(p.sink) ? p.category : p.sink,
+        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow(T("ui.foundry.label.sink", "Sink"), string.IsNullOrEmpty(p.sink) ? p.category : p.sink,
             AshfallUiHelpers.ToColor(DesignTheme.Pale)));
-        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow("Yields", $"{p.result_amount}× {p.result_item_id}",
+        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow(T("ui.foundry.label.yields", "Yields"), $"{p.result_amount}× {p.result_item_id}",
             AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
-        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow("Labor", $"{p.labor_hours:0.0} h",
+        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow(T("ui.foundry.label.labor", "Labor"), $"{p.labor_hours:0.0} h",
             AshfallUiHelpers.ToColor(DesignTheme.Dim)));
-        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow("Cast", $"{p.cast_hours:0.0} h",
+        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow(T("ui.foundry.label.cast", "Cast"), $"{p.cast_hours:0.0} h",
             AshfallUiHelpers.ToColor(DesignTheme.Dim)));
-        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow("Skill target", $"{p.skill_target:0.00}",
+        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow(T("ui.foundry.label.skill_target", "Skill target"), $"{p.skill_target:0.00}",
             AshfallUiHelpers.ToColor(DesignTheme.Dim)));
 
         if (p.ingredients != null && p.ingredients.Count > 0)
         {
             _detailContent.AddChild(AshfallUiHelpers.MakeSeparator());
-            _detailContent.AddChild(AshfallUiHelpers.MakeSubsectionHeader("Charge Manifest"));
+            _detailContent.AddChild(AshfallUiHelpers.MakeSubsectionHeader(T("ui.foundry.section.charge", "Charge Manifest")));
             for (int i = 0; i < p.ingredients.Count; i++)
             {
                 var ing = p.ingredients[i];
@@ -475,14 +475,14 @@ public partial class SilentFoundryPanel : Control, IBindablePanel
         if (!string.IsNullOrEmpty(p.treaty_id) && p.quota_amount > 0)
         {
             _detailContent.AddChild(AshfallUiHelpers.MakeSeparator());
-            _detailContent.AddChild(AshfallUiHelpers.MakeSubsectionHeader("Treaty Obligation"));
+            _detailContent.AddChild(AshfallUiHelpers.MakeSubsectionHeader(T("ui.foundry.section.treaty", "Treaty Obligation")));
             _detailContent.AddChild(AshfallUiHelpers.MakeDataRow(p.treaty_id, $"quota {p.quota_amount}/cycle",
                 AshfallUiHelpers.ToColor(DesignTheme.LetheAmber)));
         }
         if (!string.IsNullOrEmpty(p.notes))
         {
             _detailContent.AddChild(AshfallUiHelpers.MakeSeparator());
-            _detailContent.AddChild(AshfallUiHelpers.MakeSubsectionHeader("Provenance"));
+            _detailContent.AddChild(AshfallUiHelpers.MakeSubsectionHeader(T("ui.foundry.section.provenance", "Provenance")));
             _detailContent.AddChild(AshfallUiHelpers.MakeSmall(p.notes, autowrap: true));
         }
     }

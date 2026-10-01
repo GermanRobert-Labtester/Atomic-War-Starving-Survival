@@ -115,7 +115,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _contentStack.SizeFlagsVertical = SizeFlags.ExpandFill;
 
-            _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader("SURVEY PICTURE"));
+            _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader(AshfallUiText.Tr("ui.anomaly.section.picture", "SURVEY PICTURE")));
             _watchText = new Label { AutowrapMode = TextServer.AutowrapMode.WordSmart };
             _contentStack.AddChild(_watchText);
 

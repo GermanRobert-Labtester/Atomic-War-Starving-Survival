@@ -668,7 +668,7 @@ namespace AtomicWar.GodotApp.UI
             title.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
             header.AddChild(title);
 
-            var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
+            var btnClose = AshfallUiHelpers.MakeButton(Tr("ui.status.close", "CLOSE [Esc]"), () => OnClose?.Invoke());
             btnClose.CustomMinimumSize = new Vector2(110, 32);
             header.AddChild(btnClose);
             vbox.AddChild(header);

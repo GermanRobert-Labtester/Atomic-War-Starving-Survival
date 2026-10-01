@@ -83,7 +83,7 @@ namespace AtomicWar.GodotApp.UI
 
             var buttonRow = AshfallUiHelpers.MakeActionBar(separation: 10);
 
-            _mediateBtn = AshfallUiHelpers.MakeButton("Mediate Active Conflict", () =>
+            _mediateBtn = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.relations.mediate", "Mediate Active Conflict"), () =>
             {
                 if (_host != null && _host.System.State.activeConflicts.Count > 0)
                 {

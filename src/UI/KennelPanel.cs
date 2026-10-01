@@ -105,7 +105,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _contentStack.SizeFlagsVertical = SizeFlags.ExpandFill;
 
-            _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader("ANIMAL ROSTER"));
+            _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader(AshfallUiText.Tr("ui.kennel.section.roster", "ANIMAL ROSTER")));
             _rosterText = new Label { AutowrapMode = TextServer.AutowrapMode.WordSmart };
             _contentStack.AddChild(_rosterText);
 

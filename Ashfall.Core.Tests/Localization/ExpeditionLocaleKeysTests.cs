@@ -20,7 +20,7 @@ namespace Ashfall.Core.Tests.Localization
 
         /// <summary>A ui.expedition.* catalog key literal embedded in UI source.</summary>
         private static readonly Regex UiExpeditionKeyPattern = new(
-            @"\"(ui\.expedition\.[A-Za-z0-9_.]+)\"", RegexOptions.Compiled);
+            "\"(ui\\.expedition\\.[A-Za-z0-9_.]+)\"", RegexOptions.Compiled);
 
         private static readonly string[] RequiredKeys =
         {
@@ -148,6 +148,58 @@ namespace Ashfall.Core.Tests.Localization
             "ui.expedition.fitness.unfit",
             "ui.expedition.fitness.fit",
             "ui.expedition.fitness.impaired",
+            "ui.expedition.unnamed",
+            "ui.expedition.dispatch_refused",
+            "ui.expedition.refusal.unmapped",
+            "ui.expedition.refusal.crossing_closed",
+            "ui.expedition.refusal.route_blocked",
+            "ui.expedition.refusal.vehicle_unready",
+            "ui.expedition.refusal.fitness_blocked",
+            "ui.expedition.refusal.fitness_warning_confirmation_required",
+            "ui.expedition.refusal.unknown_target",
+            "ui.expedition.refusal.stale_preview",
+            "ui.expedition.estimate_line",
+            "ui.expedition.estimate_vehicle",
+            "ui.expedition.estimate_on_foot",
+            "ui.expedition.estimate_tank_low",
+            "ui.expedition.estimate_jam",
+            "ui.expedition.estimate_protection",
+            "ui.expedition.estimate_no_protection",
+            "ui.expedition.estimate_dose",
+            "ui.expedition.estimate_unprotected",
+            "ui.expedition.estimate_gear_fail",
+            "ui.expedition.camp.header",
+            "ui.expedition.camp.phase_empty",
+            "ui.expedition.camp.temperature_empty",
+            "ui.expedition.camp.weather_empty",
+            "ui.expedition.camp.firewood_empty",
+            "ui.expedition.camp.water_empty",
+            "ui.expedition.camp.food_empty",
+            "ui.expedition.camp.stamina_empty",
+            "ui.expedition.camp.night_empty",
+            "ui.expedition.camp.sentry_empty",
+            "ui.expedition.camp.cold_empty",
+            "ui.expedition.camp.encounter_none",
+            "ui.expedition.camp.advance",
+            "ui.expedition.camp.break_resume",
+            "ui.expedition.camp.break_retreat",
+            "ui.expedition.camp.resolve",
+            "ui.expedition.camp.close",
+            "ui.expedition.camp.phase_none",
+            "ui.expedition.camp.phase_night",
+            "ui.expedition.camp.temperature",
+            "ui.expedition.camp.weather",
+            "ui.expedition.camp.firewood",
+            "ui.expedition.camp.water",
+            "ui.expedition.camp.food",
+            "ui.expedition.camp.stamina",
+            "ui.expedition.camp.night",
+            "ui.expedition.camp.sentry_active",
+            "ui.expedition.camp.sentry_none",
+            "ui.expedition.camp.cold",
+            "ui.expedition.camp.cold_none",
+            "ui.expedition.camp.encounter_wildlife",
+            "ui.expedition.camp.encounter_resolved",
             "ui.status.expedition_injury",
             "ui.status.expedition_injury.value",
         };
@@ -259,7 +311,7 @@ namespace Ashfall.Core.Tests.Localization
         [Fact]
         public void ExpeditionKeySurface_DoesNotRegress()
         {
-            const int MinimumExpeditionKeys = 127;
+            const int MinimumExpeditionKeys = 205;
             int count = 0;
             foreach (string line in File.ReadAllLines(Path.Combine(RepoRoot(), "assets", "l10n", "strings.csv")))
             {
@@ -311,6 +363,33 @@ namespace Ashfall.Core.Tests.Localization
 
             Assert.True(missing.Count == 0,
                 "expedition UI references catalog keys with no row: " + string.Join("; ", missing));
+        }
+
+        /// <summary>
+        /// Every <c>ui.expedition.*</c> catalog row's source column must name an
+        /// existing file. The pinned/source gates above catch a missing key or an
+        /// unreferenced row; this catches a row whose source names a panel that
+        /// was renamed or removed, which would otherwise leave the key stranded.
+        /// </summary>
+        [Fact]
+        public void EveryExpeditionRow_SourceFileExists()
+        {
+            string root = RepoRoot();
+            var missing = new List<string>();
+            foreach (string line in File.ReadAllLines(Path.Combine(root, "assets", "l10n", "strings.csv")))
+            {
+                if (string.IsNullOrWhiteSpace(line) || line.StartsWith("#", StringComparison.Ordinal)) continue;
+                string[] row = ParseCsvLine(line);
+                if (row.Length != 4) continue;
+                if (!row[0].StartsWith("ui.expedition.", StringComparison.Ordinal)) continue;
+                string source = row[3].Trim();
+                if (!source.StartsWith("src/", StringComparison.Ordinal)) continue;
+                if (!File.Exists(Path.Combine(root, source.Replace('/', Path.DirectorySeparatorChar))))
+                    missing.Add($"{row[0]} -> {source}");
+            }
+
+            Assert.True(missing.Count == 0,
+                "ui.expedition.* rows name source files that do not exist: " + string.Join("; ", missing));
         }
     }
 }

@@ -1,33 +1,4742 @@
-# ASHFALL POT Translation Template
-# Generated: Plan 14 Localization Baseline
+# ASHFALL gettext translation template
 msgid ""
 msgstr ""
-"Project-Id-Version: Ashfall 1.0\n"
-"POT-Creation-Date: 2026-08-31 23:00+0000\n"
+"Project-Id-Version: Ashfall\n"
+"POT-Creation-Date: 2026-10-02 00:00+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Source-Row-Count: 1183\n"
+"X-Generator: scripts/ci/generate_pot_template.py\n"
 
+#: src/UI/AshfallUiHelpers.cs
 msgid "ui.common.ok"
 msgstr "OK"
 
+#: src/UI/AshfallUiHelpers.cs
 msgid "ui.common.cancel"
 msgstr "Cancel"
 
+#: src/UI/AshfallUiHelpers.cs
 msgid "ui.common.close"
 msgstr "Close"
 
+#: src/UI/AshfallUiHelpers.cs
 msgid "ui.common.back"
 msgstr "Back"
 
+#: src/UI/AshfallUiHelpers.cs
 msgid "ui.common.confirm"
 msgstr "Confirm"
 
-msgid "settings.title"
-msgstr "SYSTEM CONFIGURATION // SETTINGS"
+#: src/UI/AshfallUiHelpers.cs
+msgid "ui.common.save"
+msgstr "Save"
 
+#: src/UI/AshfallUiHelpers.cs
+msgid "ui.common.apply"
+msgstr "Apply"
+
+#: src/UI/AshfallUiHelpers.cs
+msgid "ui.common.reset"
+msgstr "Reset"
+
+#: src/UI/AshfallUiHelpers.cs
+msgid "ui.common.enabled"
+msgstr "ENABLED"
+
+#: src/UI/AshfallUiHelpers.cs
+msgid "ui.common.disabled"
+msgstr "DISABLED"
+
+#: src/UI/AshfallUiHelpers.cs
+msgid "ui.common.active"
+msgstr "ACTIVE"
+
+#: src/UI/AshfallUiHelpers.cs
+msgid "ui.common.dormant"
+msgstr "DORMANT"
+
+#: src/UI/AshfallUiHelpers.cs
+msgid "ui.common.stable"
+msgstr "STABLE"
+
+#: src/UI/AshfallUiHelpers.cs
+msgid "ui.common.critical"
+msgstr "CRITICAL"
+
+#: src/UI/AshfallUiHelpers.cs
+msgid "ui.common.warning"
+msgstr "WARNING"
+
+#: src/UI/SettingsPanel.cs
+msgid "settings.title"
+msgstr "SETTINGS"
+
+#: src/UI/SettingsPanel.cs
+msgid "settings.section.display"
+msgstr "DISPLAY & GRAPHICS"
+
+#: src/UI/SettingsPanel.cs
+msgid "settings.section.audio"
+msgstr "AUDIO"
+
+#: src/UI/SettingsPanel.cs
+msgid "settings.section.accessibility"
+msgstr "ACCESSIBILITY & READABILITY"
+
+#: src/UI/SettingsPanel.cs
+msgid "settings.section.gameplay"
+msgstr "GAMEPLAY"
+
+#: src/UI/SettingsPanel.cs
+msgid "settings.section.language"
+msgstr "LANGUAGE"
+
+#: src/UI/SettingsPanel.cs
+msgid "settings.display.window_mode"
+msgstr "Window Mode"
+
+#: src/UI/SettingsPanel.cs
+msgid "settings.display.resolution"
+msgstr "Resolution Preset"
+
+#: src/UI/SettingsPanel.cs
+msgid "settings.display.ui_scale"
+msgstr "Interface Scale"
+
+#: src/UI/SettingsPanel.cs
+msgid "settings.display.vsync"
+msgstr "Vertical Sync"
+
+#: src/UI/SettingsPanel.cs
+msgid "settings.display.max_fps"
+msgstr "Frame Rate Cap"
+
+#: src/UI/SettingsPanel.cs
+msgid "settings.audio.mute_all"
+msgstr "Mute All Audio"
+
+#: src/UI/SettingsPanel.cs
+msgid "settings.audio.master"
+msgstr "Master Volume"
+
+#: src/UI/SettingsPanel.cs
+msgid "settings.audio.music"
+msgstr "Music / Ambience"
+
+#: src/UI/SettingsPanel.cs
+msgid "settings.audio.sfx"
+msgstr "Sound Effects"
+
+#: src/UI/SettingsPanel.cs
+msgid "settings.audio.radio"
+msgstr "Radio"
+
+#: src/UI/SettingsPanel.cs
+msgid "settings.audio.ambience"
+msgstr "Bunker Ambience"
+
+#: src/UI/SettingsPanel.cs
+msgid "settings.accessibility.high_contrast"
+msgstr "High Contrast HUD"
+
+#: src/UI/SettingsPanel.cs
+msgid "settings.accessibility.hazard_labels"
+msgstr "Always Show Hazard Text"
+
+#: src/UI/SettingsPanel.cs
+msgid "settings.accessibility.reduced_motion"
+msgstr "Reduced Motion"
+
+#: src/UI/SettingsPanel.cs
+msgid "settings.accessibility.large_fonts"
+msgstr "Large Font Floor"
+
+#: src/UI/SettingsPanel.cs
+msgid "settings.gameplay.tutorial_mode"
+msgstr "Tutorial Guidance"
+
+#: src/UI/SettingsPanel.cs
+msgid "settings.gameplay.confirm_end_day"
+msgstr "Confirm Before Ending Day"
+
+#: src/UI/SettingsPanel.cs
+msgid "settings.gameplay.verbose_radio"
+msgstr "Detailed Radio Log"
+
+#: src/UI/SettingsPanel.cs
+msgid "settings.gameplay.auto_save"
+msgstr "Auto-Save on Day Advance"
+
+#: src/UI/SettingsPanel.cs
+msgid "settings.gameplay.reset_tutorials"
+msgstr "Reset Tutorial Guidance"
+
+#: src/UI/SettingsPanel.cs
+msgid "settings.language.locale"
+msgstr "Language / Locale"
+
+#: src/UI/OnboardingHintPanel.cs
 msgid "tutorial.title"
 msgstr "DAY 1 OBJECTIVE"
 
+#: Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
+msgid "tutorial.protocol.title"
+msgstr "Resolve the Day 1 protocol"
+
+#: Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
+msgid "tutorial.protocol.objective"
+msgstr "Handle rationing, maintenance, then radio. Each choice costs something."
+
+#: Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
+msgid "tutorial.inspect.title"
+msgstr "Inspect three bunker rooms"
+
+#: Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
+msgid "tutorial.inspect.objective"
+msgstr "Open the shelter and inspect rooms until three have confirming notes."
+
+#: Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
+msgid "tutorial.rationing.title"
+msgstr "Open the stores and read them"
+
+#: Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
+msgid "tutorial.rationing.objective"
+msgstr "Open the inventory and look at the food and water you are rationing."
+
+#: Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
+msgid "tutorial.assignment.title"
+msgstr "Assign a survivor to a duty"
+
+#: Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
+msgid "tutorial.assignment.objective"
+msgstr "Open the duty roster and assign one survivor to a shift. Survivors cannot work without one."
+
+#: Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
+msgid "tutorial.weather.title"
+msgstr "Read the weather"
+
+#: Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
+msgid "tutorial.weather.objective"
+msgstr "Open the weather forecast or panel to learn what tomorrow will bring."
+
+#: Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
+msgid "tutorial.inventory.title"
+msgstr "Use an item from the stores"
+
+#: Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
+msgid "tutorial.inventory.objective"
+msgstr "Equip protection, or use something from stores."
+
+#: Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
+msgid "tutorial.day_advance.title"
+msgstr "End Day 1"
+
+#: Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
+msgid "tutorial.day_advance.objective"
+msgstr "Confirm Advance Day. Morning briefing comes with Day 2."
+
+#: Assets/Ashfall.Core/Radiation/RadiationSystem.cs
+msgid "warning.radiation.acute"
+msgstr "ACUTE RADIATION: {0} at {1:F0} mSv (-5 HP/h). Give Rad-Away or iodine."
+
+#: Assets/Ashfall.Core/Localization/LocalizationService.cs
+msgid "warning.radiation.storm"
+msgstr "FALLOUT STORM: Outdoor dose is rising. Keep people inside or kit them in hazmat."
+
+#: Assets/Ashfall.Core/Survivors/NeedsSystem.cs
+msgid "warning.water.low"
+msgstr "WATER LOW: {0:F1} units left (~{1:F1} days). Run filtration or desalination."
+
+#: Assets/Ashfall.Core/Survivors/NeedsSystem.cs
+msgid "warning.food.low"
+msgstr "FOOD LOW: {0:F1} units left (~{1:F1} days). Tighten rations or scavenge."
+
+#: Assets/Ashfall.Core/Shelter/PowerGridSystem.cs
+msgid "warning.power.brownout"
+msgstr "POWER DEFICIT: Generator reserve is gone. Filters are offline; indoor contamination is rising."
+
+#: Assets/Ashfall.Core/Survivors/NeedsSystem.cs
+msgid "warning.survivor.critical"
+msgstr "SURVIVOR IN DANGER: {0} is critical on {1}. Triage now."
+
+#: src/UI/JournalPanel.cs
 msgid "codex.manual.title"
 msgstr "FIELD SURVIVAL MANUAL"
+
+#: src/UI/JournalPanel.cs
+msgid "codex.manual.radiation"
+msgstr "Radiation: Dose climbs in fallout and storms. Above 50 mSv, acute sickness takes 5 HP/hr. Give Rad-Away or iodine."
+
+#: src/UI/JournalPanel.cs
+msgid "codex.manual.rations"
+msgstr "Rations: Three people drink ~3.6 clean water a day. Keep filtration membranes working."
+
+#: src/UI/JournalPanel.cs
+msgid "codex.manual.power"
+msgstr "Power: Air filtration needs a live grid. Stock batteries and generator fuel."
+
+#: src/UI/JournalPanel.cs
+msgid "codex.manual.duty"
+msgstr "Duty: Unassigned people lose morale and cannot keep rooms running."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_roadside_memorial.title"
+msgstr "Roadside Memorial"
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_roadside_memorial.description"
+msgstr "Melted tallow stubs sit inside rusted rationing tins around a bent highway marker. A photograph was torn away, leaving only a bloodstained corner pinned beneath a stone. The wax has frozen into pale, grey discs, and the tins have been set in a rough circle."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_roadside_memorial.choice.leave_memorial"
+msgstr "Leave it untouched."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_roadside_memorial.choice.take_offering"
+msgstr "Take the candle stubs and any small offering left behind."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_crashed_truck.title"
+msgstr "Crashed Supply Truck"
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_crashed_truck.description"
+msgstr "A military logistics rig lies crushed in the frozen ditch, its windshield shattered outward. Torn radiation warning tags cling to the twisted rear doors. The cargo area was scavenged long ago, but one crate lies split open in the frost, and nobody has closed it."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_crashed_truck.choice.search_truck_cargo"
+msgstr "Search the split crate and cab for salvage."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_crashed_truck.choice.search_truck_cab"
+msgstr "Investigate the cab for documents or personal effects."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_crashed_truck.choice.ignore_truck"
+msgstr "Move on. Someone already took what was worth taking."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_frozen_bus.title"
+msgstr "Frozen Evacuation Bus"
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_frozen_bus.description"
+msgstr "The transit doors are frozen wide open, letting the ash-laden wind howl through the cabin. A child's single shoe sits upright beneath a luggage rack. The windows are obscured by thick, greasy frost on the inside, and nothing has been wiped clear."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_frozen_bus.choice.search_bus_luggage"
+msgstr "Search the luggage rack for supplies."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_frozen_bus.choice.leave_bus"
+msgstr "Leave the bus undisturbed."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_frozen_bus.choice.read_bus_tag"
+msgstr "Check the transit tag on the dashboard for a destination."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_improvised_grave.title"
+msgstr "Improvised Grave"
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_improvised_grave.description"
+msgstr "A shallow mound of frozen earth, hastily reinforced with chunks of shattered concrete. A name is violently gouged into a piece of broken siding, along with a date from the first winter of the ashfall, and both are cut to the same depth."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_improvised_grave.choice.respect_grave"
+msgstr "Pay respects and move on."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_improvised_grave.choice.inspect_grave_marker"
+msgstr "Read the name and date scratched into the plank."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_improvised_grave.choice.disturb_grave"
+msgstr "Check beneath the stones for any buried belongings."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_collapsed_bridge.title"
+msgstr "Collapsed Bridge"
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_collapsed_bridge.description"
+msgstr "A colossal span of reinforced concrete leans broken into the black, freezing river. A transport vehicle is wedged violently against the submerged rebar, its rear doors hanging open just above the roaring current."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_collapsed_bridge.choice.search_bridge_vehicle"
+msgstr "Climb down to the wedged vehicle and search the cargo area."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_collapsed_bridge.choice.inspect_bridge_structure"
+msgstr "Examine the collapsed span for salvageable steel or cable."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_collapsed_bridge.choice.avoid_bridge"
+msgstr "Find a way around. The structure looks unstable."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_drainage_pipe.title"
+msgstr "Drainage Pipe"
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_drainage_pipe.description"
+msgstr "Rags and irradiated blankets have been pushed deep into this dark concrete culvert. Words are gouged into the wall just beyond the reach of the freezing rain, the letters uneven and going downhill. The smell of copper and unwashed bodies lingers, and the blankets lie well back from the drip."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_drainage_pipe.choice.crawl_pipe"
+msgstr "Crawl inside and check the blankets for supplies."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_drainage_pipe.choice.read_pipe_warning"
+msgstr "Read the warning scratched into the concrete."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_drainage_pipe.choice.ignore_pipe"
+msgstr "Leave it alone. Someone may come back."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_rail_siding.title"
+msgstr "Rail Siding"
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_rail_siding.description"
+msgstr "Rusted wheelsets have sunk deep into the irradiated ballast. A maintenance ledger hangs from the side of a derailed freight car, the final pages written in frantic, shaky handwriting before ending abruptly, and the ledger has not been moved."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_rail_siding.choice.search_rail_car"
+msgstr "Search the freight car for industrial salvage."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_rail_siding.choice.read_rail_ledger"
+msgstr "Read the maintenance ledger."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_rail_siding.choice.ignore_rail"
+msgstr "The car has been picked over. Move on."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_dead_livestock.title"
+msgstr "Dead Livestock Area"
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_dead_livestock.description"
+msgstr "Plastic ear tags flutter in the ash-wind among the dead weeds. Massive, bloated bodies of livestock were dragged into a rough trench, but the grave diggers abandoned the work. The Geiger counter stutters nervously here."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_dead_livestock.choice.scavenge_livestock"
+msgstr "Scavenge usable material from the remains."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_dead_livestock.choice.inspect_livestock_tags"
+msgstr "Inspect the ear tags for farm identification."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_dead_livestock.choice.avoid_livestock"
+msgstr "Keep your distance. The contamination risk is not worth it."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_ruined_greenhouse.title"
+msgstr "Ruined Greenhouse"
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_ruined_greenhouse.description"
+msgstr "Shattered glass crunches underfoot in this ruined greenhouse. Desiccated seed trays lie beneath the rusted benches. In the corner, a heavy steel cabinet remains sealed—the paint around its lock is scarred by crowbar marks that stop short of success, and the scars are old."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_ruined_greenhouse.choice.take_greenhouse_seeds"
+msgstr "Take the labeled seed trays."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_ruined_greenhouse.choice.open_greenhouse_cabinet"
+msgstr "Force the sealed cabinet open."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_ruined_greenhouse.choice.leave_greenhouse"
+msgstr "Leave the greenhouse for whoever finds it next."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_shell_crater.title"
+msgstr "Shell Crater"
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_shell_crater.description"
+msgstr "The blast fused the earth into dark, jagged glass along one side of the massive crater. A torn military harness and scorched metal fragments are fused into the soil. Stepping near the rim, each footfall lands with a hollow knock that carries further than it should."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_shell_crater.choice.inspect_crater"
+msgstr "Carefully inspect the crater edge for salvage."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_shell_crater.choice.salvage_crater_harness"
+msgstr "Dig out the harness and stamped metal fragments."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_shell_crater.choice.avoid_crater"
+msgstr "The ground is unstable. Walk around."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_field_kitchen.title"
+msgstr "Abandoned Field Kitchen"
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_field_kitchen.description"
+msgstr "A massive cast-iron cooking pot is frozen solid to its metal stand. Bent ladles hang from rusted wire hooks. Hundreds of tally marks are gouged into the serving table, five bars to a group, tracking rations that eventually ran out."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_field_kitchen.choice.search_kitchen"
+msgstr "Search the kitchen area for preserved food or fuel."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_field_kitchen.choice.take_kitchen_tools"
+msgstr "Take the ladles and cooking implements."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_field_kitchen.choice.read_ration_marks"
+msgstr "Read the ration marks scratched into the table."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_abandoned_generator.title"
+msgstr "Abandoned Generator"
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_abandoned_generator.description"
+msgstr "The heavy generator casing is wrenched open, its primary power cables severed with surgical precision. A frantic fuel mixture ratio is scrawled in grease pencil on the frame. The heavy block is dead, but it could be salvaged."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_abandoned_generator.choice.strip_generator"
+msgstr "Strip the generator for electrical components."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_abandoned_generator.choice.read_generator_notes"
+msgstr "Copy the fuel mixture notes from the frame."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_abandoned_generator.choice.mark_generator"
+msgstr "Mark the location for a future salvage team."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_shrine.title"
+msgstr "Roadside Shrine"
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_shrine.description"
+msgstr "Tallow candles have burned down to stubs inside a rusted ration tin. Small offerings—screws, shiny pebbles, a bullet—sit beneath a faded cloth carefully knotted around the twisted guardrail."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_shrine.choice.leave_shrine"
+msgstr "Leave the shrine undisturbed."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_shrine.choice.take_shrine_offerings"
+msgstr "Take the small offerings left beneath the cloth."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_shrine.choice.add_shrine_offering"
+msgstr "Leave a small offering of your own."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_emergency_cache.title"
+msgstr "Emergency Cache"
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_emergency_cache.description"
+msgstr "The rubber weather seal has cracked in the bitter cold, but the faded stencil is undeniable. Deep gouges show where someone tried to pry the heavy lock before abandoning it. It reads: CIVIL DEFENSE — EMERGENCY RATION CACHE."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_emergency_cache.choice.open_cache"
+msgstr "Force the cracked seal and open the cache."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_emergency_cache.choice.leave_cache"
+msgstr "Leave the cache sealed. Someone may need it more."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_observation_post.title"
+msgstr "Military Observation Post"
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_observation_post.description"
+msgstr "A heavy optics mount still points silently toward the desolate crossing below. Frantic grid references and kill-counts are scrawled on the concrete wall, stopping abruptly mid-sentence. A single spent sniper cartridge sits on the frozen windowsill."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_observation_post.choice.search_observation_post"
+msgstr "Search the post for optics or intelligence documents."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_observation_post.choice.read_grid_references"
+msgstr "Copy the grid references and dates from the wall."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_observation_post.choice.ignore_observation_post"
+msgstr "The post has been stripped. Move on."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_abandoned_barricade.title"
+msgstr "Abandoned Barricade"
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_abandoned_barricade.description"
+msgstr "Traffic arrows were repainted twice in different faction colors, marking shifting territories. A mummified corpse lies slumped behind the barrier, clutching a rusted lockbox. The sandbags have frozen into a solid, bullet-pocked wall."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_abandoned_barricade.choice.search_barricade"
+msgstr "Search the barricade for supplies left behind."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_abandoned_barricade.choice.read_barricade_markings"
+msgstr "Examine the faction markings on the barricade."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_abandoned_barricade.choice.avoid_barricade"
+msgstr "Circle around. The body suggests this was not a safe place."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_hunting_blind.title"
+msgstr "Hunting Blind"
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_hunting_blind.description"
+msgstr "Half of the camouflage blind has collapsed under the weight of radioactive ash. An empty thermos, scattered brass casings, and a cloth-wrapped journal lie abandoned under the bench. The damp pages chronicle a hunt that went terribly wrong."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_hunting_blind.choice.search_blind"
+msgstr "Search the blind for hunting supplies."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_hunting_blind.choice.read_blind_journal"
+msgstr "Read the damp journal."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_hunting_blind.choice.leave_blind"
+msgstr "Leave the blind as you found it."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_radio_tower.title"
+msgstr "Damaged Radio Tower"
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_radio_tower.description"
+msgstr "The towering mast has buckled, its twisted steel groaning in the wind. A single intact feed line snakes into a heavy, locked utility cabinet at the base. The metal door is scarred with deep claw marks."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_radio_tower.choice.open_radio_cabinet"
+msgstr "Force the cabinet open and salvage the components."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_radio_tower.choice.read_radio_log"
+msgstr "Check the cabinet for a frequency log or maintenance record."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_radio_tower.choice.ignore_radio"
+msgstr "The tower is beyond repair. Move on."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_destroyed_checkpoint.title"
+msgstr "Destroyed Checkpoint"
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_destroyed_checkpoint.description"
+msgstr "Heavy concrete barriers are scorched black on the side facing the bunker, suggesting whatever attacked came from within. A blood-spattered logbook is pinned beneath a collapsed steel chair. The faction identity plate has been violently torn away."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_destroyed_checkpoint.choice.search_checkpoint"
+msgstr "Search the checkpoint for confiscated goods or supplies."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_destroyed_checkpoint.choice.read_checkpoint_log"
+msgstr "Read the logbook beneath the chair."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_destroyed_checkpoint.choice.avoid_checkpoint"
+msgstr "The destruction suggests heavy fighting. Keep moving."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_abandoned_tent.title"
+msgstr "Abandoned Tent"
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_abandoned_tent.description"
+msgstr "The military-grade fabric has collapsed under the weight of grey snow. Inside, nested tin cups sit beside a child's crayon drawing, meticulously preserved in a plastic sleeve. The tent's zipper is frozen shut from the inside."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_abandoned_tent.choice.search_tent"
+msgstr "Cut open the tent and search for supplies."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_abandoned_tent.choice.take_drawing"
+msgstr "Take the child's drawing from the plastic sleeve."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_abandoned_tent.choice.leave_tent"
+msgstr "Leave the tent undisturbed."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_makeshift_clinic.title"
+msgstr "Makeshift Clinic"
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_makeshift_clinic.description"
+msgstr "Desperate triage categories are scrawled in blood on torn cardboard strips. Empty, frozen saline bags hang from a rusted IV cable. The medicine cabinet was ransacked—some shelves stripped bare while others were ignored entirely."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_makeshift_clinic.choice.search_clinic"
+msgstr "Search the untouched shelves for medical supplies."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_makeshift_clinic.choice.read_triage_list"
+msgstr "Read the triage numbers on the cardboard strips."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_makeshift_clinic.choice.leave_clinic"
+msgstr "Leave the clinic intact. Others may need it."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_crashed_drone.title"
+msgstr "Crashed Drone"
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_crashed_drone.description"
+msgstr "One shattered wing is driven deep into the frozen earth. The outer casing was ripped open by scavengers, but the armored flight-control compartment remains sealed. Corrosive battery acid has burned a dark, hissing stain into the soil."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_crashed_drone.choice.open_drone_compartment"
+msgstr "Force open the flight-control compartment."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_crashed_drone.choice.read_drone_log"
+msgstr "Attempt to extract the flight log from the sealed compartment."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_crashed_drone.choice.avoid_drone"
+msgstr "The battery acid suggests chemical risk. Leave it."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_fuel_cache.title"
+msgstr "Fuel Cache"
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_fuel_cache.description"
+msgstr "Two military drums are half-buried beneath a rusted sheet of corrugated metal. A desperate route map to a safe zone has been scratched into one lid with a nail. The drums are heavy, their tamper-seals unbroken."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_fuel_cache.choice.take_fuel_cache"
+msgstr "Dig up the containers and take the fuel."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_fuel_cache.choice.read_route_sketch"
+msgstr "Copy the route sketch from the lid."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_fuel_cache.choice.leave_fuel_cache"
+msgstr "Leave the cache hidden. You may need it later."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_water_source.title"
+msgstr "Water Source"
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_water_source.description"
+msgstr "A dented tin cup is bound to the rusted hand pump with frayed wire, the concrete basin stained with heavy, unnatural mineral deposits. Someone wrote 'SAFE' in charcoal, alongside a date from five years ago. The pump handle still groans when moved."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_water_source.choice.collect_water"
+msgstr "Pump and collect water from the source."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_water_source.choice.test_water"
+msgstr "Test the water quality before collecting."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_water_source.choice.avoid_water"
+msgstr "The mineral staining is suspicious. Move on."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_supply_drop.title"
+msgstr "Supply Drop"
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_supply_drop.description"
+msgstr "The faded military parachute is hopelessly tangled in the black, petrified branches of dead trees. The stenciled coordinates indicate it drifted miles off course. The reinforced crate is intact, but the heavy locking seal has been severed."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_supply_drop.choice.open_supply_drop"
+msgstr "Open the crate and take what is inside."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_supply_drop.choice.read_supply_label"
+msgstr "Read the shipping label for destination and origin information."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_supply_drop.choice.leave_supply_drop"
+msgstr "Leave the crate. It was meant for someone else."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_hospital_chapel_ledger.title"
+msgstr "Hospital Chapel Ledger"
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_hospital_chapel_ledger.description"
+msgstr "The chapel beside the east wing kept a visitors' ledger through the worst of it. The last entries are names, then bed numbers, then nothing at all — just a date repeated down the page in a steady hand until the hand stopped coming. A candle box under the stand still has three stubs and a packet of matches."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_hospital_chapel_ledger.choice.read_the_names"
+msgstr "Read the last page properly, then close the ledger."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_hospital_chapel_ledger.choice.take_matches"
+msgstr "Take the lighter from the candle box. The dead do not need light."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_depot_undertow_raft_line.title"
+msgstr "Undertow Raft Line"
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_depot_undertow_raft_line.description"
+msgstr "A raft of sealed crates lashed to a handrail runs down the flooded concourse, marked with the Undertow's tar-symbol. The line is rigged to a pulley someone greased recently. Whatever moves along it moves quietly, and often."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_depot_undertow_raft_line.choice.note_the_route"
+msgstr "Mark the pulley anchors on your map and leave the line alone."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_depot_undertow_raft_line.choice.cut_one_crate"
+msgstr "Cut one crate free before the owners notice."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_gamma_levy_board.title"
+msgstr "Checkpoint Gamma Levy Board"
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_gamma_levy_board.description"
+msgstr "The garrison's levy board still stands by the guard shack: grain quotas, diesel quotas, and the names of households marked square for paid and circle for owed. Fresh chalk over old chalk. Somebody drives here to write, which means somebody still collects."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_gamma_levy_board.choice.memorize_the_board"
+msgstr "Memorize which farms have paid and which are marked owed."
+
+#: Assets/StreamingAssets/Data/micro_locations.json
+msgid "discovery.micro_gamma_levy_board.choice.take_the_chalk"
+msgstr "Take the chalk and the board's rating stamp. Forged square marks might pass at a distance."
+
+#: src/UI/ResearchPanel.cs
+msgid "ui.common.close_short"
+msgstr "CLOSE [Esc]"
+
+#: src/UI/ResearchPanel.cs
+msgid "research.title"
+msgstr "RESEARCH & TECHNOLOGY // QUEUE"
+
+#: src/UI/ResearchPanel.cs
+msgid "research.card.title"
+msgstr "RESEARCH & TECHNOLOGY"
+
+#: src/UI/ResearchPanel.cs
+msgid "research.card.subtitle"
+msgstr "R&D QUEUE · DISCOVERED KNOWLEDGE · BREAKTHROUGHS"
+
+#: src/UI/ResearchPanel.cs
+msgid "research.section.active"
+msgstr "ACTIVE RESEARCH"
+
+#: src/UI/ResearchPanel.cs
+msgid "research.section.available"
+msgstr "AVAILABLE RESEARCH"
+
+#: src/UI/ResearchPanel.cs
+msgid "research.section.locked"
+msgstr "LOCKED / UPCOMING RESEARCH"
+
+#: src/UI/ResearchPanel.cs
+msgid "research.section.completed"
+msgstr "COMPLETED RESEARCH"
+
+#: src/UI/ResearchPanel.cs
+msgid "research.section.knowledge"
+msgstr "DISCOVERED KNOWLEDGE"
+
+#: src/UI/ResearchPanel.cs
+msgid "research.status.ready"
+msgstr "Ready."
+
+#: src/UI/ResearchPanel.cs
+msgid "research.status.offline"
+msgstr "Offline — no research engine connected."
+
+#: src/UI/ResearchPanel.cs
+msgid "research.status.active"
+msgstr "Research system active. Day {0}."
+
+#: src/UI/ResearchPanel.cs
+msgid "research.progress"
+msgstr "Progress: Day {0} of {1} ({2} days remaining)"
+
+#: src/UI/ResearchPanel.cs
+msgid "research.breakthrough_award"
+msgstr "Breakthrough Award: {0}"
+
+#: src/UI/ResearchPanel.cs
+msgid "research.breakthrough"
+msgstr "Breakthrough: {0}"
+
+#: src/UI/ResearchPanel.cs
+msgid "research.node.summary"
+msgstr "{0} [{1}] — {2} days"
+
+#: src/UI/ResearchPanel.cs
+msgid "research.action.start"
+msgstr "START RESEARCH"
+
+#: src/UI/ResearchPanel.cs
+msgid "research.empty.available_busy"
+msgstr "No other research available (queue slot occupied or all unlocked)."
+
+#: src/UI/ResearchPanel.cs
+msgid "research.empty.available"
+msgstr "No research available to start."
+
+#: src/UI/ResearchPanel.cs
+msgid "research.empty.locked"
+msgstr "No locked research nodes remaining."
+
+#: src/UI/ResearchPanel.cs
+msgid "research.requirements"
+msgstr "Requires: {0}"
+
+#: src/UI/ResearchPanel.cs
+msgid "research.locked.prerequisites"
+msgstr "Locked: prerequisites incomplete"
+
+#: src/UI/ResearchPanel.cs
+msgid "research.empty.completed"
+msgstr "No completed research."
+
+#: src/UI/ResearchPanel.cs
+msgid "research.completed"
+msgstr "{0} [{1}] — Complete"
+
+#: src/UI/ResearchPanel.cs
+msgid "research.completed.breakthrough"
+msgstr "(Breakthrough: {0})"
+
+#: src/UI/ResearchPanel.cs
+msgid "research.empty.knowledge"
+msgstr "No knowledge unlocked yet."
+
+#: src/UI/ResearchPanel.cs
+msgid "research.knowledge.row"
+msgstr "{0} — {1}"
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.title"
+msgstr "FIRST-HOUR OBJECTIVE"
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.status.offline"
+msgstr "GUIDANCE UNAVAILABLE"
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.status.booting"
+msgstr "Reading the day's objective."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.status.complete"
+msgstr "JOURNEY COMPLETE"
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.status.current"
+msgstr "CURRENT: {0}"
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.status.day_two"
+msgstr "Day 2. The shelter is yours to run."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.status.first_hour_complete"
+msgstr "The first-hour sequence is complete. The shelter is yours to manage."
+
+#: src/Main.PlayerSurfaces.cs
+msgid "onboarding.status.disabled"
+msgstr "ONBOARDING DISABLED — veteran mode is active."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.status.inactive"
+msgstr "Onboarding is not active for this run."
+
+#: src/Main.Onboarding.cs
+msgid "onboarding.status.bar"
+msgstr "Day {0} · {1} (onboarding): {2}"
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.assistance.minimal"
+msgstr "ASSISTANCE: MINIMAL"
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.assistance.standard"
+msgstr "ASSISTANCE: STANDARD"
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.assistance.guided"
+msgstr "ASSISTANCE: GUIDED"
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.action.show_where"
+msgstr "SHOW ME WHERE"
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.action.skip"
+msgstr "SKIP STEP"
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.action.dismiss"
+msgstr "DISMISS HINT"
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.action.replay"
+msgstr "REPLAY"
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.checklist.title"
+msgstr "JOURNEY CHECKLIST"
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.hint.empty"
+msgstr "NO HINT YET"
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.hint.prefix"
+msgstr "HINT:"
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.hint.dismissed"
+msgstr "HINT: (dismissed)"
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.tooltip.tracker"
+msgstr "First-hour checklist. Progress is kept with the save."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.tooltip.close"
+msgstr "Close the onboarding hint panel. Your progress is preserved."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.tooltip.assistance"
+msgstr "How much guidance each step shows. Toggle with the button below."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.tooltip.objective"
+msgstr "Exactly what is required to complete this onboarding step."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.tooltip.hint"
+msgstr "A short hint if you stall on this step."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.tooltip.show_where"
+msgstr "Open the panel this step needs."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.tooltip.skip"
+msgstr "Mark this step known and move on. Real actions are still yours to take when ready."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.tooltip.dismiss"
+msgstr "Hide the contextual hint for this step until you advance."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.tooltip.assistance_cycle"
+msgstr "Cycle between MINIMAL (objective only) and STANDARD (with hints)."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.tooltip.replay"
+msgstr "Restart the onboarding hints from Day 1 (does not undo gameplay)."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.protocol.title"
+msgstr "Resolve the Day 1 protocol"
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.protocol.objective"
+msgstr "Handle rationing, maintenance, then radio. Each choice costs something."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.inspect.title"
+msgstr "Inspect three bunker rooms"
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.inspect.objective"
+msgstr "Open the shelter and inspect rooms until three have confirming notes."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.rationing.title"
+msgstr "Open the stores and read them"
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.rationing.objective"
+msgstr "Open the inventory and look at the food and water you are rationing."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.assignment.title"
+msgstr "Assign a survivor to a duty"
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.assignment.objective"
+msgstr "Open the duty roster and assign one survivor to a shift. Survivors cannot work without one."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.weather.title"
+msgstr "Read the weather"
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.weather.objective"
+msgstr "Open the weather forecast or panel to learn what tomorrow will bring."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.inventory_use.title"
+msgstr "Use an item from the stores"
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.inventory_use.objective"
+msgstr "Equip protection, or use something from stores."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.day_advance.title"
+msgstr "End Day 1"
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.day_advance.objective"
+msgstr "Confirm Advance Day. Morning briefing comes with Day 2."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.water.title"
+msgstr "Treat the water"
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.water.objective"
+msgstr "Start a water-treatment batch. Untreated water stays unsafe."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.power.title"
+msgstr "Restore power"
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.power.objective"
+msgstr "Throw a shelter breaker and watch the grid change."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.food.title"
+msgstr "Use a food ration"
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.food.objective"
+msgstr "Eat a food ration from stores."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.duty.title"
+msgstr "Put someone on shift"
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.duty.objective"
+msgstr "Open the duty roster and assign one survivor. Work does not happen by itself."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.dose.title"
+msgstr "Read your dose"
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.dose.objective"
+msgstr "Open the dose ledger or radiation detail. It accumulates quietly."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.research.title"
+msgstr "Start research"
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.research.objective"
+msgstr "Start one available research node. It takes days."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.expedition.title"
+msgstr "Dispatch an expedition"
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.expedition.objective"
+msgstr "Send an expedition. They leave the hatch; the cost comes back with them."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.hint.protocol"
+msgstr "Pick ration, maintenance, and radio. The bunker stores adjust around your choices."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.hint.inspect"
+msgstr "Inspect any three rooms — every confirming note is a fallback if the next storm cuts light."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.hint.rationing"
+msgstr "Open the stores. Read the food and water you are rationing against."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.hint.assignment"
+msgstr "Pull one survivor onto a duty from the Duty Roster. Their shifts move the bunker forward."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.hint.weather"
+msgstr "Read the forecast before you end the day — fallout storms change outdoor rad."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.hint.inventory"
+msgstr "Equip something real. The geiger or gas mask only protects the hands that wear them."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.hint.day_advance"
+msgstr "Confirm the advance. The morning briefing returns once Day 2 lands."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.hint.water"
+msgstr "Start a treatment batch at the water plant. The stores only change if a batch actually runs."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.hint.power"
+msgstr "Open the grid and throw one breaker. Watch the rooms change."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.hint.food"
+msgstr "Eat one ration from stores. The count should drop."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.hint.duty"
+msgstr "Open the Duty Roster and put one survivor on a shift. Nothing in the shelter runs itself."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.hint.dose"
+msgstr "Open the dose ledger before the day ends. The number only moves one way."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.hint.research"
+msgstr "Start an available research node. It appears in the queue."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.hint.expedition"
+msgstr "Send a team with the expedition command. They leave the shelter."
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.action.skip_all"
+msgstr "SKIP TUTORIAL"
+
+#: src/UI/OnboardingHintPanel.cs
+msgid "onboarding.tooltip.skip_all"
+msgstr "Mark every remaining tutorial step known. The expedition itself is still yours to run."
+
+#: src/Main.Onboarding.cs
+msgid "onboarding.hud.progress"
+msgstr "{0}/{1} · {2}"
+
+#: src/Main.Onboarding.cs
+msgid "onboarding.status.days_on_stage"
+msgstr "{0} day(s) on this step"
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.trap.trap_snare.name"
+msgstr "Wire Snare"
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.trap.trap_snare.description"
+msgstr "A loop of cord or wire set across a game trail, tightened by a springy branch. Cheap enough to deploy more than one, unreliable enough that materials still matter. The wire remembers the shape of the animal it was meant to hold."
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.trap.trap_deadfall.name"
+msgstr "Deadfall Trap"
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.trap.trap_deadfall.description"
+msgstr "A flat stone or salvaged plate balanced on a trigger stick. Low-tech, material-light, and as old as hunger. The trigger is the hard part. The rest is weight and patience."
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.trap.trap_pit.name"
+msgstr "Pit Trap"
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.trap.trap_pit.description"
+msgstr "A concealed pit dug into a game trail, lined with sharpened stakes. Labor-heavy, location-dependent, and capable of stopping something large. The earth does the work. The survivor does the digging."
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.trap.trap_net.name"
+msgstr "Net Trap"
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.trap.trap_net.description"
+msgstr "A mesh of cord or salvaged netting strung between posts or branches. Broader coverage than a snare, higher upfront cost, and more things can go wrong. Birds and small mammals both tangle in it."
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.trap.trap_fish.name"
+msgstr "Fish Trap"
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.trap.trap_fish.description"
+msgstr "A woven funnel of wood and cord set in moving water. Fish enter but cannot find the exit. Strong where geography supports it, worthless where it does not. The freeze kills it. The thaw brings it back."
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.trap.trap_cage.name"
+msgstr "Cage Trap"
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.trap.trap_cage.description"
+msgstr "A sprung cage of salvaged metal and wire, triggered by weight on a plate. Expensive to build, durable once built. The animal lives inside it, which is either a mercy or a problem depending on what caught."
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.trap.trap_bird_snare.name"
+msgstr "Bird Snare"
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.trap.trap_bird_snare.description"
+msgstr "A fine noose of thread or thin wire set on a perch stick. Lightweight, fast to deploy, and fragile. Frequent small calories with a health-risk shadow."
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.trap.trap_body_grip.name"
+msgstr "Body-Grip Trap"
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.trap.trap_body_grip.description"
+msgstr "A heavy spring-loaded mechanism that closes steel jaws on anything that passes through the frame. Efficient, durable, and severe. The misfire is as dangerous as the catch."
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.trap.trap_box.name"
+msgstr "Box Trap"
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.trap.trap_box.description"
+msgstr "A wooden box with a gravity door, triggered by a treadle inside. Bulky, dependable, and shelter-craftable. The animal is alive when you check it, which is the point."
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.trap.trap_improvised_wire.name"
+msgstr "Improvised Wire Snare"
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.trap.trap_improvised_wire.description"
+msgstr "A twist of copper wire shaped into a loose loop and pegged to the ground. The poorest survivor's option, better than doing nothing. It breaks often, catches little, and costs almost nothing to replace."
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.prey.rabbit.name"
+msgstr "Ash Rabbit"
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.prey.rabbit.description"
+msgstr "A small grey-brown rabbit, lean from foraging in contaminated soil. Common enough to teach the trapping loop, modest enough to keep the survivor humble."
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.prey.cotton_hare.name"
+msgstr "Cotton Hare"
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.prey.cotton_hare.description"
+msgstr "A larger hare with pale winter fur that darkens in the thaw. Faster and less common than the rabbit, with a slightly stronger yield."
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.prey.deer.name"
+msgstr "Wasteland Mule Deer"
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.prey.deer.description"
+msgstr "A gaunt mule deer, ribs showing through a dusty coat. Rare jackpot, never baseline passive food."
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.prey.boar.name"
+msgstr "Razorback Boar"
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.prey.boar.description"
+msgstr "A heavy-bodied boar with a ridge of bristled hair along its spine. High-value but risky."
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.prey.fox.name"
+msgstr "Barren Fox"
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.prey.fox.description"
+msgstr "A lean fox with patchy fur and alert eyes. Uncommon, with elevated disease risk."
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.prey.rat.name"
+msgstr "Irradiated Rat"
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.prey.rat.description"
+msgstr "A bloated rat with thinning fur, common near ruins and shelter edges. Desperate food — low yield and dangerous in normal play."
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.prey.pheasant.name"
+msgstr "Ash Pheasant"
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.prey.pheasant.description"
+msgstr "A ground-feeding bird with dull plumage, common in the thaw and bloom. Low yield and higher contamination than rabbit."
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.prey.ash_crow.name"
+msgstr "Three-Eyed Sentry Crow"
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.prey.ash_crow.description"
+msgstr "A scavenger bird associated with contaminated ground and corpse-rich environments. Low food yield, higher contamination risk."
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.prey.mirror_carp.name"
+msgstr "Mirror Carp"
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.prey.mirror_carp.description"
+msgstr "A large-scaled carp, reliable in moving water. Seasonal and modest in yield."
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.prey.ash_pike.name"
+msgstr "Ash Pike"
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.prey.ash_pike.description"
+msgstr "A predatory freshwater fish, rarer and larger than the carp. Water only, seasonal window."
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.prey.irradiated_squirrel.name"
+msgstr "Irradiated Squirrel"
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.prey.irradiated_squirrel.description"
+msgstr "A small rodent with patchy fur and swollen glands. Low yield and very high contamination probability."
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.prey.contaminated_fowl.name"
+msgstr "Contaminated Fowl"
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.prey.contaminated_fowl.description"
+msgstr "A bird with discolored plumage and labored breathing, a visible ecological warning sign. Medically risky."
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.prey.rad_dog.name"
+msgstr "Rad Dog"
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.prey.rad_dog.description"
+msgstr "A feral canine with patchy fur and wary eyes, traveling in small packs. Rare, morally and medically fraught."
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.prey.muskrat.name"
+msgstr "Marsh Muskrat"
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.prey.muskrat.description"
+msgstr "A semi-aquatic rodent found near waterways and wetlands. Medium yield and meaningful disease risk."
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.prey.hedgehog.name"
+msgstr "Ash Hedgehog"
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.prey.hedgehog.description"
+msgstr "A small spined mammal, seasonal and low-yield. A deadfall or box trap target."
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.bait.bait_scrap_meat.name"
+msgstr "Scrap-Meat Bait"
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.bait.bait_grain_lure.name"
+msgstr "Grain Lure"
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.bait.bait_pheromone.name"
+msgstr "Mutated-Beast Pheromone Lure"
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.bait.bait_fat_cake.name"
+msgstr "Rendered Fat Cake"
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.bait.bait_berry_mash.name"
+msgstr "Fermented Berry Mash"
+
+#: Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
+msgid "wildlife.bait.bait_salt_lick.name"
+msgstr "Mineral Salt Lick"
+
+#: src/UI/TutorialPanel.cs
+msgid "wildlife.trapping.first_snare.title"
+msgstr "The First Snare"
+
+#: src/UI/TutorialPanel.cs
+msgid "wildlife.trapping.first_snare.body"
+msgstr "Make or find a trap, set it on a valid site, and bait it if you can spare the food. Check it later, then butcher a catch. Wild prey can carry sickness or contamination."
+
+#: src/UI/TutorialPanel.cs
+msgid "wildlife.trapping.wear_out.title"
+msgstr "Traps Wear Out"
+
+#: src/UI/TutorialPanel.cs
+msgid "wildlife.trapping.wear_out.body"
+msgstr "Traps wear as they work. A broken trap stops catching but stays on the map. Repair it or replace it."
+
+#: src/UI/TutorialPanel.cs
+msgid "wildlife.trapping.bycatch.title"
+msgstr "Unexpected Catches"
+
+#: src/UI/TutorialPanel.cs
+msgid "wildlife.trapping.bycatch.body"
+msgstr "A trap can catch something unintended. Inspect catches before processing: bycatch may help, hurt, or carry disease or contamination."
+
+#: src/UI/AshfallUiTheme.cs
+msgid "ui.tooltip.prerequisites_unmet"
+msgstr "Currently unavailable — prerequisites not met."
+
+#: src/UI/AssetInspectorPanel.cs
+msgid "ui.devinspector.export_report_tooltip"
+msgstr "Write a read-only JSON coverage report to user:// listing every authored id whose art does not resolve."
+
+#: src/UI/AssetInspectorPanel.cs
+msgid "ui.devinspector.close_tooltip"
+msgstr "Return to the grid (Esc)"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.estimate_tooltip"
+msgstr "Show fuel, dose, breakdown, and encounter estimates for this destination."
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.railway_tooltip"
+msgstr "Open the railway logistics terminal — branch lines, rolling stock, and evacuation capacity."
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.radar_tooltip"
+msgstr "Open the expedition radar sweep — every cataloged destination, danger band, and active sortie on one grid."
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.camp_tooltip"
+msgstr "Manage an expedition's overnight camp: firewood, rations, sentry shifts, and night segments."
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.prep_header"
+msgstr "EXPEDITION PREP // PROJECTED LOADOUT"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.return_header"
+msgstr "RETURN LOOT CEREMONY"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.failure_header"
+msgstr "SORTIE AFTERMATH"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.prep_survivor"
+msgstr "SURVIVOR:"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.refuel_tooltip"
+msgstr "Burn 10 carried fuel items into the selected tank."
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.track_gear_tooltip"
+msgstr "Install the authored track-gear package, improving rough-terrain traction and reducing breakdown risk."
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.fitness_title"
+msgstr "FITNESS WARNING — EXPEDITION"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.no_route"
+msgstr "NO ROUTE DATA."
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.micro_location"
+msgstr "DISCOVERY · MICRO-LOCATION"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.scout"
+msgstr "SCOUT: {0}"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.stamina"
+msgstr "STAMINA {0:0}%"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.danger"
+msgstr "DANGER: LVL {0} · DISTANCE: {1} LEGS"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.dispatch_stealth"
+msgstr "DISPATCH STEALTH SORTIE"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.section.active"
+msgstr "ACTIVE SORTIES IN THE FIELD"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.section.pending"
+msgstr "PENDING SURFACED ENCOUNTERS"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.section.prep"
+msgstr "DISPATCH PREPARATION // MOTOR POOL & ARMORY"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.section.targets"
+msgstr "KNOWN WASTELAND DESTINATIONS"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.advance"
+msgstr "ADVANCE SORTIES (2 HOURS)"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.return_dashboard"
+msgstr "RETURN TO DASHBOARD [Esc]"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.push_luck"
+msgstr "PUSH LUCK (SCAVENGE DEEPER)"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.order_return"
+msgstr "ORDER INBOUND RETURN"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.estimate"
+msgstr "ESTIMATE"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.resolve"
+msgstr "RESOLVE"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.dismiss_all"
+msgstr "DISMISS ALL"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.tactical_header"
+msgstr "TACTICAL APPROACH SELECTION"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.decide_later"
+msgstr "DECIDE LATER"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.fitness_factors"
+msgstr "Fitness factors: {0}"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.filter.all"
+msgstr "All Targets"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.filter.all.hint"
+msgstr "every wasteland destination"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.filter.near"
+msgstr "Near Range"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.filter.near.hint"
+msgstr "<= 6 legs / short sortie"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.filter.medium"
+msgstr "Mid Range"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.filter.medium.hint"
+msgstr "7 .. 12 legs / day trip"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.filter.far"
+msgstr "Far Range"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.filter.far.hint"
+msgstr "> 12 legs / multi-day"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.col.survivor"
+msgstr "Survivor"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.col.phase"
+msgstr "Phase"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.col.distance"
+msgstr "Distance"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.col.stamina"
+msgstr "Stamina"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.col.loot"
+msgstr "Loot"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.col.encounters"
+msgstr "Encounters"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.col.location"
+msgstr "Location"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.col.legs"
+msgstr "Legs"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.col.danger"
+msgstr "Danger"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.col.enc_pct"
+msgstr "Enc %"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.col.status"
+msgstr "Status"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.active_header"
+msgstr "Active Sorties In The Field"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.targets_header"
+msgstr "Known Wasteland Destinations"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.detail_header"
+msgstr "TARGET DETAIL"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.select_hint"
+msgstr "Select a sortie or destination row to view phase / cargo / blocking state."
+
+#: src/UI/ExpeditionPhaseText.cs
+msgid "ui.expedition.phase.outbound"
+msgstr "OUTBOUND"
+
+#: src/UI/ExpeditionPhaseText.cs
+msgid "ui.expedition.phase.looting"
+msgstr "LOOTING"
+
+#: src/UI/ExpeditionPhaseText.cs
+msgid "ui.expedition.phase.inbound"
+msgstr "INBOUND"
+
+#: src/UI/ExpeditionPhaseText.cs
+msgid "ui.expedition.phase.completed"
+msgstr "COMPLETED"
+
+#: src/UI/ExpeditionPhaseText.cs
+msgid "ui.expedition.phase.failed"
+msgstr "FAILED"
+
+#: src/UI/ExpeditionPhaseText.cs
+msgid "ui.expedition.phase.camp"
+msgstr "CAMP"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.title"
+msgstr "Sortie Radar // Wasteland Movement Network"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.range_filter"
+msgstr "Range Filter"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.rail.active"
+msgstr "Active"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.rail.queued"
+msgstr "Queued"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.rail.blocked"
+msgstr "Blocked"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.rail.median"
+msgstr "Median"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.rail.max_danger"
+msgstr "Max Danger"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.rail.enc_pct"
+msgstr "Encounter %"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.rail.median_value"
+msgstr "{0} legs"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.rail.median_empty"
+msgstr "— legs"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.summary"
+msgstr "Plan reconnaissance and scavenging sorties. Monitor radiation risk, distance, and survivor stamina."
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.esc_hint"
+msgstr "Press [Esc] to return"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.no_active"
+msgstr "No active scavenging sorties currently deployed."
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.one_time"
+msgstr "[ONE-TIME]"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.fitness.unfit"
+msgstr "FITNESS: UNFIT — dispatch blocked"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.fitness.fit"
+msgstr "FITNESS: FIT"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.fitness.impaired"
+msgstr "FITNESS: IMPAIRED — allowed, max {0:0}h"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.detail.scout"
+msgstr "Scout"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.detail.travel"
+msgstr "Travel"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.detail.cargo"
+msgstr "Cargo"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.detail.encounter_hr"
+msgstr "Encounter/hr"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.detail.route"
+msgstr "Route"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.sortie_title"
+msgstr "{0} SORTIE"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.target_title"
+msgstr "{0} DETAIL"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.status.blocked"
+msgstr "BLOCKED"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.status.ready"
+msgstr "READY"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.status.needs_survivor"
+msgstr "NEEDS SURVIVOR"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.no_targets"
+msgstr "— no targets in range —"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.no_sorties"
+msgstr "— no sorties active —"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.subsection.loot"
+msgstr "Loot Categories"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.subsection.status"
+msgstr "Status"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.level_value"
+msgstr "LVL {0}"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.push_suffix"
+msgstr "[PUSH]"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.pushing_luck_suffix"
+msgstr "[PUSHING LUCK]"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.prep_vehicle"
+msgstr "VEHICLE:"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.prep_weapon"
+msgstr "WEAPON:"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.refuel"
+msgstr "REFUEL TOP-UP"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.fit_track_gear"
+msgstr "FIT TRACK GEAR"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.radar_console"
+msgstr "RADAR SWEEP CONSOLE"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.camp_console"
+msgstr "OVERNIGHT CAMP CONSOLE"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.rail_console"
+msgstr "RAILWAY LOGISTICS TERMINAL"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.progress_line"
+msgstr "Travel Progress: {0}/{1} legs · Encounters: {2} · Loot: {3} items ({4}/{5} kg)"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.transit_outbound"
+msgstr "In transit toward objective..."
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.transit_inbound"
+msgstr "Returning to shelter with salvage..."
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.target_line"
+msgstr "Potential Salvage: {0} · Encounter Risk: {1}/hr"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.world_line"
+msgstr "WORLD: {0} · {1} spoilage{2}{3}"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.world_unclaimed"
+msgstr "unclaimed"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.world_ruined"
+msgstr "· RUINED"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.world_threats"
+msgstr "· {0} threat(s)"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.badge.req"
+msgstr "Req: {0} x{1} ({2}/{3})"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.badge.cost"
+msgstr "Cost: {0} ×{1} ({2}/{3})"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.badge.cost_list"
+msgstr "Cost: {0}"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.badge.gain"
+msgstr "Gain: {0} ×{1}"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.badge.codex"
+msgstr "[CODEX] Clue Unlocked: {0}"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.badge.map"
+msgstr "[MAP] Discovers: {0}"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.badge.unavailable"
+msgstr "UNAVAILABLE — {0}"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.badge.cost_unavailable"
+msgstr "Cost or requirement unavailable"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.dispatch_speed"
+msgstr "DISPATCH SPEED SORTIE (1.5x)"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.dispatch_blocked"
+msgstr "Dispatch blocked: {0}"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.encounter_title"
+msgstr "ENCOUNTER"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.detail.travel_value"
+msgstr "{0}/{1} legs"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.detail.cargo_value"
+msgstr "{0} items · {1:0}/{2:0} kg"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.host_unavailable"
+msgstr "Unavailable — expedition host not bound."
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.shell_title"
+msgstr "WASTELAND EXPEDITIONS // SORTIE PLANNER"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.encounter_pending"
+msgstr "ENCOUNTER #{0}"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.banner_encounter"
+msgstr "[!] ENCOUNTER — {0} at {1} [{2}] # {3}"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.banner_specific"
+msgstr "[!] {0} — {1} [{2}] # {3}"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.unnamed"
+msgstr "[UNNAMED]"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.dispatch_refused"
+msgstr "DISPATCH REFUSED — {0}"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.refusal.unmapped"
+msgstr "no route knowledge for this sector. Survey or chart it first."
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.refusal.crossing_closed"
+msgstr "crossing gate closed. No vouch authorization to traverse."
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.refusal.route_blocked"
+msgstr "route blocked by a weather or standing gate."
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.refusal.vehicle_unready"
+msgstr "vehicle unready. Check fuel and condition in the garage."
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.refusal.fitness_blocked"
+msgstr "survivor is unfit for expedition duty."
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.refusal.fitness_warning_confirmation_required"
+msgstr "survivor is impaired and needs explicit confirmation."
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.refusal.unknown_target"
+msgstr "unknown destination."
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.refusal.stale_preview"
+msgstr "planning data went stale. Retry the dispatch."
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.estimate_line"
+msgstr "ESTIMATE [{0} · {1}] {2:F0} ticks (out {3:F0}, loot {4:F0}, in {5:F0}) · cargo {6:F0} kg · fuel {7:F1}{8} · breakdown {9:P0} · encounter {10:P0}/hr · weapons {11:P0}{12}"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.estimate_vehicle"
+msgstr "by {0}"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.estimate_on_foot"
+msgstr "on foot"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.estimate_tank_low"
+msgstr "TANK LOW"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.estimate_jam"
+msgstr "(jam {0:P0})"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.estimate_protection"
+msgstr "protection {0:0.#}"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.estimate_no_protection"
+msgstr "NO WORKING PROTECTION"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.estimate_dose"
+msgstr "dose ~{0:F0} mSv ({1}{2})"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.estimate_unprotected"
+msgstr ", {0} unprotected"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.estimate_gear_fail"
+msgstr "GEAR FAILS MID-ROUTE (~{0:F0} h < {1:F0} h trip)"
+
+#: src/UI/ExpeditionCampPanel.cs
+msgid "ui.expedition.camp.header"
+msgstr "EXPEDITION CAMP"
+
+#: src/UI/ExpeditionCampPanel.cs
+msgid "ui.expedition.camp.phase_empty"
+msgstr "Phase: —"
+
+#: src/UI/ExpeditionCampPanel.cs
+msgid "ui.expedition.camp.temperature_empty"
+msgstr "Temperature: —"
+
+#: src/UI/ExpeditionCampPanel.cs
+msgid "ui.expedition.camp.weather_empty"
+msgstr "Weather: —"
+
+#: src/UI/ExpeditionCampPanel.cs
+msgid "ui.expedition.camp.firewood_empty"
+msgstr "Firewood: —"
+
+#: src/UI/ExpeditionCampPanel.cs
+msgid "ui.expedition.camp.water_empty"
+msgstr "Water: —"
+
+#: src/UI/ExpeditionCampPanel.cs
+msgid "ui.expedition.camp.food_empty"
+msgstr "Food: —"
+
+#: src/UI/ExpeditionCampPanel.cs
+msgid "ui.expedition.camp.stamina_empty"
+msgstr "Stamina: —"
+
+#: src/UI/ExpeditionCampPanel.cs
+msgid "ui.expedition.camp.night_empty"
+msgstr "Night: —"
+
+#: src/UI/ExpeditionCampPanel.cs
+msgid "ui.expedition.camp.sentry_empty"
+msgstr "Sentry: —"
+
+#: src/UI/ExpeditionCampPanel.cs
+msgid "ui.expedition.camp.cold_empty"
+msgstr "Cold Exposure: —"
+
+#: src/UI/ExpeditionCampPanel.cs
+msgid "ui.expedition.camp.encounter_none"
+msgstr "Encounter: None"
+
+#: src/UI/ExpeditionCampPanel.cs
+msgid "ui.expedition.camp.advance"
+msgstr "Advance Night Segment"
+
+#: src/UI/ExpeditionCampPanel.cs
+msgid "ui.expedition.camp.break_resume"
+msgstr "Break Camp (Resume)"
+
+#: src/UI/ExpeditionCampPanel.cs
+msgid "ui.expedition.camp.break_retreat"
+msgstr "Break Camp (Retreat)"
+
+#: src/UI/ExpeditionCampPanel.cs
+msgid "ui.expedition.camp.resolve"
+msgstr "Resolve Encounter"
+
+#: src/UI/ExpeditionCampPanel.cs
+msgid "ui.expedition.camp.close"
+msgstr "Close"
+
+#: src/UI/ExpeditionCampPanel.cs
+msgid "ui.expedition.camp.phase_none"
+msgstr "Phase: Not in camp"
+
+#: src/UI/ExpeditionCampPanel.cs
+msgid "ui.expedition.camp.phase_night"
+msgstr "Phase: Camp (Night)"
+
+#: src/UI/ExpeditionCampPanel.cs
+msgid "ui.expedition.camp.temperature"
+msgstr "Temperature: {0:F1}°C (ambient {1:F1}°C + heat {2:F1}°C)"
+
+#: src/UI/ExpeditionCampPanel.cs
+msgid "ui.expedition.camp.weather"
+msgstr "Weather: {0}"
+
+#: src/UI/ExpeditionCampPanel.cs
+msgid "ui.expedition.camp.firewood"
+msgstr "Firewood: {0:F1} remaining ({1:F1} consumed)"
+
+#: src/UI/ExpeditionCampPanel.cs
+msgid "ui.expedition.camp.water"
+msgstr "Water: {0:F1} remaining ({1:F1} consumed)"
+
+#: src/UI/ExpeditionCampPanel.cs
+msgid "ui.expedition.camp.food"
+msgstr "Food: {0:F1} remaining ({1:F1} consumed)"
+
+#: src/UI/ExpeditionCampPanel.cs
+msgid "ui.expedition.camp.stamina"
+msgstr "Stamina: {0:F0}%"
+
+#: src/UI/ExpeditionCampPanel.cs
+msgid "ui.expedition.camp.night"
+msgstr "Night: {0}/{1} segments"
+
+#: src/UI/ExpeditionCampPanel.cs
+msgid "ui.expedition.camp.sentry_active"
+msgstr "Sentry: Active ({0} shifts)"
+
+#: src/UI/ExpeditionCampPanel.cs
+msgid "ui.expedition.camp.sentry_none"
+msgstr "Sentry: None"
+
+#: src/UI/ExpeditionCampPanel.cs
+msgid "ui.expedition.camp.cold"
+msgstr "Cold Exposure: {0:F1} [!]"
+
+#: src/UI/ExpeditionCampPanel.cs
+msgid "ui.expedition.camp.cold_none"
+msgstr "Cold Exposure: None"
+
+#: src/UI/ExpeditionCampPanel.cs
+msgid "ui.expedition.camp.encounter_wildlife"
+msgstr "Encounter: Wildlife threat (level {0}) [!]"
+
+#: src/UI/ExpeditionCampPanel.cs
+msgid "ui.expedition.camp.encounter_resolved"
+msgstr "Encounter: Resolved"
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.offline"
+msgstr "Expedition engine offline. Bind an ExpeditionHostSession to see alive sorties + destinations."
+
+#: src/UI/ExpeditionRadarPanel.cs
+msgid "ui.expedition.radar.select_row_hint"
+msgstr "Select a sortie row to view phase and stamina, or a destination row to view loot categories and blocking status."
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.risk.extreme"
+msgstr "EXTREME RISK"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.risk.high"
+msgstr "HIGH RISK"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.risk.moderate"
+msgstr "MODERATE RISK"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.risk.low"
+msgstr "LOW RISK"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.preview.morale"
+msgstr "Morale: {0}"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.preview.default"
+msgstr "Stamina: -15 · Ammo: 0"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.preview.guilt"
+msgstr "Guilt: +{0}"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.preview.standing"
+msgstr "Standing: {0}"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.unavailable.cost"
+msgstr "Cost unavailable"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.unavailable.required_item"
+msgstr "Required item unavailable"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.unavailable.required_condition"
+msgstr "Required condition unmet"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.unavailable.recognition"
+msgstr "Recognition requirement unmet"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.unavailable.standing"
+msgstr "Standing requirement unmet"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.unavailable.generic"
+msgstr "Unavailable"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.refuel_refused"
+msgstr "REFUEL REFUSED"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.track_gear_refused"
+msgstr "TRACK GEAR REFUSED"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.vehicle_foot"
+msgstr "On foot"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.weapon_sidearm"
+msgstr "Sidearm only"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.vehicle_entry"
+msgstr "{0} · fuel {1:0}/{2:0} · cond {3:0}%"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.vehicle_broken"
+msgstr "BROKEN"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.unknown_faction"
+msgstr "UNKNOWN FACTION"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.patrol_token"
+msgstr "PATROL"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.pending_day"
+msgstr "DAY {0}"
+
+#: src/UI/ExpeditionPanel.cs
+msgid "ui.expedition.no_prior_contact"
+msgstr "No prior contact"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.expedition_injury"
+msgstr "Expedition Injury"
+
+#: src/UI/InventoryPanel.cs
+msgid "ui.inventory.capacity_placeholder"
+msgstr "CAPACITY // —"
+
+#: src/UI/MainMenuPanel.cs
+msgid "ui.mainmenu.dev_run_tooltip"
+msgstr "Boot a fresh campaign and open the Item & Asset Inspector over it."
+
+#: src/UI/SettingsPanel.cs
+msgid "ui.settings.close_tooltip"
+msgstr "Close settings (Esc) — discards unsaved changes"
+
+#: src/UI/SettingsPanel.cs
+msgid "ui.settings.visual_audio_alerts_tooltip"
+msgstr "Emit concise visual equivalents for critical audio cues (Plan 169)."
+
+#: src/UI/ResearchPanel.cs
+msgid "ui.research.atlas_tooltip"
+msgstr "Research technology atlas — every project, tier, and unlock."
+
+#: src/UI/DifficultySettingsPanel.cs
+msgid "ui.difficulty.offline"
+msgstr "Difficulty settings are offline until a campaign is composed."
+
+#: src/UI/WorkshopPanel.cs
+msgid "ui.workshop.status_idle"
+msgstr "WORKSHOP STATUS: IDLE"
+
+#: src/UI/WorkshopPanel.cs
+msgid "ui.workshop.no_session"
+msgstr "No workshop session bound."
+
+#: src/UI/WorkshopPanel.cs
+msgid "ui.workshop.collect_job"
+msgstr "COLLECT JOB"
+
+#: src/UI/WorkshopPanel.cs
+msgid "ui.workshop.abort_job"
+msgstr "ABORT JOB"
+
+#: src/UI/WorkshopPanel.cs
+msgid "ui.workshop.no_active_job"
+msgstr "No active job."
+
+#: src/UI/WorkshopPanel.cs
+msgid "ui.workshop.tooling"
+msgstr "TOOLING"
+
+#: src/UI/WorkshopPanel.cs
+msgid "ui.workshop.calibration"
+msgstr "CALIBRATION"
+
+#: src/UI/WorkshopPanel.cs
+msgid "ui.workshop.overhaul_tooling"
+msgstr "OVERHAUL TOOLING"
+
+#: src/UI/WorkshopPanel.cs
+msgid "ui.workshop.start_job"
+msgstr "START JOB"
+
+#: src/UI/WorkshopPanel.cs
+msgid "ui.workshop.abandon_restoration"
+msgstr "ABANDON RESTORATION"
+
+#: src/UI/WorkshopPanel.cs
+msgid "ui.workshop.abandon"
+msgstr "ABANDON"
+
+#: src/UI/WorkshopPanel.cs
+msgid "ui.workshop.status_restored"
+msgstr "STATUS: RESTORED"
+
+#: src/UI/WorkshopPanel.cs
+msgid "ui.workshop.start_restoration"
+msgstr "START RESTORATION"
+
+#: src/UI/WorkshopPanel.cs
+msgid "ui.workshop.bench_occupied"
+msgstr "The bench is occupied. Finish or abandon the current restoration first."
+
+#: src/UI/VisitorIntegrationPanel.cs
+msgid "ui.visitors.active_stays"
+msgstr "ACTIVE VISITOR STAYS"
+
+#: src/UI/VisitorIntegrationPanel.cs
+msgid "ui.visitors.admit"
+msgstr "ADMIT NEXT ARRIVAL (LOCAL)"
+
+#: src/UI/VisitorIntegrationPanel.cs
+msgid "ui.visitors.empty"
+msgstr "No visitors are currently housed. Admitted airlock guests appear here."
+
+#: src/UI/VisitorIntegrationPanel.cs
+msgid "ui.visitors.pending"
+msgstr "PENDING PROCESSING REQUIREMENTS"
+
+#: src/UI/VisitorIntegrationPanel.cs
+msgid "ui.visitors.receipts"
+msgstr "DEPARTURE & RECRUITMENT RECEIPTS"
+
+#: src/UI/VisitorIntegrationPanel.cs
+msgid "ui.visitors.shared_quarter"
+msgstr "Shared Quarter"
+
+#: src/UI/VisitorIntegrationPanel.cs
+msgid "ui.visitors.private_room"
+msgstr "Private Room"
+
+#: src/UI/VisitorIntegrationPanel.cs
+msgid "ui.visitors.guest_suite"
+msgstr "Guest Suite"
+
+#: src/UI/VisitorIntegrationPanel.cs
+msgid "ui.visitors.recruit"
+msgstr "RECRUIT AS RESIDENT"
+
+#: src/UI/VisitorIntegrationPanel.cs
+msgid "ui.visitors.depart"
+msgstr "LOG DEPARTURE"
+
+#: src/UI/VisitorIntegrationPanel.cs
+msgid "ui.visitors.no_tasks"
+msgstr "No outstanding processing requirements."
+
+#: src/UI/VisitorIntegrationPanel.cs
+msgid "ui.visitors.satisfy"
+msgstr "Satisfy"
+
+#: src/UI/VisitorIntegrationPanel.cs
+msgid "ui.visitors.no_departures"
+msgstr "No departures or recruitment conversions recorded."
+
+#: src/UI/ShelterHudPanel.cs
+msgid "ui.shelter.nav_overview"
+msgstr "Overview"
+
+#: src/UI/ShelterHudPanel.cs
+msgid "ui.shelter.nav_survivors"
+msgstr "Survivors"
+
+#: src/UI/ShelterHudPanel.cs
+msgid "ui.shelter.nav_inventory"
+msgstr "Inventory"
+
+#: src/UI/ShelterHudPanel.cs
+msgid "ui.shelter.nav_crafting"
+msgstr "Crafting"
+
+#: src/UI/ShelterHudPanel.cs
+msgid "ui.shelter.nav_medical"
+msgstr "Medical"
+
+#: src/UI/ShelterHudPanel.cs
+msgid "ui.shelter.nav_expeditions"
+msgstr "Expeditions"
+
+#: src/UI/ShelterHudPanel.cs
+msgid "ui.shelter.nav_weather"
+msgstr "Weather"
+
+#: src/UI/ShelterHudPanel.cs
+msgid "ui.shelter.nav_shelter"
+msgstr "Shelter"
+
+#: src/UI/ShelterHudPanel.cs
+msgid "ui.shelter.nav_factions"
+msgstr "Factions"
+
+#: src/UI/ShelterHudPanel.cs
+msgid "ui.shelter.nav_verdict"
+msgstr "Verdict"
+
+#: src/UI/ShelterHudPanel.cs
+msgid "ui.shelter.forecast_pending"
+msgstr "FORECAST // --"
+
+#: src/UI/ShelterHudPanel.cs
+msgid "ui.shelter.roster_pending"
+msgstr "DUTY ROSTER // --"
+
+#: src/UI/ShelterHudPanel.cs
+msgid "ui.shelter.no_signal"
+msgstr "No fresh signal."
+
+#: src/UI/DutyRosterPanel.cs
+msgid "ui.duty_roster.scope_all"
+msgstr "All Roles"
+
+#: src/UI/DutyRosterPanel.cs
+msgid "ui.duty_roster.scope_night_watch"
+msgstr "Night Watch"
+
+#: src/UI/DutyRosterPanel.cs
+msgid "ui.duty_roster.scope_mess"
+msgstr "Mess & Rations"
+
+#: src/UI/DutyRosterPanel.cs
+msgid "ui.duty_roster.scope_hatch"
+msgstr "Hatch Defense"
+
+#: src/UI/DutyRosterPanel.cs
+msgid "ui.duty_roster.scope_intake"
+msgstr "Intake Filtration"
+
+#: src/UI/DutyRosterPanel.cs
+msgid "ui.duty_roster.scope_expedition"
+msgstr "Scavenging Sortie"
+
+#: src/UI/DutyRosterPanel.cs
+msgid "ui.duty_roster.scope_unassigned"
+msgstr "Unassigned"
+
+#: src/UI/DutyRosterPanel.cs
+msgid "ui.duty_roster.shift_detail"
+msgstr "SHIFT DETAIL"
+
+#: src/UI/DutyRosterPanel.cs
+msgid "ui.duty_roster.confirm_assign"
+msgstr "CONFIRM ASSIGN"
+
+#: src/UI/DutyRosterPanel.cs
+msgid "ui.duty_roster.assign_prefix"
+msgstr "ASSIGN:"
+
+#: src/UI/DutyRosterPanel.cs
+msgid "ui.duty_roster.vacate"
+msgstr "VACATE SHIFT"
+
+#: src/UI/SilentFoundryPanel.cs
+msgid "ui.foundry.nav_all"
+msgstr "All Heats"
+
+#: src/UI/SilentFoundryPanel.cs
+msgid "ui.foundry.nav_agricultural"
+msgstr "Agricultural Tools"
+
+#: src/UI/SilentFoundryPanel.cs
+msgid "ui.foundry.nav_structural"
+msgstr "Structural Beams"
+
+#: src/UI/SilentFoundryPanel.cs
+msgid "ui.foundry.nav_water"
+msgstr "Water / Brine Items"
+
+#: src/UI/SilentFoundryPanel.cs
+msgid "ui.foundry.nav_heavy_alloy"
+msgstr "Heavy Alloy Parts"
+
+#: src/UI/SilentFoundryPanel.cs
+msgid "ui.foundry.nav_repair_plate"
+msgstr "Repair Plates"
+
+#: src/UI/SilentFoundryPanel.cs
+msgid "ui.foundry.machine_nominal"
+msgstr "MACHINE // NOMINAL"
+
+#: src/UI/SilentFoundryPanel.cs
+msgid "ui.foundry.forge_tooltip"
+msgstr "Begin a forging pass on the latest provenance-bearing batch of the output item."
+
+#: src/UI/SilentFoundryPanel.cs
+msgid "ui.foundry.complete_tooltip"
+msgstr "Score the recorded sequence against the profile's authored order; deterministic, no RNG."
+
+#: src/UI/SilentFoundryPanel.cs
+msgid "ui.foundry.machine_prefix"
+msgstr "MACHINE //"
+
+#: src/UI/SilentFoundryPanel.cs
+msgid "ui.foundry.cast_detail"
+msgstr "CAST DETAIL"
+
+#: src/UI/SkillMatrixPanel.cs
+msgid "ui.skill_matrix.scope_all"
+msgstr "All Survivors"
+
+#: src/UI/SkillMatrixPanel.cs
+msgid "ui.skill_matrix.scope_active"
+msgstr "Active Skills"
+
+#: src/UI/SkillMatrixPanel.cs
+msgid "ui.skill_matrix.scope_dormant"
+msgstr "Dormant Skills"
+
+#: src/UI/SkillMatrixPanel.cs
+msgid "ui.skill_matrix.scope_expert"
+msgstr "Expert Tracks"
+
+#: src/UI/SkillMatrixPanel.cs
+msgid "ui.skill_matrix.scope_medical"
+msgstr "Medical Focus"
+
+#: src/UI/SkillMatrixPanel.cs
+msgid "ui.skill_matrix.scope_crafting"
+msgstr "Crafting Focus"
+
+#: src/UI/SkillMatrixPanel.cs
+msgid "ui.skill_matrix.scope_combat"
+msgstr "Combat Focus"
+
+#: src/UI/SkillMatrixPanel.cs
+msgid "ui.skill_matrix.scope_survival"
+msgstr "Survival Focus"
+
+#: src/UI/SkillMatrixPanel.cs
+msgid "ui.skill_matrix.actor_detail"
+msgstr "ACTOR DETAIL"
+
+#: src/UI/TriangulationPanel.cs
+msgid "ui.triangulation.signal_none"
+msgstr "Signal: None under direction-finding"
+
+#: src/UI/TriangulationPanel.cs
+msgid "ui.triangulation.observations_none"
+msgstr "Observations: —"
+
+#: src/UI/TriangulationPanel.cs
+msgid "ui.triangulation.candidate_none_dash"
+msgstr "Candidate: —"
+
+#: src/UI/TriangulationPanel.cs
+msgid "ui.triangulation.confidence_none"
+msgstr "Confidence: —"
+
+#: src/UI/TriangulationPanel.cs
+msgid "ui.triangulation.uncertainty_none"
+msgstr "Uncertainty: —"
+
+#: src/UI/TriangulationPanel.cs
+msgid "ui.triangulation.discovery_none"
+msgstr "Discovery: —"
+
+#: src/UI/TriangulationPanel.cs
+msgid "ui.triangulation.candidate_none"
+msgstr "Candidate: None"
+
+#: src/UI/TriangulationPanel.cs
+msgid "ui.triangulation.discovery_nodata"
+msgstr "Discovery: No data"
+
+#: src/UI/GameHudOverlay.cs
+msgid "ui.hud.needs.hunger"
+msgstr "HUN"
+
+#: src/UI/GameHudOverlay.cs
+msgid "ui.hud.needs.thirst"
+msgstr "THI"
+
+#: src/UI/GameHudOverlay.cs
+msgid "ui.hud.needs.fatigue"
+msgstr "FAT"
+
+#: src/UI/GameHudOverlay.cs
+msgid "ui.hud.needs.morale"
+msgstr "MOR"
+
+#: src/UI/TutorialPanel.cs
+msgid "expedition.protection.title"
+msgstr "Protection Before Dispatch"
+
+#: src/UI/TutorialPanel.cs
+msgid "expedition.protection.body"
+msgstr "Radiation does not announce itself. Check the party's protection and dose — gear, anti-rad, or a shorter route."
+
+#: src/UI/TutorialPanel.cs
+msgid "weather.storm_prep.title"
+msgstr "Severe Weather"
+
+#: src/UI/TutorialPanel.cs
+msgid "weather.storm_prep.body"
+msgstr "Weather carries the dose with it. A severe day raises exposure and cuts travel; read the forecast before you commit people or supplies."
+
+#: src/UI/TutorialPanel.cs
+msgid "combat.basics.title"
+msgstr "Combat Basics"
+
+#: src/UI/TutorialPanel.cs
+msgid "combat.basics.body"
+msgstr "The fight runs in real time. Pick a target, FIRE, and reload when the magazine runs dry; WASD or the left stick repositions the squad. If contact turns bad, RETREAT to the extract zone — you can still be shot while running."
+
+#: src/UI/TutorialPanel.cs
+msgid "medical.acute_radiation.title"
+msgstr "Acute Radiation"
+
+#: src/UI/TutorialPanel.cs
+msgid "medical.acute_radiation.body"
+msgstr "Acute radiation sickness is already burning down this survivor's health. Open MEDICAL and give Rad-Away or iodine now — every hour untreated costs health."
+
+#: src/UI/GameHudOverlay.cs
+msgid "ui.hud.needs.warmth"
+msgstr "WARM"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.threshold.header"
+msgstr "LETHAL THRESHOLDS"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.threshold.needs"
+msgstr "Needs thresholds"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.threshold.starvation"
+msgstr "Starvation"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.threshold.dehydration"
+msgstr "Dehydration"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.threshold.hypothermia"
+msgstr "Hypothermia"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.threshold.acute_radiation"
+msgstr "Acute radiation"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.threshold.chronic_exposure"
+msgstr "Chronic exposure"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.drift.header"
+msgstr "Needs Drift"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.drift.pending"
+msgstr "trend available after the first day advance"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.drift.hunger"
+msgstr "Hunger Drift"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.drift.thirst"
+msgstr "Thirst Drift"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.drift.fatigue"
+msgstr "Fatigue Drift"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.drift.morale"
+msgstr "Morale Drift"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.drift.warmth"
+msgstr "Warmth Drift"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.drift.per_day"
+msgstr "/ day"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.drift.per_span"
+msgstr "/ {0}d"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.cohort.survivors"
+msgstr "Survivor Cohort"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.cohort.avg_health"
+msgstr "Average Health"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.cohort.morale"
+msgstr "Bunker Morale"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.cohort.dose"
+msgstr "Dosimetry Dose"
+
+#: src/Main.GameFlow.cs
+msgid "ui.resource.food"
+msgstr "Food"
+
+#: src/Main.GameFlow.cs
+msgid "ui.resource.water"
+msgstr "Water"
+
+#: src/UI/SurvivorsPanel.cs
+msgid "ui.survivors.filter.all"
+msgstr "Filter: All"
+
+#: src/UI/SurvivorsPanel.cs
+msgid "ui.survivors.filter.living"
+msgstr "Filter: Living"
+
+#: src/UI/SurvivorsPanel.cs
+msgid "ui.survivors.filter.strained"
+msgstr "Filter: Strained"
+
+#: src/UI/SurvivorsPanel.cs
+msgid "ui.survivors.filter.critical"
+msgstr "Filter: Critical"
+
+#: src/UI/SurvivorsPanel.cs
+msgid "ui.survivors.header.roster"
+msgstr "RESIDENT ROSTER"
+
+#: src/UI/SurvivorsPanel.cs
+msgid "ui.survivors.header.telemetry"
+msgstr "COHORT TELEMETRY"
+
+#: src/UI/GameHudOverlay.cs
+msgid "ui.hud.needs.tooltip.high"
+msgstr "Warn ≥ {0} · critical ≥ {1}"
+
+#: src/UI/GameHudOverlay.cs
+msgid "ui.hud.needs.tooltip.low"
+msgstr "Warn ≤ {0} · critical ≤ {1}"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.threshold.value.starvation"
+msgstr "hunger ≥ {0} → −{1} HP/h"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.threshold.value.dehydration"
+msgstr "thirst ≥ {0} → −{1} HP/h"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.threshold.value.hypothermia"
+msgstr "warmth ≤ {0} → −{1} HP/h"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.threshold.value.acute_radiation"
+msgstr "dose ≥ {0}/100 → −{1} HP/h until treated"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.threshold.value.chronic_exposure"
+msgstr "lifetime dose ≥ {0} mSv → chronic illness"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.title"
+msgstr "HOLDFAST STATUS & OPERATIONS"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.section.day_environment"
+msgstr "DAY & ENVIRONMENT"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.section.directives"
+msgstr "STANDING DIRECTIVES"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.section.cohort"
+msgstr "COHORT & SUPPLY TELEMETRY"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.section.shelter"
+msgstr "SHELTER SUBSYSTEM HEALTH"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.section.thermal"
+msgstr "WARMTH & THERMAL"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.section.forecast"
+msgstr "3-DAY SUPPLY FORECAST"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.day.current_day"
+msgstr "Current Day"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.day.survivors"
+msgstr "Survivors"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.day.external_conditions"
+msgstr "External Conditions"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.day.power_reserve"
+msgstr "Power Reserve"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.stores.water"
+msgstr "Water Stores"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.stores.food"
+msgstr "Food Stores"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.system.power_grid"
+msgstr "Power Grid"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.system.radiation_shielding"
+msgstr "Radiation Shielding"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.system.outdoor_radiation"
+msgstr "Outdoor Radiation"
+
+#: src/UI/SurvivorsPanel.cs
+msgid "ui.survivors.shell.title"
+msgstr "SURVIVOR ROSTER & DUTY COHORT"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.thermal.roster_warmth"
+msgstr "Roster Warmth"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.thermal.clothing_warmth"
+msgstr "Clothing Warmth"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.thermal.shelter_thermal"
+msgstr "Shelter Thermal"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.thermal.waterway"
+msgstr "Waterway"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.forecast.supply_projection"
+msgstr "Supply projection"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.forecast.shortfall"
+msgstr "Shortfall"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.not_monitored"
+msgstr "NOT MONITORED"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.no_roster"
+msgstr "No survivor roster bound."
+
+#: src/UI/SurvivorsPanel.cs
+msgid "ui.survivors.empty.no_session"
+msgstr "No survivor session bound."
+
+#: src/UI/SurvivorsPanel.cs
+msgid "ui.survivors.empty.roster"
+msgstr "Roster empty. No registered shelter survivors."
+
+#: src/UI/SurvivorsPanel.cs
+msgid "ui.survivors.empty.no_match"
+msgstr "No survivors match the current filter."
+
+#: src/UI/SurvivorsPanel.cs
+msgid "ui.survivors.event.latest"
+msgstr "Latest roster event"
+
+#: src/UI/SurvivorsPanel.cs
+msgid "ui.survivors.rail.living"
+msgstr "LIVING"
+
+#: src/UI/SurvivorsPanel.cs
+msgid "ui.survivors.rail.avg_hp"
+msgstr "AVG HP"
+
+#: src/UI/SurvivorsPanel.cs
+msgid "ui.survivors.rail.avg_rad"
+msgstr "AVG RAD"
+
+#: src/UI/SurvivorsPanel.cs
+msgid "ui.survivors.rail.avg_mor"
+msgstr "AVG MOR"
+
+#: src/UI/SurvivorsPanel.cs
+msgid "ui.survivors.rail.strained"
+msgstr "STRAINED"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.need.health"
+msgstr "Health"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.need.hunger"
+msgstr "Hunger"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.need.thirst"
+msgstr "Thirst"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.need.fatigue"
+msgstr "Fatigue"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.need.warmth"
+msgstr "Warmth"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.need.morale"
+msgstr "Morale"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.need.hygiene"
+msgstr "Hygiene"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.trait.radiation_dose"
+msgstr "Radiation Dose"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.trait.lifetime_exposure"
+msgstr "Lifetime Exposure"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.trait.rad_resistance"
+msgstr "Rad Resistance"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.trait.acute_sickness"
+msgstr "Acute Sickness"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.trait.chronic_illness"
+msgstr "Chronic Illness"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.day.value"
+msgstr "Day {0}"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.day.alive"
+msgstr "{0} / {1} Alive"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.day.hazard"
+msgstr "HAZARD WATCH"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.day.nominal"
+msgstr "Nominal"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.day.battery"
+msgstr "Battery {0}/{1} Wh · Fuel {2}"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.name"
+msgstr "Name: {0}"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.profession"
+msgstr "Profession: {0}"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.unspecified"
+msgstr "Unspecified"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.alive"
+msgstr "Alive: {0}"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.max_health"
+msgstr "Max Health Cap: {0}"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.tenure"
+msgstr "In shelter: {0} day(s) (since day {1})"
+
+#: src/UI/SurvivorsPanel.cs
+msgid "ui.survivors.status.stable"
+msgstr "STABLE"
+
+#: src/UI/SurvivorsPanel.cs
+msgid "ui.survivors.status.strained"
+msgstr "STRAINED"
+
+#: src/UI/SurvivorsPanel.cs
+msgid "ui.survivors.status.critical"
+msgstr "CRITICAL"
+
+#: src/UI/SurvivorsPanel.cs
+msgid "ui.survivors.status.dead"
+msgstr "DEAD"
+
+#: src/UI/SurvivorsPanel.cs
+msgid "ui.survivors.cohort.summary"
+msgstr "Cohort morale reads {0}% (bunker-wide); average survivor wellness sits at {1}% HP. Skill Matrix is deferred — see docs/ui/PHASE13_DATA_AVAILABILITY.md."
+
+#: src/UI/SurvivorsPanel.cs
+msgid "ui.survivors.filter.all.hint"
+msgstr "every survivor"
+
+#: src/UI/SurvivorsPanel.cs
+msgid "ui.survivors.filter.living.hint"
+msgstr "alive only"
+
+#: src/UI/SurvivorsPanel.cs
+msgid "ui.survivors.filter.strained.hint"
+msgstr "STRAINED + worse"
+
+#: src/UI/SurvivorsPanel.cs
+msgid "ui.survivors.filter.critical.hint"
+msgstr "CRITICAL + DEAD"
+
+#: src/UI/SurvivorsPanel.cs
+msgid "ui.survivors.sidebar.title"
+msgstr "ROSTER OPS"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.trait.origin"
+msgstr "Origin: {0}"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.status.critical_flags"
+msgstr "Critical flags: hunger={0} thirst={1} warmth={2}"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.status.fitness"
+msgstr "Fitness: {0}"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.status.factors"
+msgstr "Factors:"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.fitness.fit"
+msgstr "FIT"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.fitness.impaired"
+msgstr "IMPAIRED"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.fitness.unfit"
+msgstr "UNFIT / INCAPACITATED"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.objective.critical_health"
+msgstr "{0} survivor(s) in critical health — triage immediately"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.objective.dosed"
+msgstr "{0} survivor(s) above {1} mSv dose — iodine/chelation required"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.objective.acute_rad"
+msgstr "{0} survivor(s) in acute radiation sickness — anti-rad chelation clears the dose"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.objective.brownout"
+msgstr "Power grid in brownout — shed load or add fuel"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.objective.hazard_weather"
+msgstr "Hazard weather active — keep survivors indoors"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.objective.water_critical"
+msgstr "Water stores critical — purify or trade for clean water"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.objective.standing"
+msgstr "Keep the roster fed, hydrated, and below dose ceiling"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.system.power_brownout"
+msgstr "BROWNOUT · Gen {0} W vs Draw {1} W"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.system.power_online"
+msgstr "Online · Gen {0} W · Draw {1} W"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.system.shielding_value"
+msgstr "Weakest ceiling {0}% attenuation"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.system.outdoor_value"
+msgstr "+{0} mSv/h modifier active"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.system.outdoor_none"
+msgstr "No weather modifier"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.objective.tag.primary"
+msgstr "PRIMARY"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.objective.tag.daily"
+msgstr "DAILY"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.objective.tag.secondary"
+msgstr "SECONDARY"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.objective.tag.standing"
+msgstr "STANDING"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.thermal.roster_value"
+msgstr "avg {0} · coldest {1} / 100"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.thermal.clothing_value"
+msgstr "−{0}% cold loss (worn layers)"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.thermal.shelter_value"
+msgstr "coldest {0}°C · boiler {1} · fuel {2}"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.thermal.boiler_on"
+msgstr "on"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.thermal.boiler_off"
+msgstr "off"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.forecast.day_value"
+msgstr "food {0} · water {1}"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.forecast.shortfall_value"
+msgstr "stores run short on Day {0}"
+
+#: src/UI/GameHudOverlay.cs
+msgid "ui.hud.day"
+msgstr "Day {0}"
+
+#: src/UI/GameHudOverlay.cs
+msgid "ui.hud.health"
+msgstr "HP: {0}/{1}"
+
+#: src/UI/GameHudOverlay.cs
+msgid "ui.hud.radiation"
+msgstr "RAD: {0:F1} mSv"
+
+#: src/UI/GameHudOverlay.cs
+msgid "ui.hud.value"
+msgstr "Value: {0}"
+
+#: src/UI/GameHudOverlay.cs
+msgid "ui.hud.label.hp"
+msgstr "HP"
+
+#: src/UI/GameHudOverlay.cs
+msgid "ui.hud.label.rad"
+msgstr "RAD"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.expedition_injury.value"
+msgstr "{0} — Day {1}: {2}"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.day.weather_value"
+msgstr "{0} — {1}"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.specialization"
+msgstr "Specialization: {0} (Level {1}, {2} practice XP)"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.clothing"
+msgstr "Clothing: {0} layer(s), warmth {1}, wetness {2}, cold reduction {3}%"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.body"
+msgstr "Body: {0} · {1}"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.performance.row"
+msgstr "{0}Performance: {1} (Work {2}%, Combat {3}%)"
+
+#: src/UI/SurvivorsPanel.cs
+msgid "ui.survivors.event.line"
+msgstr "{0}: {1}"
+
+#: src/UI/SurvivorsPanel.cs
+msgid "ui.survivors.event.none"
+msgstr "No roster events recorded yet."
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.no_selection"
+msgstr "No survivor selected."
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.not_found"
+msgstr "Survivor '{0}' not found in roster."
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.no_radiation"
+msgstr "No radiation state tracked."
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.unknown"
+msgstr "Unknown"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.unknown_source"
+msgstr "Unknown source"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.worldview"
+msgstr "Worldview: {0}"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.keepsake"
+msgstr "Associated Keepsake: {0}{1}"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.duty"
+msgstr "Duty Affinity: {0}{1}"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.duty_bonus"
+msgstr "(+{0}% comfort)"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.traits"
+msgstr "Traits: {0}"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.ideological_tension"
+msgstr "Ideological Tension: Opposes {0}"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.faction"
+msgstr "Bunker Faction: {0}"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.relationship"
+msgstr "Relationship: {0} ({1}{2})"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.soulmate"
+msgstr "· Soulmate"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.family"
+msgstr "Family Unit: {0}"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.lineage"
+msgstr "Lineage: {0}"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.political_bloc"
+msgstr "Political Bloc: {0}"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.demographic"
+msgstr "Demographic: {0} yrs · {1}{2}"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.retired_elder"
+msgstr "[Retired Elder]"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.retirement_eligible"
+msgstr "[Retirement Eligible]"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.personal_effects"
+msgstr "Personal effects: {0}"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.personal_effect_row"
+msgstr "{0} · {1} · sentiment {2}{3}"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.favorite"
+msgstr "· favorite"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.more"
+msgstr "+{0} more"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.authored_records"
+msgstr "Authored records: {0}"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.info.record_row"
+msgstr "{0} · {1} · quality {2}"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.status.top_contributors"
+msgstr "Top active need contributors"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.status.recent_contributors"
+msgstr "Recent need contributors"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.status.other_contributors"
+msgstr "+{0} other active contributors"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.status.modifier_row"
+msgstr "{0}: {1} {2}/h"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.status.recent_row"
+msgstr "{0}: {1} {2}"
+
+#: src/UI/SurvivalDetailPanel.cs
+msgid "ui.survival_detail.no_roster"
+msgstr "No survivor roster bound."
+
+#: src/UI/SurvivalDetailPanel.cs
+msgid "ui.survival_detail.roster"
+msgstr "Roster: {0} / {1} alive"
+
+#: src/UI/SurvivalDetailPanel.cs
+msgid "ui.survival_detail.avg_health"
+msgstr "Avg Health: {0} / 100"
+
+#: src/UI/SurvivalDetailPanel.cs
+msgid "ui.survival_detail.avg_hunger"
+msgstr "Avg Hunger: {0}"
+
+#: src/UI/SurvivalDetailPanel.cs
+msgid "ui.survival_detail.avg_thirst"
+msgstr "Avg Thirst: {0}"
+
+#: src/UI/SurvivalDetailPanel.cs
+msgid "ui.survival_detail.avg_fatigue"
+msgstr "Avg Fatigue: {0}"
+
+#: src/UI/SurvivalDetailPanel.cs
+msgid "ui.survival_detail.avg_morale"
+msgstr "Avg Morale: {0} / 100"
+
+#: src/UI/SurvivalDetailPanel.cs
+msgid "ui.survival_detail.avg_dose"
+msgstr "Avg Dose: {0:F1} mSv"
+
+#: src/UI/SurvivalDetailPanel.cs
+msgid "ui.survival_detail.above_threshold"
+msgstr "Survivors above {0} mSv: {1}"
+
+#: src/UI/SurvivalDetailPanel.cs
+msgid "ui.survival_detail.critical_health"
+msgstr "Critical health: {0} survivor(s)"
+
+#: src/UI/SurvivalDetailPanel.cs
+msgid "ui.survival_detail.weakest_ceiling"
+msgstr "Shelter weakest ceiling: {0}%"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.forecast.day_label"
+msgstr "Day +{0}"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.forecast.day_value_short"
+msgstr "food {0} · water {1} — SHORT"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.expedition_injury.unnamed"
+msgstr "[UNNAMED]"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.trait.dose_tooltip"
+msgstr "Dose band: warn at {0} mSv — critical at {1} mSv"
+
+#: src/UI/SurvivorDetailPanel.cs
+msgid "ui.survivor.trait.lifetime_tooltip"
+msgstr "Lifetime band: chronic at {0} mSv"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.cohort.alive_of_total"
+msgstr "{0} / {1} Alive"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.stores.water_value"
+msgstr "{0} unit(s)"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.stores.food_value"
+msgstr "{0} unit(s)"
+
+#: src/UI/AchievementsPanel.cs
+msgid "ui.achievements.no_roster"
+msgstr "No survivor roster bound."
+
+#: src/UI/AchievementsPanel.cs
+msgid "ui.achievements.days_survived"
+msgstr "Days Survived: {0}"
+
+#: src/UI/AchievementsPanel.cs
+msgid "ui.achievements.roster_alive"
+msgstr "Roster Alive: {0} / {1}"
+
+#: src/UI/AchievementsPanel.cs
+msgid "ui.achievements.avg_health"
+msgstr "Average Health: {0} / 100"
+
+#: src/UI/AchievementsPanel.cs
+msgid "ui.achievements.avg_dose"
+msgstr "Average Dose: {0} mSv"
+
+#: src/UI/AchievementsPanel.cs
+msgid "ui.achievements.no_milestones"
+msgstr "No milestones reached yet."
+
+#: src/UI/AfflictionsPanel.cs
+msgid "ui.afflictions.critical_health"
+msgstr "{0} — Critical health ({1}/100)"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.hp"
+msgstr "HP {0}/{1}"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.rad"
+msgstr "RAD {0} mSv{1}"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.resist_suffix"
+msgstr "[⚡RESIST]"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.hunger"
+msgstr "HUN {0}"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.thirst"
+msgstr "THI {0}"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.lung_row"
+msgstr "LUNG: {0}  ({1}%)"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.last_event"
+msgstr "Last medical event: {0}"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.reserved"
+msgstr "RESERVED: {0}"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.severe_cough"
+msgstr "SEVERE COUGH  [STAMINA -{0}%]"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.lung.clear"
+msgstr "CLEAR"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.lung.mild"
+msgstr "MILD COUGH"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.lung.permanent"
+msgstr "PERMANENT LUNG DAMAGE  [INHALER REQUIRED]"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.lung.critical"
+msgstr "CRITICAL — INHALER REQUIRED"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.lung.terminal"
+msgstr "TERMINAL LUNG DAMAGE"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.ready_for_tick"
+msgstr "READY FOR TICK"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.ready_in"
+msgstr "READY IN {0}h"
+
+#: src/UI/AfflictionsPanel.cs
+msgid "ui.afflictions.recent_record"
+msgstr "Recent medical record — {0}:"
+
+#: src/UI/AchievementsPanel.cs
+msgid "ui.achievements.title"
+msgstr "ACHIEVEMENTS & MILESTONES"
+
+#: src/UI/AchievementsPanel.cs
+msgid "ui.achievements.section.stats"
+msgstr "RUN STATISTICS"
+
+#: src/UI/AchievementsPanel.cs
+msgid "ui.achievements.section.earned"
+msgstr "EARNED MILESTONES"
+
+#: src/UI/AchievementsPanel.cs
+msgid "ui.achievements.section.targets"
+msgstr "NEXT TARGETS"
+
+#: src/UI/AchievementsPanel.cs
+msgid "ui.achievements.close"
+msgstr "CLOSE [Esc]"
+
+#: src/UI/AfflictionsPanel.cs
+msgid "ui.afflictions.fit_accommodation"
+msgstr "FIT"
+
+#: src/UI/AfflictionsPanel.cs
+msgid "ui.afflictions.remove_accommodation"
+msgstr "REMOVE"
+
+#: src/UI/AchievementsPanel.cs
+msgid "ui.achievements.milestone.first_week"
+msgstr "First Week Survivor — reached Day 7"
+
+#: src/UI/AchievementsPanel.cs
+msgid "ui.achievements.milestone.two_week"
+msgstr "Two-Week Endurance — reached Day 14"
+
+#: src/UI/AchievementsPanel.cs
+msgid "ui.achievements.milestone.month_ash"
+msgstr "Month of Ash — reached Day 30"
+
+#: src/UI/AchievementsPanel.cs
+msgid "ui.achievements.milestone.no_casualties"
+msgstr "No Casualties — full roster alive"
+
+#: src/UI/AchievementsPanel.cs
+msgid "ui.achievements.milestone.low_exposure"
+msgstr "Low Exposure — average dose below 20 mSv"
+
+#: src/UI/AchievementsPanel.cs
+msgid "ui.achievements.milestone.healthy_cohort"
+msgstr "Healthy Cohort — average health above 80"
+
+#: src/UI/AchievementsPanel.cs
+msgid "ui.achievements.target.day7"
+msgstr "Next: survive to Day 7"
+
+#: src/UI/AchievementsPanel.cs
+msgid "ui.achievements.target.day7_done"
+msgstr "Day 7 milestone reached"
+
+#: src/UI/AchievementsPanel.cs
+msgid "ui.achievements.target.day14"
+msgstr "Next: survive to Day 14"
+
+#: src/UI/AchievementsPanel.cs
+msgid "ui.achievements.target.day14_done"
+msgstr "Day 14 milestone reached"
+
+#: src/UI/AchievementsPanel.cs
+msgid "ui.achievements.target.day30"
+msgstr "Next: survive to Day 30"
+
+#: src/UI/AchievementsPanel.cs
+msgid "ui.achievements.target.day30_done"
+msgstr "Day 30 milestone reached"
+
+#: src/UI/AfflictionsPanel.cs
+msgid "ui.afflictions.fit_tooltip"
+msgstr "Fit {0} (consumes {1})."
+
+#: src/UI/AfflictionsPanel.cs
+msgid "ui.afflictions.missing_tooltip"
+msgstr "Missing: {0}."
+
+#: src/UI/AfflictionsPanel.cs
+msgid "ui.afflictions.cannot_fit"
+msgstr "Cannot fit {0}: accommodation command not wired."
+
+#: src/UI/AfflictionsPanel.cs
+msgid "ui.afflictions.fitted"
+msgstr "Fitted {0} for {1}."
+
+#: src/UI/AfflictionsPanel.cs
+msgid "ui.afflictions.cannot_fit_short"
+msgstr "Cannot fit {0}"
+
+#: src/UI/AfflictionsPanel.cs
+msgid "ui.afflictions.cannot_remove"
+msgstr "Cannot remove {0}: accommodation command not wired."
+
+#: src/UI/AfflictionsPanel.cs
+msgid "ui.afflictions.removed"
+msgstr "Removed {0} from {1}."
+
+#: src/UI/AfflictionsPanel.cs
+msgid "ui.afflictions.cannot_remove_short"
+msgstr "Cannot remove {0}"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.bandage"
+msgstr "BANDAGE (+{0} HP) [{1}]"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.iodine"
+msgstr "IODINE (+RESIST) [{0}]"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.anti_rad"
+msgstr "ANTI-RAD (−{0} mSv) [{1}]"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.inhaler_apply"
+msgstr "APPLY INHALER (−{0}% lung) [{1}]"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.inhaler_plain"
+msgstr "APPLY INHALER [{0}]"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.herbal_tea"
+msgstr "HERBAL TEA (−{0}%) [{1}]"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.inhaler_relief"
+msgstr "[INHALER ACTIVE {0}h]"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.inhaler_no_item"
+msgstr "No inhaler in inventory — craft recipe_inhaler"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.inhaler_no_damage"
+msgstr "No respiratory damage"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.cohort_penalty"
+msgstr "Crafting {0} · Combat {1}"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.care_cancelled"
+msgstr "Cancelled {0}; reserved treatment inputs released."
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.unnamed"
+msgstr "[UNNAMED]"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.care_bandage"
+msgstr "Applied sterile bandage."
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.care_iodine"
+msgstr "Administered Potassium Iodide."
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.care_anti_rad"
+msgstr "Administered anti-rad chelation agent."
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.care_inhaler"
+msgstr "Applied improvised inhaler."
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.care_herbal_tea"
+msgstr "Administered herbal tea."
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.no_session"
+msgstr "No medical session bound."
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.no_treatment_ledger"
+msgstr "No treatment ledger available."
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.no_inventory"
+msgstr "No inventory session bound."
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.no_health_readout"
+msgstr "No survivor health readout bound."
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.no_chem_dependencies"
+msgstr "No active chemical dependencies or withdrawal ledgers."
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.inventory_not_bound"
+msgstr "Inventory session not bound."
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.no_procedures"
+msgstr "No procedures currently queued."
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.disease_ward_offline"
+msgstr "Disease ward offline (pipeline not bound)."
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.no_infections"
+msgstr "No suspected or confirmed infections in the shelter."
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.active_penalties"
+msgstr "Active Cohort Penalties"
+
+#: src/UI/AfflictionsPanel.cs
+msgid "ui.afflictions.no_roster"
+msgstr "No survivor roster bound."
+
+#: src/UI/AfflictionsPanel.cs
+msgid "ui.afflictions.no_active"
+msgstr "No active afflictions."
+
+#: src/UI/AfflictionsPanel.cs
+msgid "ui.afflictions.no_chronic"
+msgstr "No chronic conditions."
+
+#: src/UI/AfflictionsPanel.cs
+msgid "ui.afflictions.no_inventory"
+msgstr "No inventory session bound."
+
+#: src/UI/AfflictionsPanel.cs
+msgid "ui.afflictions.no_supplies"
+msgstr "No treatment supplies in stock."
+
+#: src/UI/AfflictionsPanel.cs
+msgid "ui.afflictions.unknown"
+msgstr "Unknown"
+
+#: src/UI/MedicalVigilText.cs
+msgid "ui.medical.vigil_idle"
+msgstr "Vigil: idle"
+
+#: src/UI/MedicalVigilText.cs
+msgid "ui.medical.vigil_left_early"
+msgstr "Vigil: left early"
+
+#: src/UI/MedicalVigilText.cs
+msgid "ui.medical.vigil_kept"
+msgstr "Vigil: kept to the end for {0}"
+
+#: src/UI/MedicalVigilText.cs
+msgid "ui.medical.vigil_active"
+msgstr "Vigil: {0} · {1}/{2}s · {3}/{4} names"
+
+#: src/UI/MedicalVigilText.cs
+msgid "ui.medical.vigil_phantom"
+msgstr "· phantom knock"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.vigil_standby"
+msgstr "STANDBY"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.identify"
+msgstr "IDENTIFY"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.isolate"
+msgstr "ISOLATE"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.release"
+msgstr "RELEASE"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.apply"
+msgstr "APPLY"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.affliction_unidentified"
+msgstr "{0} — {1} (unidentified)"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.affliction_row"
+msgstr "{0} — {1} · day {2}"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.clinical_note"
+msgstr "↳ [CLINICAL NOTE] {0} · Observe: {1}"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.treatment_ready"
+msgstr "ok"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.no_supplies"
+msgstr "no supplies needed"
+
+#: src/UI/AfflictionsPanel.cs
+msgid "ui.afflictions.supply_bandage"
+msgstr "Bandage (+25 HP)"
+
+#: src/UI/AfflictionsPanel.cs
+msgid "ui.afflictions.supply_iodine"
+msgstr "Iodine Pills (rad resistance)"
+
+#: src/UI/AfflictionsPanel.cs
+msgid "ui.afflictions.supply_anti_rad"
+msgstr "Anti-Rad / Chelation (−40 mSv)"
+
+#: src/UI/AfflictionsPanel.cs
+msgid "ui.afflictions.supply_inhaler"
+msgstr "Inhaler (respiratory relief)"
+
+#: src/UI/AfflictionsPanel.cs
+msgid "ui.afflictions.supply_herbal_tea"
+msgstr "Herbal Tea (respiratory soothe)"
+
+#: src/UI/AfflictionsPanel.cs
+msgid "ui.afflictions.supply_antibiotics"
+msgstr "Antibiotics (infection)"
+
+#: src/UI/AfflictionsPanel.cs
+msgid "ui.afflictions.supply_row"
+msgstr "{0} — {1} in stock"
+
+#: src/UI/AfflictionsPanel.cs
+msgid "ui.afflictions.acute_rad"
+msgstr "{0} — Acute radiation sickness (dose {1} mSv)"
+
+#: src/UI/AfflictionsPanel.cs
+msgid "ui.afflictions.severe_respiratory"
+msgstr "{0} — Severe respiratory degeneration ({1}%)"
+
+#: src/UI/AfflictionsPanel.cs
+msgid "ui.afflictions.respiratory_irritation"
+msgstr "{0} — Respiratory irritation ({1}%)"
+
+#: src/UI/AfflictionsPanel.cs
+msgid "ui.afflictions.clinical_note"
+msgstr "↳ {0} · Observe: {1}"
+
+#: src/UI/StartingCohortSetupPanel.cs
+msgid "ui.cohort.title"
+msgstr "EXPEDITION ROSTER COMMISSION"
+
+#: src/UI/StartingCohortSetupPanel.cs
+msgid "ui.cohort.subtitle"
+msgstr "Designate starting cohort and assigned holdfast origin profile before opening bunker seal."
+
+#: src/UI/StartingCohortSetupPanel.cs
+msgid "ui.cohort.section.cohort"
+msgstr "STARTING COHORT"
+
+#: src/UI/StartingCohortSetupPanel.cs
+msgid "ui.cohort.section.stores"
+msgstr "STARTING STORES"
+
+#: src/UI/StartingCohortSetupPanel.cs
+msgid "ui.cohort.section.difficulty"
+msgstr "CAMPAIGN DIFFICULTY"
+
+#: src/UI/StartingCohortSetupPanel.cs
+msgid "ui.cohort.cancel"
+msgstr "CANCEL"
+
+#: src/UI/StartingCohortSetupPanel.cs
+msgid "ui.cohort.start"
+msgstr "START CAMPAIGN"
+
+#: src/UI/StartingCohortSetupPanel.cs
+msgid "ui.cohort.note.acute_rad"
+msgstr "acute radiation"
+
+#: src/UI/StartingCohortSetupPanel.cs
+msgid "ui.cohort.note.injured"
+msgstr "injured"
+
+#: src/UI/StartingCohortSetupPanel.cs
+msgid "ui.cohort.note.strained"
+msgstr "strained"
+
+#: src/UI/StartingCohortSetupPanel.cs
+msgid "ui.cohort.note.stable"
+msgstr "stable"
+
+#: src/UI/ShelterHudPanel.cs
+msgid "ui.shelter_hud.condition.health"
+msgstr "HEALTH"
+
+#: src/UI/ShelterHudPanel.cs
+msgid "ui.shelter_hud.condition.radiation"
+msgstr "RADIATION"
+
+#: src/UI/ShelterHudPanel.cs
+msgid "ui.shelter_hud.condition.hunger"
+msgstr "HUNGER"
+
+#: src/UI/ShelterHudPanel.cs
+msgid "ui.shelter_hud.condition.thirst"
+msgstr "THIRST"
+
+#: src/UI/ShelterHudPanel.cs
+msgid "ui.shelter_hud.condition.roster"
+msgstr "ROSTER"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.memorialized"
+msgstr "{0} MEMORIALIZED"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.youth"
+msgstr "{0} YOUTH"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.unassigned"
+msgstr "UNASSIGNED"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.duty_intake"
+msgstr "DUTY ROSTER // INTAKE FILTRATION: {0}"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.hold_hatch"
+msgstr "Hold the hatch. {0} is reading {1} mSv outside with visibility at {2}."
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.air_warning"
+msgstr "Atmospheric contamination rising. Service the HEPA filtration stack before toxic air settles."
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.rations_next"
+msgstr "Rations are becoming the next problem. Reconcile food and water before the next shift."
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.keep_quiet"
+msgstr "Keep the shelter quiet. Check the filter pressure before the next outdoor shift."
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.next_shift.hold"
+msgstr "HOLD / {0}"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.next_shift.open"
+msgstr "OPEN / {0}"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.hatch.sealed_hazard"
+msgstr "SEALED // HAZARD"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.hatch.sealed"
+msgstr "SEALED"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.cancel_reservation"
+msgstr "CANCEL / RELEASE RESERVATION"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.section.health"
+msgstr "SURVIVOR HEALTH DOSIMETRY & RESPIRATORY"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.section.treatment"
+msgstr "TREATMENT & DETOXIFICATION LEDGER"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.section.supplies"
+msgstr "MEDICAL SUPPLIES ON HAND"
+
+#: src/UI/MedicalWardPanel.cs
+msgid "ui.ward.section.matrix"
+msgstr "WARD BED MATRIX"
+
+#: src/UI/MedicalWardPanel.cs
+msgid "ui.ward.section.telemetry"
+msgstr "BAY TELEMETRY & PROCEDURES"
+
+#: src/UI/MedicalWardPanel.cs
+msgid "ui.ward.section.catalog"
+msgstr "SURGICAL CATALOG & LOGS"
+
+#: src/UI/MedicalWardPanel.cs
+msgid "ui.ward.no_events"
+msgstr "No recent ward events."
+
+#: src/UI/MedicalWardPanel.cs
+msgid "ui.ward.bed_unit"
+msgstr "BED UNIT: {0}"
+
+#: src/UI/MedicalWardPanel.cs
+msgid "ui.ward.run"
+msgstr "RUN {0}"
+
+#: src/UI/MedicalWardPanel.cs
+msgid "ui.ward.vacant"
+msgstr "Bed unit is currently vacant and sterilized. Patients requiring intensive trauma triage or surgical intervention will be admitted from shelter wards."
+
+#: src/UI/MedicalWardPanel.cs
+msgid "ui.ward.select_bed"
+msgstr "Select a bed from the matrix to inspect telemetry and run procedures."
+
+#: src/UI/MedicalWardPanel.cs
+msgid "ui.ward.section.procedures"
+msgstr "PROCEDURE CATALOG"
+
+#: src/UI/MedicalWardPanel.cs
+msgid "ui.ward.system"
+msgstr "System: {0}"
+
+#: src/UI/MedicalWardPanel.cs
+msgid "ui.ward.section.recent"
+msgstr "RECENT PROCEDURES RUN"
+
+#: src/UI/MedicalWardPanel.cs
+msgid "ui.ward.no_procedures"
+msgstr "No procedures logged yet."
+
+#: src/UI/MedicalWardPanel.cs
+msgid "ui.ward.discharge"
+msgstr "DISCHARGE PATIENT"
+
+#: src/UI/MedicalWardPanel.cs
+msgid "ui.ward.section.clinical_note"
+msgstr "CLINICAL NOTE"
+
+#: src/UI/MedicalWardPanel.cs
+msgid "ui.ward.sign"
+msgstr "Sign: {0}"
+
+#: src/UI/MedicalWardPanel.cs
+msgid "ui.ward.also"
+msgstr "Also: {0}"
+
+#: src/UI/MedicalWardPanel.cs
+msgid "ui.ward.section.available"
+msgstr "AVAILABLE PROCEDURES"
+
+#: src/UI/MedicalWardPanel.cs
+msgid "ui.ward.section.administer"
+msgstr "ADMINISTER TREATMENT"
+
+#: src/UI/MedicalWardPanel.cs
+msgid "ui.ward.label.category"
+msgstr "Category"
+
+#: src/UI/MedicalWardPanel.cs
+msgid "ui.ward.label.isolation"
+msgstr "Isolation Protocol"
+
+#: src/UI/MedicalWardPanel.cs
+msgid "ui.ward.label.occupancy"
+msgstr "Occupancy State"
+
+#: src/UI/MedicalWardPanel.cs
+msgid "ui.ward.isolation.sealed"
+msgstr "BIOHAZARD ISOLATION SEALED"
+
+#: src/UI/MedicalWardPanel.cs
+msgid "ui.ward.isolation.standard"
+msgstr "STANDARD VENTILATION"
+
+#: src/UI/MedicalWardPanel.cs
+msgid "ui.ward.occupied"
+msgstr "OCCUPIED by {0}"
+
+#: src/UI/MedicalWardPanel.cs
+msgid "ui.ward.vacant_state"
+msgstr "VACANT"
+
+#: src/UI/MedicalWardPanel.cs
+msgid "ui.ward.label.admitted_day"
+msgstr "Admitted Day"
+
+#: src/UI/MedicalWardPanel.cs
+msgid "ui.ward.sim_day"
+msgstr "Sim Day {0}"
+
+#: src/UI/ShelterHudPanel.cs
+msgid "ui.shelter_hud.section.stores"
+msgstr "STORES WATCH"
+
+#: src/UI/ShelterHudPanel.cs
+msgid "ui.shelter_hud.open_inventory"
+msgstr "OPEN INVENTORY"
+
+#: src/UI/ShelterHudPanel.cs
+msgid "ui.shelter_hud.section.condition"
+msgstr "CONDITION REPORT"
+
+#: src/UI/ShelterHudPanel.cs
+msgid "ui.shelter_hud.open_shelter"
+msgstr "OPEN SHELTER"
+
+#: src/UI/ShelterHudPanel.cs
+msgid "ui.shelter_hud.section.directive"
+msgstr "CURRENT DIRECTIVE"
+
+#: src/UI/ShelterHudPanel.cs
+msgid "ui.shelter_hud.advance_day"
+msgstr "ADVANCE TO NEXT DAY"
+
+#: src/UI/ShelterHudPanel.cs
+msgid "ui.shelter_hud.save_ledger"
+msgstr "SAVE LEDGER"
+
+#: src/UI/ShelterHudPanel.cs
+msgid "ui.shelter_hud.section.air"
+msgstr "AIR FILTRATION"
+
+#: src/UI/ShelterHudPanel.cs
+msgid "ui.shelter_hud.service_filter"
+msgstr "SERVICE FILTER (-1 SCRAP)"
+
+#: src/UI/ShelterHudPanel.cs
+msgid "ui.shelter_hud.replace_hepa"
+msgstr "REPLACE HEPA (-1 SPARE)"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.command"
+msgstr "HOLDFAST COMMAND"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.section.operations"
+msgstr "BUNKER OPERATIONS"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.tagline"
+msgstr "A quiet room a working filter and one more day to account for."
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.section.week_one"
+msgstr "WEEK ONE"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.week_one_sub"
+msgstr "THE SURFACES YOU NEED FIRST"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.section.all"
+msgstr "ALL SURFACES"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.select_surface"
+msgstr "SELECT A SURFACE"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.section.expansion"
+msgstr "EXPANSION SURFACES"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.section.consoles"
+msgstr "SUBSYSTEM CONSOLES"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.routed"
+msgstr "ROUTED TO LIVE SURFACES"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.section.condition"
+msgstr "CONDITION REPORT"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.shelter_holding"
+msgstr "SHELTER STATUS // HOLDING"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.roster_placeholder"
+msgstr "ROSTER // --"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.section.air"
+msgstr "AIR FILTRATION & ATMOSPHERE"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.air_quality"
+msgstr "AIR QUALITY: 100% [STABLE]"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.radon"
+msgstr "RADON: 12 Bq/m³ [STABLE]"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.section.directive"
+msgstr "CURRENT DIRECTIVE"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.section.stores"
+msgstr "STORES WATCH"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.section.field"
+msgstr "FIELD & DUTY REPORT"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.action.journal"
+msgstr "JOURNAL"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.action.menu"
+msgstr "MENU"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.action.save_ledger"
+msgstr "SAVE LEDGER"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.action.dev_console"
+msgstr "DEV CONSOLE"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.action.directives"
+msgstr "DIRECTIVES PROTOCOL"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.action.open_shelter"
+msgstr "OPEN SHELTER"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.action.open_inventory"
+msgstr "OPEN INVENTORY"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.action.duty_roster"
+msgstr "DUTY ROSTER SHIFTS"
+
+#: src/UI/ShelterHudPanel.cs
+msgid "ui.shelter_hud.directive_default"
+msgstr "Keep the shelter quiet. Check the filter pressure before the next outdoor shift."
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.action.service_filter"
+msgstr "SERVICE FILTER (-1 SCRAP)"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.action.replace_core"
+msgstr "REPLACE CORE (-1 HEPA)"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.action.advance_day"
+msgstr "ADVANCE TO NEXT DAY"
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.event_default"
+msgstr "No fresh signal. The radio is holding a weak carrier from the north line."
+
+#: src/UI/GameDashboardPanel.cs
+msgid "ui.dashboard.autosave_ready"
+msgstr "AUTOSAVE // LEDGER READY"
+
+#: Assets/StreamingAssets/Data/achievements.json
+msgid "achievement.first_week_survivor.name"
+msgstr "First Week Survivor"
+
+#: Assets/StreamingAssets/Data/achievements.json
+msgid "achievement.first_week_survivor.description"
+msgstr "Survive until Day 7 in the wasteland."
+
+#: Assets/StreamingAssets/Data/achievements.json
+msgid "achievement.two_week_endurance.name"
+msgstr "Two-Week Endurance"
+
+#: Assets/StreamingAssets/Data/achievements.json
+msgid "achievement.two_week_endurance.description"
+msgstr "Survive until Day 14 under persistent fallout pressure."
+
+#: Assets/StreamingAssets/Data/achievements.json
+msgid "achievement.month_of_ash.name"
+msgstr "Month of Ash"
+
+#: Assets/StreamingAssets/Data/achievements.json
+msgid "achievement.month_of_ash.description"
+msgstr "Survive 30 days in the holdfast against all odds."
+
+#: Assets/StreamingAssets/Data/achievements.json
+msgid "achievement.no_casualties.name"
+msgstr "No Casualties"
+
+#: Assets/StreamingAssets/Data/achievements.json
+msgid "achievement.no_casualties.description"
+msgstr "Maintain a full living roster with zero casualties."
+
+#: Assets/StreamingAssets/Data/achievements.json
+msgid "achievement.low_exposure.name"
+msgstr "Low Exposure"
+
+#: Assets/StreamingAssets/Data/achievements.json
+msgid "achievement.low_exposure.description"
+msgstr "Keep average radiation dose across survivors below 20 mSv."
+
+#: Assets/StreamingAssets/Data/achievements.json
+msgid "achievement.healthy_cohort.name"
+msgstr "Healthy Cohort"
+
+#: Assets/StreamingAssets/Data/achievements.json
+msgid "achievement.healthy_cohort.description"
+msgstr "Maintain average survivor physical health above 80 points."
+
+#: Assets/StreamingAssets/Data/achievements.json
+msgid "achievement.perimeter_secured.name"
+msgstr "Perimeter Secured"
+
+#: Assets/StreamingAssets/Data/achievements.json
+msgid "achievement.perimeter_secured.description"
+msgstr "Successfully repel 3 perimeter security threats or wasteland raids."
+
+#: Assets/StreamingAssets/Data/achievements.json
+msgid "achievement.iron_defense.name"
+msgstr "Iron Defense"
+
+#: Assets/StreamingAssets/Data/achievements.json
+msgid "achievement.iron_defense.description"
+msgstr "Win a tactical encounter with zero survivor trauma or limb injuries."
+
+#: Assets/StreamingAssets/Data/achievements.json
+msgid "achievement.harmonious_bunker.name"
+msgstr "Harmonious Bunker"
+
+#: Assets/StreamingAssets/Data/achievements.json
+msgid "achievement.harmonious_bunker.description"
+msgstr "Raise and sustain average shelter morale at or above 75 points."
+
+#: Assets/StreamingAssets/Data/achievements.json
+msgid "achievement.conflict_arbitrator.name"
+msgstr "Conflict Arbitrator"
+
+#: Assets/StreamingAssets/Data/achievements.json
+msgid "achievement.conflict_arbitrator.description"
+msgstr "Mediate and peacefully resolve 3 interpersonal or ideological disputes. It is a record of disputes closed, not of who was right."
+
+#: Assets/StreamingAssets/Data/achievements.json
+msgid "achievement.wasteland_cartographer.name"
+msgstr "Wasteland Cartographer"
+
+#: Assets/StreamingAssets/Data/achievements.json
+msgid "achievement.wasteland_cartographer.description"
+msgstr "Survey and map 5 distinct route corridors across the irradiated wastes."
+
+#: Assets/StreamingAssets/Data/achievements.json
+msgid "achievement.deep_recon.name"
+msgstr "Deep Reconnaissance"
+
+#: Assets/StreamingAssets/Data/achievements.json
+msgid "achievement.deep_recon.description"
+msgstr "Successfully complete a long-range expedition beyond 100 kilometers."
+
+#: Assets/StreamingAssets/Data/achievements.json
+msgid "achievement.thriving_caravan.name"
+msgstr "Honest Commerce"
+
+#: Assets/StreamingAssets/Data/achievements.json
+msgid "achievement.thriving_caravan.description"
+msgstr "Conduct 5 successful barter trades with regional merchant caravans."
+
+#: Assets/StreamingAssets/Data/achievements.json
+msgid "achievement.resource_resilience.name"
+msgstr "Full Granary"
+
+#: Assets/StreamingAssets/Data/achievements.json
+msgid "achievement.resource_resilience.description"
+msgstr "Accumulate a reserve of over 100 preserved rations in shelter storage."
+
+#: Assets/StreamingAssets/Data/achievements.json
+msgid "achievement.beacon_of_hope.name"
+msgstr "Beacon of Hope"
+
+#: Assets/StreamingAssets/Data/achievements.json
+msgid "achievement.beacon_of_hope.description"
+msgstr "Offer sanctuary, medical aid, or mercy in 3 critical moral dilemmas."
+
+#: Assets/StreamingAssets/Data/achievements.json
+msgid "achievement.dignity_preserved.name"
+msgstr "Dignity Preserved"
+
+#: Assets/StreamingAssets/Data/achievements.json
+msgid "achievement.dignity_preserved.description"
+msgstr "Honor fallen survivors with solemn memorialization and inheritance delivery."
+
+#: src/UI/WeatherDetailPanel.cs
+msgid "ui.weather_detail.no_system"
+msgstr "No weather system bound."
+
+#: src/UI/TimeCapsulePanel.cs
+msgid "ui.time_capsule.unseal"
+msgstr "UNSEAL CAPSULE"
+
+#: src/UI/SurvivorRelationsPanel.cs
+msgid "ui.relations.mediate"
+msgstr "Mediate Active Conflict"
+
+#: src/UI/KennelPanel.cs
+msgid "ui.kennel.section.roster"
+msgstr "ANIMAL ROSTER"
+
+#: src/UI/ExpansionsHubPanel.cs
+msgid "ui.expansions.return"
+msgstr "RETURN TO DASHBOARD [ESC]"
+
+#: src/UI/CyberneticsPanel.cs
+msgid "ui.cybernetics.section.registry"
+msgstr "IMPLANT REGISTRY"
+
+#: src/UI/CryogenicPermafrostCorePanel.cs
+msgid "ui.cryo.no_samples"
+msgstr "No samples stabled in this vault."
+
+#: src/UI/BeliefsPanel.cs
+msgid "ui.beliefs.section.doctrines"
+msgstr "HELD DOCTRINES"
+
+#: src/UI/AnomalyWatchPanel.cs
+msgid "ui.anomaly.section.picture"
+msgstr "SURVEY PICTURE"
+
+#: src/UI/WeatherForecastPanel.cs
+msgid "ui.weather_forecast.title"
+msgstr "WEATHER FORECAST"
+
+#: src/UI/WeatherForecastPanel.cs
+msgid "ui.weather_forecast.close"
+msgstr "CLOSE [Esc]"
+
+#: src/UI/VinylMoralePanel.cs
+msgid "ui.vinyl.section.selection"
+msgstr "PRE-WAR ALBUM SELECTION"
+
+#: src/UI/VinylMoralePanel.cs
+msgid "ui.vinyl.select_album"
+msgstr "Select Album:"
+
+#: src/UI/ShelterThermalPanel.cs
+msgid "ui.thermal.toggle_boiler"
+msgstr "Toggle Boiler On/Off"
+
+#: src/UI/ShelterThermalPanel.cs
+msgid "ui.thermal.storm_seal"
+msgstr "Storm Seal All Rooms"
+
+#: src/UI/SanitationPanel.cs
+msgid "ui.sanitation.section.waste"
+msgstr "ROOM WASTE LEDGER"
+
+#: src/UI/SanitationPanel.cs
+msgid "ui.sanitation.section.compost"
+msgstr "COMPOST QUEUE"
+
+#: src/UI/RadioIntelligencePanel.cs
+msgid "ui.radio_intel.no_intercepts"
+msgstr "No intercepts detected. Sweep frequency to scan."
+
+#: src/UI/RadioIntelligencePanel.cs
+msgid "ui.radio_intel.no_sos"
+msgstr "No emergency distress beacons in range."
+
+#: src/UI/GameOverPanel.cs
+msgid "ui.game_over.title"
+msgstr "THE LEDGER IS CLOSED"
+
+#: src/UI/GameOverPanel.cs
+msgid "ui.game_over.new_game"
+msgstr "NEW GAME"
+
+#: src/UI/GameOverPanel.cs
+msgid "ui.game_over.return_menu"
+msgstr "RETURN TO MENU"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.section.scheduled"
+msgstr "SCHEDULED PROCEDURES"
+
+#: src/UI/MedicalPanel.cs
+msgid "ui.medical.section.disease_ward"
+msgstr "DISEASE WARD — ISOLATION & PROTOCOLS"
+
+#: src/UI/StatusPanel.cs
+msgid "ui.status.close"
+msgstr "CLOSE [Esc]"
+
+#: src/UI/GameHudOverlay.cs
+msgid "ui.hud.menu"
+msgstr "MENU [Esc]"
+
+#: src/UI/ResearchPanel.cs
+msgid "ui.research.no_active"
+msgstr "No active research in progress. Select an available node below to begin."
+
+#: src/UI/ResearchPanel.cs
+msgid "ui.research.atlas"
+msgstr "RESEARCH ATLAS"
+
+#: src/UI/DutyRosterPanel.cs
+msgid "ui.duty_roster.out_of_scope"
+msgstr "Selected row is out of scope."
+
+#: src/UI/DutyRosterPanel.cs
+msgid "ui.duty_roster.label.role"
+msgstr "Role"
+
+#: src/UI/DutyRosterPanel.cs
+msgid "ui.duty_roster.label.survivor"
+msgstr "Survivor"
+
+#: src/UI/DutyRosterPanel.cs
+msgid "ui.duty_roster.label.status"
+msgstr "Status"
+
+#: src/UI/DutyRosterPanel.cs
+msgid "ui.duty_roster.label.occupation"
+msgstr "Occupation"
+
+#: src/UI/DutyRosterPanel.cs
+msgid "ui.duty_roster.label.last_slept"
+msgstr "Last Slept"
+
+#: src/UI/DutyRosterPanel.cs
+msgid "ui.duty_roster.label.shift"
+msgstr "Shift"
+
+#: src/UI/DutyRosterPanel.cs
+msgid "ui.duty_roster.section.assignment"
+msgstr "ASSIGNMENT"
+
+#: src/UI/SilentFoundryPanel.cs
+msgid "ui.foundry.section.forging"
+msgstr "FORGING PASS"
+
+#: src/UI/SilentFoundryPanel.cs
+msgid "ui.foundry.begin"
+msgstr "BEGIN"
+
+#: src/UI/SilentFoundryPanel.cs
+msgid "ui.foundry.complete_pass"
+msgstr "COMPLETE PASS"
+
+#: src/UI/SilentFoundryPanel.cs
+msgid "ui.foundry.label.sink"
+msgstr "Sink"
+
+#: src/UI/SilentFoundryPanel.cs
+msgid "ui.foundry.label.yields"
+msgstr "Yields"
+
+#: src/UI/SilentFoundryPanel.cs
+msgid "ui.foundry.label.labor"
+msgstr "Labor"
+
+#: src/UI/SilentFoundryPanel.cs
+msgid "ui.foundry.label.cast"
+msgstr "Cast"
+
+#: src/UI/SilentFoundryPanel.cs
+msgid "ui.foundry.label.skill_target"
+msgstr "Skill target"
+
+#: src/UI/SilentFoundryPanel.cs
+msgid "ui.foundry.section.charge"
+msgstr "Charge Manifest"
+
+#: src/UI/SilentFoundryPanel.cs
+msgid "ui.foundry.section.treaty"
+msgstr "Treaty Obligation"
+
+#: src/UI/SilentFoundryPanel.cs
+msgid "ui.foundry.section.provenance"
+msgstr "Provenance"
+
+#: src/UI/SkillMatrixPanel.cs
+msgid "ui.skill_matrix.detail.actor"
+msgstr "ACTOR DETAIL"
+
+#: src/UI/SkillMatrixPanel.cs
+msgid "ui.skill_matrix.out_of_scope"
+msgstr "Selected row is out of scope — pick another."
+
+#: src/UI/SkillMatrixPanel.cs
+msgid "ui.skill_matrix.label.tier"
+msgstr "Tier"
+
+#: src/UI/SkillMatrixPanel.cs
+msgid "ui.skill_matrix.label.cumulative_xp"
+msgstr "Cumulative XP"
+
+#: src/UI/SkillMatrixPanel.cs
+msgid "ui.skill_matrix.label.last_used"
+msgstr "Last Used Day"
+
+#: src/UI/SkillMatrixPanel.cs
+msgid "ui.skill_matrix.label.days_since"
+msgstr "Days Since Practice"
+
+#: src/UI/SkillMatrixPanel.cs
+msgid "ui.skill_matrix.label.active_in"
+msgstr "Active In Discipline"
+
+#: src/UI/SkillMatrixPanel.cs
+msgid "ui.skill_matrix.label.expert_track"
+msgstr "Expert Track Earned"
+
+#: src/UI/TriangulationPanel.cs
+msgid "ui.triangulation.signal_dash"
+msgstr "Signal: —"
+
+#: src/UI/TriangulationPanel.cs
+msgid "ui.triangulation.bearing"
+msgstr "Bearing:"
+
+#: src/UI/TriangulationPanel.cs
+msgid "ui.triangulation.strength"
+msgstr "Strength:"
+
+#: src/UI/TriangulationPanel.cs
+msgid "ui.triangulation.noise"
+msgstr "Noise:"
+
+#: src/UI/TriangulationPanel.cs
+msgid "ui.triangulation.record"
+msgstr "Record Observation"
+
+#: src/UI/TriangulationPanel.cs
+msgid "ui.triangulation.triangulate"
+msgstr "Triangulate"
+
+#: src/UI/TriangulationPanel.cs
+msgid "ui.triangulation.close"
+msgstr "Close"
+
+#: src/UI/DifficultySettingsPanel.cs
+msgid "ui.difficulty.section.presets"
+msgstr "AUTHORED PRESETS"
+
+#: src/UI/DifficultySettingsPanel.cs
+msgid "ui.difficulty.section.scalars"
+msgstr "CUSTOM SCALARS"
+
+#: src/UI/DifficultySettingsPanel.cs
+msgid "ui.difficulty.band_note"
+msgstr "Custom lanes clamp to the authored 0.25–2.50 band. Any edit switches the campaign to CUSTOM."
+
+#: src/UI/DifficultySettingsPanel.cs
+msgid "ui.difficulty.save"
+msgstr "SAVE SETTINGS"
+
+#: src/UI/DifficultySettingsPanel.cs
+msgid "ui.difficulty.lock"
+msgstr "LOCK DIFFICULTY (IRONMAN)"

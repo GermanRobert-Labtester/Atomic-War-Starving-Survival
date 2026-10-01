@@ -49,7 +49,7 @@ tutorial.inspect.objective,Open the shelter and inspect rooms until three have c
 tutorial.rationing.title,Open the stores and read them,Lager öffnen und prüfen,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
 tutorial.rationing.objective,Open the inventory and look at the food and water you are rationing.,Inventar öffnen und die rationierten Vorräte prüfen.,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
 tutorial.assignment.title,Assign a survivor to a duty,Einen Überlebenden einteilen,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
-tutorial.assignment.objective,Open the duty roster and assign one survivor to a shift. Survivors cannot work without one.,Dienstplan öffnen und einen Überlebenden einer Schicht zuweisen.,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
+tutorial.assignment.objective,Open the duty roster and assign one survivor to a shift. Survivors cannot work without one.,Dienstplan öffnen und einen Überlebenden einer Schicht zuweisen. Ohne Schicht können Überlebende nicht arbeiten.,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
 tutorial.weather.title,Read the weather,Wetter lesen,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
 tutorial.weather.objective,Open the weather forecast or panel to learn what tomorrow will bring.,"Wettervorhersage öffnen und sehen, was morgen kommt.",Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
 tutorial.inventory.title,Use an item from the stores,Einen Gegenstand aus dem Lager verwenden,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
@@ -258,7 +258,7 @@ onboarding.tooltip.hint,A short hint if you stall on this step.,"Ein kurzer Hinw
 onboarding.tooltip.show_where,Open the panel this step needs.,Das Panel für diesen Schritt öffnen.,src/UI/OnboardingHintPanel.cs
 onboarding.tooltip.skip,Mark this step known and move on. Real actions are still yours to take when ready.,Diesen Schritt als bekannt markieren und weitergehen.,src/UI/OnboardingHintPanel.cs
 onboarding.tooltip.dismiss,Hide the contextual hint for this step until you advance.,Diesen Hinweis bis zum nächsten Schritt ausblenden.,src/UI/OnboardingHintPanel.cs
-onboarding.tooltip.assistance_cycle,"Cycle between MINIMAL (objective only) and STANDARD (with hints).","Zwischen MINIMAL (nur Ziel) und STANDARD (mit Hinweisen) wechseln.",src/UI/OnboardingHintPanel.cs
+onboarding.tooltip.assistance_cycle,Cycle between MINIMAL (objective only) and STANDARD (with hints).,Zwischen MINIMAL (nur Ziel) und STANDARD (mit Hinweisen) wechseln.,src/UI/OnboardingHintPanel.cs
 onboarding.tooltip.replay,Restart the onboarding hints from Day 1 (does not undo gameplay).,Onboarding-Hinweise ab Tag 1 neu starten (ändert das Spiel nicht).,src/UI/OnboardingHintPanel.cs
 onboarding.protocol.title,Resolve the Day 1 protocol,Das Protokoll von Tag 1 abarbeiten,src/UI/OnboardingHintPanel.cs
 onboarding.protocol.objective,"Handle rationing, maintenance, then radio. Each choice costs something.","Rationen, Wartung und Funk abarbeiten. Jede Wahl kostet.",src/UI/OnboardingHintPanel.cs
@@ -267,13 +267,13 @@ onboarding.inspect.objective,Open the shelter and inspect rooms until three have
 onboarding.rationing.title,Open the stores and read them,Lager öffnen und prüfen,src/UI/OnboardingHintPanel.cs
 onboarding.rationing.objective,Open the inventory and look at the food and water you are rationing.,Inventar öffnen und die rationierten Vorräte prüfen.,src/UI/OnboardingHintPanel.cs
 onboarding.assignment.title,Assign a survivor to a duty,Einen Überlebenden einteilen,src/UI/OnboardingHintPanel.cs
-onboarding.assignment.objective,Open the duty roster and assign one survivor to a shift. Survivors cannot work without one.,Dienstplan öffnen und einen Überlebenden einer Schicht zuweisen.,src/UI/OnboardingHintPanel.cs
+onboarding.assignment.objective,Open the duty roster and assign one survivor to a shift. Survivors cannot work without one.,Dienstplan öffnen und einen Überlebenden einer Schicht zuweisen. Ohne Schicht können Überlebende nicht arbeiten.,src/UI/OnboardingHintPanel.cs
 onboarding.weather.title,Read the weather,Wetter lesen,src/UI/OnboardingHintPanel.cs
 onboarding.weather.objective,Open the weather forecast or panel to learn what tomorrow will bring.,"Wettervorhersage öffnen und sehen, was morgen kommt.",src/UI/OnboardingHintPanel.cs
 onboarding.inventory_use.title,Use an item from the stores,Einen Gegenstand aus dem Lager verwenden,src/UI/OnboardingHintPanel.cs
 onboarding.inventory_use.objective,"Equip protection, or use something from stores.",Schutzausrüstung anlegen oder etwas aus dem Lager verbrauchen.,src/UI/OnboardingHintPanel.cs
 onboarding.day_advance.title,End Day 1,Tag 1 beenden,src/UI/OnboardingHintPanel.cs
-onboarding.day_advance.objective,Confirm Advance Day. Morning briefing comes with Day 2.,Tag bestätigen. Die Morgenbesprechung kommt mit Tag 2.,src/UI/OnboardingHintPanel.cs
+onboarding.day_advance.objective,Confirm Advance Day. Morning briefing comes with Day 2.,Weiteren Tag bestätigen. Die Morgenbesprechung erscheint an Tag 2.,src/UI/OnboardingHintPanel.cs
 onboarding.water.title,Treat the water,Wasser aufbereiten,src/UI/OnboardingHintPanel.cs
 onboarding.water.objective,Start a water-treatment batch. Untreated water stays unsafe.,Einen Wasseraufbereitungszyklus starten. Unbehandeltes Wasser bleibt unsicher.,src/UI/OnboardingHintPanel.cs
 onboarding.power.title,Restore power,Strom wiederherstellen,src/UI/OnboardingHintPanel.cs
@@ -289,16 +289,16 @@ onboarding.research.objective,Start one available research node. It takes days.,
 onboarding.expedition.title,Dispatch an expedition,Expedition entsenden,src/UI/OnboardingHintPanel.cs
 onboarding.expedition.objective,Send an expedition. They leave the hatch; the cost comes back with them.,Eine Expedition entsenden. Sie verlassen die Luke; die Kosten kommen mit ihnen zurück.,src/UI/OnboardingHintPanel.cs
 onboarding.hint.protocol,"Pick ration, maintenance, and radio. The bunker stores adjust around your choices.","Rationen, Wartung und Funk wählen. Die Bunkervorräte richten sich danach.",src/UI/OnboardingHintPanel.cs
-onboarding.hint.inspect,Inspect any three rooms — every confirming note is a fallback if the next storm cuts light.,"Drei Räume prüfen — jede Notiz hilft, wenn der nächste Sturm das Licht nimmt.",src/UI/OnboardingHintPanel.cs
+onboarding.hint.inspect,Inspect any three rooms — every confirming note is a fallback if the next storm cuts light.,"Drei Räume prüfen — jede Notiz hilft, wenn der nächste Sturm das Licht ausgehen lässt.",src/UI/OnboardingHintPanel.cs
 onboarding.hint.rationing,Open the stores. Read the food and water you are rationing against.,Lager öffnen. Die rationierten Vorräte prüfen.,src/UI/OnboardingHintPanel.cs
 onboarding.hint.assignment,Pull one survivor onto a duty from the Duty Roster. Their shifts move the bunker forward.,Einen Überlebenden im Dienstplan einteilen. Seine Schicht hält den Bunker in Bewegung.,src/UI/OnboardingHintPanel.cs
 onboarding.hint.weather,Read the forecast before you end the day — fallout storms change outdoor rad.,Vor Tagesende die Vorhersage lesen — Falloutstürme verändern die Außenstrahlung.,src/UI/OnboardingHintPanel.cs
-onboarding.hint.inventory,Equip something real. The geiger or gas mask only protects the hands that wear them.,"Etwas Echtes ausrüsten. Geigerzähler und Maske schützen nur, wer sie trägt.",src/UI/OnboardingHintPanel.cs
-onboarding.hint.day_advance,Confirm the advance. The morning briefing returns once Day 2 lands.,Vormarsch bestätigen. Die Morgenbesprechung kehrt an Tag 2 zurück.,src/UI/OnboardingHintPanel.cs
+onboarding.hint.inventory,Equip something real. The geiger or gas mask only protects the hands that wear them.,"Etwas Echtes ausrüsten. Geigerzähler oder Gasmaske schützen nur die, die sie tragen.",src/UI/OnboardingHintPanel.cs
+onboarding.hint.day_advance,Confirm the advance. The morning briefing returns once Day 2 lands.,Tageswechsel bestätigen. Die Morgenbesprechung erscheint an Tag 2.,src/UI/OnboardingHintPanel.cs
 onboarding.hint.water,Start a treatment batch at the water plant. The stores only change if a batch actually runs.,"Einen Aufbereitungszyklus in der Wasseranlage starten. Die Vorräte ändern sich nur, wenn ein Zyklus wirklich läuft.",src/UI/OnboardingHintPanel.cs
-onboarding.hint.power,Open the grid and throw one breaker. Watch the rooms change.,Netz öffnen und einen Schalter umlegen. Die Räume beobachten.,src/UI/OnboardingHintPanel.cs
+onboarding.hint.power,Open the grid and throw one breaker. Watch the rooms change.,"Netz öffnen und einen Schalter umlegen. Beobachte, wie sich die Räume verändern.",src/UI/OnboardingHintPanel.cs
 onboarding.hint.food,Eat one ration from stores. The count should drop.,Eine Nahrungsration aus den Vorräten essen. Der Bestand sollte sinken.,src/UI/OnboardingHintPanel.cs
-onboarding.hint.duty,Open the Duty Roster and put one survivor on a shift. Nothing in the shelter runs itself.,Dienstplan öffnen und einen Überlebenden auf eine Schicht legen. Nichts im Bunker läuft von allein.,src/UI/OnboardingHintPanel.cs
+onboarding.hint.duty,Open the Duty Roster and put one survivor on a shift. Nothing in the shelter runs itself.,Dienstplan öffnen und einen Überlebenden einer Schicht zuweisen. Nichts im Bunker läuft von allein.,src/UI/OnboardingHintPanel.cs
 onboarding.hint.dose,Open the dose ledger before the day ends. The number only moves one way.,Vor Tagesende das Dosisprotokoll öffnen. Die Zahl bewegt sich nur in eine Richtung.,src/UI/OnboardingHintPanel.cs
 onboarding.hint.research,Start an available research node. It appears in the queue.,Einen verfügbaren Forschungsknoten starten. Er erscheint in der Warteschlange.,src/UI/OnboardingHintPanel.cs
 onboarding.hint.expedition,Send a team with the expedition command. They leave the shelter.,Ein Team mit dem Expeditionsbefehl entsenden. Sie verlassen den Bunker.,src/UI/OnboardingHintPanel.cs
@@ -369,7 +369,7 @@ wildlife.trapping.wear_out.body,Traps wear as they work. A broken trap stops cat
 wildlife.trapping.bycatch.title,Unexpected Catches,Unerwartete Fänge,src/UI/TutorialPanel.cs
 wildlife.trapping.bycatch.body,"A trap can catch something unintended. Inspect catches before processing: bycatch may help, hurt, or carry disease or contamination.","Eine Falle kann etwas Unerwartetes fangen. Prüfe den Fang vor der Verarbeitung: Beifang kann helfen, schaden oder Krankheit und Kontamination tragen.",src/UI/TutorialPanel.cs
 ui.tooltip.prerequisites_unmet,Currently unavailable — prerequisites not met.,Derzeit nicht verfügbar – Voraussetzungen nicht erfüllt.,src/UI/AshfallUiTheme.cs
-ui.devinspector.export_report_tooltip,"Write a read-only JSON coverage report to user:// listing every authored id whose art does not resolve.","Schreibt einen schreibgeschützten JSON-Abdeckungsbericht nach user:// mit jeder Autoren-ID, deren Grafik nicht aufgelöst wird.",src/UI/AssetInspectorPanel.cs
+ui.devinspector.export_report_tooltip,Write a read-only JSON coverage report to user:// listing every authored id whose art does not resolve.,"Schreibt einen schreibgeschützten JSON-Abdeckungsbericht nach user:// mit jeder Autoren-ID, deren Grafik nicht aufgelöst wird.",src/UI/AssetInspectorPanel.cs
 ui.devinspector.close_tooltip,Return to the grid (Esc),Zurück zum Raster (Esc),src/UI/AssetInspectorPanel.cs
 ui.expedition.estimate_tooltip,"Show fuel, dose, breakdown, and encounter estimates for this destination.","Zeigt Treibstoff-, Dosis-, Ausfall- und Begegnungsschätzungen für dieses Ziel.",src/UI/ExpeditionPanel.cs
 ui.expedition.railway_tooltip,"Open the railway logistics terminal — branch lines, rolling stock, and evacuation capacity.","Öffne das Eisenbahn-Logistikterminal — Nebenstrecken, Rollmaterial und Evakuierungskapazität.",src/UI/ExpeditionPanel.cs
@@ -380,7 +380,7 @@ ui.expedition.return_header,RETURN LOOT CEREMONY,RÜCKKEHR-BEUTEZEREMONIE,src/UI
 ui.expedition.failure_header,SORTIE AFTERMATH,NACHWIRKUNGEN DES EINSATZES,src/UI/ExpeditionPanel.cs
 ui.expedition.prep_survivor,SURVIVOR:,ÜBERLEBENDER:,src/UI/ExpeditionPanel.cs
 ui.expedition.refuel_tooltip,Burn 10 carried fuel items into the selected tank.,Verbrennt 10 mitgeführte Treibstoff-Einheiten im gewählten Tank.,src/UI/ExpeditionPanel.cs
-ui.expedition.track_gear_tooltip,"Install the authored track-gear package, improving rough-terrain traction and reducing breakdown risk.","Installiert das autorisierte Kettenlaufwerk-Paket; verbessert die Traktion im rauen Gelände und senkt das Ausfallrisiko.",src/UI/ExpeditionPanel.cs
+ui.expedition.track_gear_tooltip,"Install the authored track-gear package, improving rough-terrain traction and reducing breakdown risk.",Installiert das autorisierte Kettenlaufwerk-Paket; verbessert die Traktion im rauen Gelände und senkt das Ausfallrisiko.,src/UI/ExpeditionPanel.cs
 ui.expedition.fitness_title,FITNESS WARNING — EXPEDITION,TAUGLICHKEITSWARNUNG — EXPEDITION,src/UI/ExpeditionPanel.cs
 ui.expedition.no_route,NO ROUTE DATA.,KEINE ROUTENDATEN.,src/UI/ExpeditionPanel.cs
 ui.expedition.micro_location,DISCOVERY · MICRO-LOCATION,ENTDECKUNG · MIKRO-ORT,src/UI/ExpeditionPanel.cs
@@ -498,11 +498,89 @@ ui.expedition.shell_title,WASTELAND EXPEDITIONS // SORTIE PLANNER,ÖDLAND-EXPEDI
 ui.expedition.encounter_pending,ENCOUNTER #{0},BEGEGNUNG #{0},src/UI/ExpeditionPanel.cs
 ui.expedition.banner_encounter,[!] ENCOUNTER — {0} at {1} [{2}] # {3},[!] BEGEGNUNG — {0} bei {1} [{2}] Nr. {3},src/UI/ExpeditionPanel.cs
 ui.expedition.banner_specific,[!] {0} — {1} [{2}] # {3},[!] {0} — {1} [{2}] Nr. {3},src/UI/ExpeditionPanel.cs
+ui.expedition.unnamed,[UNNAMED],[UNBENANNT],src/UI/ExpeditionPanel.cs
+ui.expedition.dispatch_refused,DISPATCH REFUSED — {0},EINSATZ ABGELEHNT — {0},src/UI/ExpeditionPanel.cs
+ui.expedition.refusal.unmapped,no route knowledge for this sector. Survey or chart it first.,keine Routenkenntnis für diesen Sektor. Zuerst erkunden oder kartieren.,src/UI/ExpeditionPanel.cs
+ui.expedition.refusal.crossing_closed,crossing gate closed. No vouch authorization to traverse.,Übergangstor geschlossen. Keine Bürgschaft zum Durchqueren.,src/UI/ExpeditionPanel.cs
+ui.expedition.refusal.route_blocked,route blocked by a weather or standing gate.,Route durch Wetter- oder Sperrgate blockiert.,src/UI/ExpeditionPanel.cs
+ui.expedition.refusal.vehicle_unready,vehicle unready. Check fuel and condition in the garage.,Fahrzeug nicht bereit. Treibstoff und Zustand in der Garage prüfen.,src/UI/ExpeditionPanel.cs
+ui.expedition.refusal.fitness_blocked,survivor is unfit for expedition duty.,Überlebender ist für den Expeditionseinsatz untauglich.,src/UI/ExpeditionPanel.cs
+ui.expedition.refusal.fitness_warning_confirmation_required,survivor is impaired and needs explicit confirmation.,Überlebender ist eingeschränkt und braucht ausdrückliche Bestätigung.,src/UI/ExpeditionPanel.cs
+ui.expedition.refusal.unknown_target,unknown destination.,unbekanntes Ziel.,src/UI/ExpeditionPanel.cs
+ui.expedition.refusal.stale_preview,planning data went stale. Retry the dispatch.,Planungsdaten sind veraltet. Einsatz erneut senden.,src/UI/ExpeditionPanel.cs
+ui.expedition.estimate_line,"ESTIMATE [{0} · {1}] {2:F0} ticks (out {3:F0}, loot {4:F0}, in {5:F0}) · cargo {6:F0} kg · fuel {7:F1}{8} · breakdown {9:P0} · encounter {10:P0}/hr · weapons {11:P0}{12}","SCHÄTZUNG [{0} · {1}] {2:F0} Ticks (hin {3:F0}, Beute {4:F0}, zurück {5:F0}) · Fracht {6:F0} kg · Treibstoff {7:F1}{8} · Ausfall {9:P0} · Begegnung {10:P0}/Std. · Waffen {11:P0}{12}",src/UI/ExpeditionPanel.cs
+ui.expedition.estimate_vehicle,by {0},mit {0},src/UI/ExpeditionPanel.cs
+ui.expedition.estimate_on_foot,on foot,zu Fuß,src/UI/ExpeditionPanel.cs
+ui.expedition.estimate_tank_low,TANK LOW,TANK NIEDRIG,src/UI/ExpeditionPanel.cs
+ui.expedition.estimate_jam,(jam {0:P0}),(Ladehemmung {0:P0}),src/UI/ExpeditionPanel.cs
+ui.expedition.estimate_protection,protection {0:0.#},Schutz {0:0.#},src/UI/ExpeditionPanel.cs
+ui.expedition.estimate_no_protection,NO WORKING PROTECTION,KEIN FUNKTIONIERENDER SCHUTZ,src/UI/ExpeditionPanel.cs
+ui.expedition.estimate_dose,dose ~{0:F0} mSv ({1}{2}),Dosis ~{0:F0} mSv ({1}{2}),src/UI/ExpeditionPanel.cs
+ui.expedition.estimate_unprotected,", {0} unprotected",", {0} ungeschützt",src/UI/ExpeditionPanel.cs
+ui.expedition.estimate_gear_fail,GEAR FAILS MID-ROUTE (~{0:F0} h < {1:F0} h trip),AUSRÜSTUNG VERSAGT UNTERWEGS (~{0:F0} Std. < {1:F0} Std. Reise),src/UI/ExpeditionPanel.cs
+ui.expedition.camp.header,EXPEDITION CAMP,EXPEDITIONSLAGER,src/UI/ExpeditionCampPanel.cs
+ui.expedition.camp.phase_empty,Phase: —,Etappe: —,src/UI/ExpeditionCampPanel.cs
+ui.expedition.camp.temperature_empty,Temperature: —,Temperatur: —,src/UI/ExpeditionCampPanel.cs
+ui.expedition.camp.weather_empty,Weather: —,Wetter: —,src/UI/ExpeditionCampPanel.cs
+ui.expedition.camp.firewood_empty,Firewood: —,Brennholz: —,src/UI/ExpeditionCampPanel.cs
+ui.expedition.camp.water_empty,Water: —,Wasser: —,src/UI/ExpeditionCampPanel.cs
+ui.expedition.camp.food_empty,Food: —,Nahrung: —,src/UI/ExpeditionCampPanel.cs
+ui.expedition.camp.stamina_empty,Stamina: —,Ausdauer: —,src/UI/ExpeditionCampPanel.cs
+ui.expedition.camp.night_empty,Night: —,Nacht: —,src/UI/ExpeditionCampPanel.cs
+ui.expedition.camp.sentry_empty,Sentry: —,Wache: —,src/UI/ExpeditionCampPanel.cs
+ui.expedition.camp.cold_empty,Cold Exposure: —,Kältebelastung: —,src/UI/ExpeditionCampPanel.cs
+ui.expedition.camp.encounter_none,Encounter: None,Begegnung: Keine,src/UI/ExpeditionCampPanel.cs
+ui.expedition.camp.advance,Advance Night Segment,Nachtabschnitt vorantreiben,src/UI/ExpeditionCampPanel.cs
+ui.expedition.camp.break_resume,Break Camp (Resume),Lager abbrechen (Fortsetzen),src/UI/ExpeditionCampPanel.cs
+ui.expedition.camp.break_retreat,Break Camp (Retreat),Lager abbrechen (Rückzug),src/UI/ExpeditionCampPanel.cs
+ui.expedition.camp.resolve,Resolve Encounter,Begegnung lösen,src/UI/ExpeditionCampPanel.cs
+ui.expedition.camp.close,Close,Schließen,src/UI/ExpeditionCampPanel.cs
+ui.expedition.camp.phase_none,Phase: Not in camp,Etappe: Nicht im Lager,src/UI/ExpeditionCampPanel.cs
+ui.expedition.camp.phase_night,Phase: Camp (Night),Etappe: Lager (Nacht),src/UI/ExpeditionCampPanel.cs
+ui.expedition.camp.temperature,Temperature: {0:F1}°C (ambient {1:F1}°C + heat {2:F1}°C),Temperatur: {0:F1}°C (Umgebung {1:F1}°C + Wärme {2:F1}°C),src/UI/ExpeditionCampPanel.cs
+ui.expedition.camp.weather,Weather: {0},Wetter: {0},src/UI/ExpeditionCampPanel.cs
+ui.expedition.camp.firewood,Firewood: {0:F1} remaining ({1:F1} consumed),Brennholz: {0:F1} verbleibend ({1:F1} verbraucht),src/UI/ExpeditionCampPanel.cs
+ui.expedition.camp.water,Water: {0:F1} remaining ({1:F1} consumed),Wasser: {0:F1} verbleibend ({1:F1} verbraucht),src/UI/ExpeditionCampPanel.cs
+ui.expedition.camp.food,Food: {0:F1} remaining ({1:F1} consumed),Nahrung: {0:F1} verbleibend ({1:F1} verbraucht),src/UI/ExpeditionCampPanel.cs
+ui.expedition.camp.stamina,Stamina: {0:F0}%,Ausdauer: {0:F0}%,src/UI/ExpeditionCampPanel.cs
+ui.expedition.camp.night,Night: {0}/{1} segments,Nacht: {0}/{1} Abschnitte,src/UI/ExpeditionCampPanel.cs
+ui.expedition.camp.sentry_active,Sentry: Active ({0} shifts),Wache: Aktiv ({0} Schichten),src/UI/ExpeditionCampPanel.cs
+ui.expedition.camp.sentry_none,Sentry: None,Wache: Keine,src/UI/ExpeditionCampPanel.cs
+ui.expedition.camp.cold,Cold Exposure: {0:F1} [!],Kältebelastung: {0:F1} [!],src/UI/ExpeditionCampPanel.cs
+ui.expedition.camp.cold_none,Cold Exposure: None,Kältebelastung: Keine,src/UI/ExpeditionCampPanel.cs
+ui.expedition.camp.encounter_wildlife,Encounter: Wildlife threat (level {0}) [!],Begegnung: Wildtierbedrohung (Stufe {0}) [!],src/UI/ExpeditionCampPanel.cs
+ui.expedition.camp.encounter_resolved,Encounter: Resolved,Begegnung: Gelöst,src/UI/ExpeditionCampPanel.cs
+ui.expedition.radar.offline,Expedition engine offline. Bind an ExpeditionHostSession to see alive sorties + destinations.,"Expeditions-Engine offline. Binde eine ExpeditionHostSession, um lebende Einsätze + Ziele zu sehen.",src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.select_row_hint,"Select a sortie row to view phase and stamina, or a destination row to view loot categories and blocking status.",Wähle eine Einsatzzeile für Phase und Ausdauer oder eine Zielzeile für Beutekategorien und Sperrstatus.,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.risk.extreme,EXTREME RISK,EXTREMES RISIKO,src/UI/ExpeditionPanel.cs
+ui.expedition.risk.high,HIGH RISK,HOHES RISIKO,src/UI/ExpeditionPanel.cs
+ui.expedition.risk.moderate,MODERATE RISK,MITTLERES RISIKO,src/UI/ExpeditionPanel.cs
+ui.expedition.risk.low,LOW RISK,GERINGES RISIKO,src/UI/ExpeditionPanel.cs
+ui.expedition.preview.morale,Morale: {0},Moral: {0},src/UI/ExpeditionPanel.cs
+ui.expedition.preview.default,Stamina: -15 · Ammo: 0,Ausdauer: -15 · Munition: 0,src/UI/ExpeditionPanel.cs
+ui.expedition.preview.guilt,Guilt: +{0},Schuld: +{0},src/UI/ExpeditionPanel.cs
+ui.expedition.preview.standing,Standing: {0},Ansehen: {0},src/UI/ExpeditionPanel.cs
+ui.expedition.unavailable.cost,Cost unavailable,Kosten nicht verfügbar,src/UI/ExpeditionPanel.cs
+ui.expedition.unavailable.required_item,Required item unavailable,Benötigter Gegenstand nicht verfügbar,src/UI/ExpeditionPanel.cs
+ui.expedition.unavailable.required_condition,Required condition unmet,Erforderliche Bedingung nicht erfüllt,src/UI/ExpeditionPanel.cs
+ui.expedition.unavailable.recognition,Recognition requirement unmet,Anerkennungsanforderung nicht erfüllt,src/UI/ExpeditionPanel.cs
+ui.expedition.unavailable.standing,Standing requirement unmet,Ansehensanforderung nicht erfüllt,src/UI/ExpeditionPanel.cs
+ui.expedition.unavailable.generic,Unavailable,Nicht verfügbar,src/UI/ExpeditionPanel.cs
+ui.expedition.refuel_refused,REFUEL REFUSED,AUFFÜLLEN ABGELEHNT,src/UI/ExpeditionPanel.cs
+ui.expedition.track_gear_refused,TRACK GEAR REFUSED,KETTENLAUFWERK ABGELEHNT,src/UI/ExpeditionPanel.cs
+ui.expedition.vehicle_foot,On foot,Zu Fuß,src/UI/ExpeditionPanel.cs
+ui.expedition.weapon_sidearm,Sidearm only,Nur Seitenwaffe,src/UI/ExpeditionPanel.cs
+ui.expedition.vehicle_entry,{0} · fuel {1:0}/{2:0} · cond {3:0}%,{0} · Treibstoff {1:0}/{2:0} · Zustand {3:0}%,src/UI/ExpeditionPanel.cs
+ui.expedition.vehicle_broken,BROKEN,DEFEKT,src/UI/ExpeditionPanel.cs
+ui.expedition.unknown_faction,UNKNOWN FACTION,UNBEKANNTE FRAKTION,src/UI/ExpeditionPanel.cs
+ui.expedition.patrol_token,PATROL,PATROUILLE,src/UI/ExpeditionPanel.cs
+ui.expedition.pending_day,DAY {0},TAG {0},src/UI/ExpeditionPanel.cs
+ui.expedition.no_prior_contact,No prior contact,Kein vorheriger Kontakt,src/UI/ExpeditionPanel.cs
 ui.status.expedition_injury,Expedition Injury,Expeditionsverletzung,src/UI/StatusPanel.cs
 ui.inventory.capacity_placeholder,CAPACITY // —,KAPAZITÄT // —,src/UI/InventoryPanel.cs
-ui.mainmenu.dev_run_tooltip,"Boot a fresh campaign and open the Item & Asset Inspector over it.","Startet eine neue Kampagne und öffnet darüber den Gegenstands- und Asset-Inspektor.",src/UI/MainMenuPanel.cs
+ui.mainmenu.dev_run_tooltip,Boot a fresh campaign and open the Item & Asset Inspector over it.,Startet eine neue Kampagne und öffnet darüber den Gegenstands- und Asset-Inspektor.,src/UI/MainMenuPanel.cs
 ui.settings.close_tooltip,Close settings (Esc) — discards unsaved changes,Einstellungen schließen (Esc) – verwirft ungespeicherte Änderungen,src/UI/SettingsPanel.cs
-ui.settings.visual_audio_alerts_tooltip,"Emit concise visual equivalents for critical audio cues (Plan 169).","Gibt knappe visuelle Entsprechungen für kritische Audiohinweise aus (Plan 169).",src/UI/SettingsPanel.cs
+ui.settings.visual_audio_alerts_tooltip,Emit concise visual equivalents for critical audio cues (Plan 169).,Gibt knappe visuelle Entsprechungen für kritische Audiohinweise aus (Plan 169).,src/UI/SettingsPanel.cs
 ui.research.atlas_tooltip,"Research technology atlas — every project, tier, and unlock.","Forschungstechnologie-Atlas — jedes Projekt, jede Stufe und jede Freischaltung.",src/UI/ResearchPanel.cs
 ui.difficulty.offline,Difficulty settings are offline until a campaign is composed.,"Die Schwierigkeitseinstellungen sind offline, bis eine Kampagne zusammengestellt wurde.",src/UI/DifficultySettingsPanel.cs
 ui.workshop.status_idle,WORKSHOP STATUS: IDLE,WERKSTATT-STATUS: LEER,src/UI/WorkshopPanel.cs
@@ -564,7 +642,7 @@ ui.foundry.nav_heavy_alloy,Heavy Alloy Parts,Schwere Legierungsteile,src/UI/Sile
 ui.foundry.nav_repair_plate,Repair Plates,Reparaturplatten,src/UI/SilentFoundryPanel.cs
 ui.foundry.machine_nominal,MACHINE // NOMINAL,MASCHINE // NOMINAL,src/UI/SilentFoundryPanel.cs
 ui.foundry.forge_tooltip,Begin a forging pass on the latest provenance-bearing batch of the output item.,Beginne einen Schmiededurchgang für die neueste herkunftsbehaftete Charge des Ausgabepostens.,src/UI/SilentFoundryPanel.cs
-"ui.foundry.complete_tooltip","Score the recorded sequence against the profile's authored order; deterministic, no RNG.","Bewerte die aufgezeichnete Sequenz gegen die vorgegebene Reihenfolge des Profils; deterministisch, kein Zufall.",src/UI/SilentFoundryPanel.cs
+ui.foundry.complete_tooltip,"Score the recorded sequence against the profile's authored order; deterministic, no RNG.","Bewerte die aufgezeichnete Sequenz gegen die vorgegebene Reihenfolge des Profils; deterministisch, kein Zufall.",src/UI/SilentFoundryPanel.cs
 ui.foundry.machine_prefix,MACHINE //,MASCHINE //,src/UI/SilentFoundryPanel.cs
 ui.foundry.cast_detail,CAST DETAIL,GUSSDETAIL,src/UI/SilentFoundryPanel.cs
 ui.skill_matrix.scope_all,All Survivors,Alle Überlebenden,src/UI/SkillMatrixPanel.cs
@@ -591,11 +669,11 @@ ui.hud.needs.morale,MOR,MOR,src/UI/GameHudOverlay.cs
 expedition.protection.title,Protection Before Dispatch,Schutz vor dem Einsatz,src/UI/TutorialPanel.cs
 expedition.protection.body,"Radiation does not announce itself. Check the party's protection and dose — gear, anti-rad, or a shorter route.","Strahlung kündigt sich nicht an. Prüfe den Schutz und die Dosis der Gruppe — Ausrüstung, Anti-Strahlung oder eine kürzere Route.",src/UI/TutorialPanel.cs
 weather.storm_prep.title,Severe Weather,Schweres Wetter,src/UI/TutorialPanel.cs
-weather.storm_prep.body,"Weather carries the dose with it. A severe day raises exposure and cuts travel; read the forecast before you commit people or supplies.","Das Wetter trägt die Dosis mit sich. Ein schwerer Tag erhöht die Belastung und bremst Reisen; lies die Vorhersage, bevor du Menschen oder Vorräte einsetzt.",src/UI/TutorialPanel.cs
+weather.storm_prep.body,Weather carries the dose with it. A severe day raises exposure and cuts travel; read the forecast before you commit people or supplies.,"Das Wetter trägt die Dosis mit sich. Ein schwerer Tag erhöht die Belastung und bremst Reisen; lies die Vorhersage, bevor du Menschen oder Vorräte einsetzt.",src/UI/TutorialPanel.cs
 combat.basics.title,Combat Basics,Kampfgrundlagen,src/UI/TutorialPanel.cs
 combat.basics.body,"The fight runs in real time. Pick a target, FIRE, and reload when the magazine runs dry; WASD or the left stick repositions the squad. If contact turns bad, RETREAT to the extract zone — you can still be shot while running.","Der Kampf läuft in Echtzeit. Wähle ein Ziel, FEUERE, und lade nach, wenn das Magazin leer ist; WASD oder der linke Stick verlegt den Trupp. Wenn der Kontakt schlecht wird, ZIEH DICH in die Extraktionszone zurück — du kannst auch beim Laufen getroffen werden.",src/UI/TutorialPanel.cs
 medical.acute_radiation.title,Acute Radiation,Akute Strahlenkrankheit,src/UI/TutorialPanel.cs
-medical.acute_radiation.body,"Acute radiation sickness is already burning down this survivor's health. Open MEDICAL and give Rad-Away or iodine now — every hour untreated costs health.","Die akute Strahlenkrankheit zehrt bereits an der Gesundheit dieses Überlebenden. Öffne MEDIZIN und gib sofort Rad-Away oder Jod — jede unbehandelte Stunde kostet Gesundheit.",src/UI/TutorialPanel.cs
+medical.acute_radiation.body,Acute radiation sickness is already burning down this survivor's health. Open MEDICAL and give Rad-Away or iodine now — every hour untreated costs health.,Die akute Strahlenkrankheit zehrt bereits an der Gesundheit dieses Überlebenden. Öffne MEDIZIN und gib sofort Rad-Away oder Jod — jede unbehandelte Stunde kostet Gesundheit.,src/UI/TutorialPanel.cs
 ui.hud.needs.warmth,WARM,WÄRME,src/UI/GameHudOverlay.cs
 ui.status.threshold.header,LETHAL THRESHOLDS,TÖDLICHE SCHWELLEN,src/UI/StatusPanel.cs
 ui.status.threshold.needs,Needs thresholds,Bedarfsschwellen,src/UI/StatusPanel.cs
@@ -1005,3 +1083,102 @@ ui.dashboard.action.replace_core,REPLACE CORE (-1 HEPA),KERN ERSETZEN (-1 HEPA),
 ui.dashboard.action.advance_day,ADVANCE TO NEXT DAY,ZUM NÄCHSTEN TAG,src/UI/GameDashboardPanel.cs
 ui.dashboard.event_default,No fresh signal. The radio is holding a weak carrier from the north line.,Kein frisches Signal. Das Radio hält einen schwachen Träger aus der Nordlinie.,src/UI/GameDashboardPanel.cs
 ui.dashboard.autosave_ready,AUTOSAVE // LEDGER READY,AUTOSPEICHERN // JOURNAL BEREIT,src/UI/GameDashboardPanel.cs
+achievement.first_week_survivor.name,First Week Survivor,Überlebender der ersten Woche,Assets/StreamingAssets/Data/achievements.json
+achievement.first_week_survivor.description,Survive until Day 7 in the wasteland.,Überlebe bis Tag 7 in der Ödnis.,Assets/StreamingAssets/Data/achievements.json
+achievement.two_week_endurance.name,Two-Week Endurance,Zwei-Wochen-Ausdauer,Assets/StreamingAssets/Data/achievements.json
+achievement.two_week_endurance.description,Survive until Day 14 under persistent fallout pressure.,Überlebe bis Tag 14 unter anhaltendem Fallout-Druck.,Assets/StreamingAssets/Data/achievements.json
+achievement.month_of_ash.name,Month of Ash,Monat der Asche,Assets/StreamingAssets/Data/achievements.json
+achievement.month_of_ash.description,Survive 30 days in the holdfast against all odds.,Überlebe 30 Tage in der Festung gegen alle Widerstände.,Assets/StreamingAssets/Data/achievements.json
+achievement.no_casualties.name,No Casualties,Keine Verluste,Assets/StreamingAssets/Data/achievements.json
+achievement.no_casualties.description,Maintain a full living roster with zero casualties.,"Halte die Besatzung vollständig am Leben, ohne einen einzigen Verlust.",Assets/StreamingAssets/Data/achievements.json
+achievement.low_exposure.name,Low Exposure,Geringe Belastung,Assets/StreamingAssets/Data/achievements.json
+achievement.low_exposure.description,Keep average radiation dose across survivors below 20 mSv.,Halte die durchschnittliche Strahlendosis der Überlebenden unter 20 mSv.,Assets/StreamingAssets/Data/achievements.json
+achievement.healthy_cohort.name,Healthy Cohort,Gesunde Gruppe,Assets/StreamingAssets/Data/achievements.json
+achievement.healthy_cohort.description,Maintain average survivor physical health above 80 points.,Halte die durchschnittliche körperliche Gesundheit der Überlebenden über 80 Punkten.,Assets/StreamingAssets/Data/achievements.json
+achievement.perimeter_secured.name,Perimeter Secured,Umkreis gesichert,Assets/StreamingAssets/Data/achievements.json
+achievement.perimeter_secured.description,Successfully repel 3 perimeter security threats or wasteland raids.,Wehre 3 Sicherheitsbedrohungen am Umkreis oder Überfälle aus der Ödnis erfolgreich ab.,Assets/StreamingAssets/Data/achievements.json
+achievement.iron_defense.name,Iron Defense,Eiserne Verteidigung,Assets/StreamingAssets/Data/achievements.json
+achievement.iron_defense.description,Win a tactical encounter with zero survivor trauma or limb injuries.,Gewinne eine taktische Begegnung ohne Trauma oder Gliedmaßenverletzungen bei Überlebenden.,Assets/StreamingAssets/Data/achievements.json
+achievement.harmonious_bunker.name,Harmonious Bunker,Harmonischer Bunker,Assets/StreamingAssets/Data/achievements.json
+achievement.harmonious_bunker.description,Raise and sustain average shelter morale at or above 75 points.,Hebe und halte die durchschnittliche Moral im Unterschlupf bei mindestens 75 Punkten.,Assets/StreamingAssets/Data/achievements.json
+achievement.conflict_arbitrator.name,Conflict Arbitrator,Konfliktschlichter,Assets/StreamingAssets/Data/achievements.json
+achievement.conflict_arbitrator.description,"Mediate and peacefully resolve 3 interpersonal or ideological disputes. It is a record of disputes closed, not of who was right.","Vermittle und löse 3 zwischenmenschliche oder ideologische Streitigkeiten friedlich. Es ist eine Bilanz geschlossener Streitfälle, nicht dessen, wer recht hatte.",Assets/StreamingAssets/Data/achievements.json
+achievement.wasteland_cartographer.name,Wasteland Cartographer,Kartograf der Ödnis,Assets/StreamingAssets/Data/achievements.json
+achievement.wasteland_cartographer.description,Survey and map 5 distinct route corridors across the irradiated wastes.,Vermesse und kartiere 5 verschiedene Routenkorridore durch die verstrahlte Ödnis.,Assets/StreamingAssets/Data/achievements.json
+achievement.deep_recon.name,Deep Reconnaissance,Tiefe Aufklärung,Assets/StreamingAssets/Data/achievements.json
+achievement.deep_recon.description,Successfully complete a long-range expedition beyond 100 kilometers.,Schließe eine Fernerkundung über 100 Kilometer erfolgreich ab.,Assets/StreamingAssets/Data/achievements.json
+achievement.thriving_caravan.name,Honest Commerce,Redlicher Handel,Assets/StreamingAssets/Data/achievements.json
+achievement.thriving_caravan.description,Conduct 5 successful barter trades with regional merchant caravans.,Führe 5 erfolgreiche Tauschgeschäfte mit regionalen Händlerkarawanen durch.,Assets/StreamingAssets/Data/achievements.json
+achievement.resource_resilience.name,Full Granary,Volle Kornkammer,Assets/StreamingAssets/Data/achievements.json
+achievement.resource_resilience.description,Accumulate a reserve of over 100 preserved rations in shelter storage.,Häufe einen Vorrat von über 100 haltbar gemachten Rationen im Unterschlupflager an.,Assets/StreamingAssets/Data/achievements.json
+achievement.beacon_of_hope.name,Beacon of Hope,Leuchtfeuer der Hoffnung,Assets/StreamingAssets/Data/achievements.json
+achievement.beacon_of_hope.description,"Offer sanctuary, medical aid, or mercy in 3 critical moral dilemmas.","Biete Zuflucht, medizinische Hilfe oder Gnade in 3 kritischen moralischen Dilemmata an.",Assets/StreamingAssets/Data/achievements.json
+achievement.dignity_preserved.name,Dignity Preserved,Würde bewahrt,Assets/StreamingAssets/Data/achievements.json
+achievement.dignity_preserved.description,Honor fallen survivors with solemn memorialization and inheritance delivery.,Ehre gefallene Überlebende mit feierlicher Erinnerung und Übergabe des Erbes.,Assets/StreamingAssets/Data/achievements.json
+ui.weather_detail.no_system,No weather system bound.,Kein Wettersystem gebunden.,src/UI/WeatherDetailPanel.cs
+ui.time_capsule.unseal,UNSEAL CAPSULE,KAPSEL ÖFFNEN,src/UI/TimeCapsulePanel.cs
+ui.relations.mediate,Mediate Active Conflict,Aktiven Konflikt schlichten,src/UI/SurvivorRelationsPanel.cs
+ui.kennel.section.roster,ANIMAL ROSTER,TIERBESTAND,src/UI/KennelPanel.cs
+ui.expansions.return,RETURN TO DASHBOARD [ESC],ZURÜCK ZUM DASHBOARD [ESC],src/UI/ExpansionsHubPanel.cs
+ui.cybernetics.section.registry,IMPLANT REGISTRY,IMPLANTATREGISTER,src/UI/CyberneticsPanel.cs
+ui.cryo.no_samples,No samples stabled in this vault.,Keine Proben in diesem Gewölbe eingelagert.,src/UI/CryogenicPermafrostCorePanel.cs
+ui.beliefs.section.doctrines,HELD DOCTRINES,GEHALTE LEHREN,src/UI/BeliefsPanel.cs
+ui.anomaly.section.picture,SURVEY PICTURE,VERMESSUNGSBILD,src/UI/AnomalyWatchPanel.cs
+ui.weather_forecast.title,WEATHER FORECAST,WETTERVORHERSAGE,src/UI/WeatherForecastPanel.cs
+ui.weather_forecast.close,CLOSE [Esc],SCHLIESSEN [Esc],src/UI/WeatherForecastPanel.cs
+ui.vinyl.section.selection,PRE-WAR ALBUM SELECTION,VORKRIEGS-ALBUM-AUSWAHL,src/UI/VinylMoralePanel.cs
+ui.vinyl.select_album,Select Album:,Album auswählen:,src/UI/VinylMoralePanel.cs
+ui.thermal.toggle_boiler,Toggle Boiler On/Off,Kessel ein-/ausschalten,src/UI/ShelterThermalPanel.cs
+ui.thermal.storm_seal,Storm Seal All Rooms,Alle Räume sturmdicht versiegeln,src/UI/ShelterThermalPanel.cs
+ui.sanitation.section.waste,ROOM WASTE LEDGER,RAUM-ABFALLJOURNAL,src/UI/SanitationPanel.cs
+ui.sanitation.section.compost,COMPOST QUEUE,KOMPOST-WARTESCHLANGE,src/UI/SanitationPanel.cs
+ui.radio_intel.no_intercepts,No intercepts detected. Sweep frequency to scan.,Keine Abfänge erkannt. Frequenz zum Scannen durchlaufen.,src/UI/RadioIntelligencePanel.cs
+ui.radio_intel.no_sos,No emergency distress beacons in range.,Keine Notfall-Signalbaken in Reichweite.,src/UI/RadioIntelligencePanel.cs
+ui.game_over.title,THE LEDGER IS CLOSED,DAS JOURNAL IST GESCHLOSSEN,src/UI/GameOverPanel.cs
+ui.game_over.new_game,NEW GAME,NEUES SPIEL,src/UI/GameOverPanel.cs
+ui.game_over.return_menu,RETURN TO MENU,ZURÜCK ZUM MENÜ,src/UI/GameOverPanel.cs
+ui.medical.section.scheduled,SCHEDULED PROCEDURES,GEPLANTE VERFAHREN,src/UI/MedicalPanel.cs
+ui.medical.section.disease_ward,DISEASE WARD — ISOLATION & PROTOCOLS,KRANKENSTATION — ISOLATION & PROTOKOLLE,src/UI/MedicalPanel.cs
+ui.status.close,CLOSE [Esc],SCHLIESSEN [Esc],src/UI/StatusPanel.cs
+ui.hud.menu,MENU [Esc],MENÜ [Esc],src/UI/GameHudOverlay.cs
+ui.research.no_active,No active research in progress. Select an available node below to begin.,Keine aktive Forschung läuft. Unten einen verfügbaren Knoten auswählen.,src/UI/ResearchPanel.cs
+ui.research.atlas,RESEARCH ATLAS,FORSCHUNGSATLAS,src/UI/ResearchPanel.cs
+ui.duty_roster.out_of_scope,Selected row is out of scope.,Ausgewählte Zeile liegt außerhalb des Bereichs.,src/UI/DutyRosterPanel.cs
+ui.duty_roster.label.role,Role,Rolle,src/UI/DutyRosterPanel.cs
+ui.duty_roster.label.survivor,Survivor,Überlebender,src/UI/DutyRosterPanel.cs
+ui.duty_roster.label.status,Status,Zustand,src/UI/DutyRosterPanel.cs
+ui.duty_roster.label.occupation,Occupation,Beruf,src/UI/DutyRosterPanel.cs
+ui.duty_roster.label.last_slept,Last Slept,Zuletzt geschlafen,src/UI/DutyRosterPanel.cs
+ui.duty_roster.label.shift,Shift,Schicht,src/UI/DutyRosterPanel.cs
+ui.duty_roster.section.assignment,ASSIGNMENT,ZUWEISUNG,src/UI/DutyRosterPanel.cs
+ui.foundry.section.forging,FORGING PASS,SCHMIEDEDURCHGANG,src/UI/SilentFoundryPanel.cs
+ui.foundry.begin,BEGIN,BEGINNEN,src/UI/SilentFoundryPanel.cs
+ui.foundry.complete_pass,COMPLETE PASS,DURCHGANG ABSCHLIESSEN,src/UI/SilentFoundryPanel.cs
+ui.foundry.label.sink,Sink,Senke,src/UI/SilentFoundryPanel.cs
+ui.foundry.label.yields,Yields,Ausbeute,src/UI/SilentFoundryPanel.cs
+ui.foundry.label.labor,Labor,Arbeit,src/UI/SilentFoundryPanel.cs
+ui.foundry.label.cast,Cast,Guss,src/UI/SilentFoundryPanel.cs
+ui.foundry.label.skill_target,Skill target,Fertigkeitsziel,src/UI/SilentFoundryPanel.cs
+ui.foundry.section.charge,Charge Manifest,Beschickungsmanifest,src/UI/SilentFoundryPanel.cs
+ui.foundry.section.treaty,Treaty Obligation,Vertragsverpflichtung,src/UI/SilentFoundryPanel.cs
+ui.foundry.section.provenance,Provenance,Herkunft,src/UI/SilentFoundryPanel.cs
+ui.skill_matrix.detail.actor,ACTOR DETAIL,AKTEURSDETAIL,src/UI/SkillMatrixPanel.cs
+ui.skill_matrix.out_of_scope,Selected row is out of scope — pick another.,Ausgewählte Zeile liegt außerhalb des Bereichs — eine andere wählen.,src/UI/SkillMatrixPanel.cs
+ui.skill_matrix.label.tier,Tier,Stufe,src/UI/SkillMatrixPanel.cs
+ui.skill_matrix.label.cumulative_xp,Cumulative XP,Kumulierte EP,src/UI/SkillMatrixPanel.cs
+ui.skill_matrix.label.last_used,Last Used Day,Letzter Nutzungstag,src/UI/SkillMatrixPanel.cs
+ui.skill_matrix.label.days_since,Days Since Practice,Tage seit Übung,src/UI/SkillMatrixPanel.cs
+ui.skill_matrix.label.active_in,Active In Discipline,Aktiv in Disziplin,src/UI/SkillMatrixPanel.cs
+ui.skill_matrix.label.expert_track,Expert Track Earned,Expertenpfad erreicht,src/UI/SkillMatrixPanel.cs
+ui.triangulation.signal_dash,Signal: —,Signalstärke: —,src/UI/TriangulationPanel.cs
+ui.triangulation.bearing,Bearing:,Peilung:,src/UI/TriangulationPanel.cs
+ui.triangulation.strength,Strength:,Stärke:,src/UI/TriangulationPanel.cs
+ui.triangulation.noise,Noise:,Rauschen:,src/UI/TriangulationPanel.cs
+ui.triangulation.record,Record Observation,Beobachtung erfassen,src/UI/TriangulationPanel.cs
+ui.triangulation.triangulate,Triangulate,Triangulieren,src/UI/TriangulationPanel.cs
+ui.triangulation.close,Close,Schließen,src/UI/TriangulationPanel.cs
+ui.difficulty.section.presets,AUTHORED PRESETS,VORGEGEBENE PRESETS,src/UI/DifficultySettingsPanel.cs
+ui.difficulty.section.scalars,CUSTOM SCALARS,BENUTZERDEFINIERTE SKALARE,src/UI/DifficultySettingsPanel.cs
+ui.difficulty.band_note,Custom lanes clamp to the authored 0.25–2.50 band. Any edit switches the campaign to CUSTOM.,"Benutzerdefinierte Spuren werden auf den vorgegebenen Bereich 0,25–2,50 begrenzt. Jede Änderung schaltet die Kampagne auf BENUTZERDEFINIERT.",src/UI/DifficultySettingsPanel.cs
+ui.difficulty.save,SAVE SETTINGS,EINSTELLUNGEN SPEICHERN,src/UI/DifficultySettingsPanel.cs
+ui.difficulty.lock,LOCK DIFFICULTY (IRONMAN),SCHWIERIGKEIT SPERREN (IRONMAN),src/UI/DifficultySettingsPanel.cs

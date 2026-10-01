@@ -1,6 +1,6 @@
 # CI Gate Inventory (Plan VIII · Task 24.1)
 
-Generated from `docs/ci/CI_GATE_MANIFEST.json` — 72 gates, 68 fast. Regenerate with `python3 scripts/ci/run-gates.py --write-inventory docs/ci/GATE_INVENTORY.md`. The manifest is the single authority: add or change gates THERE, never in prose only.
+Generated from `docs/ci/CI_GATE_MANIFEST.json` — 73 gates, 69 fast. Regenerate with `python3 scripts/ci/run-gates.py --write-inventory docs/ci/GATE_INVENTORY.md`. The manifest is the single authority: add or change gates THERE, never in prose only.
 
 Runtimes below are budgeted timeouts (enforced ceiling), not measured durations; measured durations land in every `--report-json` run (Task 24.10 budgets).
 
@@ -8,6 +8,7 @@ Runtimes below are budgeted timeouts (enforced ceiling), not measured durations;
 |---|---|---|---|---|---|
 | fast | `whitespace_hygiene` | Code & Repo Hygiene | 30s | yes | — |
 | fast | `json_schema_policy` | Code & Repo Hygiene | 30s | yes | — |
+| fast | `pot_template_drift` | Code & Repo Hygiene | 30s | yes | — |
 | fast | `build_core_tests` | Build & Tests | 120s | yes | — |
 | full | `test_core_suite` | Build & Tests | 120s | yes | — |
 | fast | `build_godot_host` | Build & Tests | 180s | yes | — |

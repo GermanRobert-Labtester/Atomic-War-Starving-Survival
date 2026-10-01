@@ -145,7 +145,7 @@ namespace AtomicWar.GodotApp.UI
             var intercepts = state.intercepts;
             if (intercepts.Count == 0)
             {
-                _interceptListContainer.AddChild(AshfallUiHelpers.MakeMetadata("No intercepts detected. Sweep frequency to scan."));
+                _interceptListContainer.AddChild(AshfallUiHelpers.MakeMetadata(AshfallUiText.Tr("ui.radio_intel.no_intercepts", "No intercepts detected. Sweep frequency to scan.")));
             }
             else
             {
@@ -208,7 +208,7 @@ namespace AtomicWar.GodotApp.UI
             var activeSos = intercepts.Where(i => !i.IsExpired && i.ExpiresOnDay.HasValue).ToList();
             if (activeSos.Count == 0)
             {
-                _sosContainer.AddChild(AshfallUiHelpers.MakeMetadata("No emergency distress beacons in range."));
+                _sosContainer.AddChild(AshfallUiHelpers.MakeMetadata(AshfallUiText.Tr("ui.radio_intel.no_sos", "No emergency distress beacons in range.")));
             }
             else
             {

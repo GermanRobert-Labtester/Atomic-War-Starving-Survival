@@ -112,7 +112,7 @@ namespace AtomicWar.GodotApp.UI
 
             var buttonRow = AshfallUiHelpers.MakeActionBar(separation: 10);
 
-            _toggleBoilerBtn = AshfallUiHelpers.MakeButton("Toggle Boiler On/Off", () =>
+            _toggleBoilerBtn = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.thermal.toggle_boiler", "Toggle Boiler On/Off"), () =>
             {
                 if (_host != null)
                 {
@@ -127,7 +127,7 @@ namespace AtomicWar.GodotApp.UI
             // insulation on every room, paying the authored cost from the
             // canonical inventory. The thermal system + its save store own the
             // effect; this button only issues the command.
-            var stormSealBtn = AshfallUiHelpers.MakeButton("Storm Seal All Rooms", () =>
+            var stormSealBtn = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.thermal.storm_seal", "Storm Seal All Rooms"), () =>
             {
                 if (_host == null) return;
                 var storm = _stormWatch?.Invoke() ?? default;

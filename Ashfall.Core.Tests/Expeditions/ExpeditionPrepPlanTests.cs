@@ -454,6 +454,13 @@ namespace Ashfall.Core.Tests.Expeditions
         }
 
         [Fact]
+        public void DescribeStateRisk_QuietDanger_ReturnsLowRiskNote()
+        {
+            var state = new ExpeditionState { dangerLevel = 0, encounterChancePerTick = 0.05f };
+            Assert.Equal(ExpeditionPrepPlanner.LowRiskNote, ExpeditionPrepPlanner.DescribeStateRisk(state));
+        }
+
+        [Fact]
         public void HealthHistory_LatestEventOfTypePrefix()
         {
             var system = new HealthHistorySystem();

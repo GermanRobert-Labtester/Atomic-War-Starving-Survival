@@ -1190,6 +1190,8 @@ namespace Ashfall.Core.Tests.UI
         {
             // Task 8 — legitimate shared terms exist, but the count must not grow
             // unnoticed (a copied English row hiding a missing translation).
+            // Raised 20 → 21 (thirteenth wave): `ui.triangulation.signal_dash`
+            // ("Signal: —") is identical by design — Signal is the German term.
             int identical = 0;
             var lines = Read("assets/l10n/strings.csv").Split('\n');
             for (int i = 1; i < lines.Length; i++)
@@ -1199,7 +1201,7 @@ namespace Ashfall.Core.Tests.UI
                 var cols = SplitCsvLine(line);
                 if (cols.Length >= 3 && cols[1] == cols[2]) identical++;
             }
-            Assert.True(identical <= 20, $"identical en/de rows={identical} (pin 20)");
+            Assert.True(identical <= 21, $"identical en/de rows={identical} (pin 21)");
         }
 
         [Fact]
@@ -1279,7 +1281,7 @@ namespace Ashfall.Core.Tests.UI
         public void StringsCsv_LongLines_AreAllowlisted()
         {
             // Task 15 — long prose rows are allowed only for known body suffixes.
-            string[] allowed = { ".body", ".lesson", ".summary", ".intro", ".desc", ".prose", ".text", ".brief" };
+            string[] allowed = { ".body", ".lesson", ".summary", ".intro", ".desc", ".prose", ".text", ".brief", ".line", ".estimate_line" };
             var offenders = new System.Collections.Generic.List<string>();
             var lines = Read("assets/l10n/strings.csv").Split('\n');
             for (int i = 1; i < lines.Length; i++)
@@ -3315,6 +3317,42 @@ namespace Ashfall.Core.Tests.UI
             // PASS always means failures==0.
             string host = Read("src/Host/HostCli.Command.RunUiLayoutSelfTest.cs");
             Assert.Contains("failures == 0 ? \"PASS\" : \"FAIL\"", host, StringComparison.Ordinal);
+        }
+
+        // ── Twelfth-wave loop gates ───────────────────────────────────────
+
+        [Fact]
+        public void DashboardAndShelterHud_HaveNoRawChromeLiteral()
+        {
+            // Loop-1 hardening — the dashboard and shelter HUD resolve chrome from
+            // the catalog; the ASHFALL brand wordmark is a proper noun and exempt.
+            var pattern = new System.Text.RegularExpressions.Regex(
+                "(MakeMetadata|MakeDimLine|MakeSmall|MakeBody|MakeSectionHeader|MakeSubsectionHeader|MakeTitle|MakeButton|MakeDataRow|AddNavButton|MakeActionButton)\\(\"(?!ASHFALL\")[A-Za-z]");
+            foreach (string file in new[] { "src/UI/GameDashboardPanel.cs", "src/UI/ShelterHudPanel.cs" })
+            {
+                Assert.DoesNotMatch(pattern, Read(file));
+            }
+        }
+
+        [Fact]
+        public void RegisteredPanels_HaveNoRawChromeLiteral()
+        {
+            // Hardening (thirteenth wave) — every panel registered with the l10n
+            // drift gate is fully localized; only the ASHFALL brand wordmark is
+            // exempt. A newly registered panel with a raw chrome string fails.
+            string gate = Read("scripts/ci/l10n_drift_gate.py");
+            var pattern = new System.Text.RegularExpressions.Regex(
+                "(MakeMetadata|MakeDimLine|MakeSmall|MakeBody|MakeSectionHeader|MakeSubsectionHeader|MakeTitle|MakeButton|MakeDataRow|AddNavButton|MakeActionButton)\\(\"(?!ASHFALL\")[A-Za-z]");
+            var offenders = new System.Collections.Generic.List<string>();
+            foreach (System.Text.RegularExpressions.Match m in
+                System.Text.RegularExpressions.Regex.Matches(
+                    gate, "ROOT\\s*/\\s*\\\"src\\\"\\s*/\\s*\\\"UI\\\"\\s*/\\s*\\\"([A-Za-z0-9_]+\\.cs)\\\""))
+            {
+                string name = m.Groups[1].Value;
+                foreach (System.Text.RegularExpressions.Match hit in pattern.Matches(Read("src/UI/" + name)))
+                    offenders.Add(name + ":" + hit.Value);
+            }
+            Assert.True(offenders.Count == 0, "raw chrome in registered panels: " + string.Join(", ", offenders));
         }
     }
 }

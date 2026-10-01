@@ -72,12 +72,12 @@ namespace AtomicWar.GodotApp.UI
 
             _contentStack.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            var selectHeader = AshfallUiHelpers.MakeSectionHeader("PRE-WAR ALBUM SELECTION");
+            var selectHeader = AshfallUiHelpers.MakeSectionHeader(AshfallUiText.Tr("ui.vinyl.section.selection", "PRE-WAR ALBUM SELECTION"));
             _contentStack.AddChild(selectHeader);
 
             var selectRow = new HBoxContainer();
             selectRow.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
-            var selLabel = AshfallUiHelpers.MakeBody("Select Album:");
+            var selLabel = AshfallUiHelpers.MakeBody(AshfallUiText.Tr("ui.vinyl.select_album", "Select Album:"));
             selectRow.AddChild(selLabel);
 
             _recordSelector = new OptionButton { CustomMinimumSize = new Vector2(350, 36) };

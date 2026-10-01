@@ -152,7 +152,7 @@ public partial class DutyRosterPanel : Control, IBindablePanel
         _detailBox.SizeFlagsVertical = SizeFlags.ExpandFill;
         body.AddChild(_detailBox);
 
-        _detailTitle = AshfallUiHelpers.MakeSectionHeader("SHIFT DETAIL");
+        _detailTitle = AshfallUiHelpers.MakeSectionHeader(T("ui.duty_roster.shift_detail", "SHIFT DETAIL"));
         _detailTitle.HorizontalAlignment = HorizontalAlignment.Left;
         _detailBox.AddChild(_detailTitle);
         _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
@@ -417,26 +417,26 @@ public partial class DutyRosterPanel : Control, IBindablePanel
         if (string.IsNullOrEmpty(roleId) && string.IsNullOrEmpty(survivorId))
         {
             _detailTitle.Text = T("ui.duty_roster.shift_detail", "SHIFT DETAIL");
-            _detailContent.AddChild(AshfallUiHelpers.MakeMetadata("Selected row is out of scope.", autowrap: true));
+            _detailContent.AddChild(AshfallUiHelpers.MakeMetadata(T("ui.duty_roster.out_of_scope", "Selected row is out of scope."), autowrap: true));
             return;
         }
 
         var row = FindRow(survivorId);
         _detailTitle.Text = string.IsNullOrEmpty(roleId) ? "[UNASSIGNED] DETAIL" : $"{RoleTitle(roleId)} DETAIL";
-        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow("Role", string.IsNullOrEmpty(roleId) ? "[UNASSIGNED]" : RoleTitle(roleId),
+        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow(T("ui.duty_roster.label.role", "Role"), string.IsNullOrEmpty(roleId) ? "[UNASSIGNED]" : RoleTitle(roleId),
             AshfallUiHelpers.ToColor(DesignTheme.Warm)));
-        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow("Survivor", row?.displayName ?? FormatSurvivorName(survivorId),
+        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow(T("ui.duty_roster.label.survivor", "Survivor"), row?.displayName ?? FormatSurvivorName(survivorId),
             AshfallUiHelpers.ToColor(DesignTheme.Pale)));
-        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow("Status", row?.status ?? "—",
+        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow(T("ui.duty_roster.label.status", "Status"), row?.status ?? "—",
             row == null ? AshfallUiHelpers.ToColor(DesignTheme.Dim) :
             StatusState(row.status) == AshfallDataGrid.CellState.Critical ? AshfallUiHelpers.ToColor(DesignTheme.Critical) :
             StatusState(row.status) == AshfallDataGrid.CellState.Warning  ? AshfallUiHelpers.ToColor(DesignTheme.Entropy) :
             AshfallUiHelpers.ToColor(DesignTheme.Dim)));
-        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow("Occupation", row?.occupationObserved ?? "—",
+        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow(T("ui.duty_roster.label.occupation", "Occupation"), row?.occupationObserved ?? "—",
             AshfallUiHelpers.ToColor(DesignTheme.Muted)));
-        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow("Last Slept", (row?.lastSleptDay ?? -1) < 0 ? "—" : $"D{row!.lastSleptDay}",
+        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow(T("ui.duty_roster.label.last_slept", "Last Slept"), (row?.lastSleptDay ?? -1) < 0 ? "—" : $"D{row!.lastSleptDay}",
             AshfallUiHelpers.ToColor(DesignTheme.Dim)));
-        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow("Shift", string.IsNullOrEmpty(roleId) ? "—" : ResolveShiftText(roleId),
+        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow(T("ui.duty_roster.label.shift", "Shift"), string.IsNullOrEmpty(roleId) ? "—" : ResolveShiftText(roleId),
             AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
 
         if (!string.IsNullOrEmpty(roleId))
@@ -506,7 +506,7 @@ public partial class DutyRosterPanel : Control, IBindablePanel
     private void RenderAssignSection(string roleId, string currentSurvivorId)
     {
         _detailContent.AddChild(AshfallUiHelpers.MakeSeparator());
-        _detailContent.AddChild(AshfallUiHelpers.MakeSectionHeader("ASSIGNMENT"));
+        _detailContent.AddChild(AshfallUiHelpers.MakeSectionHeader(T("ui.duty_roster.section.assignment", "ASSIGNMENT")));
 
         // Pending confirmation dialog takes precedence until resolved.
         if (_pendingAssignRole == roleId && !string.IsNullOrEmpty(_pendingAssignSurvivorId))

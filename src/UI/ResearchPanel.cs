@@ -146,7 +146,7 @@ namespace AtomicWar.GodotApp.UI
             }
             else
             {
-                _activeContainer.AddChild(MakeDimLine("No active research in progress. Select an available node below to begin."));
+                _activeContainer.AddChild(MakeDimLine(T("ui.research.no_active", "No active research in progress. Select an available node below to begin.")));
             }
 
             // ── 2. AVAILABLE RESEARCH (Prerequisites met, unstarted) ──
@@ -412,7 +412,7 @@ namespace AtomicWar.GodotApp.UI
             var bottomHBox = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingMd);
             bottomHBox.SizeFlagsHorizontal = SizeFlags.ExpandFill;
 
-            var btnAtlas = AshfallUiHelpers.MakeButton("RESEARCH ATLAS", () => OnOpenResearchAtlasRequested?.Invoke());
+            var btnAtlas = AshfallUiHelpers.MakeButton(T("ui.research.atlas", "RESEARCH ATLAS"), () => OnOpenResearchAtlasRequested?.Invoke());
             btnAtlas.CustomMinimumSize = new Vector2(200, 40);
             btnAtlas.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             btnAtlas.TooltipText = T("ui.research.atlas_tooltip", "Research technology atlas — every project, tier, and unlock.");

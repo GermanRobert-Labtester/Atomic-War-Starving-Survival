@@ -1,5 +1,66 @@
 # ASHFALL Worktree Ownership
 
+## claim-expedition-followup-wave8-2026-10-02 — COMPLETE / FULLY INTEGRATED
+
+User-directed continuation of the released expedition package ("continue with
+these last remaining and then we are done!"). Plan:
+`.ai/plans/integrated/playability/INTEGRATED_expedition-followup-wave8-2026-10-02.md`
+(STATUS: FULLY INTEGRATED). Exact owned paths: `src/UI/ExpeditionPanel.cs`,
+`src/UI/ExpeditionRadarPanel.cs`, `assets/l10n/strings.csv` (expedition rows
+only), this claim, `.ai/state.md`, and `INTEGRATION_PLANS.md`. Localized the
+remaining player-facing strings (radar offline/select hint, encounter risk tags,
+choice preview, unavailable reasons, refusal prefixes, vehicle/weapon selectors,
+faction/patrol/unnamed fallbacks, pending day, patrol recognition), reconciled
+concurrent duplicate keys, and removed redundant `est.*` keys after a concurrent
+wave localized the estimate line. Evidence: host build 0/0;
+`ExpeditionLocaleKeysTests` 5/5; `StringsCsvLocaleGateTests` 4/4;
+`LocalizationRatchetTests` 2/2; `ExpeditionPrepPlanTests` 54/54; bounded
+`--expedition-panel-uitest` PASS; 0 duplicate keys; 0 orphans. No new save
+section, no mutable state, no gameplay authority. **COMPLETE / FULLY INTEGRATED
+2026-10-02; paths released.** No full suite; no commit.
+
+## claim-l10n-drift-dynamic-families-l01-l04-2026-10-02 — COMPLETE / FULLY INTEGRATED
+
+User-directed ("... | L01 | Extend l10n drift gate to all dynamic key families | L02 ...
+| L03 ... | L04 ..."). Plan:
+`.ai/plans/integrated/i18n/INTEGRATED_l10n-drift-dynamic-families-l01-l04-2026-10-02.md`
+(STATUS: FULLY INTEGRATED ×3; approved by user).
+**Delivered by this claim (L01 + L03):** `scripts/ci/l10n_drift_gate.py` (declarative
+`DYNAMIC_FAMILIES`: onboarding_stage, onboarding_hint, achievement, micro_discovery),
+`assets/l10n/strings.csv` (32 `achievement.*` rows + 4 first-hour German quality fixes),
+`Ashfall.Core.Tests/Tooling/L10nDynamicFamilyGateTests.cs` (new), `.ai/state.md`, this plan.
+**Delivered concurrently by another builder (L02 + L04) — verified, not overwritten:**
+`scripts/ci/extract_l10n_inventory.py` + `artifacts/l10n-inventory.json` (Make* literal
+inventory), `scripts/ci/generate_pot_template.py` + `assets/l10n/template.pot` +
+`docs/l10n/TRANSLATOR_HANDOFF.md` (POT regeneration + handoff). That session also registered
+more panels in `scripts/ci/l10n_drift_gate.py` `LOCALIZED_SURFACES`; both edits coexist and
+the gate passes. Not claimed: `StatusPanelThresholdTests.cs`, other sessions' rows.
+**Final evidence:** l10n drift gate PASS (1183 keys, 212 dynamic-family keys, 658
+localized-surface references; German parity); POT `--check` PASS (1183 entries);
+inventory 2348 records / 1501 literals / 847 lookups; JSON schema policy PASS
+(712 files); focused localization suites green. **COMPLETE / FULLY INTEGRATED
+2026-10-02; paths released.**
+
+## claim-survival-legibility-twelfth-wave-2026-10-02 — COMPLETE / FULLY INTEGRATED
+
+Plan: `.ai/plans/integrated/playability/INTEGRATED_survival-legibility-twelfth-wave-2026-10-02.md`
+(STATUS: FULLY INTEGRATED ×3; approved by user). Exact owned paths: `src/UI/MedicalWardPanel.cs`,
+`src/UI/ShelterHud.cs`, `src/UI/GameDashboardPanel.cs`, expedition localization rows in
+`assets/l10n/strings.csv`, `scripts/ci/l10n_drift_gate.py`, `scripts/ci/README.md`,
+`scripts/ci/ui-accessibility-selftest.py`, `Ashfall.Core.Tests/UI/StatusPanelThresholdTests.cs`,
+`.ai/state.md`, this file, and `INTEGRATION_PLANS.md`. Final acceptance is captured in the
+archived plan and current state record. **COMPLETE / FULLY INTEGRATED 2026-10-02; paths released.**
+
+## claim-survival-legibility-thirteenth-wave-2026-10-02 — COMPLETE / FULLY INTEGRATED
+
+Plan: `.ai/plans/integrated/playability/INTEGRATED_survival-legibility-thirteenth-wave-2026-10-02.md`
+(STATUS: FULLY INTEGRATED ×3; approved by user). Exact owned paths: the 21 small/partial panels
+named in the plan under `src/UI/`, their UI localization rows in `assets/l10n/strings.csv`,
+`scripts/ci/l10n_drift_gate.py`, `Ashfall.Core.Tests/UI/StatusPanelThresholdTests.cs`,
+`Ashfall.Core.Tests/Localization/ExpeditionLocaleKeysTests.cs`, `.ai/state.md`, this file, and
+`INTEGRATION_PLANS.md`. Final acceptance is captured in the archived plan and current state
+record. **COMPLETE / FULLY INTEGRATED 2026-10-02; paths released.**
+
 ## claim-catalog-health-gates-i01-i15-2026-10-02 — COMPLETE / FULLY INTEGRATED
 
 Final user-directed continuation of the D→I catalog-hygiene session ("Continue

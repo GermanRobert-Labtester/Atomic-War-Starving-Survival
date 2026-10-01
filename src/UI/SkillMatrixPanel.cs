@@ -120,7 +120,7 @@ public partial class SkillMatrixPanel : Control, IBindablePanel
         _detailBox.SizeFlagsVertical = SizeFlags.ExpandFill;
         body.AddChild(_detailBox);
 
-        _detailTitle = AshfallUiHelpers.MakeSectionHeader("ACTOR DETAIL");
+        _detailTitle = AshfallUiHelpers.MakeSectionHeader(T("ui.skill_matrix.detail.actor", "ACTOR DETAIL"));
         _detailTitle.HorizontalAlignment = HorizontalAlignment.Left;
         _detailBox.AddChild(_detailTitle);
         _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
@@ -389,7 +389,7 @@ public partial class SkillMatrixPanel : Control, IBindablePanel
         if (string.IsNullOrEmpty(actorId))
         {
             _detailTitle.Text = T("ui.skill_matrix.actor_detail", "ACTOR DETAIL");
-            _detailBox.AddChild(AshfallUiHelpers.MakeMetadata("Selected row is out of scope — pick another."));
+            _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(T("ui.skill_matrix.out_of_scope", "Selected row is out of scope — pick another.")));
             return;
         }
 
@@ -399,22 +399,22 @@ public partial class SkillMatrixPanel : Control, IBindablePanel
         int daysSince = lastUsed == 0 ? -1 : int.MaxValue - lastUsed;
         // Real current-day is not directly available from the engine; we report
         // the stored lastUsed day and let the host adapter enrich the panel later.
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Tier", TierForXp(xp),
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(T("ui.skill_matrix.label.tier", "Tier"), TierForXp(xp),
             AshfallUiHelpers.ToColor(TierForXp(xp) == "Expert" ? DesignTheme.Lethe : DesignTheme.Pale)));
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Cumulative XP", $"{xp:0.0}",
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(T("ui.skill_matrix.label.cumulative_xp", "Cumulative XP"), $"{xp:0.0}",
             AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Last Used Day", lastUsed == 0 ? "—" : $"D{lastUsed}",
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(T("ui.skill_matrix.label.last_used", "Last Used Day"), lastUsed == 0 ? "—" : $"D{lastUsed}",
             AshfallUiHelpers.ToColor(DesignTheme.Dim)));
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Days Since Practice",
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(T("ui.skill_matrix.label.days_since", "Days Since Practice"),
             lastUsed == 0 ? "—" : $"{daysSince}d",
             lastUsed == 0 ? AshfallUiHelpers.ToColor(DesignTheme.Muted) :
             daysSince >= SkillProgressionSystem.DormantAfterUnusedDays
                 ? AshfallUiHelpers.ToColor(DesignTheme.Critical)
                 : AshfallUiHelpers.ToColor(DesignTheme.Dim)));
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Active In Discipline",
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(T("ui.skill_matrix.label.active_in", "Active In Discipline"),
             $"{CountActiveInDiscipline(actorId, disciplineId)}",
             AshfallUiHelpers.ToColor(DesignTheme.Dim)));
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Expert Track Earned",
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(T("ui.skill_matrix.label.expert_track", "Expert Track Earned"),
             _skills.HasEarnedExpertSkill(actorId) ? "YES" : "no",
             _skills.HasEarnedExpertSkill(actorId) ? AshfallUiHelpers.ToColor(DesignTheme.Lethe) : AshfallUiHelpers.ToColor(DesignTheme.Muted)));
     }

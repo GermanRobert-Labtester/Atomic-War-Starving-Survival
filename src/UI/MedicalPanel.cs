@@ -419,7 +419,7 @@ namespace AtomicWar.GodotApp.UI
             if (pipeline == null) return;
 
             _treatmentList.AddChild(AshfallUiHelpers.MakeSeparator());
-            _treatmentList.AddChild(AshfallUiHelpers.MakeSubsectionHeader("SCHEDULED PROCEDURES"));
+            _treatmentList.AddChild(AshfallUiHelpers.MakeSubsectionHeader(Tr("ui.medical.section.scheduled", "SCHEDULED PROCEDURES")));
 
             var active = pipeline.Schedule.Active;
             if (active.Count == 0)
@@ -580,7 +580,7 @@ namespace AtomicWar.GodotApp.UI
             }
 
             _treatmentList.AddChild(AshfallUiHelpers.MakeSeparator());
-            _treatmentList.AddChild(AshfallUiHelpers.MakeSubsectionHeader("DISEASE WARD — ISOLATION & PROTOCOLS"));
+            _treatmentList.AddChild(AshfallUiHelpers.MakeSubsectionHeader(Tr("ui.medical.section.disease_ward", "DISEASE WARD — ISOLATION & PROTOCOLS")));
 
             var projector = new PatientRecordProjector(pipeline);
             bool anyRow = false;

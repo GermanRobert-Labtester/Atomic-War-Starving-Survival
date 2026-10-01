@@ -1,5 +1,107 @@
 # Current Task State
 
+## Expedition follow-up wave 8 — remaining player-facing l10n — FULLY INTEGRATED (2026-10-02)
+
+User-directed ("continue with these last remaining and then we are done!"). Plan
+archived `.ai/plans/integrated/playability/INTEGRATED_expedition-followup-wave8-2026-10-02.md`.
+Localized the remaining expedition strings: radar offline metadata + select hint,
+encounter risk tags, choice preview, `FormatUnavailableReason`, refusal prefixes,
+`DISPATCH REFUSED`, vehicle/weapon selectors + entry/BROKEN, faction/patrol/unnamed
+fallbacks, pending `DAY {0}`, and patrol `No prior contact`. Reconciled concurrent
+duplicate keys (`dispatch_refused`, `refusal.*`, `unnamed`) by removing my copies,
+and removed 3 redundant `est.*` keys after a concurrent wave localized the estimate
+line. **3 loops:** duplicate-key reconciliation; orphan/source-gate audit (0
+orphans, 0 source→catalog misses); final verification. **Evidence:** host build 0/0;
+`ExpeditionLocaleKeysTests` 5/5; `StringsCsvLocaleGateTests` 4/4;
+`LocalizationRatchetTests` 2/2; `ExpeditionPrepPlanTests` 54/54; bounded
+`--expedition-panel-uitest` PASS; scoped `git diff --check` clean; expedition key
+count 205 (floor 127). `.uid` sidecars are gitignored/untracked, so no artifact was
+needed. No full suite; no commit.
+
+## Survival legibility thirteenth wave — remaining small panels + registered-panel chrome ratchet — FULLY INTEGRATED (2026-10-02)
+
+User-directed ("continue with the remaining and then were done!"). Plan archived
+`.ai/plans/integrated/playability/INTEGRATED_survival-legibility-thirteenth-wave-2026-10-02.md`.
+**Landed:** localized the 15 smallest remaining panels (WeatherDetail, TimeCapsule,
+SurvivorRelations, Kennel, ExpansionsHub, Cybernetics, CryogenicPermafrostCore, Beliefs,
+AnomalyWatch, WeatherForecast, VinylMorale, ShelterThermal, Sanitation, RadioIntelligence,
+GameOver) and 6 earlier-registered partials (Research, DutyRoster, SilentFoundry,
+SkillMatrix, Triangulation, DifficultySettings). **Hardening:** zero-tolerance
+`RegisteredPanels_HaveNoRawChromeLiteral` gate; registered `ExpeditionCampPanel`; long-line
+allowlist `.line`/`.estimate_line`; identical pin 20→21 (documented). **Concurrent-churn
+repairs:** `ExpeditionCampPanel.Tr` routed through `AshfallUiText`; unquoted commas in
+`radar.offline`/`estimate_line`; separator moved to code in `estimate_*`/`preview.*` rows;
+duplicate keys resolved. **Evidence:** test build 0/0; host build 0/0;
+`StatusPanelThresholdTests` 211/211; `NeedsDayDeltaTests` 29/29; `StringsCsvLocaleGateTests`
+4/4; `LocalizationRatchetTests` 2/2; `ExpeditionLocaleKeysTests` 5/5; `l10n_drift_gate` PASS
+(1183 keys, 658 localized-surface references, German parity); `ui-layout-check.sh` PASS /
+Failures: 0; CSV integrity clean (1183 rows, 20 identical ≤21, 0 edge-ws);
+`git diff --check` clean. No commit; full suite not run. **Remaining:** a broad ~150-file
+sweep (larger program, not small tasks); the per-panel chrome gate is the ratchet.
+
+## L01–L04 localization hardening — L01+L03 by this claim, L02+L04 concurrent builder (2026-10-02)
+
+User-directed ("... | L01 Extend l10n drift gate to all dynamic key families | L02 Extract
+remaining hardcoded UI literals | L03 German completeness/quality pass on first-hour strings
+| L04 Regenerate template.pot + translator handoff doc"). Plan archived:
+`.ai/plans/integrated/i18n/INTEGRATED_l10n-drift-dynamic-families-l01-l04-2026-10-02.md`.
+**L01 (this claim):** `scripts/ci/l10n_drift_gate.py` now derives **all** dynamically
+constructed key families from their authoritative catalogs via a declarative
+`DYNAMIC_FAMILIES` registry — `onboarding_stage` (OnboardingJourney.cs), `onboarding_hint`
+(literals), `achievement` (achievements.json, **was 0 rows**), `micro_discovery`
+(micro_locations.json) → 212 dynamic keys enforced. Added the 32 missing
+`achievement.{id}.name/description` rows (en from catalog, German translated). New mirror
+test `Ashfall.Core.Tests/Tooling/L10nDynamicFamilyGateTests.cs`. **L03 (this claim):** the 92
+first-hour keys are already 100% German-complete; fixed 4 real quality defects —
+`onboarding.hint.inventory` (broken relative clause), `.power` (sentence fragment), `.duty`
+(verb inconsistent with `.objective`), `.inspect` (awkward "das Licht nimmt").
+**L02 + L04 were delivered concurrently by another builder** (`extract_l10n_inventory.py`
+Make* inventory + regenerated `artifacts/l10n-inventory.json`; `generate_pot_template.py` +
+`template.pot` + `docs/l10n/TRANSLATOR_HANDOFF.md`) — verified and left untouched (I did not
+duplicate or overwrite). That session also registered more `LOCALIZED_SURFACES` panels in the
+same gate file; both edits coexist. **Evidence:** `l10n_drift_gate` PASS (1064 keys, 212
+dynamic-family keys, German parity); `generate_pot_template.py --check` PASS (1064 entries);
+inventory tool 2289 records / 1545 literals (542 property + 1005 Make*); 6 pinned suites green
+(L10nDynamicFamilyGate 4/4, StringsCsvLocaleGate 4/4, StringFreezePolicy 5/5,
+MicroLocationLocalization 4/4, LocalizationPilot 4/4, LocalizationRatchet 2/2); CSV 1064
+rows / 0 dupes / 0 empty de. No full suite; no commit.
+**Six follow-up sweep loops (2026-10-02):** (1) dynamic-family `en` parity vs catalogs —
+0 achievement/micro drift; placeholder parity across all rows — 0 mismatches. (2) discovery
+choice integrity — 79/79 catalog choices present, 0 orphans, 0 en-drift. (3) no additional
+variable-built localization key families beyond the registered four; CSV edge whitespace 0;
+first-hour literal `Text=` 0. (4) gate registered panels 41 / 0 dangling; POT integrity fine
+and byte-deterministic across two runs (the one transient en-mismatch at
+`ui.expedition.estimate_line` was a read-before-regenerate race under concurrent CSV writers,
+cleared by regeneration). (5) **fix:** added a uniform non-empty guard to
+`l10n_drift_gate.py` — a `DYNAMIC_FAMILIES` derivation that enumerates zero keys now fails
+the gate instead of silently dropping that family's coverage; pinned in
+`L10nDynamicFamilyGateTests`. (6) README documents the gate; `whitespace_hygiene`,
+`json_schema_policy`, `pot_template_drift` PASS; mirror test 4/4. Final: l10n gate PASS
+(1183 keys, 212 dynamic-family keys), POT `--check` PASS.
+
+## Survival legibility twelfth wave (15 tasks × 3 substeps) + 3 find→repair→harden loops — FULLY INTEGRATED (2026-10-02)
+
+User-directed ("Continue with these small tasks completely finish all of them … repeat for
+3 loops and then suggest list only remaining if any very small tasks"). Plan archived
+`.ai/plans/integrated/playability/INTEGRATED_survival-legibility-twelfth-wave-2026-10-02.md`.
+**Landed:** (1) MedicalWardPanel data-row labels (9 keys); (2) bed/vacant prose verified;
+(3–4) ShelterHud headers/buttons + filter buttons (10); (5–6) GameDashboard headers/brand +
+nav/action buttons (27); (7) wired the concurrent `ui.expedition.*` keys with the separator
+in code; (8) `ui.expedition.world_line` verified; (9–15) ward band gate, curated dead-key
+gate extended to `ui.expedition.`, registered-panel existence gate, registered-surface count
+floor, README German-duplicate note, `--print-assembly-mtime`, artifact status/failure
+consistency. **3 loops:** (1) 7 raw Dashboard/ShelterHud chrome strings → keys;
+(2) fixed a concurrent `ExpeditionLocaleKeysTests` verbatim-string compile break + coverage
+audit; (3) added the 32 `achievement.*` rows the concurrent gate expansion demanded (then
+de-duplicated). **Evidence:** test build 0/0; host build 0/0; `StatusPanelThresholdTests`
+210/210; `NeedsDayDeltaTests` 29/29; `StringsCsvLocaleGateTests` 4/4;
+`LocalizationRatchetTests` 2/2; `ExpeditionLocaleKeysTests` 4/4; `l10n_drift_gate` PASS
+(1183 keys, 658 localized-surface references, German parity); `ui-layout-check.sh` PASS /
+Failures: 0; `--print-assembly-mtime`/`--check-staleness-only` work; CSV integrity clean
+(1183 rows, 20 identical ≤21, 0 edge-ws); `git diff --check` clean. No full suite.
+**Remaining:** a broad ~150-file sweep (not small);
+the 15 smallest bounded panels are listed in the archived plan.
+
 ## Expedition follow-up wave 7 — FULLY INTEGRATED (2026-10-02)
 
 Completed the next 15 localization/readability tasks across the expedition radar

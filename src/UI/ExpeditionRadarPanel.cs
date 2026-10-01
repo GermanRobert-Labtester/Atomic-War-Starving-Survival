@@ -386,7 +386,7 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
         {
             _detailTitle.Text = AshfallLocalization.Tr("ui.expedition.radar.detail_header", "TARGET DETAIL");
             _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
-                "Expedition engine offline. Bind an ExpeditionHostSession to see alive sorties + destinations."));
+                AshfallLocalization.Tr("ui.expedition.radar.offline", "Expedition engine offline. Bind an ExpeditionHostSession to see alive sorties + destinations.")));
             return;
         }
 
@@ -406,7 +406,7 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
 
         _detailTitle.Text = AshfallLocalization.Tr("ui.expedition.radar.detail_header", "TARGET DETAIL");
         _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
-            "Select a sortie row to view phase and stamina, or a destination row to view loot categories and blocking status."));
+            AshfallLocalization.Tr("ui.expedition.radar.select_row_hint", "Select a sortie row to view phase and stamina, or a destination row to view loot categories and blocking status.")));
     }
 
     private ExpeditionState? ActiveExpAt(int visibleIndex)
@@ -516,7 +516,7 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
 
     private static string FormatSurvivor(string id)
     {
-        if (string.IsNullOrEmpty(id)) return "[UNNAMED]";
+        if (string.IsNullOrEmpty(id)) return AshfallLocalization.Tr("ui.expedition.unnamed", "[UNNAMED]");
         return id switch
         {
             "survivor_dr_sarah_chen" or "survivor_sarah_chen" => "Dr. Sarah Chen",

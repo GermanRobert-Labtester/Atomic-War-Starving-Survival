@@ -322,7 +322,7 @@ namespace AtomicWar.GodotApp.UI
                 int spend = Math.Min(have, 10);
                 _inventoryHost.Remove("fuel", spend);
                 var refuelResult = _expeditionHost.RefuelVehicle(vehicleId, spend);
-                SurfaceCommandRefusal(refuelResult, "REFUEL REFUSED");
+                SurfaceCommandRefusal(refuelResult, AshfallLocalization.Tr("ui.expedition.refuel_refused", "REFUEL REFUSED"));
                 RefreshView();
             });
             btnRefuel.TooltipText = AshfallLocalization.Tr("ui.expedition.refuel_tooltip", "Burn 10 carried fuel items into the selected tank.");
@@ -333,7 +333,7 @@ namespace AtomicWar.GodotApp.UI
                 string vehicleId = SelectedVehicleId;
                 if (_expeditionHost == null || string.IsNullOrEmpty(vehicleId)) return;
                 var trackResult = _expeditionHost.InstallTrackGear(vehicleId, "vehicle_track_gear_standard");
-                SurfaceCommandRefusal(trackResult, "TRACK GEAR REFUSED");
+                SurfaceCommandRefusal(trackResult, AshfallLocalization.Tr("ui.expedition.track_gear_refused", "TRACK GEAR REFUSED"));
                 RefreshView();
             });
             btnTrackGear.TooltipText = AshfallLocalization.Tr("ui.expedition.track_gear_tooltip", "Install the authored track-gear package, improving rough-terrain traction and reducing breakdown risk.");
@@ -445,7 +445,7 @@ namespace AtomicWar.GodotApp.UI
                     // A refused dispatch must reach the screen, not vanish as a
                     // button no-op. The typed code names the actual gate.
                     _dispatchStatusLabel.Text =
-                        $"DISPATCH REFUSED — {FormatDispatchRefusal(result.FailureCode)}";
+                        TrFmt("ui.expedition.dispatch_refused", "DISPATCH REFUSED — {0}", FormatDispatchRefusal(result.FailureCode));
                 }
                 else if (_dispatchStatusLabel != null)
                 {
@@ -479,7 +479,7 @@ namespace AtomicWar.GodotApp.UI
 
         private static string FormatSurvivorName(string id)
         {
-            if (string.IsNullOrEmpty(id)) return "[UNNAMED]";
+            if (string.IsNullOrEmpty(id)) return AshfallLocalization.Tr("ui.expedition.unnamed", "[UNNAMED]");
             return id switch
             {
                 "survivor_dr_sarah_chen" or "survivor_sarah_chen" => "Dr. Sarah Chen",
@@ -491,7 +491,7 @@ namespace AtomicWar.GodotApp.UI
 
         private static string FormatFactionName(string id)
         {
-            if (string.IsNullOrWhiteSpace(id)) return "UNKNOWN FACTION";
+            if (string.IsNullOrWhiteSpace(id)) return AshfallLocalization.Tr("ui.expedition.unknown_faction", "UNKNOWN FACTION");
             // Presentation retains the authored lore ID. Canonicalization is
             // for standing/state authorities; mapping it here would turn an
             // Iron Garrison patrol into the unrelated display era name.
@@ -513,7 +513,7 @@ namespace AtomicWar.GodotApp.UI
 
         private static string FormatPatrolToken(string id)
         {
-            return string.IsNullOrWhiteSpace(id) ? "PATROL" : HumanizeDisplayToken(id);
+            return string.IsNullOrWhiteSpace(id) ? AshfallLocalization.Tr("ui.expedition.patrol_token", "PATROL") : HumanizeDisplayToken(id);
         }
 
         /// <summary>Localize + format a string without throwing on a malformed
@@ -529,12 +529,12 @@ namespace AtomicWar.GodotApp.UI
         {
             return code switch
             {
-                "cost_unavailable" => "Cost unavailable",
-                "required_item_missing" => "Required item unavailable",
-                "required_condition_missing" => "Required condition unmet",
-                "recognition_requirement_unmet" => "Recognition requirement unmet",
-                "standing_requirement_unmet" => "Standing requirement unmet",
-                _ => "Unavailable"
+                "cost_unavailable" => AshfallLocalization.Tr("ui.expedition.unavailable.cost", "Cost unavailable"),
+                "required_item_missing" => AshfallLocalization.Tr("ui.expedition.unavailable.required_item", "Required item unavailable"),
+                "required_condition_missing" => AshfallLocalization.Tr("ui.expedition.unavailable.required_condition", "Required condition unmet"),
+                "recognition_requirement_unmet" => AshfallLocalization.Tr("ui.expedition.unavailable.recognition", "Recognition requirement unmet"),
+                "standing_requirement_unmet" => AshfallLocalization.Tr("ui.expedition.unavailable.standing", "Standing requirement unmet"),
+                _ => AshfallLocalization.Tr("ui.expedition.unavailable.generic", "Unavailable")
             };
         }
 
@@ -544,14 +544,14 @@ namespace AtomicWar.GodotApp.UI
         {
             return code switch
             {
-                "unmapped" => "no route knowledge for this sector. Survey or chart it first.",
-                "crossing_closed" => "crossing gate closed. No vouch authorization to traverse.",
-                "route_blocked" => "route blocked by a weather or standing gate.",
-                "vehicle_unready" => "vehicle unready. Check fuel and condition in the garage.",
-                "fitness_blocked" => "survivor is unfit for expedition duty.",
-                "fitness_warning_confirmation_required" => "survivor is impaired and needs explicit confirmation.",
-                "unknown_target" => "unknown destination.",
-                "stale_preview" => "planning data went stale. Retry the dispatch.",
+                "unmapped" => AshfallLocalization.Tr("ui.expedition.refusal.unmapped", "no route knowledge for this sector. Survey or chart it first."),
+                "crossing_closed" => AshfallLocalization.Tr("ui.expedition.refusal.crossing_closed", "crossing gate closed. No vouch authorization to traverse."),
+                "route_blocked" => AshfallLocalization.Tr("ui.expedition.refusal.route_blocked", "route blocked by a weather or standing gate."),
+                "vehicle_unready" => AshfallLocalization.Tr("ui.expedition.refusal.vehicle_unready", "vehicle unready. Check fuel and condition in the garage."),
+                "fitness_blocked" => AshfallLocalization.Tr("ui.expedition.refusal.fitness_blocked", "survivor is unfit for expedition duty."),
+                "fitness_warning_confirmation_required" => AshfallLocalization.Tr("ui.expedition.refusal.fitness_warning_confirmation_required", "survivor is impaired and needs explicit confirmation."),
+                "unknown_target" => AshfallLocalization.Tr("ui.expedition.refusal.unknown_target", "unknown destination."),
+                "stale_preview" => AshfallLocalization.Tr("ui.expedition.refusal.stale_preview", "planning data went stale. Retry the dispatch."),
                 // P003 + unknown codes route through the shared refusal
                 // formatter, so the tutorial-ordering gate names its pending
                 // step instead of printing a bare de-underscored code.
@@ -622,7 +622,7 @@ namespace AtomicWar.GodotApp.UI
                     var progress = AshfallUiHelpers.MakeSmall(TrFmt(
                         "ui.expedition.progress_line",
                         "Travel Progress: {0}/{1} legs · Encounters: {2} · Loot: {3} items ({4}/{5} kg)",
-                        exp.travelTicksCompleted, exp.distanceTicks, exp.encounterCount, exp.loot.Count,
+                        exp.travelTicksCompleted, exp.distanceTicks, exp.encounterCount, exp.loot?.Count ?? 0,
                         exp.currentWeightKg.ToString("F1"), exp.maxLootCapacityKg.ToString("F0")));
                     midRow.AddChild(progress);
                     card.AddChild(midRow);
@@ -908,13 +908,15 @@ namespace AtomicWar.GodotApp.UI
                 string previous = SelectedVehicleId;
                 _vehicleSelect.Clear();
                 _vehicleIds.Clear();
-                _vehicleSelect.AddItem("On foot", 0);
+                _vehicleSelect.AddItem(AshfallLocalization.Tr("ui.expedition.vehicle_foot", "On foot"), 0);
                 foreach (var v in _expeditionHost.Vehicles.State.ownedVehicles.Values)
                 {
                     if (v == null || string.IsNullOrEmpty(v.vehicleId)) continue;
                     _vehicleIds.Add(v.vehicleId);
                     _vehicleSelect.AddItem(
-                        $"{v.displayName} · fuel {v.fuel:F0}/{v.maxFuel:F0} · cond {v.condition:F0}%" + (v.isBrokenDown ? " · BROKEN" : ""),
+                        TrFmt("ui.expedition.vehicle_entry", "{0} · fuel {1:0}/{2:0} · cond {3:0}%",
+                            v.displayName, v.fuel, v.maxFuel, v.condition) +
+                        (v.isBrokenDown ? " " + AshfallLocalization.Tr("ui.expedition.vehicle_broken", "BROKEN") : ""),
                         _vehicleSelect.ItemCount);
                 }
                 int restoreIdx = _vehicleIds.IndexOf(previous);
@@ -926,7 +928,7 @@ namespace AtomicWar.GodotApp.UI
                 string previous = SelectedWeaponInstanceId;
                 _weaponSelect.Clear();
                 _weaponInstanceIds.Clear();
-                _weaponSelect.AddItem("Sidearm only", 0);
+                _weaponSelect.AddItem(AshfallLocalization.Tr("ui.expedition.weapon_sidearm", "Sidearm only"), 0);
                 if (_equipment?.State?.items != null)
                 {
                     foreach (var item in _equipment.State.items)
@@ -968,14 +970,23 @@ namespace AtomicWar.GodotApp.UI
 
             var (est, fuelOk) = preview.Value;
             string vehiclePart = est.usingVehicle
-                ? $"by {_expeditionHost.Vehicles.GetVehicle(SelectedVehicleId)?.displayName ?? est.locationId}"
-                : "on foot";
-            _estimateLabel.Text =
-                $"ESTIMATE [{def.displayName} · {vehiclePart}] ticks {est.totalTicks:F0} " +
-                $"(out {est.outboundTicks:F0} / loot {est.lootingTicks:F0} / in {est.inboundTicks:F0}) · " +
-                $"cargo {est.cargoCapacityKg:F0} kg · fuel need {est.fuelRequired:F1}{(fuelOk ? "" : " — TANK LOW")} · " +
-                $"breakdown {est.breakdownRiskTotal:P0} · encounter {est.encounterRiskPerTick:P0}/hr · " +
-                $"weapon readiness {est.weaponReadiness:P0}{(jam > 0f ? $" (jam {jam:P0})" : "")}";
+                ? TrFmt("ui.expedition.estimate_vehicle", "by {0}", _expeditionHost.Vehicles.GetVehicle(SelectedVehicleId)?.displayName ?? est.locationId)
+                : AshfallLocalization.Tr("ui.expedition.estimate_on_foot", "on foot");
+            _estimateLabel.Text = TrFmt("ui.expedition.estimate_line",
+                "ESTIMATE [{0} · {1}] ticks {2:F0} (out {3:F0} / loot {4:F0} / in {5:F0}) · cargo {6:F0} kg · fuel need {7:F1}{8} · breakdown {9:P0} · encounter {10:P0}/hr · weapon readiness {11:P0}{12}",
+                def.displayName,
+                vehiclePart,
+                est.totalTicks,
+                est.outboundTicks,
+                est.lootingTicks,
+                est.inboundTicks,
+                est.cargoCapacityKg,
+                est.fuelRequired,
+                fuelOk ? string.Empty : " " + AshfallLocalization.Tr("ui.expedition.estimate_tank_low", "— TANK LOW"),
+                est.breakdownRiskTotal,
+                est.encounterRiskPerTick,
+                est.weaponReadiness,
+                jam > 0f ? " " + TrFmt("ui.expedition.estimate_jam", "(jam {0:P0})", jam) : string.Empty);
 
             // C2 / Plan 21C (P6/§34) — warn, do not silently block: projected
             // dose and mid-route gear failure are displayed from the canonical
@@ -983,15 +994,18 @@ namespace AtomicWar.GodotApp.UI
             if (est.projectedDoseTotal > 0f || est.unprotectedCount > 0)
             {
                 string protection = est.partyProtection > 0f
-                    ? $"protection {est.partyProtection:0.#}"
-                    : "NO WORKING PROTECTION";
-                _estimateLabel.Text += $" · dose ~{est.projectedDoseTotal:F0} mSv ({protection}" +
-                    (est.unprotectedCount > 0 ? $", {est.unprotectedCount} unprotected" : "") + ")";
+                    ? TrFmt("ui.expedition.estimate_protection", "protection {0:0.#}", est.partyProtection)
+                    : AshfallLocalization.Tr("ui.expedition.estimate_no_protection", "NO WORKING PROTECTION");
+                string unprotected = est.unprotectedCount > 0
+                    ? TrFmt("ui.expedition.estimate_unprotected", ", {0} unprotected", est.unprotectedCount)
+                    : string.Empty;
+                _estimateLabel.Text += " " + TrFmt("ui.expedition.estimate_dose",
+                    "· dose ~{0:F0} mSv ({1}{2})", est.projectedDoseTotal, protection, unprotected);
             }
             if (est.predictsMidRouteFailure)
             {
-                _estimateLabel.Text +=
-                    $" · GEAR FAILS MID-ROUTE (~{est.protectiveLifeHours:F0} h < {est.projectedTripHours:F0} h trip)";
+                _estimateLabel.Text += " " + TrFmt("ui.expedition.estimate_gear_fail",
+                    "· GEAR FAILS MID-ROUTE (~{0:F0} h < {1:F0} h trip)", est.protectiveLifeHours, est.projectedTripHours);
             }
 
             // P105/P106 — advisory prep projection over the live shelter inventory.
@@ -1049,7 +1063,7 @@ namespace AtomicWar.GodotApp.UI
                 lbl.SizeFlagsHorizontal = SizeFlags.ExpandFill;
                 row.AddChild(lbl);
 
-                var meta = AshfallUiHelpers.MakeSmall($"{p.locationId} · DAY {p.day}");
+                var meta = AshfallUiHelpers.MakeSmall($"{p.locationId} · {TrFmt("ui.expedition.pending_day", "DAY {0}", p.day)}");
                 row.AddChild(meta);
 
                 string pendingId = p.encounterId;
@@ -1222,7 +1236,7 @@ namespace AtomicWar.GodotApp.UI
                     string archetype = FormatPatrolToken(_lastSurfaced!.patrol_archetype);
                     string territory = FormatPatrolToken(_lastSurfaced!.territory_state);
                     string recognition = string.IsNullOrWhiteSpace(_lastSurfaced!.recognition_label)
-                        ? "No prior contact"
+                        ? AshfallLocalization.Tr("ui.expedition.no_prior_contact", "No prior contact")
                         : _lastSurfaced!.recognition_label;
                     _encounterContext.Text = $"{faction} · {archetype} · {territory} · {recognition}";
                     _encounterFactionEmblem.Texture = AshfallUiHelpers.MakeFactionEmblem(_lastSurfaced!.faction_id, 42).Texture;
@@ -1321,7 +1335,10 @@ namespace AtomicWar.GodotApp.UI
                 string choiceText = AshfallLocalization.Tr(choiceKey, c.text);
 
                 // Tactical assessment derivation
-                string riskTag = danger >= 8 ? "EXTREME RISK" : danger >= 5 ? "HIGH RISK" : danger >= 3 ? "MODERATE RISK" : "LOW RISK";
+                string riskTag = danger >= 8 ? AshfallLocalization.Tr("ui.expedition.risk.extreme", "EXTREME RISK")
+                    : danger >= 5 ? AshfallLocalization.Tr("ui.expedition.risk.high", "HIGH RISK")
+                    : danger >= 3 ? AshfallLocalization.Tr("ui.expedition.risk.moderate", "MODERATE RISK")
+                    : AshfallLocalization.Tr("ui.expedition.risk.low", "LOW RISK");
                 var riskColor = danger >= 8 ? AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical)
                     : danger >= 5 ? AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Entropy)
                     : danger >= 3 ? AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.LetheAmber)
@@ -1334,9 +1351,11 @@ namespace AtomicWar.GodotApp.UI
                 headerLabel.Modulate = riskColor;
                 choiceCard.AddChild(headerLabel);
 
-                string previewText = c.moraleDelta != 0 ? $"Morale: {(c.moraleDelta > 0 ? "+" : "")}{c.moraleDelta}" : "Stamina: -15 · Ammo: 0";
-                if (c.guiltDelta > 0) previewText += $" · Guilt: +{c.guiltDelta}";
-                if (c.factionStandingDelta != 0) previewText += $" · Standing: {(c.factionStandingDelta > 0 ? "+" : "")}{c.factionStandingDelta}";
+                string previewText = c.moraleDelta != 0
+                    ? TrFmt("ui.expedition.preview.morale", "Morale: {0}", $"{(c.moraleDelta > 0 ? "+" : "")}{c.moraleDelta}")
+                    : AshfallLocalization.Tr("ui.expedition.preview.default", "Stamina: -15 · Ammo: 0");
+                if (c.guiltDelta > 0) previewText += " · " + TrFmt("ui.expedition.preview.guilt", "Guilt: +{0}", c.guiltDelta);
+                if (c.factionStandingDelta != 0) previewText += " · " + TrFmt("ui.expedition.preview.standing", "Standing: {0}", $"{(c.factionStandingDelta > 0 ? "+" : "")}{c.factionStandingDelta}");
                 choiceCard.AddChild(AshfallUiHelpers.MakeMetadata(previewText));
 
                 bool authoritativePatrol = _lastSurfaced!.is_patrol && c.isPatrolChoice;

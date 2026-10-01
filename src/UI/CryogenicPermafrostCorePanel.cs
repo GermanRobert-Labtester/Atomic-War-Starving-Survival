@@ -125,7 +125,7 @@ namespace AtomicWar.GodotApp.UI
 
             if (canisterCount == 0)
             {
-                _canisters.AddChild(AshfallUiHelpers.MakeBody("No samples stabled in this vault."));
+                _canisters.AddChild(AshfallUiHelpers.MakeBody(AshfallUiText.Tr("ui.cryo.no_samples", "No samples stabled in this vault.")));
                 return;
             }
 

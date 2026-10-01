@@ -130,7 +130,7 @@ namespace AtomicWar.GodotApp
             AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
 
             // Menu button
-            _btnMenu = AshfallUiHelpers.MakeButton("MENU [Esc]", () => OnMenuRequested?.Invoke());
+            _btnMenu = AshfallUiHelpers.MakeButton(Tr("ui.hud.menu", "MENU [Esc]"), () => OnMenuRequested?.Invoke());
             _btnMenu.CustomMinimumSize = new Vector2(100, 28);
             AddChild(_btnMenu);
 

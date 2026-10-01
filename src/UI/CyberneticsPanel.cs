@@ -134,7 +134,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _contentStack.SizeFlagsVertical = SizeFlags.ExpandFill;
 
-            _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader("IMPLANT REGISTRY"));
+            _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader(AshfallUiText.Tr("ui.cybernetics.section.registry", "IMPLANT REGISTRY")));
             _bodyText = new Label { AutowrapMode = TextServer.AutowrapMode.WordSmart };
             _contentStack.AddChild(_bodyText);
 

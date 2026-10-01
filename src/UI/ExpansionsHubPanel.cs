@@ -140,7 +140,7 @@ namespace AtomicWar.GodotApp.UI
             bottomBar.AddThemeConstantOverride("separation", (int)CoreTheme.SpacingMd);
             mainVBox.AddChild(bottomBar);
 
-            var btnClose = AshfallUiHelpers.MakeButton("RETURN TO DASHBOARD [ESC]", Close);
+            var btnClose = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.expansions.return", "RETURN TO DASHBOARD [ESC]"), Close);
             btnClose.CustomMinimumSize = new Vector2(240, 44);
             bottomBar.AddChild(btnClose);
 

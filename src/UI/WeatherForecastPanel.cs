@@ -308,7 +308,7 @@ public partial class WeatherForecastPanel : Control
         vbox.CustomMinimumSize = new Vector2(550, 0);
         container.AddChild(vbox);
 
-        var title = AshfallUiHelpers.MakeTitle("WEATHER FORECAST", DesignTheme.FontSizeH1);
+        var title = AshfallUiHelpers.MakeTitle(AshfallUiText.Tr("ui.weather_forecast.title", "WEATHER FORECAST"), DesignTheme.FontSizeH1);
         title.HorizontalAlignment = HorizontalAlignment.Center;
         vbox.AddChild(title);
 
@@ -347,7 +347,7 @@ public partial class WeatherForecastPanel : Control
 
         vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-        var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
+        var btnClose = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.weather_forecast.close", "CLOSE [Esc]"), () => OnClose?.Invoke());
         btnClose.CustomMinimumSize = new Vector2(200, 40);
         vbox.AddChild(btnClose);
 

@@ -97,22 +97,22 @@ namespace AtomicWar.GodotApp.UI
 
             root.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            _signalLabel = AshfallUiHelpers.MakeBody("Signal: —");
+            _signalLabel = AshfallUiHelpers.MakeBody(T("ui.triangulation.signal_dash", "Signal: —"));
             root.AddChild(_signalLabel);
 
-            _observationCountLabel = AshfallUiHelpers.MakeBody("Observations: —");
+            _observationCountLabel = AshfallUiHelpers.MakeBody(T("ui.triangulation.observations_none", "Observations: —"));
             root.AddChild(_observationCountLabel);
 
-            _candidateLabel = AshfallUiHelpers.MakeBody("Candidate: —");
+            _candidateLabel = AshfallUiHelpers.MakeBody(T("ui.triangulation.candidate_none_dash", "Candidate: —"));
             root.AddChild(_candidateLabel);
 
-            _confidenceLabel = AshfallUiHelpers.MakeBody("Confidence: —");
+            _confidenceLabel = AshfallUiHelpers.MakeBody(T("ui.triangulation.confidence_none", "Confidence: —"));
             root.AddChild(_confidenceLabel);
 
-            _uncertaintyLabel = AshfallUiHelpers.MakeBody("Uncertainty: —");
+            _uncertaintyLabel = AshfallUiHelpers.MakeBody(T("ui.triangulation.uncertainty_none", "Uncertainty: —"));
             root.AddChild(_uncertaintyLabel);
 
-            _discoveryLabel = AshfallUiHelpers.MakeBody("Discovery: —");
+            _discoveryLabel = AshfallUiHelpers.MakeBody(T("ui.triangulation.discovery_none", "Discovery: —"));
             root.AddChild(_discoveryLabel);
 
             root.AddChild(AshfallUiHelpers.MakeSeparator());
@@ -121,15 +121,15 @@ namespace AtomicWar.GodotApp.UI
             var inputRow = new HBoxContainer();
             root.AddChild(inputRow);
 
-            inputRow.AddChild(AshfallUiHelpers.MakeBody("Bearing:"));
+            inputRow.AddChild(AshfallUiHelpers.MakeBody(T("ui.triangulation.bearing", "Bearing:")));
             _bearingInput = new SpinBox { MinValue = 0, MaxValue = 359, Value = 45 };
             inputRow.AddChild(_bearingInput);
 
-            inputRow.AddChild(AshfallUiHelpers.MakeBody("Strength:"));
+            inputRow.AddChild(AshfallUiHelpers.MakeBody(T("ui.triangulation.strength", "Strength:")));
             _strengthInput = new SpinBox { MinValue = 0, MaxValue = 1, Value = 0.7, Step = 0.05 };
             inputRow.AddChild(_strengthInput);
 
-            inputRow.AddChild(AshfallUiHelpers.MakeBody("Noise:"));
+            inputRow.AddChild(AshfallUiHelpers.MakeBody(T("ui.triangulation.noise", "Noise:")));
             _noiseInput = new SpinBox { MinValue = 0, MaxValue = 1, Value = 0.2, Step = 0.05 };
             inputRow.AddChild(_noiseInput);
 
@@ -141,13 +141,13 @@ namespace AtomicWar.GodotApp.UI
             var buttonRow = new HBoxContainer();
             root.AddChild(buttonRow);
 
-            _recordButton = AshfallUiHelpers.MakeButton("Record Observation", OnRecordPressed);
+            _recordButton = AshfallUiHelpers.MakeButton(T("ui.triangulation.record", "Record Observation"), OnRecordPressed);
             buttonRow.AddChild(_recordButton);
 
-            _triangulateButton = AshfallUiHelpers.MakeButton("Triangulate", OnTriangulatePressed);
+            _triangulateButton = AshfallUiHelpers.MakeButton(T("ui.triangulation.triangulate", "Triangulate"), OnTriangulatePressed);
             buttonRow.AddChild(_triangulateButton);
 
-            _closeButton = AshfallUiHelpers.MakeButton("Close", () => OnClose?.Invoke());
+            _closeButton = AshfallUiHelpers.MakeButton(T("ui.triangulation.close", "Close"), () => OnClose?.Invoke());
             buttonRow.AddChild(_closeButton);
         }
 

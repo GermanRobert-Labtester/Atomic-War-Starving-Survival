@@ -40,7 +40,7 @@ namespace AtomicWar.GodotApp
             center.AddChild(vbox);
 
             // ── Title ──
-            var title = AshfallUiHelpers.MakeTitle("THE LEDGER IS CLOSED", Ashfall.Core.UI.Theme.FontSizeH2);
+            var title = AshfallUiHelpers.MakeTitle(AshfallUiText.Tr("ui.game_over.title", "THE LEDGER IS CLOSED"), Ashfall.Core.UI.Theme.FontSizeH2);
             title.HorizontalAlignment = HorizontalAlignment.Center;
             vbox.AddChild(title);
 
@@ -85,11 +85,11 @@ namespace AtomicWar.GodotApp
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
             // ── Buttons ──
-            var btnNewGame = AshfallUiHelpers.MakeButton("NEW GAME", () => OnNewGame?.Invoke());
+            var btnNewGame = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.game_over.new_game", "NEW GAME"), () => OnNewGame?.Invoke());
             btnNewGame.CustomMinimumSize = new Vector2(240, 44);
             vbox.AddChild(btnNewGame);
 
-            var btnMenu = AshfallUiHelpers.MakeButton("RETURN TO MENU", () => OnReturnToMenu?.Invoke());
+            var btnMenu = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.game_over.return_menu", "RETURN TO MENU"), () => OnReturnToMenu?.Invoke());
             btnMenu.CustomMinimumSize = new Vector2(240, 44);
             vbox.AddChild(btnMenu);
 

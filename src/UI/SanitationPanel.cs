@@ -111,12 +111,12 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _contentStack.SizeFlagsVertical = SizeFlags.ExpandFill;
 
-            _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader("ROOM WASTE LEDGER"));
+            _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader(AshfallUiText.Tr("ui.sanitation.section.waste", "ROOM WASTE LEDGER")));
             _detailText = new Label { AutowrapMode = TextServer.AutowrapMode.WordSmart };
             _contentStack.AddChild(_detailText);
 
             _contentStack.AddChild(AshfallUiHelpers.MakeSeparator());
-            _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader("COMPOST QUEUE"));
+            _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader(AshfallUiText.Tr("ui.sanitation.section.compost", "COMPOST QUEUE")));
             _compostText = new Label { AutowrapMode = TextServer.AutowrapMode.WordSmart };
             _contentStack.AddChild(_compostText);
 

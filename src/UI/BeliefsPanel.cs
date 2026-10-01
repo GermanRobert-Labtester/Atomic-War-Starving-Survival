@@ -117,7 +117,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _contentStack.SizeFlagsVertical = SizeFlags.ExpandFill;
 
-            _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader("HELD DOCTRINES"));
+            _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader(AshfallUiText.Tr("ui.beliefs.section.doctrines", "HELD DOCTRINES")));
             _climateText = new Label { AutowrapMode = TextServer.AutowrapMode.WordSmart };
             _contentStack.AddChild(_climateText);
 

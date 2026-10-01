@@ -70,7 +70,7 @@ namespace AtomicWar.GodotApp.UI
 
             if (_weather == null)
             {
-                _currentWeather.AddChild(MakeDimLine("No weather system bound."));
+                _currentWeather.AddChild(MakeDimLine(AshfallUiText.Tr("ui.weather_detail.no_system", "No weather system bound.")));
                 return;
             }
 

@@ -237,7 +237,7 @@ namespace AtomicWar.GodotApp.UI
                     if (!c.IsOpen)
                     {
                         string capId = c.CapsuleId;
-                        var openBtn = AshfallUiHelpers.MakeButton("UNSEAL CAPSULE", () =>
+                        var openBtn = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.time_capsule.unseal", "UNSEAL CAPSULE"), () =>
                         {
                             // Plan 212: truthful unseal — validates the capsule's
                             // own condition at the live campaign day; the

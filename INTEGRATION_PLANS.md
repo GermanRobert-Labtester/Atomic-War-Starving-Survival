@@ -1,5 +1,46 @@
 # ASHFALL Integration Plans
 
+## Survival legibility thirteenth wave — FULLY INTEGRATED (2026-10-02)
+
+Localized 15 small panels and six previously registered partial panels; added
+the zero-tolerance registered-panel chrome gate and registered ExpeditionCampPanel.
+Final evidence: l10n drift PASS (1183 keys, 658 localized-surface references,
+German parity); UI layout PASS / 0 failures; focused UI/localization suites green;
+CSV 1183 rows with no duplicates, placeholder mismatches, or edge whitespace.
+Plan: `.ai/plans/integrated/playability/INTEGRATED_survival-legibility-thirteenth-wave-2026-10-02.md`.
+
+## L01–L04 localization hardening — FULLY INTEGRATED (2026-10-02)
+
+Dynamic-family coverage now enforces 212 keys across four catalog-backed families;
+the inventory captures 1501 literals across 2348 records; deterministic POT
+generation and the translator handoff are in place. Final gates: l10n PASS at
+1183 keys / German parity, POT drift PASS at 1183 entries, JSON schema policy
+PASS for 712 files. Plan: `.ai/plans/integrated/i18n/INTEGRATED_l10n-drift-dynamic-families-l01-l04-2026-10-02.md`.
+
+## Survival legibility twelfth wave — FULLY INTEGRATED (2026-10-02)
+
+Localized MedicalWardPanel, ShelterHud, and GameDashboard chrome; hardened
+registered-panel, dead-key, ward-band, self-test status, and artifact checks.
+Later wave verification supersedes the original counts: 211/211 status-panel
+tests; l10n drift PASS at 1183 keys / 658 localized-surface references; UI layout
+PASS / 0 failures. Plan: `.ai/plans/integrated/playability/INTEGRATED_survival-legibility-twelfth-wave-2026-10-02.md`.
+
+## Expedition follow-up wave 8 — remaining player-facing l10n — FULLY INTEGRATED (2026-10-02)
+
+Localized the remaining expedition strings (radar offline/select hint, risk tags,
+choice preview, unavailable reasons, refusal prefixes, `DISPATCH REFUSED`,
+vehicle/weapon selectors + entry/BROKEN, faction/patrol/unnamed fallbacks, pending
+`DAY {0}`, patrol `No prior contact`). Reconciled concurrent duplicate keys and
+removed redundant `est.*` keys after a concurrent wave localized the estimate line.
+**3 loops:** duplicate-key reconciliation; orphan + source↔catalog audit; final
+verification. **Evidence:** host build 0/0; `ExpeditionLocaleKeysTests` 5/5;
+`StringsCsvLocaleGateTests` 4/4; `LocalizationRatchetTests` 2/2;
+`ExpeditionPrepPlanTests` 54/54; bounded `--expedition-panel-uitest` PASS; scoped
+`git diff --check` clean; 0 duplicate keys; expedition key count 205 (floor 127).
+Archived plan:
+`.ai/plans/integrated/playability/INTEGRATED_expedition-followup-wave8-2026-10-02.md`.
+No full suite; no commit.
+
 ## Catalog hygiene follow-ups I01–I15 — FULLY INTEGRATED (2026-10-02)
 
 Final wave of the D→I catalog-hygiene session. All 15 landed: zero-value
@@ -151,15 +192,17 @@ No full suite.
 Completed 15 additional localization/readability tasks and three audit loops.
 Added shared `ExpeditionPhaseText` source and source/locale pins; localized
 radar phase/rail/title/range filter, dispatch blocker and encounter title, and
-radar detail values/spacing. **Evidence:** `ExpeditionPrepPlanTests` 50/50;
-`ExpeditionLocaleKeysTests` 3/3; `ExpeditionPhaseTextSourceGateTests` 2/2;
-`StringsCsvLocaleGateTests` 4/4; `LocalizationRatchetTests` 2/2;
-`l10n_drift_gate` PASS (995 keys, 533 localized-surface references, German
-parity); optimized host build 0 warnings/errors; bounded
-`--expedition-panel-uitest` PASS under 180 seconds. Teardown RID/ObjectDB/resource
-diagnostics remain after PASS. The smoke omits the unrelated fatal survivor/fate
-cascade; the panel checks and Core rescue/failure bridge test remain. Plan
-archived at
+radar detail values/spacing; localized the panel shell title, pending-encounter
+label, encounter banner, and host-unavailable rows. **3 loops:** (1) localized
+the two radar host-unavailable rows and added a source↔catalog key gate that
+fails when a `src/UI` expedition panel references a `ui.expedition.*` literal
+with no row; (2) localized the shell title and pending-encounter label; (3)
+localized the autoplay encounter banner. **Evidence:** `ExpeditionPrepPlanTests`
+53/53; `ExpeditionLocaleKeysTests` 4/4; `ExpeditionPhaseTextSourceGateTests` 2/2;
+`StringsCsvLocaleGateTests` 4/4; `LocalizationRatchetTests` 2/2; `StatusPanelThresholdTests`
+210/210; `l10n_drift_gate` PASS; host build 0 warnings/errors; bounded
+`--expedition-panel-uitest` PASS and `--player-panels-uitest` PASS under 180 seconds.
+Teardown RID/ObjectDB/resource diagnostics remain after PASS. Plan archived at
 `.ai/plans/integrated/playability/INTEGRATED_expedition-followup-wave7-2026-10-02.md`.
 No full suite.
 

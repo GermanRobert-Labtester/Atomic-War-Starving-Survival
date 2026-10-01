@@ -109,16 +109,16 @@ namespace AtomicWar.GodotApp.UI
             _offline.AutowrapMode = TextServer.AutowrapMode.WordSmart;
             content.AddChild(_offline);
 
-            var presetHeader = AshfallUiHelpers.MakeSectionHeader("AUTHORED PRESETS");
+            var presetHeader = AshfallUiHelpers.MakeSectionHeader(AshfallUiText.Tr("ui.difficulty.section.presets", "AUTHORED PRESETS"));
             content.AddChild(presetHeader);
             _presetRows = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill };
             _presetRows.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
             content.AddChild(_presetRows);
 
-            var scalarHeader = AshfallUiHelpers.MakeSectionHeader("CUSTOM SCALARS");
+            var scalarHeader = AshfallUiHelpers.MakeSectionHeader(AshfallUiText.Tr("ui.difficulty.section.scalars", "CUSTOM SCALARS"));
             content.AddChild(scalarHeader);
 
-            var bandNote = AshfallUiHelpers.MakeSmall("Custom lanes clamp to the authored 0.25–2.50 band. Any edit switches the campaign to CUSTOM.");
+            var bandNote = AshfallUiHelpers.MakeSmall(AshfallUiText.Tr("ui.difficulty.band_note", "Custom lanes clamp to the authored 0.25–2.50 band. Any edit switches the campaign to CUSTOM."));
             bandNote.AutowrapMode = TextServer.AutowrapMode.WordSmart;
             content.AddChild(bandNote);
 
@@ -134,12 +134,12 @@ namespace AtomicWar.GodotApp.UI
             _saveState.AutowrapMode = TextServer.AutowrapMode.WordSmart;
             _saveState.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             saveRow.AddChild(_saveState);
-            _saveButton = AshfallUiHelpers.MakeButton("SAVE SETTINGS", OnSavePressed);
+            _saveButton = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.difficulty.save", "SAVE SETTINGS"), OnSavePressed);
             _saveButton.CustomMinimumSize = new Vector2(160, 28);
             saveRow.AddChild(_saveButton);
             content.AddChild(saveRow);
 
-            _lockButton = AshfallUiHelpers.MakeButton("LOCK DIFFICULTY (IRONMAN)", OnLockPressed);
+            _lockButton = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.difficulty.lock", "LOCK DIFFICULTY (IRONMAN)"), OnLockPressed);
             _lockButton.CustomMinimumSize = new Vector2(280, 32);
             content.AddChild(_lockButton);
 
