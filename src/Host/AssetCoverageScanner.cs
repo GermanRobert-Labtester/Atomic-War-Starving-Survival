@@ -481,15 +481,17 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>
-        /// Runs full-catalog sweep across every definition ID.
+        /// Runs full-catalog sweep across every definition ID and returns the
+        /// totals so the caller can gate on missing/placeholder bindings.
         /// </summary>
-        public static void RunFullCoverageSweep(string dataDir)
+        public static (int TotalIds, int Missing, int Placeholder) RunFullCoverageSweep(string dataDir)
         {
             GD.Print("[AssetCoverageReport] Full catalog sweep — report-only, non-gating");
             GD.Print($"[AssetCoverageReport] Data dir: {dataDir}");
 
             var idsByCategory = new Dictionary<string, List<string>>();
             var missingByCategory = new Dictionary<string, List<string>>();
+            var placeholderByCategory = new Dictionary<string, List<string>>();
 
             foreach (var (category, file, idField) in CoverageCatalogFiles)
             {
@@ -509,10 +511,11 @@ namespace AtomicWar.GodotApp
                 }
             }
 
-            int totalIds = 0, totalMissing = 0;
+            int totalIds = 0, totalMissing = 0, totalPlaceholder = 0;
             foreach (var (category, ids) in idsByCategory)
             {
                 var missing = new List<string>();
+                var placeholder = new List<string>();
                 foreach (var id in ids)
                 {
                     var r = category switch
@@ -528,13 +531,29 @@ namespace AtomicWar.GodotApp
                         covered = Ashfall.Core.UI.FactionIconCatalog.HasExplicitMapping(id);
                     if (!covered)
                         missing.Add(id);
+                    // A resolved-but-placeholder binding is still a visible
+                    // placeholder square in game: classify it so the report can
+                    // drive the "kill the placeholder squares" gate.
+                    else if (IsPlaceholderPath(r.ResolvedPath))
+                        placeholder.Add(id);
                 }
                 totalIds += ids.Count;
                 totalMissing += missing.Count;
+                totalPlaceholder += placeholder.Count;
                 missingByCategory[category] = missing;
+                placeholderByCategory[category] = placeholder;
             }
 
-            AssetCoverageReport.PrintFullCoverageSweep(totalIds, totalMissing, missingByCategory, idsByCategory);
+            AssetCoverageReport.PrintFullCoverageSweep(
+                totalIds, totalMissing, missingByCategory, idsByCategory,
+                totalPlaceholder, placeholderByCategory);
+            return (totalIds, totalMissing, totalPlaceholder);
+        }
+
+        private static bool IsPlaceholderPath(string? resolvedPath)
+        {
+            if (string.IsNullOrEmpty(resolvedPath)) return false;
+            return resolvedPath.IndexOf("placeholder", StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         private static List<string> ExtractIdsFromJson(string path, string fieldName)

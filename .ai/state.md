@@ -1,6 +1,18 @@
 # Current Task State
 
-# Current Task State
+## First-hour smoke + visual-binding gate + diegetic prologue — FULLY INTEGRATED (2026-10-01)
+
+User-directed three-task wave. `FirstHourPlaythroughSmokeTests` 4/4 (full
+first-hour journey, mid-journey save/restore resume, route coverage) +
+`docs/qa/FIRST_HOUR_SMOKE_TEST.md` human checklist. `--asset-coverage-report` is
+now a gating check (placeholder-aware; 1661/1661 resolved, 0 missing,
+0 placeholder) with the duplicated `AssetRegistrySelfTest.RunFullCoverage` body
+reduced to a delegate. Authored `prologue_sequence.json` + engine-free
+`PrologueSequence` + `Main.Prologue` surfaced through the Opening Protocol
+day-goal seam; `PrologueSequenceTests` 4/4. `bin/run-scoped-tests` 5/5 PASSED;
+`--asset-registry-selftest` 55/55; headless boot 0 script errors; host build 0
+errors. Plan archived
+`.ai/plans/integrated/playability/INTEGRATED_first-hour-smoke-visual-prologue-2026-10-01.md`.
 
 ## Dispatch wave 3 + war ledger + salvage rumors + economy telemetry (W1-W5) — FULLY INTEGRATED (2026-10-01)
 

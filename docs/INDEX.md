@@ -1,8 +1,8 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 5613 | **Total Characters:** 6,974,063,991 | **Last Verified:** 2026-10-01
-**Oversized (>= 100,000 characters):** 3553 documents carrying 6,942,268,324 characters — tracked in full, see the register below
+**Total Indexed Documents:** 5613 | **Total Characters:** 6,974,066,455 | **Last Verified:** 2026-10-01
+**Oversized (>= 100,000 characters):** 3553 documents carrying 6,942,270,788 characters — tracked in full, see the register below
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
@@ -12,7 +12,7 @@
 
 ---
 
-## Oversized Document Register (>= 100,000 characters) — 3553 documents, 6,942,268,324 characters
+## Oversized Document Register (>= 100,000 characters) — 3553 documents, 6,942,270,788 characters
 
 Authored plan and prose documents at or above the size threshold, recorded to the exact character count. These documents are tracked in full: the register reports their size so it stays visible and reviewable, and no document is excluded from the corpus or from this index.
 
@@ -1476,7 +1476,7 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 1,555,560 | [`docs/plans/integrated/content/INTEGRATED_cw128_06_still_here_on_plaster_plan.md`](plans/integrated/content/INTEGRATED_cw128_06_still_here_on_plaster_plan.md) |
 | 1,550,221 | [`docs/content/PLAN134_PLAN138_RECONCILIATION.md`](content/PLAN134_PLAN138_RECONCILIATION.md) |
 | 1,541,254 | [`docs/plans/integrated/content/INTEGRATED_cw128_07_a_name_in_brass_plan.md`](plans/integrated/content/INTEGRATED_cw128_07_a_name_in_brass_plan.md) |
-| 1,536,150 | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) |
+| 1,537,521 | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) |
 | 1,534,169 | [`docs/plans/integrated/content/INTEGRATED_cw129_12_a_clerk_with_a_rifle_plan.md`](plans/integrated/content/INTEGRATED_cw129_12_a_clerk_with_a_rifle_plan.md) |
 | 1,515,307 | [`docs/plans/integrated/content/INTEGRATED_cw128_12_home_by_six_plan.md`](plans/integrated/content/INTEGRATED_cw128_12_home_by_six_plan.md) |
 | 1,512,521 | [`docs/plans/integrated/content/INTEGRATED_cw127_15_the_measure_at_the_fence_plan.md`](plans/integrated/content/INTEGRATED_cw127_15_the_measure_at_the_fence_plan.md) |
@@ -2288,7 +2288,7 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 446,495 | [`docs/world/ORBITAL_DAMAGE_PROVENANCE.md`](world/ORBITAL_DAMAGE_PROVENANCE.md) |
 | 444,762 | [`piagentsplans/12-social-shelter-life.md`](../piagentsplans/12-social-shelter-life.md) |
 | 444,580 | [`docs/progression/RESEARCH_BALANCE_MATRIX.md`](progression/RESEARCH_BALANCE_MATRIX.md) |
-| 440,793 | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) |
+| 441,886 | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) |
 | 439,819 | [`docs/plans/expansion_wave1/EXPANSION_PLAN_20_AUTHORED_DIALOGUE_GRAPHS_AND_PROSE.md`](plans/expansion_wave1/EXPANSION_PLAN_20_AUTHORED_DIALOGUE_GRAPHS_AND_PROSE.md) |
 | 438,995 | [`piagentsplans/98-standing-record-factions-expansion.md`](../piagentsplans/98-standing-record-factions-expansion.md) |
 | 433,455 | [`piagentsplans/14-ux-onboarding-accessibility.md`](../piagentsplans/14-ux-onboarding-accessibility.md) |
@@ -6252,7 +6252,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/ui/UI_PANELS_MASTER_VOLUME_3.md`](ui/UI_PANELS_MASTER_VOLUME_3.md) | 36,779 | **ASHFALL: Atomic War - Starving Survival** — ═══════════════════════════════════════════════════════════════════════════════════════════ |
 | 🟢 `CURRENT` | [`docs/ui/UI_PANELS_MASTER_VOLUME_4.md`](ui/UI_PANELS_MASTER_VOLUME_4.md) | 36,873 | **ASHFALL: Atomic War - Starving Survival** — ═══════════════════════════════════════════════════════════════════════════════════════════ |
 | 🟢 `CURRENT` | [`docs/ui/UI_PANELS_MASTER_VOLUME_5.md`](ui/UI_PANELS_MASTER_VOLUME_5.md) | 41,257 | **ASHFALL: Atomic War - Starving Survival** — ═══════════════════════════════════════════════════════════════════════════════════════════ |
-| 🟢 `CURRENT` | [`docs/ui/UI_PANEL_ARCHITECTURE_GUIDE.md`](ui/UI_PANEL_ARCHITECTURE_GUIDE.md) | 20,205 | **ASHFALL Godot UI Panel Architecture & Node Binding Guide** — **Authoritative UI Contract Guide** \| **Generated:** 2026-09-25 \| **Scene-Backed Panels:** 22 |
+| 🟢 `CURRENT` | [`docs/ui/UI_PANEL_ARCHITECTURE_GUIDE.md`](ui/UI_PANEL_ARCHITECTURE_GUIDE.md) | 20,205 | **ASHFALL Godot UI Panel Architecture & Node Binding Guide** — **Authoritative UI Contract Guide** \| **Generated:** 2026-10-01 \| **Scene-Backed Panels:** 22 |
 | 🟢 `CURRENT` | [`docs/ui/UI_UX_AUDIT_2026-09-25.md`](ui/UI_UX_AUDIT_2026-09-25.md) | 49,663 | **ASHFALL UI/UX audit & correction package — 2026-09-25** — Companion to `docs/ui/ACCESSIBILITY_REPORT.md` (2026-09-05 baseline). This |
 | 🟢 `CURRENT` | [`docs/ui/UI_VISUAL_TEXT_SPEC.md`](ui/UI_VISUAL_TEXT_SPEC.md) | 6,679 | **ASHFALL — UI Visual Information (text spec)** — All authored in house voice: cold, exhausted, human, restrained; specificity |
 | 🟢 `CURRENT` | [`docs/ui/UX_REGRESSION_MATRIX.md`](ui/UX_REGRESSION_MATRIX.md) | 2,625 | **ASHFALL — UX, Accessibility & Onboarding Regression Matrix** — **Execution Date:** 2026-09-01 |
@@ -6636,7 +6636,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`DESIGN.md`](../DESIGN.md) | 3,238 | **Design** — ASHFALL is a 2D atomic-war survival management game. The UI must reflect a cold, exhausted, human, restrained, materi... |
 | 🟢 `CURRENT` | [`GEMINI.md`](../GEMINI.md) | 18,363 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
 | 🟢 `CURRENT` | [`GOOSE.md`](../GOOSE.md) | 18,363 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
-| 🟢 `CURRENT` | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) | 440,793 | **ASHFALL Integration Plans** — User-directed ("continue with those 2 open … Then do repair sweeping finding |
+| 🟢 `CURRENT` | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) | 441,886 | **ASHFALL Integration Plans** — User-directed three-task wave. **First 30 minutes smoke harness:** |
 | 🟢 `CURRENT` | [`KNOWN_DEBT.md`](../KNOWN_DEBT.md) | 43,023 | **ASHFALL Known Debt** — Only current, decision-relevant debt belongs here. Historical detail lives in |
 | 🟢 `CURRENT` | [`MIMOCODE.md`](../MIMOCODE.md) | 18,363 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
 | 🟢 `CURRENT` | [`Next-steps-plans/Plan_132_Survivor_Hidden_Agendas_Betrayal_Arc.md`](../Next-steps-plans/Plan_132_Survivor_Hidden_Agendas_Betrayal_Arc.md) | 13,653 | **Plan 132 — Survivor Hidden Agendas & Betrayal Arc** — Create a persistent hidden-agenda system where survivors carry secret motivations, loyalties, and goals that unfold o... |
@@ -6973,7 +6973,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`Seal-steps/ashfall-wave2-successor-corpus-tranche-two-and-ship-readiness-program-2026-09-19.md`](../Seal-steps/ashfall-wave2-successor-corpus-tranche-two-and-ship-readiness-program-2026-09-19.md) | 90,201 | **ASHFALL — Wave 2, Program B: Successor Corpus Tranche-2 & Ship-Readiness Program** — This is Wave 2 Program B, the final forward document in the 2026-09-19 |
 | 🟢 `CURRENT` | [`TEST_POLICY.md`](../TEST_POLICY.md) | 5,220 | **ASHFALL Test Policy** — Tests protect current behavior; they are not a production-count target. This |
 | 🟢 `CURRENT` | [`VIBE.md`](../VIBE.md) | 18,363 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
-| 🟢 `CURRENT` | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) | 1,536,150 | **ASHFALL Worktree Ownership** — User-directed ("continue with those 2 open … Then do repair sweeping finding |
+| 🟢 `CURRENT` | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) | 1,537,521 | **ASHFALL Worktree Ownership** — User-directed: "tackle those 3 suggested next" (first-30-minutes smoke harness, |
 | 🟢 `CURRENT` | [`addons/godot_mcp/commands/master_checklist.md`](../addons/godot_mcp/commands/master_checklist.md) | 1,457 | **Master Checklist** — - [x] 01. `project_creation_commands.gd` |
 | 🟢 `CURRENT` | [`addons/ziva_agent/LICENSE.md`](../addons/ziva_agent/LICENSE.md) | 282 | **Proprietary License** — All rights reserved. |
 | 🟢 `CURRENT` | [`addons/ziva_agent/README.md`](../addons/ziva_agent/README.md) | 2,787 | **Ziva AI Agent – The S-Tier AI Coding Assistant for Godot** — ![Godot 4.2+](https://godotengine.org/) |

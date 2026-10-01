@@ -1153,63 +1153,14 @@ namespace AtomicWar.GodotApp
             return true;
         }
 
+        /// <summary>
+        /// Superseded by <see cref="AssetCoverageScanner.RunFullCoverageSweep"/>
+        /// (placeholder-aware, gate-returning). Kept as a thin delegate so the
+        /// two implementations cannot drift.
+        /// </summary>
         public static void RunFullCoverage(string dataDir)
         {
-            GD.Print("[AssetCoverageReport] Full catalog sweep — report-only, non-gating");
-            GD.Print($"[AssetCoverageReport] Data dir: {dataDir}");
-
-            var idsByCategory = new Dictionary<string, List<string>>();
-            foreach (var (category, file, idField) in CoverageCatalogFiles)
-            {
-                var path = Path.Combine(dataDir, file);
-                if (!File.Exists(path))
-                {
-                    GD.PrintErr($"[AssetCoverageReport] catalog file not found: {file}");
-                    continue;
-                }
-                if (!idsByCategory.TryGetValue(category, out var ids))
-                    idsByCategory[category] = ids = new List<string>();
-                foreach (var raw in ExtractIdsFromJson(path, idField))
-                {
-                    // The extractor scans raw text, so narrative strings can
-                    // yield pseudo-ids ('faction_x', "npc_y ..."). Only
-                    // canonical snake_case stems are real catalog ids.
-                    if (raw.Length == 0 || !IsCanonicalId(raw)) continue;
-                    if (!ids.Contains(raw))
-                        ids.Add(raw);
-                }
-            }
-
-            int totalIds = 0, totalMissing = 0;
-            foreach (var (category, ids) in idsByCategory)
-            {
-                var missing = new List<string>();
-                foreach (var id in ids)
-                {
-                    var r = category switch
-                    {
-                        "item"     => AssetRegistry.GetItem(id),
-                        "portrait" => AssetRegistry.GetPortrait(id),
-                        "location" => AssetRegistry.GetLocation(id),
-                        "faction"  => AssetRegistry.GetFaction(id),
-                        _          => default,
-                    };
-                    bool covered = r.Result == AssetLoadResult.Loaded;
-                    // Lore-namespace factions count as covered when an emblem
-                    // exists even without a full assets/art illustration.
-                    if (!covered && category == "faction")
-                        covered = Ashfall.Core.UI.FactionIconCatalog.HasExplicitMapping(id);
-                    if (!covered)
-                        missing.Add(id);
-                }
-                totalIds += ids.Count;
-                totalMissing += missing.Count;
-                GD.Print($"[AssetCoverageReport] {category,-9}: {ids.Count,4} ids, {ids.Count - missing.Count,4} resolved, {missing.Count,4} missing");
-                foreach (var id in missing)
-                    GD.Print($"[AssetCoverageReport]   MISSING {category}: {id}");
-            }
-
-            GD.Print($"ASSET_COVERAGE_REPORT: ids={totalIds} resolved={totalIds - totalMissing} missing={totalMissing} (report-only; gate remains --asset-registry-selftest)");
+            AssetCoverageScanner.RunFullCoverageSweep(dataDir);
         }
 
         /// <summary>

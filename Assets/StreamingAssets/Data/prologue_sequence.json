@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "prologue_id": "prologue_first_light",
+  "beats": [
+    {
+      "day_index": 1,
+      "title": "First light",
+      "body": "The exchange is over. You woke in the shelter with the others, and the filters are still running. Nobody has counted the stores yet. Today you decide who eats and who works."
+    },
+    {
+      "day_index": 2,
+      "title": "The hatch",
+      "body": "Nobody has stood outside since the flash. The gauge by the door still reads high, and the ash has not settled. The shelter can hold, but it cannot hold forever."
+    },
+    {
+      "day_index": 3,
+      "title": "The first protocol",
+      "body": "The room lists are on the wall, the roster is blank, and the water is not safe yet. Whatever this shelter becomes, it starts with the small decisions you make this week."
+    }
+  ]
+}

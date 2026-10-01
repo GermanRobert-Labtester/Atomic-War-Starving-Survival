@@ -95,11 +95,16 @@ namespace AtomicWar.GodotApp
             return true;
         }
 
-        /// <summary>Pushes the current day's slice beat onto the opening protocol modal.</summary>
+        /// <summary>Pushes the current day's slice beat — or, outside the
+        /// playtest instrument, the authored prologue beat — onto the opening
+        /// protocol modal. No beat means no goal line, never an invented one.</summary>
         internal void RefreshOpeningProtocolDayGoal()
         {
             if (_openingProtocolModal == null) return;
-            if (TryGetSliceGoal(Math.Max(1, _simDay), out string title, out string body))
+            int day = Math.Max(1, _simDay);
+            if (TryGetSliceGoal(day, out string title, out string body))
+                _openingProtocolModal.SetDayGoal(title, body);
+            else if (TryGetPrologueGoal(day, out title, out body))
                 _openingProtocolModal.SetDayGoal(title, body);
             else
                 _openingProtocolModal.SetDayGoal(null, null);

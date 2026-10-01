@@ -77,17 +77,24 @@ namespace AtomicWar.GodotApp
             int totalIds,
             int totalMissing,
             Dictionary<string, List<string>> missingByCategory,
-            Dictionary<string, List<string>> idsByCategory)
+            Dictionary<string, List<string>> idsByCategory,
+            int totalPlaceholder = 0,
+            Dictionary<string, List<string>>? placeholderByCategory = null)
         {
             foreach (var (category, ids) in idsByCategory)
             {
                 var missing = missingByCategory[category];
-                GD.Print($"[AssetCoverageReport] {category,-9}: {ids.Count,4} ids, {ids.Count - missing.Count,4} resolved, {missing.Count,4} missing");
+                var placeholders = placeholderByCategory != null && placeholderByCategory.TryGetValue(category, out var p)
+                    ? p
+                    : new List<string>();
+                GD.Print($"[AssetCoverageReport] {category,-9}: {ids.Count,4} ids, {ids.Count - missing.Count,4} resolved, {missing.Count,4} missing, {placeholders.Count,4} placeholder");
                 foreach (var id in missing)
                     GD.Print($"[AssetCoverageReport]   MISSING {category}: {id}");
+                foreach (var id in placeholders)
+                    GD.Print($"[AssetCoverageReport]   PLACEHOLDER {category}: {id}");
             }
 
-            GD.Print($"ASSET_COVERAGE_REPORT: ids={totalIds} resolved={totalIds - totalMissing} missing={totalMissing} (report-only; gate remains --asset-registry-selftest)");
+            GD.Print($"ASSET_COVERAGE_REPORT: ids={totalIds} resolved={totalIds - totalMissing} missing={totalMissing} placeholder={totalPlaceholder} (gating: 0 missing + 0 placeholder required)");
         }
     }
 }

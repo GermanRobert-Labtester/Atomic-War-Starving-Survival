@@ -1,5 +1,55 @@
 # ASHFALL Integration Plans
 
+## First-hour smoke + visual-binding gate + diegetic prologue — FULLY INTEGRATED (2026-10-01)
+
+User-directed three-task wave. **First 30 minutes smoke harness:**
+`FirstHourPlaythroughSmokeTests` 4/4 (full journey + mid-journey save/restore
+resume + route coverage) and `docs/qa/FIRST_HOUR_SMOKE_TEST.md` human checklist
+mirroring the seven onboarding beats. **Visual-binding completeness:**
+`AssetCoverageScanner.RunFullCoverageSweep` now classifies and returns
+placeholder bindings; `--asset-coverage-report` is a **gate**
+(1661/1661 resolved, 0 missing, 0 placeholder); the duplicated
+`AssetRegistrySelfTest.RunFullCoverage` body is now a thin delegate.
+**Diegetic prologue:** authored `prologue_sequence.json` + engine-free
+`PrologueSequence` authority + `Main.Prologue` surfaced through the existing
+Opening Protocol day-goal seam (no new modal, no save section);
+`PrologueSequenceTests` 4/4. `bin/run-scoped-tests` 5/5 PASSED; headless boot
+0 script errors; host build 0 errors. Plan archived
+`.ai/plans/integrated/playability/INTEGRATED_first-hour-smoke-visual-prologue-2026-10-01.md`.
+
+## Open-item closeout + repair-sweep finding audit — FULLY INTEGRATED (2026-10-01)
+
+User-directed ("continue with those 2 open … Then do repair sweeping finding
+audit … including tool calls missing or tool call receiving not existent!").
+**Two open items closed:** (1) `KeyBindingApplicator.Apply(data, bool safeMode)`
+exposes the Shift safe-mode check explicitly — `--settings-selftest` passes
+`safeMode: false` and asserts the skip, removing headless live-input dependence;
+(2) `ApprenticeshipSystem.AssignActingDesignation` + host forward +
+`ApprenticeshipPanel` **ASSIGN ACTING DESIGNATION** row make the `actingEligible`
+stub actionable (completes the pair, credits the skill, clears the ledger).
+**Repair sweep (8 findings):** catch-policy disposition + `report.Warn` keyword;
+`AssetInspectorPanel` raw data-path comment → `CatalogPath`;
+`RunDay1ToDay2MilestoneSelfTest` allowlisted as an isolated scenario; 4 Core
+integration seams added to `port_contract_policy.json` (310 entries);
+`world_incident_surfaced` classified `Narrative` + parity-matrix row;
+`world_incidents` added to the generated architecture graph (315 subsystems);
+2 DTO-bound camelCase catalogs pinned. Tool-call parity gates
+(`HostCliActionParityGateTests` 5/5, `SelfTestManifestGateTests` 4/4,
+`HostSelfTestExitContractTests` 1/1, `HostActionInputContractTests` 1/1) found no
+missing command / non-existent receiver. **Evidence:** host build 0 errors / 0
+new warnings; `--settings-selftest` PASS; `--day1-to-day2-milestone-selftest` PASS;
+`--7-day-smoke-selftest` 10/10; `YearTwoApprenticeLadderTests` 9/9,
+`ApprenticeshipSystemTests` 8/8, `ApprenticeshipIntegrationTests` 3/3,
+`CatchPolicyLintGateTests` 3/3, `CatalogPathForbiddenGateTests` 2/2,
+`NoFreshCampaignSystemGateTests` 2/2, `PortContractGateTests` 8/8,
+`DayEventParitySourceGateTests` 2/2, `ArchitectureTestMapGateTests` 6/6,
+`JsonNamingMixPinTests` 4/4, plus the a11y/composition/lifecycle/snapshot/doc
+sweep all green; generated contracts in sync
+(`generate-architecture-map.py --check` 315, `generate-selftest-manifest.py
+--check` 317, `l10n_drift_gate` PASS, `triad-drift-gate.sh` PASS). Plan archived
+`.ai/plans/integrated/systems/INTEGRATED_open-items-and-repair-sweep-2026-10-01.md`.
+No full suite; foreign dirty worktree preserved.
+
 ## Open-flag cleanup: Endgame / Verdict / coordinator rollback / Drowned Coast F4 — FULLY INTEGRATED (2026-10-01)
 
 User-directed ("tackle the open flags, coordinator and drowned coast … the zero

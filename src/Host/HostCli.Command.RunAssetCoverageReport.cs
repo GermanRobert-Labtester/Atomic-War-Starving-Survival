@@ -37,8 +37,13 @@ namespace AtomicWar.GodotApp
 
         public static int RunAssetCoverageReport(string dataDirectory)
         {
-            AssetRegistrySelfTest.RunFullCoverage(dataDirectory);
-            return EmitSummary("asset_coverage_report", true, 0);
+            // The scanner owns the one full-coverage sweep; the report is now a
+            // gate — a missing or placeholder binding in any catalog category
+            // fails the run ("kill the placeholder squares").
+            var (totalIds, missing, placeholder) = AssetCoverageScanner.RunFullCoverageSweep(dataDirectory);
+            bool clean = missing == 0 && placeholder == 0;
+            GD.Print($"[AssetCoverageReport] gate: ids={totalIds} missing={missing} placeholder={placeholder} -> {(clean ? "PASS" : "FAIL")}");
+            return EmitSummary("asset_coverage_report", clean, clean ? 0 : 1);
         }
 
     }

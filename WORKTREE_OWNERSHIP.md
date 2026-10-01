@@ -1,5 +1,27 @@
 # ASHFALL Worktree Ownership
 
+## claim-first-hour-smoke-visual-prologue-2026-10-01
+
+User-directed: "tackle those 3 suggested next" (first-30-minutes smoke harness,
+visual-binding completeness gate, diegetic prologue). Owned exact paths:
+`Ashfall.Core.Tests/Onboarding/FirstHourPlaythroughSmokeTests.cs` (new),
+`Ashfall.Core.Tests/Narrative/PrologueSequenceTests.cs` (new),
+`docs/qa/FIRST_HOUR_SMOKE_TEST.md` (new),
+`src/Host/AssetCoverageScanner.cs`, `src/Host/AssetCoverageReport.cs`,
+`src/Host/HostCli.Command.RunAssetCoverageReport.cs`, `src/Host/AssetRegistry.cs`
+(RunFullCoverage delegate only),
+`Assets/Ashfall.Core/Narrative/PrologueSequence.cs` (new),
+`Assets/StreamingAssets/Data/prologue_sequence.json` (new), `src/Main.Prologue.cs`
+(new), `src/Main.SliceScenario.cs` (day-goal fallback only); plus the plan
+`.ai/plans/integrated/playability/INTEGRATED_first-hour-smoke-visual-prologue-2026-10-01.md`,
+`.ai/state.md`, `INTEGRATION_PLANS.md`, this claim. Status: **COMPLETE /
+FULLY INTEGRATED; paths released.** Evidence: `FirstHourPlaythroughSmokeTests`
+4/4, `PrologueSequenceTests` 4/4, `bin/run-scoped-tests` 5/5 PASSED;
+`--asset-coverage-report` gate PASS (1661/1661, 0 missing / 0 placeholder),
+`--asset-registry-selftest` PASS 55/55; headless boot 0 script errors; host
+build 0 errors. No Core gameplay-math change; no new save section; no new
+route; foreign dirty worktree preserved.
+
 ## claim-openitems-repair-sweep-2026-10-01
 
 User-directed ("continue with those 2 open … Then do repair sweeping finding
