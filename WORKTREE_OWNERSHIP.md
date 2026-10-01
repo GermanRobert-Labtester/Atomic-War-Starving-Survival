@@ -1,16 +1,71 @@
 # ASHFALL Worktree Ownership
 
-## claim-expedition-followup-wave7-2026-10-02 — ACTIVE
+## claim-catalog-health-gates-i01-i15-2026-10-02 — COMPLETE / FULLY INTEGRATED
+
+Final user-directed continuation of the D→I catalog-hygiene session ("Continue
+with these small tasks completely finish all, only suggest if any of the sessions
+tasks are still open otherwise were done!"). Plan:
+`.ai/plans/integrated/data/INTEGRATED_catalog-health-gates-i01-i15-2026-10-02.md`
+(STATUS: FULLY INTEGRATED). Exact owned paths: modified
+`tools/gotools/pkg/catalogaudit/{catalogaudit.go,catalogaudit_test.go}`,
+`tools/gotools/cmd/ashfall-dev/main.go`, `scripts/ci/run-gates.py`,
+`scripts/ci/json-schema-policy-gate.py`, `docs/ci/CI_GATE_MANIFEST.json`,
+regenerated `docs/ci/GATE_INVENTORY.md`, `docs/ci/{README.md,
+CATALOG_AUDIT_POLICY.md}`, `tools/gotools/README.md`; this claim, `.ai/state.md`,
+`INTEGRATION_PLANS.md`. Acceptance: all 15 rows landed; Go tests 34/34; gates
+`gotools_vet`, `catalog_audit`, `gotools_test`, `gate_inventory_drift`,
+`json_schema_policy` PASS. **Session closeout: D→I all integrated; no open rows.**
+Status: **COMPLETE / FULLY INTEGRATED 2026-10-02; paths released.** No full suite
+or commit.
+
+## claim-catalog-health-gates-h01-h15-2026-10-02 — COMPLETE / FULLY INTEGRATED
+
+User-directed continuation ("Continue with these small tasks completely finish
+all of them and suggest after"). Plan:
+`.ai/plans/integrated/data/INTEGRATED_catalog-health-gates-h01-h15-2026-10-02.md`
+(STATUS: FULLY INTEGRATED). Exact owned paths: modified
+`tools/gotools/pkg/catalogaudit/{catalogaudit.go,catalogaudit_test.go}`,
+`tools/gotools/cmd/ashfall-dev/main.go`, `scripts/ci/run-gates.py`,
+`scripts/ci/json-schema-policy-gate.py`, `docs/ci/catalog_audit_policy.json`;
+new `docs/ci/CATALOG_AUDIT_POLICY.md`; this claim, `.ai/state.md`,
+`INTEGRATION_PLANS.md`. Acceptance: all 15 rows landed; Go tests 29/29; gates
+`catalog_audit`, `gotools_test`, `gate_inventory_drift`, `json_schema_policy`
+PASS. Status: **COMPLETE / FULLY INTEGRATED 2026-10-02; paths released.** Godot
+gates still not executed here. No full suite or commit.
+
+## claim-catalog-health-gates-g01-g15-2026-10-02 — COMPLETE / FULLY INTEGRATED
+
+User-directed continuation ("Continue with these small tasks completely finish
+all of them and suggest after"). Plan:
+`.ai/plans/integrated/data/INTEGRATED_catalog-health-gates-g01-g15-2026-10-02.md`
+(STATUS: FULLY INTEGRATED). Exact owned paths: modified
+`tools/gotools/pkg/catalogaudit/{catalogaudit.go,catalogaudit_test.go}`,
+`tools/gotools/cmd/ashfall-dev/main.go`, `scripts/ci/run-gates.py`,
+`scripts/ci/json-schema-policy-gate.py`, `docs/ci/catalog_audit_policy.json`,
+regenerated `docs/ci/GATE_INVENTORY.md`,
+`Ashfall.Core.Tests/Tooling/CiGateManifestDriftTests.cs`,
+`docs/ci/GATING_VS_DIAGNOSTIC_CHECKS.md`, this claim, `.ai/state.md`,
+`INTEGRATION_PLANS.md`. Acceptance: all 15 rows landed; Go tests 25/25; gates
+`catalog_audit`, `gotools_test`, `gate_inventory_drift`, `json_schema_policy`
+PASS. Status: **COMPLETE / FULLY INTEGRATED 2026-10-02; paths released.** Godot
+gates still not executed here. No full suite or commit.
+
+## claim-expedition-followup-wave7-2026-10-02 — COMPLETE / FULLY INTEGRATED
 
 User-directed continuation of the released expedition package ("Continue with
 these small tasks completely finish all of them … 3 loops … then suggest 15 very
-small tasks"). Plan: `.ai/plans/expedition-followup-wave7-2026-10-02.md`
-(STATUS: APPROVED BY USER). Exact owned paths: `src/UI/ExpeditionRadarPanel.cs`,
+small tasks"). Plan:
+`.ai/plans/integrated/playability/INTEGRATED_expedition-followup-wave7-2026-10-02.md`
+(STATUS: FULLY INTEGRATED; approved by user). Exact owned paths:
+`src/UI/ExpeditionRadarPanel.cs`,
 `src/UI/ExpeditionPanel.cs`, `assets/l10n/strings.csv` (expedition rows only),
 `Ashfall.Core.Tests/Localization/ExpeditionLocaleKeysTests.cs`, this claim,
-`.ai/state.md`, and `INTEGRATION_PLANS.md`. All other dirty worktree content is
-read-only. No new save section, no mutable state, no gameplay decision change.
-Status: ACTIVE until the plan is archived.
+`Ashfall.Core.Tests/UI/ExpeditionPhaseTextSourceGateTests.cs`, `.ai/state.md`,
+and `INTEGRATION_PLANS.md`. All other dirty worktree content is read-only during
+implementation. No new save section, mutable state, or gameplay decision change.
+Focused locale/source tests, drift gate, host build, and capped runtime smoke
+passed. Teardown warnings are recorded in the archived plan and `.ai/state.md`.
+**COMPLETE / FULLY INTEGRATED 2026-10-02; paths released.**
 
 ## claim-catalog-health-gates-f01-f15-2026-10-02 — COMPLETE / FULLY INTEGRATED
 

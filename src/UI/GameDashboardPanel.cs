@@ -406,7 +406,7 @@ namespace AtomicWar.GodotApp.UI
             var title = AshfallUiHelpers.MakeTitle("ASHFALL", DesignTheme.FontSizeH2);
             title.HorizontalAlignment = HorizontalAlignment.Left;
             brand.AddChild(title);
-            brand.AddChild(AshfallUiHelpers.MakeMetadata("HOLDFAST COMMAND"));
+            brand.AddChild(AshfallUiHelpers.MakeMetadata(Tr("ui.dashboard.command", "HOLDFAST COMMAND")));
             content.AddChild(brand);
 
             _locationLabel = AshfallUiHelpers.MakeMono("THE HOLDFAST");
@@ -417,11 +417,11 @@ namespace AtomicWar.GodotApp.UI
             _dayLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Hot));
             content.AddChild(_dayLabel);
 
-            var journal = MakeActionButton("JOURNAL", () => OnOpenPanelRequested?.Invoke("journal"));
+            var journal = MakeActionButton(Tr("ui.dashboard.action.journal", "JOURNAL"), () => OnOpenPanelRequested?.Invoke("journal"));
             journal.CustomMinimumSize = new Vector2(92, 34);
             content.AddChild(journal);
 
-            var menu = MakeActionButton("MENU", () => OnMenuRequested?.Invoke(), true);
+            var menu = MakeActionButton(Tr("ui.dashboard.action.menu", "MENU"), () => OnMenuRequested?.Invoke(), true);
             menu.CustomMinimumSize = new Vector2(84, 34);
             content.AddChild(menu);
 
@@ -433,8 +433,8 @@ namespace AtomicWar.GodotApp.UI
             var content = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingMd);
             var heading = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingXs);
             heading.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-            heading.AddChild(AshfallUiHelpers.MakeSectionHeader("BUNKER OPERATIONS"));
-            heading.AddChild(AshfallUiHelpers.MakeMetadata("A quiet room, a working filter, and one more day to account for."));
+            heading.AddChild(AshfallUiHelpers.MakeSectionHeader(Tr("ui.dashboard.section.operations", "BUNKER OPERATIONS")));
+            heading.AddChild(AshfallUiHelpers.MakeMetadata(Tr("ui.dashboard.tagline", "A quiet room, a working filter, and one more day to account for.")));
             content.AddChild(heading);
 
             _weatherLabel = AshfallUiHelpers.MakeMono("WEATHER // UNREAD");
@@ -456,8 +456,8 @@ namespace AtomicWar.GodotApp.UI
             // player needs in the first days sit at the top of the rail,
             // visible without scrolling. Every other registered surface stays
             // reachable in the sections below — just not foregrounded.
-            content.AddChild(AshfallUiHelpers.MakeSectionHeader("WEEK ONE"));
-            content.AddChild(AshfallUiHelpers.MakeMetadata("THE SURFACES YOU NEED FIRST"));
+            content.AddChild(AshfallUiHelpers.MakeSectionHeader(Tr("ui.dashboard.section.week_one", "WEEK ONE")));
+            content.AddChild(AshfallUiHelpers.MakeMetadata(Tr("ui.dashboard.week_one_sub", "THE SURFACES YOU NEED FIRST")));
             AddNavButton(content, "OVERVIEW", "overview", true);
             AddNavButton(content, "INVENTORY", "inventory");
             AddNavButton(content, "GREENHOUSE", "greenhouse");
@@ -468,8 +468,8 @@ namespace AtomicWar.GodotApp.UI
             AddNavButton(content, "SETTINGS", "settings");
 
             content.AddChild(AshfallUiHelpers.MakeSeparator());
-            content.AddChild(AshfallUiHelpers.MakeSectionHeader("ALL SURFACES"));
-            content.AddChild(AshfallUiHelpers.MakeMetadata("SELECT A SURFACE"));
+            content.AddChild(AshfallUiHelpers.MakeSectionHeader(Tr("ui.dashboard.section.all", "ALL SURFACES")));
+            content.AddChild(AshfallUiHelpers.MakeMetadata(Tr("ui.dashboard.select_surface", "SELECT A SURFACE")));
             content.AddChild(AshfallUiHelpers.MakeSeparator());
 
             AddNavButton(content, "STATUS", "status");
@@ -508,7 +508,7 @@ namespace AtomicWar.GodotApp.UI
             AddNavButton(content, "GUIDANCE", "guidance");
 
             content.AddChild(AshfallUiHelpers.MakeSeparator());
-            content.AddChild(AshfallUiHelpers.MakeSectionHeader("EXPANSION SURFACES"));
+            content.AddChild(AshfallUiHelpers.MakeSectionHeader(Tr("ui.dashboard.section.expansion", "EXPANSION SURFACES")));
             AddNavButton(content, "POLITICS", "politics");
             AddNavButton(content, "PRISONERS", "prisoners");
             AddNavButton(content, "FORCED LABOR", "forced_labor");
@@ -543,8 +543,8 @@ namespace AtomicWar.GodotApp.UI
             // resolves to the live surface that owns its domain (see
             // RedirectPrototypeRoute in Main.PlayerSurfaces.cs).
             content.AddChild(AshfallUiHelpers.MakeSeparator());
-            content.AddChild(AshfallUiHelpers.MakeSectionHeader("SUBSYSTEM CONSOLES"));
-            content.AddChild(AshfallUiHelpers.MakeMetadata("ROUTED TO LIVE SURFACES"));
+            content.AddChild(AshfallUiHelpers.MakeSectionHeader(Tr("ui.dashboard.section.consoles", "SUBSYSTEM CONSOLES")));
+            content.AddChild(AshfallUiHelpers.MakeMetadata(Tr("ui.dashboard.routed", "ROUTED TO LIVE SURFACES")));
             AddNavButton(content, "MEMORIAL CENOTAPH", "iron_cenotaph_memorial");
             AddNavButton(content, "BIOGAS DIGESTER", "biogas_digester");
             AddNavButton(content, "FUNGAL FERMENTER", "fungal_protein_fermenter");
@@ -588,13 +588,13 @@ namespace AtomicWar.GodotApp.UI
             content.AddChild(new Control { SizeFlagsVertical = SizeFlags.ExpandFill });
             content.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            var save = MakeActionButton("SAVE LEDGER", () => OnSaveRequested?.Invoke());
+            var save = MakeActionButton(Tr("ui.dashboard.action.save_ledger", "SAVE LEDGER"), () => OnSaveRequested?.Invoke());
             save.CustomMinimumSize = new Vector2(0, 34);
             content.AddChild(save);
 
             if (OS.IsDebugBuild())
             {
-                var developer = MakeActionButton("DEV CONSOLE", () => OnDeveloperRequested?.Invoke());
+                var developer = MakeActionButton(Tr("ui.dashboard.action.dev_console", "DEV CONSOLE"), () => OnDeveloperRequested?.Invoke());
                 developer.CustomMinimumSize = new Vector2(0, 34);
                 content.AddChild(developer);
             }
@@ -621,8 +621,8 @@ namespace AtomicWar.GodotApp.UI
             column.SizeFlagsStretchRatio = 1.12f;
 
             var condition = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingSm);
-            condition.AddChild(AshfallUiHelpers.MakeSectionHeader("CONDITION REPORT"));
-            _shelterState = AshfallUiHelpers.MakeMetadata("SHELTER STATUS // HOLDING");
+            condition.AddChild(AshfallUiHelpers.MakeSectionHeader(Tr("ui.dashboard.section.condition", "CONDITION REPORT")));
+            _shelterState = AshfallUiHelpers.MakeMetadata(Tr("ui.dashboard.shelter_holding", "SHELTER STATUS // HOLDING"));
             _shelterState.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
             condition.AddChild(_shelterState);
             condition.AddChild(AshfallUiHelpers.MakeSeparator());
@@ -630,7 +630,7 @@ namespace AtomicWar.GodotApp.UI
             condition.AddChild(MakeGaugeRow("RADIATION", out _radiationBar, out _radiationValue, DesignTheme.Lethe));
             condition.AddChild(MakeGaugeRow("HUNGER", out _hungerBar, out _hungerValue, DesignTheme.Warm));
             condition.AddChild(MakeGaugeRow("THIRST", out _thirstBar, out _thirstValue, DesignTheme.Lethe));
-            _survivorSummary = AshfallUiHelpers.MakeMetadata("ROSTER // --");
+            _survivorSummary = AshfallUiHelpers.MakeMetadata(Tr("ui.dashboard.roster_placeholder", "ROSTER // --"));
             condition.AddChild(_survivorSummary);
             var conditionPanel = WrapSurface(condition);
             conditionPanel.SizeFlagsVertical = SizeFlags.ExpandFill;
@@ -638,27 +638,27 @@ namespace AtomicWar.GodotApp.UI
 
             // ── Air Filtration Card ──
             var airStack = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingSm);
-            airStack.AddChild(AshfallUiHelpers.MakeSectionHeader("AIR FILTRATION & ATMOSPHERE"));
-            _airQualityValue = AshfallUiHelpers.MakeMetadata("AIR QUALITY: 100% [STABLE]");
+            airStack.AddChild(AshfallUiHelpers.MakeSectionHeader(Tr("ui.dashboard.section.air", "AIR FILTRATION & ATMOSPHERE")));
+            _airQualityValue = AshfallUiHelpers.MakeMetadata(Tr("ui.dashboard.air_quality", "AIR QUALITY: 100% [STABLE]"));
             _airQualityValue.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
             airStack.AddChild(_airQualityValue);
             // Radon is a distinct environmental hazard with its own authored
             // thresholds (YearOfAshRadonSystem). It was previously fused into the
             // air-quality string while a dedicated _radonLabel field sat declared
             // but never built — so it is now its own readable row.
-            _radonLabel = AshfallUiHelpers.MakeMetadata("RADON: 12 Bq/m³ [STABLE]");
+            _radonLabel = AshfallUiHelpers.MakeMetadata(Tr("ui.dashboard.radon", "RADON: 12 Bq/m³ [STABLE]"));
             _radonLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Lethe));
             airStack.AddChild(_radonLabel);
             airStack.AddChild(AshfallUiHelpers.MakeSeparator());
             airStack.AddChild(MakeGaugeRow("HEPA FILTER", out _airFilterBar, out _airFilterValue, DesignTheme.Entropy));
 
             var airActions = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
-            _btnServiceFilter = MakeActionButton("SERVICE FILTER (-1 SCRAP)", () => OnServiceFilterRequested?.Invoke());
+            _btnServiceFilter = MakeActionButton(Tr("ui.dashboard.action.service_filter", "SERVICE FILTER (-1 SCRAP)"), () => OnServiceFilterRequested?.Invoke());
             _btnServiceFilter.CustomMinimumSize = new Vector2(0, 32);
             _btnServiceFilter.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             airActions.AddChild(_btnServiceFilter);
 
-            _btnReplaceFilter = MakeActionButton("REPLACE CORE (-1 HEPA)", () => OnReplaceFilterRequested?.Invoke());
+            _btnReplaceFilter = MakeActionButton(Tr("ui.dashboard.action.replace_core", "REPLACE CORE (-1 HEPA)"), () => OnReplaceFilterRequested?.Invoke());
             _btnReplaceFilter.CustomMinimumSize = new Vector2(0, 32);
             _btnReplaceFilter.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             airActions.AddChild(_btnReplaceFilter);
@@ -668,17 +668,17 @@ namespace AtomicWar.GodotApp.UI
             column.AddChild(airPanel);
 
             var directive = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingSm);
-            directive.AddChild(AshfallUiHelpers.MakeSectionHeader("CURRENT DIRECTIVE"));
-            _directiveText = AshfallUiHelpers.MakeBody("Keep the shelter quiet. Check the filter pressure before the next outdoor shift.");
+            directive.AddChild(AshfallUiHelpers.MakeSectionHeader(Tr("ui.dashboard.section.directive", "CURRENT DIRECTIVE")));
+            _directiveText = AshfallUiHelpers.MakeBody(Tr("ui.dashboard.keep_quiet", "Keep the shelter quiet. Check the filter pressure before the next outdoor shift."));
             directive.AddChild(_directiveText);
 
             var btnRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
-            var protocolButton = MakeActionButton("DIRECTIVES PROTOCOL", () => OnOpenPanelRequested?.Invoke("protocol"), true);
+            var protocolButton = MakeActionButton(Tr("ui.dashboard.action.directives", "DIRECTIVES PROTOCOL"), () => OnOpenPanelRequested?.Invoke("protocol"), true);
             protocolButton.CustomMinimumSize = new Vector2(0, 34);
             protocolButton.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             btnRow.AddChild(protocolButton);
 
-            var directiveButton = MakeActionButton("OPEN SHELTER", () => OnOpenPanelRequested?.Invoke("shelter"));
+            var directiveButton = MakeActionButton(Tr("ui.dashboard.action.open_shelter", "OPEN SHELTER"), () => OnOpenPanelRequested?.Invoke("shelter"));
             directiveButton.CustomMinimumSize = new Vector2(0, 34);
             directiveButton.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             btnRow.AddChild(directiveButton);
@@ -697,7 +697,7 @@ namespace AtomicWar.GodotApp.UI
             column.SizeFlagsStretchRatio = 0.88f;
 
             var stores = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingSm);
-            stores.AddChild(AshfallUiHelpers.MakeSectionHeader("STORES WATCH"));
+            stores.AddChild(AshfallUiHelpers.MakeSectionHeader(Tr("ui.dashboard.section.stores", "STORES WATCH")));
             _resourceSummary = AshfallUiHelpers.MakeMono("STORES // VALUE 100 · WATER 62 · FOOD 84 · FILTER 03");
             _resourceSummary.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Hot));
             stores.AddChild(_resourceSummary);
@@ -708,33 +708,33 @@ namespace AtomicWar.GodotApp.UI
             stores.AddChild(MakeLiveDataRow("MACHINE TELLS", "--", out _machineTellLabel, AshfallUiHelpers.ToColor(DesignTheme.Pale)));
             stores.AddChild(MakeLiveDataRow("MECHANICAL SCRAP", "--", out _scrapValue, AshfallUiHelpers.ToColor(DesignTheme.Dim)));
             stores.AddChild(MakeLiveDataRow("MEDICAL STOCK", "--", out _medicalValue, AshfallUiHelpers.ToColor(DesignTheme.Pale)));
-            var inventoryButton = MakeActionButton("OPEN INVENTORY", () => OnOpenPanelRequested?.Invoke("inventory"));
+            var inventoryButton = MakeActionButton(Tr("ui.dashboard.action.open_inventory", "OPEN INVENTORY"), () => OnOpenPanelRequested?.Invoke("inventory"));
             inventoryButton.CustomMinimumSize = new Vector2(0, 34);
             stores.AddChild(inventoryButton);
             column.AddChild(WrapSurface(stores));
 
             var report = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingSm);
-            report.AddChild(AshfallUiHelpers.MakeSectionHeader("FIELD & DUTY REPORT"));
+            report.AddChild(AshfallUiHelpers.MakeSectionHeader(Tr("ui.dashboard.section.field", "FIELD & DUTY REPORT")));
             _forecastLabel = AshfallUiHelpers.MakeMono("FORECAST // D01: CLEAR · D02: OVERCAST · D03: ASHFALL");
             _forecastLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Hot));
             report.AddChild(_forecastLabel);
 
-            _dutyRosterSummary = AshfallUiHelpers.MakeMetadata("DUTY ROSTER // INTAKE FILTRATION: Dr. Sarah Chen");
+            _dutyRosterSummary = AshfallUiHelpers.MakeMetadata(TrFormat("ui.dashboard.duty_intake", "Dr. Sarah Chen"));
             _dutyRosterSummary.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
             report.AddChild(_dutyRosterSummary);
 
-            _eventLabel = AshfallUiHelpers.MakeBody("No fresh signal. The radio is holding a weak carrier from the north line.");
+            _eventLabel = AshfallUiHelpers.MakeBody(Tr("ui.dashboard.event_default", "No fresh signal. The radio is holding a weak carrier from the north line."));
             _eventLabel.CustomMinimumSize = new Vector2(0, 44);
             report.AddChild(_eventLabel);
             report.AddChild(AshfallUiHelpers.MakeSeparator());
             report.AddChild(MakeLiveDataRow("OUTDOOR READ", "--", out _nextShiftValue, AshfallUiHelpers.ToColor(DesignTheme.Warm)));
             report.AddChild(MakeLiveDataRow("HATCH", "SEALED", out _hatchValue, AshfallUiHelpers.ToColor(DesignTheme.Pale)));
 
-            var rosterButton = MakeActionButton("DUTY ROSTER SHIFTS", () => OnOpenPanelRequested?.Invoke("duty_roster"));
+            var rosterButton = MakeActionButton(Tr("ui.dashboard.action.duty_roster", "DUTY ROSTER SHIFTS"), () => OnOpenPanelRequested?.Invoke("duty_roster"));
             rosterButton.CustomMinimumSize = new Vector2(0, 34);
             report.AddChild(rosterButton);
 
-            var advance = MakeActionButton("ADVANCE TO NEXT DAY", () => OnAdvanceDayRequested?.Invoke(), true);
+            var advance = MakeActionButton(Tr("ui.dashboard.action.advance_day", "ADVANCE TO NEXT DAY"), () => OnAdvanceDayRequested?.Invoke(), true);
             advance.CustomMinimumSize = new Vector2(0, 42);
             report.AddChild(advance);
             column.AddChild(WrapSurface(report));
@@ -750,7 +750,7 @@ namespace AtomicWar.GodotApp.UI
             content.AddChild(AshfallUiHelpers.MakeMetadata("[F1] HELP / TUTORIAL"));
             var spacer = new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill };
             content.AddChild(spacer);
-            var status = AshfallUiHelpers.MakeMetadata("AUTOSAVE // LEDGER READY");
+            var status = AshfallUiHelpers.MakeMetadata(Tr("ui.dashboard.autosave_ready", "AUTOSAVE // LEDGER READY"));
             status.HorizontalAlignment = HorizontalAlignment.Right;
             content.AddChild(status);
             return content;

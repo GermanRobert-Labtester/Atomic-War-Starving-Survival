@@ -1,8 +1,10 @@
 package catalogaudit
 
 import (
+	"encoding/json"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -502,6 +504,179 @@ func TestValidatePolicyRejectsExcludedWithoutReason(t *testing.T) {
 	if _, err := LoadPolicy(filepath.Join(root, "policy.json")); err == nil {
 		t.Fatal("expected an excluded rule without a reason to be rejected")
 	}
+}
+
+// H02 — a reference-rule allowlist entry no longer present in the source is stale.
+func TestStaleReferenceAllowlistIsReported(t *testing.T) {
+	root := t.TempDir()
+	seedValid(t, root)
+	p := testPolicy()
+	p.IDDomains = append(p.IDDomains, DomainRule{Domain: "canonical_item", Globs: []string{"items.json"}})
+	p.ReferenceRules = []ReferenceRule{{SourceGlob: "economy_goods.json", Field: "id", TargetDomain: "canonical_item", Allowlist: []string{"ghost_good"}}}
+	writeFile(t, filepath.Join(root, "data", "economy_goods.json"), `{"schema_version":1,"goods":[{"id":"bandage"}]}`)
+	rep, err := Run(root, p, NewBaseline())
+	if err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+	if !rep.HasStale() {
+		t.Fatalf("expected stale allowlist, got %v", rep.StaleBaseline)
+	}
+}
+
+// H03 — an id-domain whose globs match no catalog is dead policy.
+func TestDeadIDDomainGlobIsReported(t *testing.T) {
+	root := t.TempDir()
+	seedValid(t, root)
+	p := testPolicy()
+	p.IDDomains = append(p.IDDomains, DomainRule{Domain: "ghost_domain", Globs: []string{"ghost_*.json"}})
+	rep, err := Run(root, p, NewBaseline())
+	if err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+	if !hasFinding(rep, "policy_domain", "policy:domain-ghost_domain:dead-glob") {
+		t.Fatalf("expected dead-domain finding, got %+v", rep.Findings)
+	}
+}
+
+// H09 — DomainIDs returns the sorted ids for a domain.
+func TestDomainIDs(t *testing.T) {
+	root := t.TempDir()
+	seedValid(t, root)
+	ids, err := DomainIDs(root, testPolicy(), "item")
+	if err != nil {
+		t.Fatalf("DomainIDs: %v", err)
+	}
+	if len(ids) != 2 {
+		t.Fatalf("expected 2 item ids, got %v", ids)
+	}
+	if _, err := DomainIDs(root, testPolicy(), "nope"); err == nil {
+		t.Fatal("expected an unknown-domain error")
+	}
+}
+
+// H10 — an allowlist reason must reference an allowlisted value.
+func TestValidatePolicyRejectsReasonForNonAllowlistedValue(t *testing.T) {
+	root := t.TempDir()
+	writeFile(t, filepath.Join(root, "policy.json"), `{
+		"schema_version":"1.0.0",
+		"id_naming_regex":"^[a-z0-9_]+$",
+		"id_domains":[{"domain":"item","globs":["items.json"]}],
+		"reference_rules":[{"source_glob":"x.json","field":"id","target_domain":"item","allowlist":["a"],"allowlist_reasons":{"b":"why"}}]
+	}`)
+	if _, err := LoadPolicy(filepath.Join(root, "policy.json")); err == nil {
+		t.Fatal("expected a reason for a non-allowlisted value to be rejected")
+	}
+}
+
+// I01 — a rule that matches a file but finds no values fails closed.
+func TestReferenceRuleNoValuesFailsClosed(t *testing.T) {
+	root := t.TempDir()
+	seedValid(t, root)
+	p := testPolicy()
+	p.IDDomains = append(p.IDDomains, DomainRule{Domain: "canonical_item", Globs: []string{"items.json"}})
+	p.ReferenceRules = []ReferenceRule{{SourceGlob: "combat_catalog.json", Field: "nonexistent_field", TargetDomain: "canonical_item"}}
+	writeFile(t, filepath.Join(root, "data", "combat_catalog.json"), `{"schema_version":1,"ammo":[{"id":"bandage"}]}`)
+	rep, err := Run(root, p, NewBaseline())
+	if err != nil {
+		t.Fatalf("Run: %v", err)
+	}
+	if !hasFinding(rep, "reference_integrity", "policy:nonexistent_field:no-values") {
+		t.Fatalf("expected no-values finding, got %+v", rep.Findings)
+	}
+}
+
+// I02 — DuplicateIDs lists cross-domain duplicates.
+func TestDuplicateIDs(t *testing.T) {
+	root := t.TempDir()
+	seedValid(t, root)
+	writeFile(t, filepath.Join(root, "data", "shelter_location.json"), `{"schema_version":1,"locations":[{"id":"bandage"}]}`)
+	dupes, err := DuplicateIDs(root, testPolicy())
+	if err != nil {
+		t.Fatalf("DuplicateIDs: %v", err)
+	}
+	if len(dupes) != 1 || dupes[0].ID != "bandage" {
+		t.Fatalf("expected the bandage duplicate, got %+v", dupes)
+	}
+}
+
+// I04 — the policy doc must mention every authored policy field.
+func TestPolicyDocMentionsEveryField(t *testing.T) {
+	root := findRepoRoot(t)
+	raw, err := os.ReadFile(filepath.Join(root, "docs", "ci", "catalog_audit_policy.json"))
+	if err != nil {
+		t.Fatalf("read policy: %v", err)
+	}
+	var fields map[string]interface{}
+	if err := json.Unmarshal(raw, &fields); err != nil {
+		t.Fatalf("parse policy: %v", err)
+	}
+	doc, err := os.ReadFile(filepath.Join(root, "docs", "ci", "CATALOG_AUDIT_POLICY.md"))
+	if err != nil {
+		t.Fatalf("read doc: %v", err)
+	}
+	text := string(doc)
+	for key := range fields {
+		if !strings.Contains(text, "`"+key+"`") {
+			t.Errorf("CATALOG_AUDIT_POLICY.md does not document policy field %q", key)
+		}
+	}
+}
+
+// I12 — every declared domain resolves to at least one id.
+func TestEveryDeclaredDomainHasIDs(t *testing.T) {
+	root := findRepoRoot(t)
+	pol, err := LoadPolicy(filepath.Join(root, "docs", "ci", "catalog_audit_policy.json"))
+	if err != nil {
+		t.Fatalf("LoadPolicy: %v", err)
+	}
+	for _, d := range pol.IDDomains {
+		ids, err := DomainIDs(root, pol, d.Domain)
+		if err != nil {
+			t.Fatalf("DomainIDs(%s): %v", d.Domain, err)
+		}
+		if len(ids) == 0 {
+			t.Errorf("domain %q resolves to no ids", d.Domain)
+		}
+	}
+}
+
+// I14 — the shipped baseline carries provenance metadata.
+func TestShippedBaselineHasNoteAndVersion(t *testing.T) {
+	root := findRepoRoot(t)
+	raw, err := os.ReadFile(filepath.Join(root, "docs", "ci", "catalog_audit_baseline.json"))
+	if err != nil {
+		t.Fatalf("read baseline: %v", err)
+	}
+	var m map[string]interface{}
+	if err := json.Unmarshal(raw, &m); err != nil {
+		t.Fatalf("parse baseline: %v", err)
+	}
+	if _, ok := m["schema_version"]; !ok {
+		t.Error("baseline missing schema_version")
+	}
+	if _, ok := m["_note"]; !ok {
+		t.Error("baseline missing _note")
+	}
+}
+
+func findRepoRoot(t *testing.T) string {
+	t.Helper()
+	dir, err := os.Getwd()
+	if err != nil {
+		t.Fatalf("getwd: %v", err)
+	}
+	for i := 0; i < 8; i++ {
+		if _, err := os.Stat(filepath.Join(dir, "docs", "ci", "catalog_audit_policy.json")); err == nil {
+			return dir
+		}
+		parent := filepath.Dir(dir)
+		if parent == dir {
+			break
+		}
+		dir = parent
+	}
+	t.Skip("repository root with docs/ci/catalog_audit_policy.json not found")
+	return ""
 }
 
 func hasFinding(rep *Report, check, key string) bool {

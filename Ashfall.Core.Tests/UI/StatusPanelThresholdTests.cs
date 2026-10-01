@@ -3110,15 +3110,21 @@ namespace Ashfall.Core.Tests.UI
         [Fact]
         public void StringsCsv_CuratedPrefixesHaveNoDeadKey()
         {
-            // Task 10 — the curated prefix families are fully live in their panel.
-            var families = new (string Prefix, string File)[]
+            // Task 10 / loop — the curated prefix families are fully live in the
+            // file their own source column names, so a superseded row in any of
+            // them fails instead of lingering unnoticed. Keys required by the
+            // expedition presence guard are exempt (reserved, not superseded).
+            string[] prefixes =
             {
-                ("ui.cohort.", "src/UI/StartingCohortSetupPanel.cs"),
-                ("ui.shelter_hud.", "src/UI/ShelterHudPanel.cs"),
-                ("ui.dashboard.", "src/UI/GameDashboardPanel.cs"),
-                ("ui.ward.", "src/UI/MedicalWardPanel.cs"),
-                ("ui.medical.section.", "src/UI/MedicalPanel.cs"),
+                "ui.cohort.", "ui.shelter_hud.", "ui.dashboard.", "ui.ward.",
+                "ui.medical.section.", "ui.expedition.",
             };
+            var reserved = new System.Collections.Generic.HashSet<string>(StringComparer.Ordinal);
+            foreach (System.Text.RegularExpressions.Match m in
+                System.Text.RegularExpressions.Regex.Matches(
+                    Read("Ashfall.Core.Tests/Localization/ExpeditionLocaleKeysTests.cs"),
+                    "\\\"(ui\\.expedition\\.[A-Za-z0-9_.]+)\\\""))
+                reserved.Add(m.Groups[1].Value);
             var dead = new System.Collections.Generic.List<string>();
             var lines = Read("assets/l10n/strings.csv").Split('\n');
             for (int i = 1; i < lines.Length; i++)
@@ -3126,12 +3132,15 @@ namespace Ashfall.Core.Tests.UI
                 string line = lines[i].TrimEnd('\r');
                 if (line.Length == 0) continue;
                 var cols = SplitCsvLine(line);
-                if (cols.Length < 1) continue;
-                foreach (var (prefix, file) in families)
+                if (cols.Length < 4) continue;
+                foreach (string prefix in prefixes)
                 {
                     if (!cols[0].StartsWith(prefix, StringComparison.Ordinal)) continue;
-                    if (!Read(file).Contains("\"" + cols[0] + "\"", StringComparison.Ordinal))
-                        dead.Add(cols[0] + " -> " + file);
+                    if (reserved.Contains(cols[0])) continue;
+                    string source = cols[3].Trim();
+                    if (!source.StartsWith("src/", StringComparison.Ordinal)) continue;
+                    if (!Read(source).Contains("\"" + cols[0] + "\"", StringComparison.Ordinal))
+                        dead.Add(cols[0] + " -> " + source);
                 }
             }
             Assert.True(dead.Count == 0, "dead curated keys: " + string.Join("; ", dead));
@@ -3251,6 +3260,61 @@ namespace Ashfall.Core.Tests.UI
             // Loop-3 — the CI-friendly staleness-only mode is documented.
             string readme = Read("scripts/ci/README.md");
             Assert.Contains("--check-staleness-only", readme, StringComparison.Ordinal);
+        }
+
+        // ── Twelfth-wave task gates ───────────────────────────────────────
+
+        [Fact]
+        public void UiSources_DoNotRetypeWardBandLiteral()
+        {
+            // Task 9 — the ward reads no re-typed health/radiation bands.
+            string panel = Read("src/UI/MedicalWardPanel.cs");
+            Assert.DoesNotMatch(new System.Text.RegularExpressions.Regex(
+                "(Health|health|Radiation|radiation|[Dd]ose)\\s*(<|<=|>=|>)\\s*[0-9]"), panel);
+        }
+
+        [Fact]
+        public void StringsCsv_SourceColumnExistsForRegisteredPanels()
+        {
+            // Task 11 — every panel registered with the drift gate exists, so a
+            // renamed panel leaves no dangling gate entry.
+            string gate = Read("scripts/ci/l10n_drift_gate.py");
+            string root = Path.Combine(RepoRoot(), "src", "UI");
+            var missing = new System.Collections.Generic.List<string>();
+            foreach (System.Text.RegularExpressions.Match m in
+                System.Text.RegularExpressions.Regex.Matches(
+                    gate, "ROOT\\s*/\\s*\\\"src\\\"\\s*/\\s*\\\"UI\\\"\\s*/\\s*\\\"([A-Za-z0-9_]+\\.cs)\\\""))
+            {
+                string name = m.Groups[1].Value;
+                if (!File.Exists(Path.Combine(root, name))) missing.Add(name);
+            }
+            Assert.True(missing.Count == 0, "dangling registered panels: " + string.Join(", ", missing));
+        }
+
+        [Fact]
+        public void LocalizedSurfaces_CountStaysBounded()
+        {
+            // Task 12 — the registered-surface registry must not shrink silently.
+            string gate = Read("scripts/ci/l10n_drift_gate.py");
+            int count = System.Text.RegularExpressions.Regex.Matches(gate, "ROOT / \\\"src\\\" / \\\"UI\\\" /").Count;
+            Assert.True(count >= 20, $"registered localized surfaces shrank to {count} (floor 20)");
+        }
+
+        [Fact]
+        public void CiReadme_DocumentsGermanDuplicateBound()
+        {
+            // Task 13 — the German-duplicate bound is documented.
+            string readme = Read("scripts/ci/README.md");
+            Assert.Contains("StringsCsv_GermanDuplicates_StayBounded", readme, StringComparison.Ordinal);
+        }
+
+        [Fact]
+        public void UiLayoutArtifact_FailureCountMatchesStatus()
+        {
+            // Task 15 — the artifact status is derived from the failure count, so
+            // PASS always means failures==0.
+            string host = Read("src/Host/HostCli.Command.RunUiLayoutSelfTest.cs");
+            Assert.Contains("failures == 0 ? \"PASS\" : \"FAIL\"", host, StringComparison.Ordinal);
         }
     }
 }

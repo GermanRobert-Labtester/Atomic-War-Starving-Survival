@@ -1,3 +1,7 @@
+# FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED
+
+> **STATUS: FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED**
+
 # Expedition follow-up wave 7 — radar detail/status l10n + panel prep/badge l10n + locale pins
 
 > **STATUS: APPROVED BY USER**
@@ -43,10 +47,17 @@ gameplay decision change, no new authority.
 
 - No new save section, no mutable state, no gameplay decision change.
 - No new panel, no new authority, no Unity dependency.
-- No full test suite; no commit unless the user asks.
+- No full test suite. The user's explicit request to commit today's completed
+  work superseded the original no-commit boundary.
 
 ## Acceptance
 
-Host build 0/0; `ExpeditionLocaleKeysTests` green with the new keys pinned;
-`StringsCsvLocaleGateTests` 4/4; `LocalizationRatchetTests` 2/2;
-`--expedition-panel-uitest` PASS (bounded).
+Host build 0/0; `ExpeditionLocaleKeysTests` 3/3 with the new keys pinned;
+`ExpeditionPhaseTextSourceGateTests` 2/2; `StringsCsvLocaleGateTests` 4/4;
+`LocalizationRatchetTests` 2/2; `l10n_drift_gate` PASS (995 keys and German
+parity); bounded `--expedition-panel-uitest` PASS. Three loops: localized
+dynamic detail/status strings and pinned their keys; hardened inserted spaces
+around localized suffixes and reran the live modal probe; added a floor on the
+expedition locale key surface and verified it with the focused tests. Godot
+continues to report the same teardown RID/ObjectDB/resource warnings after the
+PASS summary; the command exits 0. Plan paths are released.

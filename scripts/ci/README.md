@@ -41,6 +41,10 @@ surfaces (`LOCALIZED_SURFACES`) is the registry of panels that resolve through
 `AshfallUiText`; a panel that starts localizing must be added there, and
 `LocalizedSurfaces_RegisteredInDriftGate` fails when one is missing.
 
+The catalog's German column may legitimately repeat a phrase across panels; the
+`StringsCsv_GermanDuplicates_StayBounded` gate pins the maximum reuse at 4 so a
+runaway copy-paste (a missing translation) fails instead of hiding.
+
 ## Other gates
 
 - `python3 scripts/ci/l10n_drift_gate.py` — localization key parity (en/de).

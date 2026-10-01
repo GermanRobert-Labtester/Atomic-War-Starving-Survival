@@ -131,9 +131,15 @@
     {
       "source_glob": "economy_goods.json",
       "field": "id",
+      "container": "goods",
       "target_domain": "canonical_item",
       "note": "G01: every economy good id must resolve to a canonical item (the 9mm_ammo class of bug). Three grandfathered market-projection ids are allowlisted.",
-      "allowlist": ["bandages", "coal", "crowbar"]
+      "allowlist": ["bandages", "coal", "crowbar"],
+      "allowlist_reasons": {
+        "bandages": "Legacy bulk-medical market-projection id, distinct from the `bandage` item; grandfathered by the Plan 56 economy tests.",
+        "coal": "Bulk fuel good with no single canonical item (multiple coal items exist); economy-only projection.",
+        "crowbar": "Tool good predating the item-id convention; grandfathered by the Plan 56 economy tests."
+      }
     },
     {
       "source_glob": "combat_catalog.json",

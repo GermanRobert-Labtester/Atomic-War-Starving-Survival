@@ -1,0 +1,66 @@
+// SPDX-License-Identifier: MIT
+// Source-level hygiene gate: every expedition phase label rendered by src/UI
+// must go through ExpeditionPhaseText — the single owner of phase wording —
+// so a new panel cannot reintroduce a raw (ExpeditionPhase)….ToString() label
+// that drifts from the localized ui.expedition.phase.* catalog rows.
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.RegularExpressions;
+using Xunit;
+
+namespace Ashfall.Core.Tests.UI
+{
+    public sealed class ExpeditionPhaseTextSourceGateTests
+    {
+        // A raw enum-to-display conversion of a phase value, e.g.
+        // ((ExpeditionPhase)exp.phase).ToString().ToUpperInvariant().
+        private static readonly Regex RawPhaseToString = new(
+            @"ExpeditionPhase\)[^\n;]*?\.ToString\(\)",
+            RegexOptions.Compiled);
+
+        [Fact]
+        public void Ui_DoesNotRenderRawExpeditionPhaseStrings()
+        {
+            string uiDir = FindUiDirectory();
+            var offenders = new List<string>();
+            foreach (string file in Directory.EnumerateFiles(uiDir, "*.cs", SearchOption.TopDirectoryOnly))
+            {
+                string name = Path.GetFileName(file);
+                if (name == "ExpeditionPhaseText.cs") continue;
+                string text = File.ReadAllText(file);
+                foreach (Match match in RawPhaseToString.Matches(text))
+                    offenders.Add($"{name}: {match.Value}");
+            }
+
+            Assert.True(offenders.Count == 0,
+                "src/UI must render expedition phase labels through ExpeditionPhaseText, not a raw " +
+                "(ExpeditionPhase)….ToString() conversion:\n" + string.Join("\n", offenders));
+        }
+
+        [Fact]
+        public void ExpeditionPanels_UseTheSharedPhaseTextHelper()
+        {
+            string uiDir = FindUiDirectory();
+            foreach (string name in new[] { "ExpeditionPanel.cs", "ExpeditionRadarPanel.cs" })
+            {
+                string path = Path.Combine(uiDir, name);
+                Assert.True(File.Exists(path), $"Could not find {name} under {uiDir}");
+                Assert.Contains("ExpeditionPhaseText.Label(", File.ReadAllText(path), StringComparison.Ordinal);
+            }
+        }
+
+        private static string FindUiDirectory()
+        {
+            var dir = new DirectoryInfo(AppContext.BaseDirectory);
+            while (dir != null)
+            {
+                string candidate = Path.Combine(dir.FullName, "src", "UI");
+                if (Directory.Exists(candidate) && File.Exists(Path.Combine(dir.FullName, "project.godot")))
+                    return candidate;
+                dir = dir.Parent;
+            }
+            throw new DirectoryNotFoundException("Could not locate src/UI from " + AppContext.BaseDirectory);
+        }
+    }
+}

@@ -489,6 +489,15 @@ ui.expedition.badge.map,[MAP] Discovers: {0},[KARTE] Entdeckt: {0},src/UI/Expedi
 ui.expedition.badge.unavailable,UNAVAILABLE — {0},NICHT VERFÜGBAR — {0},src/UI/ExpeditionPanel.cs
 ui.expedition.badge.cost_unavailable,Cost or requirement unavailable,Kosten oder Voraussetzung nicht erfüllt,src/UI/ExpeditionPanel.cs
 ui.expedition.dispatch_speed,DISPATCH SPEED SORTIE (1.5x),"SCHNELL-EINSATZ ENTSENDEN (1,5x)",src/UI/ExpeditionPanel.cs
+ui.expedition.dispatch_blocked,Dispatch blocked: {0},Einsatz blockiert: {0},src/UI/ExpeditionPanel.cs
+ui.expedition.encounter_title,ENCOUNTER,BEGEGNUNG,src/UI/ExpeditionPanel.cs
+ui.expedition.radar.detail.travel_value,{0}/{1} legs,{0}/{1} Abschnitte,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.detail.cargo_value,{0} items · {1:0}/{2:0} kg,{0} Gegenstände · {1:0}/{2:0} kg,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.host_unavailable,Unavailable — expedition host not bound.,Nicht verfügbar — Expeditionshost nicht gebunden.,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.shell_title,WASTELAND EXPEDITIONS // SORTIE PLANNER,ÖDLAND-EXPEDITIONEN // EINSATZPLANER,src/UI/ExpeditionPanel.cs
+ui.expedition.encounter_pending,ENCOUNTER #{0},BEGEGNUNG #{0},src/UI/ExpeditionPanel.cs
+ui.expedition.banner_encounter,[!] ENCOUNTER — {0} at {1} [{2}] # {3},[!] BEGEGNUNG — {0} bei {1} [{2}] Nr. {3},src/UI/ExpeditionPanel.cs
+ui.expedition.banner_specific,[!] {0} — {1} [{2}] # {3},[!] {0} — {1} [{2}] Nr. {3},src/UI/ExpeditionPanel.cs
 ui.status.expedition_injury,Expedition Injury,Expeditionsverletzung,src/UI/StatusPanel.cs
 ui.inventory.capacity_placeholder,CAPACITY // —,KAPAZITÄT // —,src/UI/InventoryPanel.cs
 ui.mainmenu.dev_run_tooltip,"Boot a fresh campaign and open the Item & Asset Inspector over it.","Startet eine neue Kampagne und öffnet darüber den Gegenstands- und Asset-Inspektor.",src/UI/MainMenuPanel.cs
@@ -944,3 +953,55 @@ ui.ward.sign,Sign: {0},Anzeichen: {0},src/UI/MedicalWardPanel.cs
 ui.ward.also,Also: {0},Außerdem: {0},src/UI/MedicalWardPanel.cs
 ui.ward.section.available,AVAILABLE PROCEDURES,VERFÜGBARE VERFAHREN,src/UI/MedicalWardPanel.cs
 ui.ward.section.administer,ADMINISTER TREATMENT,BEHANDLUNG VERABREICHEN,src/UI/MedicalWardPanel.cs
+ui.ward.label.category,Category,Kategorie,src/UI/MedicalWardPanel.cs
+ui.ward.label.isolation,Isolation Protocol,Isolationsprotokoll,src/UI/MedicalWardPanel.cs
+ui.ward.label.occupancy,Occupancy State,Belegungsstatus,src/UI/MedicalWardPanel.cs
+ui.ward.isolation.sealed,BIOHAZARD ISOLATION SEALED,BIOSICHERHEITSISOLATION VERSIEGELT,src/UI/MedicalWardPanel.cs
+ui.ward.isolation.standard,STANDARD VENTILATION,STANDARD-BELÜFTUNG,src/UI/MedicalWardPanel.cs
+ui.ward.occupied,OCCUPIED by {0},BELEGT von {0},src/UI/MedicalWardPanel.cs
+ui.ward.vacant_state,VACANT,FREI,src/UI/MedicalWardPanel.cs
+ui.ward.label.admitted_day,Admitted Day,Aufnahmetag,src/UI/MedicalWardPanel.cs
+ui.ward.sim_day,Sim Day {0},SIM-Tag {0},src/UI/MedicalWardPanel.cs
+ui.shelter_hud.section.stores,STORES WATCH,VORRATSWACHE,src/UI/ShelterHudPanel.cs
+ui.shelter_hud.open_inventory,OPEN INVENTORY,INVENTAR ÖFFNEN,src/UI/ShelterHudPanel.cs
+ui.shelter_hud.section.condition,CONDITION REPORT,ZUSTANDSBERICHT,src/UI/ShelterHudPanel.cs
+ui.shelter_hud.open_shelter,OPEN SHELTER,UNTERSTAND ÖFFNEN,src/UI/ShelterHudPanel.cs
+ui.shelter_hud.section.directive,CURRENT DIRECTIVE,AKTUELLE ANWEISUNG,src/UI/ShelterHudPanel.cs
+ui.shelter_hud.advance_day,ADVANCE TO NEXT DAY,ZUM NÄCHSTEN TAG,src/UI/ShelterHudPanel.cs
+ui.shelter_hud.save_ledger,SAVE LEDGER,JOURNAL SPEICHERN,src/UI/ShelterHudPanel.cs
+ui.shelter_hud.section.air,AIR FILTRATION,LUFTFILTERUNG,src/UI/ShelterHudPanel.cs
+ui.shelter_hud.service_filter,SERVICE FILTER (-1 SCRAP),FILTER WARTEN (-1 SCHROTT),src/UI/ShelterHudPanel.cs
+ui.shelter_hud.replace_hepa,REPLACE HEPA (-1 SPARE),HEPA ERSETZEN (-1 ERSATZ),src/UI/ShelterHudPanel.cs
+ui.dashboard.command,HOLDFAST COMMAND,HOLDFAST-KOMMANDO,src/UI/GameDashboardPanel.cs
+ui.dashboard.section.operations,BUNKER OPERATIONS,BUNKERBETRIEB,src/UI/GameDashboardPanel.cs
+ui.dashboard.tagline,A quiet room a working filter and one more day to account for.,Ein ruhiger Raum ein funktionierender Filter und ein weiterer Tag zum Abrechnen.,src/UI/GameDashboardPanel.cs
+ui.dashboard.section.week_one,WEEK ONE,ERSTE WOCHE,src/UI/GameDashboardPanel.cs
+ui.dashboard.week_one_sub,THE SURFACES YOU NEED FIRST,DIE OBERFLÄCHEN DIE DU ZUERST BRAUCHST,src/UI/GameDashboardPanel.cs
+ui.dashboard.section.all,ALL SURFACES,ALLE OBERFLÄCHEN,src/UI/GameDashboardPanel.cs
+ui.dashboard.select_surface,SELECT A SURFACE,OBERFLÄCHE AUSWÄHLEN,src/UI/GameDashboardPanel.cs
+ui.dashboard.section.expansion,EXPANSION SURFACES,ERWEITERUNGS-OBERFLÄCHEN,src/UI/GameDashboardPanel.cs
+ui.dashboard.section.consoles,SUBSYSTEM CONSOLES,SUBSYSTEM-KONSOLEN,src/UI/GameDashboardPanel.cs
+ui.dashboard.routed,ROUTED TO LIVE SURFACES,ZU LIVE-OBERFLÄCHEN GELEITET,src/UI/GameDashboardPanel.cs
+ui.dashboard.section.condition,CONDITION REPORT,ZUSTANDSBERICHT,src/UI/GameDashboardPanel.cs
+ui.dashboard.shelter_holding,SHELTER STATUS // HOLDING,UNTERSTANDSSTATUS // HALTEND,src/UI/GameDashboardPanel.cs
+ui.dashboard.roster_placeholder,ROSTER // --,BESATZUNG // --,src/UI/GameDashboardPanel.cs
+ui.dashboard.section.air,AIR FILTRATION & ATMOSPHERE,LUFTFILTERUNG & ATMOSPHÄRE,src/UI/GameDashboardPanel.cs
+ui.dashboard.air_quality,AIR QUALITY: 100% [STABLE],LUFTQUALITÄT: 100% [STABIL],src/UI/GameDashboardPanel.cs
+ui.dashboard.radon,RADON: 12 Bq/m³ [STABLE],RADON: 12 Bq/m³ [STABIL],src/UI/GameDashboardPanel.cs
+ui.dashboard.section.directive,CURRENT DIRECTIVE,AKTUELLE ANWEISUNG,src/UI/GameDashboardPanel.cs
+ui.dashboard.section.stores,STORES WATCH,VORRATSWACHE,src/UI/GameDashboardPanel.cs
+ui.dashboard.section.field,FIELD & DUTY REPORT,FELD- & DIENSTBERICHT,src/UI/GameDashboardPanel.cs
+ui.dashboard.action.journal,JOURNAL,TAGEBUCH,src/UI/GameDashboardPanel.cs
+ui.dashboard.action.menu,MENU,MENÜ,src/UI/GameDashboardPanel.cs
+ui.dashboard.action.save_ledger,SAVE LEDGER,JOURNAL SPEICHERN,src/UI/GameDashboardPanel.cs
+ui.dashboard.action.dev_console,DEV CONSOLE,ENTWICKLERKONSOLE,src/UI/GameDashboardPanel.cs
+ui.dashboard.action.directives,DIRECTIVES PROTOCOL,ANWEISUNGSPROTOKOLL,src/UI/GameDashboardPanel.cs
+ui.dashboard.action.open_shelter,OPEN SHELTER,UNTERSTAND ÖFFNEN,src/UI/GameDashboardPanel.cs
+ui.dashboard.action.open_inventory,OPEN INVENTORY,INVENTAR ÖFFNEN,src/UI/GameDashboardPanel.cs
+ui.dashboard.action.duty_roster,DUTY ROSTER SHIFTS,DIENSTPLAN-SCHICHTEN,src/UI/GameDashboardPanel.cs
+ui.shelter_hud.directive_default,Keep the shelter quiet. Check the filter pressure before the next outdoor shift.,Den Unterstand ruhig halten. Filterdruck vor der nächsten Außenschicht prüfen.,src/UI/ShelterHudPanel.cs
+ui.dashboard.action.service_filter,SERVICE FILTER (-1 SCRAP),FILTER WARTEN (-1 SCHROTT),src/UI/GameDashboardPanel.cs
+ui.dashboard.action.replace_core,REPLACE CORE (-1 HEPA),KERN ERSETZEN (-1 HEPA),src/UI/GameDashboardPanel.cs
+ui.dashboard.action.advance_day,ADVANCE TO NEXT DAY,ZUM NÄCHSTEN TAG,src/UI/GameDashboardPanel.cs
+ui.dashboard.event_default,No fresh signal. The radio is holding a weak carrier from the north line.,Kein frisches Signal. Das Radio hält einen schwachen Träger aus der Nordlinie.,src/UI/GameDashboardPanel.cs
+ui.dashboard.autosave_ready,AUTOSAVE // LEDGER READY,AUTOSPEICHERN // JOURNAL BEREIT,src/UI/GameDashboardPanel.cs

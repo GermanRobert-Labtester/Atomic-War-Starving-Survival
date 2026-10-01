@@ -20,6 +20,7 @@ import argparse
 import json
 import os
 import pathlib
+import re
 import subprocess
 import sys
 
@@ -159,6 +160,12 @@ def validate_ci_contract_files():
                 f"{rel}: 'schema_version' must be a string for a docs/ci contract file "
                 f"(found {type(data[sv_key]).__name__}: {data[sv_key]!r})"
             )
+        elif not re.fullmatch(r"\d+(\.\d+)*", data[sv_key]):
+            errors.append(f"{rel}: 'schema_version' {data[sv_key]!r} is not a dotted-numeric version")
+    existing = {p.name for p in CI_DIR.glob("*.json")}
+    for name in sorted(NON_CONTRACT_JSON):
+        if name not in existing:
+            errors.append(f"docs/ci/{name}: NON_CONTRACT_JSON exclusion points at a missing file (stale exclusion)")
     return errors
 
 

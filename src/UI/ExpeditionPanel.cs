@@ -250,7 +250,7 @@ namespace AtomicWar.GodotApp.UI
             rootBox.CustomMinimumSize = new Vector2(760, 0);
             center.AddChild(rootBox);
 
-            var header = AshfallUiHelpers.MakeTitle("WASTELAND EXPEDITIONS // SORTIE PLANNER", Ashfall.Core.UI.Theme.FontSizeH1);
+            var header = AshfallUiHelpers.MakeTitle(AshfallLocalization.Tr("ui.expedition.shell_title", "WASTELAND EXPEDITIONS // SORTIE PLANNER"), Ashfall.Core.UI.Theme.FontSizeH1);
             header.HorizontalAlignment = HorizontalAlignment.Center;
             rootBox.AddChild(header);
 
@@ -718,12 +718,12 @@ namespace AtomicWar.GodotApp.UI
                 card.AddChild(desc);
 
                 // Task 122: live world state — ownership, spoilage, ruin, threats.
-                var worldLine = BuildWorldStateLine(def.id);
+                var (worldLine, worldSevere) = BuildWorldStateLine(def.id);
                 if (!string.IsNullOrEmpty(worldLine))
                 {
                     var worldLabel = AshfallUiHelpers.MakeMono(worldLine);
                     worldLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(
-                        worldLine.Contains("RUINED") || worldLine.Contains("threat(s)")
+                        worldSevere
                             ? Ashfall.Core.UI.Theme.Critical
                             : Ashfall.Core.UI.Theme.Pale));
                     card.AddChild(worldLabel);
@@ -809,7 +809,7 @@ namespace AtomicWar.GodotApp.UI
                 });
                 btnDispatchStealth.Disabled = blocked || fitnessBlocked || chosen == null || _expeditionHost.Engine.Active.ContainsKey(chosen);
                 if (blocked && blockReason != null)
-                    btnDispatchStealth.TooltipText = $"Dispatch blocked: {blockReason}";
+                    btnDispatchStealth.TooltipText = TrFmt("ui.expedition.dispatch_blocked", "Dispatch blocked: {0}", blockReason);
                 btnDispatchStealth.CustomMinimumSize = new Vector2(200, 32);
                 dispatchRow.AddChild(btnDispatchStealth);
 
@@ -822,7 +822,7 @@ namespace AtomicWar.GodotApp.UI
                 });
                 btnDispatchSpeed.Disabled = blocked || fitnessBlocked || chosen == null || _expeditionHost.Engine.Active.ContainsKey(chosen);
                 if (blocked && blockReason != null)
-                    btnDispatchSpeed.TooltipText = $"Dispatch blocked: {blockReason}";
+                    btnDispatchSpeed.TooltipText = TrFmt("ui.expedition.dispatch_blocked", "Dispatch blocked: {0}", blockReason);
                 btnDispatchSpeed.CustomMinimumSize = new Vector2(220, 32);
                 dispatchRow.AddChild(btnDispatchSpeed);
 
@@ -834,30 +834,32 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
-        /// <summary>Live evolving-world line for a target location, or null when untouched ground.</summary>
-        private string? BuildWorldStateLine(string locationId)
+        /// <summary>Live evolving-world line for a target location, or null when
+        /// untouched ground. <c>Severe</c> is derived from the record flags, not
+        /// from the rendered text, so localization cannot change the color.</summary>
+        private (string? Text, bool Severe) BuildWorldStateLine(string locationId)
         {
-            if (_worldHost == null || string.IsNullOrEmpty(locationId)) return null;
+            if (_worldHost == null || string.IsNullOrEmpty(locationId)) return (null, false);
             var rec = _worldHost.LocationEvolution?.TryGetRecord(locationId);
             string? flavor = _worldHost.FlavorTextForLocation(locationId, _worldHost.Weather?.Current.ToString());
 
             if (rec == null)
             {
-                return string.IsNullOrEmpty(flavor) ? null : TruncateFlavor(flavor);
+                return string.IsNullOrEmpty(flavor) ? (null, false) : (TruncateFlavor(flavor), false);
             }
 
             string owner = rec.currentOwner == "none"
                 ? AshfallLocalization.Tr("ui.expedition.world_unclaimed", "unclaimed")
                 : rec.currentOwner.Replace("faction_", "");
-            string state = rec.isRuined ? AshfallLocalization.Tr("ui.expedition.world_ruined", " · RUINED") : string.Empty;
+            string state = rec.isRuined ? " " + AshfallLocalization.Tr("ui.expedition.world_ruined", "· RUINED") : string.Empty;
             string threats = rec.activeThreats.Count > 0
-                ? AshfallLocalization.TrFormat("ui.expedition.world_threats", rec.activeThreats.Count)
+                ? " " + AshfallLocalization.TrFormat("ui.expedition.world_threats", rec.activeThreats.Count)
                 : string.Empty;
             string line = TrFmt("ui.expedition.world_line", "WORLD: {0} · {1} spoilage{2}{3}",
                 owner, rec.lootDepletionFactor.ToString("P0"), state, threats);
             if (!string.IsNullOrEmpty(flavor))
                 line += "\n" + TruncateFlavor(flavor);
-            return line;
+            return (line, rec.isRuined || rec.activeThreats.Count > 0);
         }
 
         private static string TruncateFlavor(string flavor)
@@ -1038,7 +1040,7 @@ namespace AtomicWar.GodotApp.UI
                 var def = _expeditionHost.FindEncounter(p.encounterId);
                 string label = def != null && !string.IsNullOrEmpty(def.title)
                     ? def.title.ToUpperInvariant()
-                    : $"ENCOUNTER #{p.legIndex}";
+                    : TrFmt("ui.expedition.encounter_pending", "ENCOUNTER #{0}", p.legIndex);
 
                 var card = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingXs);
                 var row = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
@@ -1582,7 +1584,7 @@ namespace AtomicWar.GodotApp.UI
             card.CustomMinimumSize = new Vector2(480, 0);
             center.AddChild(card);
 
-            _encounterTitle = AshfallUiHelpers.MakeTitle("ENCOUNTER", Ashfall.Core.UI.Theme.FontSizeH2);
+            _encounterTitle = AshfallUiHelpers.MakeTitle(AshfallLocalization.Tr("ui.expedition.encounter_title", "ENCOUNTER"), Ashfall.Core.UI.Theme.FontSizeH2);
             _encounterTitle.HorizontalAlignment = HorizontalAlignment.Center;
             card.AddChild(_encounterTitle);
 
@@ -1634,8 +1636,10 @@ namespace AtomicWar.GodotApp.UI
 
             string phase = ExpeditionPhaseText.Label((ExpeditionPhase)surfaced.trigger.phase);
             _encounterBannerLabel.Text = surfaced.resolved_at_lead == false
-                ? $"[!] ENCOUNTER — {FormatSurvivorName(surfaced.trigger.survivorId)} at {surfaced.trigger.displayName} [{phase}] # {surfaced.trigger.encounterCount}"
-                : $"[!] {surfaced.title} — {FormatSurvivorName(surfaced.trigger.survivorId)} [{phase}] # {surfaced.trigger.encounterCount}";
+                ? TrFmt("ui.expedition.banner_encounter", "[!] ENCOUNTER — {0} at {1} [{2}] # {3}",
+                    FormatSurvivorName(surfaced.trigger.survivorId), surfaced.trigger.displayName, phase, surfaced.trigger.encounterCount)
+                : TrFmt("ui.expedition.banner_specific", "[!] {0} — {1} [{2}] # {3}",
+                    surfaced.title, FormatSurvivorName(surfaced.trigger.survivorId), phase, surfaced.trigger.encounterCount);
             _encounterBanner.Visible = true;
             _bannerTimer = BannerDuration;
             RefreshBannerProcessing();

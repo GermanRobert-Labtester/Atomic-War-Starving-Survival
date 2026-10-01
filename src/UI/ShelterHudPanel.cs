@@ -231,7 +231,7 @@ public partial class ShelterHudPanel : Control
         storesCol.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
         storesCol.SizeFlagsStretchRatio = 1.05f;
         storesCol.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
-        storesCol.AddChild(AshfallUiHelpers.MakeSectionHeader("STORES WATCH"));
+        storesCol.AddChild(AshfallUiHelpers.MakeSectionHeader(T("ui.shelter_hud.section.stores", "STORES WATCH")));
         var storeCols = new[]
         {
             new AshfallDataGrid.Column { Header = "Resource", MinWidth = 160, Alignment = AshfallDataGrid.ColumnAlign.Left },
@@ -243,7 +243,7 @@ public partial class ShelterHudPanel : Control
         _storesGrid.SizeFlagsVertical = Control.SizeFlags.ExpandFill;
         storesCol.AddChild(_storesGrid);
 
-        var inventoryBtn = AshfallUiHelpers.MakeButton("OPEN INVENTORY",
+        var inventoryBtn = AshfallUiHelpers.MakeButton(T("ui.shelter_hud.open_inventory", "OPEN INVENTORY"),
             () => OnOpenPanelRequested?.Invoke("inventory"));
         inventoryBtn.CustomMinimumSize = new Vector2(0, 30);
         storesCol.AddChild(inventoryBtn);
@@ -254,7 +254,7 @@ public partial class ShelterHudPanel : Control
         conditionCol.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
         conditionCol.SizeFlagsStretchRatio = 0.95f;
         conditionCol.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
-        conditionCol.AddChild(AshfallUiHelpers.MakeSectionHeader("CONDITION REPORT"));
+        conditionCol.AddChild(AshfallUiHelpers.MakeSectionHeader(T("ui.shelter_hud.section.condition", "CONDITION REPORT")));
         var condCols = new[]
         {
             new AshfallDataGrid.Column { Header = "Driver", MinWidth = 140, Alignment = AshfallDataGrid.ColumnAlign.Left },
@@ -266,7 +266,7 @@ public partial class ShelterHudPanel : Control
         _conditionGrid.SizeFlagsVertical = Control.SizeFlags.ExpandFill;
         conditionCol.AddChild(_conditionGrid);
 
-        var shelterBtn = AshfallUiHelpers.MakeButton("OPEN SHELTER",
+        var shelterBtn = AshfallUiHelpers.MakeButton(T("ui.shelter_hud.open_shelter", "OPEN SHELTER"),
             () => OnOpenPanelRequested?.Invoke("shelter"));
         shelterBtn.CustomMinimumSize = new Vector2(0, 30);
         conditionCol.AddChild(shelterBtn);
@@ -288,8 +288,8 @@ public partial class ShelterHudPanel : Control
         var directiveVBox = new VBoxContainer();
         directiveVBox.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
         directiveMargin.AddChild(directiveVBox);
-        directiveVBox.AddChild(AshfallUiHelpers.MakeSectionHeader("CURRENT DIRECTIVE"));
-        _directiveText = AshfallUiHelpers.MakeBody("Keep the shelter quiet. Check the filter pressure before the next outdoor shift.");
+        directiveVBox.AddChild(AshfallUiHelpers.MakeSectionHeader(T("ui.shelter_hud.section.directive", "CURRENT DIRECTIVE")));
+        _directiveText = AshfallUiHelpers.MakeBody(T("ui.shelter_hud.directive_default", "Keep the shelter quiet. Check the filter pressure before the next outdoor shift."));
         directiveVBox.AddChild(_directiveText);
         _eventLabel = new Label
         {
@@ -305,11 +305,11 @@ public partial class ShelterHudPanel : Control
         // Action row inside directive: advance day + save
         var actionSubRow = new HBoxContainer();
         actionSubRow.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
-        var advance = AshfallUiHelpers.MakeButton("ADVANCE TO NEXT DAY",
+        var advance = AshfallUiHelpers.MakeButton(T("ui.shelter_hud.advance_day", "ADVANCE TO NEXT DAY"),
             () => OnAdvanceDayRequested?.Invoke());
         advance.CustomMinimumSize = new Vector2(220, 34);
         actionSubRow.AddChild(advance);
-        var save = AshfallUiHelpers.MakeButton("SAVE LEDGER", () => OnSaveRequested?.Invoke());
+        var save = AshfallUiHelpers.MakeButton(T("ui.shelter_hud.save_ledger", "SAVE LEDGER"), () => OnSaveRequested?.Invoke());
         save.CustomMinimumSize = new Vector2(140, 34);
         actionSubRow.AddChild(save);
         directiveVBox.AddChild(actionSubRow);
@@ -324,16 +324,16 @@ public partial class ShelterHudPanel : Control
         var airVBox = new VBoxContainer();
         airVBox.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
         airMargin.AddChild(airVBox);
-        airVBox.AddChild(AshfallUiHelpers.MakeSectionHeader("AIR FILTRATION"));
+        airVBox.AddChild(AshfallUiHelpers.MakeSectionHeader(T("ui.shelter_hud.section.air", "AIR FILTRATION")));
         BuildAirGaugeRow(airVBox);
         var airActions = new HBoxContainer();
         airActions.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
-        _btnServiceFilter = AshfallUiHelpers.MakeButton("SERVICE FILTER (-1 SCRAP)",
+        _btnServiceFilter = AshfallUiHelpers.MakeButton(T("ui.shelter_hud.service_filter", "SERVICE FILTER (-1 SCRAP)"),
             () => OnServiceFilterRequested?.Invoke());
         _btnServiceFilter.CustomMinimumSize = new Vector2(0, 30);
         _btnServiceFilter.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
         airActions.AddChild(_btnServiceFilter);
-        _btnReplaceFilter = AshfallUiHelpers.MakeButton("REPLACE HEPA (-1 SPARE)",
+        _btnReplaceFilter = AshfallUiHelpers.MakeButton(T("ui.shelter_hud.replace_hepa", "REPLACE HEPA (-1 SPARE)"),
             () => OnReplaceFilterRequested?.Invoke());
         _btnReplaceFilter.CustomMinimumSize = new Vector2(0, 30);
         _btnReplaceFilter.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;

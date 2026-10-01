@@ -1,5 +1,73 @@
 # Current Task State
 
+## Expedition follow-up wave 7 — FULLY INTEGRATED (2026-10-02)
+
+Completed the next 15 localization/readability tasks across the expedition radar
+and prep panel, plus three audit loops. Added shared `ExpeditionPhaseText` source
+and source/locale pins; localized phase, rail, title, range-filter, dispatch
+blocker, encounter title, radar detail values, and spacing. **Evidence:** focused
+`ExpeditionPrepPlanTests` 50/50; `ExpeditionLocaleKeysTests` 3/3;
+`ExpeditionPhaseTextSourceGateTests` 2/2; `StringsCsvLocaleGateTests` 4/4;
+`LocalizationRatchetTests` 2/2; localization drift gate PASS (995 keys, 533
+localized-surface references, German parity); optimized host build 0 warnings /
+errors; bounded `--expedition-panel-uitest` PASS under 180 seconds. Godot still
+reports teardown RIDs/ObjectDB/resources after PASS. The UI smoke no longer runs
+the fatal survivor/fate cascade; the panel aftermath/modal/patrol/focus checks
+remain and the Core rescue/failure bridge test remains. Plan archived at
+`.ai/plans/integrated/playability/INTEGRATED_expedition-followup-wave7-2026-10-02.md`.
+No full suite.
+
+## Catalog hygiene follow-ups I01–I15 — FULLY INTEGRATED (2026-10-02)
+
+Final wave of the D→I catalog-hygiene session. All 15 rows landed:
+zero-value reference-rule fail-closed; `--dump-duplicates`; `mirror_by_catalog`
+in `--summary`; policy-doc drift test; `gotools_vet` gate (72 gates / 68 fast);
+manifest-header and int-count validation; inventory "Critical" column;
+dotted-numeric contract `schema_version`; per-gate `remediation` migrated into the
+manifest; README updates; domain-id and baseline-provenance tests;
+`--advisory-check` filter. **Evidence:** Go tests 34/34; gates `gotools_vet`,
+`catalog_audit`, `gotools_test`, `gate_inventory_drift`, `json_schema_policy`
+PASS; `--check-only` clean (72/68); `--check-inventory` PASS; `--explain`/artifact
+use the manifest remediation; `json-schema-policy-gate.py` PASS; whitespace +
+`git diff --check` clean. **SESSION CLOSEOUT: D01–D05, E01–E15, F01–F15,
+G01–G15, H01–H15, I01–I15 all integrated; no open rows.** No full suite; no
+commit; foreign dirty worktree preserved. Plan archived at
+`.ai/plans/integrated/data/INTEGRATED_catalog-health-gates-i01-i15-2026-10-02.md`.
+
+## Catalog hygiene follow-ups H01–H15 — FULLY INTEGRATED (2026-10-02)
+
+User-directed ("Continue with these small tasks completely finish all of them and
+suggest after"). All 15 rows landed: economy_goods container scoping; stale
+rule-allowlist and dead-domain detection; `--summary` mirror + per-rule counts;
+`--explain` remediation; `--check-only` field/classification/category/remediation
+validation; `--dump-ids`; `allowlist_reasons`; per-file mirror breakdown; dead
+exclusion detection; `--list-checks` rule listing; `docs/ci/CATALOG_AUDIT_POLICY.md`.
+**Evidence:** Go tests 29/29; gates `catalog_audit`, `gotools_test`,
+`gate_inventory_drift`, `json_schema_policy` PASS; `--check-only` clean (71 gates
+/ 67 fast); `--check-inventory` PASS; `--explain`/`--summary`/`--dump-ids`
+verified; `json-schema-policy-gate.py` PASS (712 data + 8 contract files);
+whitespace + `git diff --check` clean. H07 substituted (dynamic selftest tokens)
+with a fast required-field/classification pre-check. No full suite; no commit;
+foreign dirty worktree preserved. Plan archived at
+`.ai/plans/integrated/data/INTEGRATED_catalog-health-gates-h01-h15-2026-10-02.md`.
+
+## Catalog hygiene follow-ups G01–G15 — FULLY INTEGRATED (2026-10-02)
+
+User-directed ("Continue with these small tasks completely finish all of them and
+suggest after"). All 15 rows landed: `economy_goods`/`combat_catalog` → canonical-item
+reference rules (new `container` scope + allowlist); mirror ratchet;
+`--advisory-allowlist`, `--update-baseline` hint, `--list-advisories`; extended
+failure remediation; critical-gate `expected_summary` ratchet; contract
+`schema_version` string enforcement; inventory "Depends on" column; `--explain`;
+excluded-rule validation; docs refresh; empty-baseline and note-length tests.
+**Evidence:** Go tests 25/25; gates `catalog_audit`, `gotools_test`,
+`gate_inventory_drift`, `json_schema_policy` PASS; `--check-only` clean (71 gates
+/ 67 fast); `--check-inventory` PASS with the negative self-check; `--explain`
+verified; `json-schema-policy-gate.py` PASS (712 data + 8 contract files);
+whitespace + `git diff --check` clean. No full suite; no commit; foreign dirty
+worktree preserved. Plan archived at
+`.ai/plans/integrated/data/INTEGRATED_catalog-health-gates-g01-g15-2026-10-02.md`.
+
 ## Survival legibility eleventh wave (15 tasks × 3 substeps) + 3 find→repair→harden loops — FULLY INTEGRATED (2026-10-02)
 
 User-directed ("Continue with these small tasks completely finish all of them … repeat for

@@ -1,9 +1,9 @@
 {
-  "schema_version": "1.1.6",
-  "_schema_version_note": "1.1.0 — Plan 48 / C2[21] Phase 2: added version_gate and changelog_drift (fast, +2 gates); Phase 3: added save_support_window (full, +1 gate). 1.1.1 — Plans 210/214 audit package: added plan_integration_audit_drift and ui_design_map_drift (fast, +2 gates). 1.1.2 — W1 assurance: four fast monitors and release_required metadata on three full release gates. 1.1.3 — P008: added first_hour_onboarding_journey (fast, +1 gate) guarding the 7-stage onboarding floor. 1.1.4 — P096: added scene_binding_truth (fast, +1 gate) so no *Content.cs stub, unassigned/dangling scene script, PanelSceneLoader request-vs-root type mismatch, or pre-hidden bound content scene can regress. 1.1.5 — D01–D05 catalog-hygiene wave: added catalog_audit (fast, +1 gate) and content_certification (fast, +1 gate). 1.1.6 — E01–E15 follow-ups: added gotools_test, gate_inventory_drift, and content_utilization (fast, +3 gates).",
+  "schema_version": "1.1.7",
+  "_schema_version_note": "1.1.0 \u2014 Plan 48 / C2[21] Phase 2: added version_gate and changelog_drift (fast, +2 gates); Phase 3: added save_support_window (full, +1 gate). 1.1.1 \u2014 Plans 210/214 audit package: added plan_integration_audit_drift and ui_design_map_drift (fast, +2 gates). 1.1.2 \u2014 W1 assurance: four fast monitors and release_required metadata on three full release gates. 1.1.3 \u2014 P008: added first_hour_onboarding_journey (fast, +1 gate) guarding the 7-stage onboarding floor. 1.1.4 \u2014 P096: added scene_binding_truth (fast, +1 gate) so no *Content.cs stub, unassigned/dangling scene script, PanelSceneLoader request-vs-root type mismatch, or pre-hidden bound content scene can regress. 1.1.5 \u2014 D01\u2013D05 catalog-hygiene wave: added catalog_audit (fast, +1 gate) and content_certification (fast, +1 gate). 1.1.6 \u2014 E01\u2013E15 follow-ups: added gotools_test, gate_inventory_drift, and content_utilization (fast, +3 gates). 1.1.7 \u2014 I01\u2013I15: added gotools_vet (fast, +1 gate); migrated per-gate remediation hints into the manifest.",
   "description": "Authoritative manifest of all verification gates for ASHFALL shared between local runner and hosted CI",
-  "total_gates": 71,
-  "fast_tier_count": 67,
+  "total_gates": 72,
+  "fast_tier_count": 68,
   "gates": [
     {
       "gate_id": "whitespace_hygiene",
@@ -13,7 +13,8 @@
       "timeout_seconds": 30,
       "expected_summary": "No whitespace errors detected",
       "classification": "fast",
-      "critical": true
+      "critical": true,
+      "remediation": "bash scripts/ci/no-whitespace-churn.sh"
     },
     {
       "gate_id": "json_schema_policy",
@@ -23,7 +24,8 @@
       "timeout_seconds": 30,
       "expected_summary": "declare valid schema policy",
       "classification": "fast",
-      "critical": true
+      "critical": true,
+      "remediation": "python3 scripts/ci/json-schema-policy-gate.py"
     },
     {
       "gate_id": "build_core_tests",
@@ -33,7 +35,8 @@
       "timeout_seconds": 120,
       "expected_summary": "",
       "classification": "fast",
-      "critical": true
+      "critical": true,
+      "remediation": "dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo"
     },
     {
       "gate_id": "test_core_suite",
@@ -44,7 +47,8 @@
       "expected_summary": "Passed!",
       "classification": "full",
       "critical": true,
-      "release_required": true
+      "release_required": true,
+      "remediation": "dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo"
     },
     {
       "gate_id": "build_godot_host",
@@ -55,7 +59,8 @@
       "expected_summary": "",
       "classification": "fast",
       "critical": true,
-      "notes": "A host build that follows a freshly rebuilt Core recompiles the whole net8.0 host; measured over the old 120s cap under concurrent-agent load, so fast-tier runs failed intermittently. 180s is the fast-tier ceiling (run-gates.py MAX_GATE_TIMEOUT_SECONDS) and keeps the gate reliable without changing what it verifies."
+      "notes": "A host build that follows a freshly rebuilt Core recompiles the whole net8.0 host; measured over the old 120s cap under concurrent-agent load, so fast-tier runs failed intermittently. 180s is the fast-tier ceiling (run-gates.py MAX_GATE_TIMEOUT_SECONDS) and keeps the gate reliable without changing what it verifies.",
+      "remediation": "dotnet build Ashfall.csproj --nologo"
     },
     {
       "gate_id": "godot_import",
@@ -79,7 +84,8 @@
       "timeout_seconds": 60,
       "expected_summary": "DATA_INTEGRITY_SELFTEST PASS",
       "classification": "fast",
-      "critical": true
+      "critical": true,
+      "remediation": "godot --headless --path . -- --data-integrity-selftest"
     },
     {
       "gate_id": "bridge_removal",
@@ -298,7 +304,8 @@
       "timeout_seconds": 30,
       "expected_summary": "GATE PASS: triad drift",
       "classification": "fast",
-      "critical": true
+      "critical": true,
+      "remediation": "bash scripts/ci/triad-drift-gate.sh"
     },
     {
       "gate_id": "cli_catalog_drift",
@@ -308,7 +315,8 @@
       "timeout_seconds": 30,
       "expected_summary": "CLI catalog in sync",
       "classification": "fast",
-      "critical": true
+      "critical": true,
+      "remediation": "bash scripts/ci/generate-cli-catalog.sh"
     },
     {
       "gate_id": "save_store_matrix_drift",
@@ -318,7 +326,8 @@
       "timeout_seconds": 30,
       "expected_summary": "Save-store matrix is up to date",
       "classification": "fast",
-      "critical": true
+      "critical": true,
+      "remediation": "bash scripts/ci/generate-save-store-matrix.sh"
     },
     {
       "gate_id": "architecture_map_drift",
@@ -329,7 +338,8 @@
       "expected_summary": "Architecture map is up to date",
       "classification": "fast",
       "critical": true,
-      "notes": "The --check scan reads all 315 subsystem rows and measured 37.2s at baseline (a false FAIL against the old 30s cap; `generate-architecture-map.py --check` reported OK). Set to the 180s fast-tier ceiling for headroom under concurrent-agent load."
+      "notes": "The --check scan reads all 315 subsystem rows and measured 37.2s at baseline (a false FAIL against the old 30s cap; `generate-architecture-map.py --check` reported OK). Set to the 180s fast-tier ceiling for headroom under concurrent-agent load.",
+      "remediation": "python3 scripts/ci/generate-architecture-map.py"
     },
     {
       "gate_id": "plan_integration_audit_drift",
@@ -360,7 +370,8 @@
       "timeout_seconds": 180,
       "expected_summary": "COMPILER WARNING BASELINE GATE PASSED",
       "classification": "fast",
-      "critical": true
+      "critical": true,
+      "remediation": "bash scripts/ci/warning-baseline-gate.sh"
     },
     {
       "gate_id": "docs_index_drift",
@@ -370,7 +381,8 @@
       "timeout_seconds": 120,
       "expected_summary": "Master docs index is up to date",
       "classification": "fast",
-      "critical": true
+      "critical": true,
+      "remediation": "python3 scripts/ci/generate-docs-index.py"
     },
     {
       "gate_id": "forbidden_core_apis",
@@ -380,7 +392,8 @@
       "timeout_seconds": 30,
       "expected_summary": "Forbidden Core API Gate PASSED",
       "classification": "fast",
-      "critical": true
+      "critical": true,
+      "remediation": "bash scripts/ci/forbidden-api-gate.sh"
     },
     {
       "gate_id": "catch_policy_lint",
@@ -390,7 +403,8 @@
       "timeout_seconds": 30,
       "expected_summary": "Catch Policy Lint Gate PASSED",
       "classification": "fast",
-      "critical": true
+      "critical": true,
+      "remediation": "bash scripts/ci/catch-policy-gate.sh"
     },
     {
       "gate_id": "persistent_filename_registry",
@@ -400,7 +414,8 @@
       "timeout_seconds": 30,
       "expected_summary": "Persistent Filename Gate Passed",
       "classification": "fast",
-      "critical": true
+      "critical": true,
+      "remediation": "bash scripts/ci/persistent-filename-gate.sh"
     },
     {
       "gate_id": "central_package_management",
@@ -410,7 +425,8 @@
       "timeout_seconds": 30,
       "expected_summary": "Central Package Management Gate Passed",
       "classification": "fast",
-      "critical": true
+      "critical": true,
+      "remediation": "bash scripts/ci/nuget-dependency-gate.sh"
     },
     {
       "gate_id": "doc_link_portability",
@@ -471,7 +487,8 @@
       "timeout_seconds": 30,
       "expected_summary": "",
       "classification": "fast",
-      "critical": true
+      "critical": true,
+      "remediation": "python3 scripts/ci/generate-catalog-registry.py"
     },
     {
       "gate_id": "agent_rulebooks_sync",
@@ -596,7 +613,8 @@
       "expected_summary": "[releasepolicy] PASS",
       "classification": "fast",
       "critical": true,
-      "depends_on": []
+      "depends_on": [],
+      "remediation": "go run -C tools/gotools ./cmd/releasepolicy --root ../.. --out ../../build/reports/monitoring/release-policy.json"
     },
     {
       "gate_id": "repository_size_budget",
@@ -693,7 +711,7 @@
     },
     {
       "gate_id": "version_gate",
-      "name": "Version Drift Gate — three-source agreement + strict semver (Plan 48 / C2[21])",
+      "name": "Version Drift Gate \u2014 three-source agreement + strict semver (Plan 48 / C2[21])",
       "category": "Release",
       "command": "python3 scripts/ci/version-gate.py",
       "timeout_seconds": 30,
@@ -735,35 +753,42 @@
     },
     {
       "gate_id": "catalog_audit",
-      "name": "Catalog Hygiene Audit — reference integrity, cross-domain duplicate ids, id naming, schema_version drift (D01–D04)",
+      "name": "Catalog Hygiene Audit \u2014 reference integrity, cross-domain duplicate ids, id naming, schema_version drift (D01\u2013D04)",
       "category": "Source Policy & Lint Gates",
       "command": "go run -C tools/gotools ./cmd/ashfall-dev audit-catalogs --root ../.. --check",
       "timeout_seconds": 120,
       "expected_summary": "CATALOG_AUDIT PASS",
       "classification": "fast",
-      "critical": true
+      "critical": true,
+      "remediation": "go run -C tools/gotools ./cmd/ashfall-dev audit-catalogs --root ../.. --json"
     },
     {
       "gate_id": "content_certification",
-      "name": "Content Orphan Certification — live/dormant/orphan verdicts over the Plan 49 family manifest (D05 / DEC-62)",
+      "name": "Content Orphan Certification \u2014 live/dormant/orphan verdicts over the Plan 49 family manifest (D05 / DEC-62)",
       "category": "Host Selftests & Lifecycle",
       "command": "bash scripts/ci/run-godot-bounded.sh --path . -- --content-certification-selftest",
       "timeout_seconds": 60,
       "expected_summary": "content-certification-selftest",
       "classification": "fast",
       "critical": false,
-      "depends_on": ["build_godot_host"]
+      "depends_on": [
+        "build_godot_host"
+      ],
+      "remediation": "bash scripts/ci/run-godot-bounded.sh --path . -- --content-certification-selftest"
     },
     {
       "gate_id": "content_utilization",
-      "name": "Content Utilization Ratchet — no GAMEPLAY_CONSUMED regression or new orphan vs baseline (Ticket #127)",
+      "name": "Content Utilization Ratchet \u2014 no GAMEPLAY_CONSUMED regression or new orphan vs baseline (Ticket #127)",
       "category": "Host Selftests & Lifecycle",
       "command": "bash scripts/ci/run-godot-bounded.sh --path . -- --content-utilization-selftest",
       "timeout_seconds": 120,
       "expected_summary": "Content Utilization Self-Test",
       "classification": "fast",
       "critical": false,
-      "depends_on": ["build_godot_host"]
+      "depends_on": [
+        "build_godot_host"
+      ],
+      "remediation": "bash scripts/ci/run-godot-bounded.sh --path . -- --content-utilization-selftest"
     },
     {
       "gate_id": "gotools_test",
@@ -773,7 +798,8 @@
       "timeout_seconds": 180,
       "expected_summary": "ok",
       "classification": "fast",
-      "critical": false
+      "critical": false,
+      "remediation": "go test -C tools/gotools ./..."
     },
     {
       "gate_id": "gate_inventory_drift",
@@ -783,7 +809,19 @@
       "timeout_seconds": 30,
       "expected_summary": "GATE_INVENTORY PASS",
       "classification": "fast",
-      "critical": false
+      "critical": false,
+      "remediation": "python3 scripts/ci/run-gates.py --write-inventory docs/ci/GATE_INVENTORY.md"
+    },
+    {
+      "gate_id": "gotools_vet",
+      "name": "Go Tooling Vet (tools/gotools)",
+      "category": "Build & Tests",
+      "command": "go vet -C tools/gotools ./...",
+      "timeout_seconds": 180,
+      "expected_summary": "",
+      "classification": "fast",
+      "critical": false,
+      "remediation": "go vet -C tools/gotools ./..."
     }
   ]
 }

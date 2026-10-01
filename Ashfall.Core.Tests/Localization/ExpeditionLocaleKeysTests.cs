@@ -18,6 +18,10 @@ namespace Ashfall.Core.Tests.Localization
         private static readonly Regex PlaceholderPattern = new(
             @"\{([A-Za-z_][A-Za-z0-9_]*|\d+)(?::[^}]*)?\}", RegexOptions.Compiled);
 
+        /// <summary>A ui.expedition.* catalog key literal embedded in UI source.</summary>
+        private static readonly Regex UiExpeditionKeyPattern = new(
+            @"\"(ui\.expedition\.[A-Za-z0-9_.]+)\"", RegexOptions.Compiled);
+
         private static readonly string[] RequiredKeys =
         {
             "ui.expedition.prep_header",
@@ -34,6 +38,14 @@ namespace Ashfall.Core.Tests.Localization
             "ui.expedition.danger",
             "ui.expedition.dispatch_stealth",
             "ui.expedition.dispatch_speed",
+            "ui.expedition.dispatch_blocked",
+            "ui.expedition.encounter_title",
+            "ui.expedition.encounter_pending",
+            "ui.expedition.banner_encounter",
+            "ui.expedition.banner_specific",
+            "ui.expedition.shell_title",
+            "ui.expedition.radar.rail.median_value",
+            "ui.expedition.host_unavailable",
             "ui.expedition.section.active",
             "ui.expedition.section.pending",
             "ui.expedition.section.prep",
@@ -88,7 +100,9 @@ namespace Ashfall.Core.Tests.Localization
             "ui.expedition.radar.rail.enc_pct",
             "ui.expedition.radar.detail.scout",
             "ui.expedition.radar.detail.travel",
+            "ui.expedition.radar.detail.travel_value",
             "ui.expedition.radar.detail.cargo",
+            "ui.expedition.radar.detail.cargo_value",
             "ui.expedition.radar.detail.encounter_hr",
             "ui.expedition.radar.detail.route",
             "ui.expedition.radar.sortie_title",
@@ -233,6 +247,70 @@ namespace Ashfall.Core.Tests.Localization
 
             Assert.True(missing.Count == 0,
                 "expedition phase values without a catalog key: " + string.Join("; ", missing));
+        }
+
+        /// <summary>
+        /// Floor for the expedition catalog surface. The per-key pin above
+        /// names the keys a feature currently uses; this catches a wholesale
+        /// trim of the ui.expedition.* block (bad merge, overzealous cleanup)
+        /// that drops keys no test names explicitly. Ratchet down, never up:
+        /// lower the floor only when a key is intentionally retired.
+        /// </summary>
+        [Fact]
+        public void ExpeditionKeySurface_DoesNotRegress()
+        {
+            const int MinimumExpeditionKeys = 127;
+            int count = 0;
+            foreach (string line in File.ReadAllLines(Path.Combine(RepoRoot(), "assets", "l10n", "strings.csv")))
+            {
+                if (string.IsNullOrWhiteSpace(line) || line.StartsWith("#", StringComparison.Ordinal)) continue;
+                string[] row = ParseCsvLine(line);
+                if (row.Length == 4 && row[0].StartsWith("ui.expedition.", StringComparison.Ordinal)) count++;
+            }
+
+            Assert.True(count >= MinimumExpeditionKeys,
+                $"ui.expedition.* catalog keys dropped below the floor: {count} < {MinimumExpeditionKeys}.");
+        }
+
+        /// <summary>
+        /// Every <c>ui.expedition.*</c> literal referenced by the expedition UI
+        /// panels must have a catalog row. The pinned list above names the keys
+        /// a feature consumes today; this ties the source to the catalog, so a
+        /// new <c>AshfallLocalization.Tr("ui.expedition.new_thing")</c> call
+        /// without its row fails instead of silently falling back to the English
+        /// literal. Covers the radar and camp panels, which the CI drift gate's
+        /// registered-surface list does not.
+        /// </summary>
+        [Fact]
+        public void EveryUiExpeditionKeyLiteral_HasACatalogRow()
+        {
+            var keys = new HashSet<string>(StringComparer.Ordinal);
+            foreach (string line in File.ReadAllLines(Path.Combine(RepoRoot(), "assets", "l10n", "strings.csv")))
+            {
+                if (string.IsNullOrWhiteSpace(line) || line.StartsWith("#", StringComparison.Ordinal)) continue;
+                string[] row = ParseCsvLine(line);
+                if (row.Length == 4) keys.Add(row[0]);
+            }
+
+            string uiRoot = Path.Combine(RepoRoot(), "src", "UI");
+            var missing = new List<string>();
+            foreach (string file in new[]
+            {
+                "ExpeditionPanel.cs", "ExpeditionRadarPanel.cs",
+                "ExpeditionPhaseText.cs", "ExpeditionCampPanel.cs",
+            })
+            {
+                string path = Path.Combine(uiRoot, file);
+                if (!File.Exists(path)) continue;
+                foreach (Match match in UiExpeditionKeyPattern.Matches(File.ReadAllText(path)))
+                {
+                    string key = match.Groups[1].Value;
+                    if (!keys.Contains(key)) missing.Add($"{file}: {key}");
+                }
+            }
+
+            Assert.True(missing.Count == 0,
+                "expedition UI references catalog keys with no row: " + string.Join("; ", missing));
         }
     }
 }

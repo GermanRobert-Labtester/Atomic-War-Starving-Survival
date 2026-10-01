@@ -19,7 +19,14 @@ remains `Ashfall.Core.CatalogIntegrityValidator` (`data_integrity`).
 go run -C tools/gotools ./cmd/ashfall-dev audit-catalogs --root ../.. --check
 go run -C tools/gotools ./cmd/ashfall-dev audit-catalogs --root ../.. --check --strict-stale
 go run -C tools/gotools ./cmd/ashfall-dev audit-catalogs --root ../.. --json
+go run -C tools/gotools ./cmd/ashfall-dev audit-catalogs --root ../.. --summary
 go run -C tools/gotools ./cmd/ashfall-dev audit-catalogs --list-checks
+go run -C tools/gotools ./cmd/ashfall-dev audit-catalogs --root ../.. --list-advisories
+go run -C tools/gotools ./cmd/ashfall-dev audit-catalogs --root ../.. --list-advisories --advisory-check id_unit_suffix
+go run -C tools/gotools ./cmd/ashfall-dev audit-catalogs --root ../.. --dump-ids canonical_item
+go run -C tools/gotools ./cmd/ashfall-dev audit-catalogs --root ../.. --dump-duplicates
+go run -C tools/gotools ./cmd/ashfall-dev audit-catalogs --root ../.. --fail-on-advisory
+go run -C tools/gotools ./cmd/ashfall-dev audit-catalogs --root ../.. --report-json /tmp/cat-audit.json
 go run -C tools/gotools ./cmd/ashfall-dev audit-catalogs --root ../.. --update-baseline
 ```
 

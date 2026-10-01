@@ -45,6 +45,8 @@ type ReferenceRule struct {
 	// Allowlist documents values that are deliberately out of the target domain
 	// (e.g. grandfathered market-projection ids). Sorted + unique.
 	Allowlist []string `json:"allowlist,omitempty"`
+	// AllowlistReasons gives a human rationale per allowlisted value (H10).
+	AllowlistReasons map[string]string `json:"allowlist_reasons,omitempty"`
 	// Container, when set, scopes the check to the named root array (e.g. the
 	// `ammo` array of combat_catalog.json) instead of the whole document.
 	Container string `json:"container,omitempty"`
@@ -63,9 +65,10 @@ type ExcludedRule struct {
 // questline_master) have no primary-domain author. Non-failing: mirrors
 // legitimately own asset-only and quest-registry-only ids.
 type MirrorAdvisory struct {
-	MirrorCatalogs   int      `json:"mirror_catalogs"`
-	MirrorUnresolved int      `json:"mirror_unresolved"`
-	Sample           []string `json:"sample,omitempty"`
+	MirrorCatalogs   int            `json:"mirror_catalogs"`
+	MirrorUnresolved int            `json:"mirror_unresolved"`
+	ByCatalog        map[string]int `json:"by_catalog,omitempty"`
+	Sample           []string       `json:"sample,omitempty"`
 }
 
 // Policy is the authored audit policy (docs/ci/catalog_audit_policy.json).
@@ -115,6 +118,7 @@ type Report struct {
 	ParseErrors            []Finding       `json:"parse_errors,omitempty"`
 	ReferenceRulesExcluded []ExcludedRule  `json:"reference_rules_excluded,omitempty"`
 	MirrorResolution       *MirrorAdvisory `json:"mirror_resolution,omitempty"`
+	ReferenceRuleCounts    map[string]int  `json:"reference_rule_counts,omitempty"`
 	Checked                map[string]int  `json:"checked"`
 }
 
@@ -202,6 +206,11 @@ func validatePolicy(p Policy) error {
 		}
 		if err := checkSortedUnique("reference_rules.allowlist for "+r.SourceGlob+"."+r.Field, r.Allowlist); err != nil {
 			return err
+		}
+		for key := range r.AllowlistReasons {
+			if !containsString(r.Allowlist, key) {
+				return fmt.Errorf("reference rule %s.%s has allowlist_reasons for %q which is not in the allowlist", r.SourceGlob, r.Field, key)
+			}
 		}
 		enforced[r.SourceGlob+"|"+r.Field] = true
 	}
@@ -299,7 +308,7 @@ func Run(root string, p Policy, baseline Baseline) (*Report, error) {
 		return nil, fmt.Errorf("read data dir %s: %w", dataDir, err)
 	}
 
-	report := &Report{Checked: map[string]int{}}
+	report := &Report{Checked: map[string]int{}, ReferenceRuleCounts: map[string]int{}}
 	files := make([]catalogFile, 0, len(entries))
 	parseErrors := []Finding{}
 	for _, e := range entries {
@@ -380,6 +389,29 @@ func Run(root string, p Policy, baseline Baseline) (*Report, error) {
 
 	var findings []Finding
 
+	// H03 — a domain whose globs match no catalog is dead policy.
+	for _, rule := range p.IDDomains {
+		matchedDomain := false
+		for _, f := range files {
+			for _, g := range rule.Globs {
+				if globMatch(g, f.Name) {
+					matchedDomain = true
+					break
+				}
+			}
+			if matchedDomain {
+				break
+			}
+		}
+		if !matchedDomain {
+			findings = append(findings, Finding{
+				Check:  "policy_domain",
+				Key:    "policy:domain-" + rule.Domain + ":dead-glob",
+				Detail: fmt.Sprintf("id_domains entry %q matches no catalog", rule.Domain),
+			})
+		}
+	}
+
 	// D01 — reference integrity.
 	for _, rule := range p.ReferenceRules {
 		targets := targetIDs[rule.TargetDomain]
@@ -396,6 +428,8 @@ func Run(root string, p Policy, baseline Baseline) (*Report, error) {
 		for _, a := range rule.Allowlist {
 			allowed[a] = true
 		}
+		seenAllow := map[string]bool{}
+		valuesChecked := 0
 		matched := 0
 		for _, f := range files {
 			if !globMatch(rule.SourceGlob, f.Name) {
@@ -433,6 +467,10 @@ func Run(root string, p Policy, baseline Baseline) (*Report, error) {
 			}
 			for _, root := range roots {
 				walkStringValues(root, rule.Field, func(value string) {
+					valuesChecked++
+					if allowed[value] {
+						seenAllow[value] = true
+					}
 					if !targets[value] && !allowed[value] {
 						findings = append(findings, Finding{
 							Check:  "reference_integrity",
@@ -442,6 +480,23 @@ func Run(root string, p Policy, baseline Baseline) (*Report, error) {
 						})
 					}
 				})
+			}
+		}
+		report.ReferenceRuleCounts[rule.SourceGlob+"."+rule.Field] = valuesChecked
+		// I01 — a rule that matched a file but found no values is dead policy and
+		// must fail closed rather than silently checking nothing.
+		if matched > 0 && valuesChecked == 0 {
+			findings = append(findings, Finding{
+				Check:  "reference_integrity",
+				Key:    "policy:" + rule.Field + ":no-values",
+				Detail: fmt.Sprintf("field %q appears nowhere in the matched catalog(s); reference rule cannot be evaluated", rule.Field),
+			})
+		}
+		// H02 — a rule allowlist entry that no longer appears in the source is
+		// stale and must be pruned (the allowlist ratchets too).
+		for _, a := range rule.Allowlist {
+			if !seenAllow[a] {
+				report.StaleBaseline = append(report.StaleBaseline, "reference_allowlist:"+rule.SourceGlob+":"+rule.Field+":"+a)
 			}
 		}
 		// F01 — a reference rule whose source glob matches no catalog is dead
@@ -601,9 +656,25 @@ func Run(root string, p Policy, baseline Baseline) (*Report, error) {
 		if len(sample) > 10 {
 			sample = sample[:10]
 		}
+		unresolvedSet := map[string]bool{}
+		for _, id := range unresolved {
+			unresolvedSet[id] = true
+		}
+		byCatalog := map[string]int{}
+		for _, f := range files {
+			if f.Domain != "mirror" {
+				continue
+			}
+			for _, r := range f.IDs {
+				if unresolvedSet[r.ID] {
+					byCatalog[f.Name]++
+				}
+			}
+		}
 		report.MirrorResolution = &MirrorAdvisory{
 			MirrorCatalogs:   mirrorCatalogs,
 			MirrorUnresolved: len(unresolved),
+			ByCatalog:        byCatalog,
 			Sample:           sample,
 		}
 
@@ -664,6 +735,133 @@ func Run(root string, p Policy, baseline Baseline) (*Report, error) {
 	return report, nil
 }
 
+// DomainIDs returns the sorted ids belonging to a domain, resolved from the
+// domain rule's globs (the same target set reference rules use). Used by
+// `audit-catalogs --dump-ids`.
+func DomainIDs(root string, p Policy, domain string) ([]string, error) {
+	var globs []string
+	for _, rule := range p.IDDomains {
+		if rule.Domain == domain {
+			globs = append(globs, rule.Globs...)
+		}
+	}
+	if len(globs) == 0 {
+		return nil, fmt.Errorf("unknown id domain %q", domain)
+	}
+	dataDir := p.DataDir
+	if !filepath.IsAbs(dataDir) {
+		dataDir = filepath.Join(root, dataDir)
+	}
+	entries, err := os.ReadDir(dataDir)
+	if err != nil {
+		return nil, err
+	}
+	set := map[string]bool{}
+	for _, e := range entries {
+		if e.IsDir() || !strings.HasSuffix(strings.ToLower(e.Name()), ".json") {
+			continue
+		}
+		matched := false
+		for _, g := range globs {
+			if globMatch(g, e.Name()) {
+				matched = true
+				break
+			}
+		}
+		if !matched {
+			continue
+		}
+		raw, err := os.ReadFile(filepath.Join(dataDir, e.Name()))
+		if err != nil {
+			continue
+		}
+		var doc interface{}
+		if err := json.Unmarshal(raw, &doc); err != nil {
+			continue
+		}
+		walk(doc, "", func(key string, value interface{}) {
+			if key == "id" {
+				if s, ok := value.(string); ok && s != "" {
+					set[s] = true
+				}
+			}
+		})
+	}
+	ids := make([]string, 0, len(set))
+	for id := range set {
+		ids = append(ids, id)
+	}
+	sort.Strings(ids)
+	return ids, nil
+}
+
+// DuplicateEntry is one id defined across multiple assigned id-domains.
+type DuplicateEntry struct {
+	ID      string   `json:"id"`
+	Domains []string `json:"domains"`
+}
+
+// DuplicateIDs returns the cross-domain duplicate ids (mirror catalogs
+// excluded), regardless of the policy allowlist. Diagnostic for
+// `audit-catalogs --dump-duplicates`.
+func DuplicateIDs(root string, p Policy) ([]DuplicateEntry, error) {
+	dataDir := p.DataDir
+	if !filepath.IsAbs(dataDir) {
+		dataDir = filepath.Join(root, dataDir)
+	}
+	entries, err := os.ReadDir(dataDir)
+	if err != nil {
+		return nil, err
+	}
+	domainsByID := map[string]map[string]bool{}
+	for _, e := range entries {
+		if e.IsDir() || !strings.HasSuffix(strings.ToLower(e.Name()), ".json") {
+			continue
+		}
+		domain := domainFor(p, e.Name())
+		if domain == "mirror" {
+			continue
+		}
+		raw, err := os.ReadFile(filepath.Join(dataDir, e.Name()))
+		if err != nil {
+			continue
+		}
+		var doc interface{}
+		if err := json.Unmarshal(raw, &doc); err != nil {
+			continue
+		}
+		walk(doc, "", func(key string, value interface{}) {
+			if key != "id" {
+				return
+			}
+			s, ok := value.(string)
+			if !ok || s == "" {
+				return
+			}
+			set := domainsByID[s]
+			if set == nil {
+				set = map[string]bool{}
+				domainsByID[s] = set
+			}
+			set[domain] = true
+		})
+	}
+	out := []DuplicateEntry{}
+	for id, domains := range domainsByID {
+		if len(domains) < 2 {
+			continue
+		}
+		ds := make([]string, 0, len(domains))
+		for d := range domains {
+			ds = append(ds, d)
+		}
+		sort.Strings(ds)
+		out = append(out, DuplicateEntry{ID: id, Domains: ds})
+	}
+	sort.Slice(out, func(i, j int) bool { return out[i].ID < out[j].ID })
+	return out, nil
+}
+
 // BaselineFromReport builds a baseline from every current finding that is not
 // already acknowledged by the policy allowlist, so a freshly-generated baseline
 // reproduces the current corpus without double-recording policy decisions.
@@ -701,6 +899,15 @@ func domainFor(p Policy, name string) string {
 func globMatch(pattern, name string) bool {
 	ok, err := filepath.Match(pattern, name)
 	return err == nil && ok
+}
+
+func containsString(items []string, target string) bool {
+	for _, item := range items {
+		if item == target {
+			return true
+		}
+	}
+	return false
 }
 
 func itoa(n int) string {

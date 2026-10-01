@@ -29,9 +29,10 @@ python3 scripts/ci/run-gates.py --report-json artifacts/gates.json --no-fail-fas
 
 - **`catalog_audit`** (fast) — `ashfall-dev audit-catalogs --check --strict-stale`.
   Four checks: `reference_integrity` (D01), `duplicate_ids` (D02), `id_naming`
-  (D03), `schema_version_drift` (D04), plus two non-failing advisories
+  (D03), `schema_version_drift` (D04), plus non-failing advisories
   (`id_unit_suffix`, `mirror_resolution`). Policy:
-  `docs/ci/catalog_audit_policy.json`; findings baseline:
+  `docs/ci/catalog_audit_policy.json` (documented in
+  [`CATALOG_AUDIT_POLICY.md`](CATALOG_AUDIT_POLICY.md)); findings baseline:
   `docs/ci/catalog_audit_baseline.json`. The runtime cross-reference authority
   remains `Ashfall.Core.CatalogIntegrityValidator` (the `data_integrity` gate).
 - **`content_certification`** (fast) — Plan 49 / DEC-62 orphan certification

@@ -266,13 +266,13 @@ namespace AtomicWar.GodotApp.UI
                 var activeAdmission = occupant != null ? _host.System.GetActiveAdmission(occupant) : null;
 
                 _inspectorContainer.AddChild(AshfallUiHelpers.MakeSectionHeader(TrFormat("ui.ward.bed_unit", currentBed.DisplayName.ToUpperInvariant())));
-                _inspectorContainer.AddChild(AshfallUiHelpers.MakeDataRow("Category", currentBed.Category.ToString(), AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
-                _inspectorContainer.AddChild(AshfallUiHelpers.MakeDataRow("Isolation Protocol", currentBed.Isolation ? "BIOHAZARD ISOLATION SEALED" : "STANDARD VENTILATION", AshfallUiHelpers.ToColor(currentBed.Isolation ? DesignTheme.Critical : DesignTheme.Pale)));
-                _inspectorContainer.AddChild(AshfallUiHelpers.MakeDataRow("Occupancy State", occupant != null ? $"OCCUPIED by {FormatSurvivorName(occupant)}" : "VACANT", AshfallUiHelpers.ToColor(occupant != null ? DesignTheme.Warm : DesignTheme.Dim)));
+                _inspectorContainer.AddChild(AshfallUiHelpers.MakeDataRow(Tr("ui.ward.label.category", "Category"), currentBed.Category.ToString(), AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
+                _inspectorContainer.AddChild(AshfallUiHelpers.MakeDataRow(Tr("ui.ward.label.isolation", "Isolation Protocol"), currentBed.Isolation ? Tr("ui.ward.isolation.sealed", "BIOHAZARD ISOLATION SEALED") : Tr("ui.ward.isolation.standard", "STANDARD VENTILATION"), AshfallUiHelpers.ToColor(currentBed.Isolation ? DesignTheme.Critical : DesignTheme.Pale)));
+                _inspectorContainer.AddChild(AshfallUiHelpers.MakeDataRow(Tr("ui.ward.label.occupancy", "Occupancy State"), occupant != null ? TrFormat("ui.ward.occupied", FormatSurvivorName(occupant)) : Tr("ui.ward.vacant_state", "VACANT"), AshfallUiHelpers.ToColor(occupant != null ? DesignTheme.Warm : DesignTheme.Dim)));
 
                 if (activeAdmission != null)
                 {
-                    _inspectorContainer.AddChild(AshfallUiHelpers.MakeDataRow("Admitted Day", $"Sim Day {activeAdmission.AdmittedDay}", AshfallUiHelpers.ToColor(DesignTheme.Pale)));
+                    _inspectorContainer.AddChild(AshfallUiHelpers.MakeDataRow(Tr("ui.ward.label.admitted_day", "Admitted Day"), TrFormat("ui.ward.sim_day", activeAdmission.AdmittedDay), AshfallUiHelpers.ToColor(DesignTheme.Pale)));
 
                     // ---- Plan 60 / D2: the clinical note, assembled by Core ----
                     var picture = _disease?.ClinicalPicture(activeAdmission.PatientId);

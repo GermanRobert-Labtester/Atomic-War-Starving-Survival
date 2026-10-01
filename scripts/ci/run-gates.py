@@ -165,13 +165,14 @@ def render_inventory(manifest):
         "measured durations land in every `--report-json` run (Task 24.10 budgets)."
     )
     out.append("")
-    out.append("| Tier | Gate | Category | Timeout ceiling | Depends on |")
-    out.append("|---|---|---|---|---|")
+    out.append("| Tier | Gate | Category | Timeout ceiling | Critical | Depends on |")
+    out.append("|---|---|---|---|---|---|")
     for g in gates:
         deps = ", ".join(g.get("depends_on", []) or []) or "—"
+        critical = "yes" if g.get("critical") else "no"
         out.append(
             f"| {g.get('classification', 'fast')} | `{g.get('gate_id', 'unknown')}` | "
-            f"{g.get('category', 'General')} | {g.get('timeout_seconds', 30)}s | {deps} |"
+            f"{g.get('category', 'General')} | {g.get('timeout_seconds', 30)}s | {critical} | {deps} |"
         )
     out.append("")
     out.append(INVENTORY_TIER_CONTRACT.rstrip("\n"))
@@ -250,7 +251,7 @@ def write_failure_artifact(artifact_path, failed_gates, total_gates, start_time,
         lines.append(f"### `{gid}` — {name}")
         lines.append(f"**Command:** `{cmd}`  ")
         lines.append(f"**Reason:** {g['error_reason']}  ")
-        hint = GATE_REMEDIATION.get(gid)
+        hint = g.get("remediation")
         if hint:
             lines.append(f"**Remediation:** `{hint}`  ")
         lines.append("")
@@ -339,33 +340,6 @@ def validate_dependencies(all_gates):
     return problems
 
 
-# F12/G06 — actionable remediation for gates most likely to be misread.
-GATE_REMEDIATION = {
-    "whitespace_hygiene": "bash scripts/ci/no-whitespace-churn.sh",
-    "json_schema_policy": "python3 scripts/ci/json-schema-policy-gate.py",
-    "build_core_tests": "dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo",
-    "test_core_suite": "dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo",
-    "build_godot_host": "dotnet build Ashfall.csproj --nologo",
-    "data_integrity": "godot --headless --path . -- --data-integrity-selftest",
-    "triad_drift": "bash scripts/ci/triad-drift-gate.sh",
-    "cli_catalog_drift": "bash scripts/ci/generate-cli-catalog.sh",
-    "save_store_matrix_drift": "bash scripts/ci/generate-save-store-matrix.sh",
-    "architecture_map_drift": "python3 scripts/ci/generate-architecture-map.py",
-    "catalog_registry_drift": "python3 scripts/ci/generate-catalog-registry.py",
-    "docs_index_drift": "python3 scripts/ci/generate-docs-index.py",
-    "forbidden_core_apis": "bash scripts/ci/forbidden-api-gate.sh",
-    "catch_policy_lint": "bash scripts/ci/catch-policy-gate.sh",
-    "persistent_filename_registry": "bash scripts/ci/persistent-filename-gate.sh",
-    "central_package_management": "bash scripts/ci/nuget-dependency-gate.sh",
-    "compiler_warning_baseline": "bash scripts/ci/warning-baseline-gate.sh",
-    "release_workflow_parity": "go run -C tools/gotools ./cmd/releasepolicy --root ../.. --out ../../build/reports/monitoring/release-policy.json",
-    "gate_inventory_drift": "python3 scripts/ci/run-gates.py --write-inventory docs/ci/GATE_INVENTORY.md",
-    "catalog_audit": "go run -C tools/gotools ./cmd/ashfall-dev audit-catalogs --root ../.. --json",
-    "gotools_test": "go test -C tools/gotools ./...",
-    "content_certification": "bash scripts/ci/run-godot-bounded.sh --path . -- --content-certification-selftest",
-    "content_utilization": "bash scripts/ci/run-godot-bounded.sh --path . -- --content-utilization-selftest",
-}
-
 # G07 — critical gates whose tooling has no stable output token (exit code is the
 # contract). Shrink-only: a NEW critical gate must declare an expected_summary.
 KNOWN_EMPTY_SUMMARY_CRITICAL = {
@@ -391,18 +365,91 @@ def validate_critical_summaries(manifest):
     return problems
 
 
+# H15 — category ratchet: new gates must reuse an existing category, not invent one.
+KNOWN_CATEGORIES = {
+    "Architecture & Catalog Gates",
+    "Build & Tests",
+    "Campaign Smoke",
+    "Code & Repo Hygiene",
+    "Drift & Architecture Gates",
+    "Drift guard",
+    "Host Selftests & Lifecycle",
+    "Performance",
+    "Quality & Verification",
+    "Release",
+    "Repository hygiene",
+    "Save Stores & Persistence",
+    "Source Policy & Lint Gates",
+    "UI & Accessibility",
+}
+
+
+def validate_gate_fields(manifest):
+    """H07 — fast pre-check mirroring the compiled manifest drift test."""
+    problems = []
+    allowed = {"fast", "full", "performance", "release"}
+    for g in manifest.get("gates", []):
+        gid = g.get("gate_id")
+        for field in ("gate_id", "name", "command"):
+            if not (g.get(field) or "").strip():
+                problems.append(f"gate {gid!r} has an empty/missing '{field}'")
+        if not isinstance(g.get("timeout_seconds"), int) or g.get("timeout_seconds", 0) <= 0:
+            problems.append(f"gate {gid!r} has a non-positive 'timeout_seconds'")
+        if g.get("classification") not in allowed:
+            problems.append(f"gate {gid!r} has invalid classification {g.get('classification')!r}")
+    return problems
+
+
+def validate_categories(manifest):
+    problems = []
+    for g in manifest.get("gates", []):
+        cat = g.get("category")
+        if cat not in KNOWN_CATEGORIES:
+            problems.append(
+                f"gate '{g.get('gate_id')}' uses unknown category {cat!r}; reuse an existing category "
+                f"or add it to KNOWN_CATEGORIES with a reason"
+            )
+    return problems
+
+
+def validate_remediation(manifest):
+    """I09 — a per-gate remediation hint must be a non-empty string when present."""
+    problems = []
+    for g in manifest.get("gates", []):
+        rem = g.get("remediation")
+        if rem is not None and not (isinstance(rem, str) and rem.strip()):
+            problems.append(f"gate '{g.get('gate_id')}' has an empty/non-string 'remediation'")
+    return problems
+
+
 def validate_manifest_counts(manifest):
-    """F08 — the header count fields must match the gates array."""
+    """F08/I15 — the header count fields must be ints and match the gates array."""
     problems = []
     gates = manifest.get("gates", [])
     actual_total = len(gates)
     actual_fast = sum(1 for g in gates if g.get("classification") == "fast")
     total = manifest.get("total_gates")
     fast = manifest.get("fast_tier_count")
-    if total != actual_total:
+    if not isinstance(total, int) or isinstance(total, bool):
+        problems.append(f"total_gates must be an integer, got {type(total).__name__}")
+    elif total != actual_total:
         problems.append(f"total_gates is {total} but the manifest declares {actual_total} gates")
-    if fast != actual_fast:
+    if not isinstance(fast, int) or isinstance(fast, bool):
+        problems.append(f"fast_tier_count must be an integer, got {type(fast).__name__}")
+    elif fast != actual_fast:
         problems.append(f"fast_tier_count is {fast} but {actual_fast} gates are classified 'fast'")
+    return problems
+
+
+def validate_manifest_header(manifest):
+    """I06 — schema_version and _schema_version_note must be present strings."""
+    problems = []
+    sv = manifest.get("schema_version")
+    if not (isinstance(sv, str) and sv.strip()):
+        problems.append("manifest 'schema_version' must be a non-empty string")
+    note = manifest.get("_schema_version_note")
+    if not (isinstance(note, str) and note.strip()):
+        problems.append("manifest '_schema_version_note' must be a non-empty string")
     return problems
 
 
@@ -461,6 +508,8 @@ def main():
         print(f"critical:         {gate.get('critical')}")
         print(f"expected_summary: {gate.get('expected_summary')!r}")
         print(f"depends_on:       {', '.join(gate.get('depends_on', []) or []) or '(none)'}")
+        hint = gate.get("remediation")
+        print(f"remediation:      {hint or '(none)'}")
         print(f"command:          {gate.get('command')}")
         return 0
 
@@ -520,6 +569,30 @@ def main():
             for p in summary_problems:
                 print(f"   - {p}", file=sys.stderr)
             return 1
+        header_problems = validate_manifest_header(manifest)
+        if header_problems:
+            print("❌ Error: manifest header problems:", file=sys.stderr)
+            for p in header_problems:
+                print(f"   - {p}", file=sys.stderr)
+            return 1
+        field_problems = validate_gate_fields(manifest)
+        if field_problems:
+            print("❌ Error: gate field problems:", file=sys.stderr)
+            for p in field_problems:
+                print(f"   - {p}", file=sys.stderr)
+            return 1
+        category_problems = validate_categories(manifest)
+        if category_problems:
+            print("❌ Error: gate category problems:", file=sys.stderr)
+            for p in category_problems:
+                print(f"   - {p}", file=sys.stderr)
+            return 1
+        remediation_problems = validate_remediation(manifest)
+        if remediation_problems:
+            print("❌ Error: gate remediation problems:", file=sys.stderr)
+            for p in remediation_problems:
+                print(f"   - {p}", file=sys.stderr)
+            return 1
         print(f"✅ Gate manifest valid: {len(all_gates)} total gates, "
               f"{len(gates_to_run)} in tier '{args.tier}', dependencies resolve cleanly.")
         return 0
@@ -570,6 +643,7 @@ def main():
                 "timeout_seconds": timeout,
                 "expected_summary": expected_summary,
                 "classification": gate.get("classification", "fast"),
+                "remediation": gate.get("remediation"),
                 "passed": False,
                 "blocked": True,
                 "quarantined": False,
@@ -636,6 +710,7 @@ def main():
             "timeout_seconds": timeout,
             "expected_summary": expected_summary,
             "classification": gate.get("classification", "fast"),
+            "remediation": gate.get("remediation"),
             "passed": passed,
             "blocked": False,
             "quarantined": False,

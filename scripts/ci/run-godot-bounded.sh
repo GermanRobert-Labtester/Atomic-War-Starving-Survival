@@ -18,9 +18,13 @@ set -euo pipefail
 # --check-staleness-only runs just the compiled-assembly staleness guard and
 # exits, so CI can gate on freshness without booting Godot.
 STALENESS_ONLY=0
+PRINT_ASSEMBLY_MTIME=0
 for arg in "$@"; do
     if [[ "$arg" == "--check-staleness-only" ]]; then
         STALENESS_ONLY=1
+    fi
+    if [[ "$arg" == "--print-assembly-mtime" ]]; then
+        PRINT_ASSEMBLY_MTIME=1
     fi
 done
 
@@ -54,6 +58,16 @@ if [[ "${ASHFALL_SKIP_BUILD_STALENESS:-0}" != "1" ]]; then
             exit 2
         fi
     fi
+fi
+
+if [[ "$PRINT_ASSEMBLY_MTIME" == "1" ]]; then
+    ASSEMBLY="$ROOT/.godot/mono/temp/bin/Debug/Ashfall.dll"
+    if [[ -f "$ASSEMBLY" ]]; then
+        stat -c '%Y %n' "$ASSEMBLY"
+        exit 0
+    fi
+    echo "assembly not built: $ASSEMBLY" >&2
+    exit 1
 fi
 
 if [[ "$STALENESS_ONLY" == "1" ]]; then

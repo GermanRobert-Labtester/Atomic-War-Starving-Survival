@@ -1,18 +1,18 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 5625 | **Total Characters:** 6,974,297,011 | **Last Verified:** 2026-10-02
-**Oversized (>= 100,000 characters):** 3553 documents carrying 6,942,353,763 characters — tracked in full, see the register below
+**Total Indexed Documents:** 5626 | **Total Characters:** 6,974,308,431 | **Last Verified:** 2026-10-02
+**Oversized (>= 100,000 characters):** 3553 documents carrying 6,942,360,369 characters — tracked in full, see the register below
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 5570 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 5571 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 53 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 2 |
 
 ---
 
-## Oversized Document Register (>= 100,000 characters) — 3553 documents, 6,942,353,763 characters
+## Oversized Document Register (>= 100,000 characters) — 3553 documents, 6,942,360,369 characters
 
 Authored plan and prose documents at or above the size threshold, recorded to the exact character count. These documents are tracked in full: the register reports their size so it stays visible and reviewable, and no document is excluded from the corpus or from this index.
 
@@ -1448,9 +1448,9 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 1,587,730 | [`docs/expansions/prose_wave137/cw137_17_the_ice_core_relay_does_not_finish_its_sentence_plan.md`](expansions/prose_wave137/cw137_17_the_ice_core_relay_does_not_finish_its_sentence_plan.md) |
 | 1,587,161 | [`docs/expansions/prose_wave137/cw137_09_the_name_page_is_torn_away_plan.md`](expansions/prose_wave137/cw137_09_the_name_page_is_torn_away_plan.md) |
 | 1,586,520 | [`docs/plans/integrated/content/INTEGRATED_cw128_13_fourteen_surnames_plan.md`](plans/integrated/content/INTEGRATED_cw128_13_fourteen_surnames_plan.md) |
+| 1,586,464 | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) |
 | 1,586,416 | [`docs/expansions/prose_wave133/cw133_19_three_hours_outside_the_bunker_plan.md`](expansions/prose_wave133/cw133_19_three_hours_outside_the_bunker_plan.md) |
 | 1,584,811 | [`docs/water/PLAN_168_FLUID_LOGISTICS_CLOSEOUT.md`](water/PLAN_168_FLUID_LOGISTICS_CLOSEOUT.md) |
-| 1,583,206 | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) |
 | 1,582,579 | [`docs/radio/PLAN_119_SENSOR_CHARACTERIZATION.md`](radio/PLAN_119_SENSOR_CHARACTERIZATION.md) |
 | 1,582,497 | [`docs/expansions/prose_wave132/cw132_01_five_point_one_seven_people_plan.md`](expansions/prose_wave132/cw132_01_five_point_one_seven_people_plan.md) |
 | 1,581,522 | [`docs/plans/integrated/content/INTEGRATED_cw128_02_the_hood_stayed_up_plan.md`](plans/integrated/content/INTEGRATED_cw128_02_the_hood_stayed_up_plan.md) |
@@ -2243,12 +2243,12 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 482,749 | [`docs/plans/integrated/content/integrated_cw118_05_the_first_week_plan.md`](plans/integrated/content/integrated_cw118_05_the_first_week_plan.md) |
 | 481,698 | [`docs/plans/integrated/content/integrated_cw119_09_triage_protocol_plan.md`](plans/integrated/content/integrated_cw119_09_triage_protocol_plan.md) |
 | 481,216 | [`docs/expansions/prose_wave117/cw117_03_the_names_column_by_the_ladder_plan.md`](expansions/prose_wave117/cw117_03_the_names_column_by_the_ladder_plan.md) |
+| 480,899 | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) |
 | 480,416 | [`docs/plans/integrated/content/integrated_cw118_04_the_final_entry_plan.md`](plans/integrated/content/integrated_cw118_04_the_final_entry_plan.md) |
 | 479,698 | [`docs/plans/integrated/content/integrated_cw118_03_the_ration_split_plan.md`](plans/integrated/content/integrated_cw118_03_the_ration_split_plan.md) |
 | 479,073 | [`piagentsplans/85-damaged-map-zones-expansion.md`](../piagentsplans/85-damaged-map-zones-expansion.md) |
 | 478,795 | [`docs/production/FOUNDRY_TREATY_LABOR_MATRIX.md`](production/FOUNDRY_TREATY_LABOR_MATRIX.md) |
 | 478,576 | [`docs/expansions/prose_wave117/cw117_08_chalk_on_the_valves_plan.md`](expansions/prose_wave117/cw117_08_chalk_on_the_valves_plan.md) |
-| 477,551 | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) |
 | 477,282 | [`docs/plans/integrated/content/INTEGRATED_cw118_09_the_warning_plan.md`](plans/integrated/content/INTEGRATED_cw118_09_the_warning_plan.md) |
 | 476,485 | [`docs/expansions/prose_wave116/cw116_08_a_square_of_sky_plan.md`](expansions/prose_wave116/cw116_08_a_square_of_sky_plan.md) |
 | 476,461 | [`docs/expansions/prose_wave117/cw117_01_the_thief_knows_this_wall_plan.md`](expansions/prose_wave117/cw117_01_the_thief_knows_this_wall_plan.md) |
@@ -3812,14 +3812,15 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/architecture/WORN_GEAR_CONSOLIDATION.md`](architecture/WORN_GEAR_CONSOLIDATION.md) | 2,323 | **WornGear consolidation** — Status: resolved, 2026-09-10. |
 | 🟢 `CURRENT` | [`sources.md`](../sources.md) | 50,832 | **Atomic War: Starving Survival — Comprehensive Codebase Exploration Report** — **Repository:** `GermanRobert-Labtester/Atomic-War-Starving-Survival` |
 
-## 2. CI, Fast-Tier Gates & Verification (6 documents)
+## 2. CI, Fast-Tier Gates & Verification (7 documents)
 
 | Status | Document | Characters | Title / Summary |
 |---|---|---|---|
 | 🟢 `CURRENT` | [`docs/CI.md`](CI.md) | 8,164 | **ASHFALL — Continuous Integration & Verification Guide** — **Authoritative host/engine:** Godot 4.7+ (.NET / C#) (`project.godot`) |
-| 🟢 `CURRENT` | [`docs/ci/GATE_INVENTORY.md`](ci/GATE_INVENTORY.md) | 6,254 | **CI Gate Inventory (Plan VIII · Task 24.1)** — Generated from `docs/ci/CI_GATE_MANIFEST.json` — 71 gates, 67 fast. Regenerate with `python3 scripts/ci/run-gates.py ... |
+| 🟢 `CURRENT` | [`docs/ci/CATALOG_AUDIT_POLICY.md`](ci/CATALOG_AUDIT_POLICY.md) | 2,962 | **Catalog Audit Policy (`docs/ci/catalog_audit_policy.json`)** — Read-only reference for the `catalog_audit` CI gate |
+| 🟢 `CURRENT` | [`docs/ci/GATE_INVENTORY.md`](ci/GATE_INVENTORY.md) | 6,743 | **CI Gate Inventory (Plan VIII · Task 24.1)** — Generated from `docs/ci/CI_GATE_MANIFEST.json` — 72 gates, 68 fast. Regenerate with `python3 scripts/ci/run-gates.py ... |
 | 🟢 `CURRENT` | [`docs/ci/GATING_VS_DIAGNOSTIC_CHECKS.md`](ci/GATING_VS_DIAGNOSTIC_CHECKS.md) | 9,509 | **ASHFALL — Verification Gates vs. Diagnostic-Only Checks** — **Date:** 2026-10-02 |
-| 🟢 `CURRENT` | [`docs/ci/README.md`](ci/README.md) | 5,418 | **ASHFALL CI — Canonical Verification Contract (Plan VIII · Task 24)** — One runner, one manifest, one meaning of "green". |
+| 🟢 `CURRENT` | [`docs/ci/README.md`](ci/README.md) | 5,485 | **ASHFALL CI — Canonical Verification Contract (Plan VIII · Task 24)** — One runner, one manifest, one meaning of "green". |
 | 🟢 `CURRENT` | [`docs/ci/TASK132_PRE2_BASELINE.md`](ci/TASK132_PRE2_BASELINE.md) | 8,675 | **Task #132 — PRE-2 Trusted Baseline** — Captured after PRE-1 (expedition test-oracle repair) and before any domain |
 | 🟢 `CURRENT` | [`docs/ci/content_reachability_dormant_triage.md`](ci/content_reachability_dormant_triage.md) | 9,566 | **Content-Reachability DORMANT Triage (T079)** — Generated from `docs/ci/content_reachability_dispositions.json`. Every entry |
 
@@ -6637,7 +6638,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`DESIGN.md`](../DESIGN.md) | 3,238 | **Design** — ASHFALL is a 2D atomic-war survival management game. The UI must reflect a cold, exhausted, human, restrained, materi... |
 | 🟢 `CURRENT` | [`GEMINI.md`](../GEMINI.md) | 18,363 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
 | 🟢 `CURRENT` | [`GOOSE.md`](../GOOSE.md) | 18,363 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
-| 🟢 `CURRENT` | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) | 477,551 | **ASHFALL Integration Plans** — User-directed ("Continue with these small tasks completely finish all of them and |
+| 🟢 `CURRENT` | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) | 480,899 | **ASHFALL Integration Plans** — Final wave of the D→I catalog-hygiene session. All 15 landed: zero-value |
 | 🟢 `CURRENT` | [`KNOWN_DEBT.md`](../KNOWN_DEBT.md) | 44,980 | **ASHFALL Known Debt** — Only current, decision-relevant debt belongs here. Historical detail lives in |
 | 🟢 `CURRENT` | [`MIMOCODE.md`](../MIMOCODE.md) | 18,363 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
 | 🟢 `CURRENT` | [`Next-steps-plans/Plan_132_Survivor_Hidden_Agendas_Betrayal_Arc.md`](../Next-steps-plans/Plan_132_Survivor_Hidden_Agendas_Betrayal_Arc.md) | 13,653 | **Plan 132 — Survivor Hidden Agendas & Betrayal Arc** — Create a persistent hidden-agenda system where survivors carry secret motivations, loyalties, and goals that unfold o... |
@@ -6974,7 +6975,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`Seal-steps/ashfall-wave2-successor-corpus-tranche-two-and-ship-readiness-program-2026-09-19.md`](../Seal-steps/ashfall-wave2-successor-corpus-tranche-two-and-ship-readiness-program-2026-09-19.md) | 90,201 | **ASHFALL — Wave 2, Program B: Successor Corpus Tranche-2 & Ship-Readiness Program** — This is Wave 2 Program B, the final forward document in the 2026-09-19 |
 | 🟢 `CURRENT` | [`TEST_POLICY.md`](../TEST_POLICY.md) | 5,220 | **ASHFALL Test Policy** — Tests protect current behavior; they are not a production-count target. This |
 | 🟢 `CURRENT` | [`VIBE.md`](../VIBE.md) | 18,363 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
-| 🟢 `CURRENT` | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) | 1,583,206 | **ASHFALL Worktree Ownership** — User-directed continuation ("Continue with these small tasks completely finish |
+| 🟢 `CURRENT` | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) | 1,586,464 | **ASHFALL Worktree Ownership** — User-directed ("... \| L01 \| Extend l10n drift gate to all dynamic key families \| L02 ... |
 | 🟢 `CURRENT` | [`addons/godot_mcp/commands/master_checklist.md`](../addons/godot_mcp/commands/master_checklist.md) | 1,457 | **Master Checklist** — - [x] 01. `project_creation_commands.gd` |
 | 🟢 `CURRENT` | [`addons/ziva_agent/LICENSE.md`](../addons/ziva_agent/LICENSE.md) | 282 | **Proprietary License** — All rights reserved. |
 | 🟢 `CURRENT` | [`addons/ziva_agent/README.md`](../addons/ziva_agent/README.md) | 2,787 | **Ziva AI Agent – The S-Tier AI Coding Assistant for Godot** — ![Godot 4.2+](https://godotengine.org/) |
@@ -6994,7 +6995,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/CODEX_CONTRACT.md`](CODEX_CONTRACT.md) | 2,369 | **CODEX READ-MODEL CONTRACT** — **Document Version:** 1.0.0 |
 | 🟢 `CURRENT` | [`docs/CODEX_SOURCE_MATRIX.md`](CODEX_SOURCE_MATRIX.md) | 2,840 | **CODEX KNOWLEDGE SOURCE MATRIX** — **Document Version:** 1.0.0 |
 | 🟢 `CURRENT` | [`docs/CONTENT_AUTHORITY_AND_MIGRATION_STATUS.md`](CONTENT_AUTHORITY_AND_MIGRATION_STATUS.md) | 2,572 | **ASHFALL — Content Authority & Migration Status (Plans 47–50)** — One index over the four content-authority domains. This page links; the |
-| 🟢 `CURRENT` | [`docs/CURRENT_AUTHORITY.md`](CURRENT_AUTHORITY.md) | 11,898 | **ASHFALL — Documentation Source-of-Truth & Authority Map** — **Date:** 2026-08-26 |
+| 🟢 `CURRENT` | [`docs/CURRENT_AUTHORITY.md`](CURRENT_AUTHORITY.md) | 12,300 | **ASHFALL — Documentation Source-of-Truth & Authority Map** — **Date:** 2026-08-26 |
 | 🟢 `CURRENT` | [`docs/ECONOMY_FAIRNESS_AUDIT.md`](ECONOMY_FAIRNESS_AUDIT.md) | 1,359 | **Economy fairness audit** — The economy pass is explainability-first. It does not rewrite the dynamic |
 | 🟢 `CURRENT` | [`docs/ECONOMY_PRICE_FACTOR_MATRIX.md`](ECONOMY_PRICE_FACTOR_MATRIX.md) | 1,211 | **Economy price-factor matrix** — The Core `MarketSystem` remains the pricing authority. `PriceExplanation` is a |
 | 🟢 `CURRENT` | [`docs/ENGINE_SUPPORT_POLICY.md`](ENGINE_SUPPORT_POLICY.md) | 4,036 | **ASHFALL Engine Support and Source-Authority Policy** — This document defines which engine and source tree is authoritative during the Unity-to-Godot strangler migration. |
@@ -9356,7 +9357,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`piagentsplans/README.md`](../piagentsplans/README.md) | 11,880 | **piagentsplans — ASHFALL Evidence-Grounded Next-Steps Plans** — Generated by forensic repository analysis (see `docs/ASHFALL_IMPLEMENTED_CANON_REGISTRY.md`, |
 | 🟢 `CURRENT` | [`potencially_weak-code.md`](../potencially_weak-code.md) | 1,099 | **Potentially Weak Code** — - **Finding:** `src/Host/HostCli.JourneyDiagnostics.cs` previously used an |
 | 🟢 `CURRENT` | [`scripts/README.md`](../scripts/README.md) | 9,405 | **ASHFALL — Script Catalog & Lifecycle Index** — This document catalogs all developer tools, CI gates, asset pipelines, and maintenance utilities under `scripts/`, cl... |
-| 🟢 `CURRENT` | [`scripts/ci/README.md`](../scripts/ci/README.md) | 2,465 | **ASHFALL CI scripts** — Bounded, deterministic verification entry points. Prefer these over invoking |
+| 🟢 `CURRENT` | [`scripts/ci/README.md`](../scripts/ci/README.md) | 2,694 | **ASHFALL CI scripts** — Bounded, deterministic verification entry points. Prefer these over invoking |
 | 🟢 `CURRENT` | [`scripts/ci/fixtures/plan_governance/invalid_category.md`](../scripts/ci/fixtures/plan_governance/invalid_category.md) | 103 | **Invalid category fixture** |
 | 🟢 `CURRENT` | [`scripts/ci/fixtures/plan_governance/legacy_plan.md`](../scripts/ci/fixtures/plan_governance/legacy_plan.md) | 158 | **Legacy plan fixture** — This fixture intentionally has no front matter. It must remain visible with a |
 | 🟢 `CURRENT` | [`scripts/ci/fixtures/plan_governance/stale_reference.md`](../scripts/ci/fixtures/plan_governance/stale_reference.md) | 283 | **Stale reference fixture** — The missing path is intentional and must produce a structured `MISSING_PATH` |
@@ -9371,7 +9372,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`semantic-review/2026-08-30-023250-pr-0.md`](../semantic-review/2026-08-30-023250-pr-0.md) | 20,700 | **Cross-wave campaign persistence and lifecycle authority** — The working diff adds lifecycle-group metadata and alias normalization, tightens current campaign-envelope validation... |
 | 🟢 `CURRENT` | [`test-helpers/README.md`](../test-helpers/README.md) | 493 | **Test Helpers & Pytest Infrastructure (Python)** — This directory hosts Python-specific test infrastructure: |
 | 🟢 `CURRENT` | [`tools/README.md`](../tools/README.md) | 7,824 | **ASHFALL — Non-Runtime Tools & Utilities Catalog** — **Date:** 2026-08-27<br> |
-| 🟢 `CURRENT` | [`tools/gotools/README.md`](../tools/gotools/README.md) | 1,632 | **ASHFALL Go Tooling (`tools/gotools`)** — Persistent development/CI tooling, invoked through `bin/ashfall-dev` |
+| 🟢 `CURRENT` | [`tools/gotools/README.md`](../tools/gotools/README.md) | 2,297 | **ASHFALL Go Tooling (`tools/gotools`)** — Persistent development/CI tooling, invoked through `bin/ashfall-dev` |
 | 🟡 `HISTORICAL` | [`Next-steps-plans/shipped_to_chat/Plan_218_Shelter_Museum_Historical_Archive.md`](../Next-steps-plans/shipped_to_chat/Plan_218_Shelter_Museum_Historical_Archive.md) | 254,597 | **Plan 218 — Shelter Museum Archive — Host, Projection, and Save Custody** — **VERIFIED Core:** `Assets/Ashfall.Core/Culture/ShelterMuseumSystem.cs`. **VERIFIED or absent host:** No ShelterMuseu... |
 | 🟡 `HISTORICAL` | [`docs/ARCHIVE_INDEX.md`](ARCHIVE_INDEX.md) | 2,510 | **ASHFALL Historical Documentation & External Archive Index** — This repository maintains a lean, living documentation corpus in `docs/` representing active, authoritative game spec... |
 | 🟡 `HISTORICAL` | [`docs/archive/ARCHIVE_INK_BALANCE_MATRIX.md`](archive/ARCHIVE_INK_BALANCE_MATRIX.md) | 2,402 | **Archive Ink Balance Matrix** — - **No Universal Dominance:** No single ink provides highest legibility, longest life, lowest fade, and lowest cost s... |

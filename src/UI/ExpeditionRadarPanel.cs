@@ -198,7 +198,7 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
             _statusRail.Set("active", "—", AshfallMetricCard.Criticality.Normal);
             _statusRail.Set("queued", "—", AshfallMetricCard.Criticality.Normal);
             _statusRail.Set("blocked", "—", AshfallMetricCard.Criticality.Caution);
-            _statusRail.Set("median", "— legs", AshfallMetricCard.Criticality.Normal);
+            _statusRail.Set("median", AshfallLocalization.Tr("ui.expedition.radar.rail.median_empty", "— legs"), AshfallMetricCard.Criticality.Normal);
             _statusRail.Set("danger", "—", AshfallMetricCard.Criticality.Normal);
             _statusRail.Set("enc", "—", AshfallMetricCard.Criticality.Normal);
             return;
@@ -243,7 +243,7 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
 
         if (_host == null)
         {
-            _activeGrid.SetRows(AshfallDataGrid.UnavailableRows(6, "Unavailable — expedition host not bound."));
+            _activeGrid.SetRows(AshfallDataGrid.UnavailableRows(6, AshfallLocalization.Tr("ui.expedition.host_unavailable", "Unavailable — expedition host not bound.")));
             return;
         }
 
@@ -282,7 +282,7 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
                 new($"{traveled}/{totalLegs} \u0394{remaining}", AshfallDataGrid.CellState.Normal),
                 new($"{exp.stamina:0}%", staminaState),
                 new($"{(exp.loot != null ? exp.loot.Count : 0)} \u00b7 {exp.currentWeightKg:0}/{exp.maxLootCapacityKg:0} kg", AshfallDataGrid.CellState.Normal),
-                new($"{exp.encounterCount}{(exp.isPushingLuck ? AshfallLocalization.Tr("ui.expedition.radar.push_suffix", " [PUSH]") : "")}{riskSuffix}", AshfallDataGrid.CellState.Normal),
+                new($"{exp.encounterCount}{(exp.isPushingLuck ? " " + AshfallLocalization.Tr("ui.expedition.radar.push_suffix", "[PUSH]") : "")}{riskSuffix}", AshfallDataGrid.CellState.Normal),
             };
             rows.Add(new AshfallDataGrid.Row { Cells = cells, Selectable = true });
         }
@@ -300,7 +300,7 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
 
         if (_host == null)
         {
-            _targetGrid.SetRows(AshfallDataGrid.UnavailableRows(6, "Unavailable — expedition host not bound."));
+            _targetGrid.SetRows(AshfallDataGrid.UnavailableRows(6, AshfallLocalization.Tr("ui.expedition.host_unavailable", "Unavailable — expedition host not bound.")));
             return;
         }
 
@@ -467,11 +467,13 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
             exp.stamina < 30f ? AshfallUiHelpers.ToColor(DesignTheme.Critical) :
             exp.stamina < 60f ? AshfallUiHelpers.ToColor(DesignTheme.Entropy) :
                                   AshfallUiHelpers.ToColor(DesignTheme.Dim)));
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallLocalization.Tr("ui.expedition.radar.detail.travel", "Travel"), $"{exp.travelTicksCompleted}/{exp.distanceTicks} legs",
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallLocalization.Tr("ui.expedition.radar.detail.travel", "Travel"),
+            AshfallLocalization.TrFormat("ui.expedition.radar.detail.travel_value", exp.travelTicksCompleted, exp.distanceTicks),
             AshfallUiHelpers.ToColor(DesignTheme.Dim)));
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallLocalization.Tr("ui.expedition.radar.detail.cargo", "Cargo"), $"{(exp.loot != null ? exp.loot.Count : 0)} items \u00b7 {exp.currentWeightKg:0}/{exp.maxLootCapacityKg:0} kg",
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallLocalization.Tr("ui.expedition.radar.detail.cargo", "Cargo"),
+            AshfallLocalization.TrFormat("ui.expedition.radar.detail.cargo_value", exp.loot != null ? exp.loot.Count : 0, exp.currentWeightKg, exp.maxLootCapacityKg),
             AshfallUiHelpers.ToColor(DesignTheme.Dim)));
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallLocalization.Tr("ui.expedition.radar.col.encounters", "Encounters"), $"{exp.encounterCount}{(exp.isPushingLuck ? AshfallLocalization.Tr("ui.expedition.radar.pushing_luck_suffix", " [PUSHING LUCK]") : string.Empty)}",
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallLocalization.Tr("ui.expedition.radar.col.encounters", "Encounters"), $"{exp.encounterCount}{(exp.isPushingLuck ? " " + AshfallLocalization.Tr("ui.expedition.radar.pushing_luck_suffix", "[PUSHING LUCK]") : string.Empty)}",
             exp.encounterCount > 0 ? AshfallUiHelpers.ToColor(DesignTheme.Entropy) : AshfallUiHelpers.ToColor(DesignTheme.Dim)));
     }
 
@@ -578,7 +580,7 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
                 {
                     new("The Works Allotment Commune", AshfallDataGrid.CellState.Normal),
                     new("5", AshfallDataGrid.CellState.Normal),
-                    new("LVL 2", AshfallDataGrid.CellState.Caution),
+                    new(AshfallLocalization.TrFormat("ui.expedition.radar.level_value", 2), AshfallDataGrid.CellState.Caution),
                     new("12%", AshfallDataGrid.CellState.Normal),
                     new("scrap_metal, clean_water, bandages, food_rations", AshfallDataGrid.CellState.Muted),
                     new("READY", AshfallDataGrid.CellState.Positive),
@@ -587,7 +589,7 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
                 {
                     new("Denial Cut Substation", AshfallDataGrid.CellState.Normal),
                     new("8", AshfallDataGrid.CellState.Normal),
-                    new("LVL 4", AshfallDataGrid.CellState.Critical),
+                    new(AshfallLocalization.TrFormat("ui.expedition.radar.level_value", 4), AshfallDataGrid.CellState.Critical),
                     new("18%", AshfallDataGrid.CellState.Normal),
                     new("dosimeter, copper_wire, fuel, item_hydro_baron_queue_chit", AshfallDataGrid.CellState.Muted),
                     new("READY", AshfallDataGrid.CellState.Positive),

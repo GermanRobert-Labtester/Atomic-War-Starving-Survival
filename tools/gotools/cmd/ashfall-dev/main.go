@@ -246,17 +246,10 @@ func runAuditCatalogs(args []string) {
 	summary := fs.Bool("summary", false, "Print a one-line JSON summary for CI logs")
 	listChecks := fs.Bool("list-checks", false, "List the audit checks and exit")
 	listAdvisories := fs.Bool("list-advisories", false, "Print the advisories (check, key, detail) and exit")
+	dumpIDs := fs.String("dump-ids", "", "Print the sorted ids of an id-domain and exit")
+	dumpDuplicates := fs.Bool("dump-duplicates", false, "Print cross-domain duplicate ids and exit")
+	advisoryCheck := fs.String("advisory-check", "", "With --list-advisories, only show advisories for this check name")
 	_ = fs.Parse(args)
-
-	if *listChecks {
-		fmt.Println("audit-catalogs checks:")
-		fmt.Println("  reference_integrity    declared reference fields resolve to a target id-domain (D01)")
-		fmt.Println("  duplicate_ids          an id defined across two different id-domains (D02)")
-		fmt.Println("  id_naming              ids conform to the canonical snake_case regex (D03)")
-		fmt.Println("  schema_version_drift   a catalog's schema_version matches its expected value (D04)")
-		fmt.Println("advisories (never fail): id_unit_suffix, mirror_resolution")
-		return
-	}
 
 	root, err := filepath.Abs(*rootDir)
 	if err != nil {
@@ -281,6 +274,55 @@ func runAuditCatalogs(args []string) {
 		fmt.Fprintf(os.Stderr, "[audit-catalogs] ERROR: %v\n", err)
 		os.Exit(2)
 	}
+	if *listChecks {
+		fmt.Println("audit-catalogs checks:")
+		fmt.Println("  reference_integrity    declared reference fields resolve to a target id-domain (D01)")
+		fmt.Println("  duplicate_ids          an id defined across two different id-domains (D02)")
+		fmt.Println("  id_naming              ids conform to the canonical snake_case regex (D03)")
+		fmt.Println("  schema_version_drift   a catalog's schema_version matches its expected value (D04)")
+		fmt.Println("  mirror_resolution_ratchet  mirror ids without a primary author stay under the policy ceiling")
+		fmt.Println("  policy_domain / reference_allowlist  dead-policy and stale-allowlist detection")
+		fmt.Println("advisories (never fail): id_unit_suffix, mirror_resolution")
+		fmt.Println("enforced reference rules:")
+		for _, r := range pol.ReferenceRules {
+			scope := r.SourceGlob + "." + r.Field
+			if r.Container != "" {
+				scope += "[" + r.Container + "]"
+			}
+			allow := ""
+			if len(r.Allowlist) > 0 {
+				allow = " (allowlist: " + strings.Join(r.Allowlist, ", ") + ")"
+			}
+			fmt.Printf("  %s -> %s%s\n", scope, r.TargetDomain, allow)
+		}
+		fmt.Println("excluded reference rules:")
+		for _, r := range pol.ReferenceRulesExcluded {
+			fmt.Printf("  %s.%s — %s\n", r.SourceGlob, r.Field, r.Reason)
+		}
+		return
+	}
+	if *dumpIDs != "" {
+		ids, err := catalogaudit.DomainIDs(root, pol, *dumpIDs)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "[audit-catalogs] ERROR: %v\n", err)
+			os.Exit(2)
+		}
+		for _, id := range ids {
+			fmt.Println(id)
+		}
+		return
+	}
+	if *dumpDuplicates {
+		dupes, err := catalogaudit.DuplicateIDs(root, pol)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "[audit-catalogs] ERROR: %v\n", err)
+			os.Exit(2)
+		}
+		for _, d := range dupes {
+			fmt.Printf("%s\t%s\n", d.ID, strings.Join(d.Domains, ","))
+		}
+		return
+	}
 	base, err := catalogaudit.LoadBaseline(baseline)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "[audit-catalogs] ERROR: %v\n", err)
@@ -303,6 +345,9 @@ func runAuditCatalogs(args []string) {
 
 	if *listAdvisories {
 		for _, a := range report.Advisories {
+			if *advisoryCheck != "" && a.Check != *advisoryCheck {
+				continue
+			}
 			fmt.Printf("%s\t%s\t%s\n", a.Check, a.Key, a.Detail)
 		}
 		return
@@ -311,7 +356,7 @@ func runAuditCatalogs(args []string) {
 	if *asJSON {
 		data, _ := json.MarshalIndent(report, "", "  ")
 		fmt.Println(string(data))
-	} else {
+	} else if !*summary {
 		fmt.Printf("[audit-catalogs] scanned %d catalogs, indexed %d ids\n", report.FilesScanned, report.IDsIndexed)
 		for _, f := range report.Findings {
 			fmt.Printf("  ✗ [%s] %s — %s\n", f.Check, f.Key, f.Detail)
@@ -345,13 +390,22 @@ func runAuditCatalogs(args []string) {
 		}
 	}
 	if *summary {
+		mirrorUnresolved := 0
+		mirrorByCatalog := map[string]int{}
+		if report.MirrorResolution != nil {
+			mirrorUnresolved = report.MirrorResolution.MirrorUnresolved
+			mirrorByCatalog = report.MirrorResolution.ByCatalog
+		}
 		s := map[string]interface{}{
-			"files_scanned": report.FilesScanned,
-			"findings":      len(report.Findings),
-			"acknowledged":  len(report.Accepted),
-			"advisories":    len(report.Advisories),
-			"parse_errors":  len(report.ParseErrors),
-			"stale":         len(report.StaleBaseline),
+			"files_scanned":     report.FilesScanned,
+			"findings":          len(report.Findings),
+			"acknowledged":      len(report.Accepted),
+			"advisories":        len(report.Advisories),
+			"parse_errors":      len(report.ParseErrors),
+			"stale":             len(report.StaleBaseline),
+			"mirror_unresolved": mirrorUnresolved,
+			"mirror_by_catalog": mirrorByCatalog,
+			"reference_rules":   report.ReferenceRuleCounts,
 		}
 		data, _ := json.Marshal(s)
 		fmt.Println(string(data))
@@ -376,7 +430,7 @@ func runAuditCatalogs(args []string) {
 			fmt.Printf("CATALOG_AUDIT FAIL (%d new finding(s), %d unreadable catalog(s), %d stale acknowledgement(s), %d advisory(ies))\n",
 				len(report.Findings), len(report.ParseErrors), len(report.StaleBaseline), len(report.Advisories))
 			if len(report.Findings) > 0 {
-				fmt.Printf("[audit-catalogs] if every finding is reviewed and intended, re-record with: %s --update-baseline\n", os.Args[0])
+				fmt.Printf("[audit-catalogs] after review, re-record with --update-baseline (baseline: %s)\n", baseline)
 			}
 			os.Exit(1)
 		}

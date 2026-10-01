@@ -295,6 +295,16 @@ namespace Ashfall.Core.Tests.Expeditions
         }
 
         [Fact]
+        public void OvernightLine_IsEmptyWithoutAnOvernightWindow()
+        {
+            var plan = new ExpeditionPrepPlan { OvernightNights = 0 };
+            Assert.Equal(string.Empty, plan.OvernightLine());
+
+            plan.OvernightNights = -2;
+            Assert.Equal(string.Empty, plan.OvernightLine());
+        }
+
+        [Fact]
         public void ReturnReport_CeremonyAndAftermath()
         {
             var state = new ExpeditionState
@@ -317,6 +327,24 @@ namespace Ashfall.Core.Tests.Expeditions
             Assert.Contains("SORTIE AFTERMATH", aftermath);
             Assert.Contains("Collapsed from exhaustion.", aftermath);
             Assert.Contains("lost in the field", aftermath);
+        }
+
+        [Fact]
+        public void ReturnReport_Aftermath_NamesEachLostLootLine()
+        {
+            var state = new ExpeditionState
+            {
+                survivorId = "survivor_test",
+                locationId = "loc_test",
+                displayName = "Test Site",
+                loot = new List<ExpeditionLootEntry>
+                {
+                    new ExpeditionLootEntry { itemId = "canned_food", quantity = 2, weightKg = 1f },
+                    new ExpeditionLootEntry { itemId = "scrap_metal", quantity = 3, weightKg = 2f }
+                }
+            };
+            string aftermath = ExpeditionReturnReport.BuildAftermath(state, "Collapsed from exhaustion.");
+            Assert.Contains("2 salvage line(s) lost in the field", aftermath);
         }
 
         [Fact]
@@ -361,6 +389,27 @@ namespace Ashfall.Core.Tests.Expeditions
             var plan = Build(def, est, new Dictionary<string, int>());
             Assert.Equal(ExpeditionPrepPlanner.MaxOvernightNights, plan.OvernightNights);
             Assert.True(plan.CampFirewoodUnits > 0f);
+        }
+
+        [Fact]
+        public void Build_WithVehicleProfile_ReportsNonZeroFuel()
+        {
+            var def = Def(ticks: 6);
+            var vehicle = new ExpeditionVehicleProfile
+            {
+                vehicleId = "vehicle_test",
+                speedMultiplier = 1f,
+                fuelPerTravelTick = 1.5f
+            };
+            var est = ExpeditionSystem.Estimate(def, ExpeditionStance.Speed, vehicle: vehicle);
+
+            Assert.True(est.usingVehicle);
+            Assert.True(est.fuelRequired > 0f);
+
+            // The prep plan still builds from the vehicle-adjusted estimate.
+            var plan = Build(def, est, new Dictionary<string, int>());
+            Assert.NotNull(plan);
+            Assert.True(plan.FoodBurn >= 1);
         }
 
         [Fact]
