@@ -22,6 +22,11 @@ namespace AtomicWar.GodotApp.UI
         public event Action? OnClose;
         public event Action? OnExpeditionUpdated;
         public event Action<List<ExpeditionLootEntry>>? OnLootDeposited;
+        // Console deep links (T14): the panel only raises the request; the
+        // host owns the routing decision for the registered
+        // expedition_radar / expedition_camp PanelRegistry routes.
+        public event Action? OnOpenRadarRequested;
+        public event Action? OnOpenCampConsoleRequested;
 
         private ExpeditionHostSession? _expeditionHost;
         private WorldHostSession? _worldHost;
@@ -34,6 +39,7 @@ namespace AtomicWar.GodotApp.UI
         private Label _pendingHeader = null!;
         private Label _statusSummary = null!;
         private Label _estimateLabel = null!;
+        private Label _dispatchStatusLabel = null!;
 
         private string _selectedTargetId = "loc_the_allotments";
         private string _selectedSurvivorId = "survivor_gunner_mikhail";
@@ -240,7 +246,8 @@ namespace AtomicWar.GodotApp.UI
                 if (have <= 0) return;
                 int spend = Math.Min(have, 10);
                 _inventoryHost.Remove("fuel", spend);
-                _expeditionHost.RefuelVehicle(vehicleId, spend);
+                var refuelResult = _expeditionHost.RefuelVehicle(vehicleId, spend);
+                SurfaceCommandRefusal(refuelResult, "REFUEL REFUSED");
                 RefreshView();
             });
             btnRefuel.TooltipText = "Burn 10 carried fuel items into the selected tank.";
@@ -250,7 +257,8 @@ namespace AtomicWar.GodotApp.UI
             {
                 string vehicleId = SelectedVehicleId;
                 if (_expeditionHost == null || string.IsNullOrEmpty(vehicleId)) return;
-                _expeditionHost.InstallTrackGear(vehicleId, "vehicle_track_gear_standard");
+                var trackResult = _expeditionHost.InstallTrackGear(vehicleId, "vehicle_track_gear_standard");
+                SurfaceCommandRefusal(trackResult, "TRACK GEAR REFUSED");
                 RefreshView();
             });
             btnTrackGear.TooltipText = "Install the authored track-gear package, improving rough-terrain traction and reducing breakdown risk.";
@@ -258,9 +266,27 @@ namespace AtomicWar.GodotApp.UI
 
             rootBox.AddChild(prepRow);
 
+            // Expedition sub-consoles (T14): deep links to the registered
+            // radar-sweep and overnight-camp surfaces. Presentation only —
+            // the host resolves the routes.
+            var consoleRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingMd);
+            consoleRow.Alignment = BoxContainer.AlignmentMode.Center;
+            var btnRadar = AshfallUiHelpers.MakeButton("RADAR SWEEP CONSOLE", () => OnOpenRadarRequested?.Invoke());
+            btnRadar.TooltipText = AshfallLocalization.Tr("ui.expedition.radar_tooltip", "Open the expedition radar sweep — every cataloged destination, danger band, and active sortie on one grid.");
+            consoleRow.AddChild(btnRadar);
+            var btnCamp = AshfallUiHelpers.MakeButton("OVERNIGHT CAMP CONSOLE", () => OnOpenCampConsoleRequested?.Invoke());
+            btnCamp.TooltipText = AshfallLocalization.Tr("ui.expedition.camp_tooltip", "Manage an expedition's overnight camp: firewood, rations, sentry shifts, and night segments.");
+            consoleRow.AddChild(btnCamp);
+            rootBox.AddChild(consoleRow);
+
             _estimateLabel = AshfallUiHelpers.MakeMono("");
             _estimateLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
             rootBox.AddChild(_estimateLabel);
+
+            _dispatchStatusLabel = AshfallUiHelpers.MakeMetadata("");
+            _dispatchStatusLabel.HorizontalAlignment = HorizontalAlignment.Center;
+            _dispatchStatusLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical));
+            rootBox.AddChild(_dispatchStatusLabel);
 
             // ── Target Destinations ──
             var targetsTitle = AshfallUiHelpers.MakeSectionHeader("KNOWN WASTELAND DESTINATIONS");
@@ -317,13 +343,24 @@ namespace AtomicWar.GodotApp.UI
 
             Action dispatch = () =>
             {
-                _expeditionHost.DispatchSortie(
+                var result = _expeditionHost.DispatchSortie(
                     survivorId,
                     locationId,
                     stance,
                     day,
                     SelectedVehicleId,
                     confirmFitnessWarning: fitness?.RequiresConfirmation == true);
+                if (!result.IsSuccess && _dispatchStatusLabel != null)
+                {
+                    // A refused dispatch must reach the screen, not vanish as a
+                    // button no-op. The typed code names the actual gate.
+                    _dispatchStatusLabel.Text =
+                        $"DISPATCH REFUSED — {FormatDispatchRefusal(result.FailureCode)}";
+                }
+                else if (_dispatchStatusLabel != null)
+                {
+                    _dispatchStatusLabel.Text = string.Empty;
+                }
                 OnExpeditionUpdated?.Invoke();
                 RefreshView();
             };
@@ -400,6 +437,35 @@ namespace AtomicWar.GodotApp.UI
                 "standing_requirement_unmet" => "Standing requirement unmet",
                 _ => "Unavailable"
             };
+        }
+
+        /// <summary>Player-facing wording for a refused sortie, keyed by the
+        /// stable Core failure code (see ACTION_RESULT_SURFACING_MATRIX.md).</summary>
+        private static string FormatDispatchRefusal(string code)
+        {
+            return code switch
+            {
+                "unmapped" => "no route knowledge for this sector. Survey or chart it first.",
+                "crossing_closed" => "crossing gate closed. No vouch authorization to traverse.",
+                "route_blocked" => "route blocked by a weather or standing gate.",
+                "vehicle_unready" => "vehicle unready. Check fuel and condition in the garage.",
+                "fitness_blocked" => "survivor is unfit for expedition duty.",
+                "fitness_warning_confirmation_required" => "survivor is impaired and needs explicit confirmation.",
+                "unknown_target" => "unknown destination.",
+                "stale_preview" => "planning data went stale. Retry the dispatch.",
+                _ => code.Replace('_', ' ')
+            };
+        }
+
+        /// <summary>T10 — surface a refused vehicle-prep command through the same
+        /// status line the dispatch refusal uses. An abandoned CommandResult must
+        /// not look like a successful click.</summary>
+        private void SurfaceCommandRefusal(Ashfall.Core.PlayerCommand.CommandResult result, string prefix)
+        {
+            if (_dispatchStatusLabel == null) return;
+            _dispatchStatusLabel.Text = result.IsSuccess
+                ? string.Empty
+                : $"{prefix} — {ActionRefusalText.Describe(result.FailureCode)}";
         }
 
         public void RefreshView()
@@ -583,12 +649,29 @@ namespace AtomicWar.GodotApp.UI
                 // Dispatch Bar
                 var dispatchRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
 
+                string? blockReason = blocked ? _expeditionHost.GetBlockReason(defId) : null;
                 if (blocked)
                 {
-                    var gateLabel = AshfallUiHelpers.MakeMono("[CROSSING GATE CLOSED — no vouch]");
+                    // Name the actual gate (fog, clues, map, weather) instead of one
+                    // hardcoded crossing message — a fogged node must say so.
+                    var gateLabel = AshfallUiHelpers.MakeMono(
+                        $"[{(blockReason ?? "dispatch blocked").ToUpperInvariant()}]");
                     gateLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical));
+                    gateLabel.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+                    gateLabel.SizeFlagsHorizontal = SizeFlags.ExpandFill;
                     dispatchRow.AddChild(gateLabel);
                 }
+
+                var btnEstimate = AshfallUiHelpers.MakeButton("ESTIMATE", () =>
+                {
+                    // Focus the risk estimate on this card's destination; the
+                    // global estimate line otherwise describes a default target.
+                    _selectedTargetId = defId;
+                    UpdateEstimateLine(livingSurvivors.Count > 0 ? livingSurvivors[0] : null);
+                });
+                btnEstimate.TooltipText = AshfallLocalization.Tr("ui.expedition.estimate_tooltip", "Show fuel, dose, breakdown, and encounter estimates for this destination.");
+                btnEstimate.CustomMinimumSize = new Vector2(110, 32);
+                dispatchRow.AddChild(btnEstimate);
 
                 var btnDispatchStealth = AshfallUiHelpers.MakeButton("DISPATCH STEALTH SORTIE", () =>
                 {
@@ -597,6 +680,8 @@ namespace AtomicWar.GodotApp.UI
                             livingSurvivors[0], defId, ExpeditionStance.Stealth, 1, dispatchRoleFitness);
                 });
                 btnDispatchStealth.Disabled = blocked || fitnessBlocked || livingSurvivors.Count == 0 || _expeditionHost.Engine.Active.ContainsKey(livingSurvivors[0]);
+                if (blocked && blockReason != null)
+                    btnDispatchStealth.TooltipText = $"Dispatch blocked: {blockReason}";
                 btnDispatchStealth.CustomMinimumSize = new Vector2(200, 32);
                 dispatchRow.AddChild(btnDispatchStealth);
 
@@ -607,6 +692,8 @@ namespace AtomicWar.GodotApp.UI
                             livingSurvivors[0], defId, ExpeditionStance.Speed, 1, dispatchRoleFitness);
                 });
                 btnDispatchSpeed.Disabled = blocked || fitnessBlocked || livingSurvivors.Count == 0 || _expeditionHost.Engine.Active.ContainsKey(livingSurvivors[0]);
+                if (blocked && blockReason != null)
+                    btnDispatchSpeed.TooltipText = $"Dispatch blocked: {blockReason}";
                 btnDispatchSpeed.CustomMinimumSize = new Vector2(220, 32);
                 dispatchRow.AddChild(btnDispatchSpeed);
 

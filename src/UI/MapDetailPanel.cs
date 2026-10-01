@@ -36,7 +36,8 @@ namespace AtomicWar.GodotApp.UI
             List<string>? subLayouts = null,
             List<string>? lootCategories = null,
             Ashfall.Core.Narrative.BunkerGraffitiCatalog? graffitiCatalog = null,
-            int currentDay = int.MaxValue)
+            int currentDay = int.MaxValue,
+            bool uncharted = false)
         {
             if (_titleLabel != null)
                 _titleLabel.Text = $"SECTOR INTELLIGENCE // {displayName.ToUpperInvariant()}";
@@ -112,10 +113,19 @@ namespace AtomicWar.GodotApp.UI
             var hazardCard = AshfallUiHelpers.MakeCardFrame("ENVIRONMENTAL HAZARDS & THREAT RATING", "DOSIMETRY");
             var hazardBox = hazardCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
 
-            hazardBox.AddChild(AshfallUiHelpers.MakeDataRow("Threat Tier", $"Level {dangerLevel:F0} / 5", AshfallUiHelpers.ToColor(dangerLevel >= 4 ? Ashfall.Core.UI.Theme.Critical : (dangerLevel >= 2 ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Pale))));
-            hazardBox.AddChild(AshfallUiHelpers.MakeDataRow("Ambient Radiation Rate", $"+{baseRadsPerHour:F1} mSv / hr", AshfallUiHelpers.ToColor(baseRadsPerHour > 10 ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Warm)));
-            hazardBox.AddChild(AshfallUiHelpers.MakeDataRow("Required Protective Gear", baseRadsPerHour > 8 ? "Lead Shielding / Hazmat Suit + Gas Mask" : "Standard Dosimeter + Particulate Filter", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
-            hazardBox.AddChild(AshfallUiHelpers.MakeDataRow("Transit Stance Advice", dangerLevel >= 3 ? "Stealth Stance Recommended" : "Standard March", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted)));
+            if (uncharted)
+            {
+                // Same fog gate as the MapPanel location list (Plan 32): a
+                // fog-Unknown sector has no verified dosimetry, so catalog
+                // numbers must not be presented as surveyed fact.
+                hazardBox.AddChild(AshfallUiHelpers.MakeDataRow("Survey Status", "UNCHARTED — no survey data", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim)));
+                hazardBox.AddChild(AshfallUiHelpers.MakeDataRow("Verified Dosimetry", "None on record — dispatch refused until this sector is mapped", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted)));
+            }
+            else
+            {
+                hazardBox.AddChild(AshfallUiHelpers.MakeDataRow("Threat Tier", $"Level {dangerLevel:F0} / 5", AshfallUiHelpers.ToColor(dangerLevel >= 4 ? Ashfall.Core.UI.Theme.Critical : (dangerLevel >= 2 ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Pale))));
+                hazardBox.AddChild(AshfallUiHelpers.MakeDataRow("Ambient Radiation Rate", $"+{baseRadsPerHour:F1} mSv / hr", AshfallUiHelpers.ToColor(baseRadsPerHour > 10 ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Warm)));
+            }
             _hazardsContainer.AddChild(hazardCard);
 
             // ── 3. Sub-Layouts & Architectural Grids ──
@@ -131,9 +141,9 @@ namespace AtomicWar.GodotApp.UI
             }
             else
             {
-                layoutBox.AddChild(AshfallUiHelpers.MakeDataRow("Primary Concourse", "Surface Access Tunnel // Reinforced Hatch", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
-                layoutBox.AddChild(AshfallUiHelpers.MakeDataRow("Sub-Level 1", "Utility Corridors & Piping Vaults", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
-                layoutBox.AddChild(AshfallUiHelpers.MakeDataRow("Perimeter Node", "Collapsed Overpass & Debris Fields", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted)));
+                // No authored sub-sector survey exists for this location; a
+                // truthful empty state replaces the former fabricated rooms.
+                layoutBox.AddChild(AshfallUiHelpers.MakeDataRow("Sub-Sector Survey", "No architectural survey on record for this sector.", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted)));
             }
             _layoutsContainer.AddChild(layoutCard);
 
@@ -150,9 +160,9 @@ namespace AtomicWar.GodotApp.UI
             }
             else
             {
-                salvageBox.AddChild(AshfallUiHelpers.MakeDataRow("Primary Scavenge", "Structural Scrap Metal & Mechanical Parts", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
-                salvageBox.AddChild(AshfallUiHelpers.MakeDataRow("Secondary Scavenge", "Electrical Wiring & Electronic Components", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
-                salvageBox.AddChild(AshfallUiHelpers.MakeDataRow("Rare Recovery", "Sealed Medical Supplies & Anti-Rad Compounds", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Hot)));
+                // No authored salvage survey exists for this location; a
+                // truthful empty state replaces the former fabricated yields.
+                salvageBox.AddChild(AshfallUiHelpers.MakeDataRow("Salvage Survey", "No salvage survey on record — dispatch a reconnaissance sortie.", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted)));
             }
             _salvageContainer.AddChild(salvageCard);
         }
@@ -161,7 +171,9 @@ namespace AtomicWar.GodotApp.UI
             HoldfastLocationEntry? holdfastLoc,
             LocationDefinitionData? journalLoc = null,
             Ashfall.Core.Narrative.BunkerGraffitiCatalog? graffitiCatalog = null,
-            int currentDay = int.MaxValue)
+            int currentDay = int.MaxValue,
+            bool uncharted = false,
+            List<string>? subLayouts = null)
         {
             if (holdfastLoc != null)
             {
@@ -174,10 +186,11 @@ namespace AtomicWar.GodotApp.UI
                     holdfastLoc.travelHours,
                     holdfastLoc.description ?? "",
                     holdfastLoc.inspect ?? "",
-                    subLayouts: null,
                     lootCategories: null,
                     graffitiCatalog: graffitiCatalog,
-                    currentDay: currentDay);
+                    currentDay: currentDay,
+                    uncharted: uncharted,
+                    subLayouts: subLayouts);
             }
             else if (journalLoc != null)
             {
@@ -193,7 +206,8 @@ namespace AtomicWar.GodotApp.UI
                     subLayouts: null,
                     lootCategories: null,
                     graffitiCatalog: graffitiCatalog,
-                    currentDay: currentDay);
+                    currentDay: currentDay,
+                    uncharted: uncharted);
             }
         }
 

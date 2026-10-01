@@ -112,6 +112,13 @@ theme_override_constants/separation = 8
 
 [node name="Sep6" type="HSeparator" parent="Dialog/Frame/Margin/Content"]
 layout_mode = 2
+[node name="CalibrationButton" type="Button" parent="Dialog/Frame/Margin/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "GEIGER CALIBRATION CONSOLE"
+
 [node name="CloseButton" type="Button" parent="Dialog/Frame/Margin/Content"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 40)

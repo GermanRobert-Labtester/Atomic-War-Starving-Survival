@@ -108,6 +108,7 @@ namespace AtomicWar.GodotApp.Economy
 
         /// <summary>Raised when the overlay requests dismissal (host wires Escape/close).</summary>
         public event Action? OnClose;
+        public event Action? OnOpenCaravanBarterRequested;
 
         public void Open()
         {
@@ -132,6 +133,17 @@ namespace AtomicWar.GodotApp.Economy
             AddThemeStyleboxOverride("panel", MakePanelFrameStyleBox());
 
             BuildLayout();
+
+            var caravanLink = new Button
+            {
+                Text = "CARAVAN BARTER LEDGER >",
+                CustomMinimumSize = new Vector2(0, global::Ashfall.Core.UI.Theme.MinInteractiveHeight)
+            };
+            caravanLink.Pressed += () => OnOpenCaravanBarterRequested?.Invoke();
+            var linkRow = new HBoxContainer();
+            linkRow.AddThemeConstantOverride("separation", global::Ashfall.Core.UI.Theme.SpacingSm);
+            linkRow.AddChild(caravanLink);
+            AddChild(linkRow);
         }
 
         private void BuildLayout()

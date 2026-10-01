@@ -25,6 +25,10 @@ namespace AtomicWar.GodotApp.UI
     {
         public event Action? OnClose;
         public event Action<string>? OnLocationDetailRequested;
+        // Console deep links (R1): the panel only raises the request; the
+        // host owns routing for the registered atlas routes.
+        public event Action? OnOpenMapAtlasRequested;
+        public event Action? OnOpenMaritimeAtlasRequested;
 
         private VBoxContainer _overviewContainer = null!;
         private VBoxContainer _legendContainer = null!;
@@ -52,6 +56,12 @@ namespace AtomicWar.GodotApp.UI
             DeepCoastHostSession? deepCoast = null,
             YearOfAshHostSession? yearOfAsh = null)
         {
+            // Bind runs on every panel open (PanelRegistry bindAction), so it
+            // must be idempotent: drop the previous session subscriptions
+            // before adopting the new sessions, or each StateChanged fires
+            // RefreshView once per accumulated re-bind.
+            Unbind();
+
             _core = core;
             _expeditions = expeditions;
             _expansions = expansions;
@@ -134,7 +144,7 @@ namespace AtomicWar.GodotApp.UI
                         AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Lethe)));
                 }
             }
-            ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Cataloged Waypoints", $"{Math.Max(totalLocations, 8)} Sector Coordinates", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+            ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Cataloged Waypoints", $"{totalLocations} Sector Coordinates", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
             ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Active Sorties", $"{activeSorties} Active Recon Team(s)", AshfallUiHelpers.ToColor(activeSorties > 0 ? Ashfall.Core.UI.Theme.Hot : Ashfall.Core.UI.Theme.Dim)));
             _overviewContainer.AddChild(overviewCard);
 
@@ -291,36 +301,55 @@ namespace AtomicWar.GodotApp.UI
                 }
             }
 
-            // If still empty, supply canonical baseline locations
-            if (locList.Count == 0)
+            // If still empty, report the absence truthfully — no fabricated
+            // baseline locations.
+            bool noLocationData = locList.Count == 0;
+            if (noLocationData)
             {
-                locList.Add(("loc_bunker_district_8", "District 8 Holdfast Shelter", "District 8", 1f, 0f, "Home shelter with active air filtration stack and reinforced airlock."));
-                locList.Add(("loc_the_allotments", "The Works Allotment Commune", "Sector 12", 2f, 3.5f, "Overgrown communal agricultural plots with preserved soil beds."));
-                locList.Add(("loc_denial_cut_substation", "The Denial Cut Substation", "Sector 04", 4f, 12f, "High-voltage transmission hub with heavy fallout accumulation."));
-                locList.Add(("loc_crossing_toll_gate", "The Crossing Toll Gate", "The Crossing", 3f, 6f, "Arbitration chokepoint requiring vouch authorization to traverse."));
+                var emptyCard = AshfallUiHelpers.MakeCardFrame("UNCHARTED REGION", "NO SURVEY RECORD");
+                var emptyBox = emptyCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
+                var emptyLbl = AshfallUiHelpers.MakeSmall("No cataloged waypoints on record — expedition reconnaissance will chart this region.");
+                emptyLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted));
+                emptyBox.AddChild(emptyLbl);
+                _locationsContainer.AddChild(emptyCard);
             }
 
             foreach (var item in locList)
             {
                 string statusBadge = "DISCOVERED";
+                bool uncharted = false;
                 if (_world?.WastelandMap != null)
                 {
-                    var status = _world.WastelandMap.ResolveNodeStatus(item.id);
-                    switch (status)
+                    var map = _world.WastelandMap;
+                    // Plan 32 fog gate: a node that exists on the graph but is
+                    // neither discovered nor surveyed is uncharted — it must not
+                    // render as "DISCOVERED" with fabricated hazard numbers.
+                    if (map.GetNode(item.id) != null
+                        && !map.IsDiscovered(item.id)
+                        && map.GetFogState(item.id) == Ashfall.Core.World.MapFogState.Unknown)
                     {
-                        case Ashfall.Core.World.MapNodeStatusKind.Locked:
-                            statusBadge = "LOCKED";
-                            break;
-                        case Ashfall.Core.World.MapNodeStatusKind.Available:
-                            statusBadge = "AVAILABLE";
-                            break;
-                        case Ashfall.Core.World.MapNodeStatusKind.Completed:
-                            statusBadge = "CLEARED ✓";
-                            break;
-                        case Ashfall.Core.World.MapNodeStatusKind.Discovered:
-                        default:
-                            statusBadge = "DISCOVERED";
-                            break;
+                        uncharted = true;
+                        statusBadge = "UNCHARTED";
+                    }
+                    else
+                    {
+                        var status = _world.WastelandMap.ResolveNodeStatus(item.id);
+                        switch (status)
+                        {
+                            case Ashfall.Core.World.MapNodeStatusKind.Locked:
+                                statusBadge = "LOCKED";
+                                break;
+                            case Ashfall.Core.World.MapNodeStatusKind.Available:
+                                statusBadge = "AVAILABLE";
+                                break;
+                            case Ashfall.Core.World.MapNodeStatusKind.Completed:
+                                statusBadge = "CLEARED ✓";
+                                break;
+                            case Ashfall.Core.World.MapNodeStatusKind.Discovered:
+                            default:
+                                statusBadge = "DISCOVERED";
+                                break;
+                        }
                     }
                 }
                 else if (item.danger >= 4f)
@@ -328,7 +357,9 @@ namespace AtomicWar.GodotApp.UI
                     statusBadge = "HIGH HAZARD";
                 }
 
-                var card = AshfallUiHelpers.MakeCardFrame(item.name, $"[{statusBadge}] · DANGER {item.danger:F0}/5 · RAD +{item.rads:F1} mSv/h");
+                var card = AshfallUiHelpers.MakeCardFrame(item.name, uncharted
+                    ? $"[{statusBadge}] · no survey data — dispatch refused until this sector is mapped"
+                    : $"[{statusBadge}] · DANGER {item.danger:F0}/5 · RAD +{item.rads:F1} mSv/h");
                 var cardBox = card.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
 
                 var descLabel = AshfallUiHelpers.MakeSmall(item.desc);
@@ -352,10 +383,58 @@ namespace AtomicWar.GodotApp.UI
             var routesCard = AshfallUiHelpers.MakeCardFrame("DISCOVERED TRANSIT CORRIDORS", "TACTICAL PATHS");
             var routesBox = routesCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
 
-            routesBox.AddChild(AshfallUiHelpers.MakeDataRow("Primary Route", "Holdfast [Sector 07] ↔ The Works Allotments [5 Ticks, Safe]", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
-            routesBox.AddChild(AshfallUiHelpers.MakeDataRow("High-Risk Cut", "Holdfast [Sector 07] ↔ Denial Cut Substation [8 Ticks, Radiation Hazard]", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
-            routesBox.AddChild(AshfallUiHelpers.MakeDataRow("Border Corridor", "District 8 ↔ Nobody's Crossing Gate [Vouch Access Required]", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted)));
-            routesBox.AddChild(AshfallUiHelpers.MakeDataRow("Waystation Line", "Holding Cells ↔ S2 Logistics Depot [Cold-Weather Transit]", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+            // Canonical projection (same rule as MapAtlasPanel): a transit
+            // corridor is charted only when both endpoints are fog-known to
+            // the player. Route facts come from the authored map — never from
+            // panel prose.
+            var routeMap = _world?.WastelandMap;
+            int chartedRoutes = 0;
+            if (routeMap != null)
+            {
+                for (int i = 0; i < routeMap.Routes.Count; i++)
+                {
+                    var route = routeMap.Routes[i];
+                    if (route == null || string.IsNullOrEmpty(route.From) || string.IsNullOrEmpty(route.To))
+                        continue;
+                    var fromIntel = routeMap.GetNodeIntel(route.From);
+                    var toIntel = routeMap.GetNodeIntel(route.To);
+                    if (fromIntel == null || toIntel == null
+                        || fromIntel.FogState == Ashfall.Core.World.MapFogState.Unknown
+                        || toIntel.FogState == Ashfall.Core.World.MapFogState.Unknown)
+                        continue;
+
+                    string fromName = string.IsNullOrEmpty(fromIntel.DisplayName) ? route.From : fromIntel.DisplayName;
+                    string toName = string.IsNullOrEmpty(toIntel.DisplayName) ? route.To : toIntel.DisplayName;
+
+                    string meta = $"{route.DistanceKm:0.0} km · {route.TravelDomain.ToUpperInvariant()}";
+                    if (route.WeatherHazard > 0f)
+                        meta += $" · hazard {route.WeatherHazard:P0}";
+                    if (route.Tags != null)
+                    {
+                        for (int t = 0; t < route.Tags.Count; t++)
+                        {
+                            if (!string.IsNullOrEmpty(route.Tags[t]))
+                                meta += $" · {route.Tags[t].ToUpperInvariant()}";
+                        }
+                    }
+
+                    bool hazardous = route.IsFlooded || route.WeatherHazard >= 0.5f;
+                    routesBox.AddChild(AshfallUiHelpers.MakeDataRow(
+                        $"{fromName} ↔ {toName}",
+                        meta,
+                        AshfallUiHelpers.ToColor(hazardous ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Pale)));
+                    chartedRoutes++;
+                }
+            }
+            if (chartedRoutes == 0)
+            {
+                routesBox.AddChild(AshfallUiHelpers.MakeDataRow(
+                    "Charted Corridors",
+                    routeMap == null
+                        ? "No canonical map bound — corridor knowledge unavailable."
+                        : "None on record — survey adjacent sectors to chart transit corridors.",
+                    AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted)));
+            }
 
             if (_deepCoast != null)
             {
@@ -422,12 +501,32 @@ namespace AtomicWar.GodotApp.UI
             var expCard = AshfallUiHelpers.MakeCardFrame("SURVEY MEMORY & SITE LAYOUTS", "RECORD ARCHIVE");
             var expBox = expCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
 
-            int layoutCount = _expansions?.Layouts != null ? 8 : 4;
-            int memoryCount = _expansions?.Memory != null ? 12 : 6;
+            // Real counts from the standing-record authorities — never
+            // static constants. Grids = rooms unlocked across mapped
+            // parents; memories = sites with recorded visits; strata =
+            // authored narrative strata loaded by the memory system.
+            int mappedRooms = 0;
+            int recordedVisits = 0;
+            int authoredStrata = 0;
+            if (_expansions?.Layouts != null)
+            {
+                var parents = _expansions.Layouts.State.parents;
+                for (int i = 0; i < parents.Count; i++)
+                {
+                    var parent = parents[i];
+                    if (parent?.unlockedRoomIds != null)
+                        mappedRooms += parent.unlockedRoomIds.Count;
+                }
+            }
+            if (_expansions?.Memory != null)
+            {
+                recordedVisits = _expansions.Memory.State.visitCounts.Count;
+                authoredStrata = _expansions.Memory.StratumCount;
+            }
 
-            expBox.AddChild(AshfallUiHelpers.MakeDataRow("Mapped Sub-Sectors", $"{layoutCount} Architectural Grids Indexed", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
-            expBox.AddChild(AshfallUiHelpers.MakeDataRow("Site Memories", $"{memoryCount} Narrative Logs Recorded", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
-            expBox.AddChild(AshfallUiHelpers.MakeDataRow("Cartographic Integrity", "100% Deterministic Seed Verification", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
+            expBox.AddChild(AshfallUiHelpers.MakeDataRow("Mapped Sub-Sectors", $"{mappedRooms} Architectural Grids Indexed", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+            expBox.AddChild(AshfallUiHelpers.MakeDataRow("Site Memories", $"{recordedVisits} Narrative Logs Recorded", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+            expBox.AddChild(AshfallUiHelpers.MakeDataRow("Standing-Record Strata", $"{authoredStrata} Authored Strata Loaded", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted)));
 
             _explorationContainer.AddChild(expCard);
         }
@@ -513,6 +612,16 @@ namespace AtomicWar.GodotApp.UI
 
             rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
+            var atlasRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+            atlasRow.Alignment = BoxContainer.AlignmentMode.Center;
+            var btnMapAtlas = AshfallUiHelpers.MakeButton("SUBTERRANEAN MAP ATLAS", () => OnOpenMapAtlasRequested?.Invoke());
+            btnMapAtlas.TooltipText = "Canonical projection of every fog-known sector, status, and danger band.";
+            atlasRow.AddChild(btnMapAtlas);
+            var btnMaritimeAtlas = AshfallUiHelpers.MakeButton("MARITIME ATLAS", () => OnOpenMaritimeAtlasRequested?.Invoke());
+            btnMaritimeAtlas.TooltipText = "Deep-coast and shelf expedition atlas beyond the shoreline.";
+            atlasRow.AddChild(btnMaritimeAtlas);
+            rootBox.AddChild(atlasRow);
+
             var btnClose = AshfallUiHelpers.MakeButton("CLOSE MAP [Esc]", () => OnClose?.Invoke());
             btnClose.CustomMinimumSize = new Vector2(220, 42);
             rootBox.AddChild(btnClose);
@@ -587,14 +696,28 @@ namespace AtomicWar.GodotApp.UI
 
     public void Unbind()
     {
-        if (_expeditions != null)
+            if (_expeditions != null)
+            {
                 _expeditions.StateChanged -= RefreshView;
+                _expeditions = null;
+            }
             if (_world != null)
+            {
                 _world.StateChanged -= RefreshView;
+                if (_world.WastelandMap != null)
+                    _world.WastelandMap.OnMarkersChanged -= RefreshView;
+                _world = null;
+            }
             if (_deepCoast != null)
+            {
                 _deepCoast.StateChanged -= RefreshView;
+                _deepCoast = null;
+            }
             if (_yearOfAsh?.Warlord != null)
+            {
                 _yearOfAsh.Warlord.OnStateChanged -= RefreshView;
+                _yearOfAsh = null;
+            }
     }
 
     public override void _ExitTree()

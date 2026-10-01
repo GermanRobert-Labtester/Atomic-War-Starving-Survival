@@ -19,6 +19,7 @@ namespace AtomicWar.GodotApp.UI;
 public partial class JournalPanel : Control
 {
     public event Action? OnClose;
+    public event Action? OnOpenStandingRecordAtlasRequested;
 
     private AshfallDashboardShell _shell = null!;
     private AshfallSidebar? _sidebar;
@@ -323,6 +324,12 @@ public partial class JournalPanel : Control
         scrollMargin.AddThemeConstantOverride("margin_right", DesignTheme.SpacingLg);
         scrollMargin.AddThemeConstantOverride("margin_bottom", DesignTheme.SpacingMd);
         scrollRoot.AddChild(scrollMargin);
+        var atlasRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
+        var btnStandingAtlas = AshfallUiHelpers.MakeButton("STANDING RECORD ATLAS", () => OnOpenStandingRecordAtlasRequested?.Invoke());
+        btnStandingAtlas.TooltipText = "Standing-record atlas: site layouts, memory strata, and survey archives.";
+        atlasRow.AddChild(btnStandingAtlas);
+        scrollRoot.AddChild(atlasRow);
+
         _shell.SetContent(scrollRoot);
         _scrollRoot = scrollRoot;
 

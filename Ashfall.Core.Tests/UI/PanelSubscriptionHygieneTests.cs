@@ -46,6 +46,70 @@ namespace Ashfall.Core.Tests.UI
                 string.Join("\n", violations));
         }
 
+        /// <summary>
+        /// T11 regression (2026-10-01): MapPanel.Bind runs on every panel open
+        /// (PanelRegistry bindAction), so it must drop the previous session
+        /// subscriptions before subscribing again, and Unbind must remove every
+        /// source Bind added — including the formerly leaked
+        /// WastelandMap.OnMarkersChanged.
+        /// </summary>
+        [Fact]
+        public void MapPanelBindIsResubscriptionSafe()
+        {
+            string srcRoot = FindSrcRoot();
+            string mapPanelPath = Path.Combine(srcRoot, "UI", "MapPanel.cs");
+            Assert.True(File.Exists(mapPanelPath), $"Could not find MapPanel.cs at {mapPanelPath}");
+            string source = File.ReadAllText(mapPanelPath);
+
+            string bindBody = ExtractBalancedBody(source, "public void Bind(");
+            int firstSubscribe = bindBody.IndexOf("+=", StringComparison.Ordinal);
+            Assert.True(firstSubscribe >= 0, "MapPanel.Bind must subscribe to its session events");
+            int unbindCall = bindBody.IndexOf("Unbind()", StringComparison.Ordinal);
+            Assert.True(unbindCall >= 0 && unbindCall < firstSubscribe,
+                "MapPanel.Bind must call Unbind() before its first subscription: Bind is re-invoked on every " +
+                "panel open, so additive subscription accumulates one RefreshView per accumulated re-bind");
+
+            string unbindBody = ExtractBalancedBody(source, "public void Unbind()");
+            foreach (string required in new[]
+            {
+                "_expeditions.StateChanged -= RefreshView",
+                "_world.StateChanged -= RefreshView",
+                "WastelandMap.OnMarkersChanged -= RefreshView",
+                "_deepCoast.StateChanged -= RefreshView",
+                "Warlord.OnStateChanged -= RefreshView",
+            })
+            {
+                Assert.True(unbindBody.Contains(required, StringComparison.Ordinal),
+                    $"MapPanel.Unbind must remove the '{required}' subscription that Bind adds");
+            }
+        }
+
+        /// <summary>
+        /// Extracts the balanced-brace body of the first method whose source
+        /// contains <paramref name="signatureMarker"/>. Adequate for the
+        /// marker methods asserted above, which contain no braces inside
+        /// string literals.
+        /// </summary>
+        private static string ExtractBalancedBody(string source, string signatureMarker)
+        {
+            int sigIndex = source.IndexOf(signatureMarker, StringComparison.Ordinal);
+            Assert.True(sigIndex >= 0, $"Method '{signatureMarker}' not found");
+            int openIndex = source.IndexOf('{', sigIndex);
+            Assert.True(openIndex >= 0, $"No open brace found after '{signatureMarker}'");
+            int depth = 0;
+            for (int i = openIndex; i < source.Length; i++)
+            {
+                if (source[i] == '{') depth++;
+                else if (source[i] == '}')
+                {
+                    depth--;
+                    if (depth == 0)
+                        return source.Substring(openIndex, i - openIndex + 1);
+                }
+            }
+            throw new InvalidOperationException($"Unbalanced braces in method '{signatureMarker}'");
+        }
+
         private static string FindSrcRoot()
         {
             string current = Directory.GetCurrentDirectory();

@@ -108,6 +108,17 @@ namespace Ashfall.Core
         public LocationLayoutState State => _state;
         public bool IsUnlocked => _state.expansionUnlocked;
         public string CurrentParentId => _state.currentParentId;
+
+        /// <summary>
+        /// Read-only view of an authored parent layout (rooms and unlock
+        /// rules), or null when the parent has no authored layout. Pure
+        /// lookup — unlock state stays in <see cref="State"/>.
+        /// </summary>
+        public LocationLayoutDef? GetLayoutDefinition(string parentLocationId)
+        {
+            if (string.IsNullOrEmpty(parentLocationId)) return null;
+            return _byParent.TryGetValue(parentLocationId, out var def) ? def : null;
+        }
         public IReadOnlyList<LocationLayoutDef> Layouts => _layouts;
 
         public LocationLayoutSystem(IFileIO files, IJsonSerializer json, ILog? log = null)

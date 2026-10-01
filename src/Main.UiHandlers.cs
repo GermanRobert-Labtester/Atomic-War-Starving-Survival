@@ -177,7 +177,48 @@ namespace AtomicWar.GodotApp
                 }
             }
             int currentDay = _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay;
-            _mapDetailPanel.Bind(holdfastLoc, journalLoc, GetBunkerGraffitiCatalog(), currentDay);
+            // Plan 32 fog gate, same predicate as MapPanel's location list: a
+            // node on the graph that is neither discovered nor surveyed has no
+            // verified dosimetry, so the detail panel must not show hazard
+            // numbers for it.
+            bool uncharted = false;
+            var canonicalMap = _world?.WastelandMap;
+            if (canonicalMap != null)
+            {
+                uncharted = canonicalMap.GetNode(locationId) != null
+                    && !canonicalMap.IsDiscovered(locationId)
+                    && canonicalMap.GetFogState(locationId) == Ashfall.Core.World.MapFogState.Unknown;
+            }
+            // Standing-record sub-layouts (R4): only rooms the player has
+            // actually unlocked surface here — authored-but-sealed rooms
+            // never leak through the detail view.
+            List<string>? subLayouts = null;
+            var layouts = _expansions?.Layouts;
+            if (layouts != null)
+            {
+                var layoutDef = layouts.GetLayoutDefinition(locationId);
+                Ashfall.Core.LocationLayoutParentSave? parentState = null;
+                foreach (var candidate in layouts.State.parents)
+                {
+                    if (candidate != null && candidate.parentLocationId == locationId)
+                    {
+                        parentState = candidate;
+                        break;
+                    }
+                }
+                if (layoutDef != null && parentState?.unlockedRoomIds != null && parentState.unlockedRoomIds.Count > 0)
+                {
+                    subLayouts = new List<string>();
+                    foreach (var roomId in parentState.unlockedRoomIds)
+                    {
+                        var room = layoutDef.GetRoom(roomId);
+                        if (room != null && !string.IsNullOrEmpty(room.displayName))
+                            subLayouts.Add(room.displayName);
+                    }
+                    if (subLayouts.Count == 0) subLayouts = null;
+                }
+            }
+            _mapDetailPanel.Bind(holdfastLoc, journalLoc, GetBunkerGraffitiCatalog(), currentDay, uncharted, subLayouts);
             _mapDetailPanel.Open();
         }
         public void OpenFactionDetailPanel(string factionId)

@@ -20,6 +20,7 @@ namespace AtomicWar.GodotApp.UI
     public partial class WeatherPanel : Control
     {
         public event Action? OnClose;
+        public event Action? OnOpenWeatherSondeRequested;
 
         public WeatherKind? BoundWeather => ActiveWeather?.Current;
         public bool IsBound => _worldHost != null || _weatherHost != null;
@@ -435,6 +436,12 @@ namespace AtomicWar.GodotApp.UI
             _intelligenceList.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
             intelVBox.AddChild(_intelligenceList);
             contentStack.AddChild(intelPanel);
+
+            var sondeRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
+            var btnSonde = AshfallUiHelpers.MakeButton("WEATHER SONDE CONSOLE", () => OnOpenWeatherSondeRequested?.Invoke());
+            btnSonde.TooltipText = "Upper-air sonde telemetry: launch windows, drift, and calibration.";
+            sondeRow.AddChild(btnSonde);
+            contentStack.AddChild(sondeRow);
 
             _shell.SetContent(contentStack);
         }

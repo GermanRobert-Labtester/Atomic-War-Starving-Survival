@@ -112,6 +112,12 @@ custom_minimum_size = Vector2(140, 28)
 layout_mode = 2
 text = "PHARMA LAB >"
 
+[node name="SurvivalWorkstationButton" type="Button" parent="Center/Frame/Margin/Content/FilterRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 28)
+layout_mode = 2
+text = "SURVIVAL WORKSTATION >"
+
 [node name="CrafterRow" type="HBoxContainer" parent="Center/Frame/Margin/Content"]
 unique_name_in_owner = true
 layout_mode = 2

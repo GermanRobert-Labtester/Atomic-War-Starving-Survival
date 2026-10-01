@@ -185,7 +185,6 @@ namespace AtomicWar.GodotApp
             "FungalProteinFermenterPanel",
             "HeavyMarineDieselGeneratorPanel",
             "InductionCupolaFurnacePanel",
-            "LongWalkExpeditionPanel",
             "MagneticDrumArchivePanel",
             "MechanicalProstheticsLathePanel",
             "SonicRuptureDrillPanel",

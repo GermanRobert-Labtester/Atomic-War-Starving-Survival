@@ -20,6 +20,7 @@ namespace AtomicWar.GodotApp.UI
         public event Action? OnCraftStarted;
         public event Action? OnOpenWorkshopRequested;
         public event Action? OnOpenPharmaLabRequested;
+        public event Action? OnOpenSurvivalWorkstationRequested;
 
         public bool IsBound => _craftingHost != null;
 
@@ -191,6 +192,7 @@ namespace AtomicWar.GodotApp.UI
             // Craft button
             var actionRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
             string recipeId = recipe.id;
+            Label? refusalLabel = null;
             var btnCraft = AshfallUiHelpers.MakeButton(
                 canCraft ? $"CRAFT {recipe.result?.displayName ?? "item"}" : "INGREDIENTS NEEDED",
                 () =>
@@ -199,7 +201,23 @@ namespace AtomicWar.GodotApp.UI
                     _craftSubmitting = true;
                     // Read at click time, not at card-build time: the player may
                     // change the bench operator after the recipe list was drawn.
-                    _craftingHost?.Start(recipeId, SelectedCrafterId);
+                    var result = _craftingHost?.Start(recipeId, SelectedCrafterId);
+                    if (result is { IsSuccess: false })
+                    {
+                        // A refused craft must reach the screen as readable text,
+                        // and must not leave the button bricked waiting for a
+                        // craft-started event that never fires.
+                        _craftSubmitting = false;
+                        if (refusalLabel == null)
+                        {
+                            refusalLabel = AshfallUiHelpers.MakeMetadata(string.Empty);
+                            refusalLabel.AddThemeColorOverride("font_color",
+                                AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical));
+                            refusalLabel.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+                            actionRow.AddChild(refusalLabel);
+                        }
+                        refusalLabel.Text = $"REFUSED — {FormatCraftRefusal(result.Value.FailureCode)}";
+                    }
                 });
             btnCraft.Disabled = !canCraft || _craftSubmitting;
             btnCraft.CustomMinimumSize = new Vector2(200, 30);
@@ -263,6 +281,27 @@ namespace AtomicWar.GodotApp.UI
                     return $"Station '{recipe.requiredStationId}' unavailable";
             }
             return "Cannot craft";
+        }
+
+        /// <summary>Player-facing wording for a runtime craft refusal, keyed by
+        /// the stable Core failure code (see ACTION_RESULT_SURFACING_MATRIX.md).
+        /// Shared with the workstation bench panel.</summary>
+        internal static string FormatCraftRefusal(string code)
+        {
+            return code switch
+            {
+                "missing_recipe" or "unknown_recipe" => "recipe unknown.",
+                "research_locked" => "recipe locked behind research.",
+                "blueprint_locked" => "blueprint required.",
+                "station_unavailable" => "workstation unavailable or unpowered.",
+                "insufficient_ingredients" or "missing_ingredients" => "not enough ingredients.",
+                "inventory_full" => "inventory full.",
+                "result_restricted" => "result restricted.",
+                "moonshine_restricted" => "moonshine restricted.",
+                "execute_failed" => "craft could not be executed.",
+                "stale_preview" => "planning data went stale. Retry.",
+                _ => code.Replace('_', ' ')
+            };
         }
 
         /// <summary>
@@ -422,6 +461,10 @@ namespace AtomicWar.GodotApp.UI
             binder.Get<Button>("PharmaLabButton").Pressed += () => {
                 Visible = false;
                 OnOpenPharmaLabRequested?.Invoke();
+            };
+            binder.Get<Button>("SurvivalWorkstationButton").Pressed += () => {
+                Visible = false;
+                OnOpenSurvivalWorkstationRequested?.Invoke();
             };
 
             Visible = false;

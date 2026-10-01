@@ -192,7 +192,6 @@ namespace AtomicWar.GodotApp
         private ClandestineInsurgencyPanel _clandestineInsurgencyPanel = null!;
         private SubterraneanDebtLedgerPanel _subterraneanDebtLedgerPanel = null!;
         private SurfaceShrapnelAegisPanel _surfaceShrapnelAegisPanel = null!;
-        private LongWalkExpeditionPanel _longWalkExpeditionPanel = null!;
         private ReconTelemetryPanel _reconTelemetryPanel = null!;
         private SonicRuptureDrillPanel _sonicRuptureDrillPanel = null!;
         private VaultDoorBreachingPanel _vaultDoorBreachingPanel = null!;
@@ -409,7 +408,25 @@ namespace AtomicWar.GodotApp
             {
                 UpdateHud();
                 GD.Print($"[Expeditions] Recovered {loot.Count} loot items.");
+                // Results must reach the player, not only the console log.
+                var toast = new Ashfall.Core.Feedback.ResolvedFeedbackMessage
+                {
+                    Key = "expedition_loot",
+                    Category = "expedition",
+                    Severity = Ashfall.Core.Feedback.FeedbackSeverity.Success,
+                    FormattedText = $"Sortie returned: {loot.Count} item(s) recovered to shelter stores.",
+                    DisplayDurationSeconds = 5f,
+                    DedupeKey = "expedition_loot",
+                    IsDiagnosticOnly = false
+                };
+                if (_feedbackPanel != null && GodotObject.IsInstanceValid(_feedbackPanel))
+                    _feedbackPanel.ShowToast(toast);
             };
+            // Expedition sub-console deep links (T14): route the registered
+            // expedition_radar / expedition_camp PanelRegistry surfaces —
+            // previously registered but unreachable.
+            _expeditionPanel.OnOpenRadarRequested += () => OpenPlayerPanel("expedition_radar");
+            _expeditionPanel.OnOpenCampConsoleRequested += () => OpenPlayerPanel("expedition_camp");
             AddChild(_expeditionPanel);
 
             // ── Weather panel (overlay) ──
@@ -822,6 +839,21 @@ namespace AtomicWar.GodotApp
             _radiationDetailPanel = PanelSceneLoader.Load<RadiationDetailPanel>("res://assets/ui/panels/RadiationDetailPanel.tscn");
             _radiationDetailPanel.OnClose += CloseRadiationDetailPanel;
             AddChild(_radiationDetailPanel);
+
+            // Route-reachability wave (R1): registered-but-unreached console
+            // routes now have host-panel deep links; the host owns routing.
+            _mapPanel.OnOpenMapAtlasRequested += () => OpenPlayerPanel("map_atlas");
+            _mapPanel.OnOpenMaritimeAtlasRequested += () => OpenPlayerPanel("maritime_atlas");
+            _factionsPanel.OnOpenStanceMatrixRequested += () => OpenPlayerPanel("faction_matrix");
+            _factionsPanel.OnOpenNarrativesRequested += () => OpenPlayerPanel("factions_narrative");
+            _craftingPanel.OnOpenSurvivalWorkstationRequested += () => OpenPlayerPanel("survival_workstation");
+            _weatherPanel.OnOpenWeatherSondeRequested += () => OpenPlayerPanel("weather_sonde");
+            _questsPanel.OnOpenQuestsAtlasRequested += () => OpenPlayerPanel("quests_atlas");
+            _researchPanel.OnOpenResearchAtlasRequested += () => OpenPlayerPanel("research_atlas");
+            _musterPanel.OnOpenMusterAtlasRequested += () => OpenPlayerPanel("muster_atlas");
+            _tradePanel.OnOpenCaravanBarterRequested += () => OpenPlayerPanel("caravan_barter");
+            _radiationDetailPanel.OnOpenCalibrationRequested += () => OpenPlayerPanel("geiger_calibration");
+            _journalPanel.OnOpenStandingRecordAtlasRequested += () => OpenPlayerPanel("standing_record_atlas");
 
             // ── Events Log panel (overlay) ──
             _eventsLogPanel = new EventsLogPanel();
@@ -1325,10 +1357,6 @@ namespace AtomicWar.GodotApp
             _surfaceShrapnelAegisPanel = new SurfaceShrapnelAegisPanel { Visible = false };
             _surfaceShrapnelAegisPanel.OnClose += () => _surfaceShrapnelAegisPanel.Visible = false;
             AddChild(_surfaceShrapnelAegisPanel);
-
-            _longWalkExpeditionPanel = new LongWalkExpeditionPanel { Visible = false };
-            _longWalkExpeditionPanel.OnClose += () => _longWalkExpeditionPanel.Visible = false;
-            AddChild(_longWalkExpeditionPanel);
 
             _reconTelemetryPanel = new ReconTelemetryPanel { Visible = false };
             _reconTelemetryPanel.OnClose += () => _reconTelemetryPanel.Visible = false;

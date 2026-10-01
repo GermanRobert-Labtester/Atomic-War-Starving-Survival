@@ -20,6 +20,7 @@ namespace AtomicWar.GodotApp.UI
     public partial class ResearchPanel : Control
     {
         public event Action? OnClose;
+        public event Action? OnOpenResearchAtlasRequested;
         public event Action<string>? OnResearchStarted;
 
         private Label _lblActiveTitle;
@@ -411,6 +412,12 @@ namespace AtomicWar.GodotApp.UI
 
             var bottomHBox = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingMd);
             bottomHBox.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+
+            var btnAtlas = AshfallUiHelpers.MakeButton("RESEARCH ATLAS", () => OnOpenResearchAtlasRequested?.Invoke());
+            btnAtlas.CustomMinimumSize = new Vector2(200, 40);
+            btnAtlas.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            btnAtlas.TooltipText = "Research technology atlas — every project, tier, and unlock.";
+            bottomHBox.AddChild(btnAtlas);
 
             var btnClose = AshfallUiHelpers.MakeButton(T("ui.common.close_short",
                 "CLOSE [Esc]"), () => OnClose?.Invoke());

@@ -121,7 +121,6 @@ namespace AtomicWar.GodotApp
                 _clandestineInsurgencyPanel,
                 _subterraneanDebtLedgerPanel,
                 _surfaceShrapnelAegisPanel,
-                _longWalkExpeditionPanel,
                 _sonicRuptureDrillPanel,
                 _vaultDoorBreachingPanel,
                 _ironCenotaphMemorialPanel,

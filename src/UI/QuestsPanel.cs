@@ -20,6 +20,7 @@ namespace AtomicWar.GodotApp.UI
         public event Action<string>? OnQuestDetailRequested;
         public event Action? OnCrossingPanelRequested;
         public event Action? OnProceduralQuestRequested;
+        public event Action? OnOpenQuestsAtlasRequested;
 
         /// <summary>Open the authored personal arc belonging to a survivor.</summary>
         public event Action<string>? OnBeginSurvivorArcRequested;
@@ -736,6 +737,10 @@ namespace AtomicWar.GodotApp.UI
             rootBox.AddChild(_completedContainer);
 
             rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+            var btnAtlas = AshfallUiHelpers.MakeButton("QUESTS & OPERATIONS ATLAS", () => OnOpenQuestsAtlasRequested?.Invoke());
+            btnAtlas.TooltipText = "Full quests and operations atlas with record archives.";
+            rootBox.AddChild(btnAtlas);
 
             var btnClose = AshfallUiHelpers.MakeButton("CLOSE QUESTS [Esc]", () => OnClose?.Invoke());
             btnClose.CustomMinimumSize = new Vector2(220, 42);

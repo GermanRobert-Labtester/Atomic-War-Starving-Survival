@@ -19,6 +19,7 @@ namespace AtomicWar.GodotApp.UI
     public partial class MusterPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
+        public event Action? OnOpenMusterAtlasRequested;
         public event Action<string, IReadOnlyList<ApproachOption>>? OnApproachModalRequested;
 
         private MusterHostSession? _muster;
@@ -143,6 +144,10 @@ namespace AtomicWar.GodotApp.UI
             // ── Footer buttons ──────────────────────────────────────
             var btnRow = AshfallUiHelpers.MakeHBox(CoreTheme.SpacingMd);
             btnRow.Alignment = BoxContainer.AlignmentMode.Center;
+
+            var btnAtlas = AshfallUiHelpers.MakeButton("MUSTER ATLAS", () => OnOpenMusterAtlasRequested?.Invoke(), false);
+            btnAtlas.TooltipText = "Full muster atlas — personnel, currents, and escalation records.";
+            btnRow.AddChild(btnAtlas);
 
             var btnClose = AshfallUiHelpers.MakeButton("RETURN TO DASHBOARD [Esc]", () => OnClose?.Invoke(), false);
             btnClose.CustomMinimumSize = new Vector2(260, 42);

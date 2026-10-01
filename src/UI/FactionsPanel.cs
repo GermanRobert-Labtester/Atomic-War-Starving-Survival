@@ -21,6 +21,8 @@ namespace AtomicWar.GodotApp.UI
         public event Action? OnMusterPanelRequested;
         public event Action? OnFoundryPanelRequested;
         public event Action? OnCultureCodexRequested;
+        public event Action? OnOpenStanceMatrixRequested;
+        public event Action? OnOpenNarrativesRequested;
         /// <summary>Player chose to pay the warlord tribute in full (amount = current ask).</summary>
         public event Action<int>? OnWarlordTributePay;
         /// <summary>Player refused the warlord tribute this week.</summary>
@@ -149,6 +151,16 @@ namespace AtomicWar.GodotApp.UI
                 OnCultureCodexRequested?.Invoke();
             });
             ovBox.AddChild(btnCulture);
+            var btnStanceMatrix = AshfallUiHelpers.MakeButton("FACTION STANCE MATRIX // RELATIONS GRID", () =>
+            {
+                OnOpenStanceMatrixRequested?.Invoke();
+            });
+            ovBox.AddChild(btnStanceMatrix);
+            var btnNarratives = AshfallUiHelpers.MakeButton("FACTION NARRATIVES // DISPATCHES & ARCS", () =>
+            {
+                OnOpenNarrativesRequested?.Invoke();
+            });
+            ovBox.AddChild(btnNarratives);
 
             _overviewContainer.AddChild(ovCard);
 

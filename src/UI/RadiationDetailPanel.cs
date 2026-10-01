@@ -17,8 +17,8 @@ namespace AtomicWar.GodotApp.UI
     public partial class RadiationDetailPanel : Control
     {
         public event Action? OnClose;
+        public event Action? OnOpenCalibrationRequested;
 
-        private VBoxContainer _contentVBox = null!;
         private Label _lblCurrentTitle;
         private VBoxContainer _currentData;
         private Label _lblDosimeterTitle;
@@ -281,6 +281,7 @@ namespace AtomicWar.GodotApp.UI
             _protectionData = binder.Get<VBoxContainer>("ProtectionData");
             _eventsList = binder.Get<VBoxContainer>("EventsList");
             binder.Get<Button>("CloseButton").Pressed += () => OnClose?.Invoke();
+            binder.Get<Button>("CalibrationButton").Pressed += () => OnOpenCalibrationRequested?.Invoke();
 
             Visible = false;
         }

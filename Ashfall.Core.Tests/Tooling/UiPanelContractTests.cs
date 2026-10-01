@@ -119,6 +119,8 @@ namespace Ashfall.Core.Tests.Tooling
             ("assets/ui/panels/RadiationDetailPanel.tscn", "ProtectionData", "VBoxContainer"),
             ("assets/ui/panels/RadiationDetailPanel.tscn", "EventsList", "VBoxContainer"),
             ("assets/ui/panels/RadiationDetailPanel.tscn", "CloseButton", "Button"),
+            ("assets/ui/panels/RadiationDetailPanel.tscn", "CalibrationButton", "Button"),
+            ("assets/ui/panels/CraftingPanel.tscn", "SurvivalWorkstationButton", "Button"),
             ("assets/ui/panels/EconomyDetailPanel.tscn", "Backdrop", "ColorRect"),
             ("assets/ui/panels/EconomyDetailPanel.tscn", "ResourcesList", "VBoxContainer"),
             ("assets/ui/panels/EconomyDetailPanel.tscn", "TradeList", "VBoxContainer"),

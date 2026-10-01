@@ -98,6 +98,34 @@ namespace Ashfall.Core.Tests.UI
         }
 
         [Fact]
+        public void ExpeditionConsoleRoutes_AreEmittedAndWired()
+        {
+            // T14 (2026-10-01): both console routes were registered and had
+            // ConfigureActions entries but NO emitter surface — registered,
+            // player-navigable, and unreachable from play. The expedition
+            // panel now deep-links both; the host resolves the routes.
+            foreach (string id in new[] { "expedition_radar", "expedition_camp" })
+            {
+                Assert.True(PanelRegistry.IsRegistered(id),
+                    $"Console route '{id}' must be registered.");
+                Assert.Equal(PanelGroup.Secondary, PanelRegistry.Get(id)!.Group);
+            }
+
+            string srcRoot = FindSrcRoot();
+            string panelPath = Path.Combine(srcRoot, "UI", "ExpeditionPanel.cs");
+            Assert.True(File.Exists(panelPath), "ExpeditionPanel.cs must exist.");
+            string panelSrc = File.ReadAllText(panelPath);
+            Assert.Contains("OnOpenRadarRequested", panelSrc, StringComparison.Ordinal);
+            Assert.Contains("OnOpenCampConsoleRequested", panelSrc, StringComparison.Ordinal);
+
+            string wiringPath = Path.Combine(srcRoot, "Main.UiPanels.cs");
+            Assert.True(File.Exists(wiringPath), "Main.UiPanels.cs must exist.");
+            string wiringSrc = File.ReadAllText(wiringPath);
+            Assert.Contains("OpenPlayerPanel(\"expedition_radar\")", wiringSrc, StringComparison.Ordinal);
+            Assert.Contains("OpenPlayerPanel(\"expedition_camp\")", wiringSrc, StringComparison.Ordinal);
+        }
+
+        [Fact]
         public void AllExpandedPanels_AreRegisteredAsExpanded()
         {
             string[] expandedIds =
