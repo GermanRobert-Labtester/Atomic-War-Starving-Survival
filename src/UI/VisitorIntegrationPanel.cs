@@ -5,6 +5,7 @@ using Godot;
 using Ashfall.Core.Visitors;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp;
+using AtomicWar.GodotApp.Localization;
 
 namespace AtomicWar.GodotApp.UI
 {
@@ -17,6 +18,9 @@ namespace AtomicWar.GodotApp.UI
     public partial class VisitorIntegrationPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
+
+        /// <summary>Localization shim: catalog key with an English fallback.</summary>
+        private static string T(string key, string fallback) => AshfallUiText.Tr(key, fallback);
 
         private AshfallDashboardShell _shell = null!;
         private AshfallStatusRail? _statusRail;
@@ -80,10 +84,10 @@ namespace AtomicWar.GodotApp.UI
             _leftColumn.SizeFlagsHorizontal = SizeFlags.Fill;
             _leftColumn.SizeFlagsVertical = SizeFlags.ExpandFill;
 
-            var visitorsHeader = new Label { Text = "ACTIVE VISITOR STAYS" };
+            var visitorsHeader = new Label { Text = T("ui.visitors.active_stays", "ACTIVE VISITOR STAYS") };
             _leftColumn.AddChild(visitorsHeader);
 
-            var admitButton = new Button { Text = "ADMIT NEXT ARRIVAL (LOCAL)", CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
+            var admitButton = new Button { Text = T("ui.visitors.admit", "ADMIT NEXT ARRIVAL (LOCAL)"), CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
             admitButton.Pressed += OnAdmitPressed;
             _leftColumn.AddChild(admitButton);
 
@@ -96,7 +100,7 @@ namespace AtomicWar.GodotApp.UI
             visitorsScroll.AddChild(_visitorsContainer);
             _leftColumn.AddChild(visitorsScroll);
 
-            _emptyLabel = new Label { Text = "No visitors are currently housed. Admitted airlock guests appear here." };
+            _emptyLabel = new Label { Text = T("ui.visitors.empty", "No visitors are currently housed. Admitted airlock guests appear here.") };
             _leftColumn.AddChild(_emptyLabel);
 
             _splitBody.AddChild(_leftColumn);
@@ -107,14 +111,14 @@ namespace AtomicWar.GodotApp.UI
             _rightColumn.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _rightColumn.SizeFlagsVertical = SizeFlags.ExpandFill;
 
-            var taskHeader = new Label { Text = "PENDING PROCESSING REQUIREMENTS" };
+            var taskHeader = new Label { Text = T("ui.visitors.pending", "PENDING PROCESSING REQUIREMENTS") };
             _rightColumn.AddChild(taskHeader);
             _tasksContainer = new VBoxContainer();
             _tasksContainer.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
             _tasksContainer.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _rightColumn.AddChild(_tasksContainer);
 
-            var departureHeader = new Label { Text = "DEPARTURE & RECRUITMENT RECEIPTS" };
+            var departureHeader = new Label { Text = T("ui.visitors.receipts", "DEPARTURE & RECRUITMENT RECEIPTS") };
             _rightColumn.AddChild(departureHeader);
 
             var departureScroll = new ScrollContainer();
@@ -216,15 +220,15 @@ namespace AtomicWar.GodotApp.UI
                 bunk.Pressed += () => { _host.AssignHousing(visitor.VisitorId, "visitor_berth_" + visitor.VisitorId, HousingType.TemporaryBunk, visitor.ArrivalDay); RefreshView(); };
                 actions.AddChild(bunk);
 
-                var shared = new Button { Text = "Shared Quarter", CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
+                var shared = new Button { Text = T("ui.visitors.shared_quarter", "Shared Quarter"), CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
                 shared.Pressed += () => { _host.AssignHousing(visitor.VisitorId, "room_shared_bunks_b", HousingType.SharedQuarter, visitor.ArrivalDay); RefreshView(); };
                 actions.AddChild(shared);
 
-                var privateRoom = new Button { Text = "Private Room", CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
+                var privateRoom = new Button { Text = T("ui.visitors.private_room", "Private Room"), CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
                 privateRoom.Pressed += () => { _host.AssignHousing(visitor.VisitorId, "room_visitor_private", HousingType.PrivateRoom, visitor.ArrivalDay); RefreshView(); };
                 actions.AddChild(privateRoom);
 
-                var guestSuite = new Button { Text = "Guest Suite", CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
+                var guestSuite = new Button { Text = T("ui.visitors.guest_suite", "Guest Suite"), CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
                 guestSuite.Pressed += () => { _host.AssignHousing(visitor.VisitorId, "room_guest_suite", HousingType.GuestSuite, visitor.ArrivalDay); RefreshView(); };
                 actions.AddChild(guestSuite);
 
@@ -235,13 +239,13 @@ namespace AtomicWar.GodotApp.UI
 
                 if (visitor.Status == VisitorStatus.Integrated)
                 {
-                    var recruit = new Button { Text = "RECRUIT AS RESIDENT", CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
+                    var recruit = new Button { Text = T("ui.visitors.recruit", "RECRUIT AS RESIDENT"), CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
                     var captured = visitor;
                     recruit.Pressed += () => OnRecruitPressed(captured);
                     decisionRow.AddChild(recruit);
                 }
 
-                var depart = new Button { Text = "LOG DEPARTURE", CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
+                var depart = new Button { Text = T("ui.visitors.depart", "LOG DEPARTURE"), CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
                 var departCaptured = visitor;
                 depart.Pressed += () => OnDepartPressed(departCaptured);
                 decisionRow.AddChild(depart);
@@ -255,7 +259,7 @@ namespace AtomicWar.GodotApp.UI
             var allPending = _host.Tasks.Where(t => !t.IsCompleted).ToList();
             if (allPending.Count == 0)
             {
-                _tasksContainer.AddChild(new Label { Text = "No outstanding processing requirements." });
+                _tasksContainer.AddChild(new Label { Text = T("ui.visitors.no_tasks", "No outstanding processing requirements.") });
             }
             else
             {
@@ -265,7 +269,7 @@ namespace AtomicWar.GodotApp.UI
                     row.AddThemeConstantOverride("separation", 8);
                     var visitor = _host.Visitors.FirstOrDefault(v => v.VisitorId == task.VisitorId);
                     row.AddChild(new Label { Text = $"{visitor?.Name ?? task.VisitorId}: {task.TaskType} (due day {task.DueDay})" });
-                    var done = new Button { Text = "Satisfy", CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
+                    var done = new Button { Text = T("ui.visitors.satisfy", "Satisfy"), CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.MinInteractiveHeight) };
                     var capturedTask = task;
                     done.Pressed += () => { _host.CompleteTask(capturedTask.TaskId, capturedTask.DueDay); RefreshView(); };
                     row.AddChild(done);
@@ -275,7 +279,7 @@ namespace AtomicWar.GodotApp.UI
 
             if (_host.Departures.Count == 0)
             {
-                _departuresContainer.AddChild(new Label { Text = "No departures or recruitment conversions recorded." });
+                _departuresContainer.AddChild(new Label { Text = T("ui.visitors.no_departures", "No departures or recruitment conversions recorded.") });
             }
             else
             {

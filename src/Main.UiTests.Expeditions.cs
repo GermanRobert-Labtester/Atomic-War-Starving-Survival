@@ -41,6 +41,9 @@ namespace AtomicWar.GodotApp
         private void RunExpeditionPanelUiTestAndQuit()
         {
             BuildUserInterface();
+            _campaignInitializationMode = CampaignInitializationMode.FreshInitialize;
+            SetupInventory();
+            SetupSurvivors();
             SetupExpeditions();
 
             bool pass = true;
@@ -57,6 +60,45 @@ namespace AtomicWar.GodotApp
             _expeditionPanel!.Bind(_expeditions!, _survivors!, _inventory!);
             _expeditionPanel.Open();
             Check(_expeditionPanel.Visible && _expeditionPanel.IsBound, "panel opens bound");
+
+            // P105/P106 — pre-dispatch prep projection renders from the live
+            // estimate + shelter inventory.
+            Check(!string.IsNullOrEmpty(_expeditionPanel.PrepSummaryText), "pre-dispatch prep projection rendered");
+            Check(_expeditionPanel.PrepSummaryText.Contains("PREP"), "prep projection names duration/burn/risk");
+            Check(_expeditionPanel.PrepSummaryText.Contains("FOOD"), "prep checklist names food/water rows");
+
+            // P107 — return-loot ceremony renders the itemised payload, not a
+            // silent counter, and does not deposit (the host owner does).
+            var returnState = new ExpeditionState
+            {
+                survivorId = "survivor_gunner_mikhail",
+                locationId = "loc_the_allotments",
+                displayName = "The Works Allotment Commune",
+                phase = (int)ExpeditionPhase.Completed,
+                loot = new List<ExpeditionLootEntry>
+                {
+                    new ExpeditionLootEntry { itemId = "canned_food", quantity = 2, weightKg = 1.2f },
+                    new ExpeditionLootEntry { itemId = "clean_water", quantity = 1, weightKg = 0.8f }
+                }
+            };
+            _expeditionPanel.PresentReturnForTest(returnState);
+            Check(_expeditionPanel.LastReturnSummary.Contains("RETURN LOOT CEREMONY"), "return ceremony header rendered");
+            Check(_expeditionPanel.LastReturnSummary.Contains("3 item(s)"), "return ceremony totals rendered");
+
+            // P108 — failure aftermath renders through the panel.
+            var failureState = new ExpeditionState
+            {
+                survivorId = "survivor_gunner_mikhail",
+                displayName = "The Works Allotment Commune"
+            };
+            _expeditionPanel.PresentFailureForTest(failureState, "Collapsed from exhaustion.");
+            Check(_expeditionPanel.LastReturnSummary.Contains("SORTIE AFTERMATH"), "failure aftermath rendered");
+            Check(_expeditionPanel.LastReturnSummary.Contains("Collapsed from exhaustion"), "failure reason surfaced verbatim");
+
+            // The UI smoke stays bounded to panel presentation and lifecycle.
+            // A fatal sortie cascade composes fate, journal, health, memorial,
+            // and save owners; those contracts belong to their focused host
+            // integration checks and do not add evidence about panel focus.
 
             // Surface a synthetic expedition state through the bridge:
             // host -> OnEncounterSurfaced -> Main.OnExpeditionEncounterSurfaced -> panel.
@@ -158,6 +200,17 @@ namespace AtomicWar.GodotApp
                 _expeditionPanel.Close();
                 _expeditionPanel.Open();
             }
+            // Wave-5 — the newly localized expedition strings resolve in German.
+            Check(AtomicWar.GodotApp.Localization.AshfallLocalization.Tr("ui.expedition.section.active", "ACTIVE SORTIES IN THE FIELD") == "AKTIVE EINSÄTZE IM FELD",
+                "German expedition section header resolves");
+            Check(ExpeditionPhaseText.Label(ExpeditionPhase.Outbound) == "HINAUS",
+                "German expedition phase label resolves through the phase owner");
+            Check(ExpeditionPhaseText.Label(ExpeditionPhase.Camp) == "NACHTLAGER",
+                "German camp phase label resolves through the phase owner");
+            Check(AtomicWar.GodotApp.Localization.AshfallLocalization.Tr("ui.expedition.radar.rail.active", "Active") == "Aktiv",
+                "German radar rail label resolves");
+            Check(AtomicWar.GodotApp.Localization.AshfallLocalization.Tr("ui.expedition.radar.title", "Sortie Radar // Wasteland Movement Network").Contains("Einsatzradar"),
+                "German radar shell title resolves");
             AtomicWar.GodotApp.Localization.AshfallLocalization.SetLocale("en");
 
             // Patrol presentation must remain a projection of the Core travel

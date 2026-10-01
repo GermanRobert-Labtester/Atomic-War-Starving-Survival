@@ -107,3 +107,14 @@ An integration plan is **DONE** only when:
 Every high-level capability claim made in documentation or agent instructions is backed by machine-verifiable evidence in:
 - **`docs/architecture/CLAIMS.json`** — The machine-readable capability registry.
 - **`scripts/ci/verify-capability-claims.py --check`** — The gate enforcing that all referenced source files, tests, and CI gates exist and remain valid.
+
+## 5. Extension Before Invention
+
+Before proposing a new `SYSTEM` plan, search the [generated capability overlap
+clusters](CAPABILITY_CLUSTERS.md) and complete a
+[duplicate-search receipt](DUPLICATE_SEARCH_RECEIPT_TEMPLATE.md). Name the
+existing Core authority, host route, save owner, and acceptance tests when they
+exist. Prefer a bounded extension or a link/content/presentation ticket when a
+live owner already covers the capability. Treat semantic similarity as a
+review lead: distinct ownership, lifecycle, or player outcomes remain separate.
+Cluster membership never changes plan status and never authorizes a merge.

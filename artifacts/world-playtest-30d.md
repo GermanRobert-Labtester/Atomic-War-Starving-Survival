@@ -1,6 +1,6 @@
 # ASHFALL evolving-world 30-day proof
 
-- Source commit: `afc419d941813d2766a27666b25df1702a7afa2a`
+- Source commit: `1cc4c773a37285bfc6205a049db2044b1b0bdb17`
 - Master seed: `424242`
 - Snapshot count: `30`
 - Day owner: `world_evolution`
@@ -45,6 +45,8 @@
 ## Checks
 
 - PASS: production EvolvingWorldDayOwner advances the fixed 30-day window
+- PASS: production day-owner retry does not double-consume rations
+- PASS: full-composition day retry matches the no-failure inventory baseline
 - PASS: 30 daily snapshots emitted — count=30
 - PASS: wildlife migration is visible — events=61
 - PASS: location degradation tier changes — transitions=1

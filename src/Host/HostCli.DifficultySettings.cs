@@ -179,10 +179,13 @@ namespace AtomicWar.GodotApp
 
                 // Check 12: host wiring routes the effective scalars into the XP-01
                 // binding field and registers a save section, without a second catalog.
+                // Persistence now goes through the central CaptureSection orchestrator
+                // (TryCapturePersisted + SectionName), not a direct TrySave call.
                 string wiring = ReadRepoFile("src", "Main.DifficultySettings.cs");
                 string registry = ReadRepoFile("Assets", "Ashfall.Core", "Save", "SaveSectionRegistry.cs");
                 if (wiring.Contains("_difficultyScalars = _difficultySettings.EffectiveProvider")
-                    && wiring.Contains("DifficultySettingsSaveStore.TrySave")
+                    && wiring.Contains("CaptureSection(DifficultySettingsSaveStore.SectionName")
+                    && wiring.Contains("DifficultySettingsSaveStore.TryCapturePersisted(state)")
                     && wiring.Contains("EnsureDifficultyCatalog()")
                     && registry.Contains("difficulty_settings")
                     && registry.Contains("difficulty_settings_save.json"))

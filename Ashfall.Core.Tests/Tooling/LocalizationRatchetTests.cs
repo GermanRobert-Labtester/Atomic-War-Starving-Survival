@@ -21,9 +21,15 @@ namespace Ashfall.Core.Tests.Tooling
         /// baseline; re-recorded 2026-10-01 at 617 after the T18 l10n repair
         /// localized the pilot ResearchPanel atlas tooltip (drift gate green);
         /// re-recorded again the same day at 619 after concurrent atlas/tooltip
-        /// work landed before the full commit. Ratchet down, never up: a future
-        /// l10n sweep should lower this number.</summary>
-        private const int HardcodedUiLiteralBaseline = 619;
+        /// work landed before the full commit; re-recorded 2026-10-01 at the
+        /// verified current count (625), then ratcheted down to 608 by localizing
+        /// the 17 WorkshopPanel strings, then to 557 by localizing VisitorIntegration
+        /// (13), ShelterHud (13), DutyRoster (13), and SilentFoundry (12), then to
+        /// 546 by localizing SkillMatrix (11), then to 536 by localizing Triangulation (10),
+        /// then to 528 by localizing the 5 remaining ExpeditionPanel literals and the
+        /// StatusPanel expedition-injury row. Ratchet
+        /// down, never up: a future l10n sweep should continue lowering this number.</summary>
+        private const int HardcodedUiLiteralBaseline = 528;
 
         private static readonly Regex LiteralPattern = new(
             "(Text|Title|Label)\\s*=\\s*\"[A-Z][^\"]{6,}\"",

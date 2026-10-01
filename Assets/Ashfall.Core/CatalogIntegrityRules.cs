@@ -166,6 +166,11 @@ namespace Ashfall.Core
             "tags", "category", "type", "phase", "severity", "discovery_trigger", "badge_asset_id", "art_asset_id",
             "stance", "short_name", "identity", "sink", "notes", "display_name", "legacy_aliases",
             "collection_id", "observation_clue",
+            // lootCategories is intentionally NOT a reference key here: the runtime
+            // validator treats it as vocabulary. Expedition lootCategories are
+            // item-id references enforced by the fast `catalog_audit` gate
+            // (docs/ci/catalog_audit_policy.json); locations_expansion3.json uses
+            // abstract category tags. See docs/ci/README.md.
             "hazardType", "will_not", "lootCategories", "tech_offerings",
             "depletion_model", "primary_hazard_type", "hazard_type", "codex_unlock_id", "location_type", "rarity_tier",
             "effect_type", "effect_target", "rarity", "ignoreConsequence", "authenticity",

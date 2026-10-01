@@ -92,10 +92,23 @@ namespace Ashfall.Core.Tests.UI
             // body fallback is the authored copy; no silent generic default).
             Assert.Contains("OnboardingLessonLocalization.ProtectionBeforeDispatchId", tutorial, StringComparison.Ordinal);
             Assert.Contains("OnboardingLessonLocalization.SevereWeatherPrepId", tutorial, StringComparison.Ordinal);
+            Assert.Contains("OnboardingLessonLocalization.AcuteRadiationId", tutorial, StringComparison.Ordinal);
 
             // And each identity starts from a non-empty trigger constant.
             Assert.False(string.IsNullOrWhiteSpace(OnboardingLessonLocalization.ProtectionBeforeDispatchId));
             Assert.False(string.IsNullOrWhiteSpace(OnboardingLessonLocalization.SevereWeatherPrepId));
+            Assert.False(string.IsNullOrWhiteSpace(OnboardingLessonLocalization.AcuteRadiationId));
+        }
+
+        [Fact]
+        public void AcuteRadiationLesson_HasAProductionTrigger()
+        {
+            // P012 — the lesson identity must be requested from production
+            // source (the medical host owns the trigger), not just constant.
+            string root = FindRepoRoot();
+            string medical = File.ReadAllText(Path.Combine(root, "src", "Main.Medical.cs"));
+            Assert.Contains("OnboardingLessonLocalization.AcuteRadiationId", medical, StringComparison.Ordinal);
+            Assert.Contains("HasAcuteRadiationSickness", medical, StringComparison.Ordinal);
         }
 
         [Fact]

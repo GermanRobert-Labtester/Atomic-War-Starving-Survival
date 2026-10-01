@@ -8,6 +8,8 @@
 using Godot;
 using System;
 using System.IO;
+using System.Linq;
+using Ashfall.Core;
 using Ashfall.Core.Content;
 
 namespace AtomicWar.GodotApp
@@ -122,9 +124,68 @@ namespace AtomicWar.GodotApp
                 }
                 GD.Print();
 
-                // Phase 9: Exemptions check
-                GD.Print("[Phase 9] Exemption validation...");
+                // Phase 9: Exemption + content-reachability disposition check
+                GD.Print("[Phase 9] Exemption + content-reachability validation...");
                 var exemptions = DefaultExemptions.CreateDefault();
+
+                // T086: every UNRESOLVED catalog must carry a reviewed, owned
+                // disposition. The policy is a data file so the disposition set
+                // is reviewable and diffable rather than implied by silence.
+                string policyPath = Path.Combine(repoRoot, "docs", "ci", "content_reachability_dispositions.json");
+                if (File.Exists(policyPath))
+                {
+                    try
+                    {
+                        var policy = new SystemTextJsonSerializer().Deserialize<ExemptionRegistry>(File.ReadAllText(policyPath));
+                        if (policy != null)
+                        {
+                            foreach (var entry in policy.Exemptions)
+                            {
+                                if (!exemptions.TryGetExemption(entry.ContentPath, out _))
+                                    exemptions.Exemptions.Add(entry);
+                            }
+                            GD.Print($"  Disposition policy: {policy.Exemptions.Count} entries");
+
+                            var noExpiry = policy.Exemptions
+                                .Where(e => string.IsNullOrWhiteSpace(e.ExpiryCondition))
+                                .Select(e => e.ContentPath)
+                                .OrderBy(p => p, StringComparer.Ordinal)
+                                .ToList();
+                            GD.Print($"  Dispositions without an expiry: {noExpiry.Count}");
+                            if (noExpiry.Count > 0)
+                            {
+                                foreach (var path in noExpiry)
+                                    GD.PrintErr($"    NO_EXPIRY: {path}");
+                                exitCode = 1;
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        GD.PrintErr($"  Disposition policy failed to parse: {ex.Message}");
+                        exitCode = 1;
+                    }
+
+                    var undispositioned = graph.Catalogs
+                        .Where(c => c.Classification == ContentClassification.UNRESOLVED)
+                        .Where(c => !exemptions.TryGetExemption(c.Path, out _))
+                        .Select(c => c.Path)
+                        .OrderBy(p => p, StringComparer.Ordinal)
+                        .ToList();
+                    GD.Print($"  Unresolved without a disposition: {undispositioned.Count}");
+                    if (undispositioned.Count > 0)
+                    {
+                        foreach (var path in undispositioned)
+                            GD.PrintErr($"    UNDISPOSITIONED: {path}");
+                        exitCode = 1;
+                    }
+                }
+                else
+                {
+                    GD.PrintErr($"  Disposition policy missing: {policyPath}");
+                    exitCode = 1;
+                }
+
                 var invalid = exemptions.GetInvalidExemptions();
                 var stale = exemptions.GetStaleExemptions(graph);
                 GD.Print($"  Total exemptions: {exemptions.Exemptions.Count}");

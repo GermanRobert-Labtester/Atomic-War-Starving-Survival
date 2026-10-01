@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Godot;
 using Ashfall.Core.UI;
+using AtomicWar.GodotApp.Localization;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI;
@@ -79,6 +80,9 @@ public partial class ShelterHudPanel : Control
 
     private AshfallDashboardShell _shell = null!;
     private AshfallSidebar? _sidebar;
+
+    /// <summary>Localization shim: catalog key with an English fallback.</summary>
+    private static string T(string key, string fallback) => AshfallUiText.Tr(key, fallback);
     private AshfallStatusRail? _statusRail;
     private AshfallDataGrid? _storesGrid;
     private AshfallDataGrid? _conditionGrid;
@@ -122,19 +126,19 @@ public partial class ShelterHudPanel : Control
         // Sidebar mirrors GameDashboard's rail taxonomy.
         _sidebar = _shell.SetSidebar(new[]
         {
-            new AshfallSidebar.Item { Id = "overview",    Label = "Overview",            Hint = "DAY // LOCATION" },
-            new AshfallSidebar.Item { Id = "survivors",   Label = "Survivors",           Hint = "ROSTER STATUS" },
-            new AshfallSidebar.Item { Id = "inventory",   Label = "Inventory",           Hint = "STORAGE" },
-            new AshfallSidebar.Item { Id = "crafting",    Label = "Crafting",            Hint = "WORKSTATION" },
-            new AshfallSidebar.Item { Id = "medical",     Label = "Medical",             Hint = "TRIAGE" },
-            new AshfallSidebar.Item { Id = "expeditions", Label = "Expeditions",         Hint = "CARAVAN" },
-            new AshfallSidebar.Item { Id = "weather",     Label = "Weather",             Hint = "FORECAST" },
+            new AshfallSidebar.Item { Id = "overview",    Label = T("ui.shelter.nav_overview", "Overview"),            Hint = "DAY // LOCATION" },
+            new AshfallSidebar.Item { Id = "survivors",   Label = T("ui.shelter.nav_survivors", "Survivors"),           Hint = "ROSTER STATUS" },
+            new AshfallSidebar.Item { Id = "inventory",   Label = T("ui.shelter.nav_inventory", "Inventory"),           Hint = "STORAGE" },
+            new AshfallSidebar.Item { Id = "crafting",    Label = T("ui.shelter.nav_crafting", "Crafting"),            Hint = "WORKSTATION" },
+            new AshfallSidebar.Item { Id = "medical",     Label = T("ui.shelter.nav_medical", "Medical"),             Hint = "TRIAGE" },
+            new AshfallSidebar.Item { Id = "expeditions", Label = T("ui.shelter.nav_expeditions", "Expeditions"),         Hint = "CARAVAN" },
+            new AshfallSidebar.Item { Id = "weather",     Label = T("ui.shelter.nav_weather", "Weather"),             Hint = "FORECAST" },
             new AshfallSidebar.Item { Id = "radio",       Label = "Radio",               Hint = "INTERCEPT" },
             new AshfallSidebar.Item { Id = "map",         Label = "Map",                 Hint = "SECTOR MAP" },
-            new AshfallSidebar.Item { Id = "shelter",     Label = "Shelter",             Hint = "INTEGRITY" },
+            new AshfallSidebar.Item { Id = "shelter",     Label = T("ui.shelter.nav_shelter", "Shelter"),             Hint = "INTEGRITY" },
             new AshfallSidebar.Item { Id = "trade",       Label = "Trade",               Hint = "CARAVAN LEDGER" },
-            new AshfallSidebar.Item { Id = "factions",    Label = "Factions",            Hint = "STANCES" },
-            new AshfallSidebar.Item { Id = "verdict",     Label = "Verdict",             Hint = "EVALUATION" },
+            new AshfallSidebar.Item { Id = "factions",    Label = T("ui.shelter.nav_factions", "Factions"),            Hint = "STANCES" },
+            new AshfallSidebar.Item { Id = "verdict",     Label = T("ui.shelter.nav_verdict", "Verdict"),             Hint = "EVALUATION" },
         }, "BUNKER OPS", "overview");
 
         if (_sidebar != null)
@@ -193,7 +197,7 @@ public partial class ShelterHudPanel : Control
 
         _forecastLabel = new Label
         {
-            Text = "FORECAST // --",
+            Text = T("ui.shelter.forecast_pending", "FORECAST // --"),
             VerticalAlignment = VerticalAlignment.Center,
         };
         _forecastLabel.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeSmall);
@@ -206,7 +210,7 @@ public partial class ShelterHudPanel : Control
 
         _dutyRosterSummary = new Label
         {
-            Text = "DUTY ROSTER // --",
+            Text = T("ui.shelter.roster_pending", "DUTY ROSTER // --"),
             VerticalAlignment = VerticalAlignment.Center,
         };
         _dutyRosterSummary.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeSmall);
@@ -289,7 +293,7 @@ public partial class ShelterHudPanel : Control
         directiveVBox.AddChild(_directiveText);
         _eventLabel = new Label
         {
-            Text = "No fresh signal.",
+            Text = T("ui.shelter.no_signal", "No fresh signal."),
             VerticalAlignment = VerticalAlignment.Center,
         };
         _eventLabel.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeSmall);
@@ -473,24 +477,24 @@ public partial class ShelterHudPanel : Control
             float thirstClamped = Math.Clamp(state.Thirst, 0f, 100f);
             var rows = new List<AshfallDataGrid.Row>
             {
-                BuildConditionRow("HEALTH",    $"{state.Health:0}/{state.MaxHealth:0}", hpPct,
+                BuildConditionRow(T("ui.shelter_hud.condition.health", "HEALTH"),    $"{state.Health:0}/{state.MaxHealth:0}", hpPct,
                     hpPct <= 25 ? AshfallDataGrid.CellState.Critical
                     : hpPct <= 50 ? AshfallDataGrid.CellState.Warning
                     : AshfallDataGrid.CellState.Normal),
-                BuildConditionRow("RADIATION", $"{state.Radiation:0.0} mSv", radClamped,
-                    radClamped >= 100 ? AshfallDataGrid.CellState.Critical
-                    : radClamped >= 50 ? AshfallDataGrid.CellState.Warning
-                    : radClamped >= 25 ? AshfallDataGrid.CellState.Caution
+                BuildConditionRow(T("ui.shelter_hud.condition.radiation", "RADIATION"), $"{state.Radiation:0.0} mSv", radClamped,
+                    radClamped >= Ashfall.Core.Radiation.RadiationSystem.AcuteThreshold ? AshfallDataGrid.CellState.Critical
+                    : radClamped >= Ashfall.Core.Radiation.RadiationSystem.WarnThreshold ? AshfallDataGrid.CellState.Warning
+                    : radClamped >= Ashfall.Core.Radiation.RadiationSystem.WarnThreshold * 0.5f ? AshfallDataGrid.CellState.Caution
                     : AshfallDataGrid.CellState.Normal),
-                BuildConditionRow("HUNGER",    $"{state.Hunger:0}/100",    hungerClamped,
-                    hungerClamped >= 80 ? AshfallDataGrid.CellState.Warning
-                    : hungerClamped >= 50 ? AshfallDataGrid.CellState.Caution
+                BuildConditionRow(T("ui.shelter_hud.condition.hunger", "HUNGER"),    $"{state.Hunger:0}/100",    hungerClamped,
+                    hungerClamped >= Ashfall.Core.Survivors.NeedsProfile.DefaultHungerCritical ? AshfallDataGrid.CellState.Warning
+                    : hungerClamped >= Ashfall.Core.Survivors.NeedsProfile.DefaultHungerWarn ? AshfallDataGrid.CellState.Caution
                     : AshfallDataGrid.CellState.Normal),
-                BuildConditionRow("THIRST",    $"{state.Thirst:0}/100",    thirstClamped,
-                    thirstClamped >= 80 ? AshfallDataGrid.CellState.Warning
-                    : thirstClamped >= 50 ? AshfallDataGrid.CellState.Caution
+                BuildConditionRow(T("ui.shelter_hud.condition.thirst", "THIRST"),    $"{state.Thirst:0}/100",    thirstClamped,
+                    thirstClamped >= Ashfall.Core.Survivors.NeedsProfile.DefaultThirstCritical ? AshfallDataGrid.CellState.Warning
+                    : thirstClamped >= Ashfall.Core.Survivors.NeedsProfile.DefaultThirstWarn ? AshfallDataGrid.CellState.Caution
                     : AshfallDataGrid.CellState.Normal),
-                BuildConditionRow("ROSTER",
+                BuildConditionRow(T("ui.shelter_hud.condition.roster", "ROSTER"),
                     state.TotalSurvivors == 0 ? "—" : $"{state.LivingSurvivors}/{state.TotalSurvivors} LIVING",
                     state.TotalSurvivors == 0 ? 0f : (float)state.LivingSurvivors / state.TotalSurvivors,
                     state.LivingSurvivors == state.TotalSurvivors ? AshfallDataGrid.CellState.Normal
@@ -549,7 +553,7 @@ public partial class ShelterHudPanel : Control
                 ? $"Hold the hatch. {weather} is reading {state.OutdoorRadiation:0} mSv outside with visibility at {state.WeatherVisibility:P0}."
                 : state.AirWarning
                     ? "Atmospheric contamination rising. Service the HEPA filtration stack before toxic air settles."
-                    : state.Hunger >= 75 || state.Thirst >= 75
+                    : state.Hunger >= Ashfall.Core.Survivors.NeedsProfile.DefaultHungerWarn || state.Thirst >= Ashfall.Core.Survivors.NeedsProfile.DefaultThirstWarn
                         ? "Rations are becoming the next problem. Reconcile food and water before the next shift."
                         : "Keep the shelter quiet. Check the filter pressure before the next outdoor shift.";
         }

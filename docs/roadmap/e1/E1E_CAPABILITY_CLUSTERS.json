@@ -1,0 +1,175 @@
+{
+  "schema_version": 1,
+  "review_status": "REVIEWED_CANDIDATES",
+  "review_evidence": "docs/roadmap/e1/E1E_INDEPENDENT_REVIEW.md",
+  "source_indexes": [
+    "docs/CURRENT_AUTHORITY.md",
+    "docs/architecture/ARCHITECTURE_TEST_MAP.md",
+    "docs/architecture/CLAIMS.json",
+    "Assets/Ashfall.Core/Save/SaveSectionRegistry.cs"
+  ],
+  "duplicate_search_receipt_schema": {
+    "required_fields": ["queries", "files_inspected", "live_systems_found", "reviewer_conclusion"],
+    "status_effect": "NONE"
+  },
+  "clusters": [
+    {
+      "id": "information-flow",
+      "label": "Wasteland information flow",
+      "vocabulary": ["information", "rumor", "radio traces", "triangulation", "gossip"],
+      "confidence": "HIGH",
+      "review_status": "REVIEWED",
+      "claim_ids": ["info_wasteland_rumor_authority"],
+      "save_sections": ["wasteland_rumors"],
+      "review_conclusion": "Extend and link to the existing rumor authority. Keep internal shelter communications distinct from wasteland rumor propagation.",
+      "next_action": "LINK",
+      "members": [
+        {"plan_id": "NEXT-PLAN-131", "relation": "EXTENSION_CANDIDATE"},
+        {"plan_id": "NEXT-PLAN-33", "relation": "RELATED_DISTINCT"},
+        {"plan_id": "PIA-24", "relation": "RELATED_DISTINCT"},
+        {"plan_id": "LEGACY-4AB98E63E0CC", "relation": "RELATED_DISTINCT", "receipt_path": "docs/roadmap/e1/receipts/LEGACY-4AB98E63E0CC.md"}
+      ],
+      "live_authorities": [
+        {"name": "RumorSystem", "role": "Core propagation and decay", "path": "Assets/Ashfall.Core/InformationFlow/RumorSystem.cs"},
+        {"name": "RumorNetworkHostSession", "role": "Host integration", "path": "src/Host/RumorNetworkHostSession.cs"},
+        {"name": "RumorNetworkSaveStore", "role": "Persistence", "path": "src/Host/RumorNetworkSaveStore.cs"},
+        {"name": "RumorBoardPanel", "role": "Presentation", "path": "src/UI/RumorBoardPanel.cs"}
+      ],
+      "integration_seam": "Route new wasteland rumor sources and consumers through RumorSystem and its existing host/save seam; do not fold internal shelter messages into the same concept without an explicit contract.",
+      "duplicate_search_receipt": {
+        "queries": ["rumor information flow", "radio traces secrets", "triangulation", "gossip"],
+        "files_inspected": ["docs/CURRENT_AUTHORITY.md", "docs/architecture/CLAIMS.json", "Assets/Ashfall.Core/InformationFlow/RumorSystem.cs", "src/Host/RumorNetworkHostSession.cs", "docs/plans/PLANS_168_203_138_INTEGRATION_LOG.md"],
+        "live_systems_found": ["RumorSystem", "SignalTriangulationSystem", "WeatherIntelligenceCoordinator", "MoralChoiceGossipRuntime"],
+        "reviewer_conclusion": "Related capabilities share information flow but have distinct sources and lifecycle; extend the existing rumor authority and preserve those boundaries."
+      }
+    },
+    {
+      "id": "npc-memory",
+      "label": "Per-NPC episodic memory",
+      "vocabulary": ["per-npc memory", "heirloom", "memory decay", "knowledge", "eulogy"],
+      "confidence": "HIGH",
+      "review_status": "REVIEWED",
+      "claim_ids": ["narr_npc_memory_persistence"],
+      "save_sections": ["npc_memory"],
+      "review_conclusion": "Keep NPC episodic memory, location memory, and phantom/campaign memory separate; use NpcMemorySystem for per-NPC extensions.",
+      "next_action": "LINK",
+      "members": [
+        {"plan_id": "LEGACY-644ECF5D803E", "relation": "EXTENSION_CANDIDATE"},
+        {"plan_id": "LEGACY-AA448DEC2320", "relation": "RELATED_DISTINCT"},
+        {"plan_id": "LEGACY-06763CA3818E", "relation": "RELATED_DISTINCT"},
+        {"plan_id": "PIA-21", "relation": "RELATED_DISTINCT"},
+        {"plan_id": "LEGACY-2D0AD23A05FF", "relation": "RELATED_DISTINCT", "receipt_path": "docs/roadmap/e1/receipts/LEGACY-2D0AD23A05FF.md"}
+      ],
+      "live_authorities": [
+        {"name": "NpcMemorySystem", "role": "Core per-NPC memories", "path": "Assets/Ashfall.Core/Narrative/NpcMemorySystem.cs"},
+        {"name": "NpcMemoryHostSession", "role": "Host integration", "path": "src/Host/NpcMemoryHostSession.cs"},
+        {"name": "NpcMemorySaveStore", "role": "Persistence", "path": "src/Host/NpcMemoryHostSession.cs"},
+        {"name": "Plan147NpcMemoryHostIntegrationTests", "role": "Host contract evidence", "path": "Ashfall.Core.Tests/Narrative/Plan147NpcMemoryHostIntegrationTests.cs"},
+        {"name": "LocationMemorySystem", "role": "Separate location-memory authority", "path": "Assets/Ashfall.Core/StandingRecord/LocationMemorySystem.cs"}
+      ],
+      "integration_seam": "Use NpcMemorySystem for per-NPC episodes and its existing host/save owner. Treat UI exposure as a separate presentation seam; do not collapse location or phantom memory into this authority.",
+      "duplicate_search_receipt": {
+        "queries": ["per NPC memory relationship depth", "memory heirlooms generations", "memory knowledge decay", "phantom memory"],
+        "files_inspected": ["docs/CURRENT_AUTHORITY.md", "Assets/Ashfall.Core/Narrative/NpcMemorySystem.cs", "Assets/Ashfall.Core/StandingRecord/LocationMemorySystem.cs", "Ashfall.Core.Tests/Narrative/Plan147NpcMemoryHostIntegrationTests.cs", "docs/architecture/ARCHITECTURE_TEST_MAP.md"],
+        "live_systems_found": ["NpcMemorySystem", "LocationMemorySystem", "PhantomMemoryEngine"],
+        "reviewer_conclusion": "Memory-themed plans overlap semantically but target different ownership and lifecycle concerns; no automatic merge or status change."
+      }
+    },
+    {
+      "id": "shelter-governance",
+      "label": "Shelter political governance",
+      "vocabulary": ["shelter governance", "political", "bloc", "succession", "leadership"],
+      "confidence": "HIGH",
+      "review_status": "REVIEWED",
+      "claim_ids": ["gov_shelter_political_state"],
+      "save_sections": ["shelter_governance"],
+      "review_conclusion": "Extend ShelterGovernanceEngine for shelter blocs and policy. Keep leadership/succession and repository process governance distinct.",
+      "next_action": "LINK",
+      "members": [
+        {"plan_id": "LEGACY-9A6ED688F224", "relation": "EXTENSION_CANDIDATE"},
+        {"plan_id": "LEGACY-F6E4E903345B", "relation": "RELATED_DISTINCT"},
+        {"plan_id": "E1", "relation": "RELATED_DISTINCT"},
+        {"plan_id": "LEGACY-A3D2F4E91606", "relation": "RELATED_DISTINCT", "receipt_path": "docs/roadmap/e1/receipts/LEGACY-A3D2F4E91606.md"}
+      ],
+      "live_authorities": [
+        {"name": "ShelterGovernanceEngine", "role": "Core shelter governance", "path": "Assets/Ashfall.Core/Governance/ShelterGovernanceEngine.cs"},
+        {"name": "ShelterGovernanceHostSession", "role": "Host integration", "path": "src/Host/ShelterGovernanceHostSession.cs"},
+        {"name": "Plan159ShelterGovernanceHostIntegrationTests", "role": "Host contract evidence", "path": "Ashfall.Core.Tests/Governance/Plan159ShelterGovernanceHostIntegrationTests.cs"},
+        {"name": "ShelterGovernanceSaveStore", "role": "Persistence", "path": "src/Host/ShelterGovernanceHostSession.cs"}
+      ],
+      "integration_seam": "Extend the existing governance engine/session/save owner for shelter-level political state. Repository governance and survivor leadership are related themes, not the same runtime authority.",
+      "duplicate_search_receipt": {
+        "queries": ["shelter governance political", "faction bloc leadership succession", "ambition governance"],
+        "files_inspected": ["docs/CURRENT_AUTHORITY.md", "docs/architecture/CLAIMS.json", "Assets/Ashfall.Core/Governance/ShelterGovernanceEngine.cs", "src/Host/ShelterGovernanceHostSession.cs", "Ashfall.Core.Tests/Governance/Plan159ShelterGovernanceHostIntegrationTests.cs"],
+        "live_systems_found": ["ShelterGovernanceEngine", "SurvivorSocialSystem", "PlanGovernanceTooling"],
+        "reviewer_conclusion": "Shelter blocs, survivor leadership, and repo governance have separate authorities; preserve boundaries and link relevant plans."
+      }
+    },
+    {
+      "id": "needs-performance-cascade",
+      "label": "Needs-to-performance projection",
+      "vocabulary": ["needs cascade", "needs performance", "hunger", "thirst", "performance"],
+      "confidence": "HIGH",
+      "review_status": "REVIEWED",
+      "claim_ids": ["surv_needs_performance_projection"],
+      "save_sections": ["survivors"],
+      "review_conclusion": "Use the existing needs owner and its read-only performance bridge. Do not treat a missing architecture-map row as evidence that the system is absent.",
+      "next_action": "LINK",
+      "members": [
+        {"plan_id": "LEGACY-18D16079DCEB", "relation": "EXTENSION_CANDIDATE"},
+        {"plan_id": "LEGACY-81DDA14E9037", "relation": "RELATED_DISTINCT"},
+        {"plan_id": "PIA-1", "relation": "RELATED_DISTINCT"},
+        {"plan_id": "NEXT-PLAN-24", "relation": "EXTENSION_CANDIDATE", "receipt_path": "docs/roadmap/e1/receipts/NEXT-PLAN-24.md"}
+      ],
+      "live_authorities": [
+        {"name": "NeedsSystem", "role": "Core needs state", "path": "Assets/Ashfall.Core/Survivors/NeedsSystem.cs"},
+        {"name": "NeedsPerformanceBridge", "role": "Read-only performance projection", "path": "Assets/Ashfall.Core/Survivors/NeedsPerformanceBridge.cs"},
+        {"name": "NeedsPerformanceHostSession", "role": "Host integration", "path": "src/Host/NeedsPerformanceHostSession.cs"},
+        {"name": "Main.NeedsPerformance", "role": "Campaign wiring", "path": "src/Main.NeedsPerformance.cs"},
+        {"name": "Plan137NeedsPerformanceHostIntegrationTests", "role": "Host contract evidence", "path": "Ashfall.Core.Tests/Survivors/Plan137NeedsPerformanceHostIntegrationTests.cs"}
+      ],
+      "integration_seam": "Extend NeedsSystem for need-state behavior and NeedsPerformanceBridge for read-only projections; do not introduce another need store or hidden performance authority.",
+      "duplicate_search_receipt": {
+        "queries": ["needs performance cascade", "need performance bridge", "needs radiation"],
+        "files_inspected": ["docs/CURRENT_AUTHORITY.md", "Assets/Ashfall.Core/Survivors/NeedsSystem.cs", "Assets/Ashfall.Core/Survivors/NeedsPerformanceBridge.cs", "src/Host/NeedsPerformanceHostSession.cs", "Ashfall.Core.Tests/Survivors/Plan137NeedsPerformanceHostIntegrationTests.cs"],
+        "live_systems_found": ["NeedsSystem", "NeedsPerformanceBridge", "NeedsPerformanceHostSession"],
+        "reviewer_conclusion": "The cascade is a projection from needs, not a second needs authority; the architecture map has an apparent documentation gap that needs separate maintenance."
+      }
+    },
+    {
+      "id": "food-pipeline",
+      "label": "Food acquisition, preparation, nutrition, preservation",
+      "vocabulary": ["food pipeline", "wildlife trapping", "cooking", "nutrition", "spoilage"],
+      "confidence": "HIGH",
+      "review_status": "REVIEWED",
+      "claim_ids": ["food_kitchen_nutrition_route"],
+      "save_sections": ["wildlife_trapping", "cooking", "food_preservation"],
+      "review_conclusion": "Link acquisition, cooking, nutrition, and preservation through their current owners. Keep the broader food-safety chain distinct from Plan 136 cooking/trapping behavior.",
+      "next_action": "LINK",
+      "members": [
+        {"plan_id": "LEGACY-B96B59EEEE27", "relation": "EXTENSION_CANDIDATE"},
+        {"plan_id": "LEGACY-EE186DA031A1", "relation": "RELATED_DISTINCT"},
+        {"plan_id": "LEGACY-9ACBF4ED6294", "relation": "RELATED_DISTINCT"},
+        {"plan_id": "LEGACY-3580577BE629", "relation": "RELATED_DISTINCT"},
+        {"plan_id": "LEGACY-9DFDC555156F", "relation": "RELATED_DISTINCT"},
+        {"plan_id": "NEXT-PLAN-215", "relation": "RELATED_DISTINCT", "receipt_path": "docs/roadmap/e1/receipts/NEXT-PLAN-215.md"}
+      ],
+      "live_authorities": [
+        {"name": "WildlifeTrappingSystem", "role": "Acquisition", "path": "Assets/Ashfall.Core/WildlifeTrappingSystem.cs"},
+        {"name": "WildlifeTrappingSaveStore", "role": "Acquisition persistence", "path": "src/Host/WildlifeTrappingSaveStore.cs"},
+        {"name": "CookingHostSession", "role": "Preparation integration", "path": "src/Host/CookingHostSession.cs"},
+        {"name": "KitchenNutritionSystem", "role": "Nutrition", "path": "Assets/Ashfall.Core/KitchenNutritionSystem.cs"},
+        {"name": "FoodPreservationSystem", "role": "Preservation", "path": "Assets/Ashfall.Core/Shelter/FoodPreservationSystem.cs"},
+        {"name": "FoodPreservationSaveStore", "role": "Preservation persistence", "path": "src/Host/FoodPreservationSaveStore.cs"},
+        {"name": "Plan136CookingHostIntegrationTests", "role": "Host contract evidence", "path": "Ashfall.Core.Tests/Cooking/Plan136CookingHostIntegrationTests.cs"}
+      ],
+      "integration_seam": "Keep inventory and existing food owners authoritative across acquisition, preparation, nutrition, and preservation. Check current host routing before classifying any UI gap; architecture-map entries may lag newer integration evidence.",
+      "duplicate_search_receipt": {
+        "queries": ["wildlife trapping food pipeline cooking", "one food authority consumption", "food type temperature spoilage", "kitchen nutrition"],
+        "files_inspected": ["docs/CURRENT_AUTHORITY.md", "Assets/Ashfall.Core/WildlifeTrappingSystem.cs", "Assets/Ashfall.Core/KitchenNutritionSystem.cs", "Assets/Ashfall.Core/Shelter/FoodPreservationSystem.cs", "src/Host/CookingHostSession.cs", "src/UI/KitchenNutritionPanel.cs", "INTEGRATION_PLANS.md"],
+        "live_systems_found": ["WildlifeTrappingSystem", "CookingHostSession", "KitchenNutritionSystem", "FoodPreservationSystem"],
+        "reviewer_conclusion": "These owners form a connected food pipeline but retain distinct acquisition, preparation, nutrition, and preservation responsibilities; no plan status is changed."
+      }
+    }
+  ]
+}

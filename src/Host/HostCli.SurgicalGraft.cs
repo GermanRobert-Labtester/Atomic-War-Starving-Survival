@@ -81,8 +81,10 @@ namespace AtomicWar.GodotApp
                 { Console.WriteLine("[PASS] Check 9: Same-day replay does not double-advance."); passed++; }
                 else Console.WriteLine("[FAIL] Check 9: same-day replay advanced state.");
 
-                // 10 contract names
-                if (SurgicalGraftSaveStore.SectionName == "surgical_graft" && SurgicalGraftSaveStore.FileName == "surgical_graft_save.json")
+                // 10 contract names (local bool keeps the drift guard reachable)
+                bool surgicalContractOk = SurgicalGraftSaveStore.SectionName == "surgical_graft"
+                    && SurgicalGraftSaveStore.FileName == "surgical_graft_save.json";
+                if (surgicalContractOk)
                 { Console.WriteLine("[PASS] Check 10: Save store contract names verified."); passed++; }
                 else Console.WriteLine("[FAIL] Check 10: save store contract names wrong.");
             }

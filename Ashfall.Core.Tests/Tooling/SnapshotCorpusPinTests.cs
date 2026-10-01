@@ -49,5 +49,22 @@ namespace Ashfall.Core.Tests
             string json = File.ReadAllText(manifest);
             Assert.Contains("snapshot_id", json, StringComparison.Ordinal);
         }
+
+        [Fact]
+        public void GameHudGolden_IsPresent_AndTargetRegistered()
+        {
+            // Task 14 — the game_hud_default snapshot is the visual contract for
+            // the needs glance row; it must exist on disk and stay registered in
+            // the harness so a rename cannot silently drop the capture.
+            string root = RepoRoot();
+            string golden = Path.Combine(root, "snapshots", "game_hud_default.png");
+            Assert.True(File.Exists(golden), "snapshots/game_hud_default.png must exist (task 14).");
+
+            string harness = Path.Combine(root, "src", "UI", "SnapshotHarness.cs");
+            Assert.True(File.Exists(harness), "src/UI/SnapshotHarness.cs must exist.");
+            string source = File.ReadAllText(harness);
+            Assert.Contains("game_hud_default", source, StringComparison.Ordinal);
+            Assert.Contains("GameHudSnapshotFixture.Bind", source, StringComparison.Ordinal);
+        }
     }
 }

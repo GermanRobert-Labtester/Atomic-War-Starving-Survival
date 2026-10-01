@@ -9,6 +9,7 @@ using Ashfall.Core.Inventory;
 using Ashfall.Core.Combat;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
+using AtomicWar.GodotApp.Localization;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
@@ -19,6 +20,9 @@ namespace AtomicWar.GodotApp.UI
         public event Action? OnOpenRoboticsRequested;
 
         public bool IsBound => _shelterWorkshop != null || _legacyWorkshop != null;
+
+        /// <summary>Localization shim: catalog key with an English fallback.</summary>
+        private static string T(string key, string fallback) => AshfallUiText.Tr(key, fallback);
 
         private ShelterWorkshopSystem? _shelterWorkshop;
         private WorkshopReverseEngineeringSystem? _legacyWorkshop;
@@ -188,9 +192,9 @@ namespace AtomicWar.GodotApp.UI
                 // No workshop authority is bound at all: no job can exist, so the
                 // job action must not present an operational affordance (UI/UX
                 // audit clickability gate — an unwired CANCEL is never shown).
-                _activeJobHeader.Text = "WORKSHOP STATUS: IDLE";
+                _activeJobHeader.Text = T("ui.workshop.status_idle", "WORKSHOP STATUS: IDLE");
                 _activeJobProgressBar.Value = 0;
-                _activeJobDetails.Text = "No workshop session bound.";
+                _activeJobDetails.Text = T("ui.workshop.no_session", "No workshop session bound.");
                 _cancelJobButton.Visible = false;
                 return;
             }
@@ -211,13 +215,13 @@ namespace AtomicWar.GodotApp.UI
                 if (activeJob.Status == WorkshopJobStatus.CompletedPendingCollection)
                 {
                     _cancelJobButton.Visible = true;
-                    _cancelJobButton.Text = "COLLECT JOB";
+                    _cancelJobButton.Text = T("ui.workshop.collect_job", "COLLECT JOB");
                     if (_cancelJobButton.IsConnected("pressed", new Callable(this, MethodName.OnCancelJobClicked))) _cancelJobButton.Disconnect("pressed", new Callable(this, MethodName.OnCancelJobClicked));
                     _cancelJobButton.Pressed += () => { RecordRefusal(_shelterWorkshop.TryCollectCompletedJob(activeJob.JobId), "COLLECT REFUSED"); RefreshView(); };
                 }
                 else
                 {
-                    _cancelJobButton.Text = "ABORT JOB";
+                    _cancelJobButton.Text = T("ui.workshop.abort_job", "ABORT JOB");
                 }
             }
             else if (_legacyWorkshop != null && _legacyWorkshop.IsBusy)
@@ -231,9 +235,9 @@ namespace AtomicWar.GodotApp.UI
             }
             else
             {
-                _activeJobHeader.Text = "WORKSHOP STATUS: IDLE";
+                _activeJobHeader.Text = T("ui.workshop.status_idle", "WORKSHOP STATUS: IDLE");
                 _activeJobProgressBar.Value = 0;
-                _activeJobDetails.Text = "No active job.";
+                _activeJobDetails.Text = T("ui.workshop.no_active_job", "No active job.");
             }
 
             var machine = _shelterWorkshop.GetOrCreateMachineState(_currentRoomId);
@@ -241,14 +245,14 @@ namespace AtomicWar.GodotApp.UI
             {
                 var gaugeBox = new HBoxContainer();
 
-                var healthGauge = new AnalogConditionGauge { LabelText = "TOOLING", Value = machine.ToolingHealth * 100f, WarningThreshold = 20f };
-                var calGauge = new AnalogConditionGauge { LabelText = "CALIBRATION", Value = machine.Calibration * 100f, WarningThreshold = 20f };
+                var healthGauge = new AnalogConditionGauge { LabelText = T("ui.workshop.tooling", "TOOLING"), Value = machine.ToolingHealth * 100f, WarningThreshold = 20f };
+                var calGauge = new AnalogConditionGauge { LabelText = T("ui.workshop.calibration", "CALIBRATION"), Value = machine.Calibration * 100f, WarningThreshold = 20f };
 
                 gaugeBox.AddChild(healthGauge);
                 gaugeBox.AddChild(calGauge);
                 _machineConditionContainer.AddChild(gaugeBox);
 
-                var overhaulBtn = new Button { Text = "OVERHAUL TOOLING", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
+                var overhaulBtn = new Button { Text = T("ui.workshop.overhaul_tooling", "OVERHAUL TOOLING"), CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
                 overhaulBtn.Pressed += () => { RecordRefusal(_shelterWorkshop.TryOverhaulTooling(_currentRoomId), "OVERHAUL REFUSED"); RefreshView(); };
                 _machineConditionContainer.AddChild(overhaulBtn);
 
@@ -322,7 +326,7 @@ namespace AtomicWar.GodotApp.UI
 
                 _detailContainer.AddChild(new Label { Text = $"Labor Ticks: {recipe.BaseLaborTicks}\nTooling Wear: {recipe.ToolWearPermille/10f}%\nBase Scrap Waste: {recipe.BaseScrapWastePermille/10f}%" });
 
-                var startBtn = new Button { Text = "START JOB", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
+                var startBtn = new Button { Text = T("ui.workshop.start_job", "START JOB"), CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
                 startBtn.Pressed += () =>
                 {
                     string? targetId = null;
@@ -355,15 +359,15 @@ namespace AtomicWar.GodotApp.UI
                 _activeJobProgressBar.Value = state.hoursRequired > 0 ? (state.progressHours / state.hoursRequired) * 100f : 0f;
                 _activeJobDetails.Text = $"Progress: {state.progressHours:F1} / {state.hoursRequired:F0} h";
                 _cancelJobButton.Visible = true;
-                _cancelJobButton.Text = "ABANDON RESTORATION";
+                _cancelJobButton.Text = T("ui.workshop.abandon_restoration", "ABANDON RESTORATION");
                 if (_cancelJobButton.IsConnected("pressed", new Callable(this, MethodName.OnCancelJobClicked))) _cancelJobButton.Disconnect("pressed", new Callable(this, MethodName.OnCancelJobClicked));
                 _cancelJobButton.Pressed += OnLegacyCancelClicked;
             }
             else
             {
-                _activeJobHeader.Text = "WORKSHOP STATUS: IDLE";
+                _activeJobHeader.Text = T("ui.workshop.status_idle", "WORKSHOP STATUS: IDLE");
                 _activeJobProgressBar.Value = 0;
-                _activeJobDetails.Text = "No active job.";
+                _activeJobDetails.Text = T("ui.workshop.no_active_job", "No active job.");
                 _cancelJobButton.Visible = false;
             }
 
@@ -390,7 +394,7 @@ namespace AtomicWar.GodotApp.UI
                     SizeFlagsHorizontal = SizeFlags.ExpandFill,
                     AutowrapMode = TextServer.AutowrapMode.WordSmart
                 });
-                var abandonBtn = new Button { Text = "ABANDON", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
+                var abandonBtn = new Button { Text = T("ui.workshop.abandon", "ABANDON"), CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
                 abandonBtn.Pressed += OnLegacyCancelClicked;
                 busyRow.AddChild(abandonBtn);
                 _relicListContainer.AddChild(busyRow);
@@ -425,7 +429,7 @@ namespace AtomicWar.GodotApp.UI
 
             if (_legacyWorkshop.IsRelicCompleted(relicId))
             {
-                _detailContainer.AddChild(new Label { Text = "STATUS: RESTORED" });
+                _detailContainer.AddChild(new Label { Text = T("ui.workshop.status_restored", "STATUS: RESTORED") });
                 if (!string.IsNullOrEmpty(relic.restoration_text))
                     _detailContainer.AddChild(MakeWrappedLabel(relic.restoration_text));
                 return;
@@ -452,11 +456,11 @@ namespace AtomicWar.GodotApp.UI
 
             if (_legacyWorkshop.IsBusy)
             {
-                _detailContainer.AddChild(new Label { Text = "The bench is occupied. Finish or abandon the current restoration first." });
+                _detailContainer.AddChild(new Label { Text = T("ui.workshop.bench_occupied", "The bench is occupied. Finish or abandon the current restoration first.") });
                 return;
             }
 
-            var startBtn = new Button { Text = "START RESTORATION", Disabled = !allAvailable, CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
+            var startBtn = new Button { Text = T("ui.workshop.start_restoration", "START RESTORATION"), Disabled = !allAvailable, CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
             startBtn.Pressed += () =>
             {
                 RecordRefusal(_legacyWorkshop.StartRepair(relicId, PickResearcherId()), "RESTORATION REFUSED");

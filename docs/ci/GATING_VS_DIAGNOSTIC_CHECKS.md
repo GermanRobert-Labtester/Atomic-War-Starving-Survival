@@ -1,6 +1,6 @@
 # ASHFALL — Verification Gates vs. Diagnostic-Only Checks
 
-**Date:** 2026-08-26
+**Date:** 2026-10-02
 **Scope:** Clarifies all automated checks, headless verbs, and CLI commands into **Blocking CI Release Gates**, **Domain Self-Test Quality Gates**, and **Diagnostic / Report-Only Tools** to ensure informational reports are never mistaken for blocking release failures.
 
 ---
@@ -24,11 +24,11 @@ bash scripts/ci/verify-fast.sh
 
 | Gate Step | Command / Script | Coverage & Enforcement Contract |
 |---|---|---|
-| **1. Fast-Fail JSON Syntax** | `python3 scripts/ci/validate_json.py` (inline) | Parses all 129 JSON catalogs under `Assets/StreamingAssets/Data/` to guarantee valid JSON syntax before compiling code. |
+| **1. Fast-Fail JSON Syntax** | `python3 scripts/ci/validate_json.py` (inline) | Parses every JSON catalog under `Assets/StreamingAssets/Data/` to guarantee valid JSON syntax before compiling code. |
 | **2. Core Assembly Build** | `dotnet build Ashfall.Core.Tests/` | Validates compilation of engine-agnostic core and tests (net8.0 / net9.0) with zero engine references (`Invariant 1`). |
 | **3. Core Unit Test Suite** | `dotnet test Ashfall.Core.Tests/` | Executes the complete Core unit test suite covering survival needs, radiation math, save codecs, catalog integrity, determinism, and CLI contracts. |
 | **4. Godot Host Assembly** | `dotnet build Ashfall.csproj` | Compiles the Godot .NET aggregate host with **0 errors and 0 warnings**. |
-| **5. Data Integrity Gate** | `godot --headless -- --data-integrity-selftest` | Cross-references 4,794 authored IDs across 129 catalogs (items, recipes, quests, locations, encounters, survivors, factions, ranges, uniqueness). |
+| **5. Data Integrity Gate** | `godot --headless -- --data-integrity-selftest` | Cross-references every authored ID across the `StreamingAssets/Data` catalogs (items, recipes, quests, locations, encounters, survivors, factions, ranges, uniqueness). Authoritative live counts come from the gate output, not this table. |
 | **6. Bridge Removal Gate** | `godot --headless -- --bridge-selftest` | Asserts removal of legacy `UnityEngine.*` bridge shim; prints confirmation and exits 0. |
 | **7. Expansion Gate** | `godot --headless -- --expansions-selftest` | End-to-end verification of all 7 core expansion state machines (Holdfast, Duty Roster, Standing Record, Crossing, Arbitration, LedgerDebt, Greenhouse). |
 | **8. Triad Drift Gate** | `bash scripts/ci/triad-drift-gate.sh` | Ensures every `SetupXxx` subsystem in `Main.cs` has an exact corresponding `SaveXxx` method and registration in `AllSaveSections`. Documented exceptions and save ownership are detailed in [`docs/architecture/TRIAD_GATE_AND_SAVE_OWNERSHIP.md`](../architecture/TRIAD_GATE_AND_SAVE_OWNERSHIP.md). |
@@ -76,3 +76,17 @@ These CLI commands execute deep domain and UI simulation passes. They use assert
 1. **Never block release on Tier 3 reports:** An incomplete asset in `--asset-coverage-report` is expected during active content authoring and is handled gracefully by runtime fallbacks.
 2. **Never ignore Tier 1 or Tier 2 failures:** Any failure in `dotnet test`, `--data-integrity-selftest`, or domain self-tests indicates a real logic defect, save corruption risk, or broken reference that must be resolved prior to merge.
 3. **UI Leak Diagnostics vs Functional Pass:** Passing UI tests (`player_panels_uitest PASS`) verify behavioral correctness. Deferred deletion (`QueueFree`), single-frame test loops, and first-open caching can emit `NODE LEAK SUSPECT` telemetry; follow [`docs/ui/UI_NODE_DIAGNOSTICS_AND_LEAK_TRIAGE.md`](../ui/UI_NODE_DIAGNOSTICS_AND_LEAK_TRIAGE.md) for leak debt triage.
+
+---
+
+## 6. Catalog hygiene gates (D01–D05, E01–E15) — added 2026-10-02
+
+| Gate | Tier | Failure consequence | Owner |
+|---|---|---|---|
+| `catalog_audit` | fast | Blocks merge: dangling declared reference, cross-id-domain duplicate, non-snake_case id, or `schema_version` drift | `tools/gotools/pkg/catalogaudit` |
+| `content_certification` | fast | Blocks merge: a Plan 49 family resolves to no live catalog/consumer | `ContentOrphanCertificationEngine` |
+| `content_utilization` | fast | Blocks merge: `GAMEPLAY_CONSUMED` regression or new orphan vs `artifacts/content-utilization-baseline.json` | `ContentUtilizationGate` |
+| `gotools_test` | fast | Blocks merge: a Go tool unit test fails | `tools/gotools` |
+| `gate_inventory_drift` | fast | Blocks merge: `GATE_INVENTORY.md` no longer matches the manifest | `scripts/ci/run-gates.py` |
+
+`audit-catalogs` advisories (`id_unit_suffix`, `mirror_resolution`) are **report-only** Tier 3 diagnostics unless the gate is run with `--fail-on-advisory`. The runtime cross-reference authority remains `CatalogIntegrityValidator` (`data_integrity`, Tier 1).

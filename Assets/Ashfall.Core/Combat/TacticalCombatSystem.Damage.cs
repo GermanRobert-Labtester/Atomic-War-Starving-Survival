@@ -114,7 +114,7 @@ namespace Ashfall.Core.Combat
                     // kicker when their archetype is registered.
                     float laneDmg = 6f + (float)(enemy.Lane == target.Lane ? 4f : 0f);
                     float dmgMod = enemy.AiDamageMod > 0f ? enemy.AiDamageMod : 1f;
-                    float dmg = laneDmg * dmgMod;
+                    float dmg = laneDmg * dmgMod * EnemyDamageScale;
                     ApplyDamage(target, dmg, enemy, false, rng);
                     AddEvent("enemy_fire", target.Id, enemy.Name + " hits " + target.Name + ".");
                 }

@@ -1,6 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://b1safe_crack_modal_ashfall"]
-
-[ext_resource type="Script" path="res://src/UI/SafeCrackModalContent.cs" id="1_safe_content"]
+[gd_scene load_steps=1 format=3 uid="uid://b1safe_crack_modal_ashfall"]
 
 [node name="SafeCrackContent" type="Control"]
 layout_mode = 3

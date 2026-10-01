@@ -86,6 +86,44 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>
+        /// P012 — the one-time contextual Medical lesson for the single
+        /// first-hour UNTAUGHT_LETHAL: a living survivor already in acute
+        /// radiation sickness on day 1. Routed through the persisted onboarding
+        /// authority so it fires at most once per campaign and survives
+        /// save/load. A no-op in veteran mode (no journey) or before survivors
+        /// exist. Owns no gameplay state and never treats the survivor.
+        /// </summary>
+        private void MaybeRequestAcuteRadiationLesson()
+        {
+            // Task 8 — evaluate once per onboarding-journey instance instead of
+            // on every HUD refresh. A new/restored journey re-evaluates; the
+            // persisted seen-id set still guarantees one lesson per campaign.
+            if (_onboardingJourney == null || _survivors == null) return;
+            // T8 — the lesson is specifically about the opening day. A restored
+            // campaign that is already past day 1 must not surface a stale
+            // opening warning for a survivor who has been acute for days.
+            if (_simDay > 1) return;
+            if (ReferenceEquals(_acuteRadLessonJourney, _onboardingJourney)) return;
+            _acuteRadLessonJourney = _onboardingJourney;
+            for (int i = 0; i < _survivors.RosterState.Count; i++)
+            {
+                var survivor = _survivors.RosterState[i];
+                if (survivor == null || !survivor.IsAliveState) continue;
+                var rad = _survivors.RadStateFor(survivor.Id);
+                if (rad is { HasAcuteRadiationSickness: true })
+                {
+                    _onboardingJourney.RequestContextualTutorial(
+                        Ashfall.Core.Localization.OnboardingLessonLocalization.AcuteRadiationId);
+                    return;
+                }
+            }
+        }
+
+        /// <summary>The journey instance the acute-radiation lesson was last
+        /// evaluated against (task 8); null until the first evaluation.</summary>
+        private Ashfall.Core.Onboarding.OnboardingJourney? _acuteRadLessonJourney;
+
+        /// <summary>
         /// Plan 143: Gathers all canonical active medical affliction IDs for a survivor.
         /// Queries the active pipeline handlers (respiratory, radiation, health deficit,
         /// chemical dependency, psychology/trauma, diseases) and physiological limb conditions.

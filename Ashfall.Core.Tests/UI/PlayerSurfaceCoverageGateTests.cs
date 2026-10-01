@@ -203,7 +203,7 @@ namespace Ashfall.Core.Tests.UI
             Assert.Empty(chem.CaptureState().survivors);
 
             // 9. Decontamination
-            var rad = new Radiation.RadiationSystem();
+            var rad = new Ashfall.Core.Radiation.RadiationSystem();
             var startLvl = new StartingLevel.StartingLevelSystem();
             var decontam = new DecontaminationSystem(rng, rad, inv, airlock, startLvl, log);
             Assert.NotNull(decontam);

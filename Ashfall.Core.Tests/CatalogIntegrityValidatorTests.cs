@@ -252,6 +252,19 @@ namespace Ashfall.Core.Tests
             Assert.Contains(report.Errors, e => e.Contains("unsupported " + field));
         }
 
+        /// <summary>
+        /// Pins the deliberate runtime classification: lootCategories is
+        /// vocabulary here (abstract tags on locations_expansion3.json), while
+        /// the fast `catalog_audit` gate enforces the item-id contract on
+        /// expeditions.json. See docs/ci/README.md.
+        /// </summary>
+        [Fact]
+        public void LootCategoriesIsAVocabularyKeyByDesign()
+        {
+            Assert.Contains("lootCategories", CatalogIntegrityRules.VocabularyKeys);
+            Assert.DoesNotContain("lootCategories", CatalogIntegrityRules.ReferenceKeys);
+        }
+
         private static CatalogIntegrityReport ValidateScratch(Action<string> seed)
         {
             string scratch = Path.Combine(Path.GetTempPath(), "ashfall_integrity_" + Guid.NewGuid().ToString("N"));

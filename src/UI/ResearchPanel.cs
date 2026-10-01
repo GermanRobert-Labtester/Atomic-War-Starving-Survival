@@ -6,7 +6,6 @@ using Godot;
 using Ashfall.Core;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
-using AtomicWar.GodotApp.Localization;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
@@ -469,12 +468,13 @@ namespace AtomicWar.GodotApp.UI
         }
 
         private static string T(string key, string fallback) =>
-            AshfallLocalization.Tr(key, fallback);
+            AshfallUiText.Tr(key, fallback);
 
         private static string F(string key, string fallback, params object[] args)
         {
-            AshfallLocalization.Initialize();
-            string translated = AshfallLocalization.Tr(key, fallback);
+            // Loop-3 hardening — AshfallUiText.Tr initializes the catalog itself;
+            // the explicit Initialize() here was redundant.
+            string translated = AshfallUiText.Tr(key, fallback);
             try
             {
                 return string.Format(System.Globalization.CultureInfo.InvariantCulture, translated, args);

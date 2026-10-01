@@ -1,9 +1,9 @@
 {
-  "schema_version": "1.1.2",
-  "_schema_version_note": "1.1.0 — Plan 48 / C2[21] Phase 2: added version_gate and changelog_drift (fast, +2 gates); Phase 3: added save_support_window (full, +1 gate). 1.1.1 — Plans 210/214 audit package: added plan_integration_audit_drift and ui_design_map_drift (fast, +2 gates). 1.1.2 — W1 assurance: four fast monitors and release_required metadata on three full release gates.",
+  "schema_version": "1.1.6",
+  "_schema_version_note": "1.1.0 — Plan 48 / C2[21] Phase 2: added version_gate and changelog_drift (fast, +2 gates); Phase 3: added save_support_window (full, +1 gate). 1.1.1 — Plans 210/214 audit package: added plan_integration_audit_drift and ui_design_map_drift (fast, +2 gates). 1.1.2 — W1 assurance: four fast monitors and release_required metadata on three full release gates. 1.1.3 — P008: added first_hour_onboarding_journey (fast, +1 gate) guarding the 7-stage onboarding floor. 1.1.4 — P096: added scene_binding_truth (fast, +1 gate) so no *Content.cs stub, unassigned/dangling scene script, PanelSceneLoader request-vs-root type mismatch, or pre-hidden bound content scene can regress. 1.1.5 — D01–D05 catalog-hygiene wave: added catalog_audit (fast, +1 gate) and content_certification (fast, +1 gate). 1.1.6 — E01–E15 follow-ups: added gotools_test, gate_inventory_drift, and content_utilization (fast, +3 gates).",
   "description": "Authoritative manifest of all verification gates for ASHFALL shared between local runner and hosted CI",
-  "total_gates": 63,
-  "fast_tier_count": 59,
+  "total_gates": 71,
+  "fast_tier_count": 67,
   "gates": [
     {
       "gate_id": "whitespace_hygiene",
@@ -51,10 +51,11 @@
       "name": "Build Godot Host Application (Ashfall.csproj net8.0)",
       "category": "Build & Tests",
       "command": "dotnet build Ashfall.csproj --nologo",
-      "timeout_seconds": 120,
+      "timeout_seconds": 180,
       "expected_summary": "",
       "classification": "fast",
-      "critical": true
+      "critical": true,
+      "notes": "A host build that follows a freshly rebuilt Core recompiles the whole net8.0 host; measured over the old 120s cap under concurrent-agent load, so fast-tier runs failed intermittently. 180s is the fast-tier ceiling (run-gates.py MAX_GATE_TIMEOUT_SECONDS) and keeps the gate reliable without changing what it verifies."
     },
     {
       "gate_id": "godot_import",
@@ -211,6 +212,19 @@
       "critical": true
     },
     {
+      "gate_id": "first_hour_onboarding_journey",
+      "depends_on": [
+        "build_godot_host"
+      ],
+      "name": "First-Hour Onboarding Journey Floor Smoke Self-Test (P008)",
+      "category": "Campaign Smoke",
+      "command": "bash scripts/ci/run-godot-bounded.sh --path . -- --onboarding-journey-selftest",
+      "timeout_seconds": 60,
+      "expected_summary": "ONBOARDING_JOURNEY_SELFTEST PASS",
+      "classification": "fast",
+      "critical": true
+    },
+    {
       "gate_id": "real_campaign_journey",
       "depends_on": [
         "build_godot_host"
@@ -311,20 +325,22 @@
       "name": "Architecture Test Map Drift Gate",
       "category": "Drift & Architecture Gates",
       "command": "bash scripts/ci/generate-architecture-map.sh --check",
-      "timeout_seconds": 30,
+      "timeout_seconds": 180,
       "expected_summary": "Architecture map is up to date",
       "classification": "fast",
-      "critical": true
+      "critical": true,
+      "notes": "The --check scan reads all 315 subsystem rows and measured 37.2s at baseline (a false FAIL against the old 30s cap; `generate-architecture-map.py --check` reported OK). Set to the 180s fast-tier ceiling for headroom under concurrent-agent load."
     },
     {
       "gate_id": "plan_integration_audit_drift",
       "name": "Recent Plan Integrations Audit Drift Gate",
       "category": "Drift & Architecture Gates",
       "command": "python3 scripts/ci/generate-plan-integration-audit.py --check",
-      "timeout_seconds": 60,
+      "timeout_seconds": 180,
       "expected_summary": "RECENT_PLAN_INTEGRATIONS_AUDIT.md in sync",
       "classification": "fast",
-      "critical": true
+      "critical": true,
+      "notes": "The --check scan re-reads all 71 integrated plans and measured 70.2s at baseline (a false FAIL against the old 60s cap; the run itself reported the audit in sync). Set to the 180s fast-tier ceiling for headroom under concurrent-agent load."
     },
     {
       "gate_id": "ui_design_map_drift",
@@ -401,10 +417,11 @@
       "name": "Portable Documentation Link Gate",
       "category": "Source Policy & Lint Gates",
       "command": "bash scripts/ci/doc-link-gate.sh",
-      "timeout_seconds": 30,
+      "timeout_seconds": 180,
       "expected_summary": "PORTABLE DOC LINK GATE PASSED",
       "classification": "fast",
-      "critical": true
+      "critical": true,
+      "notes": "The scan walks 6099 markdown files and measured 60.5s at baseline (a false FAIL against the old 30s cap; the gate itself reported PASSED). Set to the 180s fast-tier ceiling for headroom under concurrent-agent load."
     },
     {
       "gate_id": "lfs_health_check",
@@ -625,6 +642,16 @@
       "critical": true
     },
     {
+      "gate_id": "scene_binding_truth",
+      "name": "Scene Binding Truth Gate (P089-P096)",
+      "category": "Source Policy & Lint Gates",
+      "command": "bash scripts/ci/scene-binding-truth-gate.sh",
+      "timeout_seconds": 60,
+      "expected_summary": "Scene Binding Truth Gate: PASS",
+      "classification": "fast",
+      "critical": true
+    },
+    {
       "gate_id": "coverage_gate",
       "name": "Core Save Round-Trip & Determinism Coverage Gate (Plan 27B)",
       "category": "Quality & Verification",
@@ -695,6 +722,68 @@
       "critical": true,
       "release_required": true,
       "depends_on": []
+    },
+    {
+      "gate_id": "ui_layout_selftest",
+      "name": "Bounded UI Layout Self-Test (survival legibility)",
+      "category": "UI & Accessibility",
+      "command": "bash scripts/ci/ui-layout-check.sh",
+      "timeout_seconds": 180,
+      "expected_summary": "UI_LAYOUT_SELFTEST PASS",
+      "classification": "fast",
+      "critical": false
+    },
+    {
+      "gate_id": "catalog_audit",
+      "name": "Catalog Hygiene Audit — reference integrity, cross-domain duplicate ids, id naming, schema_version drift (D01–D04)",
+      "category": "Source Policy & Lint Gates",
+      "command": "go run -C tools/gotools ./cmd/ashfall-dev audit-catalogs --root ../.. --check",
+      "timeout_seconds": 120,
+      "expected_summary": "CATALOG_AUDIT PASS",
+      "classification": "fast",
+      "critical": true
+    },
+    {
+      "gate_id": "content_certification",
+      "name": "Content Orphan Certification — live/dormant/orphan verdicts over the Plan 49 family manifest (D05 / DEC-62)",
+      "category": "Host Selftests & Lifecycle",
+      "command": "bash scripts/ci/run-godot-bounded.sh --path . -- --content-certification-selftest",
+      "timeout_seconds": 60,
+      "expected_summary": "content-certification-selftest",
+      "classification": "fast",
+      "critical": false,
+      "depends_on": ["build_godot_host"]
+    },
+    {
+      "gate_id": "content_utilization",
+      "name": "Content Utilization Ratchet — no GAMEPLAY_CONSUMED regression or new orphan vs baseline (Ticket #127)",
+      "category": "Host Selftests & Lifecycle",
+      "command": "bash scripts/ci/run-godot-bounded.sh --path . -- --content-utilization-selftest",
+      "timeout_seconds": 120,
+      "expected_summary": "Content Utilization Self-Test",
+      "classification": "fast",
+      "critical": false,
+      "depends_on": ["build_godot_host"]
+    },
+    {
+      "gate_id": "gotools_test",
+      "name": "Go Tooling Unit Tests (tools/gotools)",
+      "category": "Build & Tests",
+      "command": "go test -C tools/gotools ./...",
+      "timeout_seconds": 180,
+      "expected_summary": "ok",
+      "classification": "fast",
+      "critical": false
+    },
+    {
+      "gate_id": "gate_inventory_drift",
+      "name": "CI Gate Inventory Drift (GATE_INVENTORY.md matches the manifest)",
+      "category": "Drift & Architecture Gates",
+      "command": "python3 scripts/ci/run-gates.py --check-inventory docs/ci/GATE_INVENTORY.md",
+      "timeout_seconds": 30,
+      "expected_summary": "GATE_INVENTORY PASS",
+      "classification": "fast",
+      "critical": false
     }
   ]
 }

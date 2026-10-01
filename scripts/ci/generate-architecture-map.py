@@ -899,9 +899,9 @@ ARCHITECTURE_GRAPH = {
     },
     "survivors": {
         "domain": "Survival & Biology",
-        "core": ["NeedsSystem", "SurvivorRosterSystem"],
+        "core": ["NeedsSystem", "NeedsPerformanceBridge", "SurvivorRosterSystem"],
         "catalog": ["survivors.json"],
-        "host": ["SurvivorsHostSession"],
+        "host": ["SurvivorsHostSession", "NeedsPerformanceHostSession"],
         "setup": "SetupSurvivors",
         "ticked": True,
         "tick_type": "Daily Needs Decay",
@@ -909,7 +909,7 @@ ARCHITECTURE_GRAPH = {
         "ui": ["SurvivorsPanel", "SurvivorDetailPanel", "StatusPanel"],
         "routes": ["survivors", "survivor_detail", "status"],
         "cli": ["--survivors-selftest", "--survivors-uitest", "--player-panels-uitest"],
-        "tests": ["NeedsSystemTests"]
+        "tests": ["NeedsSystemTests", "NeedsPerformanceBridgeTests", "Plan137NeedsPerformanceHostIntegrationTests"]
     },
     "economy": {
         "domain": "Economy & Trade",
@@ -2232,7 +2232,7 @@ ARCHITECTURE_GRAPH = {
     "outpost_settlement": { "domain": "Settlements", "core": ["OutpostSettlementSystem", "OutpostDef", "OutpostInstance", "OutpostSettlementState"], "catalog": ["outposts.json"], "host": ["OutpostSettlementHostSession", "ShelterOperationsHostSession", "Main"], "setup": "SetupOutpostSettlement", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["OutpostSettlementSaveStore"], "ui": ["ShelterOperationsPanel"], "routes": ["shelter_operations"], "cli": ["--shelter-operations-selftest"], "tests": ["Plan58OutpostHostIntegrationTests", "Plan58OutpostSettlementIntegrationTests", "OutpostAtomicBillTests", "ShelterOperationsBoardWiringTests"] },
     "weather_cascade": { "domain": "Weather", "core": ["WeatherCascadeSystem", "WeatherGameplayCascadeEngine", "WeatherCascadeSeverity", "WeatherCascadeCatalogLoader"], "catalog": ["weather_gameplay_effects.json", "weather_effects.json"], "host": ["WeatherCascadeHostSession", "Main"], "setup": "SetupWeatherCascade", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["WeatherCascadeSaveStore"], "ui": [], "routes": [], "cli": ["--weather-cascade-selftest"], "tests": ["Plan135WeatherCascadeHostIntegrationTests", "Plan135WeatherCascadeIntegrationTests"] },
     "territory_control": { "domain": "Factions", "core": ["TerritoryControlSystem", "FactionTerritoryDef", "SupplyLineDef", "LocationTerritoryState", "SupplyLineState", "TerritoryControlSaveState"], "catalog": ["faction_territory.json", "supply_lines.json"], "host": ["TerritoryControlHostSession", "Main"], "setup": "SetupTerritoryControl", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["TerritoryControlSaveStore"], "ui": [], "routes": [], "cli": ["--territory-control-selftest"], "tests": ["Plan134TerritoryControlHostIntegrationTests", "Plan134TerritoryControlIntegrationTests"] },
-    "cooking": { "domain": "Nutrition", "core": ["CookingSystem", "CookingRecipe", "CookingOperation", "CookingState", "CookingCensus", "CookingRecipeCatalogLoader", "InventoryCookingSource"], "catalog": ["recipes_cooking.json"], "host": ["CookingHostSession", "Main"], "setup": "SetupCooking", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["CookingSaveStore"], "ui": [], "routes": [], "cli": ["--cooking-selftest"], "tests": ["Plan136CookingHostIntegrationTests", "Plan136WildlifeCookingIntegrationTests"] },
+    "cooking": { "domain": "Nutrition", "core": ["CookingSystem", "CookingRecipe", "CookingOperation", "CookingState", "CookingCensus", "CookingRecipeCatalogLoader", "InventoryCookingSource"], "catalog": ["recipes_cooking.json"], "host": ["CookingHostSession", "Main"], "setup": "SetupCooking", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["CookingSaveStore"], "ui": ["KitchenNutritionPanel"], "routes": ["kitchen_nutrition"], "cli": ["--cooking-selftest", "--food-loop-selftest"], "tests": ["Plan136CookingHostIntegrationTests", "Plan136WildlifeCookingIntegrationTests"] },
     "campaign_legacy": { "domain": "Legacy", "core": ["CampaignLegacySystem", "CampaignLegacy", "CampaignLegacyCensus", "CampaignLegacyState", "StartingCampaignContext", "LegacyTrait"], "catalog": ["legacy_traits.json"], "host": ["CampaignLegacyHostSession", "Main"], "setup": "SetupCampaignLegacy", "ticked": True, "tick_type": "Daily Sim Tick", "store": ["CampaignLegacySaveStore"], "ui": [], "routes": [], "cli": ["--campaign-legacy-selftest"], "tests": ["Plan140CampaignLegacyHostIntegrationTests", "Plan140GenerationalLegacyIntegrationTests"] },
     "survivor_education": { "domain": "Knowledge", "core": ["SurvivorEducationSystem"], "catalog": ["education_curriculum.json"], "host": ["Main"], "setup": "SetupSurvivorEducation", "ticked": False, "tick_type": "Session-Driven", "store": ["SurvivorEducationSaveStore"], "ui": [], "routes": [], "cli": ["--orphan-seal-wave1-selftest"], "tests": ["Plan154EducationIntegrationTests"] },
     "shelter_expansion": { "domain": "Shelter", "core": ["ShelterExpansionSystem"], "catalog": ["shelter_construction.json"], "host": ["Main", "ShelterOperationsHostSession"], "setup": "SetupShelterExpansion", "ticked": False, "tick_type": "Labor-Driven", "store": ["ShelterExpansionSaveStore"], "ui": ["ShelterOperationsPanel"], "routes": ["shelter_operations"], "cli": ["--shelter-operations-selftest"], "tests": ["Plan156ShelterExpansionIntegrationTests", "ShelterOperationsBoardCoreTests", "ShelterOperationsBoardWiringTests"] },

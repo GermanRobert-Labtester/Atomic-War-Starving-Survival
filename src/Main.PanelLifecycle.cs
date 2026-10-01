@@ -167,6 +167,7 @@ namespace AtomicWar.GodotApp
                 _wildlifeTrappingPanel,
                 _excavationPanel,
                 _apprenticeshipPanel,
+                _difficultySettingsPanel,
                 _caregivingPanel,
                 _shelterThermalPanel,
                 _shelterSchedulePanel,

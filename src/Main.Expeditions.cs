@@ -105,6 +105,10 @@ namespace AtomicWar.GodotApp
             _expeditions = ExpeditionHostSession.Create(_dataDir, _narrative.Engine, _travelEncounters, _campaignDay.Rng);
             _expeditions.Flags = _consequenceLedger;
             _expeditions.CurrentDay = _simDay;
+            // P003 — tutorial-ordering gate: in full-onboarding mode the terminal
+            // first-hour Expedition verb stays locked (and names the pending
+            // stage) until Water→Dose complete. Unbound in veteran mode.
+            _expeditions.TutorialDispatchGate = TutorialExpeditionBlockReason;
             SetupEncounterChoiceResolver();
             _expeditions.ChoiceLedger = _encounterChoice;
             _expeditions.FieldGuideUnlock = UnlockFieldGuideObservation;
@@ -269,6 +273,9 @@ namespace AtomicWar.GodotApp
 
                 GD.Print($"[Ashfall Godot] Expedition completed for {state.survivorId}: {state.loot?.Count ?? 0} loot items deposited into shelter inventory.");
             };
+            // P108 — failure is routed through the existing owners here; the
+            // panel only renders the aftermath line from the event payload.
+            _expeditions.Engine.OnExpeditionFailed += OnExpeditionFailed;
             GD.Print("[Ashfall Godot] Expedition host ready: encounters · dive instance.");
         }
 
@@ -307,6 +314,87 @@ namespace AtomicWar.GodotApp
                 _expeditionDirty = true;
             };
             _discoveryConsequencesBound = true;
+        }
+
+        /// <summary>
+        /// P108 — a failed sortie is a real consequence, not a console line. The
+        /// failure is applied through the existing owners: the needs/health
+        /// pipeline takes the injury, the fate owner records a survivor who did
+        /// not come back, and the journal keeps the day. A survivor lost in the
+        /// wastes is recorded with <c>SurvivorDeathCause.Expedition</c> ("lost on
+        /// expedition" in the ledger) — ASHFALL has no separate "missing" state
+        /// by design (see <c>SurvivorLifecycleState</c> docs), so none is invented.
+        /// </summary>
+        private void OnExpeditionFailed(ExpeditionState state, string reason)
+        {
+            if (state == null || string.IsNullOrEmpty(state.survivorId)) return;
+            string survivorId = state.survivorId;
+            float loss = ExpeditionPrepPlanner.FailureHealthLoss(reason);
+
+            SetupSurvivors();
+            SetupSurvivorFate();
+            SetupHealthHistory();
+            SetupJournal();
+
+            float before = _survivors?.Needs?.Get(survivorId)?.Health ?? 100f;
+            var outcome = ExpeditionPrepPlanner.ResolveFailureOutcome(reason, before, loss);
+
+            if (outcome == ExpeditionReturnClass.Lost)
+            {
+                // Record the "lost on expedition" cause BEFORE any health
+                // mutation: the fate owner is first-write-wins, and the needs
+                // cascade would otherwise record the death under its own cause.
+                _survivorFate?.ReportDeath(survivorId, SurvivorDeathCause.Expedition, reason, source: "expedition");
+                _healthHistory?.System?.LogHealthEvent(survivorId, "expedition_failure_lost",
+                    description: reason, day: _simDay);
+            }
+            else
+            {
+                _survivors?.Needs?.Modify(survivorId, NeedKind.Health, -loss);
+                _healthHistory?.System?.LogHealthEvent(survivorId, "expedition_failure",
+                    description: reason, day: _simDay);
+            }
+
+            string effect = outcome == ExpeditionReturnClass.Lost
+                ? "lost in the wastes"
+                : $"injured (-{loss:F0} health)";
+            _journal?.TryAddRawEntry(
+                $"exp_failed_{survivorId}_{_simDay}",
+                $"{survivorId}'s sortie to {state.displayName} failed — {reason} {effect}.",
+                null!, _simDay);
+
+            ShowAdvanceFeedback(
+                outcome == ExpeditionReturnClass.Lost
+                    ? $"{FormatSurvivorName(survivorId)} was lost on the sortie to {state.displayName}."
+                    : $"{FormatSurvivorName(survivorId)} returned hurt from {state.displayName} ({reason})",
+                outcome == ExpeditionReturnClass.Lost
+                    ? Ashfall.Core.Feedback.FeedbackSeverity.Critical
+                    : Ashfall.Core.Feedback.FeedbackSeverity.Warning,
+                persistent: true);
+            // Plan 46 — a failed sortie is a real outcome and belongs in the
+            // play-session stream, not only the completed path.
+            RecordPlayMetricExpeditionFailed(reason);
+            // Distress rescue: a failed sortie must not leave the mission at
+            // Dispatched forever (TickDaily never ages Dispatched missions).
+            BridgeDistressRescueOnFailure(state, reason);
+            _expeditionDirty = true;
+        }
+
+        /// <summary>
+        /// Bridge a failed rescue sortie into the mission ledger. Selection is
+        /// Core-owned (same destination + expedition association as dispatch);
+        /// the mission transitions Dispatched → TerminalFailed exactly once.
+        /// </summary>
+        private void BridgeDistressRescueOnFailure(ExpeditionState? state, string reason)
+        {
+            if (state == null || string.IsNullOrEmpty(state.locationId)) return;
+            SetupRadio();
+            var missions = _radio?.RescueMissions;
+            if (missions == null) return;
+
+            var mission = missions.GetActiveMissionForDispatch(state.locationId);
+            if (mission == null) return;
+            missions.RecordExpeditionFailed(mission.QuestId, reason, _simDay);
         }
 
         private void SaveExpeditions()
@@ -400,6 +488,12 @@ namespace AtomicWar.GodotApp
                     var m = GetNeedsPerformanceModifiers(survivorId);
                     return (m.CombatAccuracyMultiplier, m.CombatDamageMultiplier);
                 };
+                // T32 — the difficulty authority's enemy_damage_mult reaches the
+                // engine that consumes it: every enemy-dealt damage figure (turn
+                // volley, realtime fire, realtime charge) scales by the campaign
+                // scalar. The lambda reads the provider live, so mid-campaign
+                // difficulty changes flow through without rebinding.
+                _combat.Engine.EnemyDamageMultLookup = () => _difficultyScalars?.EnemyDamageMult ?? 1f;
                 // Expedition encounters auto-populate a real combat encounter.
                 SetupExpeditionCombatHandoff(_combat);
                 // T12 — resolve outcome must reach a player who closed the panel.

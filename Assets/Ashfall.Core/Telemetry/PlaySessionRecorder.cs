@@ -24,11 +24,16 @@ namespace Ashfall.Core.Telemetry
         public const string Save = "save";
         public const string Quit = "quit";
         public const string DayAdvanced = "day_advanced";
+        /// <summary>P004 — a first-hour hint was presented for a stage.</summary>
+        public const string HintShown = "hint_shown";
+        /// <summary>P004 — a first-hour hint was dismissed for a stage.</summary>
+        public const string HintDismissed = "hint_dismissed";
 
         private static readonly HashSet<string> KnownActions = new HashSet<string>(StringComparer.Ordinal)
         {
             SessionStart, SessionEnd, PanelOpened, PanelClosed, Sigil,
-            RationPolicySet, Dispatch, ChoiceResolved, Consume, Save, Quit, DayAdvanced
+            RationPolicySet, Dispatch, ChoiceResolved, Consume, Save, Quit, DayAdvanced,
+            HintShown, HintDismissed
         };
 
         public static bool IsKnown(string action) => !string.IsNullOrEmpty(action) && KnownActions.Contains(action);

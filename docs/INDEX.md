@@ -1,18 +1,18 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 5613 | **Total Characters:** 6,974,066,455 | **Last Verified:** 2026-10-01
-**Oversized (>= 100,000 characters):** 3553 documents carrying 6,942,270,788 characters — tracked in full, see the register below
+**Total Indexed Documents:** 5625 | **Total Characters:** 6,974,297,011 | **Last Verified:** 2026-10-02
+**Oversized (>= 100,000 characters):** 3553 documents carrying 6,942,353,763 characters — tracked in full, see the register below
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 5558 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 5570 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 53 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 2 |
 
 ---
 
-## Oversized Document Register (>= 100,000 characters) — 3553 documents, 6,942,270,788 characters
+## Oversized Document Register (>= 100,000 characters) — 3553 documents, 6,942,353,763 characters
 
 Authored plan and prose documents at or above the size threshold, recorded to the exact character count. These documents are tracked in full: the register reports their size so it stays visible and reviewable, and no document is excluded from the corpus or from this index.
 
@@ -1450,6 +1450,7 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 1,586,520 | [`docs/plans/integrated/content/INTEGRATED_cw128_13_fourteen_surnames_plan.md`](plans/integrated/content/INTEGRATED_cw128_13_fourteen_surnames_plan.md) |
 | 1,586,416 | [`docs/expansions/prose_wave133/cw133_19_three_hours_outside_the_bunker_plan.md`](expansions/prose_wave133/cw133_19_three_hours_outside_the_bunker_plan.md) |
 | 1,584,811 | [`docs/water/PLAN_168_FLUID_LOGISTICS_CLOSEOUT.md`](water/PLAN_168_FLUID_LOGISTICS_CLOSEOUT.md) |
+| 1,583,206 | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) |
 | 1,582,579 | [`docs/radio/PLAN_119_SENSOR_CHARACTERIZATION.md`](radio/PLAN_119_SENSOR_CHARACTERIZATION.md) |
 | 1,582,497 | [`docs/expansions/prose_wave132/cw132_01_five_point_one_seven_people_plan.md`](expansions/prose_wave132/cw132_01_five_point_one_seven_people_plan.md) |
 | 1,581,522 | [`docs/plans/integrated/content/INTEGRATED_cw128_02_the_hood_stayed_up_plan.md`](plans/integrated/content/INTEGRATED_cw128_02_the_hood_stayed_up_plan.md) |
@@ -1476,7 +1477,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 1,555,560 | [`docs/plans/integrated/content/INTEGRATED_cw128_06_still_here_on_plaster_plan.md`](plans/integrated/content/INTEGRATED_cw128_06_still_here_on_plaster_plan.md) |
 | 1,550,221 | [`docs/content/PLAN134_PLAN138_RECONCILIATION.md`](content/PLAN134_PLAN138_RECONCILIATION.md) |
 | 1,541,254 | [`docs/plans/integrated/content/INTEGRATED_cw128_07_a_name_in_brass_plan.md`](plans/integrated/content/INTEGRATED_cw128_07_a_name_in_brass_plan.md) |
-| 1,537,521 | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) |
 | 1,534,169 | [`docs/plans/integrated/content/INTEGRATED_cw129_12_a_clerk_with_a_rifle_plan.md`](plans/integrated/content/INTEGRATED_cw129_12_a_clerk_with_a_rifle_plan.md) |
 | 1,515,307 | [`docs/plans/integrated/content/INTEGRATED_cw128_12_home_by_six_plan.md`](plans/integrated/content/INTEGRATED_cw128_12_home_by_six_plan.md) |
 | 1,512,521 | [`docs/plans/integrated/content/INTEGRATED_cw127_15_the_measure_at_the_fence_plan.md`](plans/integrated/content/INTEGRATED_cw127_15_the_measure_at_the_fence_plan.md) |
@@ -2182,9 +2182,9 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 532,400 | [`docs/plans/UNBLOCK_PLAN185_MEMORY_DECAY_INTEGRATION_PLAN.md`](plans/UNBLOCK_PLAN185_MEMORY_DECAY_INTEGRATION_PLAN.md) |
 | 531,851 | [`docs/plans/integrated/content/integrated_cw119_07_no_visitors_plan.md`](plans/integrated/content/integrated_cw119_07_no_visitors_plan.md) |
 | 530,015 | [`docs/plans/integrated/content/integrated_cw119_06_separate_entrance_plan.md`](plans/integrated/content/integrated_cw119_06_separate_entrance_plan.md) |
+| 528,607 | [`docs/architecture/ARCHITECTURE_TEST_MAP.md`](architecture/ARCHITECTURE_TEST_MAP.md) |
 | 527,581 | [`docs/plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-NARRATIVE-ARC-EVENT-TRUTH-176.md`](plans/EXPANSION_PROGRAM_WAVE14_2026-09-21/PLAN-NARRATIVE-ARC-EVENT-TRUTH-176.md) |
 | 527,508 | [`piagentsplans/82-verdict-locations-expansion.md`](../piagentsplans/82-verdict-locations-expansion.md) |
-| 526,982 | [`docs/architecture/ARCHITECTURE_TEST_MAP.md`](architecture/ARCHITECTURE_TEST_MAP.md) |
 | 526,427 | [`docs/plans/EXPANSION_PROGRAM_WAVE10_2026-09-21/PLAN-ACUTE-TRAUMA-CARE-124.md`](plans/EXPANSION_PROGRAM_WAVE10_2026-09-21/PLAN-ACUTE-TRAUMA-CARE-124.md) |
 | 525,827 | [`docs/plans/UNBLOCK_EXPANSION30_31_INTEGRATION_PLAN.md`](plans/UNBLOCK_EXPANSION30_31_INTEGRATION_PLAN.md) |
 | 524,832 | [`piagentsplans/54-combat-catalog-expansion.md`](../piagentsplans/54-combat-catalog-expansion.md) |
@@ -2248,6 +2248,7 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 479,073 | [`piagentsplans/85-damaged-map-zones-expansion.md`](../piagentsplans/85-damaged-map-zones-expansion.md) |
 | 478,795 | [`docs/production/FOUNDRY_TREATY_LABOR_MATRIX.md`](production/FOUNDRY_TREATY_LABOR_MATRIX.md) |
 | 478,576 | [`docs/expansions/prose_wave117/cw117_08_chalk_on_the_valves_plan.md`](expansions/prose_wave117/cw117_08_chalk_on_the_valves_plan.md) |
+| 477,551 | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) |
 | 477,282 | [`docs/plans/integrated/content/INTEGRATED_cw118_09_the_warning_plan.md`](plans/integrated/content/INTEGRATED_cw118_09_the_warning_plan.md) |
 | 476,485 | [`docs/expansions/prose_wave116/cw116_08_a_square_of_sky_plan.md`](expansions/prose_wave116/cw116_08_a_square_of_sky_plan.md) |
 | 476,461 | [`docs/expansions/prose_wave117/cw117_01_the_thief_knows_this_wall_plan.md`](expansions/prose_wave117/cw117_01_the_thief_knows_this_wall_plan.md) |
@@ -2288,7 +2289,6 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 446,495 | [`docs/world/ORBITAL_DAMAGE_PROVENANCE.md`](world/ORBITAL_DAMAGE_PROVENANCE.md) |
 | 444,762 | [`piagentsplans/12-social-shelter-life.md`](../piagentsplans/12-social-shelter-life.md) |
 | 444,580 | [`docs/progression/RESEARCH_BALANCE_MATRIX.md`](progression/RESEARCH_BALANCE_MATRIX.md) |
-| 441,886 | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) |
 | 439,819 | [`docs/plans/expansion_wave1/EXPANSION_PLAN_20_AUTHORED_DIALOGUE_GRAPHS_AND_PROSE.md`](plans/expansion_wave1/EXPANSION_PLAN_20_AUTHORED_DIALOGUE_GRAPHS_AND_PROSE.md) |
 | 438,995 | [`piagentsplans/98-standing-record-factions-expansion.md`](../piagentsplans/98-standing-record-factions-expansion.md) |
 | 433,455 | [`piagentsplans/14-ux-onboarding-accessibility.md`](../piagentsplans/14-ux-onboarding-accessibility.md) |
@@ -3757,7 +3757,7 @@ The following documents share identical or near-identical filenames across root,
 |---|---|---|---|
 | 🟢 `CURRENT` | [`AGENTS.md`](../AGENTS.md) | 18,363 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
 | 🟢 `CURRENT` | [`README.md`](../README.md) | 5,978 | **ASHFALL: Atomic War – Starving Survival** — 2D post-nuclear survival-management game. Godot 4.7 .NET (C#) is the only |
-| 🟢 `CURRENT` | [`docs/architecture/ARCHITECTURE_TEST_MAP.md`](architecture/ARCHITECTURE_TEST_MAP.md) | 526,982 | **ASHFALL — Evidence-Derived Architecture & Verification Graph** — **Last Verified:** 2026-10-01<br> |
+| 🟢 `CURRENT` | [`docs/architecture/ARCHITECTURE_TEST_MAP.md`](architecture/ARCHITECTURE_TEST_MAP.md) | 528,607 | **ASHFALL — Evidence-Derived Architecture & Verification Graph** — **Last Verified:** 2026-10-02<br> |
 | 🟢 `CURRENT` | [`docs/architecture/BUNKER_COURT_AUTHORITY_MAP.md`](architecture/BUNKER_COURT_AUTHORITY_MAP.md) | 4,591 | **Bunker Court Authority & System Boundary Map** — **Document ID:** ARCH-BUNKER-COURT-AUTHORITY |
 | 🟢 `CURRENT` | [`docs/architecture/BUNKER_COURT_CASE_MATRIX.md`](architecture/BUNKER_COURT_CASE_MATRIX.md) | 12,637 | **Bunker Court Case Matrix — Full 24-Case Census** — **Document ID:** ARCH-BUNKER-COURT-CASE-MATRIX |
 | 🟢 `CURRENT` | [`docs/architecture/BUNKER_COURT_DISCOVERY_MATRIX.md`](architecture/BUNKER_COURT_DISCOVERY_MATRIX.md) | 6,032 | **Bunker Court Discovery Matrix & Manifest Registration** — **Document ID:** ARCH-BUNKER-COURT-DISCOVERY-MATRIX |
@@ -3766,7 +3766,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/architecture/BUNKER_GLITCH_20_ROW_MATRIX.md`](architecture/BUNKER_GLITCH_20_ROW_MATRIX.md) | 6,830 | **BUNKER GLITCH 20-ROW MATRIX** — Canonical mapping of the 20 Subterranean Engineering Emergencies from `Assets/StreamingAssets/Data/narrative/bunker_m... |
 | 🟢 `CURRENT` | [`docs/architecture/CAMPAIGN_CALENDAR_AUTHORITY.md`](architecture/CAMPAIGN_CALENDAR_AUTHORITY.md) | 5,295 | **ASHFALL Campaign Calendar Authority & Time Invariants** — This document specifies the authoritative campaign calendar hierarchy, time domains, clock projections, and reconcili... |
 | 🟢 `CURRENT` | [`docs/architecture/CLOCK_POLICY.md`](architecture/CLOCK_POLICY.md) | 4,694 | **ASHFALL Clock Governance & Simulation Policy** — **Status:** Canonical Architecture Policy |
-| 🟢 `CURRENT` | [`docs/architecture/CORE_SYSTEMS_CATALOG.md`](architecture/CORE_SYSTEMS_CATALOG.md) | 31,015 | **ASHFALL Core Domain Subsystems & Host Seams Catalog** — **Authoritative Architecture Map** \| **Generated:** 2026-09-25 \| **Systems Documented:** 34 |
+| 🟢 `CURRENT` | [`docs/architecture/CORE_SYSTEMS_CATALOG.md`](architecture/CORE_SYSTEMS_CATALOG.md) | 31,015 | **ASHFALL Core Domain Subsystems & Host Seams Catalog** — **Authoritative Architecture Map** \| **Generated:** 2026-10-01 \| **Systems Documented:** 34 |
 | 🟢 `CURRENT` | [`docs/architecture/ENGINEERING_LOG_CORPUS_MATRIX.md`](architecture/ENGINEERING_LOG_CORPUS_MATRIX.md) | 3,848 | **ENGINEERING LOG CORPUS MATRIX** — Overview of ASHFALL's ambient engineering and maintenance log corpora and their relationship to the canonical 20 glit... |
 | 🟢 `CURRENT` | [`docs/architecture/ENGINEERING_SAVE_COMPATIBILITY.md`](architecture/ENGINEERING_SAVE_COMPATIBILITY.md) | 1,972 | **ENGINEERING SAVE COMPATIBILITY** — Plan 148 activates the subterranean engineering emergencies and maintenance logs strictly as a read-only data catalog... |
 | 🟢 `CURRENT` | [`docs/architecture/ENGINEERING_SUBSYSTEM_AUTHORITY_MAP.md`](architecture/ENGINEERING_SUBSYSTEM_AUTHORITY_MAP.md) | 4,207 | **ENGINEERING SUBSYSTEM AUTHORITY MAP** — In ASHFALL, the shelter simulation is strictly authoritative. Subterranean infrastructure and machinery states are co... |
@@ -3803,7 +3803,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/architecture/PLANS_80_84_AUTHORITY_MAP.md`](architecture/PLANS_80_84_AUTHORITY_MAP.md) | 3,203,621 | **PLANS 80–84 (TASKS B21–B25) AUTHORITY MAP** — **Wave Target:** Flagship Player Experience, Runtime Hardening & Campaign Closure |
 | 🟢 `CURRENT` | [`docs/architecture/PLANS_94_97_AUTHORITY_MAP.md`](architecture/PLANS_94_97_AUTHORITY_MAP.md) | 3,147,725 | **ASHFALL Plans 94–97 Authority and Reconnaissance Map** — **Scope:** Vehicle track gear, grain processing and silo safety, heliograph |
 | 🟢 `CURRENT` | [`docs/architecture/PLANS_CARAVAN_SURGERY_POWER_DEFENSE_AUTHORITY_MAP.md`](architecture/PLANS_CARAVAN_SURGERY_POWER_DEFENSE_AUTHORITY_MAP.md) | 2,792,982 | **ASHFALL Authority Reconnaissance Map** — **Document:** `docs/architecture/PLANS_CARAVAN_SURGERY_POWER_DEFENSE_AUTHORITY_MAP.md` |
-| 🟢 `CURRENT` | [`docs/architecture/PORT_CONTRACT.md`](architecture/PORT_CONTRACT.md) | 46,149 | **Core Port Contracts and Host Wiring Manifest** — - **Total integration seams:** 306 |
+| 🟢 `CURRENT` | [`docs/architecture/PORT_CONTRACT.md`](architecture/PORT_CONTRACT.md) | 46,984 | **Core Port Contracts and Host Wiring Manifest** — - **Total integration seams:** 310 |
 | 🟢 `CURRENT` | [`docs/architecture/REPAIR_KIT_IDENTITY_MATRIX.md`](architecture/REPAIR_KIT_IDENTITY_MATRIX.md) | 10,779 | **REPAIR KIT IDENTITY MATRIX** — Each of the 20 canonical glitches in `narrative/bunker_maintenance_glitches.json` specifies an array of `required_rep... |
 | 🟢 `CURRENT` | [`docs/architecture/SURVIVOR_SAVE_MIGRATION_MATRIX.md`](architecture/SURVIVOR_SAVE_MIGRATION_MATRIX.md) | 23,887 | **ASHFALL — Survivor Save Migration Matrix** — **Task:** #132 — host-independent survivor migration |
 | 🟢 `CURRENT` | [`docs/architecture/TOOLING_ARCHITECTURE.md`](architecture/TOOLING_ARCHITECTURE.md) | 4,555 | **ASHFALL Dual-Stack Tooling Architecture (Go & Python)** — This document establishes the official operational boundary between **Go** (for high-frequency, low-RAM, concurrent s... |
@@ -3812,15 +3812,16 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/architecture/WORN_GEAR_CONSOLIDATION.md`](architecture/WORN_GEAR_CONSOLIDATION.md) | 2,323 | **WornGear consolidation** — Status: resolved, 2026-09-10. |
 | 🟢 `CURRENT` | [`sources.md`](../sources.md) | 50,832 | **Atomic War: Starving Survival — Comprehensive Codebase Exploration Report** — **Repository:** `GermanRobert-Labtester/Atomic-War-Starving-Survival` |
 
-## 2. CI, Fast-Tier Gates & Verification (5 documents)
+## 2. CI, Fast-Tier Gates & Verification (6 documents)
 
 | Status | Document | Characters | Title / Summary |
 |---|---|---|---|
 | 🟢 `CURRENT` | [`docs/CI.md`](CI.md) | 8,164 | **ASHFALL — Continuous Integration & Verification Guide** — **Authoritative host/engine:** Godot 4.7+ (.NET / C#) (`project.godot`) |
-| 🟢 `CURRENT` | [`docs/ci/GATE_INVENTORY.md`](ci/GATE_INVENTORY.md) | 4,254 | **CI Gate Inventory (Plan VIII · Task 24.1)** — Generated from `docs/ci/CI_GATE_MANIFEST.json` on 2026-09-05 — 49 gates, 47 fast. Regenerate with `python3 scripts/ci... |
-| 🟢 `CURRENT` | [`docs/ci/GATING_VS_DIAGNOSTIC_CHECKS.md`](ci/GATING_VS_DIAGNOSTIC_CHECKS.md) | 8,318 | **ASHFALL — Verification Gates vs. Diagnostic-Only Checks** — **Date:** 2026-08-26 |
-| 🟢 `CURRENT` | [`docs/ci/README.md`](ci/README.md) | 3,752 | **ASHFALL CI — Canonical Verification Contract (Plan VIII · Task 24)** — One runner, one manifest, one meaning of "green". |
+| 🟢 `CURRENT` | [`docs/ci/GATE_INVENTORY.md`](ci/GATE_INVENTORY.md) | 6,254 | **CI Gate Inventory (Plan VIII · Task 24.1)** — Generated from `docs/ci/CI_GATE_MANIFEST.json` — 71 gates, 67 fast. Regenerate with `python3 scripts/ci/run-gates.py ... |
+| 🟢 `CURRENT` | [`docs/ci/GATING_VS_DIAGNOSTIC_CHECKS.md`](ci/GATING_VS_DIAGNOSTIC_CHECKS.md) | 9,509 | **ASHFALL — Verification Gates vs. Diagnostic-Only Checks** — **Date:** 2026-10-02 |
+| 🟢 `CURRENT` | [`docs/ci/README.md`](ci/README.md) | 5,418 | **ASHFALL CI — Canonical Verification Contract (Plan VIII · Task 24)** — One runner, one manifest, one meaning of "green". |
 | 🟢 `CURRENT` | [`docs/ci/TASK132_PRE2_BASELINE.md`](ci/TASK132_PRE2_BASELINE.md) | 8,675 | **Task #132 — PRE-2 Trusted Baseline** — Captured after PRE-1 (expedition test-oracle repair) and before any domain |
+| 🟢 `CURRENT` | [`docs/ci/content_reachability_dormant_triage.md`](ci/content_reachability_dormant_triage.md) | 9,566 | **Content-Reachability DORMANT Triage (T079)** — Generated from `docs/ci/content_reachability_dispositions.json`. Every entry |
 
 ## 3. Save Systems & State Architecture (73 documents)
 
@@ -3910,7 +3911,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/expansions/CROSSING_DEPTH_AUDIT.md`](expansions/CROSSING_DEPTH_AUDIT.md) | 256,181 | **Crossing Depth Audit (Expansion 04)** — Nobody's Charter / The Crossing represents the legal, humanitarian, and political friction of border arbitration. |
 | 🟢 `CURRENT` | [`docs/expansions/CROSSING_STATE_FLOW.md`](expansions/CROSSING_STATE_FLOW.md) | 1,687 | **Crossing State Flow** — CrossingQuestSystem |
 | 🟢 `CURRENT` | [`docs/expansions/DEEP_LORE_MASTER_PLAN.md`](expansions/DEEP_LORE_MASTER_PLAN.md) | 3,926,498 | **ASHFALL — DEEP LORE & CHARACTER PROGRESSION: IMPLEMENTATION PLAN** — This expansion is **primarily data, not code**. The project already has all the narrative plumbing: |
-| 🟢 `CURRENT` | [`docs/expansions/EXPANSIONS_MASTER_CATALOG.md`](expansions/EXPANSIONS_MASTER_CATALOG.md) | 9,991 | **ASHFALL Expansions 01–11 Master Systems & Integration Atlas** — **Authoritative Expansion Catalog** \| **Generated:** 2026-09-25 \| **Total Expansions:** 11 |
+| 🟢 `CURRENT` | [`docs/expansions/EXPANSIONS_MASTER_CATALOG.md`](expansions/EXPANSIONS_MASTER_CATALOG.md) | 9,344 | **ASHFALL Expansions 01–11 Master Systems & Integration Atlas** — **Authoritative Expansion Catalog** \| **Generated:** 2026-10-01 \| **Total Expansions:** 11 |
 | 🟢 `CURRENT` | [`docs/expansions/EXPANSION_3_4_MASTER_PLAN.md`](expansions/EXPANSION_3_4_MASTER_PLAN.md) | 4,044,808 | **ASHFALL — EXPANSION 3 & 4: COMPREHENSIVE IMPLEMENTATION PLAN** — **Goal**: Add dynamic condition, contamination, and purity to all scavenged items. |
 | 🟢 `CURRENT` | [`docs/expansions/EXPANSION_CONTENT_MATRIX.md`](expansions/EXPANSION_CONTENT_MATRIX.md) | 322,334 | **Expansion Content Matrix — Four Charter Expansions, Systemic Scope, Quest Distribution & Anchor Topology** — **Document Reference:** `docs/expansions/EXPANSION_CONTENT_MATRIX.md` |
 | 🟢 `CURRENT` | [`docs/expansions/EXPANSION_CONTINUITY_AUDIT.md`](expansions/EXPANSION_CONTINUITY_AUDIT.md) | 291,137 | **Expansion Continuity & Chronology Audit — Four-Phase Campaign Alignment & Narrative Invariants** — **Document Reference:** `docs/expansions/EXPANSION_CONTINUITY_AUDIT.md` |
@@ -6246,7 +6247,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/ui/TIER3_UI_READINESS.md`](ui/TIER3_UI_READINESS.md) | 10,922 | **ASHFALL — Tier-3 UI Readiness Map** — **Date:** Reconciled post-Phase 28 (Historical Phase 14 baseline). |
 | 🟢 `CURRENT` | [`docs/ui/UI_ASSET_FALLBACK_AUDIT_2026-09-25.md`](ui/UI_ASSET_FALLBACK_AUDIT_2026-09-25.md) | 4,362 | **ASHFALL — UI Asset Fallback Audit (2026-09-25)** — Scope: which UI art resolves to real assets and which silently resolves through |
 | 🟢 `CURRENT` | [`docs/ui/UI_CORRECTION_REPORT.md`](ui/UI_CORRECTION_REPORT.md) | 15,330 | **ASHFALL — UI CORRECTION PASS REPORT** — **Date:** 2026-08-15 |
-| 🟢 `CURRENT` | [`docs/ui/UI_DESIGN_MAP.md`](ui/UI_DESIGN_MAP.md) | 27,175 | **ASHFALL UI Design Map — Programmatic** — **Generated:** 2026-09-25 (from source; regenerate with `python3 scripts/ci/generate-ui-design-map.py`) |
+| 🟢 `CURRENT` | [`docs/ui/UI_DESIGN_MAP.md`](ui/UI_DESIGN_MAP.md) | 27,476 | **ASHFALL UI Design Map — Programmatic** — **Generated:** 2026-10-01 (from source; regenerate with `python3 scripts/ci/generate-ui-design-map.py`) |
 | 🟢 `CURRENT` | [`docs/ui/UI_NODE_DIAGNOSTICS_AND_LEAK_TRIAGE.md`](ui/UI_NODE_DIAGNOSTICS_AND_LEAK_TRIAGE.md) | 7,327 | **Contributor Guide — UI Node Diagnostics, Lifecycle & Leak Triage** — **Date:** 2026-08-27 |
 | 🟢 `CURRENT` | [`docs/ui/UI_PANELS_MASTER_VOLUME_2.md`](ui/UI_PANELS_MASTER_VOLUME_2.md) | 32,694 | **ASHFALL: Atomic War - Starving Survival** — ═══════════════════════════════════════════════════════════════════════════════════════════ |
 | 🟢 `CURRENT` | [`docs/ui/UI_PANELS_MASTER_VOLUME_3.md`](ui/UI_PANELS_MASTER_VOLUME_3.md) | 36,779 | **ASHFALL: Atomic War - Starving Survival** — ═══════════════════════════════════════════════════════════════════════════════════════════ |
@@ -6344,7 +6345,7 @@ The following documents share identical or near-identical filenames across root,
 
 | Status | Document | Characters | Title / Summary |
 |---|---|---|---|
-| 🟢 `CURRENT` | [`docs/data/CATALOG_REGISTRY.md`](data/CATALOG_REGISTRY.md) | 73,291 | **ASHFALL Data Authority & Master Catalog Registry** — **Authoritative Location:** `Assets/StreamingAssets/Data/` \| **Last Verified:** 2026-09-26 |
+| 🟢 `CURRENT` | [`docs/data/CATALOG_REGISTRY.md`](data/CATALOG_REGISTRY.md) | 84,543 | **ASHFALL Data Authority & Master Catalog Registry** — **Authoritative Location:** `Assets/StreamingAssets/Data/` \| **Last Verified:** 2026-10-01 |
 | 🟢 `CURRENT` | [`docs/data/DATA_AUTHORITY_NAMING_DRIFT.md`](data/DATA_AUTHORITY_NAMING_DRIFT.md) | 2,656 | **ASHFALL — Data Authority Naming Drift Inventory & Migration Notes** — **Date:** 2026-09-06 |
 | 🟢 `CURRENT` | [`docs/data/DATA_GAP_AUDIT.md`](data/DATA_GAP_AUDIT.md) | 11,916 | **ASHFALL Data Gap Audit** — Counted entries in every top-level JSON catalog, identified C# consumers per catalog, |
 | 🟢 `CURRENT` | [`docs/data/SNAKE_CASE_MIGRATION.md`](data/SNAKE_CASE_MIGRATION.md) | 6,317 | **ASHFALL — snake_case Migration Tracker (Plans 47+)** — **Policy:** spelling-only migration. ID values, schema versions and value |
@@ -6377,7 +6378,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md`](tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md) | 9,685 | **ASHFALL — Non-Runtime Tooling Architecture, Classification, & Lifecycle** — **Date:** 2026-08-27<br> |
 | 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | 2,358 | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |
 
-## 9. General Project Guides & Archive Reference (3027 documents)
+## 9. General Project Guides & Archive Reference (3038 documents)
 
 | Status | Document | Characters | Title / Summary |
 |---|---|---|---|
@@ -6599,7 +6600,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`C-integration-plans/D1_planintegration[7].md`](../C-integration-plans/D1_planintegration[7].md) | 59,527 | **D1 Flagship Integration Plan [7]** — The source plan correctly distinguishes **radio content** from **communications infrastructure**. The current project... |
 | 🟢 `CURRENT` | [`C-integration-plans/D1_planintegration[8].md`](../C-integration-plans/D1_planintegration[8].md) | 61,136 | **D1 Flagship Integration Plan [8]** — The source plan identifies a specific survivor-personality gap: |
 | 🟢 `CURRENT` | [`C-integration-plans/D1_planintegration[9].md`](../C-integration-plans/D1_planintegration[9].md) | 52,307 | **D1 Flagship Integration Plan [9]** — The source plan establishes a favorable base: |
-| 🟢 `CURRENT` | [`C-integration-plans/E1_planintegration.md`](../C-integration-plans/E1_planintegration.md) | 88,286 | **E1 — Flagship Plan Integration: Ambition Governance, Rails Readiness, and Evidence-Gated Execution** — This plan converts the Plan 53 ambition-audit concept into an implementation-grade integration programme. |
+| 🟢 `CURRENT` | [`C-integration-plans/E1_planintegration.md`](../C-integration-plans/E1_planintegration.md) | 88,404 | **E1 — Flagship Plan Integration: Ambition Governance, Rails Readiness, and Evidence-Gated Execution** — This plan converts the Plan 53 ambition-audit concept into an implementation-grade integration programme. |
 | 🟢 `CURRENT` | [`C-integration-plans/E1_planintegration[10].md`](../C-integration-plans/E1_planintegration[10].md) | 89,053 | **E1 Plan Integration [10] — Expedition Outposts, Fixed Forward Presence, Supply Lines, Territorial Reach, and Colony-Scale Growth** — This plan expands Plan 160 into an implementation-grade fixed-outpost and colony-growth programme. |
 | 🟢 `CURRENT` | [`C-integration-plans/E1_planintegration[11].md`](../C-integration-plans/E1_planintegration[11].md) | 89,048 | **E1 Plan Integration [11] — Nuclear Winter Progression, Seasonal Climate Envelope, Long-Horizon Environmental Escalation, and Adaptation** — This plan converts Plan 164 into an implementation-grade climate-progression programme. |
 | 🟢 `CURRENT` | [`C-integration-plans/E1_planintegration[12].md`](../C-integration-plans/E1_planintegration[12].md) | 89,058 | **E1 Plan Integration [12] — Audio Accessibility, Mix Legibility, Critical-Cue Equivalence, Ducking, Diagnostics, and User Preferences** — This plan converts Plan 169 into an implementation-grade accessibility and mix-legibility programme. |
@@ -6636,8 +6637,8 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`DESIGN.md`](../DESIGN.md) | 3,238 | **Design** — ASHFALL is a 2D atomic-war survival management game. The UI must reflect a cold, exhausted, human, restrained, materi... |
 | 🟢 `CURRENT` | [`GEMINI.md`](../GEMINI.md) | 18,363 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
 | 🟢 `CURRENT` | [`GOOSE.md`](../GOOSE.md) | 18,363 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
-| 🟢 `CURRENT` | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) | 441,886 | **ASHFALL Integration Plans** — User-directed three-task wave. **First 30 minutes smoke harness:** |
-| 🟢 `CURRENT` | [`KNOWN_DEBT.md`](../KNOWN_DEBT.md) | 43,023 | **ASHFALL Known Debt** — Only current, decision-relevant debt belongs here. Historical detail lives in |
+| 🟢 `CURRENT` | [`INTEGRATION_PLANS.md`](../INTEGRATION_PLANS.md) | 477,551 | **ASHFALL Integration Plans** — User-directed ("Continue with these small tasks completely finish all of them and |
+| 🟢 `CURRENT` | [`KNOWN_DEBT.md`](../KNOWN_DEBT.md) | 44,980 | **ASHFALL Known Debt** — Only current, decision-relevant debt belongs here. Historical detail lives in |
 | 🟢 `CURRENT` | [`MIMOCODE.md`](../MIMOCODE.md) | 18,363 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
 | 🟢 `CURRENT` | [`Next-steps-plans/Plan_132_Survivor_Hidden_Agendas_Betrayal_Arc.md`](../Next-steps-plans/Plan_132_Survivor_Hidden_Agendas_Betrayal_Arc.md) | 13,653 | **Plan 132 — Survivor Hidden Agendas & Betrayal Arc** — Create a persistent hidden-agenda system where survivors carry secret motivations, loyalties, and goals that unfold o... |
 | 🟢 `CURRENT` | [`Next-steps-plans/Plan_133_Expedition_Discovery_Persistent_World_Consequences.md`](../Next-steps-plans/Plan_133_Expedition_Discovery_Persistent_World_Consequences.md) | 136,680 | **Plan 133 — Expedition Discovery → Persistent World Consequences** — docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md. |
@@ -6973,7 +6974,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`Seal-steps/ashfall-wave2-successor-corpus-tranche-two-and-ship-readiness-program-2026-09-19.md`](../Seal-steps/ashfall-wave2-successor-corpus-tranche-two-and-ship-readiness-program-2026-09-19.md) | 90,201 | **ASHFALL — Wave 2, Program B: Successor Corpus Tranche-2 & Ship-Readiness Program** — This is Wave 2 Program B, the final forward document in the 2026-09-19 |
 | 🟢 `CURRENT` | [`TEST_POLICY.md`](../TEST_POLICY.md) | 5,220 | **ASHFALL Test Policy** — Tests protect current behavior; they are not a production-count target. This |
 | 🟢 `CURRENT` | [`VIBE.md`](../VIBE.md) | 18,363 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
-| 🟢 `CURRENT` | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) | 1,537,521 | **ASHFALL Worktree Ownership** — User-directed: "tackle those 3 suggested next" (first-30-minutes smoke harness, |
+| 🟢 `CURRENT` | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) | 1,583,206 | **ASHFALL Worktree Ownership** — User-directed continuation ("Continue with these small tasks completely finish |
 | 🟢 `CURRENT` | [`addons/godot_mcp/commands/master_checklist.md`](../addons/godot_mcp/commands/master_checklist.md) | 1,457 | **Master Checklist** — - [x] 01. `project_creation_commands.gd` |
 | 🟢 `CURRENT` | [`addons/ziva_agent/LICENSE.md`](../addons/ziva_agent/LICENSE.md) | 282 | **Proprietary License** — All rights reserved. |
 | 🟢 `CURRENT` | [`addons/ziva_agent/README.md`](../addons/ziva_agent/README.md) | 2,787 | **Ziva AI Agent – The S-Tier AI Coding Assistant for Godot** — ![Godot 4.2+](https://godotengine.org/) |
@@ -6993,7 +6994,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/CODEX_CONTRACT.md`](CODEX_CONTRACT.md) | 2,369 | **CODEX READ-MODEL CONTRACT** — **Document Version:** 1.0.0 |
 | 🟢 `CURRENT` | [`docs/CODEX_SOURCE_MATRIX.md`](CODEX_SOURCE_MATRIX.md) | 2,840 | **CODEX KNOWLEDGE SOURCE MATRIX** — **Document Version:** 1.0.0 |
 | 🟢 `CURRENT` | [`docs/CONTENT_AUTHORITY_AND_MIGRATION_STATUS.md`](CONTENT_AUTHORITY_AND_MIGRATION_STATUS.md) | 2,572 | **ASHFALL — Content Authority & Migration Status (Plans 47–50)** — One index over the four content-authority domains. This page links; the |
-| 🟢 `CURRENT` | [`docs/CURRENT_AUTHORITY.md`](CURRENT_AUTHORITY.md) | 10,482 | **ASHFALL — Documentation Source-of-Truth & Authority Map** — **Date:** 2026-08-26 |
+| 🟢 `CURRENT` | [`docs/CURRENT_AUTHORITY.md`](CURRENT_AUTHORITY.md) | 11,898 | **ASHFALL — Documentation Source-of-Truth & Authority Map** — **Date:** 2026-08-26 |
 | 🟢 `CURRENT` | [`docs/ECONOMY_FAIRNESS_AUDIT.md`](ECONOMY_FAIRNESS_AUDIT.md) | 1,359 | **Economy fairness audit** — The economy pass is explainability-first. It does not rewrite the dynamic |
 | 🟢 `CURRENT` | [`docs/ECONOMY_PRICE_FACTOR_MATRIX.md`](ECONOMY_PRICE_FACTOR_MATRIX.md) | 1,211 | **Economy price-factor matrix** — The Core `MarketSystem` remains the pricing authority. `PriceExplanation` is a |
 | 🟢 `CURRENT` | [`docs/ENGINE_SUPPORT_POLICY.md`](ENGINE_SUPPORT_POLICY.md) | 4,036 | **ASHFALL Engine Support and Source-Authority Policy** — This document defines which engine and source tree is authoritative during the Unity-to-Godot strangler migration. |
@@ -7105,7 +7106,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/chatgpt-claude-assisted/trading-house-2-consignments.md`](chatgpt-claude-assisted/trading-house-2-consignments.md) | 140,168 | **TH-2 — Consignments and Exchange Clearing** — STATUS: DRAFT — evidence-backed proposal for review; depends conceptually on TH-1; no ownership claim, path claim, im... |
 | 🟢 `CURRENT` | [`docs/chatgpt-claude-assisted/trading-house-3-credit.md`](chatgpt-claude-assisted/trading-house-3-credit.md) | 131,139 | **TH-3 — Credit Exposure and Settlement** — STATUS: DRAFT — proposal for review; depends on TH-1 and TH-2; no ownership claim, approval, or implementation author... |
 | 🟢 `CURRENT` | [`docs/chatgpt-claude-assisted/trading-house-4-production-closeout.md`](chatgpt-claude-assisted/trading-house-4-production-closeout.md) | 120,134 | **TH-4 — Production Commitments and Closeout** — STATUS: DRAFT — proposal for review; depends on TH-1 through TH-3; no ownership claim, approval, or implementation au... |
-| 🟢 `CURRENT` | [`docs/cli/HOST_CLI_COMMAND_CATALOG.md`](cli/HOST_CLI_COMMAND_CATALOG.md) | 48,002 | **ASHFALL — Host CLI Command Catalog** — **Last Verified:** 2026-10-01<br> |
+| 🟢 `CURRENT` | [`docs/cli/HOST_CLI_COMMAND_CATALOG.md`](cli/HOST_CLI_COMMAND_CATALOG.md) | 48,426 | **ASHFALL — Host CLI Command Catalog** — **Last Verified:** 2026-10-01<br> |
 | 🟢 `CURRENT` | [`docs/cli/HOST_TEST_EXIT_CODES.md`](cli/HOST_TEST_EXIT_CODES.md) | 3,486 | **ASHFALL — Host Self-Test Exit Codes & Output Protocol** — **Date:** 2026-08-27 |
 | 🟢 `CURRENT` | [`docs/collectibles/COLLECTIBLES_100_RUN_BALANCE_REPORT.md`](collectibles/COLLECTIBLES_100_RUN_BALANCE_REPORT.md) | 3,650 | **ASHFALL Collectibles — 100-Run Scavenging Balance Report** — **Generated** for Tasks 5–8 Wave F · Harness: `CollectibleBalanceCharacterizationTests` |
 | 🟢 `CURRENT` | [`docs/collectibles/COLLECTIBLES_UTILIZATION_MATRIX.md`](collectibles/COLLECTIBLES_UTILIZATION_MATRIX.md) | 6,779 | **ASHFALL Collectibles Utilization Matrix** — **Generated** by `scripts/ci/generate-collectibles-matrix.py` — machine-derived from |
@@ -7907,7 +7908,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/plans/PLAYER_FACING_REALTIME_COMBAT_PHYSICS_AI_INTEGRATION_PLAN.md`](plans/PLAYER_FACING_REALTIME_COMBAT_PHYSICS_AI_INTEGRATION_PLAN.md) | 138,115 | **PLAYER-FACING REAL-TIME COMBAT TETRAD — INTEGRATION PLAN** — **Package ID:** `PFGL-RT-COMBAT-TETRAD-2026-09-25` |
 | 🟢 `CURRENT` | [`docs/plans/PLAYER_FACING_TRIAD_B_EXERCISE_DREAM_SANITATION_INTEGRATION_PLAN.md`](plans/PLAYER_FACING_TRIAD_B_EXERCISE_DREAM_SANITATION_INTEGRATION_PLAN.md) | 131,023 | **PLAYER-FACING TRIAD B — EXERCISE · DREAM · SANITATION — INTEGRATION PLAN** — **Package ID:** `PFGL-TRIAD-B-2026-09-25` |
 | 🟢 `CURRENT` | [`docs/plans/PRODUCTION_ISLANDS_WIRING_LOG.md`](plans/PRODUCTION_ISLANDS_WIRING_LOG.md) | 4,796,119 | **Production-island wiring log** — *(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)* |
-| 🟢 `CURRENT` | [`docs/plans/RECENT_PLAN_INTEGRATIONS_AUDIT.md`](plans/RECENT_PLAN_INTEGRATIONS_AUDIT.md) | 62,049 | **Recent Plan Integrations — Programmatic Audit** — *(Post-hoc, non-contractual editorial block; the recorded audit remains the authority.)* |
+| 🟢 `CURRENT` | [`docs/plans/RECENT_PLAN_INTEGRATIONS_AUDIT.md`](plans/RECENT_PLAN_INTEGRATIONS_AUDIT.md) | 61,777 | **Recent Plan Integrations — Programmatic Audit** — **Generated:** 2026-10-01 |
 | 🟢 `CURRENT` | [`docs/plans/RELEASE_STABILITY_65_BUG_REMEDIATION.md`](plans/RELEASE_STABILITY_65_BUG_REMEDIATION.md) | 4,783,905 | **ASHFALL Release Stability Remediation Plan — 65 Bugs** — *(Post-hoc, non-contractual editorial block; no scope, claim, decision, acceptance criterion or |
 | 🟢 `CURRENT` | [`docs/plans/SHELTER_EMP_MEDICAL_POWER_IMPLEMENTATION_LOG.md`](plans/SHELTER_EMP_MEDICAL_POWER_IMPLEMENTATION_LOG.md) | 4,774,781 | **SHELTER EMP & MEDICAL POWER — IMPLEMENTATION LOG** — *(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)* |
 | 🟢 `CURRENT` | [`docs/plans/SHELTER_EMP_MEDICAL_POWER_INTEGRATION_PLAN.md`](plans/SHELTER_EMP_MEDICAL_POWER_INTEGRATION_PLAN.md) | 5,424,610 | **SHELTER EMP & MEDICAL POWER — INTEGRATION PLAN (G4–G5)** — **Source evidence:** `docs/forensics/SHELTER_CASCADE_SEAMS_FORENSIC_REPORT.md` (G4/G5/G6 findings) |
@@ -8878,10 +8879,10 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/relationships/CONFESSION_CONSEQUENCE_RANGE_MATRIX.md`](relationships/CONFESSION_CONSEQUENCE_RANGE_MATRIX.md) | 3,922 | **Confession Consequence Range Matrix** — - **Forgiveness Affinity:** Mean $\approx +16.0$, Range: $[+8, +25]$ |
 | 🟢 `CURRENT` | [`docs/relationships/CONFESSION_SECRET_SCHEMA.md`](relationships/CONFESSION_SECRET_SCHEMA.md) | 4,536 | **Confession Secret Catalog Schema Specification** — "schema_version": 1, |
 | 🟢 `CURRENT` | [`docs/relationships/PLAN88_BASELINE.md`](relationships/PLAN88_BASELINE.md) | 3,053,240 | **Plan 88 — Baseline Discovery & Forensic Reconciliation** — Plan 88 requested expanding `confession_secrets.json` from a supposed 8-entry baseline to 20 confession secrets cover... |
-| 🟢 `CURRENT` | [`docs/releases/HOTFIX.md`](releases/HOTFIX.md) | 4,029 | **ASHFALL Hotfix Guide** — Not every urgent fix is a hotfix. Classify first. |
+| 🟢 `CURRENT` | [`docs/releases/HOTFIX.md`](releases/HOTFIX.md) | 5,037 | **ASHFALL Hotfix Guide** — Not every urgent fix is a hotfix. Classify first. |
 | 🟢 `CURRENT` | [`docs/releases/HOTFIX_REHEARSAL_v1.1.1.md`](releases/HOTFIX_REHEARSAL_v1.1.1.md) | 2,085 | **ASHFALL Hotfix Rehearsal Record — v1.1.1** — Prove that the hotfix gate **correctly refuses** a branch that contains |
 | 🟢 `CURRENT` | [`docs/releases/POSTMORTEM_TEMPLATE.md`](releases/POSTMORTEM_TEMPLATE.md) | 2,774 | **ASHFALL Post-Mortem Template** — **Date:** [YYYY-MM-DD] |
-| 🟢 `CURRENT` | [`docs/releases/PROCESS.md`](releases/PROCESS.md) | 3,415 | **ASHFALL Release Process** — ASHFALL uses a tag-based release model. Every public release is represented |
+| 🟢 `CURRENT` | [`docs/releases/PROCESS.md`](releases/PROCESS.md) | 4,028 | **ASHFALL Release Process** — ASHFALL uses a tag-based release model. Every public release is represented |
 | 🟢 `CURRENT` | [`docs/releases/RELEASE_1.1.0.md`](releases/RELEASE_1.1.0.md) | 5,824 | **RELEASE 1.1.0 — Release Record — ✅ GO (clean-clone verified)** — Lane: `lane/trapping-flagship-verification` (branched from `feat/asset-pipeline-flagship`) |
 | 🟢 `CURRENT` | [`docs/releases/RELEASE_DRY_RUN_2026-09-25.md`](releases/RELEASE_DRY_RUN_2026-09-25.md) | 4,878 | **Release Dry Run — 2026-09-25 (target 1.2.0, current 1.1.0)** — Dry run of the `ashfall-release-captain` checklist. No version bumps, tags or commits were made. |
 | 🟢 `CURRENT` | [`docs/releases/SUPPORT.md`](releases/SUPPORT.md) | 3,221 | **ASHFALL — Support Triage Kit** — This document helps triage player-reported issues: classify them, determine the |
@@ -8909,16 +8910,25 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/research/PLAN34_COMPLETION_REPORT.md`](research/PLAN34_COMPLETION_REPORT.md) | 3,177,343 | **Plan 34 Completion Report — Research Tree Externalization (2026-09-01)** — The externalization half of Plan 34 had already landed under `research_knowledge.json` / |
 | 🟢 `CURRENT` | [`docs/research/PLAN_166_SALVAGE_REVERSE_ENGINEERING_CLOSEOUT.md`](research/PLAN_166_SALVAGE_REVERSE_ENGINEERING_CLOSEOUT.md) | 1,623,134 | **Plan 166 — Salvage & Reverse Engineering Closeout** — `WorkshopReverseEngineeringSystem` remains the sole workshop authority. The implementation adds `PreWarTechDef` catal... |
 | 🟢 `CURRENT` | [`docs/research/RESEARCH_FAILURE_POLICY.md`](research/RESEARCH_FAILURE_POLICY.md) | 2,856 | **Research Failure Policy (Plan 34 §1.10, §34D.9)** — The JSON catalog is the **sole authored research authority**. There is no hardcoded fallback. |
-| 🟢 `CURRENT` | [`docs/roadmap/PLAN_REGISTER.md`](roadmap/PLAN_REGISTER.md) | 87,840 | **ASHFALL Plan Register** — This file is generated from plan front matter and repository state. The JSON sibling is the integration substrate; do... |
+| 🟢 `CURRENT` | [`docs/roadmap/CAPABILITY_CLUSTERS.md`](roadmap/CAPABILITY_CLUSTERS.md) | 91,574 | **Capability overlap clusters** — This report records reviewed overlap candidates. Cluster membership is evidence for linking and intake review; it nev... |
+| 🟢 `CURRENT` | [`docs/roadmap/DUPLICATE_SEARCH_RECEIPT_TEMPLATE.md`](roadmap/DUPLICATE_SEARCH_RECEIPT_TEMPLATE.md) | 580 | **Duplicate-search receipt** — Complete this receipt before proposing a new `SYSTEM` authority or a new stateful |
+| 🟢 `CURRENT` | [`docs/roadmap/PLAN_REGISTER.md`](roadmap/PLAN_REGISTER.md) | 88,186 | **ASHFALL Plan Register** — This file is generated from plan front matter and repository state. The JSON sibling is the integration substrate; do... |
 | 🟢 `CURRENT` | [`docs/roadmap/RAILS.md`](roadmap/RAILS.md) | 3,213 | **Canonical Rails Readiness Registry (Plan 53 / E1H)** — Total Canonical Rails: **10** |
-| 🟢 `CURRENT` | [`docs/roadmap/README.md`](roadmap/README.md) | 6,579 | **ASHFALL Roadmap Governance & Single-Truth Authority** — **Canonical source:** Plan 29 / C1[7] "One Truth"\ |
+| 🟢 `CURRENT` | [`docs/roadmap/README.md`](roadmap/README.md) | 7,204 | **ASHFALL Roadmap Governance & Single-Truth Authority** — **Canonical source:** Plan 29 / C1[7] "One Truth"\ |
 | 🟢 `CURRENT` | [`docs/roadmap/WAVE_LEDGER.md`](roadmap/WAVE_LEDGER.md) | 4,242 | **ASHFALL Master Wave Ledger** — **Canonical source:** Plan 29 / C1[7] "One Truth"\ |
 | 🟢 `CURRENT` | [`docs/roadmap/e1/E1A_IMPLEMENTATION_LOG.md`](roadmap/e1/E1A_IMPLEMENTATION_LOG.md) | 1,369 | **E1A baseline implementation log** — Date: 2026-09-19 |
 | 🟢 `CURRENT` | [`docs/roadmap/e1/E1B_IMPLEMENTATION_LOG.md`](roadmap/e1/E1B_IMPLEMENTATION_LOG.md) | 1,885 | **E1B register implementation log** — Date: 2026-09-19 |
 | 🟢 `CURRENT` | [`docs/roadmap/e1/E1C_E1D_E1H_E1I_INTEGRATION_LOG.md`](roadmap/e1/E1C_E1D_E1H_E1I_INTEGRATION_LOG.md) | 3,341 | **E1 Tooling and Rails Implementation Log (Plan 53 / E1D, E1H, E1I)** — Date: 2026-09-20 |
 | 🟢 `CURRENT` | [`docs/roadmap/e1/E1C_IMPLEMENTATION_LOG.md`](roadmap/e1/E1C_IMPLEMENTATION_LOG.md) | 2,841 | **E1C Plan Metadata Migration — Implementation Log** — Date: 2026-09-30 |
+| 🟢 `CURRENT` | [`docs/roadmap/e1/E1E_IMPLEMENTATION_LOG.md`](roadmap/e1/E1E_IMPLEMENTATION_LOG.md) | 4,030 | **E1E implementation log — duplicate-topic clusters and live capabilities** — **Date:** 2026-10-01 |
+| 🟢 `CURRENT` | [`docs/roadmap/e1/E1E_INDEPENDENT_REVIEW.md`](roadmap/e1/E1E_INDEPENDENT_REVIEW.md) | 2,718 | **E1E independent review — capability overlap clusters** — **Review date:** 2026-10-01 |
 | 🟢 `CURRENT` | [`docs/roadmap/e1/E1_BASELINE.md`](roadmap/e1/E1_BASELINE.md) | 629 | **E1A Baseline** — Captured at `2026-09-19T17:10:44Z` from `b8363cb7deb8e8f8e9410f5fa400c8b9bf171327` on branch `feat/partial-wave6-plan... |
 | 🟢 `CURRENT` | [`docs/roadmap/e1/E1_METADATA_MIGRATION_REPORT.md`](roadmap/e1/E1_METADATA_MIGRATION_REPORT.md) | 111,965 | **E1C Plan Metadata Migration Report** — - Migration digest: `7182a707d6606bd72bb954c4c36a398f2998da3f4c0402efe164cc485928cd35` |
+| 🟢 `CURRENT` | [`docs/roadmap/e1/receipts/LEGACY-2D0AD23A05FF.md`](roadmap/e1/receipts/LEGACY-2D0AD23A05FF.md) | 1,987 | **Duplicate-search receipt — Plan 182** — - **Plan ID / proposed capability:** `LEGACY-2D0AD23A05FF` — Relationship Decay & Drift System. |
+| 🟢 `CURRENT` | [`docs/roadmap/e1/receipts/LEGACY-4AB98E63E0CC.md`](roadmap/e1/receipts/LEGACY-4AB98E63E0CC.md) | 1,940 | **Duplicate-search receipt — Plan 203** — - **Plan ID / proposed capability:** `LEGACY-4AB98E63E0CC` — Intelligence & Rumor Network System. |
+| 🟢 `CURRENT` | [`docs/roadmap/e1/receipts/LEGACY-A3D2F4E91606.md`](roadmap/e1/receipts/LEGACY-A3D2F4E91606.md) | 2,075 | **Duplicate-search receipt — Plan 43** — - **Plan ID / proposed capability:** `LEGACY-A3D2F4E91606` — Governing Together: Leadership, Policy, and Consent. |
+| 🟢 `CURRENT` | [`docs/roadmap/e1/receipts/NEXT-PLAN-215.md`](roadmap/e1/receipts/NEXT-PLAN-215.md) | 2,610 | **Duplicate-search receipt — Plan 215** — - **Plan ID / proposed capability:** `NEXT-PLAN-215` — Crisis Rationing: Existing Economy Policy Overlay Completion. |
+| 🟢 `CURRENT` | [`docs/roadmap/e1/receipts/NEXT-PLAN-24.md`](roadmap/e1/receipts/NEXT-PLAN-24.md) | 2,848 | **Duplicate-search receipt — Plan 24** — - **Plan ID / proposed capability:** `NEXT-PLAN-24` — People Are Not Abstraction: Health, Fatigue, Skill, and Duty Ar... |
 | 🟢 `CURRENT` | [`docs/shelter/MACHINE_CONDITION_PROVENANCE.md`](shelter/MACHINE_CONDITION_PROVENANCE.md) | 4,742 | **Plan 29 — Machine Condition Provenance (Phase 0, §3.5)** — Existing condition bands that already support truthful diagnostic tells: |
 | 🟢 `CURRENT` | [`docs/shelter/MACHINE_INVENTORY.md`](shelter/MACHINE_INVENTORY.md) | 3,758 | **Plan 29 — Machine Inventory (Phase 0, §3.4)** — Diesel Generator & Alternator Vault, Central Ventilation & Blower Station, Deep Artesian |
 | 🟢 `CURRENT` | [`docs/shelter/PLAN29_AUDIO_HOOKS.md`](shelter/PLAN29_AUDIO_HOOKS.md) | 3,133,087 | **Plan 29 — Audio Hooks (Task 29B §29B.21, Plan 07B handoff)** — - Machine identity sound is consistent: the degraded variations derive from the healthy |
@@ -9045,7 +9055,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/survivors/PLAN_182_RELATIONSHIP_DRIFT_AUTHORITY_MAP.md`](survivors/PLAN_182_RELATIONSHIP_DRIFT_AUTHORITY_MAP.md) | 2,711,281 | **Plan 182 — Relationship drift authority map** — **Status:** ACCEPTED — §3 signed 2026-09-12 |
 | 🟢 `CURRENT` | [`docs/technical/PLANS_146_149_GAMEPLAY_ASSUMPTIONS.md`](technical/PLANS_146_149_GAMEPLAY_ASSUMPTIONS.md) | 2,711,684 | **Plans 146–149: Gameplay Assumptions & Architectural Invariants** — **Plan IDs:** AF-146, AF-147, AF-148, AF-149 |
 | 🟢 `CURRENT` | [`docs/telemetry/DAY_RECORD.md`](telemetry/DAY_RECORD.md) | 2,181 | **DAY_RECORD — Replayable Diagnostics Schema** — **Status:** CURRENT · **Plan:** C1[8] / Plan 31C · **Schema version:** 1 |
-| 🟢 `CURRENT` | [`docs/telemetry/FIRST_HOUR_FUNNEL.md`](telemetry/FIRST_HOUR_FUNNEL.md) | 973 | **ASHFALL First-Hour Funnel Report** — - Events: 14 · Max day: 4 |
+| 🟢 `CURRENT` | [`docs/telemetry/FIRST_HOUR_FUNNEL.md`](telemetry/FIRST_HOUR_FUNNEL.md) | 1,696 | **ASHFALL First-Hour Funnel Report** — - Events: 14 · Max day: 4 |
 | 🟢 `CURRENT` | [`docs/telemetry/FIRST_HOUR_FUNNEL_SELFTEST.md`](telemetry/FIRST_HOUR_FUNNEL_SELFTEST.md) | 543 | **ASHFALL First-Hour Funnel Report** — - Events: 149 · Max day: 4 |
 | 🟢 `CURRENT` | [`docs/telemetry/FIRST_HOUR_TRIAGE_2026-09-25.md`](telemetry/FIRST_HOUR_TRIAGE_2026-09-25.md) | 3,954 | **First-Hour Playtest Triage — 2026-09-25** — Result of applying `docs/alpha/FIRST_HOUR_PLAYTEST_KIT.md` in the strongest available automated |
 | 🟢 `CURRENT` | [`docs/telemetry/SENTRY_CRASH_REPORTING_AUDIT_2026-09-27.md`](telemetry/SENTRY_CRASH_REPORTING_AUDIT_2026-09-27.md) | 5,748 | **Sentry Crash-Reporting Audit — 2026-09-27** — Enhancement-plan Task 4 (Repository Enhancement Plan, `Repo_enhancement_plans/`) asked to |
@@ -9346,6 +9356,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`piagentsplans/README.md`](../piagentsplans/README.md) | 11,880 | **piagentsplans — ASHFALL Evidence-Grounded Next-Steps Plans** — Generated by forensic repository analysis (see `docs/ASHFALL_IMPLEMENTED_CANON_REGISTRY.md`, |
 | 🟢 `CURRENT` | [`potencially_weak-code.md`](../potencially_weak-code.md) | 1,099 | **Potentially Weak Code** — - **Finding:** `src/Host/HostCli.JourneyDiagnostics.cs` previously used an |
 | 🟢 `CURRENT` | [`scripts/README.md`](../scripts/README.md) | 9,405 | **ASHFALL — Script Catalog & Lifecycle Index** — This document catalogs all developer tools, CI gates, asset pipelines, and maintenance utilities under `scripts/`, cl... |
+| 🟢 `CURRENT` | [`scripts/ci/README.md`](../scripts/ci/README.md) | 2,465 | **ASHFALL CI scripts** — Bounded, deterministic verification entry points. Prefer these over invoking |
 | 🟢 `CURRENT` | [`scripts/ci/fixtures/plan_governance/invalid_category.md`](../scripts/ci/fixtures/plan_governance/invalid_category.md) | 103 | **Invalid category fixture** |
 | 🟢 `CURRENT` | [`scripts/ci/fixtures/plan_governance/legacy_plan.md`](../scripts/ci/fixtures/plan_governance/legacy_plan.md) | 158 | **Legacy plan fixture** — This fixture intentionally has no front matter. It must remain visible with a |
 | 🟢 `CURRENT` | [`scripts/ci/fixtures/plan_governance/stale_reference.md`](../scripts/ci/fixtures/plan_governance/stale_reference.md) | 283 | **Stale reference fixture** — The missing path is intentional and must produce a structured `MISSING_PATH` |
@@ -9360,6 +9371,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`semantic-review/2026-08-30-023250-pr-0.md`](../semantic-review/2026-08-30-023250-pr-0.md) | 20,700 | **Cross-wave campaign persistence and lifecycle authority** — The working diff adds lifecycle-group metadata and alias normalization, tightens current campaign-envelope validation... |
 | 🟢 `CURRENT` | [`test-helpers/README.md`](../test-helpers/README.md) | 493 | **Test Helpers & Pytest Infrastructure (Python)** — This directory hosts Python-specific test infrastructure: |
 | 🟢 `CURRENT` | [`tools/README.md`](../tools/README.md) | 7,824 | **ASHFALL — Non-Runtime Tools & Utilities Catalog** — **Date:** 2026-08-27<br> |
+| 🟢 `CURRENT` | [`tools/gotools/README.md`](../tools/gotools/README.md) | 1,632 | **ASHFALL Go Tooling (`tools/gotools`)** — Persistent development/CI tooling, invoked through `bin/ashfall-dev` |
 | 🟡 `HISTORICAL` | [`Next-steps-plans/shipped_to_chat/Plan_218_Shelter_Museum_Historical_Archive.md`](../Next-steps-plans/shipped_to_chat/Plan_218_Shelter_Museum_Historical_Archive.md) | 254,597 | **Plan 218 — Shelter Museum Archive — Host, Projection, and Save Custody** — **VERIFIED Core:** `Assets/Ashfall.Core/Culture/ShelterMuseumSystem.cs`. **VERIFIED or absent host:** No ShelterMuseu... |
 | 🟡 `HISTORICAL` | [`docs/ARCHIVE_INDEX.md`](ARCHIVE_INDEX.md) | 2,510 | **ASHFALL Historical Documentation & External Archive Index** — This repository maintains a lean, living documentation corpus in `docs/` representing active, authoritative game spec... |
 | 🟡 `HISTORICAL` | [`docs/archive/ARCHIVE_INK_BALANCE_MATRIX.md`](archive/ARCHIVE_INK_BALANCE_MATRIX.md) | 2,402 | **Archive Ink Balance Matrix** — - **No Universal Dominance:** No single ink provides highest legibility, longest life, lowest fade, and lowest cost s... |

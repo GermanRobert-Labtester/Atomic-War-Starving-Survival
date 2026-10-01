@@ -41,6 +41,14 @@ namespace AtomicWar.GodotApp
         public Ashfall.Core.Flags.IFlagLedger Flags { get; set; } = new Ashfall.Core.Flags.CampaignConsequenceLedger();
         public DiscoveryConsequenceSystem DiscoveryConsequences { get; }
 
+        /// <summary>P107 follow-up — the last return-loot ceremony or failure
+        /// aftermath, owned by the session so the text survives an unbound panel.
+        /// Empty until a sortie ends.</summary>
+        public string LastReturnSummary { get; private set; } = string.Empty;
+
+        /// <summary>True when <see cref="LastReturnSummary"/> describes a failed sortie.</summary>
+        public bool LastReturnWasFailure { get; private set; }
+
         /// <summary>Plan 133 — host adapter event for the campaign consequence
         /// owner. The host raises the fact; Main binds the canonical standing
         /// and flag consumers.</summary>
@@ -99,6 +107,22 @@ namespace AtomicWar.GodotApp
         public Func<string, bool> ExtraBlocked { get; set; }
 
         /// <summary>
+        /// P003 — optional tutorial-ordering gate. When set, it returns a
+        /// non-empty failure code (e.g. <c>tutorial_step_locked:water</c>) while
+        /// the campaign's first-hour sequence still owes prerequisite stages, or
+        /// null when dispatch is allowed. Unset ⇒ legacy (never gates). The
+        /// pending stage rides in the failure code so the player-facing refusal
+        /// can name the next step.
+        /// </summary>
+        public Func<string?>? TutorialDispatchGate { get; set; }
+
+        private string? TutorialBlock()
+        {
+            var code = TutorialDispatchGate?.Invoke();
+            return string.IsNullOrWhiteSpace(code) ? null : code;
+        }
+
+        /// <summary>
         /// Optional projection from the campaign's survivor fitness authority.
         /// Fit and impaired survivors may dispatch (the latter with a warning
         /// in the caller's detail view); unfit and incapacitated survivors are
@@ -153,6 +177,10 @@ namespace AtomicWar.GodotApp
         /// and the reason-carrying extra gate.</summary>
         public string? GetBlockReason(string locationId)
         {
+            // P003 — the tutorial-ordering gate is destination-independent and
+            // more informative than a route gate, so it wins the label.
+            if (TutorialBlock() != null)
+                return "Tutorial sequence incomplete";
             if (CrossingGate != null && CrossingSession.IsCrossingNode(locationId) && !CrossingGate.HasAccess)
                 return "Crossing gate closed — no vouch";
             if (ExtraBlocked != null && ExtraBlocked(locationId))
@@ -434,9 +462,23 @@ namespace AtomicWar.GodotApp
                 LastEvent = $"Vehicle breakdown: {s.survivorId}'s sortie continues on foot.";
                 RaiseStateChanged();
             };
-            Engine.OnExpeditionStarted += s => { LastEvent = $"Expedition started: {s.survivorId} -> {s.displayName}."; RaiseStateChanged(); };
-            Engine.OnExpeditionCompleted += s => { LastEvent = $"Expedition completed: {s.survivorId} returned with {s.loot.Count} loot lines."; RaiseStateChanged(); };
-            Engine.OnExpeditionFailed += (s, r) => { LastEvent = $"Expedition failed: {s.survivorId} — {r}"; RaiseStateChanged(); };
+            Engine.OnExpeditionStarted += s => { if (s == null) return; LastEvent = $"Expedition started: {s.survivorId} -> {s.displayName}."; RaiseStateChanged(); };
+            Engine.OnExpeditionCompleted += s =>
+            {
+                if (s == null) return;
+                LastReturnSummary = ExpeditionReturnReport.BuildCeremony(s, ItemDisplayName);
+                LastReturnWasFailure = false;
+                LastEvent = $"Expedition completed: {s.survivorId} returned with {s.loot?.Count ?? 0} loot lines.";
+                RaiseStateChanged();
+            };
+            Engine.OnExpeditionFailed += (s, r) =>
+            {
+                if (s == null) return;
+                LastReturnSummary = ExpeditionReturnReport.BuildAftermath(s, r);
+                LastReturnWasFailure = true;
+                LastEvent = $"Expedition failed: {s.survivorId} — {r}";
+                RaiseStateChanged();
+            };
             DiscoveryConsequences.OnConsequenceTriggered += outcome =>
             {
                 LastEvent = $"Discovery consequence recorded: {outcome.DiscoveryId}.";
@@ -615,6 +657,12 @@ namespace AtomicWar.GodotApp
 
             var fitnessBlock = GetFitnessBlock(survivorId, version, confirmFitnessWarning);
             if (fitnessBlock != null) return fitnessBlock.Value;
+
+            // P003 — refuse before any route/vehicle work so an out-of-order
+            // tutorial dispatch spends nothing and names the pending stage.
+            var tutorialBlock = TutorialBlock();
+            if (tutorialBlock != null)
+                return CommandResult.ContextBlocked(PlayerCommandCode.ExpeditionDispatch, tutorialBlock, "expedition.tutorial_locked", version);
 
             if (CrossingGate != null && CrossingSession.IsCrossingNode(locationId) && !CrossingGate.HasAccess)
                 return CommandResult.ContextBlocked(PlayerCommandCode.ExpeditionDispatch, "crossing_closed", "expedition.crossing_closed", version);
@@ -996,6 +1044,12 @@ namespace AtomicWar.GodotApp
 
             var fitnessBlock = GetFitnessBlock(survivorId, version, confirmFitnessWarning);
             if (fitnessBlock != null) return fitnessBlock.Value;
+
+            // P003 — same tutorial-ordering gate as StartExpedition; the UI
+            // dispatch path must refuse identically.
+            var tutorialBlock = TutorialBlock();
+            if (tutorialBlock != null)
+                return CommandResult.ContextBlocked(PlayerCommandCode.ExpeditionDispatch, tutorialBlock, "expedition.tutorial_locked", version);
 
             var def = ExpeditionDefinitionRegistry.Get(locationId)
                       ?? Definitions.Find(d => d.id == locationId);

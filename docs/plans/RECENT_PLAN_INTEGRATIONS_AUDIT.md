@@ -1,17 +1,6 @@
 # Recent Plan Integrations — Programmatic Audit
 
-## 0. Framing — Believing Code (editorial polish pass — commentary only)
-
-*(Post-hoc, non-contractual editorial block; the recorded audit remains the authority.)*
-
-> "Ledger claims are not trusted; files are."
-
-The programmatic audit checks integrations the only way integrations can be checked — against the
-codebase itself. A registry of claims is a novel; a grep of the source is a photograph.
-
-- **Verification by measurement, not by memo** — the audit's whole method in five words.
-
-**Generated:** 2026-09-26
+**Generated:** 2026-10-01
 
 **Method:** programmatic source scan (Core type declarations, src references, SaveSectionRegistry, HostCli, SELFTEST_MANIFEST, test fixtures)
 
@@ -55,7 +44,7 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 | 132 | Hidden Agendas & Betrayal | `hidden_agenda` | ✅ 2/2 identifiers referenced | ✅ | ✅ | ✅ | ✅ | **INTEGRATED** |
 | 134 | Territory & Supply Lines | `territory_control` | ✅ 3/7 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
 | 135 | Weather Gameplay Cascade | `weather_cascade` | ✅ 5/5 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
-| 136 | Cooking Pipeline | `cooking` | ✅ 7/8 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
+| 136 | Cooking Pipeline | `cooking` | ✅ 7/8 identifiers referenced | ✅ | ✅ | ✅ | ✅ | **INTEGRATED** |
 | 137 | Needs→Performance Cascade | read model | ✅ 1/1 identifiers referenced | — | ✅ | — | ✅ | **INTEGRATED** |
 | 138 | Shelter Defense & Security | `shelter_security` | ✅ 2/2 identifiers referenced | ✅ | ✅ | ✅ | ✅ | **INTEGRATED** |
 | 140 | Generational Legacy | `campaign_legacy` | ✅ 6/7 identifiers referenced | ✅ | ✅ | — | ✅ | **INTEGRATED** |
@@ -284,7 +273,7 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 - — `route`: —
 - ✅ `cli_flag`: --survivor-voice-selftest
 - ✅ `tests`: Plan42SurvivorVoiceHostIntegrationTests
-- Host reference files (first authority, up to 8): `src/Main.SurvivorVoice.cs`, `src/Main.ContentCertification.cs`, `src/Host/SurvivorVoiceHostSession.cs`, `src/Host/HostCli.SurvivorVoice.cs`, `src/Host/ContentCertificationHostSession.cs`
+- Host reference files (first authority, up to 8): `src/Main.ContentCertification.cs`, `src/Main.SurvivorVoice.cs`, `src/Host/SurvivorVoiceHostSession.cs`, `src/Host/HostCli.SurvivorVoice.cs`, `src/Host/ContentCertificationHostSession.cs`
 
 ### Plan 46 — Playable Metrics — INTEGRATED
 
@@ -299,7 +288,7 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 - — `route`: —
 - ✅ `cli_flag`: --playable-metrics-selftest
 - ✅ `tests`: Plan46PlayMetricsHostIntegrationTests
-- Host reference files (first authority, up to 8): `src/Host/PlayMetricsHostSession.cs`, `src/Host/HostCli.PlayMetrics.cs`, `src/Host/PlayMetricJsonlSink.cs`
+- Host reference files (first authority, up to 8): `src/Host/PlayMetricsHostSession.cs`, `src/Host/PlayMetricJsonlSink.cs`, `src/Host/HostCli.PlayMetrics.cs`
 
 ### Plan 49 — Content Orphan Certification — INTEGRATED
 
@@ -460,11 +449,11 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 - ✅ `save_file`: cooking_save.json
 - ✅ `save_store`: CookingSaveStore
 - ✅ `host_session`: CookingHostSession
-- — `ui_panel`: no dedicated panel (read model / detail rows)
-- — `route`: —
+- ✅ `ui_panel`: KitchenNutritionPanel
+- ✅ `route`: kitchen_nutrition
 - ✅ `cli_flag`: --cooking-selftest
 - ✅ `tests`: Plan136CookingHostIntegrationTests
-- Host reference files (first authority, up to 8): `src/Main.Cooking.cs`, `src/Host/CookingHostSession.cs`, `src/Host/HostCli.Cooking.cs`
+- Host reference files (first authority, up to 8): `src/Main.Cooking.cs`, `src/Main.ShelterBatch3.cs`, `src/Main.UiTests.FoodLoop.cs`, `src/Host/CookingHostSession.cs`, `src/Host/HostCli.Cooking.cs`, `src/UI/KitchenNutritionPanel.cs`
 
 ### Plan 137 — Needs→Performance Cascade — INTEGRATED
 
@@ -554,7 +543,7 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 - ✅ `route`: epilogue, chronicle
 - ✅ `cli_flag`: --unified-ending-selftest
 - ✅ `tests`: Plan145UnifiedEndingHostIntegrationTests
-- Host reference files (first authority, up to 8): `src/Main.UnifiedEnding.cs`, `src/Host/UnifiedEndingHostSession.cs`, `src/Host/HostCli.UnifiedEnding.cs`
+- Host reference files (first authority, up to 8): `src/Main.UnifiedEnding.cs`, `src/Host/HostCli.UnifiedEnding.cs`, `src/Host/UnifiedEndingHostSession.cs`
 
 ### Plan 147 — NPC Memory & Relationships — INTEGRATED
 
@@ -599,7 +588,7 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 - ✅ `route`: survivor_detail
 - ✅ `cli_flag`: --romance-family-selftest
 - ✅ `tests`: Plan150RomanceFamilyHostIntegrationTests
-- Host reference files (first authority, up to 8): `src/Host/RomanceFamilyHostSession.cs`, `src/Host/GenealogyHostSession.cs`
+- Host reference files (first authority, up to 8): `src/Main.Genealogy.cs`, `src/Host/RomanceFamilyHostSession.cs`, `src/Host/GenealogyHostSession.cs`
 
 ### Plan 151 — Working Animals / Companions — INTEGRATED
 
@@ -659,7 +648,7 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 - — `route`: —
 - ✅ `cli_flag`: --shelter-archive-selftest
 - ✅ `tests`: Plan162ArchiveIntegrationTests, ShelterArchiveSystemTests
-- Host reference files (first authority, up to 8): `src/Main.Plans162_185.cs`, `src/Main.ShelterArchive.cs`, `src/Host/ShelterArchiveHostSession.cs`, `src/Host/HostCli.ShelterArchive.cs`
+- Host reference files (first authority, up to 8): `src/Main.ShelterArchive.cs`, `src/Main.ShelterArchiveProjection.Integration.cs`, `src/Host/ShelterArchiveHostSession.cs`, `src/Host/HostCli.ShelterArchive.cs`
 
 ### Plan 165 — Mod & Content-Pack Contract — INTEGRATED
 
@@ -764,7 +753,7 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 - ✅ `route`: mutation_tree
 - ✅ `cli_flag`: --radiation-mutation-selftest
 - ✅ `tests`: Plan172RadiationMutationTests
-- Host reference files (first authority, up to 8): `src/Main.Audio.cs`, `src/Main.Plans178_181.cs`, `src/Host/RadiationMutationHostSession.cs`, `src/UI/MutationTreePanel.cs`, `src/Audio/ExpansionAudioBridge.cs`, `src/Audio/AudioSelfTest.cs`
+- Host reference files (first authority, up to 8): `src/Main.Audio.cs`, `src/Main.Mutations.Integration.cs`, `src/Host/RadiationMutationHostSession.cs`, `src/UI/MutationTreePanel.cs`, `src/Audio/ExpansionAudioBridge.cs`, `src/Audio/AudioSelfTest.cs`
 
 ### Plan 173 — Radio Production & Audience — INTEGRATED
 
@@ -809,7 +798,7 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 - — `route`: —
 - ✅ `cli_flag`: --dream-system-selftest
 - ✅ `tests`: Plan177DreamSleepIntegrationTests
-- Host reference files (first authority, up to 8): `src/Main.SleepNarrative.cs`, `src/Main.DreamSystem.cs`, `src/Host/DreamHostSession.cs`, `src/Host/HostCli.DreamSystem.cs`
+- Host reference files (first authority, up to 8): `src/Main.DreamSystem.cs`, `src/Main.SleepNarrative.cs`, `src/Host/DreamHostSession.cs`, `src/Host/HostCli.DreamSystem.cs`
 
 ### Plan 178 — Art & Culture Creation — INTEGRATED
 
@@ -899,7 +888,7 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 - ✅ `route`: nursery, century_seed
 - ✅ `cli_flag`: --child-development-selftest
 - ✅ `tests`: Plan183ChildDevelopmentIntegrationTests
-- Host reference files (first authority, up to 8): `src/Main.AntenatalMaternalHealth.cs`, `src/Main.ChildDevelopment.cs`, `src/Host/AntenatalMaternalHealthHostSession.cs`, `src/Host/ChildDevelopmentHostSession.cs`, `src/Host/ChildDevelopmentSelfTest.cs`
+- Host reference files (first authority, up to 8): `src/Main.AntenatalMaternalHealth.cs`, `src/Main.ChildDevelopment.cs`, `src/Main.ShelterSocial.cs`, `src/Host/AntenatalMaternalHealthHostSession.cs`, `src/Host/ChildDevelopmentHostSession.cs`, `src/Host/SecondGenerationMilestoneHostSession.cs`, `src/Host/HostCli.SecondGenerationMilestones.cs`, `src/Host/ChildDevelopmentSelfTest.cs`
 
 ### Plan 184 — Accessibility Options System — INTEGRATED
 
@@ -929,7 +918,7 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 - — `route`: —
 - ✅ `cli_flag`: --memory-decay-selftest
 - ✅ `tests`: Plan185MemoryDecayIntegrationTests, MemoryDecaySystemTests
-- Host reference files (first authority, up to 8): `src/Main.Plans162_185.cs`, `src/Main.MemoryDecay.cs`, `src/Host/MemoryDecayHostSession.cs`, `src/Host/HostCli.MemoryDecay.cs`
+- Host reference files (first authority, up to 8): `src/Main.MemoryDecay.cs`, `src/Host/MemoryDecayHostSession.cs`, `src/Host/HostCli.MemoryDecay.cs`
 
 ### Plan 186 — Shelter Maintenance — INTEGRATED
 
@@ -1019,7 +1008,7 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 - — `route`: —
 - ✅ `cli_flag`: --interpersonal-conflict-selftest
 - ✅ `tests`: Plan202InterpersonalConflictIntegrationTests, InterpersonalConflictSystemTests
-- Host reference files (first authority, up to 8): `src/Main.Plans216_202Interpersonal.cs`, `src/Main.InterpersonalConflict.cs`, `src/Host/InterpersonalConflictHostSession.cs`, `src/Host/HostCli.InterpersonalConflict.cs`
+- Host reference files (first authority, up to 8): `src/Main.InterpersonalConflict.cs`, `src/Host/InterpersonalConflictHostSession.cs`, `src/Host/HostCli.InterpersonalConflict.cs`
 
 ### Plan 203 — Rumor Network — INTEGRATED
 
@@ -1034,7 +1023,7 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 - ✅ `route`: rumors
 - ✅ `cli_flag`: --rumor-network-selftest
 - — `tests`: no named fixture (host selftest only)
-- Host reference files (first authority, up to 8): `src/Main.MoralChoice.cs`, `src/Main.RumorNetwork.cs`, `src/Main.BroadsheetPress.cs`, `src/Host/RumorNetworkHostSession.cs`, `src/Host/RumorNetworkSelfTest.cs`, `src/Host/BroadsheetPressHostSession.cs`
+- Host reference files (first authority, up to 8): `src/Main.BroadsheetPress.cs`, `src/Main.MoralChoice.cs`, `src/Main.RumorNetwork.cs`, `src/Host/RumorNetworkHostSession.cs`, `src/Host/RumorNetworkSelfTest.cs`, `src/Host/BroadsheetPressHostSession.cs`
 
 ### Plan 205 — Shelter Noise — INTEGRATED
 
@@ -1094,7 +1083,7 @@ files, route registration, and test fixtures. Ledger claims are not trusted.
 - — `route`: —
 - ✅ `cli_flag`: --leadership-succession-selftest
 - ✅ `tests`: Plan208LeadershipSuccessionIntegrationTests
-- Host reference files (first authority, up to 8): `src/Main.Plans182_185.cs`, `src/Main.SurvivorSocial.cs`, `src/Main.ShelterGovernance.cs`, `src/Host/ShelterGovernanceHostSession.cs`, `src/Host/LeadershipSuccessionSelfTest.cs`, `src/Host/InternalCommunicationHostSession.cs`
+- Host reference files (first authority, up to 8): `src/Main.Politics.Integration.cs`, `src/Main.ShelterGovernance.cs`, `src/Main.SurvivorSocial.cs`, `src/Host/ShelterGovernanceHostSession.cs`, `src/Host/InternalCommunicationHostSession.cs`, `src/Host/LeadershipSuccessionSelfTest.cs`
 
 ### Plan 210 — Personal Belongings & Effects — INTEGRATED
 

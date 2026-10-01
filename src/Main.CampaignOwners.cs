@@ -379,11 +379,23 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>Plan 55 retention day owner (ownerId <c>retention</c>, phase 5).</summary>
-        private sealed class RetentionDayOwner : IDayAdvanceOwner
+        private sealed class RetentionDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore
         {
             private readonly Main _m;
+            private RetentionHostRetrySnapshot? _snapshot;
+            private bool _dirtySnapshot;
             public RetentionDayOwner(Main m) => _m = m;
-            public void CapturePreDaySnapshot(int day) { /* retention is idempotent; captured via save section */ }
+            public void CapturePreDaySnapshot(int day)
+            {
+                _m.EnsureRetention();
+                _snapshot = _m.Retention?.CaptureRetrySnapshot();
+                _dirtySnapshot = _m.RetentionDirty;
+            }
+            public void RestorePreDaySnapshot(int day)
+            {
+                if (_snapshot != null) _m.Retention?.RestoreRetrySnapshot(_snapshot);
+                _m.RestoreRetentionDirty(_dirtySnapshot);
+            }
             public void TickDay(int day, List<DayStateChangeEvent> events)
             {
                 _m.EnsureRetention();
@@ -1756,6 +1768,9 @@ namespace AtomicWar.GodotApp
                 _m.SetupSurvivors();
                 _m._survivors.Needs.CurrentDay = day;
                 _m.ApplyScheduleNeedsModifiers();
+                // P010 — snapshot the pre-tick values so panel/status deltas
+                // answer "how much did this need move today", not since load.
+                _m._survivors.CaptureNeedsBaseline(day);
                 _m._survivors.TickHour(24f);
                 _m.VacateInvalidFitnessAssignments();
                 // Plan 24B A2 + 24C A3: measured overwork routes data-authored

@@ -85,7 +85,7 @@ namespace AtomicWar.GodotApp.UI
                     float zone = env?.EffectiveZoneRadLevel ?? 0f;
                     var row = AshfallUiHelpers.MakeDataRow(Name(state.Id),
                         $"{dose:0.0}/100 mSv · {reason} ({zone:0.0} mSv/h zone)",
-                        AshfallUiHelpers.ToColor(dose >= 50f
+                        AshfallUiHelpers.ToColor(dose >= Ashfall.Core.Radiation.RadiationSystem.WarnThreshold
                             ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Lethe));
                     _currentData.AddChild(row);
                     // C2 / Plan 20A (§16) — canonical input breakdown from the
@@ -110,7 +110,7 @@ namespace AtomicWar.GodotApp.UI
                 if (entry == null) continue;
                 var row = AshfallUiHelpers.MakeDataRow(Name(entry.survivorId),
                     $"{entry.cumulativeMsv:0.0} mSv cumulative · baseline {entry.baselineMsv:0.0}",
-                    AshfallUiHelpers.ToColor(entry.cumulativeMsv >= 50f
+                    AshfallUiHelpers.ToColor(entry.cumulativeMsv >= Ashfall.Core.Radiation.RadiationSystem.WarnThreshold
                         ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Lethe));
                 _currentData.AddChild(row);
                 RenderedCurrentCount++;

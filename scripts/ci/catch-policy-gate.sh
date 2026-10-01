@@ -30,7 +30,7 @@ cleanup_keywords = [
 logging_keywords = [
     "catalogdiagnostics", "gd.printerr", "gd.print", "gd.pushwarning",
     "log.", "_log.", "log?.", "_log?.", "console.error", "console.writeline", "errors.add",
-    "report.error", "report.warning", "failure(", "[fail]", "return (false",
+    "report.error", "report.warning", "report.warn", "failure(", "[fail]", "return (false",
     "throw", "ex_catdiag", "check(", "failures++"
 ]
 

@@ -157,6 +157,20 @@ namespace AtomicWar.GodotApp
                 stableBefore == stableAfter && repeat.TotalEntriesPruned == 0,
                 $"pruned={repeat.TotalEntriesPruned}");
 
+            // A coordinator retry restores transient audit state as well as
+            // the canonical collection snapshots owned by their systems.
+            var retrySnapshot = session.CaptureRetrySnapshot();
+            int retryPasses = session.Passes;
+            string retryResultKey = session.LastResults.Count > 0
+                ? session.LastResults[0].CollectionKey : string.Empty;
+            session.ApplyRetention();
+            session.RestoreRetrySnapshot(retrySnapshot);
+            Check("failed_day_retry_restores_audit_state",
+                session.Passes == retryPasses
+                && session.LastResults.Count > 0
+                && session.LastResults[0].CollectionKey == retryResultKey,
+                $"passes={session.Passes}; results={session.LastResults.Count}");
+
             // 10 — the audit section round-trips (and does not persist the logs).
             var state = RetentionSaveStore.From(repeat, session.Passes, session.UsingAuthoredPolicies);
             Check("audit_store_save", RetentionSaveStore.TrySave(state));

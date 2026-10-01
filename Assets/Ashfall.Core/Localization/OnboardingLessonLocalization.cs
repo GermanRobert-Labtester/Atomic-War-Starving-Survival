@@ -18,6 +18,13 @@ namespace Ashfall.Core.Localization
         /// <summary>Fired on the first realtime combat encounter of a campaign.</summary>
         public const string CombatBasicsId = "combat.basics";
 
+        /// <summary>
+        /// Fired once when a living survivor starts day 1 in acute radiation
+        /// sickness — the single first-hour `UNTAUGHT_LETHAL`
+        /// (`docs/onboarding/TUTORIAL_REVIEW.md`, ranked proposal #1).
+        /// </summary>
+        public const string AcuteRadiationId = "medical.acute_radiation";
+
         /// <summary>Localization key for a lesson title (falls back to the authored English copy).</summary>
         public static string TutorialTitleKey(string tutorialId) => $"{tutorialId}.title";
 

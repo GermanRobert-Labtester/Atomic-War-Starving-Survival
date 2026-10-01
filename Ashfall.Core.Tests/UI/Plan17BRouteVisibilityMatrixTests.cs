@@ -80,9 +80,10 @@ namespace Ashfall.Core.Tests.UI
                 .Where(d => d.Maturity == PanelMaturity.Prototype)
                 .ToList();
 
-            Assert.NotEmpty(prototypes);
-            Assert.True(prototypes.Count >= 25, $"Expected >= 25 prototypes, found {prototypes.Count}");
-
+            // Plan 17B closed: every shelved prototype console was either promoted
+            // to a Live route or removed, so the prototype tier is intentionally
+            // empty. The invariant still holds for any prototype reintroduced later:
+            // it must be non-player-navigable and TryOpen must refuse it.
             foreach (var proto in prototypes)
             {
                 Assert.False(proto.IsPlayerNavigable, $"Prototype '{proto.Id}' must not be player-navigable.");

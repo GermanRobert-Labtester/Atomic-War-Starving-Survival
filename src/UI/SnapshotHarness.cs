@@ -51,6 +51,10 @@ namespace AtomicWar.GodotApp.UI
 
             new Target{ StableId="shelter_hud_default",          Title="Shelter HUD (#40 Stitch)",                   PanelCtor="AtomicWar.GodotApp.UI.ShelterHudPanel",                  StateHint="default", Width=1920, Height=1080 },
 
+            // P009 — the always-on game HUD now carries the needs glance row;
+            // a dedicated golden keeps it reviewable.
+            new Target{ StableId="game_hud_default",             Title="Game HUD overlay (needs glance)",            PanelCtor="AtomicWar.GodotApp.GameHudOverlay",                    StateHint="default", Width=1920, Height=1080, FixtureFactory=GameHudSnapshotFixture.Bind },
+
             // Plan 12C — captured against real catalog definitions, an
             // inventory-backed mount, active room assignments, and a memorial
             // projection. This intentionally proves the panel is not an empty

@@ -137,8 +137,10 @@ namespace AtomicWar.GodotApp
                     Console.WriteLine("[FAIL] Check 9: replay after restore duplicated lineage.");
                 }
 
-                // Check 10: save store contract names.
-                if (GenealogySaveStore.SectionName == "genealogy" && GenealogySaveStore.FileName == "genealogy_save.json")
+                // Check 10: save store contract names (local bool keeps the guard reachable).
+                bool genealogyContractOk = GenealogySaveStore.SectionName == "genealogy"
+                    && GenealogySaveStore.FileName == "genealogy_save.json";
+                if (genealogyContractOk)
                 {
                     Console.WriteLine("[PASS] Check 10: Genealogy save store contract names verified (own save key).");
                     passed++;

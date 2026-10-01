@@ -28,6 +28,19 @@ namespace AtomicWar.GodotApp
         }
     }
 
+    /// <summary>Transient rollback snapshot for a failed campaign-day retry.</summary>
+    public sealed class RetentionHostRetrySnapshot
+    {
+        internal readonly int Passes;
+        internal readonly List<RetentionOwnerResult> Results;
+
+        internal RetentionHostRetrySnapshot(int passes, IEnumerable<RetentionOwnerResult> results)
+        {
+            Passes = passes;
+            Results = new List<RetentionOwnerResult>(results);
+        }
+    }
+
     /// <summary>
     /// Plan 55 / Task 55A host session — binds the authored
     /// <c>retention_policies.json</c> table to the Core retention authority and
@@ -67,6 +80,18 @@ namespace AtomicWar.GodotApp
         public int Passes { get; private set; }
 
         public IReadOnlyList<RetentionOwnerResult> LastResults => _lastResults;
+
+        public RetentionHostRetrySnapshot CaptureRetrySnapshot()
+            => new RetentionHostRetrySnapshot(Passes, _lastResults);
+
+        public void RestoreRetrySnapshot(RetentionHostRetrySnapshot snapshot)
+        {
+            if (snapshot == null) throw new ArgumentNullException(nameof(snapshot));
+            Passes = snapshot.Passes;
+            _lastResults.Clear();
+            _lastResults.AddRange(snapshot.Results);
+            RaiseStateChanged();
+        }
 
         public RetentionHostSession(RetentionPolicyCatalog? catalog = null)
         {

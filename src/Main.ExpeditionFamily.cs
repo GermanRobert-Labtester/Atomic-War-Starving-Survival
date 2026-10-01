@@ -18,6 +18,9 @@ namespace AtomicWar.GodotApp
         public void ResetExpeditionFamily()
         {
             _expeditionFamily = null;
+            // Task 10 — a campaign reset must not leave the previous run's
+            // return ceremony on the expedition panel.
+            _expeditionPanel?.ClearReturnSummary();
         }
     }
 }

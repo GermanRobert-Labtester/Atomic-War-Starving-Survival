@@ -154,8 +154,9 @@ namespace AtomicWar.GodotApp
                 passed++;
 
                 // Check 12: contracts — store name + section name.
-                if (ChronicConditionSaveStore.SectionName == "chronic_condition"
-                    && ChronicConditionSaveStore.FileName == "chronic_condition_save.json")
+                bool chronicContractOk = ChronicConditionSaveStore.SectionName == "chronic_condition"
+                    && ChronicConditionSaveStore.FileName == "chronic_condition_save.json";
+                if (chronicContractOk)
                 {
                     Console.WriteLine("[PASS] Check 12: chronic-condition save store contract names verified (own save key).");
                     passed++;

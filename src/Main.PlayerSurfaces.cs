@@ -14,7 +14,20 @@ namespace AtomicWar.GodotApp
         {
             // Core Dashboard Panels
             PanelRegistry.ConfigureActions("status",
-                bindAction: () => { SetupSurvivors(); SetupWorld(); SetupInventory(); _statusPanel.Bind(_survivors, _world?.Weather, _powerGrid, _inventory, _simDay); },
+                bindAction: () =>
+                {
+                    SetupSurvivors();
+                    SetupWorld();
+                    SetupInventory();
+                    // P015/P016 — bind the existing warmth/thermal owners and the
+                    // host-computed supply projection so the status panel reads
+                    // real state instead of a NOT MONITORED stub.
+                    SetupClothingWarmth();
+                    SetupShelterThermal();
+                    SetupHealthHistory();
+                    _statusPanel.Bind(_survivors, _world?.Weather, _powerGrid, _inventory, _simDay,
+                        _clothingWarmth, _shelterThermal, BuildSupplyForecast(), _healthHistory);
+                },
                 openAction: () => _statusPanel.Open(),
                 closeAction: () => CloseStatusPanel());
 
@@ -275,7 +288,7 @@ namespace AtomicWar.GodotApp
                 closeAction: () => CloseAchievementsPanel());
 
             PanelRegistry.ConfigureActions("survivors",
-                bindAction: () => { SetupSurvivors(); _survivorsOverlay.Bind(_survivors); },
+                bindAction: () => { SetupSurvivors(); _survivorsOverlay.Bind(_survivors, _simDay); },
                 openAction: () => _survivorsOverlay.Open(),
                 closeAction: () => CloseSurvivorsOverlay());
 
@@ -812,6 +825,7 @@ namespace AtomicWar.GodotApp
             {
                 "water_treatment", "airlock_security", "survivor_relations", "regional_treaty",
                 "vinyl_morale", "wildlife_trapping", "excavation", "apprenticeship",
+                "difficulty_settings",
                 "caregiving", "shelter_thermal", "shelter_schedule", "shelter_decor", "shelter_atmosphere", "hidden_agenda", "shelter_reputation", "autopsy_report",
                 "waystation_network", "chemical_dependency", "sump_flooding", "decontamination",
                 "kitchen_nutrition", "equipment_condition", "library_study", "archive_desk",
@@ -1056,7 +1070,7 @@ namespace AtomicWar.GodotApp
         {
             Callable.From(() =>
             {
-                if (!GodotObject.IsInstanceValid(panel) || !panel.Visible)
+                if (!GodotObject.IsInstanceValid(panel) || !panel.IsInsideTree() || !panel.Visible)
                     return;
                 var owner = panel.GetViewport()?.GuiGetFocusOwner();
                 if (owner != null && GodotObject.IsInstanceValid(owner) && panel.IsAncestorOf(owner))

@@ -24,8 +24,10 @@ namespace AtomicWar.GodotApp
         public const int MaxHunger = 100;
         public const int MaxThirst = 100;
         public const float RadDamageThreshold = 50f; // mSv/day causes HP loss
-        public const float StarvationThreshold = 90f; // hunger above this causes HP loss
-        public const float DehydrationThreshold = 90f; // thirst above this causes HP loss
+        // T7 — derived from the canonical needs defaults so the fallback path and
+        // the needs simulation can never disagree about the lethal threshold.
+        public const float StarvationThreshold = Ashfall.Core.Survivors.NeedsProfile.DefaultHungerCritical; // hunger above this causes HP loss
+        public const float DehydrationThreshold = Ashfall.Core.Survivors.NeedsProfile.DefaultThirstCritical; // thirst above this causes HP loss
 
         public CoreDemoSession World { get; }
         public HoldfastTradeSession Trade { get; }
@@ -66,6 +68,9 @@ namespace AtomicWar.GodotApp
         private int _fallbackHealth = MaxHealth;
         private int _fallbackHunger = 0;
         private int _fallbackThirst = 0;
+        private int _fallbackFatigue = 0;
+        private int _fallbackMorale = 50;
+        private int _fallbackWarmth = 80;
         private float _fallbackRadiation = 0f;
 
         // ── Survival state projections ───────────────────────────────
@@ -84,6 +89,18 @@ namespace AtomicWar.GodotApp
         public int Thirst => Survivors?.Find(PlayerSurvivorId) != null
             ? (int)Math.Clamp(Survivors.Find(PlayerSurvivorId)!.Thirst, 0f, (float)MaxThirst)
             : _fallbackThirst;
+
+        public int Fatigue => Survivors?.Find(PlayerSurvivorId) != null
+            ? (int)Math.Clamp(Survivors.Find(PlayerSurvivorId)!.Fatigue, 0f, 100f)
+            : _fallbackFatigue;
+
+        public int Morale => Survivors?.Find(PlayerSurvivorId) != null
+            ? (int)Math.Clamp(Survivors.Find(PlayerSurvivorId)!.Morale, 0f, 100f)
+            : _fallbackMorale;
+
+        public int Warmth => Survivors?.Find(PlayerSurvivorId) != null
+            ? (int)Math.Clamp(Survivors.Find(PlayerSurvivorId)!.Warmth, 0f, 100f)
+            : _fallbackWarmth;
 
         // Day is a live projection of the shared campaign clock (World.Clock),
         // not an independent counter — HoldfastRuntimeSession itself has no
@@ -226,6 +243,13 @@ namespace AtomicWar.GodotApp
             {
                 _fallbackHunger = Math.Min(MaxHunger, _fallbackHunger + 8);
                 _fallbackThirst = Math.Min(MaxThirst, _fallbackThirst + 10);
+                // Task 7 — the HUD fallback previously froze fatigue at 0 and
+                // morale at 50 forever; mirror the survivor-loop drift so the
+                // standalone/no-survivors path does not render a static needs row.
+                _fallbackFatigue = Math.Min(100, _fallbackFatigue + 6);
+                _fallbackMorale = Math.Max(0, _fallbackMorale - 1);
+                // Warmth follows the authored cold-loss drift (~0.5/h in cold).
+                _fallbackWarmth = Math.Max(0, _fallbackWarmth - 12);
                 if (_fallbackRadiation > 0)
                     _fallbackRadiation = Math.Max(0, _fallbackRadiation - _fallbackRadiation * 0.07f);
 

@@ -1,5 +1,465 @@
 # ASHFALL Integration Plans
 
+## Catalog hygiene follow-ups F01–F15 — FULLY INTEGRATED (2026-10-02)
+
+User-directed ("Continue with these small tasks completely finish all of them and
+suggest after"). All 15 landed: policy dead-rule/allowlist-order fail-closed checks;
+`Report.HasStale()`; `--fail-on-advisory`, `--report-json`, `--summary`;
+data-driven `docs/ci/*.json` contract scan; C# header-count + `lootCategories`
+classification tests; `--check-only` count validation; inventory negative
+self-check; failure-artifact remediation hints; gate docs §6; policy/baseline
+version discipline. **Evidence:** Go tests 21/21; `catalog_audit`,
+`gotools_test`, `gate_inventory_drift`, `json_schema_policy` PASS;
+`--check-only` clean (71/67); `--check-inventory` PASS with a working mutated
+negative check; `json-schema-policy-gate.py` PASS (712 data + 8 contract files);
+whitespace + `git diff --check` clean. F13 verified: `content_utilization` is
+fast tier and therefore runs in `release-gate.sh` via `verify-fast.sh`. Plan
+archived at
+`.ai/plans/integrated/data/INTEGRATED_catalog-health-gates-f01-f15-2026-10-02.md`.
+No full suite or commit; foreign dirty worktree preserved.
+
+## Catalog hygiene follow-ups E01–E15 — FULLY INTEGRATED (2026-10-02)
+
+User-directed ("Continue with these small tasks completely finish all of them and
+suggest after"). All 15 landed: `gotools_test` gate; `gate_inventory_drift` with a
+deterministic `run-gates.py --write-inventory/--check-inventory` and regenerated
+`GATE_INVENTORY.md`; `content_utilization` gate (Ticket #127, replay-verified 0
+regressions / 0 new orphans); `audit-catalogs --strict-stale` and
+`--list-checks`; `reference_rules_excluded` + unit-suffix + mirror-resolution
+reporting; manifest `depends_on` on `content_certification`/`content_utilization`
+plus a C# dependency-integrity test; `docs/ci/*.json` contract validation in the
+schema-policy gate; `docs/ci/README.md` gate documentation + the dual
+`lootCategories` contract; shrink-only acknowledged-count assertion; a runtime
+`lootCategories` cross-reference comment. Manifest 1.1.6: 71 gates, 67 fast.
+**Evidence:** `catalog_audit`, `gotools_test`, `gate_inventory_drift`,
+`json_schema_policy` all PASS; `run-gates.py --check-only` clean (dependencies
+resolve); Go tests 17/17; `--check-inventory` PASS; whitespace and
+`git diff --check` clean. Plan archived at
+`.ai/plans/integrated/data/INTEGRATED_catalog-health-gates-e01-e15-2026-10-02.md`.
+No full suite or commit; foreign dirty worktree preserved.
+
+## Catalog hygiene gates D01–D05 — FULLY INTEGRATED (2026-10-02)
+
+User-directed ("Continue with these small tasks completely finish all of them …
+3 find→repair→harden loops"). Landed a read-only catalog-hygiene audit tool
+(`ashfall-dev audit-catalogs`, `tools/gotools/pkg/catalogaudit`) and registered
+it as the fast `catalog_audit` gate: D01 reference integrity (expedition
+`lootCategories` → item ids, `scavenging_table_id`/map `lootTable` → Plan 46
+tables), D02 cross-id-domain duplicate detection with a self-verifying
+allowlist, D03 snake_case id lint, D04 `schema_version` value drift. D05
+registered the existing `--content-certification-selftest` (Plan 49 / DEC-62) as
+the `content_certification` gate. Manifest schema 1.1.5, 66→68 gates, 62→64
+fast. **3 loops:** (1) allowlisted duplicates now surfaced/self-verifying,
+`--update-baseline` no longer double-records, `--check` fails closed on
+unreadable catalogs; (2) full `go build`/`go vet`/tests, releasepolicy PASS,
+capability claims 33/33, whitespace PASS; (3) `validatePolicy` rejects undeclared
+reference targets and bad regexes, plus a real-corpus integration test.
+**Evidence:** `catalog_audit` PASS (0 new findings; 10 acknowledged; 8,255 ids /
+10,144 naming / 428 schema versions checked); Go tests 12/12; host rebuild for
+the D05 gate was killed by the environment (`csc` exit 143, memory pressure) and
+its deterministic prerequisites were verified statically. Plan archived at
+`.ai/plans/integrated/data/INTEGRATED_catalog-health-gates-d01-d05-2026-10-02.md`.
+No full suite or commit; foreign dirty worktree preserved.
+
+## P089–P096 scene-binding truth + five follow-up hardening tasks — FULLY INTEGRATED (2026-10-02)
+
+Selected the already-approved scene-binding package and completed its five follow-ups:
+runtime mismatch diagnostics through the real generic loader; static resolution of
+literal/local/`const` scene paths with explicit failure for unresolved concrete paths;
+post-bind visibility checks for content roots; structured generated scene/request/root/
+script report from `--scene-binding-selftest`; and pinned actionable diagnostics.
+The original cleanup remains intact (five dead content shims and dangling scene script
+declarations removed; Daily Briefing construction uses its live C# modal; Water Treatment
+content remains the only live `*Content` shim). Archived plan:
+`.ai/plans/integrated/ui/INTEGRATED_scene-binding-truth-p089-p096-2026-10-02.md`.
+Evidence: focused xUnit targets SceneBindingTruthGate 6/6, CiGateManifestDrift 7/7,
+ArchitectureTestMapGate 7/7; host build 0 warnings/0 errors; scene self-test 25/25
+contracts + both runtime probes; UI layout 0 failures; accessibility 6/6; scene truth
+gate 0 violations / 27 scenes; UID gate 0 dangling sidecars; UI map current (240 panels).
+No full suite or commit. The accessibility smoke logged one unrelated missing key
+(`ui.expedition.railway_tooltip`), left with its owner.
+
+## Expedition follow-up wave 6 — FULLY INTEGRATED (2026-10-02)
+
+Closed the radar/rail localization, five Core read-model guards, expedition
+locale smoke, and current-authority row. The panel-focused runtime smoke now exits
+0 in about 60 seconds under the fixed 180-second cap after removing the unrelated
+fatal survivor/fate cascade; the panel aftermath and modal/patrol checks remain.
+Evidence: `ExpeditionPrepPlanTests` 50/50; `ExpeditionLocaleKeysTests` 2/2;
+`l10n_drift_gate` 888 keys with German parity; optimized host build 0 warnings / 0
+errors; bounded `--expedition-panel-uitest` PASS. Godot still reports teardown
+RID/ObjectDB/resource diagnostics, recorded in `.ai/state.md`. Archived plan:
+`.ai/plans/integrated/playability/INTEGRATED_expedition-followup-wave6-2026-10-02.md`.
+No full suite.
+
+## Expedition follow-up wave 5 (15 small tasks) — FULLY INTEGRATED (2026-10-02)
+
+User-directed ("Continue with these small tasks completely finish all of them"). All
+15: radar phase/rail/title/range-filter localized via new `ExpeditionPhaseText`; 5 Core
+tests; panel summary/Esc/no-active/one-time/fitness localized; German smoke assertions;
+`CURRENT_AUTHORITY.md` panel-route row. **3 audit loops:** remaining modal/banner phase
+sites routed through the helper; radar detail-box labels localized; 5 detail keys pinned +
+arch/hygiene gates green. **Evidence:** host build 0/0; `ExpeditionPrepPlanTests` 50/50;
+`ExpeditionLocaleKeysTests` 1/1; `StringsCsvLocaleGateTests` 4/4; `LocalizationRatchetTests`
+2/2; `StatusPanelThresholdTests` 200/200; `PanelSubscriptionHygieneTests` 3/3;
+`ArchitectureTestMapGateTests` 7/7; `--expedition-panel-uitest` PASS; `--player-panels-uitest`
+PASS (22/0); arch map `--check` OK (315). No commit; full suite not run; foreign dirty
+worktree preserved.
+
+## Expedition follow-up wave 4 (15 small tasks) — FULLY INTEGRATED (2026-10-02)
+
+User-directed ("Continue with these small tasks completely finish all of them"). All
+15: remaining ExpeditionPanel buttons/header + Fitness-factors prefix localized;
+radar headers/sidebar/headers/hint localized; 5 Core tests; PlayMetrics fresh-zero +
+no-harvest checks; StatusPanel health-history detach gate; `estimate_tooltip` + all new
+keys pinned; `CURRENT_AUTHORITY.md` metrics row. **3 audit loops:** CSV field-integrity
+repair (unquoted German comma + typo); `LowRiskNote` suppression re-verified in MapPanel +
+Radar; coverage hardening (31 keys + detach gate). **Evidence:** host build 0/0;
+`ExpeditionPrepPlanTests` 45/45; `ExpeditionLocaleKeysTests` 1/1; `StringsCsvLocaleGateTests`
+4/4; `LocalizationRatchetTests` 2/2; `StatusPanelThresholdTests` 182/182;
+`PanelSubscriptionHygieneTests` 3/3; `--playable-metrics-selftest` 23/0;
+`--expedition-panel-uitest` PASS (73/0); `--player-panels-uitest` PASS (22/0); arch map
+`--check` OK (315). No commit; full suite not run; foreign dirty worktree preserved.
+
+## Expedition follow-up wave 3 (15 small tasks) — FULLY INTEGRATED (2026-10-02)
+
+User-directed ("Continue with these small tasks completely finish all of them"). All
+15: PlayMetrics `FailedSortieCount`; 5 Core tests (digest order, same-day latest,
+clamp boundary, cross-survivor isolation, zero/negative encounter); 9 localized panel
+headers/buttons; radar risk driver; StatusPanel re-bind safe in `--player-panels-uitest`;
+new `ExpeditionLocaleKeysTests`; `CURRENT_AUTHORITY.md` read-model row. **3 audit loops:**
+magic-string suppression → `LowRiskNote` constant (+ MapPanel parity); constant contract
+pinned by test; subscription/refresh hygiene gates green. **Evidence:** host build 0/0;
+`ExpeditionPrepPlanTests` 41/41; `ExpeditionLocaleKeysTests` 1/1; `StringsCsvLocaleGateTests`
+4/4; `LocalizationRatchetTests` 2/2; `StatusPanelThresholdTests` 132/132;
+`PanelSubscriptionHygieneTests` 2/2; `PanelLiveRefreshGateTests` 2/2;
+`--playable-metrics-selftest` 21/0; `--expedition-panel-uitest` PASS (73/0);
+`--player-panels-uitest` PASS (22/0); arch map `--check` OK (315). No commit; full suite
+not run; foreign dirty worktree preserved.
+
+## Expedition follow-up wave 2 (15 small tasks) — FULLY INTEGRATED (2026-10-02)
+
+User-directed ("Continue with these small tasks completely finish all of them"). All
+15 landed: 4 Core tests (rescue no-op, return-report null, blank health loss,
+HumanizeToken); 5 localized panel rows (scout/danger/stamina/dispatch stealth/speed);
+`ClearReturnSummary` on reset; `HealthHistorySystem.GetLatestEventOfTypePrefix` +
+`ExpeditionInjuryDigest` (living-only) driving the StatusPanel chip; MapPanel risk
+driver; `FailedSortieCount` metric; overnight-night clamp. **3 audit loops:** dead
+using removed; helper covered by a new Core test; localized format calls hardened
+against malformed catalog rows via `TrFmt`. **Evidence:** host build 0/0;
+`ExpeditionPrepPlanTests` 36/36; `ExpeditionRescueFailureBridgeTests` 5/5;
+`StringsCsvLocaleGateTests` 4/4; `LocalizationRatchetTests` 2/2;
+`StatusPanelThresholdTests` 106/106; `Plan198HealthHistoryIntegrationTests` 6/6;
+`--expedition-panel-uitest` PASS (73/0); `--player-panels-uitest` PASS (22/0); arch map
+`--check` OK (315). No commit; full suite not run; foreign dirty worktree preserved.
+
+## Expedition follow-up wave (10 small tasks) — FULLY INTEGRATED (2026-10-01)
+
+User-directed ("Continue with these small tasks completely finish all of them"). All
+ten landed on top of the P105–P108 package: end-to-end failure selftest folded into
+`--expedition-panel-uitest`; `DistressRescueMissionManager.RecordExpeditionFailed` +
+`Main.BridgeDistressRescueOnFailure` (Dispatched → TerminalFailed, no salvage, no
+fingerprint change); advisory `ExpeditionPrepChecklistItem.Advisory` (light never gates);
+host-owned `LastReturnSummary` + shared `ExpeditionReturnReport` (ceremony survives an
+unbound panel); per-survivor dispatch selector; 5 panel literals + survivor/injury
+strings localized and the l10n ratchet lowered 536 → 528; `StatusPanel` injured chip from
+`HealthHistoryHostSession` (live-subscribed); `RiskNote` dominant-driver; failed-sortie
+play-metric; authored camp burn (firewood/water/food). **Sweep repairs:** stale ceremony
+on rebind, StatusPanel subscription hygiene, CS8602 null-flow, dead field removed.
+**Evidence:** host build 0/0; `ExpeditionPrepPlanTests` 23/23;
+`ExpeditionRescueFailureBridgeTests` 4/4; `LocalizationRatchetTests` 2/2;
+`StringsCsvLocaleGateTests` 4/4; radio regression 5/5 + 21/21 + 5/5 + 13/13;
+`--expedition-panel-uitest` PASS (73/0); arch map `--check` OK (315). No commit; full
+suite not run; foreign dirty worktree preserved.
+
+## Expedition prep, dispatch projection & return consequences P105–P108 — FULLY INTEGRATED (2026-10-01)
+
+User-directed ("Please integrate these tasks fully … | P105 … P106 … P107 …
+P108" + audit/repair/harden loop). Plan archived
+`.ai/plans/integrated/playability/INTEGRATED_expedition-prep-return-p105-p108-2026-10-01.md`.
+**(P105/P106)** new pure-Core `ExpeditionPrepPlanner` +
+`ExpeditionPrepPlan` projects a five-row prep checklist (food/water/rad
+meds/weapon/light) from the live shelter inventory plus the canonical dispatch
+estimate, with projected duration, supply burn, and a four-band risk grade;
+`ExpeditionPanel` renders it above dispatch. **(P107)** the panel now renders an
+itemised return-loot ceremony from the completion payload and no longer
+deposits — repairing a pre-existing **double deposit** where the panel and
+`Main.SetupExpeditions` both added the same salvage to the same inventory; Main
+is the single depositor. **(P108)** `Main` subscribes `OnExpeditionFailed` and
+routes the failed sortie through existing owners: `NeedsSystem` health loss
+(injury), `SurvivorFateSystem.ReportDeath(Expedition)` for a fatality —
+reported before the health mutation so the fate ledger names the expedition —
+health-history log, journal entry, and persistent feedback; the missing arm is
+deliberately not fabricated (no missing state exists; `SurvivorDeathCause.Expedition`
+is the existing "lost on expedition" record). Three l10n keys added. Arch map
+regenerated. **Sweep repairs:** ceremony/depositor quantity parity (both now
+floor at 1 and skip only empty ids) and null-safe `ExpeditionHostSession`
+feedback handlers (`s.loot?.Count ?? 0`). **Found, not fixed:** a failed
+distress-rescue sortie leaves its `DistressRescueMission` at `Dispatched`;
+repairing it needs a radio-domain design decision. **Evidence:** host build 0/0; `ExpeditionPrepPlanTests` 18/18;
+`ExpeditionLootIntegrityTests` 10/10; `Plan21EstimateProtectiveInputsTests` 9/9;
+`StringsCsvLocaleGateTests` 4/4; `LocalizationRatchetTests` 2/2;
+`ArchitectureTestMapGateTests` 7/7; arch map `--check` OK (315);
+`--expedition-panel-uitest` PASS. No commit; full suite not run; foreign dirty
+worktree preserved.
+
+## Survival legibility second wave + 5 hardening loops — FULLY INTEGRATED (2026-10-01)
+
+User-directed ("Continue with these small tasks, after please again do a loop of finding
+issues, repairing issues, hardening … repeat for 5 loops and then suggest 15 very small
+tasks"). Second wave: HUD snapshot target+golden, need-chip tooltips, CSV key gate,
+`NeedsProfile.healthWarn/healthCritical` across 5 surfaces, `OnNeedCritical`→
+`FeedbackMessages` toast (display name, per-survivor dedupe), fallback thresholds from
+`NeedsProfile.Default*Critical`, day-1 acute-rad gate, warmth drift inverse colour. 5
+find→repair→harden loops: health/need literals→profile; radiation `50`→
+`RadiationSystem.WarnThreshold`; raw id→display name; prose "50 mSv"→interpolated band;
+`-0` drift→Core `NeedsDayDeltaFormat`. Repaired two concurrent compile breaks. **Evidence:**
+build 0/0; `NeedsDayDeltaTests` 19/19; `StatusPanelThresholdTests` 21/21;
+`OnboardingWiringGateTests` 5/5; `StringsCsvLocaleGateTests` 4/4;
+`LocalizationRatchetTests` 2/2; `StatusGlanceAndForecastGateTests` 7/7;
+`MainTriadDriftGateTests` 8/8; l10n gate PASS; `--ui-layout-selftest` Failures 0;
+snapshot MATCH; `git diff --check` clean. 15 next tasks recorded in the plan.
+
+## Survival legibility P009–P012 follow-up wave (10 small tasks) — FULLY INTEGRATED (2026-10-01)
+
+User-directed ("Proceed with all of these 10 integration small tasks after suggest 10
+more small tasks!"). All ten landed on top of the P009–P012 package: StatusPanel Warmth
+Drift; SurvivorsPanel MOR delta; HUD need-chip localization (`ui.hud.needs.*`);
+feedback thresholds from `NeedsProfile`; `Needs.OnNeedCritical` consumer; authored
+warn/critical bands on `NeedsProfile`; fallback fatigue/morale decay; per-journey
+acute-rad lesson guard; lesson title/body l10n rows; `--ui-layout-selftest` PASS.
+Sweep repairs: `UpdateHud` `survivors` local (latent NRE) and a namespace-shadowing
+test compile break. **Evidence:** host build 0/0; `NeedsDayDeltaTests` 8/8;
+`StatusPanelThresholdTests` 11/11; `OnboardingWiringGateTests` 5/5;
+`StringsCsvLocaleGateTests` 4/4; `LocalizationRatchetTests` 2/2; l10n drift gate PASS;
+`ui_layout_selftest` Failures 0; `MainTriadDriftGateTests` 8/8; `git diff --check` clean.
+Next 10 minor follow-ups recorded in the integrated plan. No commit; full suite not run.
+
+## Status glance, Game-Over ledger & supply forecast P013–P016 — FULLY INTEGRATED (2026-10-01)
+
+User-directed ("Proceed and work on these next tasks! | P013 … P014 … P015 … P016").
+Plan archived `.ai/plans/integrated/playability/INTEGRATED_status-glance-gamover-forecast-p013-p016-2026-10-01.md`.
+**(P013)** premise corrected: the seeded day-1 acute state (dose 15 < threshold 80)
+applies no acute health loss, so it was never the "can lose the survivor" hazard
+it was framed as; the real defects were the un-clearable `HasAcuteRadiationSickness`
+flag and its invisibility. `RadiationSystem.AdministerAntiRad`/`SetDose` now clear
+the status once the dose is treated below `AcuteThreshold` (re-granted on
+exposure), and `StatusPanel` adds a per-survivor acute-radiation objective.
+**(P014)** `GameOverPanel` gains a `_lblLedger` block + `LedgerProvider`, so every
+Game Over path renders `Main.SurvivorFate.BuildSurvivorLossLedger` (name · day ·
+cause, then the still-standing). **(P015)** `StatusPanel` WARMTH & THERMAL reads
+roster warmth (cold flag from `NeedsProfile`), `ClothingWarmthHostSession.
+CalculateColdLossReduction`, and `ShelterThermalHostSession` (coldest room /
+boiler / freeze). **(P016)** pure-Core `SupplyForecast` + `Main.SupplyForecast.
+BuildSupplyForecast` (ration-policy rates + inventory counts) + a 3-DAY SUPPLY
+FORECAST strip. **Sweep:** fixed a new-namespace collision and two wrong
+forecast-test day expectations, then verified generated/panel/A11y/architecture
+gates. **Evidence:** host build 0/0; `AcuteSicknessResolutionTests` 4/4;
+`StatusGlanceAndForecastGateTests` 7/7; `StatusPanelThresholdTests` 11/11;
+`Radiation` 93/93; `NeedsRadiationSaveRoundTrip` 17/17; `MainTriadDriftGateTests`
+8/8; `PanelRouteGateTests` 22/22; `PanelSubscriptionHygiene` 2/2;
+`PanelLiveRefresh` 2/2; `LocalizationRatchet` 2/2; `ArchitectureTestMapGateTests`
+7/7; `UiA11yTargetSizeGateTests` 31/31; `AccessibilitySourceAuditTests` 6/6;
+`--ui-layout-selftest` Failures 0; `--ui-accessibility-selftest` /
+`--survivors-selftest` / `--player-panels-uitest` /
+`--real-campaign-journey-selftest` PASS; `panel_bind_lifecycle` PASS;
+`l10n_drift_gate` PASS (472 keys); arch map `--check` OK (315); `git diff --check`
+clean. `src/Main.GameFlow.cs` was a foreign hot file and was left to its owner;
+foreign `save_store_matrix_drift` untouched. No commit; full suite not run.
+
+## Survival legibility P009–P012 — FULLY INTEGRATED (2026-10-01)
+
+User-directed ("Tackle this suggestion fully integrate the suggestion after run a deep
+sweep repair loop … after suggest minor task follow ups 10 of them very small!").
+Plan archived `.ai/plans/integrated/playability/INTEGRATED_survival-legibility-p009-p012-2026-10-01.md`.
+**(P009)** `GameHudOverlay` needs glance row (hunger/thirst/fatigue/morale) with
+critical coloring read from the owning `NeedsProfile`; `HoldfastRuntimeSession`
+projects `Fatigue`/`Morale`; event-driven/no-`_Process` contract preserved.
+**(P010)** pure-Core `NeedsDayDeltaTracker` + transient host baseline captured by
+`SurvivorsNeedsDayOwner.TickDay`; `SurvivorsPanel`/`StatusPanel` render day-over-day
+deltas; cleared on restore; never persisted.
+**(P011)** `StatusPanel` LETHAL THRESHOLDS reads `NeedsProfile` criticals +
+`RadiationSystem.AcuteThreshold`/`HealthLossPerHourAtAcute`; `SurvivorsPanel` strain
+classification reads the profile instead of re-typed 90/20.
+**(P012)** one-time `medical.acute_radiation` contextual lesson through the persisted
+onboarding seam. **Sweep repair:** contextual-lesson titles no longer leak raw stable ids.
+**Evidence:** build 0/0; `NeedsDayDeltaTests` 7/7; `StatusPanelThresholdTests` 6/6;
+`OnboardingWiringGateTests` 5/5; `OnboardingFirstHourInstrumentationTests` 20/20;
+`LocalizationRatchetTests` 2/2; `StringsCsvLocaleGateTests` 4/4; l10n drift gate PASS;
+`AccessibilitySourceAuditTests` 6/6; `UiA11ySidebarHoverOverflowGateTests` 9/9;
+`UiScrimContrastGateTests` 6/6; `MainTriadDriftGateTests` 8/8;
+`ArchitectureAuthorityGateTests` 2/2; `ArchitectureTestMapGateTests` 6/6;
+`git diff --check` clean. No commit; full suite not run; foreign dirty worktree preserved.
+
+## Five-loop sweep — FULLY INTEGRATED (2026-10-01)
+
+User-directed ("Run a pass of find and repair plus harden and repeat for 5 loops").
+Plan archived `.ai/plans/integrated/systems/INTEGRATED_five-loop-sweep-2026-10-01.md`.
+**Loop 1:** regenerated drifted architecture map + catalog registry (gates registered).
+**Loop 2:** updated the stale Plan49 cassette-orphan assertion to the live-composition
+form. **Loop 3:** `MapDetailPanel` scrim → shared `PanelScrim()` token; Plan17B
+prototype-count assumption made conditional. **Loop 4:** reconciled the two scrim
+gates on the token authority. **Loop 5:** retry probe uses `AdvanceCampaignDayForValidation`
+(coordinator source gate green); Plan38 save-seam assertion updated to the aggregate
+`CaptureSection` contract. **Evidence:** build 0/0; Content/UI/Campaign/Combat/Tooling/
+Onboarding/Launch/Localization all 0 failures; `--world-playtest-selftest` PASS;
+fast CI gates PASS; generated contracts in sync; `git diff --check` clean. No commit;
+full suite not run; foreign dirty worktree preserved.
+
+## Content migration wave — FULLY INTEGRATED (2026-10-01)
+
+User-directed ("continue working on these however don't suggest anything no more").
+Plan archived `.ai/plans/integrated/systems/INTEGRATED_content-migration-2026-10-01.md`.
+**Deleted** `anomalous_expedition_encounters.json`, `documentation_templates.json`,
+`survivor_life_stages.json` after a reference audit (unreferenced; the third is
+superseded by `life_stages.json`). **Kept** `store_capability_claims.json` (test
+fixture) and reclassified it `DORMANT` → `TEST_ONLY`. **Registry migrated:**
+`docs/ci/content_reachability_dispositions.json` 188 → **99 entries** (retired 86
+now-consumed + 3 deleted). Catalogs 715 → 712; gameplay-consumed 355; unresolved 99;
+orphaned 0; report 0 removal candidates. **Evidence:** validate-json 712/712;
+`ContentUtilizationGraphTests` 39/39; `ContentReachabilityDispositionTests` 5/5;
+`--content-utilization-selftest` 99/0/0 + CI gate PASS; plan-register `--check` clean;
+doc-link gate PASS; build 0/0; `git diff --check` clean. No commit; full suite not run;
+foreign dirty worktree preserved.
+
+## Last-four wave — FULLY INTEGRATED (2026-10-01)
+
+User-directed ("continue working on the last tasks"). Plan archived
+`.ai/plans/integrated/systems/INTEGRATED_last-four-2026-10-01.md`.
+**(1)** `Main.RunFullCompositionRetryProbe` builds the UI + composes the real campaign
+twice and proves a faulted day + retry matches the no-failure inventory checksum
+(**121 owners rolled back**, `--world-playtest-selftest` PASS). **(3)** new
+`SaveEnvelopeCuratedCodecChecksumTests` 2/2 over the six real codecs. **(4)** new Go
+`tools/gotools/cmd/reachability-report` writes `artifacts/content-reachability-report.md`
+and fails on expiry-less/owner-less or undispositioned entries;
+`ContentReachabilityDispositionTests` 5/5. **(2)** DORMANT migration triaged: 4 removal
+candidates + 86 retire-able dispositions; deletion deferred for an approved reference
+audit. **Evidence:** build 0/0; `ContentUtilizationGraphTests` 39/39;
+`--content-utilization-selftest` 0 undispositioned / 0 no-expiry; `git diff --check`
+clean. No commit; full suite not run; foreign dirty worktree preserved.
+
+## Remainder + six continued wave — FULLY INTEGRATED (2026-10-01)
+
+User-directed ("continue working on what remains still and after start coding the 6
+suggestions …"). Plan archived
+`.ai/plans/integrated/systems/INTEGRATED_remainder-and-six-continued-2026-10-01.md`.
+**Consumer-trace promotion:** inferred declared loader + source filename reference
+→ `GAMEPLAY_CONSUMED` in `ContentUtilizationScanner` (39/39; `difficulty_presets.json`
+promoted). **L10n wave 4 + reference gate:** `TriangulationPanel` localized (10),
+ratchet 546 → **536**; `l10n_drift_gate.py` now validates **80** `Tr/T/F` references
+across 8 localized surfaces (456 keys). **Partials:** full-composition retry
+(UI-dependent owners, headless-blocked), DORMANT merge/delete migration, save-checksum
+over the six real codecs, standalone reachability report generator. **Evidence:** build
+0/0; `SaveEnvelopeChecksumInvariantTests` 5/5, `LocalizationRatchetTests` 2/2,
+`StringsCsvLocaleGateTests` 4/4, `ContentReachabilityDispositionTests` 4/4; l10n gate
+PASS; `--world-playtest-selftest` PASS. No commit; full suite not run; foreign dirty
+worktree preserved.
+
+## Seals + six suggestions wave — FULLY INTEGRATED (2026-10-01)
+
+User-directed ("seal those last 5 suggestions! After start coding these 6"). Plan archived
+`.ai/plans/integrated/systems/INTEGRATED_seals-and-six-2026-10-01.md`.
+**Seals:** loader-class inference retained; full-composition retry reverted on evidence
+(UI-dependent owners NRE headless — documented), 2-owner production probe stays green;
+DORMANT expiry gate + triage report retained. **(4)** `SkillMatrixPanel` localized (11):
+ratchet 557 → **546**, l10n gate 448 keys. **(5)** `git diff --check` clean. **(6)** new
+`SaveEnvelopeChecksumInvariantTests` 5/5. Partials: **(1)** full 60-owner retry +
+envelope checksum, **(2)** DORMANT merge/delete migration, **(3)** consumer-trace promotion.
+**Evidence:** host build 0/0; `--world-playtest-selftest` PASS; `ContentUtilizationGraphTests`
+39/39; `ContentReachabilityDispositionTests` 4/4; `HotfixRehearsalGateTests` 3/3;
+`SaveEnvelopeChecksumInvariantTests` 5/5; `LocalizationRatchetTests` 2/2;
+`StringsCsvLocaleGateTests` 4/4; `l10n_drift_gate` 448 keys; `git diff --check` clean.
+No commit; full suite not run; foreign dirty worktree preserved.
+
+## Five-suggestions wave + 6-iteration find/repair loop — FULLY INTEGRATED (2026-10-01)
+
+User-directed ("tackle all 5 suggestions, after run a find bug, repair, repeat loop
+5x times …"). Plan archived
+`.ai/plans/integrated/systems/INTEGRATED_five-suggestions-plus-loop-2026-10-01.md`.
+**Five suggestions:** (1) `ContentUtilizationScanner` loader-class inference
+(`InferLoaderClass`/`GetDeclaredClassNames`; the dead `allCsFiles` corpus is now
+used) so `difficulty_presets.json` records `DifficultyPresetCatalogLoader`, with
+`HasInferredLoader` preventing the false-orphan regression; (2) host coordinator
+retry probe run from `--world-playtest-selftest` (rations consumed once, before=16
+→ 13); (3) difficulty two-press ironman lock + `UNSAVED CHANGES`/`SAVE SETTINGS`;
+(4) `scripts/release/hotfix-rehearsal.sh` throwaway-fixture rehearsal (docs-only
+PASS, schema bump FAIL, three-source PASS); (5) expiry enforcement on every
+disposition + `docs/ci/content_reachability_dormant_triage.md` (110 DORMANT grouped).
+**Find/repair loop (6 real repairs):** `order.Count`→`order.Length`; dead
+`allCsFiles` consumed; loader-inference orphan regression; catch-policy `report.warn`;
+dangling `ModalManager.cs.uid`; 6 × CS0162 constant-condition guards → warning
+baseline gate **0 warnings across all targets**. **Evidence:** `ContentUtilizationGraphTests`
+39/39, `ContentReachabilityDispositionTests` 4/4, `HotfixRehearsalGateTests` 3/3,
+`DifficultySettingsPanelRouteTests` 3/3; `--content-utilization-selftest` 0 missing;
+`--world-playtest-selftest` PASS; `--7-day-smoke-selftest` 10/10; `--port-contract-selftest`
+310/310; `--ui-layout-selftest` Failures 0; warning-baseline/catch-policy/uid-sidecar/
+triad-drift/forbidden-api/json-schema/case-collision/input-map/legacy-reference/doc-link
+PASS; `l10n_drift_gate` 439 keys; architecture map 315. **Remaining:** full 60-owner
+retry + persisted-envelope checksum (M); DORMANT merge/delete migration (L). No
+commit; full suite not run; foreign dirty worktree preserved.
+
+## Suggested-five wave — dispositions, host retry probe, difficulty lock/persistence, release rehearsal, l10n burn-down — FULLY INTEGRATED (2026-10-01)
+
+User-directed ("Then tackle all 5 suggested tasks and after suggest 5 …"). Plan
+archived `.ai/plans/integrated/systems/INTEGRATED_suggested-five-wave-2026-10-01.md`.
+**(1) T079–T086:** `docs/ci/content_reachability_dispositions.json` gives all 188
+`UNRESOLVED` catalogs a reviewed owner/classification/rationale; `ContentUtilizationSelfTest`
+Phase 9 fails on any undispositioned catalog (0 here); `ContentReachabilityDispositionTests`
+4/4. **(2) Host coordinator retry:** `Main.RunCoordinatorRetryProductionProbe` proves
+the real `inventory_custody` + `starting_level_rations` owners roll back on a fail-closed
+retry (`--world-playtest-selftest`: rations consumed once). **(3) Difficulty lock/persistence:**
+two-press ironman confirmation + unsaved-changes/save surfacing in `DifficultySettingsPanel`;
+route tests 3/3, `--difficulty-settings-selftest` 12/12. **(4) Release rehearsal:**
+`version-gate.py --self-test` rehearses the hotfix iron rule; `HotfixRehearsalGateTests` 2/2;
+HOTFIX.md updated. **(5) L10n burn-down:** `WorkshopPanel` localized (17); ratchet 625 → 608;
+`l10n_drift_gate` 391 keys; `--workshop-relic-uitest` PASS. Evidence: build 0 errors /
+6 pre-existing warnings; `ContentUtilizationGraphTests` 38/38, `CampaignDayCoordinatorRetryRuntimeTests`
+3/3, `EnrichmentKeepsakeResolutionTests` 2/2, `DifficultySettingsPanelRouteTests` 3/3,
+`ContentReachabilityDispositionTests` 4/4, `HotfixRehearsalGateTests` 2/2,
+`StringsCsvLocaleGateTests` 4/4, `LocalizationPilotTests` 4/4, `LocalizationRatchetTests` 2/2;
+architecture map regenerated (315). No commit; full suite not run; foreign dirty worktree preserved.
+
+## Five-task wave — coordinator retry, keepsake closure, scanner fix, difficulty panel, pre-release gate — FULLY INTEGRATED (2026-10-01)
+
+User-directed ("Tackle 5 of these tasks, fully integrate them after run a deep
+sweep repair loop … also suggest 5 bigger sized tasks"). Plan archived
+`.ai/plans/integrated/systems/INTEGRATED_five-task-wave-2026-10-01.md`.
+**(A) Coordinator retry runtime proof:** `CampaignDayCoordinatorRetryRuntimeTests`
+3/3 — a mid-day fault, a same-day retry, and a persistence fault all restore the
+inventory custody baseline so rations are not double-consumed and producer output
+is neither lost nor doubled; the final ledger checksum equals the no-failure
+control. **(B) Keepsake orphan closure:** all 65 orphaned
+`personal_keepsake_item_id` values authored into `items.json` (724→789);
+`--origin-mechanics-selftest` Check 9 now requires full resolution (12/12);
+`EnrichmentKeepsakeResolutionTests` 2/2; DEBT-ENRICHMENT-KEEPSAKE-ORPHANS retired.
+**(C) Content-utilization scanner F-18:** `VerifyConsumersInSource` records
+`SourceReference:<file>` loader evidence for a source-named catalog so
+`DetectDisconnects` no longer emits a false `NO_LOADER`;
+`ContentUtilizationGraphTests` 38/38; architecture map regenerated (315).
+**(D) Difficulty runtime panel:** new `DifficultySettingsPanel` (IBindablePanel,
+authored presets + 9 scalar lanes + ironman lock) registered as the Live
+`difficulty_settings` Expanded route and bound by `Main.SetupDifficultySettingsPanel`;
+`DifficultySettingsPanelRouteTests` 3/3, `PanelRouteGateTests` 22/22,
+`--ui-layout-selftest` Failures 0, `--difficulty-settings-selftest` 12/12;
+DEBT-PLAN181-DIFFICULTY-RUNTIME-UI retired. **(E) Single pre-release gate:**
+`scripts/release/pre-release-gate.sh` composes `release-gate.sh` + `export-build.sh`
+(thin delegation, no new gate logic); `docs/releases/PROCESS.md` updated. **Sweep
+repairs:** l10n ratchet was red at HEAD (625 vs stale 619) — panel string localized
+and baseline re-recorded to the verified 625; malformed prior T18 `strings.csv` row
+(`ui.research.atlas_tooltip`, unquoted commas → 7 fields) quoted;
+`StringsCsvLocaleGateTests` 4/4, `l10n_drift_gate` 377 keys. **Evidence:** host build
+0 errors / 6 pre-existing warnings; `PortContractGateTests` 8/8,
+`CatchPolicyLintGateTests` 3/3, `ArchitectureTestMapGateTests` 6/6,
+`JsonNamingMixPinTests` 4/4, `NoFreshCampaignSystemGateTests` 2/2,
+`DayEventParitySourceGateTests` 2/2, `CampaignDayCoordinatorSourceGateTests` 5/5,
+`ContentUtilizationGraphTests` 38/38, `EnrichmentKeepsakeResolutionTests` 2/2,
+`DifficultySettingsPanelRouteTests` 3/3, `PanelRouteReachabilityGateTests` 2/2,
+`PlayerSurfaceCoverageGateTests` 8/8, `PanelCatalogCompletenessTests` 3/3,
+`StringsCsvLocaleGateTests` 4/4, `LocalizationPilotTests` 4/4,
+`LocalizationRatchetTests` 2/2; `bin/ashfall-dev validate-json` 715/715; generated
+`ARCHITECTURE_TEST_MAP.md` (315) and `SELFTEST_MANIFEST.json` (317) in sync. No
+commit; full suite not run; foreign dirty worktree preserved.
+
 ## First-hour smoke + visual-binding gate + diegetic prologue — FULLY INTEGRATED (2026-10-01)
 
 User-directed three-task wave. **First 30 minutes smoke harness:**
@@ -407,6 +867,32 @@ full suite not run; foreign dirty worktree preserved.
 ## Plan 53 E1C metadata migration — FULLY INTEGRATED (2026-09-30)
 
 User-authorized ownership handoff and current-inventory reconciliation completed. All 621 current plan files now have schema metadata; E1A's 609-path historical snapshot remains unchanged and its eight missing paths and twenty additions are explicitly reconciled. The canonical register validates 621 plans with zero errors and duplicate IDs. The migration report records unchanged body hashes, zero inferred `DONE`, and the 621-entry human review queue for inferred metadata. The streaming docs-index generator excludes front matter from summaries and verifies 5,609 documents. Focused PlanGovernanceContractTests passed 5/5; no full suite or commit. E1A/E1B/E1C are complete; E1E is next in Plan 53.
+
+## Plan 53 E1E overlap clusters — FULLY INTEGRATED (2026-10-01)
+
+Published five reviewed overlap clusters for information flow, NPC memory,
+shelter governance, needs performance, and the food pipeline, mapped to current
+Core/host/save/test evidence. Deterministic candidate signals and the receipt
+format support future intake while preserving plan identities and statuses.
+Recorded three architecture-map maintenance findings without changing runtime
+or map claims. Capability-cluster self-test/check, register check, and docs-index
+check (5,618 documents) PASS; focused `PlanGovernanceContractTests` 6/6 PASS.
+No full suite or commit. E1F remains next in Plan 53; E1 is not complete.
+
+## Plan 53 E1E follow-ups — FULLY INTEGRATED (2026-10-01)
+
+Completed the three user-approved E1E follow-ups: the generated architecture
+map now reflects the live cooking panel/route and needs-performance projection
+while retaining NPC memory's real UI gap; five additional candidates have
+reviewed duplicate-search receipts linked to their clusters; and five current
+capabilities are recorded in `docs/architecture/CLAIMS.json`. Claims validate
+at 33 total. The focused map gate passed 7/7, governance contract 6/6, and the
+five cited host tests passed (40/40). The first map assertion was tightened to
+read the route detail section and unique subsystem row. Generated architecture
+map, plan register, capability report, and docs index are regenerated and
+checked. No runtime/save/UI/gameplay or plan-status changes; no full suite or
+commit. The three next small suggestions are recorded in the E1E implementation
+log. E1F remains the next Plan 53 phase; Plan 53 is still open.
 
 ## UI MOTION — PASS 11 seal every close path + navigation cue — FULLY INTEGRATED (2026-09-30)
 

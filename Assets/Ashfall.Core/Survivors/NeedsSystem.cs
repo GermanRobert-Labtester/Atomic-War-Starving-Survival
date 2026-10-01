@@ -52,6 +52,22 @@ namespace Ashfall.Core.Survivors
     /// <summary>Decay/restore tuning values (port of Unity's NeedsProfile defaults).</summary>
     public class NeedsProfile
     {
+        // Shared defaults so host projections (e.g. HoldfastRuntimeSession's
+        // fallback thresholds) derive from one source instead of re-typing 90.
+        public const float DefaultHungerCritical = 90f;
+        public const float DefaultThirstCritical = 90f;
+        public const float DefaultWarmthCritical = 20f;
+        // Presentation warn bands (no simulation consequence) as shared defaults
+        // so surfaces without a bound NeedsProfile (dashboards, HUD cards) read
+        // the same numbers the profile enforces instead of re-typing 70/30/15.
+        public const float DefaultHungerWarn = 70f;
+        public const float DefaultThirstWarn = 70f;
+        public const float DefaultFatigueWarn = 70f;
+        public const float DefaultFatigueCritical = 90f;
+        public const float DefaultMoraleWarn = 30f;
+        public const float DefaultMoraleCritical = 15f;
+        public const float DefaultWarmthWarn = 40f;
+
         public float hungerPerHour = 0.8f;
         public float thirstPerHour = 1.2f;
         public float fatiguePerHour = 0.4f;
@@ -61,9 +77,65 @@ namespace Ashfall.Core.Survivors
         public float healthLossFromHunger = 0.4f;
         public float healthLossFromThirst = 0.6f;
         public float healthLossFromCold = 0.3f;
-        public float hungerCritical = 90f;
-        public float thirstCritical = 90f;
-        public float warmthCritical = 20f;
+        public float hungerCritical = DefaultHungerCritical;
+        public float thirstCritical = DefaultThirstCritical;
+        public float warmthCritical = DefaultWarmthCritical;
+
+        // Presentation warning bands (no simulation consequence). The HUD and
+        // panels read these instead of re-typing 70 / 30 / 15 literals, so the
+        // authored survival-tuning profile is the single source of the bands
+        // players see.
+        public float hungerWarn = DefaultHungerWarn;
+        public float thirstWarn = DefaultThirstWarn;
+        public float fatigueWarn = DefaultFatigueWarn;
+        public float fatigueCritical = DefaultFatigueCritical;
+        public float moraleWarn = DefaultMoraleWarn;
+        public float moraleCritical = DefaultMoraleCritical;
+        // Warmth is low-is-bad; the warn band sits above the critical floor.
+        public float warmthWarn = DefaultWarmthWarn;
+
+        // Shared defaults so presentation surfaces (afflictions/medical panels)
+        // read the same health bands the needs profile enforces.
+        public const float DefaultHealthWarn = 30f;
+        public const float DefaultHealthCritical = 25f;
+
+        // Health is low-is-bad; the warn band sits above the critical floor.
+        public float healthWarn = DefaultHealthWarn;
+        public float healthCritical = DefaultHealthCritical;
+
+        /// <summary>
+        /// Single cold predicate shared by every presentation surface: true when
+        /// a warmth value is at or below the authored critical floor. Panels must
+        /// call this instead of re-comparing <see cref="warmthCritical"/> so the
+        /// threshold can never drift between them.
+        /// </summary>
+        public bool IsWarmthCritical(float warmth) => warmth <= warmthCritical;
+
+        /// <summary>High-is-bad predicate: true when hunger is at or above critical.</summary>
+        public bool IsHungerCritical(float hunger) => hunger >= hungerCritical;
+
+        /// <summary>High-is-bad predicate: true when thirst is at or above critical.</summary>
+        public bool IsThirstCritical(float thirst) => thirst >= thirstCritical;
+
+        /// <summary>High-is-bad predicate: true when fatigue is at or above critical.</summary>
+        public bool IsFatigueCritical(float fatigue) => fatigue >= fatigueCritical;
+
+        /// <summary>Low-is-bad predicate: true when morale is at or below critical.</summary>
+        public bool IsMoraleCritical(float morale) => morale <= moraleCritical;
+
+        /// <summary>
+        /// Low-is-bad predicate: true when health is at or below the authored
+        /// critical floor. Symmetric with the other need predicates so every
+        /// presentation surface classifies a critical survivor identically.
+        /// </summary>
+        public bool IsHealthCritical(float health) => health <= healthCritical;
+
+        /// <summary>
+        /// Low-is-bad predicate: true when health is at or below the authored
+        /// presentation warn band (which sits above the critical floor). Panels
+        /// read this instead of re-comparing <see cref="healthWarn"/>.
+        /// </summary>
+        public bool IsHealthWarn(float health) => health <= healthWarn;
     }
 
     /// <summary>
@@ -109,6 +181,14 @@ namespace Ashfall.Core.Survivors
             _profile = profile ?? new NeedsProfile();
             _isNearHeatSource = isNearHeatSource;
         }
+
+        /// <summary>
+        /// The tuning profile this system simulates with. Exposed read-only so
+        /// presentation surfaces (HUD danger coloring, lethal-threshold legend)
+        /// read the same critical values the simulation actually enforces
+        /// instead of re-typing magic numbers that can drift.
+        /// </summary>
+        public NeedsProfile Profile => _profile;
 
         /// <summary>
         /// Register a survivor's needs state for simulation.

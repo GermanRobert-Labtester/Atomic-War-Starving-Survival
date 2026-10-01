@@ -109,8 +109,10 @@ namespace AtomicWar.GodotApp
                 { Console.WriteLine("[PASS] Check 10: Save/restore round-trip preserved press state."); passed++; }
                 else Console.WriteLine("[FAIL] Check 10: restore round-trip broken.");
 
-                // contract
-                if (PharmaceuticalTabletSaveStore.SectionName == "pharmaceutical_tablet" && PharmaceuticalTabletSaveStore.FileName == "pharmaceutical_tablet_save.json")
+                // contract (local bool keeps the drift guard reachable)
+                bool tabletContractOk = PharmaceuticalTabletSaveStore.SectionName == "pharmaceutical_tablet"
+                    && PharmaceuticalTabletSaveStore.FileName == "pharmaceutical_tablet_save.json";
+                if (tabletContractOk)
                 { Console.WriteLine("[PASS] Check 11: Save store contract names verified."); passed++; }
                 else Console.WriteLine("[FAIL] Check 11: contract names wrong.");
             }

@@ -6,6 +6,7 @@ using Ashfall.Core;
 using Ashfall.Core.UI;
 using Ashfall.Core.Survivors;
 using AtomicWar.GodotApp.UI;
+using AtomicWar.GodotApp.Localization;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI;
@@ -42,6 +43,9 @@ public partial class DutyRosterPanel : Control, IBindablePanel
     private VBoxContainer _detailBox = null!;
     private VBoxContainer _detailContent = null!;
     private Label _detailTitle = null!;
+
+    /// <summary>Localization shim: catalog key with an English fallback.</summary>
+    private static string T(string key, string fallback) => AshfallUiText.Tr(key, fallback);
     private int _selectedIndex = -1;
     private string _scopeFilter = "all"; // all | night_watch | mess | hatch_opener | intake_sleeper | expedition | unassigned
 
@@ -104,13 +108,13 @@ public partial class DutyRosterPanel : Control, IBindablePanel
 
         var scopes = new[]
         {
-            new AshfallSidebar.Item { Id = "all",             Label = "All Roles",         Hint = "every assigned shift",     IconPath = "" },
-            new AshfallSidebar.Item { Id = "night_watch",     Label = "Night Watch",       Hint = "perimeter + storms",       IconPath = "" },
-            new AshfallSidebar.Item { Id = "mess",            Label = "Mess & Rations",    Hint = "ration efficiency",       IconPath = "" },
-            new AshfallSidebar.Item { Id = "hatch_opener",    Label = "Hatch Defense",     Hint = "airlock protocols",       IconPath = "" },
-            new AshfallSidebar.Item { Id = "intake_sleeper",  Label = "Intake Filtration", Hint = "HEPA filter savings",     IconPath = "" },
-            new AshfallSidebar.Item { Id = "expedition",      Label = "Scavenging Sortie", Hint = "sortie readiness",        IconPath = "" },
-            new AshfallSidebar.Item { Id = "unassigned",      Label = "Unassigned",        Hint = "roster entries w/o role", IconPath = "" },
+            new AshfallSidebar.Item { Id = "all",             Label = T("ui.duty_roster.scope_all", "All Roles"),         Hint = "every assigned shift",     IconPath = "" },
+            new AshfallSidebar.Item { Id = "night_watch",     Label = T("ui.duty_roster.scope_night_watch", "Night Watch"),       Hint = "perimeter + storms",       IconPath = "" },
+            new AshfallSidebar.Item { Id = "mess",            Label = T("ui.duty_roster.scope_mess", "Mess & Rations"),    Hint = "ration efficiency",       IconPath = "" },
+            new AshfallSidebar.Item { Id = "hatch_opener",    Label = T("ui.duty_roster.scope_hatch", "Hatch Defense"),     Hint = "airlock protocols",       IconPath = "" },
+            new AshfallSidebar.Item { Id = "intake_sleeper",  Label = T("ui.duty_roster.scope_intake", "Intake Filtration"), Hint = "HEPA filter savings",     IconPath = "" },
+            new AshfallSidebar.Item { Id = "expedition",      Label = T("ui.duty_roster.scope_expedition", "Scavenging Sortie"), Hint = "sortie readiness",        IconPath = "" },
+            new AshfallSidebar.Item { Id = "unassigned",      Label = T("ui.duty_roster.scope_unassigned", "Unassigned"),        Hint = "roster entries w/o role", IconPath = "" },
         };
         _sidebar = _shell.SetSidebar(scopes, "Role Filter", "all");
         _sidebar.OnSelected += HandleSidebar;
@@ -397,14 +401,14 @@ public partial class DutyRosterPanel : Control, IBindablePanel
         AshfallUiHelpers.EmptyChildren(_detailContent);
         if (_host == null)
         {
-            _detailTitle.Text = "SHIFT DETAIL";
+            _detailTitle.Text = T("ui.duty_roster.shift_detail", "SHIFT DETAIL");
             _detailContent.AddChild(AshfallUiHelpers.MakeMetadata(
                 "Duty Roster engine offline. Bind a DutyRosterHostSession to see live shift assignments.", autowrap: true));
             return;
         }
         if (_selectedIndex < 0)
         {
-            _detailTitle.Text = "SHIFT DETAIL";
+            _detailTitle.Text = T("ui.duty_roster.shift_detail", "SHIFT DETAIL");
             _detailContent.AddChild(AshfallUiHelpers.MakeMetadata(
                 "Select a roster row to view role, survivor, occupation, and last-slept day.", autowrap: true));
             return;
@@ -412,7 +416,7 @@ public partial class DutyRosterPanel : Control, IBindablePanel
         var (roleId, survivorId) = ResolveVisibleRow(_selectedIndex);
         if (string.IsNullOrEmpty(roleId) && string.IsNullOrEmpty(survivorId))
         {
-            _detailTitle.Text = "SHIFT DETAIL";
+            _detailTitle.Text = T("ui.duty_roster.shift_detail", "SHIFT DETAIL");
             _detailContent.AddChild(AshfallUiHelpers.MakeMetadata("Selected row is out of scope.", autowrap: true));
             return;
         }
@@ -516,7 +520,7 @@ public partial class DutyRosterPanel : Control, IBindablePanel
 
             var confirmRow = new HBoxContainer();
             confirmRow.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
-            var confirm = new Button { Text = "CONFIRM ASSIGN", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight), SizeFlagsHorizontal = SizeFlags.ExpandFill };
+            var confirm = new Button { Text = T("ui.duty_roster.confirm_assign", "CONFIRM ASSIGN"), CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight), SizeFlagsHorizontal = SizeFlags.ExpandFill };
             var cancel = new Button { Text = "CANCEL", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight), SizeFlagsHorizontal = SizeFlags.ExpandFill };
             string pendingRole = _pendingAssignRole;
             string pendingSurvivor = _pendingAssignSurvivorId;
@@ -546,7 +550,7 @@ public partial class DutyRosterPanel : Control, IBindablePanel
 
             var button = new Button
             {
-                Text = "ASSIGN: " + FormatSurvivorName(candidateId),
+                Text = T("ui.duty_roster.assign_prefix", "ASSIGN:") + " " + FormatSurvivorName(candidateId),
                 CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight),
                 SizeFlagsHorizontal = SizeFlags.ExpandFill,
             };
@@ -558,7 +562,7 @@ public partial class DutyRosterPanel : Control, IBindablePanel
         {
             var vacate = new Button
             {
-                Text = "VACATE SHIFT",
+                Text = T("ui.duty_roster.vacate", "VACATE SHIFT"),
                 CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight),
                 SizeFlagsHorizontal = SizeFlags.ExpandFill,
             };

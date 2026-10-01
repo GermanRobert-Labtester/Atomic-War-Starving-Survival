@@ -90,6 +90,28 @@ namespace Ashfall.Core.Tests.UI
         /// marker methods asserted above, which contain no braces inside
         /// string literals.
         /// </summary>
+        /// <summary>
+        /// Wave-3/4 — StatusPanel gained a health-history subscription for the
+        /// expedition-injury chip; Bind runs on every panel open, so it must
+        /// detach the previous handler before re-attaching.
+        /// </summary>
+        [Fact]
+        public void StatusPanelBindDetachesHealthHistory()
+        {
+            string srcRoot = FindSrcRoot();
+            string path = Path.Combine(srcRoot, "UI", "StatusPanel.cs");
+            Assert.True(File.Exists(path), $"Could not find StatusPanel.cs at {path}");
+            string source = File.ReadAllText(path);
+
+            string bindBody = ExtractBalancedBody(source, "public void Bind(");
+            int detach = bindBody.IndexOf("_healthHistory.StateChanged -= RefreshView", StringComparison.Ordinal);
+            int attach = bindBody.IndexOf("_healthHistory.StateChanged += RefreshView", StringComparison.Ordinal);
+            Assert.True(detach >= 0, "StatusPanel.Bind must detach _healthHistory.StateChanged");
+            Assert.True(attach >= 0, "StatusPanel.Bind must attach _healthHistory.StateChanged");
+            Assert.True(detach < attach,
+                "StatusPanel.Bind must detach _healthHistory.StateChanged before re-attaching (re-bind safe).");
+        }
+
         private static string ExtractBalancedBody(string source, string signatureMarker)
         {
             int sigIndex = source.IndexOf(signatureMarker, StringComparison.Ordinal);

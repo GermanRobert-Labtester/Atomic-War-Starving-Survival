@@ -25,13 +25,28 @@ Version bump classification follows [VERSIONING.md](VERSIONING.md):
 
 Before running `prepare-release.sh`, confirm:
 
-- [ ] `main` branch is green on `bash scripts/ci/verify-fast.sh` (all 53 fast gates)
+- [ ] `main` branch is green on `bash scripts/ci/verify-fast.sh` (all fast gates)
 - [ ] `bash scripts/ci/release-gate.sh` passes on a clean checkout
+  (or the one-command wrapper below, which also runs the export smoke)
 - [ ] `python3 scripts/ci/version-gate.py` PASS (three-source agreement)
 - [ ] `python3 scripts/release/generate_changelog.py --check` PASS
 - [ ] Target version string is agreed (bump type decided per VERSIONING.md)
 - [ ] All open PRs for this release merged to `main`
 - [ ] No uncommitted work in the tree
+
+### One-command pre-release gate
+
+`scripts/ci/release-gate.sh` remains the canonical gate read by release policy.
+For a single local command that also exports the shipping build and runs the
+packaged runtime smoke:
+
+```bash
+bash scripts/release/pre-release-gate.sh              # release gate + export smoke
+bash scripts/release/pre-release-gate.sh --skip-export # fast local sanity only
+```
+
+The tagged CI workflow (`.github/workflows/release.yml`) runs the same two
+stages as separate jobs.
 
 ---
 
@@ -64,12 +79,13 @@ git tag -a v1.2.0 -m "ASHFALL v1.2.0"
 git push origin main v1.2.0
 ```
 
-Tags **must never** be pushed without passing `release-gate.sh`.
+Tags **must never** be pushed without passing `release-gate.sh` (or
+`pre-release-gate.sh`, which runs it).
 
 ### Step 4 — Verify
 
 ```bash
-bash scripts/ci/release-gate.sh
+bash scripts/release/pre-release-gate.sh
 ```
 
 ---

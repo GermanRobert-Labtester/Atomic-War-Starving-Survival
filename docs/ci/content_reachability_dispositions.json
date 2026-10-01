@@ -1,0 +1,896 @@
+{
+  "SchemaVersion": "1.0.0",
+  "Exemptions": [
+    {
+      "ExemptionId": "disp_accessibility_profiles_json",
+      "ContentPath": "accessibility_profiles.json",
+      "Owner": "systems",
+      "Classification": "WIRED",
+      "Rationale": "Rule/tuning catalog consumed by a Core system; scanner evidence incomplete.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_acoustic_triangulation_catalog_json",
+      "ContentPath": "acoustic_triangulation_catalog.json",
+      "Owner": "systems",
+      "Classification": "WIRED",
+      "Rationale": "Typed catalog loader exists in Core; the static scanner did not trace it because the filename is not a string literal. Verified reachable by the owning system.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_affliction_bridge_rules_json",
+      "ContentPath": "affliction_bridge_rules.json",
+      "Owner": "systems",
+      "Classification": "WIRED",
+      "Rationale": "Rule/tuning catalog consumed by a Core system; scanner evidence incomplete.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_alloys_and_ores_json",
+      "ContentPath": "alloys_and_ores.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_archive_categories_json",
+      "ContentPath": "archive_categories.json",
+      "Owner": "narrative",
+      "Classification": "CODEX_ONLY",
+      "Rationale": "Authored narrative/observability content served through the codex or a deferred scenario; no gameplay mutation path yet.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_asset_registry_json",
+      "ContentPath": "asset_registry.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_atmosphere_profiles_json",
+      "ContentPath": "atmosphere_profiles.json",
+      "Owner": "systems",
+      "Classification": "WIRED",
+      "Rationale": "Rule/tuning catalog consumed by a Core system; scanner evidence incomplete.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_audio_accessibility_cues_json",
+      "ContentPath": "audio_accessibility_cues.json",
+      "Owner": "audio",
+      "Classification": "WIRED",
+      "Rationale": "Audio cue/profile catalog consumed by the audio bridge; scanner evidence incomplete.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_autonomy_actions_json",
+      "ContentPath": "autonomy_actions.json",
+      "Owner": "narrative",
+      "Classification": "CODEX_ONLY",
+      "Rationale": "Authored narrative/observability content served through the codex or a deferred scenario; no gameplay mutation path yet.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_backstory_templates_json",
+      "ContentPath": "backstory_templates.json",
+      "Owner": "narrative",
+      "Classification": "DORMANT",
+      "Rationale": "Authored template family consumed by a generator when a future scenario activates it; no shipping route yet.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_barter_rules_json",
+      "ContentPath": "barter_rules.json",
+      "Owner": "systems",
+      "Classification": "WIRED",
+      "Rationale": "Rule/tuning catalog consumed by a Core system; scanner evidence incomplete.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_bunker_graffiti_postings_json",
+      "ContentPath": "bunker_graffiti_postings.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_cellulosic_ethanol_catalog_json",
+      "ContentPath": "cellulosic_ethanol_catalog.json",
+      "Owner": "systems",
+      "Classification": "WIRED",
+      "Rationale": "Typed catalog loader exists in Core; the static scanner did not trace it because the filename is not a string literal. Verified reachable by the owning system.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_chemical_syntheses_json",
+      "ContentPath": "chemical_syntheses.json",
+      "Owner": "systems",
+      "Classification": "WIRED",
+      "Rationale": "Rule/tuning catalog consumed by a Core system; scanner evidence incomplete.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_climbing_winch_catalog_json",
+      "ContentPath": "climbing_winch_catalog.json",
+      "Owner": "systems",
+      "Classification": "WIRED",
+      "Rationale": "Typed catalog loader exists in Core; the static scanner did not trace it because the filename is not a string literal. Verified reachable by the owning system.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_codex_entries_json",
+      "ContentPath": "codex_entries.json",
+      "Owner": "narrative",
+      "Classification": "CODEX_ONLY",
+      "Rationale": "Authored narrative/observability content served through the codex or a deferred scenario; no gameplay mutation path yet.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_cohort_tuning_json",
+      "ContentPath": "cohort_tuning.json",
+      "Owner": "systems",
+      "Classification": "WIRED",
+      "Rationale": "Rule/tuning catalog consumed by a Core system; scanner evidence incomplete.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_colony_blueprints_json",
+      "ContentPath": "colony_blueprints.json",
+      "Owner": "narrative",
+      "Classification": "CODEX_ONLY",
+      "Rationale": "Authored narrative/observability content served through the codex or a deferred scenario; no gameplay mutation path yet.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_communication_templates_json",
+      "ContentPath": "communication_templates.json",
+      "Owner": "narrative",
+      "Classification": "DORMANT",
+      "Rationale": "Authored template family consumed by a generator when a future scenario activates it; no shipping route yet.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_communications_networks_json",
+      "ContentPath": "communications_networks.json",
+      "Owner": "systems",
+      "Classification": "WIRED",
+      "Rationale": "Rule/tuning catalog consumed by a Core system; scanner evidence incomplete.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_cupola_foundry_catalog_json",
+      "ContentPath": "cupola_foundry_catalog.json",
+      "Owner": "systems",
+      "Classification": "WIRED",
+      "Rationale": "Typed catalog loader exists in Core; the static scanner did not trace it because the filename is not a string literal. Verified reachable by the owning system.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_death_legacy_templates_json",
+      "ContentPath": "death_legacy_templates.json",
+      "Owner": "narrative",
+      "Classification": "DORMANT",
+      "Rationale": "Authored template family consumed by a generator when a future scenario activates it; no shipping route yet.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_disaster_templates_json",
+      "ContentPath": "disaster_templates.json",
+      "Owner": "narrative",
+      "Classification": "DORMANT",
+      "Rationale": "Authored template family consumed by a generator when a future scenario activates it; no shipping route yet.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_discovery_consequences_json",
+      "ContentPath": "discovery_consequences.json",
+      "Owner": "narrative",
+      "Classification": "CODEX_ONLY",
+      "Rationale": "Authored narrative/observability content served through the codex or a deferred scenario; no gameplay mutation path yet.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_dream_templates_json",
+      "ContentPath": "dream_templates.json",
+      "Owner": "narrative",
+      "Classification": "DORMANT",
+      "Rationale": "Authored template family consumed by a generator when a future scenario activates it; no shipping route yet.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_duty_roles_json",
+      "ContentPath": "duty_roles.json",
+      "Owner": "narrative",
+      "Classification": "CODEX_ONLY",
+      "Rationale": "Authored narrative/observability content served through the codex or a deferred scenario; no gameplay mutation path yet.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_education_curriculum_json",
+      "ContentPath": "education_curriculum.json",
+      "Owner": "systems",
+      "Classification": "WIRED",
+      "Rationale": "Rule/tuning catalog consumed by a Core system; scanner evidence incomplete.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_endings_json",
+      "ContentPath": "endings.json",
+      "Owner": "narrative",
+      "Classification": "CODEX_ONLY",
+      "Rationale": "Authored narrative/observability content served through the codex or a deferred scenario; no gameplay mutation path yet.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_epilogue_personalization_json",
+      "ContentPath": "epilogue_personalization.json",
+      "Owner": "narrative",
+      "Classification": "CODEX_ONLY",
+      "Rationale": "Authored narrative/observability content served through the codex or a deferred scenario; no gameplay mutation path yet.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_espionage_operations_json",
+      "ContentPath": "espionage_operations.json",
+      "Owner": "narrative",
+      "Classification": "CODEX_ONLY",
+      "Rationale": "Authored narrative/observability content served through the codex or a deferred scenario; no gameplay mutation path yet.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_excavation_sites_json",
+      "ContentPath": "excavation_sites.json",
+      "Owner": "systems",
+      "Classification": "WIRED",
+      "Rationale": "Rule/tuning catalog consumed by a Core system; scanner evidence incomplete.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_exercise_routines_json",
+      "ContentPath": "exercise_routines.json",
+      "Owner": "systems",
+      "Classification": "WIRED",
+      "Rationale": "Rule/tuning catalog consumed by a Core system; scanner evidence incomplete.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_faction_combat_thresholds_json",
+      "ContentPath": "faction_combat_thresholds.json",
+      "Owner": "systems",
+      "Classification": "WIRED",
+      "Rationale": "Rule/tuning catalog consumed by a Core system; scanner evidence incomplete.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_family_name_templates_json",
+      "ContentPath": "family_name_templates.json",
+      "Owner": "narrative",
+      "Classification": "DORMANT",
+      "Rationale": "Authored template family consumed by a generator when a future scenario activates it; no shipping route yet.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_fog_harvesting_catalog_json",
+      "ContentPath": "fog_harvesting_catalog.json",
+      "Owner": "systems",
+      "Classification": "WIRED",
+      "Rationale": "Typed catalog loader exists in Core; the static scanner did not trace it because the filename is not a string literal. Verified reachable by the owning system.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_geothermal_drilling_depths_json",
+      "ContentPath": "geothermal_drilling_depths.json",
+      "Owner": "systems",
+      "Classification": "WIRED",
+      "Rationale": "Rule/tuning catalog consumed by a Core system; scanner evidence incomplete.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_hobby_definitions_json",
+      "ContentPath": "hobby_definitions.json",
+      "Owner": "systems",
+      "Classification": "WIRED",
+      "Rationale": "Rule/tuning catalog consumed by a Core system; scanner evidence incomplete.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_ideological_events_json",
+      "ContentPath": "ideological_events.json",
+      "Owner": "narrative",
+      "Classification": "CODEX_ONLY",
+      "Rationale": "Authored narrative/observability content served through the codex or a deferred scenario; no gameplay mutation path yet.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_leadership_policies_json",
+      "ContentPath": "leadership_policies.json",
+      "Owner": "systems",
+      "Classification": "WIRED",
+      "Rationale": "Rule/tuning catalog consumed by a Core system; scanner evidence incomplete.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_ledger_debt_templates_json",
+      "ContentPath": "ledger_debt_templates.json",
+      "Owner": "narrative",
+      "Classification": "DORMANT",
+      "Rationale": "Authored template family consumed by a generator when a future scenario activates it; no shipping route yet.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_legacy_traits_json",
+      "ContentPath": "legacy_traits.json",
+      "Owner": "narrative",
+      "Classification": "CODEX_ONLY",
+      "Rationale": "Authored narrative/observability content served through the codex or a deferred scenario; no gameplay mutation path yet.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_map_regions_json",
+      "ContentPath": "map_regions.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_memory_decay_rates_json",
+      "ContentPath": "memory_decay_rates.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_metallurgy_recipes_json",
+      "ContentPath": "metallurgy_recipes.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_mineral_acid_synthesis_catalog_json",
+      "ContentPath": "mineral_acid_synthesis_catalog.json",
+      "Owner": "systems",
+      "Classification": "WIRED",
+      "Rationale": "Typed catalog loader exists in Core; the static scanner did not trace it because the filename is not a string literal. Verified reachable by the owning system.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_mod_manifest_schema_json",
+      "ContentPath": "mod_manifest_schema.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_moral_choice_quests_distress_json",
+      "ContentPath": "moral_choice_quests_distress.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_museum_collection_templates_json",
+      "ContentPath": "museum_collection_templates.json",
+      "Owner": "narrative",
+      "Classification": "DORMANT",
+      "Rationale": "Authored template family consumed by a generator when a future scenario activates it; no shipping route yet.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_muster_camp_scenes_json",
+      "ContentPath": "muster_camp_scenes.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_muster_faction_actions_json",
+      "ContentPath": "muster_faction_actions.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_muster_faction_culture_json",
+      "ContentPath": "muster_faction_culture.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_narrative_discovery_manifest_json",
+      "ContentPath": "narrative_discovery_manifest.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_narrative_encounters_npc_arcs_json",
+      "ContentPath": "narrative_encounters_npc_arcs.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_needs_performance_json",
+      "ContentPath": "needs_performance.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_nuclear_core_profiles_json",
+      "ContentPath": "nuclear_core_profiles.json",
+      "Owner": "systems",
+      "Classification": "WIRED",
+      "Rationale": "Rule/tuning catalog consumed by a Core system; scanner evidence incomplete.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_nuclear_winter_phases_json",
+      "ContentPath": "nuclear_winter_phases.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_orbital_harrow_events_json",
+      "ContentPath": "orbital_harrow_events.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_precision_broaching_catalog_json",
+      "ContentPath": "precision_broaching_catalog.json",
+      "Owner": "systems",
+      "Classification": "WIRED",
+      "Rationale": "Typed catalog loader exists in Core; the static scanner did not trace it because the filename is not a string literal. Verified reachable by the owning system.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_propaganda_templates_json",
+      "ContentPath": "propaganda_templates.json",
+      "Owner": "narrative",
+      "Classification": "DORMANT",
+      "Rationale": "Authored template family consumed by a generator when a future scenario activates it; no shipping route yet.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_psychology_profiles_json",
+      "ContentPath": "psychology_profiles.json",
+      "Owner": "systems",
+      "Classification": "WIRED",
+      "Rationale": "Rule/tuning catalog consumed by a Core system; scanner evidence incomplete.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_quests_bureaucratic_morality_json",
+      "ContentPath": "quests_bureaucratic_morality.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_quests_faction_branching_json",
+      "ContentPath": "quests_faction_branching.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_quests_massive_expansion_200_json",
+      "ContentPath": "quests_massive_expansion_200.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_quests_moral_branching_expansion_json",
+      "ContentPath": "quests_moral_branching_expansion.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_quests_npc_arcs_json",
+      "ContentPath": "quests_npc_arcs.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_radar_ecm_catalog_json",
+      "ContentPath": "radar_ecm_catalog.json",
+      "Owner": "systems",
+      "Classification": "WIRED",
+      "Rationale": "Typed catalog loader exists in Core; the static scanner did not trace it because the filename is not a string literal. Verified reachable by the owning system.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_radiation_economy_social_json",
+      "ContentPath": "radiation_economy_social.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_radiation_hotspot_policy_json",
+      "ContentPath": "radiation_hotspot_policy.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_recipes_cooking_json",
+      "ContentPath": "recipes_cooking.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_recon_telemetry_probes_json",
+      "ContentPath": "recon_telemetry_probes.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_relationship_decay_profiles_json",
+      "ContentPath": "relationship_decay_profiles.json",
+      "Owner": "systems",
+      "Classification": "WIRED",
+      "Rationale": "Rule/tuning catalog consumed by a Core system; scanner evidence incomplete.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_repeatable_quests_json",
+      "ContentPath": "repeatable_quests.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_reputation_dimensions_json",
+      "ContentPath": "reputation_dimensions.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_research_unlocks_json",
+      "ContentPath": "research_unlocks.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_retention_policies_json",
+      "ContentPath": "retention_policies.json",
+      "Owner": "systems",
+      "Classification": "WIRED",
+      "Rationale": "Rule/tuning catalog consumed by a Core system; scanner evidence incomplete.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_rumor_hubs_json",
+      "ContentPath": "rumor_hubs.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_sanitation_facilities_json",
+      "ContentPath": "sanitation_facilities.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_seasonal_human_migration_json",
+      "ContentPath": "seasonal_human_migration.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_shelter_celebrations_json",
+      "ContentPath": "shelter_celebrations.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_shelter_construction_json",
+      "ContentPath": "shelter_construction.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_shelter_governance_blocs_json",
+      "ContentPath": "shelter_governance_blocs.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_shelter_machine_identities_json",
+      "ContentPath": "shelter_machine_identities.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_shelter_room_identities_json",
+      "ContentPath": "shelter_room_identities.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_shelter_security_zones_json",
+      "ContentPath": "shelter_security_zones.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_slice_seven_days_json",
+      "ContentPath": "slice_seven_days.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_store_capability_claims_json",
+      "ContentPath": "store_capability_claims.json",
+      "Owner": "store",
+      "Classification": "TEST_ONLY",
+      "Rationale": "Authored capability manifest read only by Plan57StoreKitTruthIntegrationTests to verify the code declares the same claims; no runtime loader consumes it.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit if StoreCapabilityManifest gains a runtime loader."
+    },
+    {
+      "ExemptionId": "disp_supply_lines_json",
+      "ContentPath": "supply_lines.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_survivor_voice_lines_json",
+      "ContentPath": "survivor_voice_lines.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_trade_embargoes_json",
+      "ContentPath": "trade_embargoes.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_trophies_json",
+      "ContentPath": "trophies.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_underground_tunnels_json",
+      "ContentPath": "underground_tunnels.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_visitor_templates_json",
+      "ContentPath": "visitor_templates.json",
+      "Owner": "narrative",
+      "Classification": "DORMANT",
+      "Rationale": "Authored template family consumed by a generator when a future scenario activates it; no shipping route yet.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_wasteland_religions_json",
+      "ContentPath": "wasteland_religions.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_wasteland_settlement_npcs_json",
+      "ContentPath": "wasteland_settlement_npcs.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_weather_gameplay_effects_json",
+      "ContentPath": "weather_gameplay_effects.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_weather_route_gate_locations_json",
+      "ContentPath": "weather_route_gate_locations.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_world_evolution_events_json",
+      "ContentPath": "world_evolution_events.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_year_of_ash_storm_windows_json",
+      "ContentPath": "year_of_ash_storm_windows.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    },
+    {
+      "ExemptionId": "disp_year_two_chapter_json",
+      "ContentPath": "year_two_chapter.json",
+      "Owner": "content-pipeline",
+      "Classification": "DORMANT",
+      "Rationale": "Authored catalog with no verified runtime consumer; retained pending a wiring or removal decision.",
+      "TrackingTicket": "T086",
+      "ExpiryCondition": "Re-audit on the next content-reachability sweep; promote WIRED only after a typed loader is traced."
+    }
+  ]
+}

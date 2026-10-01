@@ -25,6 +25,10 @@ namespace AtomicWar.GodotApp
         private RetentionHostSession? _retention;
         private bool _retentionDirty;
 
+        private bool RetentionDirty => _retentionDirty;
+
+        private void RestoreRetentionDirty(bool dirty) => _retentionDirty = dirty;
+
         public RetentionHostSession? Retention => _retention;
 
         /// <summary>

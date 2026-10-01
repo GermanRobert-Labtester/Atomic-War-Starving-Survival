@@ -603,6 +603,10 @@ namespace AtomicWar.GodotApp
                 case "apprenticeship":
                     if (_apprenticeshipPanel != null) { ShowPanelLifecycle(_apprenticeshipPanel); _apprenticeshipPanel.RefreshView(); }
                     break;
+                case "difficulty_settings":
+                    SetupDifficultySettingsPanel();
+                    if (_difficultySettingsPanel != null) { ShowPanelLifecycle(_difficultySettingsPanel); _difficultySettingsPanel.RefreshView(); }
+                    break;
                 case "caregiving":
                     if (_caregivingPanel != null) { ShowPanelLifecycle(_caregivingPanel); _caregivingPanel.RefreshView(); }
                     break;
@@ -756,6 +760,7 @@ namespace AtomicWar.GodotApp
             RemovePanel(_wildlifeTrappingPanel); _wildlifeTrappingPanel = null!;
             RemovePanel(_excavationPanel); _excavationPanel = null!;
             RemovePanel(_apprenticeshipPanel); _apprenticeshipPanel = null!;
+            RemovePanel(_difficultySettingsPanel); _difficultySettingsPanel = null;
             RemovePanel(_caregivingPanel); _caregivingPanel = null!;
             RemovePanel(_sumpFloodingPanel); _sumpFloodingPanel = null!;
             RemovePanel(_decontaminationPanel); _decontaminationPanel = null!;

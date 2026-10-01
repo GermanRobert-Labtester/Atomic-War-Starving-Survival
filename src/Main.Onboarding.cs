@@ -5,6 +5,7 @@ using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Inventory;
 using Ashfall.Core.Onboarding;
+using Ashfall.Core.Telemetry;
 using AtomicWar.GodotApp.UI;
 using AtomicWar.GodotApp.Localization;
 
@@ -89,8 +90,16 @@ namespace AtomicWar.GodotApp
             var panel = new OnboardingHintPanel();
             panel.OnShowMeWhereRequested += route => OpenPlayerPanel(route);
             panel.OnCurrentStepSkipped += SkipCurrentStage;
+            // P007 — one visible "skip tutorial" affordance wired to the
+            // existing SkipAllRemaining seam (previously dead code).
+            panel.OnSkipAllRequested += SkipAllOnboardingStages;
             panel.OnJourneyReplayed += ReplayJourney;
             panel.OnHintDismissed += () => RefreshOnboardingStatusBar();
+            // P004 — hint presentation/dismissal counters per stage (audit-only;
+            // never feed gameplay). The panel de-dupes so a hint is counted once
+            // per time it becomes visible, not once per refresh.
+            panel.OnHintShown += stageId => RecordPlayMetricHint(PlaySessionActions.HintShown, stageId);
+            panel.OnHintDismissedForStage += stageId => RecordPlayMetricHint(PlaySessionActions.HintDismissed, stageId);
             panel.OnAssistanceChanged += SetOnboardingAssistance;
             AddChild(panel);
             _onboardingHintPanel = panel;
@@ -147,6 +156,30 @@ namespace AtomicWar.GodotApp
             // local play-session recorder; the JSONL stream stays an audit read
             // model and never feeds gameplay.
             RecordPlayMetricSigil(sigil);
+            // P002 — the same observed sigil also emits the stage's published
+            // first-hour verb (PlayerCommandCode) so the funnel histogram sees
+            // each stage's action instead of every verb collapsing to `sigil`.
+            if (OnboardingCatalog.TryGetFirstHourVerbForSigil(sigil, out var stage, out string verb))
+                RecordPlayMetricFirstHourVerb(verb, OnboardingHintPanel.StageLocalizationId(stage));
+        }
+
+        /// <summary>
+        /// P003 — tutorial-ordering gate for the terminal Expedition dispatch.
+        /// Returns a block code naming the first incomplete Water→Dose stage
+        /// while a full-onboarding first-hour run is in progress; null when
+        /// dispatch is unlocked (veteran, contextual-only, legacy, or complete).
+        /// </summary>
+        private string? TutorialExpeditionBlockReason()
+        {
+            // "In tutorial mode" = the full onboarding tier. Contextual-only (1)
+            // and veteran (2) keep unconditional dispatch.
+            if (AtomicWar.GodotApp.Settings.UserSettingsStore.Current.TutorialMode != 0) return null;
+            if (_onboardingJourney == null) SetupOnboarding();
+            var journey = _onboardingJourney;
+            if (journey == null) return null;
+            var pending = journey.ExpeditionDispatchPrerequisite();
+            if (pending == null) return null;
+            return "tutorial_step_locked:" + OnboardingHintPanel.StageLocalizationId(pending.Value);
         }
 
         public void ObserveFailedAction(string label)
@@ -197,6 +230,9 @@ namespace AtomicWar.GodotApp
                     _onboardingHintPanel.Visible = false;
                 _onboardingJourney = null;
                 _onboardingDirty = false;
+                // P006 — switching to veteran mode mid-run must not leave a
+                // stale first-hour progress chip on the HUD.
+                RefreshOnboardingHud(null);
                 return;
             }
 
@@ -245,8 +281,9 @@ namespace AtomicWar.GodotApp
         /// not open. Restful, never modal.</summary>
         private void RefreshOnboardingStatusBar()
         {
-            if (_onboardingJourney == null || _statusLabel == null) return;
             var j = _onboardingJourney;
+            RefreshOnboardingHud(j);
+            if (j == null || _statusLabel == null) return;
             if (j.JourneyComplete)
             {
                 // Truthful terminal state: the final objective no longer applies,
@@ -265,8 +302,41 @@ namespace AtomicWar.GodotApp
             string stageId = OnboardingHintPanel.StageLocalizationId(def.Id);
             string title = AshfallLocalization.Tr($"onboarding.{stageId}.title", def.Title);
             string objective = AshfallLocalization.Tr($"onboarding.{stageId}.objective", def.Objective);
-            _statusLabel.Text = AshfallLocalization.TrFormat(
+            string bar = AshfallLocalization.TrFormat(
                 "onboarding.status.bar", _simDay, title, objective);
+            // P005 — non-blocking "N days on this stage" nudge. First-hour stages
+            // only (the catalog owns that order); shown once the stage has been
+            // open a full day so a freshly entered stage is never nagged.
+            if (j.Profile == OnboardingProfile.FirstHour && j.DaysOnCurrentStage >= 1)
+            {
+                bar = bar + " · " + AshfallLocalization.TrFormat(
+                    "onboarding.status.days_on_stage", j.DaysOnCurrentStage);
+            }
+            _statusLabel.Text = bar;
+        }
+
+        /// <summary>
+        /// P006 — projects first-hour stage progress (`1/7 · WATER`) onto the
+        /// HUD from the same catalog order the checklist uses. The HUD owns no
+        /// onboarding knowledge; an empty string hides the chip.
+        /// </summary>
+        private void RefreshOnboardingHud(OnboardingJourney? j)
+        {
+            if (_hudOverlay == null) return;
+            if (j == null || j.JourneyComplete)
+            {
+                _hudOverlay.UpdateOnboardingProgress(string.Empty);
+                return;
+            }
+            var order = OnboardingCatalog.OrderFor(j.Profile);
+            int index = 0;
+            for (int i = 0; i < order.Count; i++)
+            {
+                if (order[i] == j.CurrentStage) { index = i; break; }
+            }
+            string stageTag = OnboardingHintPanel.StageLocalizationId(j.CurrentStage).ToUpperInvariant();
+            _hudOverlay.UpdateOnboardingProgress(AshfallLocalization.TrFormat(
+                "onboarding.hud.progress", index + 1, order.Count, stageTag));
         }
     }
 }

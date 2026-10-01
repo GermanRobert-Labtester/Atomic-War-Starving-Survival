@@ -45,6 +45,10 @@ namespace AtomicWar.GodotApp
                 {
                     Check(productionMain.RunWorldPlaytestProductionOwnerProbe(WorldPlaytestDays),
                         "production EvolvingWorldDayOwner advances the fixed 30-day window");
+                    Check(productionMain.RunCoordinatorRetryProductionProbe(),
+                        "production day-owner retry does not double-consume rations");
+                    Check(productionMain.RunFullCompositionRetryProbe(),
+                        "full-composition day retry matches the no-failure inventory baseline");
                 }
 
                 var primary = WorldPlaytestRun.Create(dataDirectory, WorldPlaytestSeed);

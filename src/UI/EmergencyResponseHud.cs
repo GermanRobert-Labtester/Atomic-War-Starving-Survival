@@ -12,6 +12,9 @@ namespace AtomicWar.GodotApp.UI
     {
         public bool IsVisible => Visible;
         public bool IsBound { get; private set; }
+        // Standard panel-dismiss contract observed by the host funnel and the
+        // controller-parity gate; OnPanelClosed stays for HUD-specific listeners.
+        public event Action? OnClose;
         public event Action? OnPanelClosed;
         public event Action? OnAcknowledge;
         public event Action<string>? OnRequestNavigateToPanel;
@@ -284,6 +287,7 @@ namespace AtomicWar.GodotApp.UI
             if (!AtomicWar.GodotApp.UI.UiMotion.AnimateClose(this))
                 Visible = false;
             AudioManager.Instance?.SetSnapshot(AudioSnapshot.Normal);
+            OnClose?.Invoke();
             OnPanelClosed?.Invoke();
         }
 
@@ -298,6 +302,20 @@ namespace AtomicWar.GodotApp.UI
         // propagation gives later siblings the first claim.
         public override void _UnhandledKeyInput(InputEvent @event)
         {
+            if (!Visible || !@event.IsPressed() || @event.IsEcho()) return;
+            if (AshfallInputActions.IsCloseOrCancel(@event))
+            {
+                Close();
+                GetViewport()?.SetInputAsHandled();
+            }
+        }
+
+        // Joypad buttons are routed to _UnhandledInput, never to
+        // _UnhandledKeyInput — without this override pad B could not dismiss
+        // the crisis HUD (controller-parity gate regression).
+        public override void _UnhandledInput(InputEvent @event)
+        {
+            if (@event is InputEventKey) return; // keys are claimed above
             if (!Visible || !@event.IsPressed() || @event.IsEcho()) return;
             if (AshfallInputActions.IsCloseOrCancel(@event))
             {

@@ -299,6 +299,18 @@ namespace AtomicWar.GodotApp
                 {
                     GD.PrintErr($"[Combat] breaching_equipment_catalog.json load failed: {ex.Message}");
                 }
+                // T30 — the authored arena catalog was dormant: sessions always
+                // fought on the procedural 3-lane default even though
+                // combat_arenas.json ships. Load it here (falls back to the
+                // same default when the file is absent or malformed).
+                try
+                {
+                    CombatArenaCatalog.Load(dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
+                }
+                catch (Exception ex)
+                {
+                    GD.PrintErr($"[Combat] combat_arenas.json load failed, falling back to procedural default: {ex.Message}");
+                }
             }
 
             var save = CombatSaveStore.TryLoad();

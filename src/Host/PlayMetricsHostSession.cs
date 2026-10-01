@@ -71,6 +71,9 @@ namespace AtomicWar.GodotApp
         /// <summary>Delivered expedition loot lines (the recorder-side harvest proxy).</summary>
         public int HarvestedResourceCount { get; private set; }
 
+        /// <summary>Failed sorties observed this session (read model).</summary>
+        public int FailedSortieCount { get; private set; }
+
         public PlayMetricsHostSession(string sessionId, string buildVersion = "1.0.0", FirstHourFunnel? funnel = null)
         {
             if (string.IsNullOrWhiteSpace(sessionId)) sessionId = "local_session";
@@ -135,6 +138,14 @@ namespace AtomicWar.GodotApp
         {
             if (lootUnits > 0) HarvestedResourceCount += lootUnits;
             Recorder.Record("expedition.returned", "expedition", "ok", day, tSessionMs);
+            RaiseStateChanged();
+        }
+
+        /// <summary>Record a failed expedition sortie in the play-session stream.</summary>
+        public void RecordExpeditionFailed(string reason, int day = 1, long tSessionMs = 0)
+        {
+            FailedSortieCount++;
+            Recorder.Record("expedition.failed", "expedition", "failed", day, tSessionMs);
             RaiseStateChanged();
         }
 

@@ -133,14 +133,14 @@ namespace AtomicWar.GodotApp.UI
 
             if (_survivors == null || string.IsNullOrEmpty(_survivorId))
             {
-                _survivorInfo.AddChild(MakeDimLine("No survivor selected."));
+                _survivorInfo.AddChild(MakeDimLine(Tr("ui.survivor.info.no_selection", "No survivor selected.")));
                 return;
             }
 
             var s = _survivors.RosterState.FirstOrDefault(r => r != null && r.Id == _survivorId);
             if (s == null)
             {
-                _survivorInfo.AddChild(MakeDimLine($"Survivor '{_survivorId}' not found in roster."));
+                _survivorInfo.AddChild(MakeDimLine(TrFormat("ui.survivor.info.not_found", _survivorId)));
                 return;
             }
 
@@ -149,15 +149,16 @@ namespace AtomicWar.GodotApp.UI
             var view = _enrichmentService?.GetView(s.Id, def);
 
             // ── Survivor info ──
-            AddRow(_survivorInfo, $"Name: {view?.DisplayName ?? Name(s.Id)}", Ashfall.Core.UI.Theme.Pale);
-            AddRow(_survivorInfo, $"Profession: {view?.ProfessionLabel ?? (!string.IsNullOrEmpty(def?.profession) ? def.profession : "Unspecified")}", Ashfall.Core.UI.Theme.Dim);
+            AddRow(_survivorInfo, TrFormat("ui.survivor.info.name", view?.DisplayName ?? Name(s.Id)), Ashfall.Core.UI.Theme.Pale);
+            AddRow(_survivorInfo, TrFormat("ui.survivor.info.profession", view?.ProfessionLabel ?? (!string.IsNullOrEmpty(def?.profession) ? def.profession : Tr("ui.survivor.info.unspecified", "Unspecified"))), Ashfall.Core.UI.Theme.Dim);
             RenderedRowCount += 2;
 
             // Plan 195 — truthful current specialization role; read-only projection.
             var roleReadout = RoleProvider?.Invoke(_survivorId);
             if (roleReadout.HasValue && !string.IsNullOrEmpty(roleReadout.Value.RoleId))
             {
-                AddRow(_survivorInfo, $"Specialization: {roleReadout.Value.DisplayName} (Level {roleReadout.Value.Level}, {roleReadout.Value.ExperiencePoints} practice XP)", Ashfall.Core.UI.Theme.Lethe);
+                AddRow(_survivorInfo, TrFormat("ui.survivor.info.specialization",
+                    roleReadout.Value.DisplayName, roleReadout.Value.Level, roleReadout.Value.ExperiencePoints), Ashfall.Core.UI.Theme.Lethe);
                 RenderedRowCount++;
             }
 
@@ -166,7 +167,8 @@ namespace AtomicWar.GodotApp.UI
             if (clothingReadout.HasValue && clothingReadout.Value.Layers > 0)
             {
                 var c = clothingReadout.Value;
-                AddRow(_survivorInfo, $"Clothing: {c.Layers} layer(s), warmth {c.TotalWarmth}, wetness {c.Wetness:P0}, cold reduction {c.ColdReductionBp / 100f:F0}%", Ashfall.Core.UI.Theme.Lethe);
+                AddRow(_survivorInfo, TrFormat("ui.survivor.info.clothing",
+                    c.Layers, c.TotalWarmth, $"{c.Wetness:P0}", $"{c.ColdReductionBp / 100f:F0}"), Ashfall.Core.UI.Theme.Lethe);
                 RenderedRowCount++;
             }
 
@@ -176,7 +178,7 @@ namespace AtomicWar.GodotApp.UI
             var bodySlate = BodySlateProvider?.Invoke(_survivorId);
             if (bodySlate != null)
             {
-                AddRow(_survivorInfo, $"Body: {bodySlate.SummaryStatus} · {bodySlate.GripCapability}", Ashfall.Core.UI.Theme.Lethe);
+                AddRow(_survivorInfo, TrFormat("ui.survivor.info.body", bodySlate.SummaryStatus, bodySlate.GripCapability), Ashfall.Core.UI.Theme.Lethe);
                 RenderedRowCount++;
                 foreach (var limb in bodySlate.Limbs)
                 {
@@ -196,7 +198,7 @@ namespace AtomicWar.GodotApp.UI
 
             if (view != null && !string.IsNullOrEmpty(view.BeliefProfileLabel) && !string.IsNullOrEmpty(view.BeliefProfileId))
             {
-                AddRow(_survivorInfo, $"Worldview: {view.BeliefProfileLabel}", Ashfall.Core.UI.Theme.Lethe);
+                AddRow(_survivorInfo, TrFormat("ui.survivor.info.worldview", view.BeliefProfileLabel), Ashfall.Core.UI.Theme.Lethe);
                 RenderedRowCount++;
             }
 
@@ -205,36 +207,36 @@ namespace AtomicWar.GodotApp.UI
                 string tagInfo = view.KeepsakeItemTags.Count > 0
                     ? $" [{string.Join(", ", view.KeepsakeItemTags)}]"
                     : string.Empty;
-                AddRow(_survivorInfo, $"Associated Keepsake: {view.KeepsakeItemLabel}{tagInfo}", Ashfall.Core.UI.Theme.Dim);
+                AddRow(_survivorInfo, TrFormat("ui.survivor.info.keepsake", view.KeepsakeItemLabel, tagInfo), Ashfall.Core.UI.Theme.Dim);
                 RenderedRowCount++;
             }
 
             if (view != null && !string.IsNullOrEmpty(view.PrimaryDutyAffinity))
             {
                 string bonusText = view.DutyComfortBonusPermille > 0
-                    ? $" (+{view.DutyComfortBonusPermille / 10}% comfort)"
+                    ? " " + TrFormat("ui.survivor.info.duty_bonus", view.DutyComfortBonusPermille / 10)
                     : string.Empty;
-                AddRow(_survivorInfo, $"Duty Affinity: {view.PrimaryDutyAffinity}{bonusText}", Ashfall.Core.UI.Theme.Lethe);
+                AddRow(_survivorInfo, TrFormat("ui.survivor.info.duty", view.PrimaryDutyAffinity, bonusText), Ashfall.Core.UI.Theme.Lethe);
                 RenderedRowCount++;
             }
 
             if (view != null && view.CorePersonalityTraits.Count > 0)
             {
-                AddRow(_survivorInfo, $"Traits: {string.Join(" · ", view.CorePersonalityTraits)}", Ashfall.Core.UI.Theme.Dim);
+                AddRow(_survivorInfo, TrFormat("ui.survivor.info.traits", string.Join(" · ", view.CorePersonalityTraits)), Ashfall.Core.UI.Theme.Dim);
                 RenderedRowCount++;
             }
 
             if (view != null && !string.IsNullOrEmpty(view.IdeologicalTensionBeliefId))
             {
                 var (_, frictionLabel) = Ashfall.Core.Survivors.SurvivorEnrichmentService.ResolveFrictionBelief(view.BeliefProfileId);
-                AddRow(_survivorInfo, $"Ideological Tension: Opposes {frictionLabel}", Ashfall.Core.UI.Theme.Warm);
+                AddRow(_survivorInfo, TrFormat("ui.survivor.info.ideological_tension", frictionLabel), Ashfall.Core.UI.Theme.Warm);
                 RenderedRowCount++;
             }
 
             var faction = IdeologicalFactionProvider?.Invoke(s.Id);
             if (!string.IsNullOrEmpty(faction))
             {
-                AddRow(_survivorInfo, $"Bunker Faction: {faction}", Ashfall.Core.UI.Theme.Warm);
+                AddRow(_survivorInfo, TrFormat("ui.survivor.info.faction", faction), Ashfall.Core.UI.Theme.Warm);
                 RenderedRowCount++;
             }
 
@@ -242,15 +244,15 @@ namespace AtomicWar.GodotApp.UI
             if (romance != null)
             {
                 string partnerName = Name(romance.Value.PartnerId);
-                string soulmateTag = romance.Value.IsSoulmate ? " · Soulmate" : string.Empty;
-                AddRow(_survivorInfo, $"Relationship: {partnerName} ({romance.Value.Stage}{soulmateTag})", Ashfall.Core.UI.Theme.Warm);
+                string soulmateTag = romance.Value.IsSoulmate ? " " + Tr("ui.survivor.info.soulmate", "· Soulmate") : string.Empty;
+                AddRow(_survivorInfo, TrFormat("ui.survivor.info.relationship", partnerName, romance.Value.Stage, soulmateTag), Ashfall.Core.UI.Theme.Warm);
                 RenderedRowCount++;
             }
 
             var family = FamilyProvider?.Invoke(s.Id);
             if (!string.IsNullOrEmpty(family))
             {
-                AddRow(_survivorInfo, $"Family Unit: {family}", Ashfall.Core.UI.Theme.Lethe);
+                AddRow(_survivorInfo, TrFormat("ui.survivor.info.family", family), Ashfall.Core.UI.Theme.Lethe);
                 RenderedRowCount++;
             }
 
@@ -258,14 +260,14 @@ namespace AtomicWar.GodotApp.UI
             var kinship = KinshipProvider?.Invoke(s.Id);
             if (!string.IsNullOrEmpty(kinship))
             {
-                AddRow(_survivorInfo, $"Lineage: {kinship}", Ashfall.Core.UI.Theme.Lethe);
+                AddRow(_survivorInfo, TrFormat("ui.survivor.info.lineage", kinship), Ashfall.Core.UI.Theme.Lethe);
                 RenderedRowCount++;
             }
 
             var politicalBloc = PoliticalBlocProvider?.Invoke(s.Id);
             if (!string.IsNullOrEmpty(politicalBloc))
             {
-                AddRow(_survivorInfo, $"Political Bloc: {politicalBloc}", Ashfall.Core.UI.Theme.Warm);
+                AddRow(_survivorInfo, TrFormat("ui.survivor.info.political_bloc", politicalBloc), Ashfall.Core.UI.Theme.Warm);
                 RenderedRowCount++;
             }
 
@@ -273,49 +275,49 @@ namespace AtomicWar.GodotApp.UI
             if (ageProfile != null)
             {
                 string retirementStatus = ageProfile.IsRetired
-                    ? " [Retired Elder]"
-                    : (ageProfile.IsRetirementEligible ? " [Retirement Eligible]" : string.Empty);
-                AddRow(_survivorInfo, $"Demographic: {ageProfile.EffectiveAgeYears} yrs · {ageProfile.Stage}{retirementStatus}", Ashfall.Core.UI.Theme.Warm);
+                    ? " " + Tr("ui.survivor.info.retired_elder", "[Retired Elder]")
+                    : (ageProfile.IsRetirementEligible ? " " + Tr("ui.survivor.info.retirement_eligible", "[Retirement Eligible]") : string.Empty);
+                AddRow(_survivorInfo, TrFormat("ui.survivor.info.demographic", ageProfile.EffectiveAgeYears, ageProfile.Stage, retirementStatus), Ashfall.Core.UI.Theme.Warm);
                 RenderedRowCount++;
             }
 
             var belongings = BelongingsProvider?.Invoke(s.Id);
             if (belongings != null && belongings.Count > 0)
             {
-                AddRow(_survivorInfo, $"Personal effects: {belongings.Count}", Ashfall.Core.UI.Theme.Lethe);
+                AddRow(_survivorInfo, TrFormat("ui.survivor.info.personal_effects", belongings.Count), Ashfall.Core.UI.Theme.Lethe);
                 int visible = Math.Min(3, belongings.Count);
                 for (int i = 0; i < visible; i++)
                 {
                     var belonging = belongings[i];
-                    string favorite = belonging.IsFavorite ? " · favorite" : string.Empty;
+                    string favorite = belonging.IsFavorite ? " " + Tr("ui.survivor.info.favorite", "· favorite") : string.Empty;
                     AddRow(_survivorInfo,
-                        $"  {belonging.ItemName} · {belonging.Category} · sentiment {belonging.SentimentalValue:0}{favorite}",
+                        "  " + TrFormat("ui.survivor.info.personal_effect_row", belonging.ItemName, belonging.Category, $"{belonging.SentimentalValue:0}", favorite),
                         Ashfall.Core.UI.Theme.Dim);
                 }
                 if (belongings.Count > visible)
-                    AddRow(_survivorInfo, $"  +{belongings.Count - visible} more", Ashfall.Core.UI.Theme.Dim);
+                    AddRow(_survivorInfo, "  " + TrFormat("ui.survivor.info.more", belongings.Count - visible), Ashfall.Core.UI.Theme.Dim);
                 RenderedRowCount += 1 + visible + (belongings.Count > visible ? 1 : 0);
             }
 
             var docs = DocumentationProvider?.Invoke(s.Id);
             if (docs != null && docs.Count > 0)
             {
-                AddRow(_survivorInfo, $"Authored records: {docs.Count}", Ashfall.Core.UI.Theme.Lethe);
+                AddRow(_survivorInfo, TrFormat("ui.survivor.info.authored_records", docs.Count), Ashfall.Core.UI.Theme.Lethe);
                 int visible = Math.Min(3, docs.Count);
                 for (int i = 0; i < visible; i++)
                 {
                     var doc = docs[i];
                     AddRow(_survivorInfo,
-                        $"  {doc.Title} · {doc.Type} · quality {doc.Quality:0}",
+                        "  " + TrFormat("ui.survivor.info.record_row", doc.Title, doc.Type, $"{doc.Quality:0}"),
                         Ashfall.Core.UI.Theme.Dim);
                 }
                 if (docs.Count > visible)
-                    AddRow(_survivorInfo, $"  +{docs.Count - visible} more", Ashfall.Core.UI.Theme.Dim);
+                    AddRow(_survivorInfo, "  " + TrFormat("ui.survivor.info.more", docs.Count - visible), Ashfall.Core.UI.Theme.Dim);
                 RenderedRowCount += 1 + visible + (docs.Count > visible ? 1 : 0);
             }
 
-            AddRow(_survivorInfo, $"Alive: {s.IsAlive}", s.IsAlive ? Ashfall.Core.UI.Theme.Lethe : Ashfall.Core.UI.Theme.Critical);
-            AddRow(_survivorInfo, $"Max Health Cap: {s.MaxHealthCap:0}", Ashfall.Core.UI.Theme.Dim);
+            AddRow(_survivorInfo, TrFormat("ui.survivor.info.alive", s.IsAlive), s.IsAlive ? Ashfall.Core.UI.Theme.Lethe : Ashfall.Core.UI.Theme.Critical);
+            AddRow(_survivorInfo, TrFormat("ui.survivor.info.max_health", s.MaxHealthCap), Ashfall.Core.UI.Theme.Dim);
             RenderedRowCount += 2;
 
             // Plan 176 — campaign tenure, days only (no months/years in UI).
@@ -324,18 +326,21 @@ namespace AtomicWar.GodotApp.UI
             {
                 int currentDay = AppDayProvider?.Invoke() ?? rosterEntry.joinedDay;
                 int tenureDays = rosterEntry.CampaignAgeDays(currentDay);
-                AddRow(_survivorInfo, $"In shelter: {tenureDays} day{(tenureDays == 1 ? "" : "s")} (since day {rosterEntry.joinedDay})", Ashfall.Core.UI.Theme.Dim);
+                AddRow(_survivorInfo, TrFormat("ui.survivor.info.tenure", tenureDays, rosterEntry.joinedDay), Ashfall.Core.UI.Theme.Dim);
                 RenderedRowCount++;
             }
 
             // ── Needs ──
-            AddRow(_needsList, $"Health: {s.Health:0} / {s.MaxHealthCap:0}", s.Health < 30 ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Lethe);
-            AddRow(_needsList, $"Hunger: {s.Hunger:0}", s.Hunger >= 90 ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Pale);
-            AddRow(_needsList, $"Thirst: {s.Thirst:0}", s.Thirst >= 90 ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Pale);
-            AddRow(_needsList, $"Fatigue: {s.Fatigue:0}", s.Fatigue >= 90 ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Pale);
-            AddRow(_needsList, $"Warmth: {s.Warmth:0}", s.Warmth < 20 ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Pale);
-            AddRow(_needsList, $"Morale: {s.Morale:0}", s.Morale < 20 ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Pale);
-            AddRow(_needsList, $"Hygiene: {s.Hygiene:0}", Ashfall.Core.UI.Theme.Dim);
+            // The early guard already returned for a null session; `!` keeps the
+            // nullable analysis quiet across the intervening method calls.
+            var profile = _survivors!.Needs.Profile;
+            AddRow(_needsList, $"{Tr("ui.survivor.need.health", "Health")}: {s.Health:0} / {s.MaxHealthCap:0}", profile.IsHealthWarn(s.Health) ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Lethe);
+            AddRow(_needsList, $"{Tr("ui.survivor.need.hunger", "Hunger")}: {s.Hunger:0}", profile.IsHungerCritical(s.Hunger) ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Pale);
+            AddRow(_needsList, $"{Tr("ui.survivor.need.thirst", "Thirst")}: {s.Thirst:0}", profile.IsThirstCritical(s.Thirst) ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Pale);
+            AddRow(_needsList, $"{Tr("ui.survivor.need.fatigue", "Fatigue")}: {s.Fatigue:0}", profile.IsFatigueCritical(s.Fatigue) ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Pale);
+            AddRow(_needsList, $"{Tr("ui.survivor.need.warmth", "Warmth")}: {s.Warmth:0}", profile.IsWarmthCritical(s.Warmth) ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Pale);
+            AddRow(_needsList, $"{Tr("ui.survivor.need.morale", "Morale")}: {s.Morale:0}", profile.IsMoraleCritical(s.Morale) ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Pale);
+            AddRow(_needsList, $"{Tr("ui.survivor.need.hygiene", "Hygiene")}: {s.Hygiene:0}", Ashfall.Core.UI.Theme.Dim);
             RenderedRowCount += 7;
 
             // Plan 137 — Needs -> Performance Cascade
@@ -350,36 +355,61 @@ namespace AtomicWar.GodotApp.UI
                     _ => Ashfall.Core.UI.Theme.Lethe
                 };
                 string warningIcon = perf.OverallBand >= Ashfall.Core.Survivors.PerformanceBand.Severe ? "⚠ " : string.Empty;
-                AddRow(_needsList, $"{warningIcon}Performance: {perf.OverallBand.ToString().ToUpperInvariant()} (Work {perf.WorkSpeedMultiplier * 100:0}%, Combat {perf.CombatAccuracyMultiplier * 100:0}%)", bandColor);
+                AddRow(_needsList, TrFormat("ui.survivor.performance.row", warningIcon,
+                    perf.OverallBand.ToString().ToUpperInvariant(),
+                    $"{perf.WorkSpeedMultiplier * 100:0}", $"{perf.CombatAccuracyMultiplier * 100:0}"), bandColor);
                 RenderedRowCount++;
             }
 
             // ── Traits (from rad state) ──
             if (rad != null)
             {
-                AddRow(_traitsList, $"Radiation Dose: {rad.RadiationDose:0} mSv", rad.RadiationDose >= 50 ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Lethe);
-                AddRow(_traitsList, $"Lifetime Exposure: {rad.LifetimeRadiationExposure:0} mSv", Ashfall.Core.UI.Theme.Dim);
-                AddRow(_traitsList, $"Rad Resistance: {rad.HasRadResistance}{(rad.HasRadResistance ? $" ({rad.RadResistanceHoursRemaining:0}h)" : "")}",
+                // Task 7 — three-band dose colouring. The row previously jumped
+                // straight from "clean" to Critical at the warn threshold, so a
+                // survivor sitting in the warn band looked the same as one at
+                // zero. It now shares AshfallUiBands with the HUD chip, the
+                // StatusPanel card, and the host's radiation_high toast.
+                //
+                // Task 11 — the colour now explains itself. Without a tooltip a
+                // player sees an amber number with no way to learn that 50 mSv
+                // is the warn line and 80 mSv is critical.
+                var doseRow = MakeRowLabel(
+                    $"{Tr("ui.survivor.trait.radiation_dose", "Radiation Dose")}: {rad.RadiationDose:0} mSv",
+                    AshfallUiBands.ForDose(rad.RadiationDose));
+                doseRow.TooltipText = TrFormat("ui.survivor.trait.dose_tooltip",
+                    $"{Ashfall.Core.Radiation.RadiationSystem.WarnThreshold:0}",
+                    $"{Ashfall.Core.Radiation.RadiationSystem.AcuteThreshold:0}");
+                _traitsList.AddChild(doseRow);
+
+                var lifetimeRow = MakeRowLabel(
+                    $"{Tr("ui.survivor.trait.lifetime_exposure", "Lifetime Exposure")}: {rad.LifetimeRadiationExposure:0} mSv",
+                    // Task 10 — colour the lifetime total from the shared chronic band.
+                    rad.LifetimeRadiationExposure >= Ashfall.Core.Radiation.RadiationSystem.ChronicLifetimeThreshold
+                        ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Dim);
+                lifetimeRow.TooltipText = TrFormat("ui.survivor.trait.lifetime_tooltip",
+                    $"{Ashfall.Core.Radiation.RadiationSystem.ChronicLifetimeThreshold:0}");
+                _traitsList.AddChild(lifetimeRow);
+                AddRow(_traitsList, $"{Tr("ui.survivor.trait.rad_resistance", "Rad Resistance")}: {rad.HasRadResistance}{(rad.HasRadResistance ? $" ({rad.RadResistanceHoursRemaining:0}h)" : "")}",
                     rad.HasRadResistance ? Ashfall.Core.UI.Theme.Lethe : Ashfall.Core.UI.Theme.Dim);
-                AddRow(_traitsList, $"Acute Sickness: {rad.HasAcuteRadiationSickness}", rad.HasAcuteRadiationSickness ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Dim);
-                AddRow(_traitsList, $"Chronic Illness: {rad.HasChronicIllness}", rad.HasChronicIllness ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Dim);
+                AddRow(_traitsList, $"{Tr("ui.survivor.trait.acute_sickness", "Acute Sickness")}: {rad.HasAcuteRadiationSickness}", rad.HasAcuteRadiationSickness ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Dim);
+                AddRow(_traitsList, $"{Tr("ui.survivor.trait.chronic_illness", "Chronic Illness")}: {rad.HasChronicIllness}", rad.HasChronicIllness ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Dim);
                 RenderedRowCount += 5;
             }
             else
             {
-                _traitsList.AddChild(MakeDimLine("No radiation state tracked."));
+                _traitsList.AddChild(MakeDimLine(Tr("ui.survivor.info.no_radiation", "No radiation state tracked.")));
             }
 
             // Plan 174 — Procedural Survivor Backstory
             var backstory = BackstoryProvider?.Invoke(s.Id);
             if (backstory != null && !string.IsNullOrEmpty(backstory.OccupationId))
             {
-                AddRow(_traitsList, $"Origin: {backstory.OccupationId}", Ashfall.Core.UI.Theme.Warm);
+                AddRow(_traitsList, TrFormat("ui.survivor.trait.origin", backstory.OccupationId), Ashfall.Core.UI.Theme.Warm);
                 RenderedRowCount++;
             }
 
             // ── Status ──
-            AddRow(_statusList, $"Critical flags: hunger={s.WasHungerCritical} thirst={s.WasThirstCritical} warmth={s.WasWarmthCritical}",
+            AddRow(_statusList, TrFormat("ui.survivor.status.critical_flags", s.WasHungerCritical, s.WasThirstCritical, s.WasWarmthCritical),
                 (s.WasHungerCritical || s.WasThirstCritical || s.WasWarmthCritical) ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Dim);
             RenderedRowCount++;
 
@@ -387,16 +417,16 @@ namespace AtomicWar.GodotApp.UI
             if (fitness != null)
             {
                 string fitnessText = fitness.Level == FitnessLevel.Fit
-                    ? "FIT"
-                    : fitness.Level == FitnessLevel.Impaired ? "IMPAIRED" : "UNFIT / INCAPACITATED";
-                AddRow(_statusList, $"Fitness: {fitnessText}",
+                    ? Tr("ui.survivor.fitness.fit", "FIT")
+                    : fitness.Level == FitnessLevel.Impaired ? Tr("ui.survivor.fitness.impaired", "IMPAIRED") : Tr("ui.survivor.fitness.unfit", "UNFIT / INCAPACITATED");
+                AddRow(_statusList, TrFormat("ui.survivor.status.fitness", fitnessText),
                     fitness.Level == FitnessLevel.Fit ? Ashfall.Core.UI.Theme.Lethe :
                     fitness.Level == FitnessLevel.Impaired ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Critical);
                 var reasons = new List<string>();
                 reasons.AddRange(fitness.BlockingReasons);
                 reasons.AddRange(fitness.DegradedFactors);
                 if (reasons.Count > 0)
-                    AddRow(_statusList, "Factors: " + string.Join(", ", reasons).Replace('_', ' '), Ashfall.Core.UI.Theme.Dim);
+                    AddRow(_statusList, Tr("ui.survivor.status.factors", "Factors:") + " " + string.Join(", ", reasons).Replace('_', ' '), Ashfall.Core.UI.Theme.Dim);
                 RenderedRowCount += reasons.Count > 0 ? 2 : 1;
             }
 
@@ -414,30 +444,30 @@ namespace AtomicWar.GodotApp.UI
                     int source = string.CompareOrdinal(left.SourceId, right.SourceId);
                     return source != 0 ? source : ((int)left.Need).CompareTo((int)right.Need);
                 });
-                AddRow(_statusList, "Top active need contributors", Ashfall.Core.UI.Theme.Pale);
+                AddRow(_statusList, Tr("ui.survivor.status.top_contributors", "Top active need contributors"), Ashfall.Core.UI.Theme.Pale);
                 int count = Math.Min(5, modifiers.Count);
                 for (int i = 0; i < count; i++)
                 {
                     var modifier = modifiers[i];
                     AddRow(_statusList,
-                        $"  {FormatModifierSource(modifier.SourceId)}: {modifier.Need} {modifier.DeltaPerHour:+0.##;-0.##;0}/h",
+                        "  " + TrFormat("ui.survivor.status.modifier_row", FormatModifierSource(modifier.SourceId), modifier.Need, $"{modifier.DeltaPerHour:+0.##;-0.##;0}"),
                         Ashfall.Core.UI.Theme.Dim);
                 }
                 if (modifiers.Count > count)
-                    AddRow(_statusList, $"  +{modifiers.Count - count} other active contributors", Ashfall.Core.UI.Theme.Dim);
+                    AddRow(_statusList, TrFormat("ui.survivor.status.other_contributors", modifiers.Count - count), Ashfall.Core.UI.Theme.Dim);
                 RenderedRowCount += count + 1 + (modifiers.Count > count ? 1 : 0);
             }
 
             var recent = needsSystem?.ModifierStack.GetRecentForSurvivor(s.Id);
             if (recent != null && recent.Count > 0)
             {
-                AddRow(_statusList, "Recent need contributors", Ashfall.Core.UI.Theme.Pale);
+                AddRow(_statusList, Tr("ui.survivor.status.recent_contributors", "Recent need contributors"), Ashfall.Core.UI.Theme.Pale);
                 int count = Math.Min(4, recent.Count);
                 for (int i = 0; i < count; i++)
                 {
                     var contribution = recent[i];
                     AddRow(_statusList,
-                        $"  {FormatModifierSource(contribution.SourceId)}: {contribution.Need} {contribution.DeltaPerHour:+0.##;-0.##;0}",
+                        "  " + TrFormat("ui.survivor.status.recent_row", FormatModifierSource(contribution.SourceId), contribution.Need, $"{contribution.DeltaPerHour:+0.##;-0.##;0}"),
                         Ashfall.Core.UI.Theme.Dim);
                 }
                 RenderedRowCount += count + 1;
@@ -445,6 +475,13 @@ namespace AtomicWar.GodotApp.UI
         }
 
         private void AddRow(VBoxContainer parent, string text, (float r, float g, float b, float a) col)
+            => parent.AddChild(MakeRowLabel(text, col));
+
+        /// <summary>
+        /// Task 11 — builds the row label without parenting it, so a caller can
+        /// attach a band tooltip before the row joins the tree.
+        /// </summary>
+        private static Label MakeRowLabel(string text, (float r, float g, float b, float a) col)
         {
             var label = new Label
             {
@@ -455,7 +492,7 @@ namespace AtomicWar.GodotApp.UI
             label.CustomMinimumSize = new Vector2(400, 0);
             label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
             label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(col));
-            parent.AddChild(label);
+            return label;
         }
 
         private Label MakeDimLine(string text)
@@ -468,14 +505,18 @@ namespace AtomicWar.GodotApp.UI
 
         private static string Name(string id)
         {
-            if (string.IsNullOrEmpty(id)) return "Unknown";
+            if (string.IsNullOrEmpty(id)) return Tr("ui.survivor.info.unknown", "Unknown");
             int us = id.IndexOf('_');
             return us >= 0 ? id.Substring(us + 1).Replace('_', ' ') : id;
         }
 
+        private static string Tr(string key, string fallback) => AshfallUiText.Tr(key, fallback);
+
+        private static string TrFormat(string key, params object[] args) => AshfallUiText.TrFormat(key, args);
+
         private static string FormatModifierSource(string sourceId)
         {
-            if (string.IsNullOrEmpty(sourceId)) return "Unknown source";
+            if (string.IsNullOrEmpty(sourceId)) return Tr("ui.survivor.info.unknown_source", "Unknown source");
             return sourceId.Replace('.', ' ').Replace('_', ' ').Replace(':', ' ');
         }
 

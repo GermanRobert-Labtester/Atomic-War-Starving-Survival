@@ -95,9 +95,11 @@ namespace Ashfall.Core.Tests.Content
             Assert.Contains("_journal?.HasAuthoredCorpus == true", main);
             Assert.Contains("_confessionSecrets != null", main);
             Assert.Contains("_survivorVoice != null", main);
-            // ...and orphans are reported, never faked as loaded.
-            Assert.Contains("session.MarkConsumerActive(\"CassettePlaybackSystem\", false);", main);
-            Assert.Contains("session.MarkCatalogLoaded(\"cassette_sets.json\", false);", main);
+            // ...and the cassette consumer was subsequently wired live: its flags
+            // are now derived from the live composition, never a hardcoded orphan.
+            Assert.Contains("bool cassettesLoaded = _cassettePlayback != null && _cassettePlayback.SetCount > 0;", main);
+            Assert.Contains("session.MarkConsumerActive(\"CassettePlaybackSystem\", cassettesLoaded);", main);
+            Assert.Contains("session.MarkCatalogLoaded(\"cassette_sets.json\", cassettesLoaded);", main);
         }
 
         [Fact]

@@ -81,6 +81,36 @@ namespace Ashfall.Core.Tests.Tooling
         }
 
         [Fact]
+        public void Manifest_HeaderCountsMatchGatesArray()
+        {
+            string root = FindRepoRoot();
+            using var doc = LoadManifest(root);
+            var rootEl = doc.RootElement;
+            var gates = rootEl.GetProperty("gates").EnumerateArray().ToList();
+
+            Assert.True(rootEl.TryGetProperty("total_gates", out var totalProp), "manifest must declare total_gates");
+            Assert.Equal(gates.Count, totalProp.GetInt32());
+
+            Assert.True(rootEl.TryGetProperty("fast_tier_count", out var fastProp), "manifest must declare fast_tier_count");
+            int actualFast = gates.Count(g => g.GetProperty("classification").GetString() == "fast");
+            Assert.Equal(actualFast, fastProp.GetInt32());
+        }
+
+        [Fact]
+        public void Manifest_SchemaVersionNoteIsBounded()
+        {
+            string root = FindRepoRoot();
+            using var doc = LoadManifest(root);
+            var rootEl = doc.RootElement;
+
+            Assert.True(rootEl.TryGetProperty("_schema_version_note", out var noteProp), "manifest must declare _schema_version_note");
+            string note = noteProp.GetString()!;
+            Assert.False(string.IsNullOrWhiteSpace(note), "_schema_version_note cannot be blank");
+            Assert.True(note.Length <= 2000,
+                $"_schema_version_note grew to {note.Length} chars; move historical entries to docs/ci/GATE_INVENTORY.md or a changelog");
+        }
+
+        [Fact]
         public void Manifest_GateIdsAreUniqueAndSnakeCase()
         {
             string root = FindRepoRoot();
@@ -95,6 +125,31 @@ namespace Ashfall.Core.Tests.Tooling
                 string gateId = gate.GetProperty("gate_id").GetString()!;
                 Assert.Matches(snakeRegex, gateId);
                 Assert.True(seenIds.Add(gateId), $"Duplicate gate_id detected in manifest: '{gateId}'");
+            }
+        }
+
+        [Fact]
+        public void Manifest_DependencyIdsReferenceRegisteredGates()
+        {
+            string root = FindRepoRoot();
+            using var doc = LoadManifest(root);
+            var gates = doc.RootElement.GetProperty("gates").EnumerateArray().ToList();
+            var ids = gates.Select(g => g.GetProperty("gate_id").GetString()!).ToHashSet(StringComparer.Ordinal);
+
+            foreach (var gate in gates)
+            {
+                string gateId = gate.GetProperty("gate_id").GetString()!;
+                if (!gate.TryGetProperty("depends_on", out var deps) || deps.ValueKind != JsonValueKind.Array)
+                {
+                    continue;
+                }
+
+                foreach (var dep in deps.EnumerateArray())
+                {
+                    string? depId = dep.GetString();
+                    Assert.False(string.IsNullOrWhiteSpace(depId), $"Gate '{gateId}' has a blank depends_on entry");
+                    Assert.True(ids.Contains(depId!), $"Gate '{gateId}' depends_on unregistered gate '{depId}'");
+                }
             }
         }
 

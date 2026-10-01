@@ -259,6 +259,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.RealCampaignJourneySelfTest:
                     RunRealCampaignJourneySelfTestAndQuit();
                     return;
+                case HostCliAction.UiCompositionHarnessSelfTest:
+                    RunUiCompositionHarnessAndQuit();
+                    return;
                 case HostCliAction.FailureRestartSelfTest:
                     RunFailureRestartSelfTestAndQuit();
                     return;

@@ -31,6 +31,7 @@ namespace AtomicWar.GodotApp
             var session = new PlayMetricsHostSession("probe_session", "probe");
             session.BeginSession(4242, "difficulty_standard");
             Check("session_context", session.Recorder.Seed == 4242 && session.Recorder.PresetId == "difficulty_standard");
+            Check("failed_sortie_zero_on_fresh", session.FailedSortieCount == 0);
 
             // 2 — bounded buffer: never grows past Core's cap.
             for (int i = 0; i < PlaySessionRecorder.MaxBufferedEvents + 25; i++)
@@ -66,6 +67,43 @@ namespace AtomicWar.GodotApp
                 && session.Funnel.IsStepCompleted("first_research")
                 && session.Funnel.IsStepCompleted("first_dispatch"));
 
+            // 3c — P002: every live stage publishes a verb and resolves it back
+            // from its requirement sigil (the host records both).
+            bool verbsResolve = true;
+            foreach (var stage in Ashfall.Core.Onboarding.OnboardingCatalog.FirstHourOrder)
+            {
+                string verb = Ashfall.Core.Onboarding.OnboardingCatalog.FirstHourVerbForStage(stage);
+                var sigil = Ashfall.Core.Onboarding.OnboardingCatalog
+                    .DefFor(Ashfall.Core.Onboarding.OnboardingProfile.FirstHour, stage)
+                    .Requirements[0].Sigil;
+                if (string.IsNullOrEmpty(verb)) verbsResolve = false;
+                if (!Ashfall.Core.Onboarding.OnboardingCatalog.TryGetFirstHourVerbForSigil(
+                        sigil, out var resolved, out _) || resolved != stage)
+                    verbsResolve = false;
+            }
+            Check("first_hour_verb_mapping", verbsResolve);
+            // The verb is recorded as a distinct histogram action AND the two
+            // hint counters are part of the closed action vocabulary.
+            session.RecordAction(Ashfall.Core.PlayerCommand.PlayerCommandCode.WaterStart, "water", "observed", 1);
+            session.RecordAction(PlaySessionActions.HintShown, "water", "observed", 1);
+            session.RecordAction(PlaySessionActions.HintDismissed, "water", "observed", 1);
+            Check("hint_action_vocabulary",
+                PlaySessionActions.IsKnown(PlaySessionActions.HintShown)
+                && PlaySessionActions.IsKnown(PlaySessionActions.HintDismissed));
+
+            // 3e — P003: the terminal Expedition verb is locked until the
+            // Water→Dose prerequisites complete, then unlocks.
+            var gateJourney = Ashfall.Core.Onboarding.OnboardingJourney.CreateFirstHour();
+            bool lockedAtStart = gateJourney.ExpeditionDispatchPrerequisite()
+                == Ashfall.Core.Onboarding.OnboardingStage.Water;
+            gateJourney.RecordSigil("water.treatment_started");
+            gateJourney.RecordSigil("power.breaker_toggled");
+            gateJourney.RecordSigil("food.ration_consumed");
+            gateJourney.RecordSigil("duty.assigned");
+            gateJourney.RecordSigil("dose.read");
+            bool unlockedAfterDose = gateJourney.ExpeditionDispatchPrerequisite() == null;
+            Check("tutorial_dispatch_gate", lockedAtStart && unlockedAfterDose);
+
             // 4 — day advances arrive as day_join rows and complete their step.
             for (int day = 1; day <= 3; day++) session.RecordDayJoined(day, "campaign_day_coordinator", "day_advanced", 4 + day);
             Check("funnel_day_step", session.Funnel.IsStepCompleted("first_day_past_tutorial"));
@@ -74,6 +112,11 @@ namespace AtomicWar.GodotApp
             // 5 — expedition completion feeds the harvest read model.
             session.RecordExpeditionReturned(12, 3);
             Check("harvest_read_model", session.HarvestedResourceCount == 12);
+
+            // 5b — a failed sortie is observable too (Plan 46 follow-up).
+            session.RecordExpeditionFailed("Collapsed from exhaustion.", 4);
+            Check("failed_sortie_read_model", session.FailedSortieCount == 1);
+            Check("failed_does_not_harvest", session.HarvestedResourceCount == 12);
 
             // 6 — aggregation grades are deterministic and documented.
             var strong = session.Aggregate(new SessionMetricInputs(

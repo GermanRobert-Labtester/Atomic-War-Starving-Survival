@@ -1,6 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://b1kitchen_nutrition_panel_ash"]
-
-[ext_resource type="Script" path="res://src/UI/KitchenNutritionPanelContent.cs" id="1_kitchen_content"]
+[gd_scene load_steps=1 format=3 uid="uid://b1kitchen_nutrition_panel_ash"]
 
 [node name="KitchenNutritionContent" type="Control"]
 layout_mode = 3

@@ -112,7 +112,13 @@ namespace AtomicWar.GodotApp
         private void SetupDailyBriefingModal()
         {
             if (_dailyBriefingModal != null) return;
-            _dailyBriefingModal = PanelSceneLoader.Load<DailyBriefingModal>("res://assets/ui/modals/DailyBriefingModal.tscn");
+            // res://assets/ui/modals/DailyBriefingModal.tscn is a designer mirror
+            // whose root is a plain Control with no script attached, so loading it
+            // as DailyBriefingModal threw InvalidCastException on every day advance
+            // (PackedScene.Instantiate<T> is an unbox.any hard cast). The modal's own
+            // _Ready() builds the complete surface, so construct it directly like
+            // every other modal (see OpeningProtocolModal in Main.UiPanels).
+            _dailyBriefingModal = new DailyBriefingModal();
             _dailyBriefingModal.OnAcknowledged += OnBriefingAcknowledged;
             _dailyBriefingModal.OnDeepLinkRequested += HandleBriefingDeepLink;
             AddChild(_dailyBriefingModal);

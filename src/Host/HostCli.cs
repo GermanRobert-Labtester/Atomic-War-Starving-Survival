@@ -222,6 +222,7 @@ namespace AtomicWar.GodotApp
         CampaignFuzzSelfTest,
         CompositionRootSelfTest,
         RealCampaignJourneySelfTest,
+        UiCompositionHarnessSelfTest,
         FailureRestartSelfTest,
         FoodLoopSelfTest,
         ReasonablePlayerSelfTest,
@@ -819,6 +820,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.CompositionRootSelfTest;
             if (Has(args, "--real-campaign-journey-selftest") || Has(args, "--campaign-journey-selftest") || Has(args, "--real-main-journey-selftest"))
                 return HostCliAction.RealCampaignJourneySelfTest;
+            if (Has(args, "--ui-composition-harness-selftest") || Has(args, "--ui-sim-harness-selftest") || Has(args, "--composition-retry-selftest"))
+                return HostCliAction.UiCompositionHarnessSelfTest;
             if (Has(args, "--failure-restart-selftest") || Has(args, "--restart-journey-selftest") || Has(args, "--gameover-restart-selftest"))
                 return HostCliAction.FailureRestartSelfTest;
             if (Has(args, "--food-loop-selftest"))
@@ -1129,6 +1132,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --campaign-fuzz-selftest      Core-level campaign fuzz harness gate (Task #129); delegates to Ashfall.Core.Tests.CampaignFuzz suite");
             GD.Print("  --composition-root-selftest   Composition root architecture gate: verifies ComposeCampaign() is the single entry point (Task #131)");
             GD.Print("  --real-campaign-journey-selftest / --campaign-journey-selftest / --real-main-journey-selftest Real Main-composed player journey: New Game -> ComposeCampaign() -> real gameplay action -> real day advance through the coordinator -> SaveAll -> full in-memory reset -> Continue -> restored composed state (Plan #5)");
+            GD.Print("  --ui-composition-harness-selftest / --ui-sim-harness-selftest / --composition-retry-selftest  UI-built headless simulation harness: builds the real UI/composition root, drives a deterministic multi-day run, injects a late-owner fault, retries the same day (fail-closed rollback), compares the persisted campaign.json checksum to the in-memory envelope, and soaks the retry cycle over the full production owner set");
             GD.Print("  --failure-restart-selftest / --restart-journey-selftest / --gameover-restart-selftest  Failure & restart path proof: survivor deaths -> ShowGameOver terminal seal -> ReturnToMenu -> fresh New Game (no stale state) -> Continue after a simulated crash -> corrupt campaign.json fails closed with the live session intact -> verified backup recovery (Task 9)");
             GD.Print("  --food-loop-selftest          Food loop from the UI: fresh-game starter cooking recipes known, kitchen panel prep -> day advance -> serve-all, holdfast eat/drink seam, Plan 136 cooking authority live");
             GD.Print("  --year-two-chapter-selftest / --play-on-selftest / --chapter-selftest  Year-two chapter continuation probe");

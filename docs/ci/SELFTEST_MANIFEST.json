@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
-  "total_tests": 317,
-  "headless_test_count": 315,
+  "total_tests": 318,
+  "headless_test_count": 316,
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",
@@ -3735,6 +3735,20 @@
       "headless_compatible": true,
       "expected_summary_id": "real_campaign_journey_selftest",
       "timeout_seconds": 30
+    },
+    {
+      "test_id": "ui_composition_harness_selftest",
+      "action": "UiCompositionHarnessSelfTest",
+      "category": "UI Tests, Layout & Gameplay Smoke",
+      "primary_flag": "--ui-composition-harness-selftest",
+      "aliases": [
+        "--ui-sim-harness-selftest",
+        "--composition-retry-selftest"
+      ],
+      "description": "UI-built headless simulation harness: builds the real UI/composition root, drives a deterministic multi-day run, injects a late-owner fault, retries the same day (fail-closed rollback), compares the persisted campaign.json checksum to the in-memory envelope, and soaks the retry cycle over the full production owner set",
+      "headless_compatible": true,
+      "expected_summary_id": "ui_composition_harness_selftest",
+      "timeout_seconds": 120
     },
     {
       "test_id": "failure_restart_selftest",

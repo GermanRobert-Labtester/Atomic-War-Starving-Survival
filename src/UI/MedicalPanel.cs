@@ -53,9 +53,13 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
+        private static string Tr(string key, string fallback) => AshfallUiText.Tr(key, fallback);
+
+        private static string TrFormat(string key, params object[] args) => AshfallUiText.TrFormat(key, args);
+
         private static string FormatSurvivorName(string id)
         {
-            if (string.IsNullOrEmpty(id)) return "[UNNAMED]";
+            if (string.IsNullOrEmpty(id)) return Tr("ui.medical.unnamed", "[UNNAMED]");
             return id switch
             {
                 "survivor_dr_sarah_chen" or "survivor_sarah_chen" => "Dr. Sarah Chen",
@@ -67,14 +71,14 @@ namespace AtomicWar.GodotApp.UI
 
         private static string RespiratoryLabel(float degradation, bool permanent)
         {
-            if (degradation <= 0f) return "CLEAR";
+            if (degradation <= 0f) return Tr("ui.medical.lung.clear", "CLEAR");
             if (degradation < RespiratoryDegenerationSystem.SevereCoughThreshold)
-                return "MILD COUGH";
+                return Tr("ui.medical.lung.mild", "MILD COUGH");
             if (degradation < RespiratoryDegenerationSystem.IrreversibleThreshold)
-                return $"SEVERE COUGH  [STAMINA -{RespiratoryDegenerationSystem.SevereCoughStaminaPenalty * 100:F0}%]";
+                return TrFormat("ui.medical.severe_cough", $"{RespiratoryDegenerationSystem.SevereCoughStaminaPenalty * 100:F0}");
             if (degradation < RespiratoryDegenerationSystem.TerminalLungThreshold)
-                return permanent ? "PERMANENT LUNG DAMAGE  [INHALER REQUIRED]" : "CRITICAL — INHALER REQUIRED";
-            return "TERMINAL LUNG DAMAGE";
+                return permanent ? Tr("ui.medical.lung.permanent", "PERMANENT LUNG DAMAGE  [INHALER REQUIRED]") : Tr("ui.medical.lung.critical", "CRITICAL — INHALER REQUIRED");
+            return Tr("ui.medical.lung.terminal", "TERMINAL LUNG DAMAGE");
         }
 
         public void Bind(
@@ -116,16 +120,16 @@ namespace AtomicWar.GodotApp.UI
 
             if (_medicalHost == null)
             {
-                _healthStats.AddChild(AshfallUiHelpers.MakeMetadata("No medical session bound."));
-                _treatmentList.AddChild(AshfallUiHelpers.MakeMetadata("No treatment ledger available."));
-                _supplyList.AddChild(AshfallUiHelpers.MakeMetadata("No inventory session bound."));
+                _healthStats.AddChild(AshfallUiHelpers.MakeMetadata(Tr("ui.medical.no_session", "No medical session bound.")));
+                _treatmentList.AddChild(AshfallUiHelpers.MakeMetadata(Tr("ui.medical.no_treatment_ledger", "No treatment ledger available.")));
+                _supplyList.AddChild(AshfallUiHelpers.MakeMetadata(Tr("ui.medical.no_inventory", "No inventory session bound.")));
                 return;
             }
 
             // ── Survivor health, dosimetry, and affliction rows ────────
             if (_survivorsHost == null || _survivorsHost.RosterState.Count == 0)
             {
-                _healthStats.AddChild(AshfallUiHelpers.MakeMetadata("No survivor health readout bound."));
+                _healthStats.AddChild(AshfallUiHelpers.MakeMetadata(Tr("ui.medical.no_health_readout", "No survivor health readout bound.")));
             }
             else
             {
@@ -157,27 +161,27 @@ namespace AtomicWar.GodotApp.UI
                     // ── Vital row ──────────────────────────────────────
                     var row = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
                     row.AddChild(AshfallUiHelpers.MakeBadgeIcon(
-                        currentDose >= 50f ? "badge_rad_sickness" : "badge_exhaustion", 22));
+                        currentDose >= Ashfall.Core.Radiation.RadiationSystem.WarnThreshold ? "badge_rad_sickness" : "badge_exhaustion", 22));
 
                     var name = AshfallUiHelpers.MakeSmall(FormatSurvivorName(survivor.Id));
                     name.SizeFlagsHorizontal = SizeFlags.ExpandFill;
                     row.AddChild(name);
 
-                    var hp = AshfallUiHelpers.MakeMono($"HP {survivor.Health:0}/{survivor.MaxHealthCap:0}");
+                    var hp = AshfallUiHelpers.MakeMono(TrFormat("ui.medical.hp", $"{survivor.Health:0}", $"{survivor.MaxHealthCap:0}"));
                     hp.AddThemeColorOverride("font_color",
-                        AshfallUiHelpers.ToColor(survivor.Health < 30
+                        AshfallUiHelpers.ToColor(survivor.Health < Ashfall.Core.Survivors.NeedsProfile.DefaultHealthWarn
                             ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Warm));
                     row.AddChild(hp);
 
                     var dose = AshfallUiHelpers.MakeMono(
-                        $"RAD {currentDose:0} mSv{(hasResistance ? " [⚡RESIST]" : "")}");
+                        TrFormat("ui.medical.rad", $"{currentDose:0}", hasResistance ? " " + Tr("ui.medical.resist_suffix", "[⚡RESIST]") : ""));
                     dose.AddThemeColorOverride("font_color",
-                        AshfallUiHelpers.ToColor(currentDose >= 50f
+                        AshfallUiHelpers.ToColor(currentDose >= Ashfall.Core.Radiation.RadiationSystem.WarnThreshold
                             ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Lethe));
                     row.AddChild(dose);
 
-                    row.AddChild(AshfallUiHelpers.MakeMono($"HUN {survivor.Hunger:0}"));
-                    row.AddChild(AshfallUiHelpers.MakeMono($"THI {survivor.Thirst:0}"));
+                    row.AddChild(AshfallUiHelpers.MakeMono(TrFormat("ui.medical.hunger", $"{survivor.Hunger:0}")));
+                    row.AddChild(AshfallUiHelpers.MakeMono(TrFormat("ui.medical.thirst", $"{survivor.Thirst:0}")));
                     card.AddChild(row);
 
                     // ── Treatment action row (Task #133: all treatments go
@@ -187,11 +191,11 @@ namespace AtomicWar.GodotApp.UI
                     var actionRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
 
                     var btnHeal = AshfallUiHelpers.MakeButton(
-                        $"BANDAGE (+25 HP) [{bandageCount}]", () =>
+                        TrFormat("ui.medical.bandage", 25, bandageCount), () =>
                         {
                             if (TryExecuteTreatment(targetId, MedicalTreatmentCatalog.TreatmentBandage))
                             {
-                                _medicalHost.AddCareEntry(targetId, "Applied sterile bandage.");
+                                _medicalHost.AddCareEntry(targetId, Tr("ui.medical.care_bandage", "Applied sterile bandage."));
                                 OnTreatmentAdministered?.Invoke();
                                 RefreshView();
                             }
@@ -201,11 +205,11 @@ namespace AtomicWar.GodotApp.UI
                     actionRow.AddChild(btnHeal);
 
                     var btnIodine = AshfallUiHelpers.MakeButton(
-                        $"IODINE (+RESIST) [{iodineCount}]", () =>
+                        TrFormat("ui.medical.iodine", iodineCount), () =>
                         {
                             if (TryExecuteTreatment(targetId, MedicalTreatmentCatalog.TreatmentIodine))
                             {
-                                _medicalHost.AddCareEntry(targetId, "Administered Potassium Iodide.");
+                                _medicalHost.AddCareEntry(targetId, Tr("ui.medical.care_iodine", "Administered Potassium Iodide."));
                                 OnTreatmentAdministered?.Invoke();
                                 RefreshView();
                             }
@@ -215,11 +219,11 @@ namespace AtomicWar.GodotApp.UI
                     actionRow.AddChild(btnIodine);
 
                     var btnRadAway = AshfallUiHelpers.MakeButton(
-                        $"ANTI-RAD (−40 mSv) [{radAwayCount}]", () =>
+                        TrFormat("ui.medical.anti_rad", 40, radAwayCount), () =>
                         {
                             if (TryExecuteTreatment(targetId, MedicalTreatmentCatalog.TreatmentAntiRad))
                             {
-                                _medicalHost.AddCareEntry(targetId, "Administered anti-rad chelation agent.");
+                                _medicalHost.AddCareEntry(targetId, Tr("ui.medical.care_anti_rad", "Administered anti-rad chelation agent."));
                                 OnTreatmentAdministered?.Invoke();
                                 RefreshView();
                             }
@@ -236,7 +240,7 @@ namespace AtomicWar.GodotApp.UI
                         respRow.AddChild(AshfallUiHelpers.MakeBadgeIcon("badge_exhaustion", 18));
 
                         string respLabel = RespiratoryLabel(respDeg, permanent);
-                        var respText = AshfallUiHelpers.MakeSmall($"LUNG: {respLabel}  ({respDeg:F0}%)");
+                        var respText = AshfallUiHelpers.MakeSmall(TrFormat("ui.medical.lung_row", respLabel, $"{respDeg:F0}"));
                         respText.SizeFlagsHorizontal = SizeFlags.ExpandFill;
                         bool respCritical = respDeg >= RespiratoryDegenerationSystem.SevereCoughThreshold;
                         respText.AddThemeColorOverride("font_color",
@@ -246,7 +250,7 @@ namespace AtomicWar.GodotApp.UI
 
                         if (reliefHours > 0f)
                         {
-                            var relief = AshfallUiHelpers.MakeMono($"[INHALER ACTIVE {reliefHours:F0}h]");
+                            var relief = AshfallUiHelpers.MakeMono(TrFormat("ui.medical.inhaler_relief", $"{reliefHours:F0}"));
                             relief.AddThemeColorOverride("font_color",
                                 AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
                             respRow.AddChild(relief);
@@ -258,10 +262,10 @@ namespace AtomicWar.GodotApp.UI
 
                         bool canApplyInhaler = inhalerCount > 0 && respDeg > 0f;
                         string inhalerBtnText = canApplyInhaler
-                            ? $"APPLY INHALER (−{RespiratoryDegenerationSystem.InhalerDegradationReduction:F0}% lung) [{inhalerCount}]"
-                            : $"APPLY INHALER [{inhalerCount}]";
+                            ? TrFormat("ui.medical.inhaler_apply", $"{RespiratoryDegenerationSystem.InhalerDegradationReduction:F0}", inhalerCount)
+                            : TrFormat("ui.medical.inhaler_plain", inhalerCount);
                         string inhalerReason = !canApplyInhaler
-                            ? (inhalerCount <= 0 ? "No inhaler in inventory — craft recipe_inhaler" : "No respiratory damage")
+                            ? (inhalerCount <= 0 ? Tr("ui.medical.inhaler_no_item", "No inhaler in inventory — craft recipe_inhaler") : Tr("ui.medical.inhaler_no_damage", "No respiratory damage"))
                             : string.Empty;
 
                         string respTargetId = survivor.Id;
@@ -269,7 +273,7 @@ namespace AtomicWar.GodotApp.UI
                         {
                             if (TryExecuteTreatment(respTargetId, MedicalTreatmentCatalog.TreatmentInhaler))
                             {
-                                _medicalHost.AddCareEntry(respTargetId, "Applied improvised inhaler.");
+                                _medicalHost.AddCareEntry(respTargetId, Tr("ui.medical.care_inhaler", "Applied improvised inhaler."));
                                 OnTreatmentAdministered?.Invoke();
                                 RefreshView();
                             }
@@ -291,12 +295,12 @@ namespace AtomicWar.GodotApp.UI
                         {
                             string teaTargetId = survivor.Id;
                             var btnTea = AshfallUiHelpers.MakeButton(
-                                $"HERBAL TEA (−{RespiratoryDegenerationSystem.HerbalTeaDegradationReduction:F0}%) [{herbalTeaCount}]",
+                                TrFormat("ui.medical.herbal_tea", $"{RespiratoryDegenerationSystem.HerbalTeaDegradationReduction:F0}", herbalTeaCount),
                                 () =>
                                 {
                                     if (TryExecuteTreatment(teaTargetId, MedicalTreatmentCatalog.TreatmentHerbalTea))
                                     {
-                                        _medicalHost.AddCareEntry(teaTargetId, "Administered herbal tea.");
+                                        _medicalHost.AddCareEntry(teaTargetId, Tr("ui.medical.care_herbal_tea", "Administered herbal tea."));
                                         OnTreatmentAdministered?.Invoke();
                                         RefreshView();
                                     }
@@ -309,11 +313,11 @@ namespace AtomicWar.GodotApp.UI
                     }
 
                     // ── Clinical context note (Plan 141) ─────────────────
-                    string? clinicalConditionKey = currentDose >= 50f
+                    string? clinicalConditionKey = currentDose >= Ashfall.Core.Radiation.RadiationSystem.WarnThreshold
                         ? MedicalTreatmentCatalog.RadiationSicknessId
                         : (respDeg >= RespiratoryDegenerationSystem.SevereCoughThreshold
                             ? MedicalTreatmentCatalog.RespiratoryDegenerationId
-                            : (survivor.Health < 30f ? MedicalTreatmentCatalog.HealthDeficitId : null));
+                            : (survivor.Health < Ashfall.Core.Survivors.NeedsProfile.DefaultHealthWarn ? MedicalTreatmentCatalog.HealthDeficitId : null));
 
                     if (clinicalConditionKey != null && _medicalTexts != null)
                     {
@@ -358,14 +362,14 @@ namespace AtomicWar.GodotApp.UI
             }
             if (dependencyCount == 0)
                 _treatmentList.AddChild(
-                    AshfallUiHelpers.MakeMetadata("No active chemical dependencies or withdrawal ledgers."));
+                    AshfallUiHelpers.MakeMetadata(Tr("ui.medical.no_chem_dependencies", "No active chemical dependencies or withdrawal ledgers.")));
 
             _treatmentList.AddChild(AshfallUiHelpers.MakeDataRow(
-                "Active Cohort Penalties",
-                $"Crafting {_medicalHost.ActiveCraftingPenalty:P0} · Combat {_medicalHost.ActiveCombatPenalty:P0}",
+                Tr("ui.medical.active_penalties", "Active Cohort Penalties"),
+                TrFormat("ui.medical.cohort_penalty", $"{_medicalHost.ActiveCraftingPenalty:P0}", $"{_medicalHost.ActiveCombatPenalty:P0}"),
                 AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Lethe)));
 
-            _treatmentList.AddChild(AshfallUiHelpers.MakeMetadata(_medicalHost.VigilStatusLine()));
+            _treatmentList.AddChild(AshfallUiHelpers.MakeMetadata(MedicalVigilText.Format(_medicalHost.Vigil)));
 
             RenderScheduledProcedures();
             RenderDiseaseSection();
@@ -373,7 +377,7 @@ namespace AtomicWar.GodotApp.UI
             // ── Medical supplies on hand ───────────────────────────────
             if (_inventoryHost == null)
             {
-                _supplyList.AddChild(AshfallUiHelpers.MakeMetadata("Inventory session not bound."));
+                _supplyList.AddChild(AshfallUiHelpers.MakeMetadata(Tr("ui.medical.inventory_not_bound", "Inventory session not bound.")));
             }
             else
             {
@@ -399,7 +403,7 @@ namespace AtomicWar.GodotApp.UI
 
             if (!string.IsNullOrWhiteSpace(_medicalHost.LastEvent))
                 _supplyList.AddChild(
-                    AshfallUiHelpers.MakeMetadata($"Last medical event: {_medicalHost.LastEvent}"));
+                    AshfallUiHelpers.MakeMetadata(TrFormat("ui.medical.last_event", _medicalHost.LastEvent)));
         }
 
         /// <summary>
@@ -420,7 +424,7 @@ namespace AtomicWar.GodotApp.UI
             var active = pipeline.Schedule.Active;
             if (active.Count == 0)
             {
-                _treatmentList.AddChild(AshfallUiHelpers.MakeMetadata("No procedures currently queued."));
+                _treatmentList.AddChild(AshfallUiHelpers.MakeMetadata(Tr("ui.medical.no_procedures", "No procedures currently queued.")));
                 return;
             }
 
@@ -429,8 +433,8 @@ namespace AtomicWar.GodotApp.UI
                 var def = MedicalTreatmentCatalog.Get(row.treatmentId);
                 string displayName = def?.DisplayName ?? row.treatmentId.Replace('_', ' ');
                 string readiness = row.remainingHours <= 0f
-                    ? "READY FOR TICK"
-                    : $"READY IN {row.remainingHours:0.#}h";
+                    ? Tr("ui.medical.ready_for_tick", "READY FOR TICK")
+                    : TrFormat("ui.medical.ready_in", $"{row.remainingHours:0.#}");
                 string reservations = string.Join(", ", row.reservationIds
                     .Select(id => pipeline.Reservations.TryGet(id, out var claim)
                         ? $"{ResolveItemDisplayName(claim.targetId)} ×{claim.quantity}"
@@ -446,13 +450,13 @@ namespace AtomicWar.GodotApp.UI
                     AshfallUiHelpers.ToColor(row.remainingHours <= 0f
                         ? Ashfall.Core.UI.Theme.Lethe
                         : Ashfall.Core.UI.Theme.Pale)));
-                card.AddChild(AshfallUiHelpers.MakeMetadata($"RESERVED: {reservations}"));
+                card.AddChild(AshfallUiHelpers.MakeMetadata(TrFormat("ui.medical.reserved", reservations)));
 
-                var cancel = AshfallUiHelpers.MakeButton("CANCEL / RELEASE RESERVATION", () =>
+                var cancel = AshfallUiHelpers.MakeButton(Tr("ui.medical.cancel_reservation", "CANCEL / RELEASE RESERVATION"), () =>
                 {
                     var result = pipeline.ExecuteCancel(row.procedureId);
                     if (result.Success)
-                        host!.AddCareEntry(row.survivorId, $"Cancelled {displayName}; reserved treatment inputs released.");
+                        host!.AddCareEntry(row.survivorId, TrFormat("ui.medical.care_cancelled", displayName));
                     else
                         GD.PushWarning($"[Medical] procedure {row.procedureId} cancellation refused: {result.ReasonCode}");
                     RefreshView();
@@ -571,7 +575,7 @@ namespace AtomicWar.GodotApp.UI
             var pipeline = _medicalHost?.Pipeline;
             if (pipeline == null || _survivorsHost == null)
             {
-                _treatmentList.AddChild(AshfallUiHelpers.MakeMetadata("Disease ward offline (pipeline not bound)."));
+                _treatmentList.AddChild(AshfallUiHelpers.MakeMetadata(Tr("ui.medical.disease_ward_offline", "Disease ward offline (pipeline not bound).")));
                 return;
             }
 
@@ -596,8 +600,8 @@ namespace AtomicWar.GodotApp.UI
 
                     var row = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
                     string label = unidentified
-                        ? $"{FormatSurvivorName(survivor.Id)} — {affliction.StageLabel} (unidentified)"
-                        : $"{FormatSurvivorName(survivor.Id)} — {affliction.StageLabel} · day {affliction.SeverityValue:0}";
+                        ? TrFormat("ui.medical.affliction_unidentified", FormatSurvivorName(survivor.Id), affliction.StageLabel)
+                        : TrFormat("ui.medical.affliction_row", FormatSurvivorName(survivor.Id), affliction.StageLabel, $"{affliction.SeverityValue:0}");
                     var labelNode = AshfallUiHelpers.MakeSmall(label);
                     labelNode.SizeFlagsHorizontal = SizeFlags.ExpandFill;
                     row.AddChild(labelNode);
@@ -605,7 +609,7 @@ namespace AtomicWar.GodotApp.UI
                     if (unidentified)
                     {
                         string target = survivor.Id;
-                        var btn = AshfallUiHelpers.MakeButton("IDENTIFY", () =>
+                        var btn = AshfallUiHelpers.MakeButton(Tr("ui.medical.identify", "IDENTIFY"), () =>
                         {
                             if (TryIdentify(target)) RefreshView();
                         });
@@ -622,7 +626,7 @@ namespace AtomicWar.GodotApp.UI
                             sv, MedicalTreatmentCatalog.TreatmentRelease,
                             target: new Ashfall.Core.Medical.AfflictionId(diseaseId)).IsAvailable;
 
-                        var btnQuarantine = AshfallUiHelpers.MakeButton("ISOLATE", () =>
+                        var btnQuarantine = AshfallUiHelpers.MakeButton(Tr("ui.medical.isolate", "ISOLATE"), () =>
                         {
                             if (TryExecuteTreatment(target, MedicalTreatmentCatalog.TreatmentQuarantine, diseaseId))
                                 RefreshView();
@@ -630,7 +634,7 @@ namespace AtomicWar.GodotApp.UI
                         btnQuarantine.Disabled = !quarantineOk;
                         row.AddChild(btnQuarantine);
 
-                        var btnRelease = AshfallUiHelpers.MakeButton("RELEASE", () =>
+                        var btnRelease = AshfallUiHelpers.MakeButton(Tr("ui.medical.release", "RELEASE"), () =>
                         {
                             if (TryExecuteTreatment(target, MedicalTreatmentCatalog.TreatmentRelease, diseaseId))
                                 RefreshView();
@@ -649,7 +653,7 @@ namespace AtomicWar.GodotApp.UI
                         {
                             var subRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
                             string summary = prose.DiagnosisSummary.Length > 80 ? prose.DiagnosisSummary.Substring(0, 77) + "..." : prose.DiagnosisSummary;
-                            var clinicalLabel = AshfallUiHelpers.MakeMetadata($"  ↳ [CLINICAL NOTE] {summary} · Observe: {prose.SymptomLine}");
+                            var clinicalLabel = AshfallUiHelpers.MakeMetadata("  " + TrFormat("ui.medical.clinical_note", summary, prose.SymptomLine));
                             clinicalLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
                             subRow.AddChild(clinicalLabel);
                             _treatmentList.AddChild(subRow);
@@ -659,7 +663,7 @@ namespace AtomicWar.GodotApp.UI
             }
             if (!anyRow)
                 _treatmentList.AddChild(AshfallUiHelpers.MakeMetadata(
-                    "No suspected or confirmed infections in the shelter."));
+                    Tr("ui.medical.no_infections", "No suspected or confirmed infections in the shelter.")));
 
             // Camp-wide vector protocols: one application each; the pipeline
             // consumes the catalog countermeasure through the inventory.
@@ -673,12 +677,12 @@ namespace AtomicWar.GodotApp.UI
                 row.AddChild(label);
 
                 string protocolId = protocol.ProtocolId;
-                var btn = AshfallUiHelpers.MakeButton("APPLY", () =>
+                var btn = AshfallUiHelpers.MakeButton(Tr("ui.medical.apply", "APPLY"), () =>
                 {
                     if (TryExecuteProtocol(protocolId)) RefreshView();
                 });
                 btn.Disabled = !preview.IsAvailable;
-                btn.TooltipText = preview.IsAvailable ? "ok" : preview.FailureCode;
+                btn.TooltipText = preview.IsAvailable ? Tr("ui.medical.treatment_ready", "ok") : preview.FailureCode;
                 row.AddChild(btn);
                 _treatmentList.AddChild(row);
             }
@@ -686,7 +690,7 @@ namespace AtomicWar.GodotApp.UI
 
         private static string DescribeProtocolCost(Ashfall.Core.Medical.IMedicalProtocolHandler protocol)
         {
-            if (protocol.ItemCosts.Count == 0) return "no supplies needed";
+            if (protocol.ItemCosts.Count == 0) return Tr("ui.medical.no_supplies", "no supplies needed");
             return string.Join(", ", protocol.ItemCosts.Select(kv => $"{kv.Value}× {kv.Key.Replace('_', ' ')}"));
         }
 
@@ -744,15 +748,15 @@ namespace AtomicWar.GodotApp.UI
                 : AshfallMetricCard.Criticality.Warn;
 
             AshfallMetricCard.Criticality hpCrit =
-                avgHp >= 75 ? AshfallMetricCard.Criticality.Normal
-                : avgHp >= 50 ? AshfallMetricCard.Criticality.Caution
-                : avgHp > 0 ? AshfallMetricCard.Criticality.Warn
-                : AshfallMetricCard.Criticality.Critical;
+                avgHp <= Ashfall.Core.Survivors.NeedsProfile.DefaultHealthCritical ? AshfallMetricCard.Criticality.Critical
+                : avgHp <= Ashfall.Core.Survivors.NeedsProfile.DefaultHealthWarn ? AshfallMetricCard.Criticality.Warn
+                : avgHp >= 75 ? AshfallMetricCard.Criticality.Normal
+                : AshfallMetricCard.Criticality.Caution;
 
             AshfallMetricCard.Criticality doseCrit =
-                maxDose < 25 ? AshfallMetricCard.Criticality.Normal
-                : maxDose < 50 ? AshfallMetricCard.Criticality.Caution
-                : maxDose < 100 ? AshfallMetricCard.Criticality.Warn
+                maxDose < Ashfall.Core.Radiation.RadiationSystem.WarnThreshold * 0.5f ? AshfallMetricCard.Criticality.Normal
+                : maxDose < Ashfall.Core.Radiation.RadiationSystem.WarnThreshold ? AshfallMetricCard.Criticality.Caution
+                : maxDose < Ashfall.Core.Radiation.RadiationSystem.AcuteThreshold ? AshfallMetricCard.Criticality.Warn
                 : AshfallMetricCard.Criticality.Critical;
 
             _statusRail.Set("cohort",   $"{living}/{cohort}",  cohortCrit);
@@ -760,23 +764,21 @@ namespace AtomicWar.GodotApp.UI
             _statusRail.Set("doseMax",  $"{maxDose:0} mSv",     doseCrit);
             _statusRail.Set("activeTx", $"{activeTx}",          AshfallMetricCard.Criticality.Normal);
 
-            // Vigil: state from the medical engine (the underlying wording is
-            // kept verbatim so the host doesn't lose semantics).
-            string vigilState = "STANDBY";
-            AshfallMetricCard.Criticality vigilCrit = AshfallMetricCard.Criticality.Caution;
-            if (_medicalHost != null)
+            // Vigil: state from the medical engine's public state machine; the
+            // line is localized by the panel, and the rail severity comes from
+            // the state itself instead of English substring matching.
+            string vigilState = Tr("ui.medical.vigil_standby", "STANDBY");
+            AshfallMetricCard.Criticality vigilCrit = AshfallMetricCard.Criticality.Normal;
+            if (_medicalHost?.Vigil != null)
             {
-                var line = _medicalHost.VigilStatusLine();
+                string line = MedicalVigilText.Format(_medicalHost.Vigil);
                 if (!string.IsNullOrWhiteSpace(line))
                 {
                     string upper = line.ToUpperInvariant();
                     vigilState = upper.Length > 18 ? upper.Substring(0, 18) : upper;
-                    if (upper.Contains("CRITICAL") || upper.Contains("EMERGENCY"))
-                        vigilCrit = AshfallMetricCard.Criticality.Critical;
-                    else if (upper.Contains("WARN") || upper.Contains("DAMAGE"))
-                        vigilCrit = AshfallMetricCard.Criticality.Warn;
-                    else if (upper.Contains("CLEAR") || upper.Contains("HOLDING"))
-                        vigilCrit = AshfallMetricCard.Criticality.Normal;
+                    vigilCrit = _medicalHost.Vigil.IsActive
+                        ? AshfallMetricCard.Criticality.Caution
+                        : AshfallMetricCard.Criticality.Normal;
                 }
             }
             _statusRail.Set("vigil", vigilState, vigilCrit);
@@ -831,20 +833,20 @@ namespace AtomicWar.GodotApp.UI
             contentBox.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             scrollMargin.AddChild(contentBox);
 
-            contentBox.AddChild(AshfallUiHelpers.MakeSectionHeader("SURVIVOR HEALTH, DOSIMETRY & RESPIRATORY"));
+            contentBox.AddChild(AshfallUiHelpers.MakeSectionHeader(Tr("ui.medical.section.health", "SURVIVOR HEALTH, DOSIMETRY & RESPIRATORY")));
             _healthStats = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingXs);
             _healthStats.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             contentBox.AddChild(_healthStats);
 
             contentBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            contentBox.AddChild(AshfallUiHelpers.MakeSectionHeader("TREATMENT & DETOXIFICATION LEDGER"));
+            contentBox.AddChild(AshfallUiHelpers.MakeSectionHeader(Tr("ui.medical.section.treatment", "TREATMENT & DETOXIFICATION LEDGER")));
             _treatmentList = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingXs);
             contentBox.AddChild(_treatmentList);
 
             contentBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            contentBox.AddChild(AshfallUiHelpers.MakeSectionHeader("MEDICAL SUPPLIES ON HAND"));
+            contentBox.AddChild(AshfallUiHelpers.MakeSectionHeader(Tr("ui.medical.section.supplies", "MEDICAL SUPPLIES ON HAND")));
             _supplyList = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingXs);
             contentBox.AddChild(_supplyList);
 

@@ -148,6 +148,27 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
+        public void ArchitectureTestMap_ProjectsKitchenRouteAndNeedsBridgeWithoutInventingNpcMemoryUi()
+        {
+            string root = RepoRoot();
+            string text = File.ReadAllText(Path.Combine(root, "docs", "architecture", "ARCHITECTURE_TEST_MAP.md"));
+            string[] rows = text.Split('\n').Where(line => line.StartsWith("|")).ToArray();
+
+            string cooking = Assert.Single(rows.Where(line => line.Contains("| `cooking` | Nutrition |", StringComparison.Ordinal)));
+            Assert.Contains("KitchenNutritionPanel", cooking);
+            Assert.Contains("--food-loop-selftest", cooking);
+            Assert.Contains("- **UI Routes:** `kitchen_nutrition`", text);
+
+            string survivors = Assert.Single(rows.Where(line => line.Contains("| `survivors` | Survival & Biology |", StringComparison.Ordinal)));
+            Assert.Contains("NeedsPerformanceBridge", survivors);
+            Assert.Contains("NeedsPerformanceHostSession", survivors);
+            Assert.Contains("NeedsPerformanceBridgeTests", survivors);
+
+            string npcMemory = Assert.Single(rows.Where(line => line.Contains("| `npc_memory` | Narrative |", StringComparison.Ordinal)));
+            Assert.Contains("*None (GAP)*", npcMemory);
+        }
+
+        [Fact]
         public void ArchitectureTestMap_ConstructedStatusIncludesSetupInvocationEvidence()
         {
             string root = RepoRoot();

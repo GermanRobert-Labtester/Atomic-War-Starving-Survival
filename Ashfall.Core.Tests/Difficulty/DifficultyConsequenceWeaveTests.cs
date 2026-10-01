@@ -28,6 +28,7 @@ namespace Ashfall.Core.Tests.Difficulty
                 radiation_gain_mult = 1.5f,
                 disease_onset_mult = 1.5f,
                 hostile_encounter_mult = 1.5f,
+                enemy_damage_mult = 1.5f,
                 market_price_mult = 1.2f,
                 equipment_decay_mult = 1.3f,
                 crisis_deadline_mult = 0.8f

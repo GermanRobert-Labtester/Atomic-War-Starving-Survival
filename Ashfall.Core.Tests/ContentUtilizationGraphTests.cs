@@ -48,6 +48,40 @@ namespace Ashfall.Core.Tests
                 "Not all discovered catalogs should be classified as gameplay-consumed");
         }
 
+        // F-18: a catalog whose filename is named by source code has a real
+        // loader seam even when the scanner's explicit loader dictionary has no
+        // entry. Before the fix, accessibility_profiles.json (named by
+        // src/Main.AccessibilitySettings.cs) was reported NO_LOADER.
+        [Fact]
+        public void CatalogNamedInSource_IsNotReportedAsNoLoader_F18()
+        {
+            var scanner = new ContentUtilizationScanner(FindRepoRoot(), GetDataDir(), GetCoreDir(), GetSrcDir());
+            var graph = scanner.Scan();
+
+            var entry = graph.Catalogs.Single(c => c.Path == "accessibility_profiles.json");
+            Assert.False(string.IsNullOrEmpty(entry.Loader),
+                "accessibility_profiles.json is named in source and must record filename-based loader evidence.");
+            Assert.StartsWith("SourceReference:", entry.Loader);
+            Assert.DoesNotContain(graph.Disconnects,
+                d => d.Catalog == "accessibility_profiles.json" && d.Category == "NO_LOADER");
+        }
+
+        // Task 1 (suggested wave): the explicit loader dictionary missed real
+        // typed loaders. The scanner now infers a declared loader class from the
+        // catalog name, so difficulty_presets.json records DifficultyPresetCatalogLoader
+        // instead of a bare filename reference.
+        [Fact]
+        public void DeclaredLoaderClass_IsInferredForUnmappedCatalogs()
+        {
+            var scanner = new ContentUtilizationScanner(FindRepoRoot(), GetDataDir(), GetCoreDir(), GetSrcDir());
+            var graph = scanner.Scan();
+
+            var entry = graph.Catalogs.Single(c => c.Path == "difficulty_presets.json");
+            Assert.Contains("DifficultyPreset", entry.Loader);
+            Assert.DoesNotContain("SourceReference", entry.Loader);
+            Assert.Equal(ContentClassification.GAMEPLAY_CONSUMED, entry.Classification);
+        }
+
         // ── B. LOADED VS QUERIED ────────────────────────────────────
 
         [Fact]

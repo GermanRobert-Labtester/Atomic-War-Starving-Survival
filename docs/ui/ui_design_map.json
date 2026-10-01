@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "generated_at": "2026-09-25",
+  "generated_at": "2026-10-01",
   "canvas": {
     "resolution": "1920x1080",
     "scaling": "fixed"
@@ -37,7 +37,7 @@
       },
       {
         "token": "Critical",
-        "hex": "#E63333"
+        "hex": "#FF5252"
       },
       {
         "token": "Surface",
@@ -114,51 +114,52 @@
       "FontSizeBody": 15,
       "FontSizeSmall": 12,
       "FontSizeMono": 13,
-      "FontSizeLabel": 11
+      "FontSizeLabel": 12
     }
   },
   "surface_counts": {
-    "total_panels": 244,
-    "shell_panels": 112,
+    "total_panels": 240,
+    "shell_panels": 114,
     "bindable_panels": 116,
     "scene_backed": 22,
-    "rail_surfaces": 120
+    "rail_surfaces": 121
   },
   "layout_patterns": {
-    "shell:split-body": 38,
+    "shell:split-body": 40,
     "shell:single-column": 74,
     "scene-backed": 22,
-    "code-built": 110
+    "code-built": 104
   },
   "component_totals": {
-    "scroll": 121,
-    "option_buttons": 47,
-    "buttons": 215,
+    "scroll": 124,
+    "option_buttons": 53,
+    "buttons": 213,
     "panel_cards": 39,
-    "separators": 415,
-    "hbox": 238,
-    "vbox": 478,
-    "datagrid": 2014,
+    "separators": 428,
+    "hbox": 249,
+    "vbox": 489,
+    "datagrid": 2051,
     "sidebar": 199,
-    "metric_card": 1612
+    "metric_card": 1645
   },
   "component_users": {
-    "scroll": 82,
-    "option_buttons": 23,
-    "buttons": 62,
+    "scroll": 84,
+    "option_buttons": 26,
+    "buttons": 63,
     "panel_cards": 23,
-    "separators": 119,
-    "hbox": 136,
-    "vbox": 154,
-    "datagrid": 33,
+    "separators": 120,
+    "hbox": 141,
+    "vbox": 156,
+    "datagrid": 34,
     "sidebar": 32,
-    "metric_card": 120
+    "metric_card": 122
   },
   "shell_min_sizes": [
     "720\u00d7480",
     "900\u00d7560",
     "900\u00d7580",
     "900\u00d7600",
+    "900\u00d7620",
     "920\u00d7600",
     "950\u00d7600",
     "950\u00d7620",
@@ -180,23 +181,48 @@
   ],
   "nav": [
     {
-      "group": "SYSTEMS",
+      "group": "WEEK ONE",
       "buttons": [
         {
-          "label": "STATUS",
-          "route": "status"
+          "label": "INVENTORY",
+          "route": "inventory"
+        },
+        {
+          "label": "GREENHOUSE",
+          "route": "greenhouse"
         },
         {
           "label": "SURVIVORS",
           "route": "survivors"
         },
         {
-          "label": "SURVIVAL",
-          "route": "survival_detail"
+          "label": "MAP",
+          "route": "map"
         },
         {
-          "label": "INVENTORY",
-          "route": "inventory"
+          "label": "JOURNAL",
+          "route": "journal"
+        },
+        {
+          "label": "SAVE / LOAD",
+          "route": "save"
+        },
+        {
+          "label": "SETTINGS",
+          "route": "settings"
+        }
+      ]
+    },
+    {
+      "group": "ALL SURFACES",
+      "buttons": [
+        {
+          "label": "STATUS",
+          "route": "status"
+        },
+        {
+          "label": "SURVIVAL",
+          "route": "survival_detail"
         },
         {
           "label": "CRAFTING",
@@ -227,10 +253,6 @@
           "route": "radio"
         },
         {
-          "label": "MAP",
-          "route": "map"
-        },
-        {
           "label": "SHELTER",
           "route": "shelter"
         },
@@ -249,10 +271,6 @@
         {
           "label": "RESEARCH",
           "route": "research"
-        },
-        {
-          "label": "GREENHOUSE",
-          "route": "greenhouse"
         },
         {
           "label": "FACTIONS",
@@ -303,7 +321,7 @@
           "route": "narrative_arc"
         },
         {
-          "label": "JOURNAL",
+          "label": "JOURNAL DETAIL",
           "route": "journal_detail"
         },
         {
@@ -613,6 +631,7 @@
       "wildlife_trapping",
       "excavation",
       "apprenticeship",
+      "difficulty_settings",
       "caregiving",
       "shelter_thermal",
       "shelter_schedule",
@@ -832,6 +851,7 @@
       "cybernetics",
       "death_legacy",
       "decontamination",
+      "difficulty_settings",
       "dynamic_quests",
       "equipment_condition",
       "excavation",
@@ -851,6 +871,7 @@
       "plans_130_133",
       "plans_94_97",
       "propaganda",
+      "recruitment",
       "regional_treaty",
       "relationship_decay",
       "rumors",
@@ -884,7 +905,7 @@
     {
       "rule": "Every dashboard shell declares a min size \u2265 720\u00d7480",
       "holds": true,
-      "evidence": "112 shell panels"
+      "evidence": "114 shell panels"
     },
     {
       "rule": "Every bindable panel exposes Unbind (lifecycle symmetry)",
@@ -894,19 +915,19 @@
     {
       "rule": "Every expanded panel id has an open path (switch case or PanelRegistry binding)",
       "holds": true,
-      "evidence": "63 ids, 63 switch cases, 143 registry bindings"
+      "evidence": "64 ids, 65 switch cases, 143 registry bindings"
     },
     {
       "rule": "Every surface with status-rail cards obtains the rail via shell.SetStatusRail()",
       "holds": true,
-      "evidence": "120 surfaces with rails"
+      "evidence": "121 surfaces with rails"
     }
   ],
   "panels": [
     {
       "panel": "AchievementsPanel",
       "file": "src/UI/AchievementsPanel.cs",
-      "loc": 208,
+      "loc": 207,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -934,7 +955,7 @@
     {
       "panel": "AfflictionsPanel",
       "file": "src/UI/AfflictionsPanel.cs",
-      "loc": 489,
+      "loc": 672,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -1012,7 +1033,7 @@
     {
       "panel": "AmphibiousDraisinePanel",
       "file": "src/UI/AmphibiousDraisinePanel.cs",
-      "loc": 159,
+      "loc": 161,
       "bind_target": "AmphibiousDraisineHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -1059,7 +1080,7 @@
     {
       "panel": "AmputationTriagePanel",
       "file": "src/UI/AmputationTriagePanel.cs",
-      "loc": 284,
+      "loc": 328,
       "bind_target": "AmputationSystem",
       "has_unbind": true,
       "bindable": true,
@@ -1092,7 +1113,7 @@
         "option_buttons": 0,
         "buttons": 0,
         "panel_cards": 0,
-        "separators": 2,
+        "separators": 3,
         "hbox": 2,
         "vbox": 0,
         "datagrid": 0,
@@ -1205,7 +1226,7 @@
     {
       "panel": "ApprenticeshipPanel",
       "file": "src/UI/ApprenticeshipPanel.cs",
-      "loc": 113,
+      "loc": 232,
       "bind_target": "ApprenticeshipHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -1224,15 +1245,15 @@
         }
       ],
       "uses_status_rail": true,
-      "layout_pattern": "shell:single-column",
+      "layout_pattern": "shell:split-body",
       "components": {
-        "scroll": 0,
-        "option_buttons": 0,
+        "scroll": 1,
+        "option_buttons": 2,
         "buttons": 0,
         "panel_cards": 0,
         "separators": 0,
-        "hbox": 0,
-        "vbox": 1,
+        "hbox": 1,
+        "vbox": 4,
         "datagrid": 0,
         "sidebar": 0,
         "metric_card": 4
@@ -1317,7 +1338,7 @@
     {
       "panel": "ArchiveDeskPanel",
       "file": "src/UI/ArchiveDeskPanel.cs",
-      "loc": 303,
+      "loc": 412,
       "bind_target": "ArchiveDeskHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -1345,25 +1366,57 @@
         {
           "id": "status",
           "label": "ARCHIVIST"
+        },
+        {
+          "id": "museum",
+          "label": "MUSEUM"
         }
       ],
       "uses_status_rail": true,
       "layout_pattern": "shell:split-body",
       "components": {
         "scroll": 3,
-        "option_buttons": 0,
-        "buttons": 0,
+        "option_buttons": 1,
+        "buttons": 1,
         "panel_cards": 0,
-        "separators": 2,
-        "hbox": 1,
-        "vbox": 7,
+        "separators": 3,
+        "hbox": 2,
+        "vbox": 8,
         "datagrid": 0,
         "sidebar": 0,
-        "metric_card": 11
+        "metric_card": 14
       },
       "routes": [
         "archive_desk"
       ]
+    },
+    {
+      "panel": "AssetInspectorPanel",
+      "file": "src/UI/AssetInspectorPanel.cs",
+      "loc": 813,
+      "bind_target": null,
+      "has_unbind": false,
+      "bindable": false,
+      "shell": false,
+      "shell_title": null,
+      "min_width": 720,
+      "min_height": 480,
+      "rail_cards": [],
+      "uses_status_rail": false,
+      "layout_pattern": "code-built",
+      "components": {
+        "scroll": 1,
+        "option_buttons": 1,
+        "buttons": 0,
+        "panel_cards": 0,
+        "separators": 2,
+        "hbox": 0,
+        "vbox": 0,
+        "datagrid": 0,
+        "sidebar": 0,
+        "metric_card": 0
+      },
+      "routes": []
     },
     {
       "panel": "AutopsyReportPanel",
@@ -1450,7 +1503,7 @@
     {
       "panel": "BasalRadonMigrationPanel",
       "file": "src/UI/BasalRadonMigrationPanel.cs",
-      "loc": 166,
+      "loc": 157,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -1570,7 +1623,7 @@
     {
       "panel": "BioFermentationPanel",
       "file": "src/UI/BioFermentationPanel.cs",
-      "loc": 337,
+      "loc": 393,
       "bind_target": "BioFermentationEngine",
       "has_unbind": true,
       "bindable": true,
@@ -1586,7 +1639,7 @@
         "option_buttons": 2,
         "buttons": 0,
         "panel_cards": 0,
-        "separators": 3,
+        "separators": 4,
         "hbox": 0,
         "vbox": 0,
         "datagrid": 0,
@@ -1598,7 +1651,7 @@
     {
       "panel": "BlackMarketPanel",
       "file": "src/UI/BlackMarketPanel.cs",
-      "loc": 448,
+      "loc": 449,
       "bind_target": "BlackMarketHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -1694,7 +1747,7 @@
     {
       "panel": "BoreholeSeismographPanel",
       "file": "src/UI/BoreholeSeismographPanel.cs",
-      "loc": 185,
+      "loc": 176,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -1722,7 +1775,7 @@
     {
       "panel": "BrineExtractionPanel",
       "file": "src/UI/BrineExtractionPanel.cs",
-      "loc": 236,
+      "loc": 237,
       "bind_target": "SilentFoundryHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -2187,7 +2240,7 @@
     {
       "panel": "ChroniclePanel",
       "file": "src/UI/ChroniclePanel.cs",
-      "loc": 218,
+      "loc": 284,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -2196,6 +2249,10 @@
       "min_width": 1100,
       "min_height": 700,
       "rail_cards": [
+        {
+          "id": "chapter",
+          "label": "Chapter"
+        },
         {
           "id": "phase",
           "label": "Phase"
@@ -2214,10 +2271,10 @@
         "panel_cards": 0,
         "separators": 0,
         "hbox": 1,
-        "vbox": 4,
+        "vbox": 5,
         "datagrid": 0,
         "sidebar": 0,
-        "metric_card": 6
+        "metric_card": 8
       },
       "routes": [
         "chronicle",
@@ -2255,7 +2312,7 @@
     {
       "panel": "CombatDetailPanel",
       "file": "src/UI/CombatDetailPanel.cs",
-      "loc": 160,
+      "loc": 162,
       "bind_target": "CombatHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -2286,7 +2343,7 @@
     {
       "panel": "CombatHistoryPanel",
       "file": "src/UI/CombatHistoryPanel.cs",
-      "loc": 198,
+      "loc": 211,
       "bind_target": "CombatHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -2302,7 +2359,7 @@
         "option_buttons": 0,
         "buttons": 0,
         "panel_cards": 0,
-        "separators": 4,
+        "separators": 5,
         "hbox": 0,
         "vbox": 1,
         "datagrid": 0,
@@ -2317,7 +2374,7 @@
     {
       "panel": "CombatHudOverlay",
       "file": "src/UI/CombatHudOverlay.cs",
-      "loc": 453,
+      "loc": 506,
       "bind_target": "CombatHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -2369,7 +2426,7 @@
         "separators": 4,
         "hbox": 2,
         "vbox": 6,
-        "datagrid": 92,
+        "datagrid": 101,
         "sidebar": 0,
         "metric_card": 28
       },
@@ -2378,7 +2435,7 @@
     {
       "panel": "CombatPanel",
       "file": "src/UI/CombatPanel.cs",
-      "loc": 492,
+      "loc": 723,
       "bind_target": "CombatHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -2458,7 +2515,7 @@
     {
       "panel": "ConfirmationModal",
       "file": "src/UI/ConfirmationModal.cs",
-      "loc": 141,
+      "loc": 142,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -2537,7 +2594,7 @@
     {
       "panel": "CraftingPanel",
       "file": "src/UI/CraftingPanel.cs",
-      "loc": 471,
+      "loc": 520,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -2567,7 +2624,7 @@
     {
       "panel": "CrossingQuestPanel",
       "file": "src/UI/CrossingQuestPanel.cs",
-      "loc": 494,
+      "loc": 523,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -2625,7 +2682,7 @@
     {
       "panel": "CryogenicPermafrostCorePanel",
       "file": "src/UI/CryogenicPermafrostCorePanel.cs",
-      "loc": 166,
+      "loc": 157,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -2653,7 +2710,7 @@
     {
       "panel": "CvdDiamondPanel",
       "file": "src/UI/CvdDiamondPanel.cs",
-      "loc": 133,
+      "loc": 135,
       "bind_target": "CvdDiamondHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -2745,7 +2802,7 @@
     {
       "panel": "DailyBriefingModal",
       "file": "src/UI/DailyBriefingModal.cs",
-      "loc": 246,
+      "loc": 301,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -2771,34 +2828,6 @@
       "routes": [
         "briefing"
       ]
-    },
-    {
-      "panel": "DailyBriefingModalContent",
-      "file": "src/UI/DailyBriefingModalContent.cs",
-      "loc": 7,
-      "bind_target": null,
-      "has_unbind": false,
-      "bindable": false,
-      "shell": false,
-      "shell_title": null,
-      "min_width": 720,
-      "min_height": 480,
-      "rail_cards": [],
-      "uses_status_rail": false,
-      "layout_pattern": "code-built",
-      "components": {
-        "scroll": 0,
-        "option_buttons": 0,
-        "buttons": 0,
-        "panel_cards": 0,
-        "separators": 0,
-        "hbox": 0,
-        "vbox": 0,
-        "datagrid": 0,
-        "sidebar": 0,
-        "metric_card": 0
-      },
-      "routes": []
     },
     {
       "panel": "DeconAirlockPanel",
@@ -3021,9 +3050,46 @@
       "routes": []
     },
     {
+      "panel": "DifficultySettingsPanel",
+      "file": "src/UI/DifficultySettingsPanel.cs",
+      "loc": 386,
+      "bind_target": null,
+      "has_unbind": true,
+      "bindable": false,
+      "shell": true,
+      "shell_title": "Difficulty // Campaign Parameters",
+      "min_width": 900,
+      "min_height": 620,
+      "rail_cards": [
+        {
+          "id": "preset",
+          "label": "Active Preset"
+        },
+        {
+          "id": "state",
+          "label": "Campaign Lock"
+        }
+      ],
+      "uses_status_rail": true,
+      "layout_pattern": "shell:split-body",
+      "components": {
+        "scroll": 0,
+        "option_buttons": 0,
+        "buttons": 0,
+        "panel_cards": 0,
+        "separators": 0,
+        "hbox": 3,
+        "vbox": 3,
+        "datagrid": 0,
+        "sidebar": 0,
+        "metric_card": 5
+      },
+      "routes": []
+    },
+    {
       "panel": "DoseGeographyPanel",
       "file": "src/UI/DoseGeographyPanel.cs",
-      "loc": 486,
+      "loc": 519,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -3057,6 +3123,10 @@
           "label": "WATCH LIST"
         },
         {
+          "id": "route",
+          "label": "ROUTE CHECK"
+        },
+        {
           "id": "events",
           "label": "READINGS"
         }
@@ -3073,7 +3143,7 @@
         "vbox": 3,
         "datagrid": 22,
         "sidebar": 7,
-        "metric_card": 24
+        "metric_card": 28
       },
       "routes": []
     },
@@ -3133,7 +3203,7 @@
     {
       "panel": "DutyRosterDetailPanel",
       "file": "src/UI/DutyRosterDetailPanel.cs",
-      "loc": 165,
+      "loc": 164,
       "bind_target": "DutyRosterHostSession",
       "has_unbind": false,
       "bindable": true,
@@ -3164,7 +3234,7 @@
     {
       "panel": "DutyRosterPanel",
       "file": "src/UI/DutyRosterPanel.cs",
-      "loc": 724,
+      "loc": 757,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -3271,7 +3341,7 @@
     {
       "panel": "EbPvdCoatingPanel",
       "file": "src/UI/EbPvdCoatingPanel.cs",
-      "loc": 352,
+      "loc": 345,
       "bind_target": "EbPvdCoatingHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -3318,7 +3388,7 @@
     {
       "panel": "EconomyDetailPanel",
       "file": "src/UI/EconomyDetailPanel.cs",
-      "loc": 420,
+      "loc": 443,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -3335,7 +3405,7 @@
         "buttons": 1,
         "panel_cards": 0,
         "separators": 1,
-        "hbox": 1,
+        "hbox": 2,
         "vbox": 3,
         "datagrid": 0,
         "sidebar": 0,
@@ -3377,7 +3447,7 @@
     {
       "panel": "EmergencyResponseHud",
       "file": "src/UI/EmergencyResponseHud.cs",
-      "loc": 294,
+      "loc": 328,
       "bind_target": "CrisisPresentationSnapshot",
       "has_unbind": true,
       "bindable": true,
@@ -3487,7 +3557,7 @@
     {
       "panel": "EventDetailPanel",
       "file": "src/UI/EventDetailPanel.cs",
-      "loc": 135,
+      "loc": 134,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -3517,7 +3587,7 @@
     {
       "panel": "EventsLogPanel",
       "file": "src/UI/EventsLogPanel.cs",
-      "loc": 200,
+      "loc": 205,
       "bind_target": "object",
       "has_unbind": false,
       "bindable": true,
@@ -3583,7 +3653,7 @@
     {
       "panel": "ExpansionsHubPanel",
       "file": "src/UI/ExpansionsHubPanel.cs",
-      "loc": 469,
+      "loc": 468,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -3641,7 +3711,7 @@
     {
       "panel": "ExpeditionPanel",
       "file": "src/UI/ExpeditionPanel.cs",
-      "loc": 1419,
+      "loc": 1660,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -3654,7 +3724,7 @@
       "layout_pattern": "code-built",
       "components": {
         "scroll": 3,
-        "option_buttons": 2,
+        "option_buttons": 3,
         "buttons": 0,
         "panel_cards": 0,
         "separators": 4,
@@ -3913,7 +3983,7 @@
     {
       "panel": "FactionsPanel",
       "file": "src/UI/FactionsPanel.cs",
-      "loc": 537,
+      "loc": 651,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -3929,7 +3999,7 @@
         "option_buttons": 0,
         "buttons": 0,
         "panel_cards": 0,
-        "separators": 9,
+        "separators": 10,
         "hbox": 0,
         "vbox": 0,
         "datagrid": 0,
@@ -4062,7 +4132,7 @@
     {
       "panel": "FeedbackPanel",
       "file": "src/UI/FeedbackPanel.cs",
-      "loc": 242,
+      "loc": 262,
       "bind_target": "IFeedbackService",
       "has_unbind": true,
       "bindable": true,
@@ -4176,7 +4246,7 @@
     {
       "panel": "GameDashboardPanel",
       "file": "src/UI/GameDashboardPanel.cs",
-      "loc": 769,
+      "loc": 867,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -4192,7 +4262,7 @@
         "option_buttons": 0,
         "buttons": 0,
         "panel_cards": 0,
-        "separators": 8,
+        "separators": 9,
         "hbox": 0,
         "vbox": 0,
         "datagrid": 0,
@@ -4204,7 +4274,7 @@
     {
       "panel": "GameHudOverlay",
       "file": "src/UI/GameHudOverlay.cs",
-      "loc": 163,
+      "loc": 267,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -4221,7 +4291,7 @@
         "buttons": 0,
         "panel_cards": 0,
         "separators": 0,
-        "hbox": 2,
+        "hbox": 3,
         "vbox": 0,
         "datagrid": 0,
         "sidebar": 0,
@@ -4232,7 +4302,7 @@
     {
       "panel": "GameOverPanel",
       "file": "src/UI/GameOverPanel.cs",
-      "loc": 119,
+      "loc": 161,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -4260,7 +4330,7 @@
     {
       "panel": "GeigerCalibrationPanel",
       "file": "src/UI/GeigerCalibrationPanel.cs",
-      "loc": 280,
+      "loc": 281,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -4685,7 +4755,7 @@
     {
       "panel": "InventoryDetailPanel",
       "file": "src/UI/InventoryDetailPanel.cs",
-      "loc": 289,
+      "loc": 343,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -4702,7 +4772,7 @@
         "buttons": 2,
         "panel_cards": 0,
         "separators": 0,
-        "hbox": 0,
+        "hbox": 1,
         "vbox": 0,
         "datagrid": 0,
         "sidebar": 0,
@@ -4716,7 +4786,7 @@
     {
       "panel": "InventoryPanel",
       "file": "src/UI/InventoryPanel.cs",
-      "loc": 309,
+      "loc": 341,
       "bind_target": "InventoryHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -4822,7 +4892,7 @@
     {
       "panel": "JournalDetailPanel",
       "file": "src/UI/JournalDetailPanel.cs",
-      "loc": 135,
+      "loc": 134,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -4850,7 +4920,7 @@
     {
       "panel": "JournalPanel",
       "file": "src/UI/JournalPanel.cs",
-      "loc": 487,
+      "loc": 498,
       "bind_target": "JournalHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -5015,7 +5085,7 @@
     {
       "panel": "KitchenNutritionPanel",
       "file": "src/UI/KitchenNutritionPanel.cs",
-      "loc": 395,
+      "loc": 656,
       "bind_target": "KitchenNutritionHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -5027,6 +5097,10 @@
         {
           "id": "prep_jobs",
           "label": "ACTIVE PREP"
+        },
+        {
+          "id": "cook_ops",
+          "label": "COOK OPS"
         },
         {
           "id": "cooked",
@@ -5048,48 +5122,20 @@
       "uses_status_rail": true,
       "layout_pattern": "shell:split-body",
       "components": {
-        "scroll": 3,
+        "scroll": 4,
         "option_buttons": 0,
         "buttons": 0,
         "panel_cards": 0,
-        "separators": 3,
+        "separators": 4,
         "hbox": 1,
-        "vbox": 7,
+        "vbox": 8,
         "datagrid": 0,
         "sidebar": 0,
-        "metric_card": 12
+        "metric_card": 17
       },
       "routes": [
         "kitchen_nutrition"
       ]
-    },
-    {
-      "panel": "KitchenNutritionPanelContent",
-      "file": "src/UI/KitchenNutritionPanelContent.cs",
-      "loc": 8,
-      "bind_target": null,
-      "has_unbind": false,
-      "bindable": false,
-      "shell": false,
-      "shell_title": null,
-      "min_width": 720,
-      "min_height": 480,
-      "rail_cards": [],
-      "uses_status_rail": false,
-      "layout_pattern": "code-built",
-      "components": {
-        "scroll": 0,
-        "option_buttons": 0,
-        "buttons": 0,
-        "panel_cards": 0,
-        "separators": 0,
-        "hbox": 0,
-        "vbox": 0,
-        "datagrid": 0,
-        "sidebar": 0,
-        "metric_card": 0
-      },
-      "routes": []
     },
     {
       "panel": "LaborUI",
@@ -5190,34 +5236,6 @@
       ]
     },
     {
-      "panel": "LongWalkExpeditionPanel",
-      "file": "src/UI/LongWalkExpeditionPanel.cs",
-      "loc": 101,
-      "bind_target": null,
-      "has_unbind": true,
-      "bindable": false,
-      "shell": false,
-      "shell_title": null,
-      "min_width": 720,
-      "min_height": 480,
-      "rail_cards": [],
-      "uses_status_rail": false,
-      "layout_pattern": "code-built",
-      "components": {
-        "scroll": 0,
-        "option_buttons": 0,
-        "buttons": 4,
-        "panel_cards": 0,
-        "separators": 0,
-        "hbox": 0,
-        "vbox": 0,
-        "datagrid": 0,
-        "sidebar": 0,
-        "metric_card": 0
-      },
-      "routes": []
-    },
-    {
       "panel": "LowBackgroundLeadPanel",
       "file": "src/UI/LowBackgroundLeadPanel.cs",
       "loc": 270,
@@ -5295,7 +5313,7 @@
     {
       "panel": "MainMenuPanel",
       "file": "src/UI/MainMenuPanel.cs",
-      "loc": 195,
+      "loc": 225,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -5372,7 +5390,7 @@
     {
       "panel": "MapDetailPanel",
       "file": "src/UI/MapDetailPanel.cs",
-      "loc": 248,
+      "loc": 263,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -5400,7 +5418,7 @@
     {
       "panel": "MapPanel",
       "file": "src/UI/MapPanel.cs",
-      "loc": 607,
+      "loc": 730,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -5542,7 +5560,7 @@
     {
       "panel": "MedicalPanel",
       "file": "src/UI/MedicalPanel.cs",
-      "loc": 939,
+      "loc": 932,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -5741,7 +5759,7 @@
     {
       "panel": "MicrofluidicDiagnosticPanel",
       "file": "src/UI/MicrofluidicDiagnosticPanel.cs",
-      "loc": 401,
+      "loc": 394,
       "bind_target": "MicrofluidicDiagnosticHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -5788,7 +5806,7 @@
     {
       "panel": "MineFlailPanel",
       "file": "src/UI/MineFlailPanel.cs",
-      "loc": 321,
+      "loc": 314,
       "bind_target": "MineClearingFlailHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -5833,37 +5851,9 @@
       ]
     },
     {
-      "panel": "ModalManager",
-      "file": "src/UI/ModalManager.cs",
-      "loc": 135,
-      "bind_target": null,
-      "has_unbind": false,
-      "bindable": false,
-      "shell": false,
-      "shell_title": null,
-      "min_width": 720,
-      "min_height": 480,
-      "rail_cards": [],
-      "uses_status_rail": false,
-      "layout_pattern": "code-built",
-      "components": {
-        "scroll": 0,
-        "option_buttons": 0,
-        "buttons": 0,
-        "panel_cards": 0,
-        "separators": 0,
-        "hbox": 0,
-        "vbox": 0,
-        "datagrid": 0,
-        "sidebar": 0,
-        "metric_card": 0
-      },
-      "routes": []
-    },
-    {
       "panel": "MoralChoiceModal",
       "file": "src/UI/MoralChoiceModal.cs",
-      "loc": 318,
+      "loc": 320,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -5891,7 +5881,7 @@
     {
       "panel": "MusterAtlasPanel",
       "file": "src/UI/MusterAtlasPanel.cs",
-      "loc": 537,
+      "loc": 546,
       "bind_target": "MusterHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -5944,7 +5934,7 @@
     {
       "panel": "MusterPanel",
       "file": "src/UI/MusterPanel.cs",
-      "loc": 389,
+      "loc": 404,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -6017,7 +6007,7 @@
     {
       "panel": "NarrativeArcModal",
       "file": "src/UI/NarrativeArcModal.cs",
-      "loc": 142,
+      "loc": 146,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -6136,7 +6126,7 @@
     {
       "panel": "OnboardingHintPanel",
       "file": "src/UI/OnboardingHintPanel.cs",
-      "loc": 426,
+      "loc": 498,
       "bind_target": "OnboardingJourney",
       "has_unbind": false,
       "bindable": true,
@@ -6153,7 +6143,7 @@
         "buttons": 0,
         "panel_cards": 1,
         "separators": 3,
-        "hbox": 2,
+        "hbox": 3,
         "vbox": 2,
         "datagrid": 0,
         "sidebar": 0,
@@ -6166,7 +6156,7 @@
     {
       "panel": "OpeningProtocolModal",
       "file": "src/UI/OpeningProtocolModal.cs",
-      "loc": 239,
+      "loc": 277,
       "bind_target": "StartingLevelHostSession",
       "has_unbind": false,
       "bindable": true,
@@ -6182,7 +6172,7 @@
         "option_buttons": 0,
         "buttons": 0,
         "panel_cards": 0,
-        "separators": 4,
+        "separators": 5,
         "hbox": 0,
         "vbox": 0,
         "datagrid": 0,
@@ -6192,34 +6182,6 @@
       "routes": [
         "protocol"
       ]
-    },
-    {
-      "panel": "OpeningProtocolModalContent",
-      "file": "src/UI/OpeningProtocolModalContent.cs",
-      "loc": 7,
-      "bind_target": null,
-      "has_unbind": false,
-      "bindable": false,
-      "shell": false,
-      "shell_title": null,
-      "min_width": 720,
-      "min_height": 480,
-      "rail_cards": [],
-      "uses_status_rail": false,
-      "layout_pattern": "code-built",
-      "components": {
-        "scroll": 0,
-        "option_buttons": 0,
-        "buttons": 0,
-        "panel_cards": 0,
-        "separators": 0,
-        "hbox": 0,
-        "vbox": 0,
-        "datagrid": 0,
-        "sidebar": 0,
-        "metric_card": 0
-      },
-      "routes": []
     },
     {
       "panel": "PersonalBelongingsPanel",
@@ -6265,7 +6227,7 @@
     {
       "panel": "PersonalQuestPanel",
       "file": "src/UI/PersonalQuestPanel.cs",
-      "loc": 227,
+      "loc": 228,
       "bind_target": "PersonalQuestHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -6334,7 +6296,7 @@
     {
       "panel": "PhantomMemoryPanel",
       "file": "src/UI/PhantomMemoryPanel.cs",
-      "loc": 335,
+      "loc": 342,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -6386,7 +6348,7 @@
     {
       "panel": "PharmaLabPanel",
       "file": "src/UI/PharmaLabPanel.cs",
-      "loc": 378,
+      "loc": 397,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -6415,37 +6377,9 @@
       ]
     },
     {
-      "panel": "PharmaLabPanelContent",
-      "file": "src/UI/PharmaLabPanelContent.cs",
-      "loc": 7,
-      "bind_target": null,
-      "has_unbind": false,
-      "bindable": false,
-      "shell": false,
-      "shell_title": null,
-      "min_width": 720,
-      "min_height": 480,
-      "rail_cards": [],
-      "uses_status_rail": false,
-      "layout_pattern": "code-built",
-      "components": {
-        "scroll": 0,
-        "option_buttons": 0,
-        "buttons": 0,
-        "panel_cards": 0,
-        "separators": 0,
-        "hbox": 0,
-        "vbox": 0,
-        "datagrid": 0,
-        "sidebar": 0,
-        "metric_card": 0
-      },
-      "routes": []
-    },
-    {
       "panel": "Phase0Panel",
       "file": "src/UI/Phase0Panel.cs",
-      "loc": 339,
+      "loc": 349,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -6664,7 +6598,7 @@
     {
       "panel": "PowerGridPanel",
       "file": "src/UI/PowerGridPanel.cs",
-      "loc": 304,
+      "loc": 316,
       "bind_target": "PowerGridHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -6914,7 +6848,7 @@
     {
       "panel": "QuestsPanel",
       "file": "src/UI/QuestsPanel.cs",
-      "loc": 775,
+      "loc": 780,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -6945,7 +6879,7 @@
     {
       "panel": "RadiationDetailPanel",
       "file": "src/UI/RadiationDetailPanel.cs",
-      "loc": 306,
+      "loc": 309,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -6976,7 +6910,7 @@
     {
       "panel": "RadiationHistoryPanel",
       "file": "src/UI/RadiationHistoryPanel.cs",
-      "loc": 184,
+      "loc": 183,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -7035,7 +6969,7 @@
     {
       "panel": "RadioPanel",
       "file": "src/UI/RadioPanel.cs",
-      "loc": 701,
+      "loc": 741,
       "bind_target": "RadioHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -7086,7 +7020,7 @@
     {
       "panel": "RailGrindingPanel",
       "file": "src/UI/RailGrindingPanel.cs",
-      "loc": 335,
+      "loc": 328,
       "bind_target": "RailGrindingHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -7204,6 +7138,53 @@
       "routes": []
     },
     {
+      "panel": "RecruitmentPanel",
+      "file": "src/UI/RecruitmentPanel.cs",
+      "loc": 261,
+      "bind_target": "RecruitmentHostSession",
+      "has_unbind": true,
+      "bindable": true,
+      "shell": true,
+      "shell_title": "Survivor Recruitment & Defection Desk // Operations",
+      "min_width": 1000,
+      "min_height": 660,
+      "rail_cards": [
+        {
+          "id": "active_campaigns",
+          "label": "Active Campaigns"
+        },
+        {
+          "id": "known_candidates",
+          "label": "Discovered"
+        },
+        {
+          "id": "pending_offers",
+          "label": "Pending Offers"
+        },
+        {
+          "id": "total_recruited",
+          "label": "Recruited"
+        }
+      ],
+      "uses_status_rail": true,
+      "layout_pattern": "shell:single-column",
+      "components": {
+        "scroll": 0,
+        "option_buttons": 0,
+        "buttons": 0,
+        "panel_cards": 0,
+        "separators": 0,
+        "hbox": 1,
+        "vbox": 1,
+        "datagrid": 28,
+        "sidebar": 0,
+        "metric_card": 9
+      },
+      "routes": [
+        "recruitment"
+      ]
+    },
+    {
       "panel": "RegionalTreatyPanel",
       "file": "src/UI/RegionalTreatyPanel.cs",
       "loc": 161,
@@ -7245,7 +7226,7 @@
     {
       "panel": "RelationshipDecayPanel",
       "file": "src/UI/RelationshipDecayPanel.cs",
-      "loc": 191,
+      "loc": 192,
       "bind_target": "RelationshipDecayHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -7341,7 +7322,7 @@
     {
       "panel": "ResearchPanel",
       "file": "src/UI/ResearchPanel.cs",
-      "loc": 482,
+      "loc": 489,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -7514,7 +7495,7 @@
     {
       "panel": "SafeCrackModal",
       "file": "src/UI/SafeCrackModal.cs",
-      "loc": 215,
+      "loc": 216,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -7533,34 +7514,6 @@
         "separators": 3,
         "hbox": 2,
         "vbox": 1,
-        "datagrid": 0,
-        "sidebar": 0,
-        "metric_card": 0
-      },
-      "routes": []
-    },
-    {
-      "panel": "SafeCrackModalContent",
-      "file": "src/UI/SafeCrackModalContent.cs",
-      "loc": 7,
-      "bind_target": null,
-      "has_unbind": false,
-      "bindable": false,
-      "shell": false,
-      "shell_title": null,
-      "min_width": 720,
-      "min_height": 480,
-      "rail_cards": [],
-      "uses_status_rail": false,
-      "layout_pattern": "code-built",
-      "components": {
-        "scroll": 0,
-        "option_buttons": 0,
-        "buttons": 0,
-        "panel_cards": 0,
-        "separators": 0,
-        "hbox": 0,
-        "vbox": 0,
         "datagrid": 0,
         "sidebar": 0,
         "metric_card": 0
@@ -7617,7 +7570,7 @@
     {
       "panel": "SaveLoadPanel",
       "file": "src/UI/SaveLoadPanel.cs",
-      "loc": 403,
+      "loc": 411,
       "bind_target": "SaveLoadHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -7645,7 +7598,7 @@
     {
       "panel": "SceneBindingException",
       "file": "src/UI/SceneBinder.cs",
-      "loc": 178,
+      "loc": 229,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -7701,7 +7654,7 @@
     {
       "panel": "SettingsPanel",
       "file": "src/UI/SettingsPanel.cs",
-      "loc": 657,
+      "loc": 887,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -7714,7 +7667,7 @@
       "layout_pattern": "code-built",
       "components": {
         "scroll": 1,
-        "option_buttons": 7,
+        "option_buttons": 8,
         "buttons": 0,
         "panel_cards": 0,
         "separators": 6,
@@ -7729,7 +7682,7 @@
     {
       "panel": "ShelterAtmospherePanel",
       "file": "src/UI/ShelterAtmospherePanel.cs",
-      "loc": 221,
+      "loc": 233,
       "bind_target": "ShelterAtmosphereHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -7776,7 +7729,7 @@
     {
       "panel": "ShelterBarterPanel",
       "file": "src/UI/ShelterBarterPanel.cs",
-      "loc": 1142,
+      "loc": 1165,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -7825,7 +7778,7 @@
     {
       "panel": "ShelterDecorPanel",
       "file": "src/UI/ShelterDecorPanel.cs",
-      "loc": 444,
+      "loc": 451,
       "bind_target": "ShelterDecorHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -7870,7 +7823,7 @@
     {
       "panel": "ShelterHudPanel",
       "file": "src/UI/ShelterHudPanel.cs",
-      "loc": 613,
+      "loc": 617,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -7978,7 +7931,7 @@
     {
       "panel": "ShelterPanel",
       "file": "src/UI/ShelterPanel.cs",
-      "loc": 497,
+      "loc": 505,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -8123,7 +8076,7 @@
     {
       "panel": "ShelterSecurityPanel",
       "file": "src/UI/ShelterSecurityPanel.cs",
-      "loc": 304,
+      "loc": 305,
       "bind_target": "ShelterSecurityHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -8170,7 +8123,7 @@
     {
       "panel": "ShelterSocialPanel",
       "file": "src/UI/ShelterSocialPanel.cs",
-      "loc": 558,
+      "loc": 561,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -8200,7 +8153,7 @@
     {
       "panel": "ShelterThermalPanel",
       "file": "src/UI/ShelterThermalPanel.cs",
-      "loc": 147,
+      "loc": 240,
       "bind_target": "ShelterThermalHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -8224,6 +8177,10 @@
         {
           "id": "frostbite_risk",
           "label": "Frostbite Risk"
+        },
+        {
+          "id": "storm_window",
+          "label": "Storm Window"
         }
       ],
       "uses_status_rail": true,
@@ -8231,14 +8188,14 @@
       "components": {
         "scroll": 0,
         "option_buttons": 0,
-        "buttons": 0,
+        "buttons": 1,
         "panel_cards": 0,
         "separators": 0,
-        "hbox": 0,
+        "hbox": 1,
         "vbox": 1,
         "datagrid": 0,
         "sidebar": 0,
-        "metric_card": 12
+        "metric_card": 17
       },
       "routes": [
         "shelter_thermal"
@@ -8247,7 +8204,7 @@
     {
       "panel": "SilentFoundryPanel",
       "file": "src/UI/SilentFoundryPanel.cs",
-      "loc": 590,
+      "loc": 594,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -8338,7 +8295,7 @@
     {
       "panel": "SkillMatrixPanel",
       "file": "src/UI/SkillMatrixPanel.cs",
-      "loc": 500,
+      "loc": 504,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -8474,7 +8431,7 @@
     {
       "panel": "SnapshotOrchestrator",
       "file": "src/UI/SnapshotOrchestrator.cs",
-      "loc": 432,
+      "loc": 445,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -8502,7 +8459,7 @@
     {
       "panel": "SolidOxideFuelCellPanel",
       "file": "src/UI/SolidOxideFuelCellPanel.cs",
-      "loc": 146,
+      "loc": 148,
       "bind_target": "SofcPowerHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -8577,7 +8534,7 @@
     {
       "panel": "SoundRangingPanel",
       "file": "src/UI/SoundRangingPanel.cs",
-      "loc": 154,
+      "loc": 156,
       "bind_target": "SoundRangingHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -8624,7 +8581,7 @@
     {
       "panel": "StandingRecordAtlasPanel",
       "file": "src/UI/StandingRecordAtlasPanel.cs",
-      "loc": 516,
+      "loc": 525,
       "bind_target": "StandingRecordHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -8708,7 +8665,7 @@
     {
       "panel": "StartingCohortSelection",
       "file": "src/UI/StartingCohortSetupPanel.cs",
-      "loc": 325,
+      "loc": 326,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -8736,7 +8693,7 @@
     {
       "panel": "StatusPanel",
       "file": "src/UI/StatusPanel.cs",
-      "loc": 377,
+      "loc": 701,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -8752,7 +8709,7 @@
         "option_buttons": 0,
         "buttons": 0,
         "panel_cards": 0,
-        "separators": 4,
+        "separators": 7,
         "hbox": 0,
         "vbox": 0,
         "datagrid": 0,
@@ -8867,7 +8824,7 @@
     {
       "panel": "SubterraneanOperationsPanel",
       "file": "src/UI/SubterraneanOperationsPanel.cs",
-      "loc": 299,
+      "loc": 347,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -8974,7 +8931,7 @@
     {
       "panel": "SurvivalDetailPanel",
       "file": "src/UI/SurvivalDetailPanel.cs",
-      "loc": 145,
+      "loc": 146,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -9002,7 +8959,7 @@
     {
       "panel": "SurvivalWorkstationPanel",
       "file": "src/UI/SurvivalWorkstationPanel.cs",
-      "loc": 666,
+      "loc": 687,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -9051,7 +9008,7 @@
     {
       "panel": "SurvivorDeathLegacyPanel",
       "file": "src/UI/SurvivorDeathLegacyPanel.cs",
-      "loc": 214,
+      "loc": 215,
       "bind_target": "SurvivorDeathLegacyHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -9094,7 +9051,7 @@
     {
       "panel": "SurvivorDetailPanel",
       "file": "src/UI/SurvivorDetailPanel.cs",
-      "loc": 436,
+      "loc": 513,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -9214,36 +9171,15 @@
     {
       "panel": "SurvivorsPanel",
       "file": "src/UI/SurvivorsPanel.cs",
-      "loc": 333,
-      "bind_target": "SurvivorsHostSession",
+      "loc": 388,
+      "bind_target": null,
       "has_unbind": true,
-      "bindable": true,
+      "bindable": false,
       "shell": false,
       "shell_title": null,
       "min_width": 720,
       "min_height": 480,
-      "rail_cards": [
-        {
-          "id": "living",
-          "label": "LIVING"
-        },
-        {
-          "id": "avgHp",
-          "label": "AVG HP"
-        },
-        {
-          "id": "avgRad",
-          "label": "AVG RAD"
-        },
-        {
-          "id": "avgMor",
-          "label": "AVG MOR"
-        },
-        {
-          "id": "strained",
-          "label": "STRAINED"
-        }
-      ],
+      "rail_cards": [],
       "uses_status_rail": true,
       "layout_pattern": "code-built",
       "components": {
@@ -9295,7 +9231,7 @@
     {
       "panel": "TimeCapsulePanel",
       "file": "src/UI/TimeCapsulePanel.cs",
-      "loc": 215,
+      "loc": 297,
       "bind_target": "TimeCapsuleHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -9326,7 +9262,7 @@
         "panel_cards": 2,
         "separators": 0,
         "hbox": 1,
-        "vbox": 7,
+        "vbox": 8,
         "datagrid": 0,
         "sidebar": 0,
         "metric_card": 3
@@ -9417,7 +9353,7 @@
     {
       "panel": "TriangulationPanel",
       "file": "src/UI/TriangulationPanel.cs",
-      "loc": 234,
+      "loc": 239,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -9473,7 +9409,7 @@
     {
       "panel": "TutorialPanel",
       "file": "src/UI/TutorialPanel.cs",
-      "loc": 263,
+      "loc": 284,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -9501,7 +9437,7 @@
     {
       "panel": "UiBackgroundCarousel",
       "file": "src/UI/UiBackgroundCarousel.cs",
-      "loc": 213,
+      "loc": 226,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -9762,7 +9698,7 @@
     {
       "panel": "VisitorIntegrationPanel",
       "file": "src/UI/VisitorIntegrationPanel.cs",
-      "loc": 293,
+      "loc": 297,
       "bind_target": "VisitorIntegrationHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -9837,7 +9773,7 @@
     {
       "panel": "WaterTreatmentPanel",
       "file": "src/UI/WaterTreatmentPanel.cs",
-      "loc": 294,
+      "loc": 298,
       "bind_target": "WaterTreatmentHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -9888,7 +9824,7 @@
     {
       "panel": "WaterTreatmentPanelContent",
       "file": "src/UI/WaterTreatmentPanelContent.cs",
-      "loc": 7,
+      "loc": 20,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -9987,7 +9923,7 @@
     {
       "panel": "WeatherForecastPanel",
       "file": "src/UI/WeatherForecastPanel.cs",
-      "loc": 365,
+      "loc": 377,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -10043,7 +9979,7 @@
     {
       "panel": "WeatherPanel",
       "file": "src/UI/WeatherPanel.cs",
-      "loc": 486,
+      "loc": 511,
       "bind_target": "WeatherHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -10211,7 +10147,7 @@
     {
       "panel": "WorkshopPanel",
       "file": "src/UI/WorkshopPanel.cs",
-      "loc": 507,
+      "loc": 562,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,

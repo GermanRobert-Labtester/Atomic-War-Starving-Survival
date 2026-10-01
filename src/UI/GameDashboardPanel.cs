@@ -125,6 +125,10 @@ namespace AtomicWar.GodotApp.UI
             });
         }
 
+        private static string Tr(string key, string fallback) => AshfallUiText.Tr(key, fallback);
+
+        private static string TrFormat(string key, params object[] args) => AshfallUiText.TrFormat(key, args);
+
         public void UpdateState(DashboardSnapshot state)
         {
             if (_dayLabel == null || state == null) return;
@@ -172,9 +176,9 @@ namespace AtomicWar.GodotApp.UI
             AshfallUiHelpers.SetBarValue(_radiationBar, Math.Clamp(safeRadiation, 0f, 100f));
             _radiationValue.AddThemeColorOverride(
                 "font_color",
-                AshfallUiHelpers.ToColor(safeRadiation >= 100f
+                AshfallUiHelpers.ToColor(safeRadiation >= Ashfall.Core.Radiation.RadiationSystem.AcuteThreshold
                     ? DesignTheme.Critical
-                    : safeRadiation >= 50f
+                    : safeRadiation >= Ashfall.Core.Radiation.RadiationSystem.WarnThreshold
                         ? DesignTheme.Entropy
                         : DesignTheme.Lethe));
 
@@ -183,9 +187,9 @@ namespace AtomicWar.GodotApp.UI
             AshfallUiHelpers.SetBarValue(_hungerBar, safeHunger);
             _hungerValue.AddThemeColorOverride(
                 "font_color",
-                AshfallUiHelpers.ToColor(safeHunger >= 80
+                AshfallUiHelpers.ToColor(safeHunger >= Ashfall.Core.Survivors.NeedsProfile.DefaultHungerCritical
                     ? DesignTheme.Critical
-                    : safeHunger >= 50
+                    : safeHunger >= Ashfall.Core.Survivors.NeedsProfile.DefaultHungerWarn
                         ? DesignTheme.Entropy
                         : DesignTheme.Pale));
 
@@ -194,17 +198,17 @@ namespace AtomicWar.GodotApp.UI
             AshfallUiHelpers.SetBarValue(_thirstBar, safeThirst);
             _thirstValue.AddThemeColorOverride(
                 "font_color",
-                AshfallUiHelpers.ToColor(safeThirst >= 80
+                AshfallUiHelpers.ToColor(safeThirst >= Ashfall.Core.Survivors.NeedsProfile.DefaultThirstCritical
                     ? DesignTheme.Critical
-                    : safeThirst >= 50
+                    : safeThirst >= Ashfall.Core.Survivors.NeedsProfile.DefaultThirstWarn
                         ? DesignTheme.Entropy
                         : DesignTheme.Pale));
 
             string cohortExtra = "";
             if (state.MemorialCount > 0)
-                cohortExtra += $" · {state.MemorialCount} MEMORIALIZED";
+                cohortExtra += " · " + TrFormat("ui.dashboard.memorialized", state.MemorialCount);
             if (state.CohortLivingCount > 0)
-                cohortExtra += $" · {state.CohortLivingCount} YOUTH";
+                cohortExtra += " · " + TrFormat("ui.dashboard.youth", state.CohortLivingCount);
 
             _survivorSummary.Text = totalSurvivors == 0
                 ? "ROSTER // NO SURVIVORS REGISTERED"
@@ -218,7 +222,7 @@ namespace AtomicWar.GodotApp.UI
                 ? "SHELTER STATUS // NO FILTER SPARES"
                 : safeHealth <= safeMaxHealth * 0.25f
                 ? "SHELTER STATUS // MEDICAL ATTENTION REQUIRED"
-                : safeRadiation >= 50f
+                : safeRadiation >= Ashfall.Core.Radiation.RadiationSystem.WarnThreshold
                     ? "SHELTER STATUS // DECONTAMINATION ADVISED"
                     : "SHELTER STATUS // HOLDING");
 
@@ -314,19 +318,19 @@ namespace AtomicWar.GodotApp.UI
 
             if (_dutyRosterSummary != null)
             {
-                string intake = string.IsNullOrWhiteSpace(state.FilterDutyAssignee) ? "UNASSIGNED" : state.FilterDutyAssignee;
-                _dutyRosterSummary.Text = $"DUTY ROSTER // INTAKE FILTRATION: {intake}";
+                string intake = string.IsNullOrWhiteSpace(state.FilterDutyAssignee) ? Tr("ui.dashboard.unassigned", "UNASSIGNED") : state.FilterDutyAssignee;
+                _dutyRosterSummary.Text = TrFormat("ui.dashboard.duty_intake", intake);
             }
 
             _directiveText.Text = outdoorHazard
-                ? $"Hold the hatch. {weather} is reading {outdoorRadiation:0} mSv outside with visibility at {visibility:P0}."
+                ? TrFormat("ui.dashboard.hold_hatch", weather, $"{outdoorRadiation:0}", $"{visibility:P0}")
                 : state.AirWarning
-                    ? "Atmospheric contamination rising. Service the HEPA filtration stack before toxic air settles."
-                    : safeHunger >= 75 || safeThirst >= 75
-                        ? "Rations are becoming the next problem. Reconcile food and water before the next shift."
-                        : "Keep the shelter quiet. Check the filter pressure before the next outdoor shift.";
-            _nextShiftValue.Text = outdoorHazard ? $"HOLD / {weather}" : $"OPEN / {weather}";
-            _hatchValue.Text = outdoorHazard ? "SEALED // HAZARD" : "SEALED";
+                    ? Tr("ui.dashboard.air_warning", "Atmospheric contamination rising. Service the HEPA filtration stack before toxic air settles.")
+                    : safeHunger >= Ashfall.Core.Survivors.NeedsProfile.DefaultHungerWarn || safeThirst >= Ashfall.Core.Survivors.NeedsProfile.DefaultThirstWarn
+                        ? Tr("ui.dashboard.rations_next", "Rations are becoming the next problem. Reconcile food and water before the next shift.")
+                        : Tr("ui.dashboard.keep_quiet", "Keep the shelter quiet. Check the filter pressure before the next outdoor shift.");
+            _nextShiftValue.Text = outdoorHazard ? TrFormat("ui.dashboard.next_shift.hold", weather) : TrFormat("ui.dashboard.next_shift.open", weather);
+            _hatchValue.Text = outdoorHazard ? Tr("ui.dashboard.hatch.sealed_hazard", "SEALED // HAZARD") : Tr("ui.dashboard.hatch.sealed", "SEALED");
             _eventLabel.Text = string.IsNullOrWhiteSpace(state.LastEvent)
                 ? outdoorHazard
                     ? "No new dispatch. The weather station is carrying the warning for us."

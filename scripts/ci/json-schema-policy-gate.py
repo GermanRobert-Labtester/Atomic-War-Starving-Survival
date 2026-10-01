@@ -126,6 +126,42 @@ def validate_json_file(file_path: pathlib.Path):
 
     return True, [], sv
 
+# Contract files under docs/ci/ are consumed by CI tooling, not the game runtime,
+# so they carry a string schema_version rather than the integer catalog version.
+# The scan is data-driven over docs/ci/*.json; NON_CONTRACT_JSON is the explicit
+# exclusion list for any future raw data dump (none today).
+CI_DIR = REPO_ROOT / "docs" / "ci"
+NON_CONTRACT_JSON = set()
+
+
+def validate_ci_contract_files():
+    errors = []
+    if not CI_DIR.is_dir():
+        return errors
+    for p in sorted(CI_DIR.glob("*.json")):
+        if p.name in NON_CONTRACT_JSON:
+            continue
+        rel = p.relative_to(REPO_ROOT).as_posix()
+        try:
+            data = json.loads(p.read_text(encoding="utf-8"))
+        except Exception as ex:
+            errors.append(f"{rel}: invalid JSON ({ex})")
+            continue
+        if not isinstance(data, dict):
+            errors.append(f"{rel}: root must be a JSON object")
+            continue
+        sv_key = next((k for k in data if str(k).lower().replace("_", "") == "schemaversion"), None)
+        if sv_key is None:
+            errors.append(f"{rel}: missing mandatory 'schema_version' key at root object")
+            continue
+        if not isinstance(data[sv_key], str):
+            errors.append(
+                f"{rel}: 'schema_version' must be a string for a docs/ci contract file "
+                f"(found {type(data[sv_key]).__name__}: {data[sv_key]!r})"
+            )
+    return errors
+
+
 def main():
     parser = argparse.ArgumentParser(description="JSON Schema Policy Gate for ASHFALL")
     group = parser.add_mutually_exclusive_group()
@@ -164,6 +200,11 @@ def main():
             all_errors.extend(errs)
         else:
             version_counts[sv] = version_counts.get(sv, 0) + 1
+
+    # CI/full mode also validates the docs/ci/ contract files (E10).
+    if not (args.staged or args.diff):
+        contract_errors = validate_ci_contract_files()
+        all_errors.extend(contract_errors)
 
     if all_errors:
         print("\nJSON SCHEMA POLICY VIOLATIONS DETECTED:", file=sys.stderr)

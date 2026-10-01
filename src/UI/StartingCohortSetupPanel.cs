@@ -185,8 +185,8 @@ namespace AtomicWar.GodotApp.UI
             rootMargins.AddChild(root);
             AddChild(rootMargins);
 
-            root.AddChild(AshfallUiHelpers.MakeTitle("EXPEDITION ROSTER COMMISSION"));
-            root.AddChild(AshfallUiHelpers.MakeMetadata("Designate starting cohort and assigned holdfast origin profile before opening bunker seal."));
+            root.AddChild(AshfallUiHelpers.MakeTitle(Tr("ui.cohort.title", "EXPEDITION ROSTER COMMISSION")));
+            root.AddChild(AshfallUiHelpers.MakeMetadata(Tr("ui.cohort.subtitle", "Designate starting cohort and assigned holdfast origin profile before opening bunker seal.")));
             root.AddChild(AshfallUiHelpers.MakeSeparator());
 
             var split = new HBoxContainer
@@ -203,12 +203,12 @@ namespace AtomicWar.GodotApp.UI
             };
             _profileList = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingXs);
             var profileColumn = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingXs);
-            profileColumn.AddChild(AshfallUiHelpers.MakeSectionHeader("STARTING COHORT"));
+            profileColumn.AddChild(AshfallUiHelpers.MakeSectionHeader(Tr("ui.cohort.section.cohort", "STARTING COHORT")));
             profileColumn.AddChild(_profileList);
-            profileColumn.AddChild(AshfallUiHelpers.MakeSectionHeader("STARTING STORES"));
+            profileColumn.AddChild(AshfallUiHelpers.MakeSectionHeader(Tr("ui.cohort.section.stores", "STARTING STORES")));
             _originList = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingXs);
             profileColumn.AddChild(_originList);
-            profileColumn.AddChild(AshfallUiHelpers.MakeSectionHeader("CAMPAIGN DIFFICULTY"));
+            profileColumn.AddChild(AshfallUiHelpers.MakeSectionHeader(Tr("ui.cohort.section.difficulty", "CAMPAIGN DIFFICULTY")));
             _difficultyList = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingXs);
             profileColumn.AddChild(_difficultyList);
             scroll.AddChild(profileColumn);
@@ -230,12 +230,12 @@ namespace AtomicWar.GodotApp.UI
             };
             actions.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
             var cancel = AshfallUiHelpers.MakeButton(
-                "CANCEL",
+                Tr("ui.cohort.cancel", "CANCEL"),
                 () => OnCancel?.Invoke());
             cancel.CustomMinimumSize = new Vector2(140, 40);
             actions.AddChild(cancel);
             var start = AshfallUiHelpers.MakeButton(
-                "START CAMPAIGN",
+                Tr("ui.cohort.start", "START CAMPAIGN"),
                 () => OnStartRequested?.Invoke(
                     new StartingCohortSelection(
                         _selectedProfileId,
@@ -300,19 +300,30 @@ namespace AtomicWar.GodotApp.UI
             var s = preset.scalars;
             return $"Hunger {s.hunger_rate_mult:0.##} · Thirst {s.thirst_rate_mult:0.##}\n" +
                    $"Radiation {s.radiation_gain_mult:0.##} · Disease {s.disease_onset_mult:0.##}\n" +
-                   $"Hostiles {s.hostile_encounter_mult:0.##} · Market {s.market_price_mult:0.##}\n" +
-                   $"Wear {s.equipment_decay_mult:0.##} · Crisis deadline {s.crisis_deadline_mult:0.##}";
+                   $"Hostiles {s.hostile_encounter_mult:0.##} · Enemy dmg {s.enemy_damage_mult:0.##}\n" +
+                   $"Market {s.market_price_mult:0.##} · Wear {s.equipment_decay_mult:0.##}\n" +
+                   $"Crisis deadline {s.crisis_deadline_mult:0.##}";
         }
+
+        /// <summary>
+        /// Starting-cohort strain note threshold. This is a setup-preview band,
+        /// not a simulation threshold: a starting survivor authored above it is
+        /// flagged "strained" in the roster preview. Kept as a named constant so
+        /// it cannot be confused with the NeedsProfile bands.
+        /// </summary>
+        private const float StartingStrainPreviewThreshold = 36f;
 
         private static string DescribeInitialCondition(StartingSurvivorDefinition member)
         {
             var notes = new List<string>();
-            if (member.acuteRad) notes.Add("acute radiation");
-            if (member.health < 88f) notes.Add("injured");
-            if (member.hunger >= 36f || member.thirst >= 36f) notes.Add("strained");
-            if (notes.Count == 0) notes.Add("stable");
+            if (member.acuteRad) notes.Add(Tr("ui.cohort.note.acute_rad", "acute radiation"));
+            if (member.health < 88f) notes.Add(Tr("ui.cohort.note.injured", "injured"));
+            if (member.hunger >= StartingStrainPreviewThreshold || member.thirst >= StartingStrainPreviewThreshold) notes.Add(Tr("ui.cohort.note.strained", "strained"));
+            if (notes.Count == 0) notes.Add(Tr("ui.cohort.note.stable", "stable"));
             return string.Join(", ", notes);
         }
+
+        private static string Tr(string key, string fallback) => AshfallUiText.Tr(key, fallback);
 
         private void GrabFirstProfileFocus()
         {

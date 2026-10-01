@@ -4,10 +4,10 @@
 
 ## Summary Metrics
 
-- **Total integration seams:** 306
-- **Host-required (`HOST_REQUIRED`):** 202 (all verified called from `src/`)
+- **Total integration seams:** 310
+- **Host-required (`HOST_REQUIRED`):** 205 (all verified called from `src/`)
 - **Optional host ports (`OPTIONAL_HOST`):** 7
-- **Live via Core (`LIVE_VIA_CORE`):** 56
+- **Live via Core (`LIVE_VIA_CORE`):** 57
 - **Test/Diagnostic only (`TEST_ONLY`):** 41
 - **Pure library utilities (`PURE_LIBRARY`):** 0
 - **Deferred / Exemptions (`DEFERRED`):** 0 (shrink-only ratchet with dated owner)
@@ -41,23 +41,23 @@
 | `BallisticsWorkbenchSystem.RegisterDefinition` | combat | `HOST_REQUIRED` | 2 | ✅ BOUND | Integration seam in BallisticsWorkbenchSystem. |
 | `BioFermentationEngine.BindCatalog` | shelter | `HOST_REQUIRED` | 30 | ✅ BOUND | Integration seam in BioFermentationEngine. |
 | `BionicsSystem.BindInventory` | medical | `HOST_REQUIRED` | 18 | ✅ BOUND | Integration seam in BionicsSystem. |
-| `BlackFlotillaStanding.Register` | core-architecture | `HOST_REQUIRED` | 33 | ✅ BOUND | Integration seam in BlackFlotillaStanding. |
+| `BlackFlotillaStanding.Register` | core-architecture | `HOST_REQUIRED` | 36 | ✅ BOUND | Integration seam in BlackFlotillaStanding. |
 | `BlackMarketSystem.BindCatalog` | economy | `HOST_REQUIRED` | 30 | ✅ BOUND | Integration seam in BlackMarketSystem. |
 | `BlackMarketSystem.BindFactionBountySystem` | economy | `HOST_REQUIRED` | 2 | ✅ BOUND | Integration seam in BlackMarketSystem. |
 | `BlackMarketSystem.BindMarket` | economy | `HOST_REQUIRED` | 3 | ✅ BOUND | Integration seam in BlackMarketSystem. |
 | `BootstrapLifecycleGate.RegisterSubsystem` | orchestration | `TEST_ONLY` | 1 | ✅ BOUND | EN-06 one-bootstrap-path lifecycle verification read model; consumed by BootstrapLifecycleGateTests only, no production caller. |
-| `CampaignCalendar.BindProfile` | campaign | `HOST_REQUIRED` | 4 | ✅ BOUND | Integration seam in CampaignCalendar. |
-| `CampaignDayCoordinator.Register` | core-architecture | `HOST_REQUIRED` | 33 | ✅ BOUND | Integration seam in CampaignDayCoordinator. |
+| `CampaignCalendar.BindProfile` | campaign | `HOST_REQUIRED` | 5 | ✅ BOUND | Integration seam in CampaignCalendar. |
+| `CampaignDayCoordinator.Register` | core-architecture | `HOST_REQUIRED` | 36 | ✅ BOUND | Integration seam in CampaignDayCoordinator. |
 | `CarbonCompositeEngine.BindCatalog` | shelter | `HOST_REQUIRED` | 30 | ✅ BOUND | Integration seam in CarbonCompositeEngine. |
 | `CarbonCompositeEngine.BindInventory` | shelter | `HOST_REQUIRED` | 18 | ✅ BOUND | Integration seam in CarbonCompositeEngine. |
 | `CargoAirdropSystem.BindCatalog` | world | `HOST_REQUIRED` | 30 | ✅ BOUND | Integration seam in CargoAirdropSystem. |
 | `CartographySystem.RegisterRegion` | exploration | `TEST_ONLY` | 0 | 🧪 TEST | Region registration is Core-test exercised; no production host caller yet. |
 | `CatalogBootValidator.RegisterCatalog` | core-architecture | `HOST_REQUIRED` | 3 | ✅ BOUND | Integration seam in CatalogEntry. |
 | `CatalogDiagnostics.RegisterLog` | core-architecture | `TEST_ONLY` | 0 | 🧪 TEST | Integration seam in CatalogDiagnostics. |
-| `CatalogIntegrityDefinitionChecker.Register` | core-architecture | `HOST_REQUIRED` | 33 | ✅ BOUND | Integration seam in CatalogIntegrityDefinitionChecker. |
+| `CatalogIntegrityDefinitionChecker.Register` | core-architecture | `HOST_REQUIRED` | 36 | ✅ BOUND | Integration seam in CatalogIntegrityDefinitionChecker. |
 | `CatalogIntegrityDefinitionChecker.RegisterOrReference` | core-architecture | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Integration seam in CatalogIntegrityDefinitionChecker. |
 | `ChildDevelopmentSystem.RegisterChild` | survivors | `TEST_ONLY` | 4 | ✅ BOUND | Child registration is exercised in Core tests; no production host caller yet. |
-| `CombatCatalog.Register` | core-architecture | `HOST_REQUIRED` | 33 | ✅ BOUND | Integration seam in CombatCatalog. |
+| `CombatCatalog.Register` | core-architecture | `HOST_REQUIRED` | 36 | ✅ BOUND | Integration seam in CombatCatalog. |
 | `CombatPerks.RegisterSurvivor` | core-architecture | `HOST_REQUIRED` | 7 | ✅ BOUND | Integration seam in CombatPerks. |
 | `CombatTraumaSystem.RegisterSurvivor` | core-architecture | `HOST_REQUIRED` | 7 | ✅ BOUND | Integration seam in CombatTraumaSystem. |
 | `CommitmentSystem.RegisterCommitment` | commitments | `LIVE_VIA_CORE` | 3 | ✅ BOUND | Integration seam in CommitmentSystem. |
@@ -66,7 +66,7 @@
 | `CounterIntelligenceSystem.RegisterProfile` | factions | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Integration seam in CounterIntelligenceSystem. |
 | `CraftingSystem.BindCraftResultGate` | crafting | `HOST_REQUIRED` | 1 | ✅ BOUND | CraftingHostSession binds the gate to ItemCatalog.Contains so unknown result ids cannot be crafted. |
 | `CraftingSystem.BindResearchGate` | crafting | `HOST_REQUIRED` | 2 | ✅ BOUND | Integration seam in CraftingSystem. |
-| `CrisisPresentationCoordinator.Bind` | core-architecture | `HOST_REQUIRED` | 323 | ✅ BOUND | Integration seam in CrisisPresentationCoordinator. |
+| `CrisisPresentationCoordinator.Bind` | core-architecture | `HOST_REQUIRED` | 326 | ✅ BOUND | Integration seam in CrisisPresentationCoordinator. |
 | `CrossingQuestSystem.BindCatalog` | core-architecture | `HOST_REQUIRED` | 30 | ✅ BOUND | Integration seam in CrossingQuestSystem. |
 | `CrossingQuestSystem.BindConsequenceLedger` | crossing | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in CrossingQuestSystem. |
 | `CrossingQuestSystem.BindMoralSystem` | crossing | `TEST_ONLY` | 0 | 🧪 TEST | Integration seam in CrossingQuestSystem. |
@@ -86,15 +86,15 @@
 | `DistressFollowUpScheduler.BindToMissionEvents` | radio | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in DistressFollowUpScheduler. |
 | `DoorEncounterSystem.RegisterEncounter` | core-architecture | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in DoorEncounterSystem. |
 | `DosimeterCalibrationSystem.RegisterDevice` | core-architecture | `HOST_REQUIRED` | 2 | ✅ BOUND | Integration seam in DosimeterCalibrationSystem. |
-| `DutyRosterChartEngine.Bind` | core-architecture | `HOST_REQUIRED` | 323 | ✅ BOUND | Integration seam in DutyRosterChartEngine. |
-| `DutyRosterOverflowEngine.Bind` | core-architecture | `HOST_REQUIRED` | 323 | ✅ BOUND | Integration seam in DutyRosterOverflowEngine. |
+| `DutyRosterChartEngine.Bind` | core-architecture | `HOST_REQUIRED` | 326 | ✅ BOUND | Integration seam in DutyRosterChartEngine. |
+| `DutyRosterOverflowEngine.Bind` | core-architecture | `HOST_REQUIRED` | 326 | ✅ BOUND | Integration seam in DutyRosterOverflowEngine. |
 | `DutyRosterOverflowEngine.RegisterOverflowVisit` | core-architecture | `HOST_REQUIRED` | 3 | ✅ BOUND | Integration seam in DutyRosterOverflowEngine. |
 | `DutyRosterQuestRuntime.BindCatalog` | core-architecture | `HOST_REQUIRED` | 30 | ✅ BOUND | Integration seam in DutyRosterQuestRuntime. |
 | `DutyRosterSystem.RegisterBlankRowsLivingName` | core-architecture | `TEST_ONLY` | 0 | 🧪 TEST | Integration seam in DutyRosterSystem. |
 | `DutyRosterSystem.RegisterOverflowVisit` | core-architecture | `HOST_REQUIRED` | 3 | ✅ BOUND | Integration seam in DutyRosterSystem. |
 | `DynamicQuestGenerator.RegisterTemplate` | quests | `TEST_ONLY` | 1 | ✅ BOUND | Template registration is Core-side; mercenary host calls a different RegisterTemplate. |
 | `EbPvdCoatingEngine.RegisterCoating` | shelter | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in EbPvdCoatingEngine. |
-| `EchoSystem.RegisterRange` | narrative | `HOST_REQUIRED` | 7 | ✅ BOUND | Integration seam in EchoSystem. |
+| `EchoSystem.RegisterRange` | narrative | `HOST_REQUIRED` | 8 | ✅ BOUND | Integration seam in EchoSystem. |
 | `EquipmentConditionSystem.RegisterItem` | core-architecture | `HOST_REQUIRED` | 5 | ✅ BOUND | Integration seam in EquipmentConditionSystem. |
 | `EquipmentConditionSystem.RegisterProfile` | equipment | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Invoked internally by EquipmentConditionSystem default-profile construction and LoadProfiles catalog ingestion. |
 | `EspionageConsequenceRouter.BindConsumers` | factions | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in EspionageConsequenceRouter. |
@@ -103,9 +103,9 @@
 | `EspionageSystem.BindFactionResolver` | factions | `OPTIONAL_HOST` | 0 | 🧩 OPTIONAL | Optional override hook; EspionageSystem already defaults to FactionStandingIdResolver.ToSystemsId when no host resolver is supplied. |
 | `EspionageSystem.BindResearchGate` | factions | `HOST_REQUIRED` | 2 | ✅ BOUND | Integration seam in EspionageSystem. |
 | `EspionageSystem.BindRng` | factions | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in EspionageSystem. |
-| `EvidenceLedger.Register` | core-architecture | `HOST_REQUIRED` | 33 | ✅ BOUND | Integration seam in EvidenceLedger. |
+| `EvidenceLedger.Register` | core-architecture | `HOST_REQUIRED` | 36 | ✅ BOUND | Integration seam in EvidenceLedger. |
 | `ExpansionQuestSystem.BindCatalog` | core-architecture | `HOST_REQUIRED` | 30 | ✅ BOUND | Integration seam in ExpansionQuestSystem. |
-| `ExpeditionDefinitionRegistry.Register` | core-architecture | `HOST_REQUIRED` | 33 | ✅ BOUND | Integration seam in ExpeditionDefinitionRegistry. |
+| `ExpeditionDefinitionRegistry.Register` | core-architecture | `HOST_REQUIRED` | 36 | ✅ BOUND | Integration seam in ExpeditionDefinitionRegistry. |
 | `ExpeditionLootReferenceResolver.RegisterCategory` | expeditions | `OPTIONAL_HOST` | 0 | 🧩 OPTIONAL | Optional resolver extension; canonical/default category sets are already accepted through the resolver constructor. |
 | `ExpeditionLootReferenceResolver.RegisterItem` | core-architecture | `HOST_REQUIRED` | 5 | ✅ BOUND | Integration seam in ExpeditionLootReferenceResolver. |
 | `ExpeditionNavalSystem.RegisterVessel` | expeditions | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Invoked internally by ExpeditionNavalSystem default-vessel construction and LoadCatalog ingestion. |
@@ -130,17 +130,17 @@
 | `GroundPenetratingRadarEngine.BindCatalog` | world | `HOST_REQUIRED` | 30 | ✅ BOUND | Integration seam in GroundPenetratingRadarEngine. |
 | `GroundPenetratingRadarEngine.BindInventory` | world | `HOST_REQUIRED` | 18 | ✅ BOUND | Integration seam in GroundPenetratingRadarEngine. |
 | `HeliographSystem.RegisterStation` | core-architecture | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Integration seam in HeliographSystem. |
-| `HoldfastFactionsCatalog.Register` | core-architecture | `HOST_REQUIRED` | 33 | ✅ BOUND | Integration seam in HoldfastFactionsCatalog. |
-| `HoldfastItemsCatalog.Register` | core-architecture | `HOST_REQUIRED` | 33 | ✅ BOUND | Integration seam in HoldfastItemsCatalog. |
-| `HoldfastNpcCatalog.Register` | core-architecture | `HOST_REQUIRED` | 33 | ✅ BOUND | Integration seam in HoldfastNpcCatalog. |
+| `HoldfastFactionsCatalog.Register` | core-architecture | `HOST_REQUIRED` | 36 | ✅ BOUND | Integration seam in HoldfastFactionsCatalog. |
+| `HoldfastItemsCatalog.Register` | core-architecture | `HOST_REQUIRED` | 36 | ✅ BOUND | Integration seam in HoldfastItemsCatalog. |
+| `HoldfastNpcCatalog.Register` | core-architecture | `HOST_REQUIRED` | 36 | ✅ BOUND | Integration seam in HoldfastNpcCatalog. |
 | `HoldfastQuestSystem.BindCatalog` | core-architecture | `HOST_REQUIRED` | 30 | ✅ BOUND | Integration seam in HoldfastQuestSystem. |
 | `HydraulicExtrusionEngine.RegisterMachine` | foundry | `HOST_REQUIRED` | 2 | ✅ BOUND | Integration seam in HydraulicExtrusionEngine. |
 | `IceRoadSystem.RegisterHoldfastNode` | holdfast | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Default Cut/holdfast node registration goes through this method. |
 | `IdeologicalFrictionSystem.RegisterBelief` | core-architecture | `HOST_REQUIRED` | 3 | ✅ BOUND | Integration seam in IdeologicalFrictionSystem. |
-| `IndependentBranchCatalog.Register` | core-architecture | `HOST_REQUIRED` | 33 | ✅ BOUND | Integration seam in IndependentBranchCatalog. |
-| `ItemCatalog.Register` | core-architecture | `HOST_REQUIRED` | 33 | ✅ BOUND | Integration seam in ItemCatalog. |
-| `ItemCatalog.RegisterRange` | core-architecture | `HOST_REQUIRED` | 7 | ✅ BOUND | Integration seam in ItemCatalog. |
-| `ItemDescriptionCatalog.Register` | inventory | `HOST_REQUIRED` | 33 | ✅ BOUND | Integration seam in ItemDescriptionCatalog. |
+| `IndependentBranchCatalog.Register` | core-architecture | `HOST_REQUIRED` | 36 | ✅ BOUND | Integration seam in IndependentBranchCatalog. |
+| `ItemCatalog.Register` | core-architecture | `HOST_REQUIRED` | 36 | ✅ BOUND | Integration seam in ItemCatalog. |
+| `ItemCatalog.RegisterRange` | core-architecture | `HOST_REQUIRED` | 8 | ✅ BOUND | Integration seam in ItemCatalog. |
+| `ItemDescriptionCatalog.Register` | inventory | `HOST_REQUIRED` | 36 | ✅ BOUND | Integration seam in ItemDescriptionCatalog. |
 | `ItemDescriptionCatalog.RegisterAlias` | inventory | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Integration seam in ItemDescriptionCatalog. |
 | `ItemLoreSystem.RegisterItem` | inventory | `TEST_ONLY` | 5 | ✅ BOUND | Item provenance registration is Core-test exercised; no production host caller yet. |
 | `JournalSystem.BindAuthoredCorpus` | journal | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in JournalSystem. |
@@ -162,24 +162,24 @@
 | `MemoryDecaySystem.RegisterOrUpdate` | cognition | `TEST_ONLY` | 3 | ✅ BOUND | Memory records are registered from Core tests; no production host caller yet. |
 | `MercenarySystem.RegisterTemplate` | core-architecture | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in MercenarySystem. |
 | `MicrofluidicDiagnosticEngine.RegisterAssay` | medical | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in MicrofluidicDiagnosticEngine. |
-| `MilitaryBranchCatalog.Register` | core-architecture | `HOST_REQUIRED` | 33 | ✅ BOUND | Integration seam in MilitaryBranchCatalog. |
+| `MilitaryBranchCatalog.Register` | core-architecture | `HOST_REQUIRED` | 36 | ✅ BOUND | Integration seam in MilitaryBranchCatalog. |
 | `MineClearingFlailEngine.RegisterModule` | expeditions | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in MineClearingFlailEngine. |
-| `MoralBranchingSystem.Register` | core-architecture | `HOST_REQUIRED` | 33 | ✅ BOUND | Integration seam in MoralBranchingSystem. |
+| `MoralBranchingSystem.Register` | core-architecture | `HOST_REQUIRED` | 36 | ✅ BOUND | Integration seam in MoralBranchingSystem. |
 | `MoralBranchingSystem.RegisterMoralChoice` | core-architecture | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in MoralBranchingSystem. |
 | `MoralChoiceSystem.RegisterQuest` | moralchoice | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Integration seam in MoralChoiceSystem. |
 | `MoralChoiceSystem.RegisterQuests` | moralchoice | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in MoralChoiceSystem. |
 | `MoraleMarkSystem.BindCatalog` | core-architecture | `HOST_REQUIRED` | 30 | ✅ BOUND | Integration seam in MoraleMarkSystem. |
 | `MusterSystem.RegisterQuestline` | core-architecture | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in MusterSystem. |
 | `MutationSystem.RegisterMutation` | core-architecture | `HOST_REQUIRED` | 2 | ✅ BOUND | Integration seam in MutationSystem. |
-| `NarrativeArcEventSystem.RegisterRange` | narrative | `HOST_REQUIRED` | 7 | ✅ BOUND | Integration seam in NarrativeArcEventSystem. |
+| `NarrativeArcEventSystem.RegisterRange` | narrative | `HOST_REQUIRED` | 8 | ✅ BOUND | Integration seam in NarrativeArcEventSystem. |
 | `NarrativeDiscoveryCatalog.RegisterAdapter` | narrative | `OPTIONAL_HOST` | 0 | 🧩 OPTIONAL | Optional extension hook; NarrativeDiscoveryCatalog installs its canonical default adapters in the constructor. |
 | `NarrativeEncounterSystem.RegisterEncounter` | core-architecture | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in NarrativeEncounterSystem. |
-| `NarrativeEncounterSystem.RegisterRange` | core-architecture | `HOST_REQUIRED` | 7 | ✅ BOUND | Integration seam in NarrativeEncounterSystem. |
-| `NeedsSystem.Register` | core-architecture | `HOST_REQUIRED` | 33 | ✅ BOUND | Integration seam in NeedsSystem. |
-| `NpcArcCatalog.Register` | core-architecture | `HOST_REQUIRED` | 33 | ✅ BOUND | Integration seam in NpcArcCatalog. |
-| `PanelDescriptor.Bind` | core-architecture | `HOST_REQUIRED` | 323 | ✅ BOUND | Integration seam in PanelDescriptor. |
+| `NarrativeEncounterSystem.RegisterRange` | core-architecture | `HOST_REQUIRED` | 8 | ✅ BOUND | Integration seam in NarrativeEncounterSystem. |
+| `NeedsSystem.Register` | core-architecture | `HOST_REQUIRED` | 36 | ✅ BOUND | Integration seam in NeedsSystem. |
+| `NpcArcCatalog.Register` | core-architecture | `HOST_REQUIRED` | 36 | ✅ BOUND | Integration seam in NpcArcCatalog. |
+| `PanelDescriptor.Bind` | core-architecture | `HOST_REQUIRED` | 326 | ✅ BOUND | Integration seam in PanelDescriptor. |
 | `PanelRegistry.ConfigureActions` | core-architecture | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in PanelRegistry. |
-| `PanelRegistry.Register` | core-architecture | `HOST_REQUIRED` | 33 | ✅ BOUND | Integration seam in PanelRegistry. |
+| `PanelRegistry.Register` | core-architecture | `HOST_REQUIRED` | 36 | ✅ BOUND | Integration seam in PanelRegistry. |
 | `PanelRegistryBootstrap.RegisterAll` | core-architecture | `HOST_REQUIRED` | 4 | ✅ BOUND | Integration seam in PanelRegistryBootstrap. |
 | `PathogenStrainSystem.BindEngineHooks` | disease | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in PathogenStrainSystem. |
 | `PersonalBelongingsSystem.RegisterBelonging` | survivors | `TEST_ONLY` | 2 | ✅ BOUND | Belonging registration is Core-test exercised; no production host caller yet. |
@@ -196,24 +196,24 @@
 | `PowerGridSystem.RegisterLoadRoom` | shelter | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Integration seam in PowerGridSystem. |
 | `PrisonerSystem.RegisterTactic` | core-architecture | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in PrisonerSystem. |
 | `ProceduralItemInstance.ConfigureSequence` | inventory | `TEST_ONLY` | 0 | 🧪 TEST | Integration seam in ProceduralItemInstance. |
-| `QuestRuntimeCoordinator.Register` | quests | `HOST_REQUIRED` | 33 | ✅ BOUND | Integration seam in QuestRuntimeCoordinator. |
+| `QuestRuntimeCoordinator.Register` | quests | `HOST_REQUIRED` | 36 | ✅ BOUND | Integration seam in QuestRuntimeCoordinator. |
 | `QuestlineSystem.RegisterQuestline` | core-architecture | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in QuestlineSystem. |
-| `RadiationPhaseProgression.Register` | core-architecture | `HOST_REQUIRED` | 33 | ✅ BOUND | Integration seam in RadiationPhaseProgression. |
-| `RadiationSystem.Register` | core-architecture | `HOST_REQUIRED` | 33 | ✅ BOUND | Integration seam in RadiationSystem. |
-| `RadioBroadcastCatalog.Register` | core-architecture | `HOST_REQUIRED` | 33 | ✅ BOUND | Integration seam in RadioBroadcastCatalog. |
+| `RadiationPhaseProgression.Register` | core-architecture | `HOST_REQUIRED` | 36 | ✅ BOUND | Integration seam in RadiationPhaseProgression. |
+| `RadiationSystem.Register` | core-architecture | `HOST_REQUIRED` | 36 | ✅ BOUND | Integration seam in RadiationSystem. |
+| `RadioBroadcastCatalog.Register` | core-architecture | `HOST_REQUIRED` | 36 | ✅ BOUND | Integration seam in RadioBroadcastCatalog. |
 | `RadioBroadcastCatalog.RegisterAuthoredGapBroadcasts` | core-architecture | `TEST_ONLY` | 0 | 🧪 TEST | Integration seam in RadioBroadcastCatalog. |
 | `RadioDistressSystem.RegisterSignal` | core-architecture | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in RadioDistressSystem. |
-| `RadioStationCatalog.Register` | core-architecture | `HOST_REQUIRED` | 33 | ✅ BOUND | Integration seam in RadioStationCatalog. |
+| `RadioStationCatalog.Register` | core-architecture | `HOST_REQUIRED` | 36 | ✅ BOUND | Integration seam in RadioStationCatalog. |
 | `RailGrindingEngine.RegisterHead` | expeditions | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in RailGrindingEngine. |
 | `RailwayInterlockEngine.BindCatalog` | expeditions | `HOST_REQUIRED` | 30 | ✅ BOUND | Integration seam in RailwayInterlockEngine. |
 | `RailwayInterlockEngine.BindInventory` | expeditions | `HOST_REQUIRED` | 18 | ✅ BOUND | Integration seam in RailwayInterlockEngine. |
 | `RailwaySystem.RegisterCatalog` | core-architecture | `HOST_REQUIRED` | 3 | ✅ BOUND | Integration seam in RailwaySystem. |
 | `RailwaySystem.RegisterLogisticsCatalog` | expeditions | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in RailwaySystem. |
 | `RationConflictSystem.RegisterSurvivor` | core-architecture | `HOST_REQUIRED` | 7 | ✅ BOUND | Integration seam in RationConflictSystem. |
-| `RebelBranchCatalog.Register` | core-architecture | `HOST_REQUIRED` | 33 | ✅ BOUND | Integration seam in RebelBranchCatalog. |
+| `RebelBranchCatalog.Register` | core-architecture | `HOST_REQUIRED` | 36 | ✅ BOUND | Integration seam in RebelBranchCatalog. |
 | `ReconTelemetrySystem.RegisterPlatform` | expeditions | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Integration seam in ReconTelemetrySystem. |
 | `RelationshipDecaySystem.RegisterOrUpdatePair` | survivors | `TEST_ONLY` | 2 | ✅ BOUND | Pair-bond registration is Core-test exercised; no production host caller yet. |
-| `ResearchSystem.Register` | core-architecture | `HOST_REQUIRED` | 33 | ✅ BOUND | Integration seam in ResearchSystem. |
+| `ResearchSystem.Register` | core-architecture | `HOST_REQUIRED` | 36 | ✅ BOUND | Integration seam in ResearchSystem. |
 | `ResourceRationingSystem.BindResourceValidator` | economy | `HOST_REQUIRED` | 2 | ✅ BOUND | EconomyHostSession binds the canonical catalog/consumer validator to rationing state. |
 | `RouteInfrastructureSystem.RegisterMinefield` | world | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in RouteInfrastructureSystem. |
 | `RouteInfrastructureSystem.RegisterRailSegment` | world | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in RouteInfrastructureSystem. |
@@ -223,7 +223,7 @@
 | `SanitationSystem.BindFacilityCatalog` | shelter | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in SanitationSystem. |
 | `SeasonalEventSystem.BindDefinitions` | core-architecture | `HOST_REQUIRED` | 2 | ✅ BOUND | Integration seam in SeasonalEventSystem. |
 | `SeismicDynamicsSystem.RegisterFault` | shelter | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Integration seam in SeismicDynamicsSystem. |
-| `SessionLifecycleRegistry.Register` | core-architecture | `HOST_REQUIRED` | 33 | ✅ BOUND | Integration seam in SessionLifecycleRegistry. |
+| `SessionLifecycleRegistry.Register` | core-architecture | `HOST_REQUIRED` | 36 | ✅ BOUND | Integration seam in SessionLifecycleRegistry. |
 | `ShelterBarterSystem.RegisterCaravan` | economy | `HOST_REQUIRED` | 2 | ✅ BOUND | Integration seam in ShelterBarterSystem. |
 | `ShelterDecorSystem.RegisterItemModifier` | core-architecture | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in ShelterDecorSystem. |
 | `ShelterNoiseSystem.RegisterRoom` | shelter | `TEST_ONLY` | 0 | 🧪 TEST | Room acoustic registration is Core-internal / test-exercised; no production host caller yet. |
@@ -255,7 +255,7 @@
 | `SurvivorDowntimeSystem.RegisterHobby` | survivors | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Invoked internally by SurvivorDowntimeSystem default-hobby construction and LoadCatalog ingestion. |
 | `SurvivorEntityStore.RegisterComponentStore` | core-architecture | `TEST_ONLY` | 0 | 🧪 TEST | Integration seam in SurvivorEntityStore. |
 | `SurvivorRosterSystem.RegisterDefinition` | core-architecture | `HOST_REQUIRED` | 2 | ✅ BOUND | Integration seam in SurvivorRosterSystem. |
-| `SurvivorRosterSystem.RegisterRange` | core-architecture | `HOST_REQUIRED` | 7 | ✅ BOUND | Integration seam in SurvivorRosterSystem. |
+| `SurvivorRosterSystem.RegisterRange` | core-architecture | `HOST_REQUIRED` | 8 | ✅ BOUND | Integration seam in SurvivorRosterSystem. |
 | `SurvivorSocialCoordinator.RegisterBelief` | core-architecture | `HOST_REQUIRED` | 3 | ✅ BOUND | Integration seam in SurvivorSocialCoordinator. |
 | `TacticalCombatSystem.ConfigureBreachingLogistics` | combat | `HOST_REQUIRED` | 3 | ✅ BOUND | Integration seam in TacticalCombatSystem. |
 | `ThirdonaryQuestSystem.BindCatalog` | core-architecture | `HOST_REQUIRED` | 30 | ✅ BOUND | Integration seam in ThirdonaryQuestSystem. |
@@ -272,15 +272,15 @@
 | `VehicleGarageSystem.RegisterRecoveryMission` | expeditions | `HOST_REQUIRED` | 2 | ✅ BOUND | Integration seam in VehicleGarageSystem. |
 | `VentilationSystem.BindStageServices` | core-architecture | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in VentilationSystem. |
 | `VentilationSystem.RegisterSource` | core-architecture | `LIVE_VIA_CORE` | 1 | ✅ BOUND | Integration seam in VentilationSystem. |
-| `VerdictAccusationSystem.Bind` | verdict | `HOST_REQUIRED` | 323 | ✅ BOUND | Integration seam in VerdictAccusationSystem. |
-| `VerdictNpcSystem.Register` | core-architecture | `HOST_REQUIRED` | 33 | ✅ BOUND | Integration seam in VerdictNpcSystem. |
+| `VerdictAccusationSystem.Bind` | verdict | `HOST_REQUIRED` | 326 | ✅ BOUND | Integration seam in VerdictAccusationSystem. |
+| `VerdictNpcSystem.Register` | core-architecture | `HOST_REQUIRED` | 36 | ✅ BOUND | Integration seam in VerdictNpcSystem. |
 | `WastelandMapSystem.RegisterTrapSiteLocation` | world | `OPTIONAL_HOST` | 0 | 🧩 OPTIONAL | Optional runtime extension hook; authored trap-site locations are already supplied by WastelandMapCatalogLoader through the system constructor. |
 | `WaterTreatmentSystem.RegisterContaminationAdvisory` | core-architecture | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in WaterTreatmentSystem. |
 | `WaystationNetworkSystem.BindShortagePolicy` | core-architecture | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in WaystationNetworkSystem. |
-| `WeatherGateCatalog.Register` | core-architecture | `HOST_REQUIRED` | 33 | ✅ BOUND | Integration seam in WeatherGateCatalog. |
+| `WeatherGateCatalog.Register` | core-architecture | `HOST_REQUIRED` | 36 | ✅ BOUND | Integration seam in WeatherGateCatalog. |
 | `WeatherHardeningSystem.RegisterUpgrade` | world | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Integration seam in WeatherHardeningSystem. |
 | `WeatherSondeSystem.BindRecoveryInventory` | core-architecture | `HOST_REQUIRED` | 2 | ✅ BOUND | Integration seam in WeatherSondeSystem. |
-| `WeatherSystem.BindProfile` | core-architecture | `HOST_REQUIRED` | 4 | ✅ BOUND | Integration seam in WeatherSystem. |
+| `WeatherSystem.BindProfile` | core-architecture | `HOST_REQUIRED` | 5 | ✅ BOUND | Integration seam in WeatherSystem. |
 | `WeatherSystem.BindWeatherEffects` | world | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in WeatherSystem. |
 | `WildlifeMigrationSystem.BindSeasonProfile` | core-architecture | `HOST_REQUIRED` | 2 | ✅ BOUND | Integration seam in WildlifeMigrationSystem. |
 | `WildlifeMigrationSystem.RegisterPack` | core-architecture | `LIVE_VIA_CORE` | 1 | ✅ BOUND | Integration seam in WildlifeMigrationSystem. |
@@ -334,3 +334,7 @@
 | `PerimeterDefenseSystem.BindWatchCatalog` | shelter | `HOST_REQUIRED` | 2 | ✅ BOUND | Integration seam in PerimeterDefenseSystem — host session binds authored night-watch operations (Expansion 36). |
 | `SleepAcousticLedger.RegisterOrUpdateQuarter` | shelter | `HOST_REQUIRED` | 2 | ✅ BOUND | Integration seam in SleepAcousticLedger — host session registers sleeping quarters from the authored catalog (Expansion 41). |
 | `SurvivorLetterDeliverySystem.BindCatalog` | narrative | `HOST_REQUIRED` | 30 | ✅ BOUND | Integration seam in SurvivorLetterDeliverySystem. |
+| `WorldIncidentSystem.RegisterRange` | narrative | `HOST_REQUIRED` | 8 | ✅ BOUND | Integration seam in WorldIncidentSystem — WorldIncidentHostSession registers the authored events.json incident range. |
+| `YearOfAshTimelineSystem.BindYearTwoClimateCatalog` | year-two | `HOST_REQUIRED` | 1 | ✅ BOUND | Integration seam in YearOfAshTimelineSystem — YearOfAshHostSession binds the chapter-two climate catalog. |
+| `ReckoningSystem.ConfigureFromProfile` | verdict | `HOST_REQUIRED` | 3 | ✅ BOUND | Integration seam in ReckoningSystem — VerdictHostSession.ConfigureFromProfile applies the chapter profile's timing/offset to the reckoning clock. |
+| `ReckoningSystem.ConfigureTiming` | verdict | `LIVE_VIA_CORE` | 0 | 🔹 CORE | Core-internal timing seam invoked by ReckoningSystem.ConfigureFromProfile; not called directly from the host. |

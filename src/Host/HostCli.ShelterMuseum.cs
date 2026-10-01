@@ -172,8 +172,9 @@ namespace AtomicWar.GodotApp
                 }
 
                 // Check 12: Save store contract names
-                if (ShelterMuseumSaveStore.SectionName == "shelter_museum"
-                    && ShelterMuseumSaveStore.FileName == "shelter_museum_save.json")
+                bool shelterMuseumContractOk = ShelterMuseumSaveStore.SectionName == "shelter_museum"
+                    && ShelterMuseumSaveStore.FileName == "shelter_museum_save.json";
+                if (shelterMuseumContractOk)
                 {
                     Console.WriteLine("[PASS] Check 12: Save store contract names verified.");
                     passed++;

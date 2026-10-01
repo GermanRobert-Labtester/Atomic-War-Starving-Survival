@@ -56,7 +56,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 if (entry == null) continue;
                 AddRow(_historyList, $"{FormatSurvivorName(entry.survivorId)} — baseline {entry.baselineMsv:0.0} · cumulative {entry.cumulativeMsv:0.0} mSv",
-                    entry.cumulativeMsv >= 50f ? AshfallUiHelpers.ColorCritical : AshfallUiHelpers.ColorInfo);
+                    entry.cumulativeMsv >= Ashfall.Core.Radiation.RadiationSystem.WarnThreshold ? AshfallUiHelpers.ColorCritical : AshfallUiHelpers.ColorInfo);
                 RenderedRowCount++;
             }
 

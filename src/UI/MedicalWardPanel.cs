@@ -128,7 +128,7 @@ namespace AtomicWar.GodotApp.UI
             var leftVbox = new VBoxContainer();
             leftVbox.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
             leftMargin.AddChild(leftVbox);
-            leftVbox.AddChild(AshfallUiHelpers.MakeSectionHeader("WARD BED MATRIX"));
+            leftVbox.AddChild(AshfallUiHelpers.MakeSectionHeader(Tr("ui.ward.section.matrix", "WARD BED MATRIX")));
             var leftScroll = new ScrollContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _bedGrid = new VBoxContainer();
             _bedGrid.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
@@ -146,7 +146,7 @@ namespace AtomicWar.GodotApp.UI
             var centerVbox = new VBoxContainer();
             centerVbox.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
             centerMargin.AddChild(centerVbox);
-            centerVbox.AddChild(AshfallUiHelpers.MakeSectionHeader("BAY TELEMETRY & PROCEDURES"));
+            centerVbox.AddChild(AshfallUiHelpers.MakeSectionHeader(Tr("ui.ward.section.telemetry", "BAY TELEMETRY & PROCEDURES")));
             var centerScroll = new ScrollContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _inspectorContainer = new VBoxContainer();
             _inspectorContainer.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
@@ -164,7 +164,7 @@ namespace AtomicWar.GodotApp.UI
             var rightVbox = new VBoxContainer();
             rightVbox.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
             rightMargin.AddChild(rightVbox);
-            rightVbox.AddChild(AshfallUiHelpers.MakeSectionHeader("SURGICAL CATALOG & LOGS"));
+            rightVbox.AddChild(AshfallUiHelpers.MakeSectionHeader(Tr("ui.ward.section.catalog", "SURGICAL CATALOG & LOGS")));
             var rightScroll = new ScrollContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
             _procedureQueueContainer = new VBoxContainer();
             _procedureQueueContainer.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
@@ -173,7 +173,7 @@ namespace AtomicWar.GodotApp.UI
             rightVbox.AddChild(rightScroll);
 
             rightVbox.AddChild(AshfallUiHelpers.MakeSeparator());
-            _eventLogLabel = AshfallUiHelpers.MakeMetadata("No recent ward events.");
+            _eventLogLabel = AshfallUiHelpers.MakeMetadata(Tr("ui.ward.no_events", "No recent ward events."));
             _eventLogLabel.AutowrapMode = TextServer.AutowrapMode.WordSmart;
             rightVbox.AddChild(_eventLogLabel);
 
@@ -265,7 +265,7 @@ namespace AtomicWar.GodotApp.UI
                 var occupant = _host.System.GetBedOccupant(currentBed.BedId);
                 var activeAdmission = occupant != null ? _host.System.GetActiveAdmission(occupant) : null;
 
-                _inspectorContainer.AddChild(AshfallUiHelpers.MakeSectionHeader($"BED UNIT: {currentBed.DisplayName.ToUpperInvariant()}"));
+                _inspectorContainer.AddChild(AshfallUiHelpers.MakeSectionHeader(TrFormat("ui.ward.bed_unit", currentBed.DisplayName.ToUpperInvariant())));
                 _inspectorContainer.AddChild(AshfallUiHelpers.MakeDataRow("Category", currentBed.Category.ToString(), AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
                 _inspectorContainer.AddChild(AshfallUiHelpers.MakeDataRow("Isolation Protocol", currentBed.Isolation ? "BIOHAZARD ISOLATION SEALED" : "STANDARD VENTILATION", AshfallUiHelpers.ToColor(currentBed.Isolation ? DesignTheme.Critical : DesignTheme.Pale)));
                 _inspectorContainer.AddChild(AshfallUiHelpers.MakeDataRow("Occupancy State", occupant != null ? $"OCCUPIED by {FormatSurvivorName(occupant)}" : "VACANT", AshfallUiHelpers.ToColor(occupant != null ? DesignTheme.Warm : DesignTheme.Dim)));
@@ -279,15 +279,15 @@ namespace AtomicWar.GodotApp.UI
                     if (picture != null && !string.IsNullOrEmpty(picture.DiseaseId))
                     {
                         _inspectorContainer.AddChild(AshfallUiHelpers.MakeSeparator());
-                        _inspectorContainer.AddChild(AshfallUiHelpers.MakeSubsectionHeader("CLINICAL NOTE"));
+                        _inspectorContainer.AddChild(AshfallUiHelpers.MakeSubsectionHeader(Tr("ui.ward.section.clinical_note", "CLINICAL NOTE")));
                         _inspectorContainer.AddChild(AshfallUiHelpers.MakeDataRow(
                             "Illness",
                             $"{picture.DisplayName} — day {picture.DaysSick} ({picture.StageToken})",
                             AshfallUiHelpers.ToColor(picture.Terminal ? DesignTheme.Critical : DesignTheme.Warm)));
                         if (!string.IsNullOrEmpty(picture.Tell))
-                            _inspectorContainer.AddChild(AshfallUiHelpers.MakeBody("Sign: " + picture.Tell));
+                            _inspectorContainer.AddChild(AshfallUiHelpers.MakeBody(TrFormat("ui.ward.sign", picture.Tell)));
                         if (!string.IsNullOrEmpty(picture.SecondaryTell))
-                            _inspectorContainer.AddChild(AshfallUiHelpers.MakeBody("Also: " + picture.SecondaryTell));
+                            _inspectorContainer.AddChild(AshfallUiHelpers.MakeBody(TrFormat("ui.ward.also", picture.SecondaryTell)));
                         if (!string.IsNullOrEmpty(picture.TimingClue))
                             _inspectorContainer.AddChild(AshfallUiHelpers.MakeDataRow(
                                 "Timing", picture.TimingClue, AshfallUiHelpers.ToColor(DesignTheme.Pale)));
@@ -312,14 +312,14 @@ namespace AtomicWar.GodotApp.UI
                     }
 
                     _inspectorContainer.AddChild(AshfallUiHelpers.MakeSeparator());
-                    _inspectorContainer.AddChild(AshfallUiHelpers.MakeSubsectionHeader("AVAILABLE PROCEDURES"));
+                    _inspectorContainer.AddChild(AshfallUiHelpers.MakeSubsectionHeader(Tr("ui.ward.section.available", "AVAILABLE PROCEDURES")));
 
                     foreach (var proc in _host.System.Procedures)
                     {
                         // Task #133 P1b: through the host wrapper — pipeline
                         // treatment first (bandage/chelation), ward log only on
                         // success; refusals surface in the event log.
-                        var btnProc = AshfallUiHelpers.MakeButton($"RUN {proc.DisplayName.ToUpperInvariant()}", () =>
+                        var btnProc = AshfallUiHelpers.MakeButton(TrFormat("ui.ward.run", proc.DisplayName.ToUpperInvariant()), () =>
                         {
                             _host.RunProcedure(activeAdmission.PatientId, proc.ProcedureId, _host.SimDay);
                             RefreshView();
@@ -342,10 +342,10 @@ namespace AtomicWar.GodotApp.UI
                             },
                             disabled: keeping);
                         _inspectorContainer.AddChild(btnVigil);
-                        _inspectorContainer.AddChild(AshfallUiHelpers.MakeBody(_medical.VigilStatusLine()));
+                        _inspectorContainer.AddChild(AshfallUiHelpers.MakeBody(MedicalVigilText.Format(_medical.Vigil)));
                     }
 
-                    var btnDischarge = AshfallUiHelpers.MakeButton("DISCHARGE PATIENT", () =>
+                    var btnDischarge = AshfallUiHelpers.MakeButton(Tr("ui.ward.discharge", "DISCHARGE PATIENT"), () =>
                     {
                         _host.System.Discharge(activeAdmission.PatientId, _host.SimDay);
                         RefreshView();
@@ -368,7 +368,7 @@ namespace AtomicWar.GodotApp.UI
                                 if (!wroteHeader)
                                 {
                                     _inspectorContainer.AddChild(AshfallUiHelpers.MakeSeparator());
-                                    _inspectorContainer.AddChild(AshfallUiHelpers.MakeSubsectionHeader("ADMINISTER TREATMENT"));
+                                    _inspectorContainer.AddChild(AshfallUiHelpers.MakeSubsectionHeader(Tr("ui.ward.section.administer", "ADMINISTER TREATMENT")));
                                     wroteHeader = true;
                                 }
 
@@ -418,27 +418,27 @@ namespace AtomicWar.GodotApp.UI
                 else
                 {
                     _inspectorContainer.AddChild(AshfallUiHelpers.MakeSeparator());
-                    _inspectorContainer.AddChild(AshfallUiHelpers.MakeBody("Bed unit is currently vacant and sterilized. Patients requiring intensive trauma triage or surgical intervention will be admitted from shelter wards."));
+                    _inspectorContainer.AddChild(AshfallUiHelpers.MakeBody(Tr("ui.ward.vacant", "Bed unit is currently vacant and sterilized. Patients requiring intensive trauma triage or surgical intervention will be admitted from shelter wards.")));
                 }
             }
             else
             {
-                _inspectorContainer.AddChild(AshfallUiHelpers.MakeMetadata("Select a bed from the matrix to inspect telemetry and run procedures."));
+                _inspectorContainer.AddChild(AshfallUiHelpers.MakeMetadata(Tr("ui.ward.select_bed", "Select a bed from the matrix to inspect telemetry and run procedures.")));
             }
 
             // Populate Procedures Catalog
-            _procedureQueueContainer.AddChild(AshfallUiHelpers.MakeSectionHeader("PROCEDURE CATALOG"));
+            _procedureQueueContainer.AddChild(AshfallUiHelpers.MakeSectionHeader(Tr("ui.ward.section.procedures", "PROCEDURE CATALOG")));
             foreach (var proc in _host.System.Procedures)
             {
-                _procedureQueueContainer.AddChild(AshfallUiHelpers.MakeDataRow(proc.DisplayName, $"System: {proc.DelegatedSystemId}", AshfallUiHelpers.ToColor(DesignTheme.Pale)));
+                _procedureQueueContainer.AddChild(AshfallUiHelpers.MakeDataRow(proc.DisplayName, TrFormat("ui.ward.system", proc.DelegatedSystemId), AshfallUiHelpers.ToColor(DesignTheme.Pale)));
             }
 
             _procedureQueueContainer.AddChild(AshfallUiHelpers.MakeSeparator());
-            _procedureQueueContainer.AddChild(AshfallUiHelpers.MakeSubsectionHeader("RECENT PROCEDURES RUN"));
+            _procedureQueueContainer.AddChild(AshfallUiHelpers.MakeSubsectionHeader(Tr("ui.ward.section.recent", "RECENT PROCEDURES RUN")));
             var recentRuns = _host.System.State.ProceduresRun;
             if (recentRuns.Count == 0)
             {
-                _procedureQueueContainer.AddChild(AshfallUiHelpers.MakeMetadata("No procedures logged yet."));
+                _procedureQueueContainer.AddChild(AshfallUiHelpers.MakeMetadata(Tr("ui.ward.no_procedures", "No procedures logged yet.")));
             }
             else
             {
@@ -448,6 +448,10 @@ namespace AtomicWar.GodotApp.UI
                 }
             }
         }
+
+        private static string Tr(string key, string fallback) => AshfallUiText.Tr(key, fallback);
+
+        private static string TrFormat(string key, params object[] args) => AshfallUiText.TrFormat(key, args);
 
         private static string FormatSurvivorName(string id)
         {

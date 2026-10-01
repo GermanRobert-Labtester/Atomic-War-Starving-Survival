@@ -4,7 +4,25 @@
 # Every headless Godot invocation used by verification goes through this
 # wrapper. It enforces the project test policy: fixed 15 FPS and a hard 180s
 # process limit. The cap is deliberately not configurable above 180s.
+#
+# Environment:
+#   ASHFALL_SKIP_BUILD_STALENESS=1   skip the compiled-assembly staleness guard
+#                                    (unusual workflows only; stale runs are a
+#                                    false-green risk)
+#   ASHFALL_EXPECT_ARTIFACT=<path>   after the run, fail when <path> is missing
+#                                    or empty. Callers that promise a
+#                                    machine-readable artifact set this so a
+#                                    silent non-write cannot pass as green.
 set -euo pipefail
+
+# --check-staleness-only runs just the compiled-assembly staleness guard and
+# exits, so CI can gate on freshness without booting Godot.
+STALENESS_ONLY=0
+for arg in "$@"; do
+    if [[ "$arg" == "--check-staleness-only" ]]; then
+        STALENESS_ONLY=1
+    fi
+done
 
 MAX_SECONDS=180
 KILL_GRACE_SECONDS=5
@@ -36,6 +54,11 @@ if [[ "${ASHFALL_SKIP_BUILD_STALENESS:-0}" != "1" ]]; then
             exit 2
         fi
     fi
+fi
+
+if [[ "$STALENESS_ONLY" == "1" ]]; then
+    echo "[ashfall-godot] staleness check OK" >&2
+    exit 0
 fi
 
 command -v godot >/dev/null 2>&1 || {
@@ -92,5 +115,17 @@ game_args=("${args[@]:separator_index}")
 args=("${engine_args[@]}" --fixed-fps 15 --max-fps 15 "${game_args[@]}")
 
 echo "[ashfall-godot] timeout=${MAX_SECONDS}s fixed_fps=15 max_fps=15" >&2
-exec timeout --foreground --signal=TERM --kill-after="${KILL_GRACE_SECONDS}s" \
-    "${MAX_SECONDS}s" godot "${args[@]}"
+status=0
+timeout --foreground --signal=TERM --kill-after="${KILL_GRACE_SECONDS}s" \
+    "${MAX_SECONDS}s" godot "${args[@]}" || status=$?
+
+# Task 14 (ninth wave) — optional artifact-presence contract. A runner that
+# exits 0 without writing the artifact it promised is a false green. Callers
+# that promise an artifact set ASHFALL_EXPECT_ARTIFACT to its repo-relative path.
+if [[ -n "${ASHFALL_EXPECT_ARTIFACT:-}" ]]; then
+    if [[ ! -s "$ASHFALL_EXPECT_ARTIFACT" ]]; then
+        echo "ERROR: expected artifact was not written: $ASHFALL_EXPECT_ARTIFACT" >&2
+        exit 1
+    fi
+fi
+exit "$status"

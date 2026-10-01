@@ -11,6 +11,7 @@
         "radiation_gain_mult": 0.75,
         "disease_onset_mult": 0.8,
         "hostile_encounter_mult": 0.75,
+        "enemy_damage_mult": 0.8,
         "market_price_mult": 0.9,
         "equipment_decay_mult": 0.8,
         "crisis_deadline_mult": 1.25
@@ -27,6 +28,7 @@
         "radiation_gain_mult": 1.0,
         "disease_onset_mult": 1.0,
         "hostile_encounter_mult": 1.0,
+        "enemy_damage_mult": 1.0,
         "market_price_mult": 1.0,
         "equipment_decay_mult": 1.0,
         "crisis_deadline_mult": 1.0
@@ -43,6 +45,7 @@
         "radiation_gain_mult": 1.3,
         "disease_onset_mult": 1.25,
         "hostile_encounter_mult": 1.35,
+        "enemy_damage_mult": 1.15,
         "market_price_mult": 1.15,
         "equipment_decay_mult": 1.25,
         "crisis_deadline_mult": 0.8
@@ -59,6 +62,7 @@
         "radiation_gain_mult": 1.6,
         "disease_onset_mult": 1.5,
         "hostile_encounter_mult": 1.75,
+        "enemy_damage_mult": 1.3,
         "market_price_mult": 1.3,
         "equipment_decay_mult": 1.5,
         "crisis_deadline_mult": 0.65

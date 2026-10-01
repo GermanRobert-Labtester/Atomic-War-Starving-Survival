@@ -240,8 +240,8 @@ namespace Ashfall.Core.Feedback
             Add(list, "trade_deadline", "time_pressure", "critical", "Trade window closes in {0} minutes.", 1, 4.5f);
 
             // Resource Warning (10)
-            Add(list, "food_low", "resource_warning", "warning", "WARNING: Food at {0}%. Send someone for more.", 1, 4.0f);
-            Add(list, "water_low", "resource_warning", "warning", "WARNING: Water at {0}%. The filter needs work.", 1, 4.0f);
+            Add(list, "food_low", "resource_warning", "warning", "WARNING: {1} at {0}%. Send someone for more.", 1, 4.0f);
+            Add(list, "water_low", "resource_warning", "warning", "WARNING: {1} at {0}%. The filter needs work.", 1, 4.0f);
             Add(list, "medical_low", "resource_warning", "warning", "WARNING: Medical stores at {0}%. Critical cases first.", 1, 4.0f);
             Add(list, "fuel_low", "resource_warning", "warning", "WARNING: Fuel at {0}%. Send a team.", 1, 4.0f);
             Add(list, "scrap_low", "resource_warning", "warning", "WARNING: Scrap at {0}%. Builds will wait.", 1, 4.0f);

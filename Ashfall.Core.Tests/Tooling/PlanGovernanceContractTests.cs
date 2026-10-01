@@ -31,7 +31,7 @@ public sealed class PlanGovernanceContractTests
 
         using var document = JsonDocument.Parse(File.ReadAllText(path));
         var root = document.RootElement;
-        Assert.Equal(1, root.GetProperty("register_schema_version").GetInt32());
+        Assert.Equal(2, root.GetProperty("register_schema_version").GetInt32());
         Assert.Equal("scripts/ci/generate-plan-register.py", root.GetProperty("generated_by").GetString());
 
         var plans = root.GetProperty("plans");
@@ -75,12 +75,69 @@ public sealed class PlanGovernanceContractTests
                      {
                          "plan_id", "status", "category", "wave", "premise_verified_at", "supersedes",
                          "superseded_by", "owner", "rails_required", "metric_moved", "acceptance_tier",
-                         "source_authority", "reference_health", "overlap_cluster", "path", "file_sha256"
+                         "source_authority", "reference_health", "overlap_cluster", "overlap_clusters", "path", "file_sha256"
                      })
             {
                 Assert.True(plan.TryGetProperty(field, out _), $"Missing register field {field}");
             }
         }
+    }
+
+    [Fact]
+    public void E1EClustersHaveReviewedEvidenceAndDoNotChangePlanStatuses()
+    {
+        var root = RepositoryRoot;
+        using var register = JsonDocument.Parse(File.ReadAllText(Path.Combine(root, "docs", "roadmap", "PLAN_REGISTER.json")));
+        using var clusters = JsonDocument.Parse(File.ReadAllText(Path.Combine(root, "docs", "roadmap", "e1", "E1E_CAPABILITY_CLUSTERS.json")));
+        var clusterRows = clusters.RootElement.GetProperty("clusters").EnumerateArray().ToList();
+        Assert.Equal(5, clusterRows.Count);
+
+        var plans = register.RootElement.GetProperty("plans").EnumerateArray()
+            .ToDictionary(plan => plan.GetProperty("plan_id").GetString()!, plan => plan, StringComparer.Ordinal);
+        using var claims = JsonDocument.Parse(File.ReadAllText(Path.Combine(root, "docs", "architecture", "CLAIMS.json")));
+        var claimIds = claims.RootElement.GetProperty("claims").EnumerateArray()
+            .Select(claim => claim.GetProperty("claim_id").GetString()).ToHashSet(StringComparer.Ordinal);
+        int candidateReceipts = 0;
+        foreach (var cluster in clusterRows)
+        {
+            var clusterId = cluster.GetProperty("id").GetString()!;
+            Assert.Equal("REVIEWED", cluster.GetProperty("review_status").GetString());
+            Assert.False(cluster.TryGetProperty("status", out _), $"Cluster {clusterId} must not assign a plan status");
+            foreach (var member in cluster.GetProperty("members").EnumerateArray())
+            {
+                var planId = member.GetProperty("plan_id").GetString()!;
+                Assert.True(plans.TryGetValue(planId, out var plan), $"Unknown E1E member {planId}");
+                Assert.Contains(clusterId, plan.GetProperty("overlap_clusters").EnumerateArray().Select(value => value.GetString()));
+                if (member.TryGetProperty("receipt_path", out var receiptPathElement))
+                {
+                    candidateReceipts++;
+                    var receiptPath = receiptPathElement.GetString()!;
+                    var receiptFullPath = Path.Combine(root, receiptPath);
+                    Assert.True(File.Exists(receiptFullPath), $"Missing candidate duplicate-search receipt: {receiptPath}");
+                    var receiptText = File.ReadAllText(receiptFullPath);
+                    Assert.Contains(planId, receiptText);
+                    foreach (var field in new[] { "Queries used", "Files and registries inspected", "Live Core authority found", "Host route and save owner found", "Tests or runtime evidence inspected", "Semantic overlap versus implementation duplicate", "Recommended action", "Reviewer conclusion and date" })
+                    {
+                        Assert.Contains(field, receiptText);
+                    }
+                }
+            }
+
+            foreach (var claimId in cluster.GetProperty("claim_ids").EnumerateArray().Select(value => value.GetString()))
+            {
+                Assert.Contains(claimId, claimIds);
+            }
+
+            foreach (var authority in cluster.GetProperty("live_authorities").EnumerateArray())
+            {
+                var path = authority.GetProperty("path").GetString()!;
+                Assert.True(File.Exists(Path.Combine(root, path)) || Directory.Exists(Path.Combine(root, path)), $"Missing authority evidence: {path}");
+            }
+        }
+
+        Assert.Equal(5, candidateReceipts);
+        Assert.True(File.Exists(Path.Combine(root, "docs", "roadmap", "CAPABILITY_CLUSTERS.md")));
+        Assert.True(File.Exists(Path.Combine(root, "docs", "roadmap", "e1", "E1E_INDEPENDENT_REVIEW.md")));
     }
 
     [Fact]
@@ -134,6 +191,7 @@ public sealed class PlanGovernanceContractTests
             Path.Combine(RepositoryRoot, "scripts", "ci", "plan-intake-check.py"),
             Path.Combine(RepositoryRoot, "scripts", "ci", "plan-intake-check.sh"),
             Path.Combine(RepositoryRoot, "scripts", "ci", "generate-rails-registry.py"),
+            Path.Combine(RepositoryRoot, "scripts", "ci", "generate-capability-clusters.py"),
         };
 
         foreach (var script in scripts)

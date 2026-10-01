@@ -25,6 +25,7 @@ namespace Ashfall.Core.Difficulty
         public float RadiationMult => _scalars.radiation_gain_mult;
         public float DiseaseMult => _scalars.disease_onset_mult;
         public float HostileEncounterMult => _scalars.hostile_encounter_mult;
+        public float EnemyDamageMult => _scalars.enemy_damage_mult;
         public float MarketPriceMult => _scalars.market_price_mult;
         public float EquipmentDecayMult => _scalars.equipment_decay_mult;
         public float CrisisDeadlineMult => _scalars.crisis_deadline_mult;
@@ -68,6 +69,7 @@ namespace Ashfall.Core.Difficulty
                 && _scalars.radiation_gain_mult == other._scalars.radiation_gain_mult
                 && _scalars.disease_onset_mult == other._scalars.disease_onset_mult
                 && _scalars.hostile_encounter_mult == other._scalars.hostile_encounter_mult
+                && _scalars.enemy_damage_mult == other._scalars.enemy_damage_mult
                 && _scalars.market_price_mult == other._scalars.market_price_mult
                 && _scalars.equipment_decay_mult == other._scalars.equipment_decay_mult
                 && _scalars.crisis_deadline_mult == other._scalars.crisis_deadline_mult;

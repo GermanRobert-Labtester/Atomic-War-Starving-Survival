@@ -3,6 +3,7 @@ using System;
 using Godot;
 using Ashfall.Core.Radio;
 using Ashfall.Core.UI;
+using AtomicWar.GodotApp.Localization;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
@@ -17,6 +18,9 @@ namespace AtomicWar.GodotApp.UI
     public partial class TriangulationPanel : Control
     {
         public event Action? OnClose;
+
+        /// <summary>Localization shim: catalog key with an English fallback.</summary>
+        private static string T(string key, string fallback) => AshfallUiText.Tr(key, fallback);
         public event Action<string>? OnLocationDiscovered;
 
         private RadioHostSession? _radioHost;
@@ -176,12 +180,12 @@ namespace AtomicWar.GodotApp.UI
             if (string.IsNullOrEmpty(_activeSignalId))
             {
                 // Explicit no-signal state: never a canned demo signal id (N16.6).
-                _signalLabel.Text = "Signal: None under direction-finding";
-                _observationCountLabel.Text = "Observations: —";
-                _candidateLabel.Text = "Candidate: —";
-                _confidenceLabel.Text = "Confidence: —";
-                _uncertaintyLabel.Text = "Uncertainty: —";
-                _discoveryLabel.Text = "Discovery: —";
+                _signalLabel.Text = T("ui.triangulation.signal_none", "Signal: None under direction-finding");
+                _observationCountLabel.Text = T("ui.triangulation.observations_none", "Observations: —");
+                _candidateLabel.Text = T("ui.triangulation.candidate_none_dash", "Candidate: —");
+                _confidenceLabel.Text = T("ui.triangulation.confidence_none", "Confidence: —");
+                _uncertaintyLabel.Text = T("ui.triangulation.uncertainty_none", "Uncertainty: —");
+                _discoveryLabel.Text = T("ui.triangulation.discovery_none", "Discovery: —");
                 _discoveryLabel.Modulate = AshfallUiHelpers.ToColor(DesignTheme.Pale);
                 _recordButton.Disabled = true;
                 _triangulateButton.Disabled = true;
@@ -206,10 +210,10 @@ namespace AtomicWar.GodotApp.UI
             }
             else
             {
-                _candidateLabel.Text = "Candidate: None";
-                _confidenceLabel.Text = "Confidence: —";
-                _uncertaintyLabel.Text = "Uncertainty: —";
-                _discoveryLabel.Text = "Discovery: No data";
+                _candidateLabel.Text = T("ui.triangulation.candidate_none", "Candidate: None");
+                _confidenceLabel.Text = T("ui.triangulation.confidence_none", "Confidence: —");
+                _uncertaintyLabel.Text = T("ui.triangulation.uncertainty_none", "Uncertainty: —");
+                _discoveryLabel.Text = T("ui.triangulation.discovery_nodata", "Discovery: No data");
                 _discoveryLabel.Modulate = AshfallUiHelpers.ToColor(DesignTheme.Pale);
             }
         }

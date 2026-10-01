@@ -9,6 +9,19 @@ namespace Ashfall.Core.PlayerCommand
     /// </summary>
     public static class PlayerCommandCode
     {
+        // ── First-hour onboarding verbs ───────────────────────────────
+        // The measurable verbs of the live 7-stage first-hour contract
+        // (Water → Power → Food → Duty → Dose → Research → Expedition). The
+        // terminal Expedition verb reuses ExpeditionDispatch; the others are
+        // emitted to the local play-metrics stream through the existing
+        // ObserveSigil → recorder seam.
+        public const string WaterStart = "water.start";
+        public const string PowerBreaker = "power.breaker";
+        public const string FoodConsume = "food.consume";
+        public const string DutyAssign = "duty.assign";
+        public const string DoseOpen = "dose.open";
+        public const string ResearchStart = "research.start";
+
         // ── Crafting ──────────────────────────────────────────────────
         public const string CraftStart = "craft.start";
         public const string CraftCancel = "craft.cancel";

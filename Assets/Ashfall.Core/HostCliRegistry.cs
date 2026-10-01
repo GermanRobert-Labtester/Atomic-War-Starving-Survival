@@ -230,6 +230,7 @@ namespace Ashfall.Core
         VerdictUiTest,
         OnboardingJourneySelfTest,
         RealCampaignJourneySelfTest,
+        UiCompositionHarnessSelfTest,
         FailureRestartSelfTest,
         FoodLoopSelfTest,
         ReasonablePlayerSelfTest,
@@ -2262,6 +2263,12 @@ namespace Ashfall.Core
                     new[] { "--campaign-journey-selftest", "--real-main-journey-selftest" },
                     "Real Main-composed player journey (Plans #5/#7/#8/#9): New Game -> ComposeCampaign() -> typed gameplay action -> real day advance -> SaveAll -> reset -> Continue -> restored state -> post-load action; combat auto-spawn via expedition encounter trigger -> victory loot & weapon-condition write-back (Plan #9); Holdfast trade against the shared inventory -> day advance -> save/reload (Plan #7); radiation exposure -> treatment -> save/reload (Plan #8)"),
                 new HostCliActionDescriptor(
+                    HostCliAction.UiCompositionHarnessSelfTest,
+                    "UI Tests, Layout & Gameplay Smoke",
+                    "--ui-composition-harness-selftest",
+                    new[] { "--ui-sim-harness-selftest", "--composition-retry-selftest" },
+                    "UI-built headless simulation harness: builds the real UI/composition root, drives a deterministic multi-day run, injects a late-owner fault, retries the same day (fail-closed rollback), compares the persisted campaign.json checksum to the in-memory envelope, and soaks the retry cycle over the full production owner set"),
+                new HostCliActionDescriptor(
                     HostCliAction.FailureRestartSelfTest,
                     "UI Tests, Layout & Gameplay Smoke",
                     "--failure-restart-selftest",
@@ -2574,7 +2581,7 @@ namespace Ashfall.Core
                     Description = d.Description,
                     HeadlessCompatible = d.HeadlessCompatible,
                     ExpectedSummaryId = d.TestId,
-                    TimeoutSeconds = d.PrimaryFlag.Contains("smoke") ? 60 : 30
+                    TimeoutSeconds = TimeoutSecondsFor(d)
                 })
                 .ToList();
 
@@ -2586,6 +2593,19 @@ namespace Ashfall.Core
                 HeadlessTestCount = testItems.Count(t => t.HeadlessCompatible),
                 Tests = testItems
             };
+        }
+
+        /// <summary>
+        /// Per-test process timeout. Smoke runs and the UI-built composition
+        /// harness do a full campaign composition plus several day advances,
+        /// so they need more headroom than a focused probe; every other test
+        /// keeps the 30s default.
+        /// </summary>
+        private static int TimeoutSecondsFor(HostCliActionDescriptor descriptor)
+        {
+            if (descriptor.Action == HostCliAction.UiCompositionHarnessSelfTest)
+                return 120;
+            return descriptor.PrimaryFlag.Contains("smoke") ? 60 : 30;
         }
 
         public static string GenerateJsonManifest()

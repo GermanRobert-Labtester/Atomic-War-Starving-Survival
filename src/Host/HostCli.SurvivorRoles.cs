@@ -176,8 +176,9 @@ namespace AtomicWar.GodotApp
                 }
 
                 // Check 12: Save store contract names
-                if (SurvivorRoleSaveStore.SectionName == "survivor_roles"
-                    && SurvivorRoleSaveStore.FileName == "survivor_roles_save.json")
+                bool survivorRoleContractOk = SurvivorRoleSaveStore.SectionName == "survivor_roles"
+                    && SurvivorRoleSaveStore.FileName == "survivor_roles_save.json";
+                if (survivorRoleContractOk)
                 {
                     Console.WriteLine("[PASS] Check 12: Save store contract names verified.");
                     passed++;

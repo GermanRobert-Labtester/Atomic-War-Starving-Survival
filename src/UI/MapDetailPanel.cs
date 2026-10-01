@@ -239,7 +239,7 @@ namespace AtomicWar.GodotApp.UI
             // soften that overlay so the art shows through.
             var sceneBackdrop = GetNodeOrNull<ColorRect>("Backdrop");
             if (sceneBackdrop != null)
-                sceneBackdrop.Color = new Color(0.03f, 0.04f, 0.05f, 0.90f); // A11Y §3: 0.74 let bright art under Muted/Dim text fall to ~2.7:1; 0.90 holds AA worst-case
+                sceneBackdrop.Color = AshfallUiHelpers.PanelScrim(); // A11Y §3: the shared InkPanelStrong scrim keeps AA worst-case contrast under bright art
             BackdropArt.Apply(this, BackdropArt.SurfaceHatchApproach, 0f, insertBehind: true);
         }
 

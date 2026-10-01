@@ -1,0 +1,5 @@
+{
+  "schema_version": "1.0.0",
+  "_note": "Acknowledged catalog-hygiene findings for the `catalog_audit` CI gate. The gate fails only on findings absent here, so this file ratchets against new drift. Intentional cross-domain id reuse is declared in docs/ci/catalog_audit_policy.json (duplicate_id_allowlist) and therefore does NOT need a baseline entry. Regenerate with: go run -C tools/gotools ./cmd/ashfall-dev audit-catalogs --root ../.. --update-baseline",
+  "accepted": {}
+}

@@ -198,8 +198,8 @@ namespace AtomicWar.GodotApp.UI
 
         private static readonly Dictionary<string, string> _resourceWarnings = new Dictionary<string, string>
         {
-            {"food_low", "WARNING: Food at {0}%. Send someone for more."},
-            {"water_low", "WARNING: Water at {0}%. The filter needs work."},
+            {"food_low", "WARNING: {1} at {0}%. Send someone for more."},
+            {"water_low", "WARNING: {1} at {0}%. The filter needs work."},
             {"medical_low", "WARNING: Medical stores at {0}%. Critical cases first."},
             {"fuel_low", "WARNING: Fuel at {0}%. Send a team."},
             {"scrap_low", "WARNING: Scrap at {0}%. Builds will wait."},

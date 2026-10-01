@@ -7,6 +7,7 @@
 // not fabricate or consume resources.
 // ============================================================================
 using System;
+using System.Linq;
 using Godot;
 using System.IO;
 using Ashfall.Core;
@@ -28,6 +29,15 @@ namespace AtomicWar.GodotApp
             }
 
             GD.Print("[OnboardingJourneySelfTest] === ASHFALL First-Hour Onboarding Journey ===");
+
+            // P008 — the recorded floor this CI-registered smoke exists to
+            // guard. A catalog regression below this count must fail here, not
+            // silently pass with fewer stages.
+            const int RecordedFirstHourStageCount = 7;
+            Check(OnboardingCatalog.FirstHourOrder.Length >= RecordedFirstHourStageCount,
+                $"first-hour catalog retains its recorded {RecordedFirstHourStageCount}-stage floor");
+            Check(OnboardingCatalog.FirstHourOrder.Distinct().Count() == OnboardingCatalog.FirstHourOrder.Length,
+                "first-hour catalog has no duplicate stages");
 
             // Isolate from real user data so a run never clobbers slot_1.
             string defaultDataDir = SaveSlotRoot.ResolveBaseDirectory();
@@ -157,6 +167,15 @@ namespace AtomicWar.GodotApp
                 restored.RecordSigil("expedition.dispatched");
                 Check(restored.JourneyComplete,
                     "expedition dispatch signal completes journey");
+
+                // P008 — every stage in the authoritative order is now driven
+                // to completion, so a stage added without a matching drive step
+                // fails here instead of shipping unmeasured.
+                int drivenStages = 0;
+                foreach (var stage in OnboardingCatalog.FirstHourOrder)
+                    if (restored.IsStageComplete(stage)) drivenStages++;
+                Check(drivenStages == RecordedFirstHourStageCount,
+                    $"all {RecordedFirstHourStageCount} first-hour stages driven (got {drivenStages})");
                 restored.SetDay(2);
                 Check(restored.JourneyComplete,
                     "day advance does not undo completed first-hour journey");
@@ -182,7 +201,7 @@ namespace AtomicWar.GodotApp
             return EmitSummary("onboarding_journey_selftest", failures == 0,
                 failures == 0 ? 0 : 1,
                 details: failures == 0
-                    ? "PASS: full journey with save/load resume in 1 host"
+                    ? $"PASS: full journey ({OnboardingCatalog.FirstHourOrder.Length} stages) with save/load resume in 1 host"
                     : $"FAIL ({failures} check(s) failed)");
         }
     }

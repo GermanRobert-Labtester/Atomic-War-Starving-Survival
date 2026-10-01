@@ -5,6 +5,7 @@ using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Survivors;
 using AtomicWar.GodotApp.UI;
+using AtomicWar.GodotApp.Localization;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI;
@@ -28,6 +29,9 @@ namespace AtomicWar.GodotApp.UI;
 public partial class SkillMatrixPanel : Control, IBindablePanel
 {
     public event Action? OnClose;
+
+    /// <summary>Localization shim: catalog key with an English fallback.</summary>
+    private static string T(string key, string fallback) => AshfallUiText.Tr(key, fallback);
     public event Action<string>? OnSurvivorSelected;
 
     private AshfallDashboardShell _shell = null!;
@@ -71,14 +75,14 @@ public partial class SkillMatrixPanel : Control, IBindablePanel
 
         var scopes = new[]
         {
-            new AshfallSidebar.Item { Id = "all",       Label = "All Survivors", Hint = "every roster entry",        IconPath = "" },
-            new AshfallSidebar.Item { Id = "active",    Label = "Active Skills",  Hint = ">= 1 active skill",          IconPath = "" },
-            new AshfallSidebar.Item { Id = "dormant",   Label = "Dormant Skills", Hint = ">= 1 dormant skill",         IconPath = "" },
-            new AshfallSidebar.Item { Id = "expert",    Label = "Expert Tracks",  Hint = "an expert-track earned",    IconPath = "" },
-            new AshfallSidebar.Item { Id = "medical",   Label = "Medical Focus",  Hint = "medical discipline only",   IconPath = "" },
-            new AshfallSidebar.Item { Id = "crafting",  Label = "Crafting Focus", Hint = "crafting discipline only",  IconPath = "" },
-            new AshfallSidebar.Item { Id = "combat",    Label = "Combat Focus",   Hint = "combat discipline only",    IconPath = "" },
-            new AshfallSidebar.Item { Id = "survival",  Label = "Survival Focus", Hint = "survival discipline only",  IconPath = "" },
+            new AshfallSidebar.Item { Id = "all",       Label = T("ui.skill_matrix.scope_all", "All Survivors"), Hint = "every roster entry",        IconPath = "" },
+            new AshfallSidebar.Item { Id = "active",    Label = T("ui.skill_matrix.scope_active", "Active Skills"),  Hint = ">= 1 active skill",          IconPath = "" },
+            new AshfallSidebar.Item { Id = "dormant",   Label = T("ui.skill_matrix.scope_dormant", "Dormant Skills"), Hint = ">= 1 dormant skill",         IconPath = "" },
+            new AshfallSidebar.Item { Id = "expert",    Label = T("ui.skill_matrix.scope_expert", "Expert Tracks"),  Hint = "an expert-track earned",    IconPath = "" },
+            new AshfallSidebar.Item { Id = "medical",   Label = T("ui.skill_matrix.scope_medical", "Medical Focus"),  Hint = "medical discipline only",   IconPath = "" },
+            new AshfallSidebar.Item { Id = "crafting",  Label = T("ui.skill_matrix.scope_crafting", "Crafting Focus"), Hint = "crafting discipline only",  IconPath = "" },
+            new AshfallSidebar.Item { Id = "combat",    Label = T("ui.skill_matrix.scope_combat", "Combat Focus"),   Hint = "combat discipline only",    IconPath = "" },
+            new AshfallSidebar.Item { Id = "survival",  Label = T("ui.skill_matrix.scope_survival", "Survival Focus"), Hint = "survival discipline only",  IconPath = "" },
         };
         _sidebar = _shell.SetSidebar(scopes, "Scope", "all");
         _sidebar.OnSelected += HandleSidebar;
@@ -369,14 +373,14 @@ public partial class SkillMatrixPanel : Control, IBindablePanel
         AshfallUiHelpers.EmptyChildrenExcept(_detailBox, _detailTitle);
         if (_skills == null)
         {
-            _detailTitle.Text = "ACTOR DETAIL";
+            _detailTitle.Text = T("ui.skill_matrix.actor_detail", "ACTOR DETAIL");
             _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
                 "Skill Progression engine offline. Bind a SkillProgressionSystem to see live actor skill state."));
             return;
         }
         if (_selectedIndex < 0)
         {
-            _detailTitle.Text = "ACTOR DETAIL";
+            _detailTitle.Text = T("ui.skill_matrix.actor_detail", "ACTOR DETAIL");
             _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
                 "Select a matrix row to view per-discipline XP, tier, last-used day, and active-skill count."));
             return;
@@ -384,7 +388,7 @@ public partial class SkillMatrixPanel : Control, IBindablePanel
         var (actorId, disciplineId) = ResolveVisibleRow(_selectedIndex);
         if (string.IsNullOrEmpty(actorId))
         {
-            _detailTitle.Text = "ACTOR DETAIL";
+            _detailTitle.Text = T("ui.skill_matrix.actor_detail", "ACTOR DETAIL");
             _detailBox.AddChild(AshfallUiHelpers.MakeMetadata("Selected row is out of scope — pick another."));
             return;
         }

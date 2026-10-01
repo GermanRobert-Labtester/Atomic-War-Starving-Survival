@@ -114,6 +114,14 @@ namespace Ashfall.Core.Onboarding
     {
         public int schemaVersion = OnboardingJourney.SaveVersion;
         public int day = 1;
+
+        /// <summary>
+        /// Day the current stage was entered (P005 — "N days on this stage"
+        /// nudge). Additive field: a legacy save defaults to 0, which the
+        /// journey reads as "entered today" so the nudge never fabricates a
+        /// back-dated count after a load.
+        /// </summary>
+        public int stageStartDay = 0;
         public int profile = (int)OnboardingProfile.Legacy;
 
         /// <summary>

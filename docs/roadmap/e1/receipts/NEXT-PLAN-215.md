@@ -1,0 +1,13 @@
+# Duplicate-search receipt — Plan 215
+
+- **Plan ID / proposed capability:** `NEXT-PLAN-215` — Crisis Rationing: Existing Economy Policy Overlay Completion.
+- **Queries used:** `resource rationing crisis`; `food ration policy allocation`; `ResourceRationingSystem route save`; `cooking nutrition food preservation`.
+- **Files and registries inspected:** `docs/roadmap/PLAN_REGISTER.json`; `docs/roadmap/e1/E1E_CAPABILITY_CLUSTERS.json`; `docs/architecture/CLAIMS.json`; `Assets/Ashfall.Core/Save/SaveSectionRegistry.cs`; `Next-steps-plans/shipped_to_chat/Plan_215_Shelter_Resource_Rationing_Crisis_Management.md`; `Assets/Ashfall.Core/Economy/ResourceRationingSystem.cs`; `src/Host/EconomyHostSession.cs`; `Assets/Ashfall.Core/KitchenNutritionSystem.cs`; `src/Host/CookingHostSession.cs`; `src/UI/KitchenNutritionPanel.cs`; `Ashfall.Core.Tests/Cooking/Plan136CookingHostIntegrationTests.cs`.
+- **Live Core authority found:** `ResourceRationingSystem` owns allocation policy within the economy host; cooking, nutrition, and preservation have distinct existing owners.
+- **Host route and save owner found:** `EconomyHostSession` constructs rationing behavior under the existing economy state seam. The candidate's own current-evidence section reports no dedicated Main day/command route and no independent rationing save section. Cooking is registered separately under `cooking` and has its own kitchen route.
+- **Tests or runtime evidence inspected:** `Plan136CookingHostIntegrationTests`, economy host construction, save registry, and candidate current-evidence section.
+- **Semantic overlap versus implementation duplicate:** Crisis allocation policy is adjacent to the food pipeline but does not duplicate cooking, nutrition, or preservation. Current evidence does not establish an end-to-end player route or independent persistence for rationing.
+- **Recommended action:** `LINK`.
+- **Reviewer conclusion and date:** `RELATED_DISTINCT` candidate for the food-pipeline cluster. Preserve the separate rationing policy scope and explicitly track its missing route/persistence seam if later promoted. No plan status or body changes. Reviewed 2026-10-01.
+
+- **Runtime follow-up (2026-10-02):** `XDG_DATA_HOME=/tmp/ashfall-godot-user bash scripts/ci/run-godot-bounded.sh --path . -- --food-loop-selftest` passed (`FOOD_LOOP_SELFTEST PASS`, exit 0). This confirms the live food route through the real kitchen UI, inventory, coordinator day advance, consume seam, cooking authority, and refusal feedback; it does not add a rationing route or persistence seam, so the `RELATED_DISTINCT` conclusion remains unchanged.

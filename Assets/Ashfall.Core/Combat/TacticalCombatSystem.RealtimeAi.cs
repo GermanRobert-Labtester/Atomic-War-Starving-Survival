@@ -319,7 +319,7 @@ namespace Ashfall.Core.Combat
                 float dist = (float)Math.Sqrt(dx * dx + dy * dy);
                 if (dist <= ChargeMeleeRadius)
                 {
-                    float dmg = ChargeDamage * (enemy.AiDamageMod > 0f ? enemy.AiDamageMod : 1f);
+                    float dmg = ChargeDamage * (enemy.AiDamageMod > 0f ? enemy.AiDamageMod : 1f) * EnemyDamageScale;
                     ApplyDamage(focus, dmg, enemy, false, rng);
                     AddEvent("ai_charge_hit", focus.Id, enemy.Name + " charges into " + focus.Name + ".");
                     enemy.AiBehaviorPhase = "charge_stun";
@@ -359,7 +359,7 @@ namespace Ashfall.Core.Combat
             {
                 float laneDmg = 6f + (enemy.Lane == target.Lane ? 4f : 0f);
                 float dmgMod = enemy.AiDamageMod > 0f ? enemy.AiDamageMod : 1f;
-                float dmg = laneDmg * dmgMod;
+                float dmg = laneDmg * dmgMod * EnemyDamageScale;
                 if (move == "SuppressiveFire" || enemy.AiBehaviorPhase == "suppress")
                     dmg *= 0.65f;
                 ApplyDamage(target, dmg, enemy, false, rng);

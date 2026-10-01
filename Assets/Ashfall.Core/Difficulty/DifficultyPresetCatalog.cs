@@ -18,6 +18,7 @@ namespace Ashfall.Core.Difficulty
         public float radiation_gain_mult { get; set; }
         public float disease_onset_mult { get; set; }
         public float hostile_encounter_mult { get; set; }
+        public float enemy_damage_mult { get; set; }
         public float market_price_mult { get; set; }
         public float equipment_decay_mult { get; set; }
         public float crisis_deadline_mult { get; set; }
@@ -31,6 +32,7 @@ namespace Ashfall.Core.Difficulty
                 radiation_gain_mult = 1f,
                 disease_onset_mult = 1f,
                 hostile_encounter_mult = 1f,
+                enemy_damage_mult = 1f,
                 market_price_mult = 1f,
                 equipment_decay_mult = 1f,
                 crisis_deadline_mult = 1f
@@ -46,6 +48,7 @@ namespace Ashfall.Core.Difficulty
                 radiation_gain_mult = radiation_gain_mult,
                 disease_onset_mult = disease_onset_mult,
                 hostile_encounter_mult = hostile_encounter_mult,
+                enemy_damage_mult = enemy_damage_mult,
                 market_price_mult = market_price_mult,
                 equipment_decay_mult = equipment_decay_mult,
                 crisis_deadline_mult = crisis_deadline_mult
@@ -59,6 +62,7 @@ namespace Ashfall.Core.Difficulty
                 !ValidateMultiplier(nameof(radiation_gain_mult), radiation_gain_mult, out error) ||
                 !ValidateMultiplier(nameof(disease_onset_mult), disease_onset_mult, out error) ||
                 !ValidateMultiplier(nameof(hostile_encounter_mult), hostile_encounter_mult, out error) ||
+                !ValidateMultiplier(nameof(enemy_damage_mult), enemy_damage_mult, out error) ||
                 !ValidateMultiplier(nameof(market_price_mult), market_price_mult, out error) ||
                 !ValidateMultiplier(nameof(equipment_decay_mult), equipment_decay_mult, out error) ||
                 !ValidateMultiplier(nameof(crisis_deadline_mult), crisis_deadline_mult, out error))

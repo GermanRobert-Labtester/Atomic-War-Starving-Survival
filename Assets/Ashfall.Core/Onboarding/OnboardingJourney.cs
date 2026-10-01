@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Ashfall.Core.PlayerCommand;
 
 namespace Ashfall.Core.Onboarding
 {
@@ -168,6 +169,49 @@ namespace Ashfall.Core.Onboarding
         public static IReadOnlyList<OnboardingStage> OrderFor(OnboardingProfile profile) =>
             profile == OnboardingProfile.FirstHour ? FirstHourOrder : LegacyOrder;
 
+        /// <summary>
+        /// Published player-command verb for a first-hour stage (P002). One
+        /// mapping authority shared by the host recorder and the funnel tool;
+        /// a stage without a published verb returns an empty string so a caller
+        /// cannot record a fabricated code.
+        /// </summary>
+        public static string FirstHourVerbForStage(OnboardingStage stage) => stage switch
+        {
+            OnboardingStage.Water => PlayerCommandCode.WaterStart,
+            OnboardingStage.Power => PlayerCommandCode.PowerBreaker,
+            OnboardingStage.Food => PlayerCommandCode.FoodConsume,
+            OnboardingStage.Duty => PlayerCommandCode.DutyAssign,
+            OnboardingStage.Dose => PlayerCommandCode.DoseOpen,
+            OnboardingStage.Research => PlayerCommandCode.ResearchStart,
+            OnboardingStage.Expedition => PlayerCommandCode.ExpeditionDispatch,
+            _ => string.Empty,
+        };
+
+        /// <summary>
+        /// Reverse lookup from a live observed sigil to its first-hour stage and
+        /// published verb. Only requirement sigils of the seven live stages
+        /// resolve (so unrelated sigils such as a blocked-attempt variant never
+        /// manufacture a verb).
+        /// </summary>
+        public static bool TryGetFirstHourVerbForSigil(string sigil, out OnboardingStage stage, out string verb)
+        {
+            stage = default;
+            verb = string.Empty;
+            if (string.IsNullOrWhiteSpace(sigil)) return false;
+            for (int i = 0; i < FirstHour.Length; i++)
+            {
+                var def = FirstHour[i];
+                for (int r = 0; r < def.Requirements.Length; r++)
+                {
+                    if (!string.Equals(def.Requirements[r].Sigil, sigil, StringComparison.Ordinal)) continue;
+                    stage = def.Id;
+                    verb = FirstHourVerbForStage(def.Id);
+                    return verb.Length > 0;
+                }
+            }
+            return false;
+        }
+
         private static readonly OnboardingStage[] LegacyOrder =
         {
             OnboardingStage.Protocol,
@@ -218,6 +262,18 @@ namespace Ashfall.Core.Onboarding
 
         public int Day => _state.day;
 
+        /// <summary>
+        /// Day the current stage was entered (P005). Falls back to the live day
+        /// for legacy/zero saves so the value is never below the current day.
+        /// </summary>
+        public int StageStartDay => _state.stageStartDay <= 0 ? _state.day : _state.stageStartDay;
+
+        /// <summary>
+        /// Whole days the current stage has been open (P005). 0 on the entry
+        /// day; never negative. Pure read — drives the non-blocking nudge.
+        /// </summary>
+        public int DaysOnCurrentStage => Math.Max(0, _state.day - StageStartDay);
+
         public IReadOnlyDictionary<string, int> Sigils => _counts;
 
         public IReadOnlyList<int> CompletedStages =>
@@ -252,6 +308,7 @@ namespace Ashfall.Core.Onboarding
             {
                 profile = (int)normalized,
                 currentStage = (int)OnboardingCatalog.OrderFor(normalized)[0],
+                stageStartDay = 1,
             };
         }
 
@@ -288,7 +345,7 @@ namespace Ashfall.Core.Onboarding
 
             _state.completedStages.Add(idx);
             OnStageAdvanced?.Invoke((OnboardingStage)idx);
-            _state.currentStage = NextIncompleteIndex();
+            EnterStage(NextIncompleteIndex());
             EmitJourneyChangedIf();
             return true;
         }
@@ -306,7 +363,7 @@ namespace Ashfall.Core.Onboarding
                     OnStageAdvanced?.Invoke(order[i]);
                 }
             }
-            _state.currentStage = NextIncompleteIndex();
+            EnterStage(NextIncompleteIndex());
             EmitJourneyChangedIf();
         }
 
@@ -322,18 +379,18 @@ namespace Ashfall.Core.Onboarding
             if (Profile == OnboardingProfile.FirstHour)
             {
                 _state.journeyComplete = false;
-                _state.currentStage = (int)OnboardingCatalog.FirstHourOrder[0];
+                EnterStage((int)OnboardingCatalog.FirstHourOrder[0]);
             }
             else if (_state.day >= 2)
             {
                 _state.completedStages.Add((int)OnboardingStage.DayAdvance);
                 _state.journeyComplete = true;
-                _state.currentStage = (int)OnboardingStage.DayAdvance;
+                EnterStage((int)OnboardingStage.DayAdvance);
             }
             else
             {
                 _state.journeyComplete = false;
-                _state.currentStage = (int)OnboardingStage.Protocol;
+                EnterStage((int)OnboardingStage.Protocol);
             }
             OnStageAdvanced?.Invoke(CurrentStage);
             EmitJourneyChangedIf();
@@ -438,6 +495,29 @@ namespace Ashfall.Core.Onboarding
             return list;
         }
 
+        /// <summary>
+        /// Number of leading first-hour stages that must be complete before the
+        /// terminal Expedition dispatch unlocks (P003): Water → Dose.
+        /// </summary>
+        public const int ExpeditionPrerequisiteStageCount = 5;
+
+        /// <summary>
+        /// Tutorial-ordering gate for the terminal first-hour verb (P003).
+        /// Returns the first incomplete prerequisite stage (Water→Dose) while a
+        /// live first-hour journey is still in progress, or null when dispatch
+        /// is unlocked: legacy profile, journey complete, or every prerequisite
+        /// satisfied. Pure read — never mutates journey state.
+        /// </summary>
+        public OnboardingStage? ExpeditionDispatchPrerequisite()
+        {
+            if (Profile != OnboardingProfile.FirstHour || JourneyComplete) return null;
+            var order = OnboardingCatalog.FirstHourOrder;
+            int limit = Math.Min(ExpeditionPrerequisiteStageCount, order.Length);
+            for (int i = 0; i < limit; i++)
+                if (!IsStageComplete(order[i])) return order[i];
+            return null;
+        }
+
         private bool AreRequirementsSatisfied(OnboardingStageDef def)
         {
             foreach (var req in def.Requirements)
@@ -470,7 +550,7 @@ namespace Ashfall.Core.Onboarding
                 _state.completedStages.Add(idx);
                 if (!_suppressEvents) OnStageAdvanced?.Invoke((OnboardingStage)idx);
                 anyChange = true;
-                _state.currentStage = NextIncompleteIndex();
+                EnterStage(NextIncompleteIndex());
             }
             if (Profile == OnboardingProfile.FirstHour &&
                 OnboardingCatalog.OrderFor(Profile).Count == _state.completedStages.Count &&
@@ -479,6 +559,18 @@ namespace Ashfall.Core.Onboarding
                 _state.journeyComplete = true;
             }
             return anyChange;
+        }
+
+        /// <summary>
+        /// Moves the active stage pointer and stamps the entry day so the
+        /// "N days on this stage" nudge (P005) is truthful across save/load.
+        /// Used only on real stage transitions — never on a plain
+        /// <see cref="SetDay"/> tick, which must not reset the count.
+        /// </summary>
+        private void EnterStage(int idx)
+        {
+            _state.currentStage = idx;
+            _state.stageStartDay = _state.day;
         }
 
         private int NextIncompleteIndex()
@@ -507,6 +599,7 @@ namespace Ashfall.Core.Onboarding
             {
                 schemaVersion = _state.schemaVersion,
                 day = _state.day,
+                stageStartDay = _state.stageStartDay,
                 profile = _state.profile,
                 sigils = persistedSigils,
                 currentStage = _state.currentStage,
@@ -541,6 +634,7 @@ namespace Ashfall.Core.Onboarding
             {
                 schemaVersion = futureVersion,
                 day = saved.day == 0 ? 1 : saved.day,
+                stageStartDay = saved.stageStartDay,
                 profile = saved.profile == (int)OnboardingProfile.FirstHour
                     ? (int)OnboardingProfile.FirstHour
                     : (int)OnboardingProfile.Legacy,
@@ -601,6 +695,7 @@ namespace Ashfall.Core.Onboarding
 
             // Walk forward over any earlier stages that had already met their
             // requirements at save-time so the resume is exactly correct.
+            int preWalkStage = j._state.currentStage;
             int guard = OnboardingCatalog.OrderFor(j.Profile).Count;
             while (guard-- > 0 &&
                    (j.Profile == OnboardingProfile.FirstHour || !j.IsTerminalStage(j.CurrentStage)) &&
@@ -613,6 +708,11 @@ namespace Ashfall.Core.Onboarding
             }
 
             j._state.currentStage = j.NextIncompleteIndex();
+            // P005 — if the resume walk moved past the saved stage, the new
+            // stage was entered now; otherwise keep the saved entry day so the
+            // days-on-stage nudge survives the load.
+            if (j._state.currentStage != preWalkStage)
+                j._state.stageStartDay = j._state.day;
 
             j._suppressEvents = false;
             j.OnJourneyChanged?.Invoke(j);

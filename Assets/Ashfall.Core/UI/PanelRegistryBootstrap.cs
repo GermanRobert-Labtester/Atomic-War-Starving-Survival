@@ -92,6 +92,7 @@ namespace Ashfall.Core.UI
             R("wildlife_trapping",   "Wildlife Trapping",             PanelGroup.Expanded);
             R("excavation",          "Excavation",                    PanelGroup.Expanded);
             R("apprenticeship",      "Apprenticeship",                PanelGroup.Expanded);
+            R("difficulty_settings", "Difficulty Settings",            PanelGroup.Expanded,  new[] { "difficulty_settings" });
             R("caregiving",          "Caregiving",                    PanelGroup.Expanded);  // was missing from forwarding
             R("shelter_thermal",     "Shelter Thermal",               PanelGroup.Expanded);
             R("shelter_schedule",    "Shelter Schedule",              PanelGroup.Expanded);

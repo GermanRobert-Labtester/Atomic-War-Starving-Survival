@@ -1,5 +1,566 @@
 # ASHFALL Worktree Ownership
 
+## claim-expedition-followup-wave7-2026-10-02 — ACTIVE
+
+User-directed continuation of the released expedition package ("Continue with
+these small tasks completely finish all of them … 3 loops … then suggest 15 very
+small tasks"). Plan: `.ai/plans/expedition-followup-wave7-2026-10-02.md`
+(STATUS: APPROVED BY USER). Exact owned paths: `src/UI/ExpeditionRadarPanel.cs`,
+`src/UI/ExpeditionPanel.cs`, `assets/l10n/strings.csv` (expedition rows only),
+`Ashfall.Core.Tests/Localization/ExpeditionLocaleKeysTests.cs`, this claim,
+`.ai/state.md`, and `INTEGRATION_PLANS.md`. All other dirty worktree content is
+read-only. No new save section, no mutable state, no gameplay decision change.
+Status: ACTIVE until the plan is archived.
+
+## claim-catalog-health-gates-f01-f15-2026-10-02 — COMPLETE / FULLY INTEGRATED
+
+User-directed continuation ("Continue with these small tasks completely finish
+all of them and suggest after"). Plan:
+`.ai/plans/integrated/data/INTEGRATED_catalog-health-gates-f01-f15-2026-10-02.md`
+(STATUS: FULLY INTEGRATED). Exact owned paths: modified
+`tools/gotools/pkg/catalogaudit/{catalogaudit.go,catalogaudit_test.go}`,
+`tools/gotools/cmd/ashfall-dev/main.go`, `scripts/ci/run-gates.py`,
+`scripts/ci/json-schema-policy-gate.py`,
+`Ashfall.Core.Tests/Tooling/CiGateManifestDriftTests.cs`,
+`Ashfall.Core.Tests/CatalogIntegrityValidatorTests.cs`,
+`docs/ci/GATING_VS_DIAGNOSTIC_CHECKS.md`, regenerated
+`docs/ci/GATE_INVENTORY.md` (manifest retuned concurrently by another agent),
+this claim, `.ai/state.md`, `INTEGRATION_PLANS.md`. Acceptance: all 15 rows
+landed; Go tests 21/21; gates `catalog_audit`, `gotools_test`,
+`gate_inventory_drift`, `json_schema_policy` PASS. Status: **COMPLETE / FULLY
+INTEGRATED 2026-10-02; paths released.** Godot-dependent gates still not
+executed in this environment. No full suite or commit.
+
+## claim-catalog-health-gates-e01-e15-2026-10-02 — COMPLETE / FULLY INTEGRATED
+
+User-directed continuation of the D01–D05 catalog-hygiene wave ("Continue with
+these small tasks completely finish all of them and suggest after"). Plan:
+`.ai/plans/integrated/data/INTEGRATED_catalog-health-gates-e01-e15-2026-10-02.md`
+(STATUS: FULLY INTEGRATED). Exact owned paths: new
+`tools/gotools/README.md`; modified
+`tools/gotools/pkg/catalogaudit/{catalogaudit.go,catalogaudit_test.go}`,
+`tools/gotools/cmd/ashfall-dev/main.go`, `scripts/ci/run-gates.py`,
+`scripts/ci/json-schema-policy-gate.py`, `docs/ci/{CI_GATE_MANIFEST.json,
+GATE_INVENTORY.md,README.md}`,
+`Ashfall.Core.Tests/Tooling/CiGateManifestDriftTests.cs`,
+`Assets/Ashfall.Core/CatalogIntegrityRules.cs` (comment only), this claim,
+`.ai/state.md`, `INTEGRATION_PLANS.md`. Acceptance: all 15 rows landed; new gates
+`gotools_test`, `gate_inventory_drift`, `content_utilization` plus `depends_on`
+metadata. Status: **COMPLETE / FULLY INTEGRATED 2026-10-02; paths released.**
+Godot-dependent gates registered but not run in this environment (compiler
+memory pressure); `content_utilization` pass verified by replaying the gate
+logic over the current artifact. No full suite or commit.
+
+## claim-expedition-followup-wave6-2026-10-02 — COMPLETE / FULLY INTEGRATED
+
+User-directed continuation of the released expedition package ("Continue with
+these small tasks completely finish all of them … 3 loops … then suggest 15 very
+small tasks"). Plan:
+`.ai/plans/integrated/playability/INTEGRATED_expedition-followup-wave6-2026-10-02.md`
+(STATUS: FULLY INTEGRATED; approved by user). Exact owned paths: `src/UI/ExpeditionPanel.cs`,
+`src/UI/ExpeditionRadarPanel.cs`, `src/UI/AshfallUiHelpers.cs` (one shared phase
+formatter), `src/Main.UiTests.Expeditions.cs`, `assets/l10n/strings.csv`
+(expedition rows only), `Ashfall.Core.Tests/Expeditions/ExpeditionPrepPlanTests.cs`,
+`Ashfall.Core.Tests/Localization/ExpeditionLocaleKeysTests.cs`,
+`docs/CURRENT_AUTHORITY.md`, this claim, `.ai/state.md`, and `INTEGRATION_PLANS.md`.
+All other dirty worktree content is read-only. No new save section, no mutable
+state, no gameplay decision change. The 180-second UI-probe limitation was
+resolved by removing the unrelated fatal cascade from this panel smoke; remaining
+teardown diagnostics are recorded in the archived plan and `.ai/state.md`. Focused
+tests, localization gate, host build, and capped runtime probe passed.
+**COMPLETE / FULLY INTEGRATED 2026-10-02; paths released.**
+
+## claim-catalog-health-gates-d01-d05-2026-10-02 — COMPLETE / FULLY INTEGRATED
+
+User-directed continuation ("Continue with these small tasks completely finish all
+of them … 3 find→repair→harden loops … then suggest 15 very small tasks"). Plan:
+`.ai/plans/integrated/data/INTEGRATED_catalog-health-gates-d01-d05-2026-10-02.md`
+(STATUS: FULLY INTEGRATED). Exact owned paths: new
+`tools/gotools/pkg/catalogaudit/{catalogaudit.go,catalogaudit_test.go}`,
+`docs/ci/catalog_audit_policy.json`, `docs/ci/catalog_audit_baseline.json`;
+modified `tools/gotools/cmd/ashfall-dev/main.go`,
+`docs/ci/CI_GATE_MANIFEST.json`, this claim, `.ai/state.md`, and
+`INTEGRATION_PLANS.md`. Nothing under `Assets/`, `src/`, `Ashfall.Core.Tests/`,
+or `.github/` was touched. All other dirty worktree content remains read-only.
+Acceptance: `catalog_audit` gate PASS, Go tests 12/12, `content_certification`
+gate registered. Status: **COMPLETE / FULLY INTEGRATED 2026-10-02; paths
+released.** D05 runtime observation blocked by an environment-level compiler kill
+recorded in the plan. No full suite or commit.
+
+## claim-15-small-repo-followups-2026-10-02 — COMPLETE / RELEASED
+
+User-authorized continuation to implement/verify all 15 small follow-ups.
+Plan: `.ai/plans/15-small-repo-followups-2026-10-02.md` (STATUS: APPROVED BY USER).
+Exact owned paths: `assets/l10n/strings.csv` (railway tooltip row only),
+`scripts/ci/generate-capability-clusters.py`, `docs/roadmap/e1/receipts/NEXT-PLAN-24.md`,
+`docs/roadmap/e1/receipts/NEXT-PLAN-215.md`, `src/Host/RetentionHostSession.cs`,
+`src/Main.CampaignOwners.cs` (RetentionDayOwner only),
+`src/Main.Retention.cs` (retry dirty-state restore only),
+`src/Host/HostCli.Retention.cs` (retry probe only),
+`Ashfall.Core.Tests/Campaign/Plan55RetentionHostIntegrationTests.cs`,
+`Ashfall.Core.Tests/UI/AccessibilitySourceAuditTests.cs` (Expedition focus contract only),
+`src/Main.UiTests.PlayerPanels.cs` (Water Treatment route/action assertion only),
+`src/Main.UiTests.Expeditions.cs` (self-test fresh survivor fixture setup only),
+`src/Main.PlayerSurfaces.cs` (deferred initial-focus teardown guard only),
+`.github/workflows/ci.yml` (scene-binding report extraction step only),
+this claim, the new plan and archive, `.ai/state.md`, `INTEGRATION_PLANS.md`, and
+generated `docs/INDEX.md`. Generated capability-cluster outputs are changed only
+through their owner generator. All other dirty worktree content remains read-only.
+**COMPLETE / FULLY INTEGRATED 2026-10-02; paths released.** Acceptance: all 15 rows
+implemented or evidenced as already satisfied. Scoped tests passed; host build passed
+0/0; l10n and capability gates passed; docs index regenerated and checked. Food-loop,
+retention, audio, and player-panel bounded probes passed. Expedition-panel assertions
+passed after fixture repair, but the process exceeded the wrapper's 180s cap during
+shutdown (exit 124); this limitation is recorded in `.ai/state.md`. No full suite or
+commit.
+
+## claim-scene-binding-truth-p089-p096-2026-10-02 — COMPLETE / RELEASED
+
+User-directed selection and integration of the already approved
+`.ai/plans/stub-content-scripts-scene-binding-truth-p089-p096-2026-10-01.md`.
+Owned for this closeout: that plan, `WORKTREE_OWNERSHIP.md`, `INTEGRATION_PLANS.md`,
+`.ai/state.md`, `src/UI/{DailyBriefingModalContent,OpeningProtocolModalContent,SafeCrackModalContent,KitchenNutritionPanelContent,PharmaLabPanelContent}.cs` and their UID sidecars, `assets/ui/{modals/{DailyBriefingModal,OpeningProtocolModal,SafeCrackModal},panels/{KitchenNutritionPanel,PharmaLabPanel,WaterTreatmentPanel}}.tscn`, `src/Main.Campaign.cs`, `src/UI/{PanelSceneLoader,SceneBinder,WaterTreatmentPanel,WaterTreatmentPanelContent}.cs`, `src/Host/SceneBindingSelfTest.cs`, `scripts/ci/scene-binding-truth-gate.sh`, `Ashfall.Core.Tests/Tooling/SceneBindingTruthGateTests.cs`, `docs/ci/CI_GATE_MANIFEST.json`, generated `docs/ui/{ui_design_map.json,UI_DESIGN_MAP.md}`, and generated `docs/INDEX.md` closeout. Follow-up runtime mismatch/dynamic path/visibility probes and generated scene-root report were integrated. Evidence: focused targets 6/6 + 7/7 + 7/7; host build 0/0; scene self-test 25/25 plus 2 runtime probes; UI layout 0 failures; accessibility 6/6; static truth and UID gates pass; generated maps current. **COMPLETE / FULLY INTEGRATED 2026-10-02; paths released.** No unrelated expedition/difficulty ownership; no full suite or commit. **Sweep follow-up (2026-10-02):** re-ran the find→fix loops; raised four fast-gate timeouts in `docs/ci/CI_GATE_MANIFEST.json` to the 180s ceiling — `build_godot_host` 120s (measured 139.44s), `architecture_map_drift` 30s (37.2s), `plan_integration_audit_drift` 60s (70.2s), `doc_link_portability` 30s (60.5s) — each re-verified PASS after; scene-binding/UID/self-test/focused-xUnit all still green. Findings needing authority (`ChemicalLabPanel`/`SafeCrackModal` orphaned UI; `compiler_warning_baseline` 251.9s > the 180s fast ceiling) reported in `.ai/state.md`; foreign `save_store_matrix_drift`/`ui_design_map_drift`/`docs_index_drift` left untouched.
+
+## claim-expedition-prep-return-p105-p108-2026-10-01
+
+User-directed ("Please integrate these tasks fully … | P105 … P106 … P107 … P108" +
+audit/repair/harden loop). Source rows P105–P108 of
+`docs/plans/PLAYABILITY_200_SUGGESTIONS_2026-10-01.md`. Owned exact paths:
+`Assets/Ashfall.Core/Expeditions/ExpeditionPrepPlan.cs` (new),
+`src/UI/ExpeditionPanel.cs`, `src/Main.Expeditions.cs`,
+`src/Host/ExpeditionHostSession.cs`,
+`src/Main.UiTests.Expeditions.cs`, `assets/l10n/strings.csv`,
+`Ashfall.Core.Tests/Expeditions/ExpeditionPrepPlanTests.cs` (new),
+`docs/architecture/ARCHITECTURE_TEST_MAP.md` (regenerated),
+**wave-2 additions:** `Assets/Ashfall.Core/Radio/DistressRescueMissionManager.cs`,
+`src/UI/StatusPanel.cs`, `src/Main.PlayerSurfaces.cs`, `src/Main.PlayMetrics.cs`,
+`src/Host/PlayMetricsHostSession.cs`,
+`Ashfall.Core.Tests/Radio/ExpeditionRescueFailureBridgeTests.cs` (new),
+`Ashfall.Core.Tests/Tooling/LocalizationRatchetTests.cs`,
+**wave-3 additions:** `Assets/Ashfall.Core/Medical/HealthHistorySystem.cs`,
+`Assets/Ashfall.Core/Expeditions/ExpeditionInjuryDigest.cs` (new),
+`src/UI/MapPanel.cs`, `src/Main.ExpeditionFamily.cs`,
+**wave-4 additions:** `src/UI/ExpeditionRadarPanel.cs`, `src/Main.UiTests.PlayerPanels.cs`,
+`src/Host/HostCli.PlayMetrics.cs`, `docs/CURRENT_AUTHORITY.md`,
+`Ashfall.Core.Tests/Localization/ExpeditionLocaleKeysTests.cs` (new),
+**wave-5 additions:** `Ashfall.Core.Tests/UI/PanelSubscriptionHygieneTests.cs`,
+**wave-6 additions:** `src/UI/ExpeditionPhaseText.cs` (new), the plan
+`.ai/plans/integrated/playability/INTEGRATED_expedition-prep-return-p105-p108-2026-10-01.md`,
+this claim, `.ai/state.md`, and the `INTEGRATION_PLANS.md` entry. Status:
+**COMPLETE / FULLY INTEGRATED 2026-10-01; paths released.** No new save section;
+the prep plan is a transient read model. P107 also repaired a pre-existing
+double loot deposit (panel + Main both deposited). P108 routes failed-sortie
+consequences through the existing health/fate/journal owners; the "missing"
+arm is deliberately not invented (no missing state exists — see
+`SurvivorLifecycleState` docs). Evidence: host build 0/0;
+`ExpeditionPrepPlanTests` 18/18; `ExpeditionLootIntegrityTests` 10/10;
+`Plan21EstimateProtectiveInputsTests` 9/9; `StringsCsvLocaleGateTests` 4/4;
+`LocalizationRatchetTests` 2/2; `ArchitectureTestMapGateTests` 7/7; arch map
+`--check` OK (315); `--expedition-panel-uitest` PASS. No commit; full suite not
+run; foreign dirty worktree preserved (`src/UI/GameHudSnapshotFixture.cs` was
+written concurrently and left untouched). **Wave-2 (10 follow-ups) also
+integrated:** end-to-end failure selftest; rescue-failure bridge; advisory light;
+host-owned return summary; per-survivor selector; l10n ratchet 536→528; StatusPanel
+injury chip; risk driver; failed-sortie metric; camp burn. Wave-2 evidence: host
+build 0/0; `ExpeditionPrepPlanTests` 23/23; `ExpeditionRescueFailureBridgeTests` 4/4;
+radio 5/5+21/21+5/5+13/13; `--expedition-panel-uitest` PASS (73/0); arch map
+`--check` OK (315). **Wave-3 (15 follow-ups + 3 audit loops) also integrated:** 4 Core
+tests, 5 localized rows, reset clear, health-history helper + injury digest, MapPanel
+risk driver, `FailedSortieCount`, overnight clamp; audit repairs = dead using, helper
+test, `TrFmt` format hardening. Wave-3 evidence: host build 0/0;
+`ExpeditionPrepPlanTests` 36/36; `ExpeditionRescueFailureBridgeTests` 5/5;
+`StatusPanelThresholdTests` 106/106; `Plan198HealthHistoryIntegrationTests` 6/6;
+`--player-panels-uitest` PASS (22/0); arch map `--check` OK (315). **Wave-4 (15
+follow-ups + 3 audit loops) also integrated:** PlayMetrics `FailedSortieCount`; 5 Core
+tests; 9 localized headers/buttons; radar risk driver; StatusPanel re-bind safe;
+`ExpeditionLocaleKeysTests`; `CURRENT_AUTHORITY.md` row; audit = `LowRiskNote` constant +
+contract test + hygiene gates. Wave-4 evidence: host build 0/0;
+`ExpeditionPrepPlanTests` 41/41; `ExpeditionLocaleKeysTests` 1/1; `StringsCsvLocaleGateTests`
+4/4; `StatusPanelThresholdTests` 132/132; `PanelSubscriptionHygieneTests` 2/2;
+`PanelLiveRefreshGateTests` 2/2; `--playable-metrics-selftest` 21/0;
+`--expedition-panel-uitest` PASS (73/0). **Wave-5 (15 follow-ups + 3 audit loops)
+also integrated:** remaining ExpeditionPanel buttons/header + Fitness-factors prefix and
+radar headers/sidebar/headers/hint localized; 5 Core tests; PlayMetrics fresh-zero +
+no-harvest; StatusPanel health-history detach gate; all new keys pinned; metrics
+`CURRENT_AUTHORITY.md` row; audit = CSV field-integrity repair + suppression re-verify +
+coverage hardening. Wave-5 evidence: host build 0/0; `ExpeditionPrepPlanTests` 45/45;
+`ExpeditionLocaleKeysTests` 1/1; `StringsCsvLocaleGateTests` 4/4;
+`StatusPanelThresholdTests` 182/182; `PanelSubscriptionHygieneTests` 3/3;
+`--playable-metrics-selftest` 23/0; `--player-panels-uitest` PASS (22/0); arch map
+`--check` OK (315). **Wave-6 (15 follow-ups + 3 audit loops) also integrated:** radar
+phase/rail/title/range-filter + panel summary/Esc/no-active/one-time/fitness localized via
+new `ExpeditionPhaseText`; 5 Core tests; German smoke assertions; `CURRENT_AUTHORITY.md`
+panel-route row; audit = modal/banner phase sites + radar detail-box labels + 5 detail keys
+pinned. Wave-6 evidence: host build 0/0; `ExpeditionPrepPlanTests` 50/50;
+`ExpeditionLocaleKeysTests` 1/1; `StringsCsvLocaleGateTests` 4/4;
+`StatusPanelThresholdTests` 200/200; `PanelSubscriptionHygieneTests` 3/3;
+`ArchitectureTestMapGateTests` 7/7; `--expedition-panel-uitest` PASS; arch map `--check`
+OK (315).
+
+## claim-status-glance-p013-p016-2026-10-01
+
+User-directed ("Proceed and work on these next tasks! | P013 … P014 … P015 …
+P016" + repair/sweep-loop). Source rows P013–P016 of
+`docs/plans/PLAYABILITY_200_SUGGESTIONS_2026-10-01.md`. Owned exact paths:
+`Assets/Ashfall.Core/Radiation/RadiationSystem.cs`,
+`Assets/Ashfall.Core/Campaign/SupplyForecast.cs` (new), `src/UI/StatusPanel.cs`,
+`src/UI/GameOverPanel.cs`, `src/Main.SurvivorFate.cs`, `src/Main.GameFlow.cs`,
+`src/Main.PlayerSurfaces.cs`, `src/Main.SupplyForecast.cs` (new),
+`Ashfall.Core.Tests/UI/StatusGlanceAndForecastGateTests.cs` (new),
+`Ashfall.Core.Tests/Radiation/AcuteSicknessResolutionTests.cs` (new), the plan
+`.ai/plans/status-glance-gamover-forecast-p013-p016-2026-10-01.md`, this claim,
+`.ai/state.md`, and the `INTEGRATION_PLANS.md` entry. Status: **COMPLETE /
+FULLY INTEGRATED 2026-10-01; paths released.** Absorbed the released
+`claim-survival-legibility-p009-p012-2026-10-01` paths
+(`src/UI/StatusPanel.cs`) — its P009–P012 code is preserved. `src/Main.GameFlow.cs`
+was under active foreign writes and was therefore **not** edited (the ledger still
+reaches every Game Over path via `GameOverPanel.LedgerProvider`). No new save
+section; no `starting_survivors.json` edit. Evidence: host build 0/0;
+`AcuteSicknessResolutionTests` 4/4; `StatusGlanceAndForecastGateTests` 7/7;
+`StatusPanelThresholdTests` 11/11; `Radiation` 93/93;
+`NeedsRadiationSaveRoundTrip` 17/17; `MainTriadDriftGateTests` 8/8;
+`PanelRouteGateTests` 22/22; `PanelSubscriptionHygiene` 2/2; `PanelLiveRefresh`
+2/2; `LocalizationRatchet` 2/2; `ArchitectureTestMapGateTests` 7/7;
+`UiA11yTargetSizeGateTests` 31/31; `AccessibilitySourceAuditTests` 6/6;
+`--ui-layout-selftest` Failures 0; `--ui-accessibility-selftest`,
+`--survivors-selftest`, `--player-panels-uitest`,
+`--real-campaign-journey-selftest` PASS; `panel_bind_lifecycle` PASS;
+`l10n_drift_gate` PASS (472 keys); arch map `--check` OK (315); `git diff --check`
+clean. No commit; full suite not run; foreign dirty worktree preserved (foreign
+`save_store_matrix_drift` left untouched).
+
+## claim-survival-legibility-p009-p012-2026-10-01
+
+User-directed ("Tackle this suggestion fully integrate the suggestion after run a deep
+sweep repair loop … after suggest minor task follow ups 10 of them very small"). Owned
+exact paths: `Assets/Ashfall.Core/Survivors/NeedsSystem.cs`,
+`Assets/Ashfall.Core/Survivors/NeedsDayDeltaTracker.cs` (new),
+`Assets/Ashfall.Core/Localization/OnboardingLessonLocalization.cs`,
+`src/Host/SurvivorsHostSession.cs`, `src/Host/HoldfastRuntimeSession.cs`,
+`src/UI/GameHudOverlay.cs`, `src/UI/StatusPanel.cs`, `src/UI/SurvivorsPanel.cs`,
+`src/UI/TutorialPanel.cs`, `src/Main.CampaignOwners.cs`, `src/Main.GameFlow.cs`,
+`src/Main.Medical.cs`, `src/Main.Survivors.cs` (reverted; net no change),
+`assets/l10n/strings.csv`, `Ashfall.Core.Tests/UI/OnboardingWiringGateTests.cs`,
+`Ashfall.Core.Tests/Survivors/NeedsDayDeltaTests.cs`,
+`Ashfall.Core.Tests/UI/StatusPanelThresholdTests.cs`,
+`Ashfall.Core.Tests/UI/PlayerSurfaceCoverageGateTests.cs` (namespace-shadowing compile
+repair), the plan
+`.ai/plans/integrated/playability/INTEGRATED_survival-legibility-p009-p012-2026-10-01.md`,
+this claim, `.ai/state.md`, and the `INTEGRATION_PLANS.md` entry. Status: **COMPLETE /
+FULLY INTEGRATED; paths released.** Absorbs the released
+`claim-first-hour-p005-p008-2026-10-01` ownership of `src/UI/GameHudOverlay.cs` (that
+claim's P005–P008 code is preserved). No new save section; the P010 delta baseline is a
+transient presentation read model cleared on restore. **Follow-up wave (10 small tasks)
+also integrated:** Warmth Drift, MOR delta, HUD chip l10n + authored `NeedsProfile`
+warn/critical bands, feedback thresholds from the profile, `Needs.OnNeedCritical`
+consumer, fallback fatigue/morale decay, per-journey acute-rad lesson guard, lesson
+title/body l10n rows, `--ui-layout-selftest` PASS. Evidence: host build 0/0;
+`NeedsDayDeltaTests` 8/8; `StatusPanelThresholdTests` 11/11; `OnboardingWiringGateTests`
+5/5; `OnboardingFirstHourInstrumentationTests` 20/20; `LocalizationRatchetTests` 2/2;
+`StringsCsvLocaleGateTests` 4/4; l10n drift gate PASS (472 keys);
+`AccessibilitySourceAuditTests` 6/6; `UiA11ySidebarHoverOverflowGateTests` 9/9;
+`UiScrimContrastGateTests` 6/6; `StatusGlanceAndForecastGateTests` 7/7;
+`MainTriadDriftGateTests` 8/8; `ArchitectureAuthorityGateTests` 2/2;
+`ArchitectureTestMapGateTests` 6/6; `ui_layout_selftest` Failures 0; `git diff --check`
+clean. **Second wave + 5 loops:** `src/UI/GameHudSnapshotFixture.cs` (new),
+`src/UI/SnapshotHarness.cs`, `src/UI/SurvivalDetailPanel.cs`,
+`src/UI/SurvivorDetailPanel.cs`, `src/UI/PanelSceneLoader.cs` (concurrent compile
+repair), `Assets/Ashfall.Core/Survivors/NeedsDayDeltaFormat.cs` (new),
+`Assets/Ashfall.Core/Radiation/RadiationSystem.cs` (`WarnThreshold`),
+`assets/l10n/strings.csv`; final evidence host build 0 warnings / 0 errors,
+`NeedsDayDeltaTests` 19/19, `StatusPanelThresholdTests` 21/21, snapshot MATCH,
+`--ui-layout-selftest` Failures 0, l10n gate PASS (496 keys). No commit; full suite not
+run; foreign dirty worktree preserved. NOTE: concurrent
+sessions `claim-five-loop-sweep` and `claim-status-glance-p013-p016` edited the same
+feature area and removed this claim block once; it has been re-added. Re-verify the claim
+text if both sessions are live.
+
+## claim-five-loop-sweep-2026-10-01
+
+User-directed ("Run a pass of find and repair plus harden and repeat for 5 loops").
+Owned exact paths: `docs/architecture/ARCHITECTURE_TEST_MAP.md`,
+`docs/data/CATALOG_REGISTRY.md`,
+`Ashfall.Core.Tests/Content/Plan49ContentCertificationHostIntegrationTests.cs`,
+`src/UI/MapDetailPanel.cs`, `Ashfall.Core.Tests/UI/Plan17BRouteVisibilityMatrixTests.cs`,
+`Ashfall.Core.Tests/UI/UiScrimContrastGateTests.cs`, `src/Main.CoordinatorRetryProbe.cs`,
+`Ashfall.Core.Tests/Campaign/Plan38CommitmentHostIntegrationTests.cs`, the plan
+`.ai/plans/integrated/systems/INTEGRATED_five-loop-sweep-2026-10-01.md`, this claim,
+`.ai/state.md`, and the `INTEGRATION_PLANS.md` entry. Status: **COMPLETE / FULLY
+INTEGRATED; paths released.** Evidence: host build 0 errors / 0 warnings; Content 95/0,
+UI 258/0, Campaign 276/0, Combat 154/0, Tooling 142/0, Onboarding 24/0, Launch 5/0,
+Localization 25/0; `--world-playtest-selftest` PASS; `--data-integrity-selftest`,
+`--settings-selftest`, `--content-utilization-selftest`, `--ui-layout-selftest` PASS;
+fast CI gates PASS; generated contracts in sync; `git diff --check` clean. No commit;
+full suite not run; foreign dirty worktree preserved.
+
+## claim-graphics25-batch22-2026-10-01
+
+Owner /root RELEASED 18:33 UTC — BLOCKED by built-in image usage limit. Exact pack artifacts/asset-generation/graphics25-22-2026-10-01/ and .ai/plans/asset-generation-graphics25-22-2026-10-01.md; own additive state/claim entries only. Twenty-five prompts ready (twelve swatches, five alpha graphics, five props, three characters), premise reviewed; zero PNGs generated. First request HTTP429 usage_limit_reached; tool reset 2026-10-02 12:03:20 UTC. Start 18:30 UTC; stopped within deadline. No retries, fallback calls or code/data/live asset/registry/UI changes.
+
+## claim-first-hour-p005-p008-2026-10-01
+
+User-directed ("start working, coding on these tasks as well as repair any leaks,
+bugs, missing tool calls or receiving tool calls, missing panels, missing UI
+animations, warnings, errors … run a sweep loop of find issue fix issue repeat
+for 5 loops"). Source rows P005–P008 of
+`docs/plans/PLAYABILITY_200_SUGGESTIONS_2026-10-01.md`. Owned exact paths:
+`Assets/Ashfall.Core/Onboarding/OnboardingSaveState.cs`,
+`Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs`, `src/UI/GameHudOverlay.cs`,
+`src/UI/OnboardingHintPanel.cs`, `src/Main.Onboarding.cs`,
+`src/Host/HostCli.Onboarding.cs`, `docs/ci/CI_GATE_MANIFEST.json`,
+`assets/l10n/strings.csv`,
+`Ashfall.Core.Tests/Onboarding/OnboardingFirstHourInstrumentationTests.cs`, the plan
+`.ai/plans/integrated/playability/INTEGRATED_first-hour-hud-nudge-skipall-ci-2026-10-01.md`,
+this claim, and `.ai/state.md`. Status: **COMPLETE / FULLY INTEGRATED
+2026-10-01; paths released.** No new save section; additive `stageStartDay`
+field on the existing onboarding save owner with restore path. Extended the
+released `claim-first-hour-instrumentation-p001-p004-2026-10-01` paths. Evidence:
+host build 0 errors / 0 warnings (warning baseline 0 across all targets);
+`--onboarding-journey-selftest` PASS (7-stage floor + all-stages-driven);
+`run-gates.py --gate first_hour_onboarding_journey` ALL PASS;
+`--ui-accessibility-selftest` 6/6, `--ui-layout-selftest` Failures 0,
+`--panel-bind-lifecycle-selftest` PASS, `--real-campaign-journey-selftest` PASS,
+`--save-store-checksum-selftest` 21/21; `OnboardingFirstHourInstrumentationTests`
+20/20, `OnboardingJourneyTests` 34/34, `FirstHourPlaythroughSmokeTests` 4/4,
+`OnboardingWiringGateTests` 4/4, `OnboardingAssistanceLoopGateTests` 6/6,
+`OnboardingTruthfulnessGateTests` 5/5, `FirstHourStagePanelAccessibilityGateTests`
+3/3, `PanelRouteGateTests` 22/22, `PanelSubscriptionHygieneTests` 2/2,
+`PanelLiveRefreshGateTests` 2/2, `UiA11yTargetSizeGateTests` 31/31,
+`LocalizationRatchetTests` 2/2, `StringsCsvLocaleGateTests` 4/4,
+`CiGateManifestDriftTests` 7/7; `l10n_drift_gate` PASS (460 keys). No commit;
+full suite not run; foreign dirty worktree preserved (foreign
+`save_store_matrix_drift` + stale-build `selftest_manifest_drift`/`cli_catalog_drift`
+left untouched).
+
+## claim-content-migration-2026-10-01
+
+User-directed ("continue working on these however don't suggest anything no more").
+Owned exact paths: `Assets/StreamingAssets/Data/anomalous_expedition_encounters.json`
+(deleted), `Assets/StreamingAssets/Data/documentation_templates.json` (deleted),
+`Assets/StreamingAssets/Data/survivor_life_stages.json` (deleted),
+`docs/ci/content_reachability_dispositions.json`,
+`Ashfall.Core.Tests/Content/ContentReachabilityDispositionTests.cs`,
+`artifacts/content-utilization.json`, `artifacts/content-reachability-report.md`,
+`docs/roadmap/PLAN_REGISTER.json`, the plan
+`.ai/plans/integrated/systems/INTEGRATED_content-migration-2026-10-01.md`, this claim,
+`.ai/state.md`, and the `INTEGRATION_PLANS.md` entry. Status: **COMPLETE /
+FULLY INTEGRATED; paths released.** Evidence: `bin/ashfall-dev validate-json` 712/712;
+`ContentUtilizationGraphTests` 39/39; `ContentReachabilityDispositionTests` 5/5;
+`--content-utilization-selftest` 99 dispositions / 0 undispositioned / 0 no-expiry +
+CI gate PASS; `reachability-report` 0 removal candidates; `generate-plan-register.py
+--check` clean; `doc-link-gate` PASS; host build 0 errors / 0 warnings;
+`git diff --check` clean. No commit; full suite not run; foreign dirty worktree
+preserved.
+
+## claim-last-four-2026-10-01
+
+User-directed ("continue working on the last tasks"). Owned exact paths:
+`src/Main.CoordinatorRetryProbe.cs`, `src/Host/HostCli.WorldPlaytest.cs`,
+`Ashfall.Core.Tests/Save/SaveEnvelopeCuratedCodecChecksumTests.cs`,
+`tools/gotools/cmd/reachability-report/main.go`, `bin/reachability-report`,
+`artifacts/content-reachability-report.md`, the plan
+`.ai/plans/integrated/systems/INTEGRATED_last-four-2026-10-01.md`, this claim,
+`.ai/state.md`, and the `INTEGRATION_PLANS.md` entry. Status: **COMPLETE /
+FULLY INTEGRATED (DORMANT delete deferred); paths released.** Evidence: host build
+0 errors / 0 warnings; `--world-playtest-selftest` PASS (2-owner + 121-owner
+full-composition retry); `SaveEnvelopeCuratedCodecChecksumTests` 2/2;
+`SaveEnvelopeChecksumInvariantTests` 5/5; `ContentReachabilityDispositionTests` 5/5;
+`--content-utilization-selftest` 0 undispositioned / 0 no-expiry; `git diff --check`
+clean. No commit; full suite not run; foreign dirty worktree preserved.
+
+## claim-graphics25-batch21-2026-10-01
+
+Owner /root RELEASED 18:29 UTC. Exact new pack artifacts/asset-generation/graphics25-21-2026-10-01/ and .ai/plans/asset-generation-graphics25-21-2026-10-01.md; own additive state/claim entries only. Six props, four characters, ten swatches, five alpha graphics saved and producer/independent reviewed. Start 18:06 UTC; completed about 23 minutes, within 19:06 UTC deadline. Go manifest, previews, prompts, source/provenance, report and Blender handoff complete. No code/data/liveasset/registry/UI changes; staged art only.
+
+## claim-remainder-six-continued-2026-10-01
+
+User-directed ("continue working on what remains still and after start coding the 6
+suggestions …"). Owned exact paths: `Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs`,
+`Ashfall.Core.Tests/ContentUtilizationGraphTests.cs`, `src/UI/TriangulationPanel.cs`,
+`assets/l10n/strings.csv`, `Ashfall.Core.Tests/Tooling/LocalizationRatchetTests.cs`,
+`scripts/ci/l10n_drift_gate.py`, the plan
+`.ai/plans/integrated/systems/INTEGRATED_remainder-and-six-continued-2026-10-01.md`, this
+claim, `.ai/state.md`, and the `INTEGRATION_PLANS.md` entry. Status: **COMPLETE /
+FULLY INTEGRATED (three documented partials); paths released.** Evidence: host build
+0 errors / 0 warnings; `ContentUtilizationGraphTests` 39/39,
+`SaveEnvelopeChecksumInvariantTests` 5/5, `LocalizationRatchetTests` 2/2,
+`StringsCsvLocaleGateTests` 4/4, `ContentReachabilityDispositionTests` 4/4;
+`l10n_drift_gate` PASS (456 keys, 80 localized-surface references);
+`--world-playtest-selftest` PASS. No commit; full suite not run; foreign dirty
+worktree preserved.
+
+## claim-seals-and-six-2026-10-01
+
+User-directed ("start by sealing those last 5 suggestions! After start coding these
+6 suggestions after!"). Owned exact paths: `src/Main.CoordinatorRetryProbe.cs`,
+`src/Host/HostCli.WorldPlaytest.cs`, `src/UI/SkillMatrixPanel.cs`,
+`assets/l10n/strings.csv`, `Ashfall.Core.Tests/Tooling/LocalizationRatchetTests.cs`,
+`Ashfall.Core.Tests/Save/SaveEnvelopeChecksumInvariantTests.cs`, the plan
+`.ai/plans/integrated/systems/INTEGRATED_seals-and-six-2026-10-01.md`, this claim,
+`.ai/state.md`, and the `INTEGRATION_PLANS.md` entry. Status: **COMPLETE /
+FULLY INTEGRATED (two documented partials); paths released.** Evidence: host build
+0 errors / 0 warnings; `--world-playtest-selftest` PASS; `ContentUtilizationGraphTests`
+39/39, `ContentReachabilityDispositionTests` 4/4, `HotfixRehearsalGateTests` 3/3,
+`SaveEnvelopeChecksumInvariantTests` 5/5, `LocalizationRatchetTests` 2/2,
+`StringsCsvLocaleGateTests` 4/4; `l10n_drift_gate` 448 keys; `git diff --check` clean.
+No commit; full suite not run; foreign dirty worktree preserved.
+
+## claim-graphics25-batch20-2026-10-01
+
+Owner /root RELEASED at 18:03 UTC on 2026-10-01. Exact new paths artifacts/asset-generation/graphics25-20-2026-10-01/ and .ai/plans/asset-generation-graphics25-20-2026-10-01.md; own additive claim/state entries only. Eight prop sheets, seven character sheets, five swatches, five alpha graphics completed and reviewed within 60 minutes. No code/data/liveasset/registry/UI changes, blocking errors or pending generation.
+
+## claim-five-suggestions-plus-loop-2026-10-01
+
+User-directed ("tackle all 5 suggestions, after run a find bug, repair, repeat loop
+5x times …"). Owned exact paths: `Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs`,
+`Ashfall.Core.Tests/ContentUtilizationGraphTests.cs`,
+`src/Host/ContentUtilizationSelfTest.cs`, `docs/ci/content_reachability_dispositions.json`,
+`docs/ci/content_reachability_dormant_triage.md`,
+`Ashfall.Core.Tests/Content/ContentReachabilityDispositionTests.cs`,
+`src/Main.CoordinatorRetryProbe.cs`, `src/UI/DifficultySettingsPanel.cs`,
+`src/Main.DifficultySettings.cs`, `Ashfall.Core.Tests/UI/DifficultySettingsPanelRouteTests.cs`,
+`scripts/release/hotfix-rehearsal.sh`, `scripts/ci/version-gate.py`,
+`Ashfall.Core.Tests/Save/HotfixRehearsalGateTests.cs`, `docs/releases/HOTFIX.md`,
+`src/UI/WorkshopPanel.cs`, `src/UI/VisitorIntegrationPanel.cs`, `src/UI/ShelterHudPanel.cs`,
+`src/UI/DutyRosterPanel.cs`, `src/UI/SilentFoundryPanel.cs`, `assets/l10n/strings.csv`,
+`Ashfall.Core.Tests/Tooling/LocalizationRatchetTests.cs`,
+`scripts/ci/catch-policy-gate.sh`, `Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs`,
+`src/Host/HostCli.SurgicalGraft.cs`, `src/Host/HostCli.PharmaceuticalTablet.cs`,
+`src/Host/HostCli.SurvivorRoles.cs`, `src/Host/HostCli.ShelterMuseum.cs`,
+`src/Host/HostCli.Genealogy.cs`, `src/Host/HostCli.ChronicCondition.cs`,
+`docs/architecture/ARCHITECTURE_TEST_MAP.md`, the plan
+`.ai/plans/integrated/systems/INTEGRATED_five-suggestions-plus-loop-2026-10-01.md`, this
+claim, `.ai/state.md`, and the `INTEGRATION_PLANS.md` entry. Status: **COMPLETE /
+FULLY INTEGRATED; paths released.** Evidence: host build 0 errors / 0 warnings
+(warning baseline gate PASS); `ContentUtilizationGraphTests` 39/39,
+`ContentReachabilityDispositionTests` 4/4, `HotfixRehearsalGateTests` 3/3,
+`DifficultySettingsPanelRouteTests` 3/3; `--content-utilization-selftest` 0 missing;
+`--world-playtest-selftest` PASS; `--7-day-smoke-selftest` 10/10;
+`--port-contract-selftest` 310/310; `--ui-layout-selftest` Failures 0;
+`version-gate.py --self-test` PASS; `l10n_drift_gate` 439 keys; architecture map 315;
+catch-policy/uid-sidecar/triad-drift/forbidden-api/json-schema/case-collision/input-map/
+legacy-reference/doc-link/warning-baseline gates PASS. No commit; full suite not run;
+foreign dirty worktree preserved.
+
+## claim-graphics25-batch19-2026-10-01
+
+Owner /root RELEASED at 17:42 UTC on 2026-10-01. Exact new paths artifacts/asset-generation/graphics25-19-2026-10-01/ and .ai/plans/asset-generation-graphics25-19-2026-10-01.md; own additive claim/state entries. Completed 12 prop sheets, 8 character sheets, 5 alpha graphics within 60 minutes. Producer and read-only auditor accepted staged references. No code/data/liveasset/registry/UI changes or pending generation.
+
+## claim-first-hour-instrumentation-p001-p004-2026-10-01
+
+User-directed ("start working, coding on these tasks … run a sweep loop of find
+issue fix issue repeat for 5 loops"). Source rows P001–P004 of
+`docs/plans/PLAYABILITY_200_SUGGESTIONS_2026-10-01.md`. Owned exact paths:
+`Assets/Ashfall.Core/PlayerCommand/PlayerCommandCode.cs`,
+`Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs`,
+`Assets/Ashfall.Core/Telemetry/PlaySessionRecorder.cs`,
+`src/Main.PlayMetrics.cs`, `src/Main.Onboarding.cs`,
+`src/Host/ExpeditionHostSession.cs` (additive `TutorialDispatchGate` seam only),
+`src/Main.Expeditions.cs` (one additive bind line only),
+`src/UI/ExpeditionPanel.cs` (one additive refusal-format case only),
+`src/UI/ActionRefusalText.cs` (additive tutorial-prefix wording only),
+`src/UI/OnboardingHintPanel.cs`, `src/Host/HostCli.PlayMetrics.cs`,
+`src/Main.UiTests.RealCampaignJourney.cs` (harness: ordered prerequisites +
+live hint-panel path), `scripts/tools/first_hour_funnel.py`,
+`docs/telemetry/FIRST_HOUR_FUNNEL.md`, generated `docs/INDEX.md` (full
+current-input regeneration),
+new `Ashfall.Core.Tests/Onboarding/OnboardingFirstHourInstrumentationTests.cs`,
+the plan `.ai/plans/integrated/playability/INTEGRATED_playability-first-hour-instrumentation-p001-p004-2026-10-01.md`,
+this claim, and `.ai/state.md`. **Overlap resolved 2026-10-01:** the
+`claim-c1-plan24-survivor-ledger-2026-09-16` row (was ACTIVE) is now marked
+**HANDED_OFF** with `src/Host/ExpeditionHostSession.cs` /
+`src/Main.Expeditions.cs` / `src/UI/ExpeditionPanel.cs` explicitly released to
+this claim (Plan 24 terminal CLOSED-with-deferrals per `INTEGRATION_PLANS.md`
+2026-09-23; its two open signatures are design memos touching none of these
+paths). Status: **COMPLETE / FULLY INTEGRATED
+2026-10-01; paths released.** Evidence: host build 0 errors / 0 warnings
+(`-t:Rebuild`); `OnboardingFirstHourInstrumentationTests` 15/15,
+`FirstHourPlaythroughSmokeTests` 4/4, `OnboardingJourneyTests` 34/34,
+`PlaySessionRecorderTests` 7/7, `OnboardingWiringGateTests` 4/4,
+`Plan46PlayMetricsHostIntegrationTests` 9/9, `ActionResultSurfacingGateTests`
+3/3, `LocalizationRatchetTests` 2/2, `ArchitectureTestMapGateTests` 6/6;
+`--playable-metrics-selftest` 20/20, `--onboarding-journey-selftest`,
+`--real-campaign-journey-selftest`, `--expedition-selftest`,
+`--player-panels-ui-test` 22/22, `--ui-layout-selftest` Failures 0,
+`--7-day-smoke-selftest`, `--day1-selftest` PASS; `first_hour_funnel.py
+--selftest` PASS. Plan archived
+`.ai/plans/integrated/playability/INTEGRATED_playability-first-hour-instrumentation-p001-p004-2026-10-01.md`.
+**Limitations follow-up (2026-10-01):** C1 claim released as HANDED_OFF above;
+live P002/P004 proof via `--real-campaign-journey-selftest` → live sink
+`local_session` = 6/7 verbs + `hint_shown`/`hint_dismissed['research']`, and the
+refreshed funnel delta shows `research 1/1/no` hint→no-action drop-off;
+`docs/INDEX.md` regenerated (`--check` PASS, 5614 docs — racy under concurrent
+doc writers). No commit; full suite not run; foreign dirty worktree preserved.
+
+## claim-suggested-five-wave-2026-10-01
+
+User-directed ("Then tackle all 5 suggested tasks and after suggest 5 …"). Owned
+exact paths: `docs/ci/content_reachability_dispositions.json`,
+`src/Host/ContentUtilizationSelfTest.cs`,
+`Ashfall.Core.Tests/Content/ContentReachabilityDispositionTests.cs`,
+`src/Main.CoordinatorRetryProbe.cs`, `src/Host/HostCli.WorldPlaytest.cs`,
+`src/UI/DifficultySettingsPanel.cs`, `src/Main.DifficultySettings.cs`,
+`Ashfall.Core.Tests/UI/DifficultySettingsPanelRouteTests.cs`,
+`scripts/ci/version-gate.py`, `Ashfall.Core.Tests/Save/HotfixRehearsalGateTests.cs`,
+`docs/releases/HOTFIX.md`, `src/UI/WorkshopPanel.cs`, `assets/l10n/strings.csv`,
+`Ashfall.Core.Tests/Tooling/LocalizationRatchetTests.cs`,
+`docs/architecture/ARCHITECTURE_TEST_MAP.md`, the plan
+`.ai/plans/integrated/systems/INTEGRATED_suggested-five-wave-2026-10-01.md`, this
+claim, `.ai/state.md`, and the `INTEGRATION_PLANS.md` entry. Status: **COMPLETE /
+FULLY INTEGRATED; paths released.** Evidence: host build 0 errors / 6 pre-existing
+warnings; `--world-playtest-selftest` PASS (rations consumed once);
+`--content-utilization-selftest` 0 undispositioned; `--difficulty-settings-selftest`
+12/12; `--workshop-relic-uitest` PASS; `ContentUtilizationGraphTests` 38/38,
+`ContentReachabilityDispositionTests` 4/4, `CampaignDayCoordinatorRetryRuntimeTests`
+3/3, `EnrichmentKeepsakeResolutionTests` 2/2, `DifficultySettingsPanelRouteTests`
+3/3, `HotfixRehearsalGateTests` 2/2, `StringsCsvLocaleGateTests` 4/4,
+`LocalizationPilotTests` 4/4, `LocalizationRatchetTests` 2/2; `version-gate.py
+--self-test` PASS; `l10n_drift_gate` 391 keys; architecture map regenerated (315).
+No commit; full suite not run; foreign dirty worktree preserved.
+
+## claim-props-characters25-batch18-2026-10-01
+
+Owner /root; RELEASED17:17UTC. Exactnewpaths artifacts/asset-generation/props-characters25-18-2026-10-01/ and .ai/plans/asset-generation-props-characters25-18-2026-10-01.md; own additiveclaim/stateentries only. Complete25originals15prop10character modelingreferences,75illustratedviews.45,127,173PNGbytes/43.04MiB. Producer+independentauditor pass stagedreview; fullpreview/provenance/Go manifest/report/Blenderhandoff supplied. Start16:55UTC deadline17:55UTC; finishedabout22minutes. No pendinggeneration, no code/data/liveasset/registry/UI changes.
+
+## claim-five-task-wave-2026-10-01
+
+User-directed ("Tackle 5 of these tasks, fully integrate them after run a deep
+sweep repair loop … also suggest 5 bigger sized tasks"). Owned exact paths:
+`Ashfall.Core.Tests/Campaign/CampaignDayCoordinatorRetryRuntimeTests.cs`,
+`Assets/StreamingAssets/Data/items.json`,
+`src/Host/HostCli.OriginMechanics.cs`,
+`Ashfall.Core.Tests/Survivors/EnrichmentKeepsakeResolutionTests.cs`,
+`Assets/Ashfall.Core/Content/ContentUtilizationScanner.cs`,
+`Ashfall.Core.Tests/ContentUtilizationGraphTests.cs`,
+`src/UI/DifficultySettingsPanel.cs`,
+`Assets/Ashfall.Core/UI/PanelRegistryBootstrap.cs`,
+`src/Main.PlayerSurfaces.cs` (difficulty route only),
+`src/Main.ExpandedShelterSystems.cs` (difficulty case/reset only),
+`src/Main.PanelLifecycle.cs` (difficulty overlay entry only),
+`src/Main.DifficultySettings.cs`,
+`Ashfall.Core.Tests/UI/DifficultySettingsPanelRouteTests.cs`,
+`scripts/release/pre-release-gate.sh`, `docs/releases/PROCESS.md`,
+`assets/l10n/strings.csv`,
+`Ashfall.Core.Tests/Tooling/LocalizationRatchetTests.cs`,
+`docs/architecture/ARCHITECTURE_TEST_MAP.md`,
+`KNOWN_DEBT.md`, the plan
+`.ai/plans/integrated/systems/INTEGRATED_five-task-wave-2026-10-01.md`, this
+claim, `.ai/state.md`, and the `INTEGRATION_PLANS.md` entry. Status: **COMPLETE /
+FULLY INTEGRATED; paths released.** Evidence: host build 0 errors / 6 pre-existing
+warnings; `CampaignDayCoordinatorRetryRuntimeTests` 3/3,
+`EnrichmentKeepsakeResolutionTests` 2/2, `DifficultySettingsPanelRouteTests` 3/3,
+`ContentUtilizationGraphTests` 38/38; `--origin-mechanics-selftest` 12/12,
+`--difficulty-settings-selftest` 12/12, `--ui-layout-selftest` Failures 0;
+`PanelRouteGateTests` 22/22, `PanelRouteReachabilityGateTests` 2/2,
+`PlayerSurfaceCoverageGateTests` 8/8, `PanelCatalogCompletenessTests` 3/3,
+`PortContractGateTests` 8/8, `CatchPolicyLintGateTests` 3/3,
+`ArchitectureTestMapGateTests` 6/6, `JsonNamingMixPinTests` 4/4,
+`NoFreshCampaignSystemGateTests` 2/2, `DayEventParitySourceGateTests` 2/2,
+`CampaignDayCoordinatorSourceGateTests` 5/5, `StringsCsvLocaleGateTests` 4/4,
+`LocalizationPilotTests` 4/4, `LocalizationRatchetTests` 2/2; `l10n_drift_gate`
+377 keys; `bin/ashfall-dev validate-json` 715/715; generated contracts in sync.
+No commit; full suite not run; foreign dirty worktree preserved.
+
 ## claim-first-hour-smoke-visual-prologue-2026-10-01
 
 User-directed: "tackle those 3 suggested next" (first-30-minutes smoke harness,
@@ -7601,6 +8162,7 @@ claim of permanent subsystem ownership.
 | claim-four-track-orphan-batch-2026-09-26 | `FOUR-TRACK-ORPHAN-BATCH` | Integrator (user-authorized batch 2026-09-26) | **Plan:** `.ai/plans/four-track-orphan-batch-2026-09-26.md` (STATUS: APPROVED BY USER). **Core:** `SaveSectionRegistry.cs` (+`diplomacy`, `radiation_economy`, `radiation_social`, `trophies`), `HostCliRegistry.cs` (+4 actions/descriptors), `Campaign/DayEventVocabulary.cs` (+`diplomacy_ticked`). **Host (new):** `src/Host/DiplomacyHostSession.cs`, `RadiationEconomyHostSession.cs`, `RadiationSocialHostSession.cs`, `TrophyHostSession.cs`, `HostCli.Diplomacy.cs`, `HostCli.RadiationEconomy.cs`, `HostCli.RadiationSocial.cs`, `HostCli.Trophy.cs`, `src/Main.Diplomacy.cs`, `Main.RadiationEconomy.cs`, `Main.RadiationSocial.cs`, `Main.Trophies.cs`. **Host (edited):** `src/Host/HostCli.cs`, `src/Main.Application.cs`, `src/Main.SaveOrchestrator.cs`, `src/Main.Lifecycle.cs`, `src/Main.CampaignOwners.cs` (`DiplomacyDayOwner`). **Docs:** `docs/campaign/EVENT_SEMANTIC_PARITY_MATRIX.md`. **Read-only:** all four Core systems + their data files; no threat/economy/needs authority internals changed. | **IN PROGRESS 2026-09-26:** Core builds 0 errors; all four tracks implemented and host-wired. Godot host build externally blocked by concurrent untracked `src/Host/HostCli.Genealogy.cs` (CS0411, not this batch). No commit per user directive. |
 | claim-plan194-emergency-alert-integration-2026-09-26 | `UNBLOCK-PLAN194-EMERGENCY-ALERT` | Integrator (user-authorized full integration 2026-09-26) | **Core:** `Assets/Ashfall.Core/Save/SaveSectionRegistry.cs` (`emergency_alert` section, `emergency_alert_save.json`), `Assets/Ashfall.Core/HostCliRegistry.cs` (`EmergencyAlertSelfTest` + descriptor), `Assets/Ashfall.Core/Campaign/DayEventVocabulary.cs` (`emergency_alert_ticked`); **Host:** new `src/Host/EmergencyAlertHostSession.cs` (incl. `EmergencyAlertSaveStore`), new `src/Host/HostCli.EmergencyAlert.cs` (12 checks), new `src/Main.EmergencyAlerts.cs`, `src/Main.CampaignOwners.cs` (`EmergencyAlertDayOwner`, phase 5), `src/Main.SaveOrchestrator.cs`, `src/Main.Lifecycle.cs`, `src/Main.Application.cs`, `src/Host/HostCli.cs`, `src/Main.GameFlow.cs`, `src/UI/GameDashboardPanel.cs` (read-only alert card); **Tests:** new `Ashfall.Core.Tests/Emergency/Plan194EmergencyAlertHostIntegrationTests.cs`, `Ashfall.Core.Tests/Save/ComprehensiveSaveStoreCorruptionAndMigrationTests.cs` (section pin 273); **Docs/generated:** `docs/plans/integrated/emergency/INTEGRATED_PLAN_194_EMERGENCY_ALERT.md`, `docs/campaign/EVENT_SEMANTIC_PARITY_MATRIX.md`, `scripts/ci/generate-architecture-map.py` (+1 node), owning generator outputs; **Governance:** this row, `INTEGRATION_PLANS.md`, `docs/governance/DECISION_REGISTER.md` (DEC-360), `.ai/state.md`. Explicitly untouched: the Core `EmergencyAlertSystem` domain logic and its data file, `EmergencyResponseHud`/`CrisisPresentationCoordinator` (separate crisis presenter), radio `BroadcastGenre`, and every threat owner's internals. | **DONE/FULLY INTEGRATED 2026-09-26:** `--emergency-alert-selftest` 12/12; `Plan194EmergencyAlertHostIntegrationTests` 8/8; Save 1640/1640 (273 sections); adjacent gates 18/18; host build 0 errors / package files 0 warnings; generated `--check` all OK. Zero partial residue. |
 | claim-plan142-clothing-warmth-integration-2026-09-26 | `UNBLOCK-PLAN142-CLOTHING-WARMTH` | Integrator (user-authorized full integration 2026-09-26) | **Core:** `Assets/Ashfall.Core/Inventory/ClothingWarmthSystem.cs` (ClothingWarmthCensus, GetCensus), `Assets/Ashfall.Core/Save/SaveSectionRegistry.cs` (`clothing_warmth` section, `clothing_warmth_save.json`), `Assets/Ashfall.Core/Campaign/DayEventVocabulary.cs` (`clothing_warmth_ticked`), `Assets/Ashfall.Core/HostCliRegistry.cs` (`ClothingWarmthSelfTest` + descriptor); **Host:** new `src/Host/ClothingWarmthHostSession.cs` (incl. `ClothingWarmthSaveStore`), new `src/Host/HostCli.ClothingWarmth.cs` (12 checks), new `src/Main.ClothingWarmth.cs`, `src/Main.CampaignOwners.cs` (`ClothingWarmthDayOwner`, phase 5), `src/Main.SaveOrchestrator.cs`, `src/Main.Lifecycle.cs`, `src/Host/HostCli.cs`, `src/Main.Application.cs`, `src/Main.PlayerSurfaces.cs`, `src/UI/SurvivorDetailPanel.cs` (read-only Clothing row); **Tests:** new `Ashfall.Core.Tests/Inventory/Plan142ClothingWarmthHostIntegrationTests.cs`, `Ashfall.Core.Tests/Save/ComprehensiveSaveStoreCorruptionAndMigrationTests.cs` (section pin 272); **Docs/generated:** `docs/plans/UNBLOCK_PLAN142_CLOTHING_WARMTH_INTEGRATION_PLAN.md`, `docs/campaign/EVENT_SEMANTIC_PARITY_MATRIX.md` (Plan 142 + stale Plan 204 row repaired), `scripts/ci/generate-architecture-map.py` (+1 node), architecture/save/selftest/CLI/catalog outputs; **Governance:** `.ai/plans/plan142-clothing-warmth-integration.md`, `INTEGRATION_PLANS.md`, `docs/governance/DECISION_REGISTER.md` (DEC-359). Explicitly untouched: `NeedsSystem` internals (only the existing provider seam is assigned), `Inventory` custody, `WeatherSystem` internals, all day owners except the new phase-5 registration. | **DONE/FULLY INTEGRATED 2026-09-26:** `--clothing-warmth-selftest` 12/12; `Plan142ClothingWarmthHostIntegrationTests` 7/7; `ClothingWarmthSystemTests` 7/7; Save 1634/1634 (272 sections); adjacent gates 20/20; builds 0/0; generated `--check` all OK. Zero partial residue. |
+| claim-placeholder-art-shelter-rooms-2026-09-26 | `PLACEHOLDER-ART-SHELTER-ROOMS` | Builder (user-authorized lane 2026-09-26) | **Plan:** `.ai/plans/placeholder-art-shelter-rooms-2026-09-26.md` (STATUS: APPROVED BY USER). **New tool (read-only Clothing row); **Tests:** new `Ashfall.Core.Tests/Inventory/Plan142ClothingWarmthHostIntegrationTests.cs`, `Ashfall.Core.Tests/Save/ComprehensiveSaveStoreCorruptionAndMigrationTests.cs` (section pin 272); **Docs/generated:** `docs/plans/UNBLOCK_PLAN142_CLOTHING_WARMTH_INTEGRATION_PLAN.md`, `docs/campaign/EVENT_SEMANTIC_PARITY_MATRIX.md` (Plan 142 + stale Plan 204 row repaired), `scripts/ci/generate-architecture-map.py` (+1 node), architecture/save/selftest/CLI/catalog outputs; **Governance:** `.ai/plans/plan142-clothing-warmth-integration.md`, `INTEGRATION_PLANS.md`, `docs/governance/DECISION_REGISTER.md` (DEC-359). Explicitly untouched: `NeedsSystem` internals (only the existing provider seam is assigned), `Inventory` custody, `WeatherSystem` internals, all day owners except the new phase-5 registration. | **DONE/FULLY INTEGRATED 2026-09-26:** `--clothing-warmth-selftest` 12/12; `Plan142ClothingWarmthHostIntegrationTests` 7/7; `ClothingWarmthSystemTests` 7/7; Save 1634/1634 (272 sections); adjacent gates 20/20; builds 0/0; generated `--check` all OK. Zero partial residue. |
 | claim-placeholder-art-shelter-rooms-2026-09-26 | `PLACEHOLDER-ART-SHELTER-ROOMS` | Builder (user-authorized lane 2026-09-26) | **Plan:** `.ai/plans/placeholder-art-shelter-rooms-2026-09-26.md` (STATUS: APPROVED BY USER). **New tools:** `scripts/tools/bake-shelter-rooms.py`, `scripts/tools/post-shelter-rooms-bake.py`. **Art:** `assets/sprites/Shelter/room_*.png` (23), `assets/sprites/Shelter/prop_ceiling_lamp.png`, `assets/sprites/Shelter/prop_pipe_bundle.png`, `assets/sprites/Shelter/tile_wall_concrete.png`, `assets/sprites/Shelter/tile_floor_concrete.png`, `assets/sprites/Shelter/tile_floor_grate.png`; `assets/sprites/Shelter/PLACEHOLDER_MANIFEST.json`. **Docs:** new `docs/visual/SHELTER_ROOM_PICTOGRAM_BAKE_2026-09-26.md`. **Scratch:** `artifacts/shelter-bake-rooms/**` (raws pruned before commit). **Governance:** this row, `.ai/state.md`. **Read-only:** the 7 existing stage finals + `bake-shelter-stage.py`/`post-shelter-bake.py` (verified intact), `src/World/RoomHotspotView.cs`, `src/World/HoldfastInteriorView.cs`, `generate-shelter-placeholders.py`. **Not claimed:** wiring of the 2 unwired props or 3 tiles into runtime anchors, `assets/art/placeholders-512/`, `assets/art/loc_*` (foreign lane), any `src/**` or Core path. | ACTIVE — 2026-09-26: premise verified (manifest = exactly 28 placeholders; `shelter_rooms.json` hotspot set = exactly the 23 pictogram IDs; tiles + 2 props have no runtime consumer and are baked manifest-truth only); 09-25 finals intact (`post-shelter-bake.py --check` 7/7). **DONE 2026-09-26:** all 28 replaced via new `bake-shelter-rooms.py` (Blender, seed 20260925) + `post-shelter-rooms-bake.py` (tiles seed 20260926); vision QA two passes (6 composition fixes, final 8/8 PASS USABLE); `--check` 28/28; Godot `--import`/boot/`--player-panels-uitest` Errors: 0; manifest flipped to 0 placeholders with regeneration recipes; provenance `docs/visual/SHELTER_ROOM_PICTOGRAM_BAKE_2026-09-26.md`. No dedicated lane commit was made (user directive after a stuck commit contending with the concurrent integrator); the staged lane — including the previously uncommitted 09-25 stage-bake files — landed in HEAD via the integrator's consolidate commits (verified: manifest/scripts/provenance/governance all present at HEAD, 0 dirty lane files). |
 | claim-wholegame-p1a-core-loop-feedback-2026-09-25 | `WHOLEGAME-P1A-CORE-LOOP-FEEDBACK` | Integrator (user-authorized 2026-09-25) | **Plan:** `.ai/plans/wholegame-p1-playable-ui-integration.md` (STATUS: APPROVED BY USER). **Core:** `Assets/Ashfall.Core/Save/SaveSectionRegistry.cs`; `Assets/Ashfall.Core/Campaign/CampaignDayCoordinator.cs`. **Host:** `src/Main.Lifecycle.cs`; `src/Main.Holdfast.cs`; `src/Main.Application.cs`; `src/Main.GameFlow.cs`; `src/Main.SaveOrchestrator.cs`; `src/UI/EmergencyResponseHud.cs`; `src/UI/CrisisPresentationCoordinator.cs`; `src/Main.UiPanels.cs`. **Tests:** `Ashfall.Core.Tests/Flags/ConsequenceLedgerSaveTests.cs` (new); `Ashfall.Core.Tests/Campaign/DayAdvanceOrderTests.cs` (new). **Governance:** this row, `INTEGRATION_PLANS.md`, `.ai/state.md`. **Not claimed:** panel lifecycle, expanded panels, UI polish, `src/Main.PanelLifecycle.cs`, `src/Main.PlayerSurfaces.cs`, `src/Main.ExpandedShelterSystems.cs`, all other `src/UI/*Panel.cs`. | **DONE 2026-09-25:** Consequence ledger save section registered + lifecycle participant with ClearAll onReset; day-advance feedback routed through FeedbackPanel.ShowToast; crisis HUD 4 action buttons wired to coordinator.ExecuteAction; duty-roster subscription moved to build-time; dev console guarded with OS.IsDebugBuild; boot path wrapped in try/catch; persist/commit order swapped in CampaignDayCoordinator. Tests: ConsequenceLedgerSaveTests 4/4, DayAdvanceOrderTests 2/2. Host build 0/0. |
 | claim-wholegame-p1b-panel-wiring-catalog-2026-09-25 | `WHOLEGAME-P1B-PANEL-WIRING-CATALOG` | Integrator (user-authorized 2026-09-25) | **Plan:** `.ai/plans/wholegame-p1-playable-ui-integration.md` (STATUS: APPROVED BY USER). **Host:** `src/Main.PanelLifecycle.cs`; `src/Main.ExpandedShelterSystems.cs`; `src/Main.PlayerSurfaces.cs`; `src/UI/ShelterPanel.cs`; `src/UI/ShelterBarterPanel.cs`. **Tests:** `Ashfall.Core.Tests/UI/PanelCatalogCompletenessTests.cs` (new). **Governance:** this row, `INTEGRATION_PLANS.md`, `.ai/state.md`. **Not claimed:** Core save/lifecycle, day-advance feedback, UI polish, `src/Main.Application.cs`, `src/Main.Holdfast.cs`, `src/Main.GameFlow.cs`, `Assets/Ashfall.Core/**`. | **DONE 2026-09-25:** ShowPanelLifecycle helper added; OverlayPanelCatalog expanded from 155 to 222 entries; 33 bare Visible=true in ExpandedShelterSystems replaced; 17 Visible=true in PlayerSurfaces replaced; ShelterPanel passes duty-roster + assignment sessions to Initialize; ShelterBarterPanel.SetAppraisalSkill added. Tests: PanelCatalogCompletenessTests 3/3, PanelRouteGateTests 21/21. Host build 0/0. |
@@ -7793,6 +8355,8 @@ claim of permanent subsystem ownership.
 | claim-c2-21-release-craft-2026-09-19 | `C2[21]/PLAN-48-RELEASE-CRAFT` | Foreman / integrator (user-authorized implementation) | **Docs:** `docs/releases/{VERSIONING.md, PROCESS.md, HOTFIX.md, TEMPLATE.md, SUPPORT.md, POSTMORTEM_TEMPLATE.md, HOTFIX_REHEARSAL_v1.1.1.md}`; **Scripts:** `scripts/release/{prepare-release.sh, generate_changelog.py, hotfix.sh}`, `scripts/ci/{version-gate.py, release-gate.sh}`; **Core:** `Assets/Ashfall.Core/ReleaseVersion.cs`; **Host:** `src/Host/HostCli.cs`; **Versions:** `project.godot`, `Directory.Build.props`, `export_presets.cfg`; **Tests:** `Ashfall.Core.Tests/Release/ReleaseVersionContractTests.cs`, `Ashfall.Core.Tests/Save/SaveSupportWindowTests.cs`; **Fixtures:** `artifacts/golden_saves/historical/`; **Changelog:** `CHANGELOG.md`; **CI:** `docs/ci/CI_GATE_MANIFEST.json`, `.github/workflows/{build.yml, release.yml, hotfix.yml}`; **Claims/Skills:** `docs/architecture/CLAIMS.json`, `.agents/skills/ashfall-release-captain/SKILL.md`; **Closeout:** `docs/plans/PLAN_48_RELEASE_CRAFT_CLOSEOUT.md` | **DONE 2026-09-19:** All 6 phases complete. ReleaseVersion.cs 32/32 PASS; version-gate.py PASS; SaveSupportWindowTests 15/15 PASS; prepare-release.sh + release-gate.sh + hotfix.sh + release.yml + hotfix.yml delivered; CHANGELOG.md [1.1.0] backfilled; hotfix iron rule proven; 28/28 claims verified; verify-fast 53/53. |
 | claim-e1-plan53-2026-09-19 | `E1/PLAN-53-AMBITION-GOVERNANCE` | Foreman / integrator (user-authorized implementation) | **E1A:** `scripts/ci/plan_governance_config.json`, `scripts/ci/generate-plan-register.py` (baseline mode), `docs/roadmap/e1/E1_BASELINE.md`, `docs/roadmap/e1/e1_baseline.json`, `docs/roadmap/e1/E1A_IMPLEMENTATION_LOG.md`; **E1B:** `scripts/ci/plan_corpus_lib.py`, `scripts/ci/generate-plan-register.py`, `scripts/ci/fixtures/plan_governance/`, `docs/roadmap/PLAN_REGISTER.md`, `docs/roadmap/PLAN_REGISTER.json`, `docs/roadmap/e1/E1B_IMPLEMENTATION_LOG.md`, `Ashfall.Core.Tests/Tooling/PlanGovernanceContractTests.cs`; **E1C:** `scripts/ci/migrate-plan-metadata.py`, `scripts/ci/generate-docs-index.py`, `docs/roadmap/e1/E1C_EXECUTION_BASELINE.json`, `docs/roadmap/e1/E1_METADATA_MIGRATION_REPORT.{md,json}`, `docs/roadmap/e1/E1C_IMPLEMENTATION_LOG.md`, 621 current plan documents; **Governance:** `WORKTREE_OWNERSHIP.md` and phase-boundary package records. Runtime source, game data, save, and UI paths are explicitly excluded. | **ACTIVE 2026-09-19:** E1A, E1B, and E1C are complete. E1C metadata migration covered 621 current paths; E1A history remains preserved. The remaining human metadata review queue is recorded in `E1_METADATA_MIGRATION_REPORT.json`; next Plan 53 phase: E1E duplicate-topic clustering and live-capability mapping. |
 | claim-e1-plan53-e1c-metadata-migration-2026-09-30 | `E1/PLAN-53/E1C-METADATA-MIGRATION` | Foreman / integrator (user-authorized 2026-09-30; ownership and inventory reconciliation explicitly authorized 2026-09-30) | **Tool/tests:** `scripts/ci/migrate-plan-metadata.py`, `scripts/ci/generate-docs-index.py` (front-matter-aware streaming index generation), `Ashfall.Core.Tests/Tooling/PlanGovernanceContractTests.cs`; **Corpus:** current 621-path inventory captured in `docs/roadmap/e1/E1C_EXECUTION_BASELINE.json`, with E1A historical reconciliation; **Reports:** `docs/roadmap/e1/E1C_EXECUTION_BASELINE.json`, `docs/roadmap/e1/E1_METADATA_MIGRATION_REPORT.{md,json}`, `docs/roadmap/e1/E1C_IMPLEMENTATION_LOG.md`; **Generated/governance:** `docs/roadmap/PLAN_REGISTER.{md,json}`, `docs/INDEX.md`, `.ai/plans/integrated/governance/INTEGRATED_plan53-e1c-metadata-migration-2026-09-30.md`, `.ai/state.md`, `INTEGRATION_PLANS.md`, this ledger. **Transferred from PFGL to E1C:** seven E1A-held plan documents plus `Plan_41_Memory_That_Acts_Heirlooms_Eulogies_Generations.md`; all current copies included. | **COMPLETE — 2026-09-30:** all 621 current paths migrated; register 621/621 complete with zero validation errors; body hashes unchanged; no duplicate IDs or inferred `DONE`; second run is a no-op. The 621-entry inferred-field review queue is disclosed in the migration report. |
+| claim-e1-plan53-e1e-clusters-2026-10-01 | `E1/PLAN-53/E1E-CAPABILITY-CLUSTERS` | Foreman / integrator (user-authorized 2026-10-01; three follow-up tasks accepted) | `scripts/ci/generate-plan-register.py`, `scripts/ci/generate-capability-clusters.py`, `scripts/ci/plan_corpus_lib.py`; `docs/roadmap/e1/E1E_CAPABILITY_CLUSTERS.json`, `docs/roadmap/CAPABILITY_CLUSTERS.md`, `docs/roadmap/DUPLICATE_SEARCH_RECEIPT_TEMPLATE.md`, `docs/roadmap/README.md`, generated `docs/roadmap/PLAN_REGISTER.{md,json}`, `docs/INDEX.md`; `Ashfall.Core.Tests/Tooling/PlanGovernanceContractTests.cs`; `docs/roadmap/e1/E1E_IMPLEMENTATION_LOG.md`, `docs/roadmap/e1/E1E_INDEPENDENT_REVIEW.md`, the E1 phase checklist, `.ai/plans/integrated/governance/INTEGRATED_plan53-e1e-capability-clusters-2026-10-01.md`, `.ai/state.md`, `INTEGRATION_PLANS.md`, this ledger. Runtime source, game data, save, UI, and plan-status mutations are excluded. | **COMPLETE / FULLY INTEGRATED — 2026-10-01; paths released.** Five reviewed overlap clusters map to live Core/host/save/test evidence; deterministic candidate signals and receipts never alter plan status. Generator self-test/checks PASS; register/index checks PASS; `PlanGovernanceContractTests` 6/6 PASS. |
+| claim-e1-plan53-e1e-followups-2026-10-01 | `E1/PLAN-53/E1E-FOLLOWUPS` | Foreman / integrator (user-authorized follow-ups 2026-10-01) | `.ai/plans/integrated/governance/INTEGRATED_plan53-e1e-followups-2026-10-01.md`, `scripts/ci/generate-architecture-map.py`, `scripts/ci/generate-capability-clusters.py`, `Ashfall.Core.Tests/Tooling/ArchitectureTestMapGateTests.cs`, `Ashfall.Core.Tests/Tooling/PlanGovernanceContractTests.cs`, `docs/architecture/ARCHITECTURE_TEST_MAP.md`, `docs/architecture/CLAIMS.json`, `docs/roadmap/e1/E1E_CAPABILITY_CLUSTERS.json`, `docs/roadmap/CAPABILITY_CLUSTERS.md`, `docs/roadmap/e1/E1E_INDEPENDENT_REVIEW.md`, `docs/roadmap/e1/receipts/`, `docs/roadmap/e1/E1E_IMPLEMENTATION_LOG.md`, `docs/roadmap/PLAN_REGISTER.{md,json}`, `docs/INDEX.md`, `.ai/state.md`, `INTEGRATION_PLANS.md`, this ledger. No runtime/UI/save/gameplay path changes and no plan-status mutation. | **COMPLETE / FULLY INTEGRATED — 2026-10-01; paths released.** Cooking and needs map entries reconciled; NPC memory UI gap retained; five candidate receipts and five verified claims linked; focused governance and candidate integration tests pass; generated outputs checked. |
 | claim-cf-p1-distress-content-seal-2026-09-19 | `CF-P1-DISTRESS-CONTENT-SEAL` | Foreman / integrator (user-authorized implementation) | **Core:** `Assets/Ashfall.Core/CatalogIntegrityValidator.cs` (distress follow-up rules only); **Data:** `Assets/StreamingAssets/Data/radio_distress_signals.json` (three authored follow-up removals only); **Tests:** `Ashfall.Core.Tests/Radio/DistressFollowUpTests.cs`, `Ashfall.Core.Tests/Radio/DistressFollowUpPopulationReplayTests.cs`; **Host:** `src/Audio/AudioSelfTest.cs` (distress cue cross-reference only); **Docs:** `docs/radio/DISTRESS_SIGNAL_PR3_CLOSEOUT.md`; **Plan archive:** `docs/plans/integrated/radio/CF_P1_DISTRESS_CONTENT_SEAL_INTEGRATION_PLAN.md`; **Governance:** this claim row and package ledger row. Mechanism, save, scheduler, trust, resolver, registry, expansion catalog, and generated indexes were explicitly untouched. | **DONE/FULLY INTEGRATED 2026-09-30 (content sealed 2026-09-19):** validator 39/39; population replay 46/46 (both scoped targets rerun 2026-09-30); build 0/0; data-integrity 0 errors + 5 pinned warnings; audio selftest 645/645; content-utilization CI/deep-chain PASS. |
 | claim-quad-d-183-118-121-96-2026-09-26 | `QUAD-D-183-118-121-96` | Integrator (user-authorized package 2026-09-26) | **183:** `src/Host/ChemicalPlumeHostSession.cs`, `src/Main.ChemicalPlume.cs`, `src/Host/HostCli.ChemicalPlume.cs`, section `chemical_plume`; **118:** `src/Host/OilseedPressingHostSession.cs`, `src/Main.OilseedPressing.cs`, `src/Host/HostCli.OilseedPressing.cs`, section `oilseed_pressing`; **121:** `src/Host/VerdictAccusationHostSession.cs`, `src/Main.VerdictAccusation.cs`, `src/Host/HostCli.VerdictAccusation.cs`, section `verdict_accusation`; **96:** `src/Host/LoanSharkHostSession.cs`, `src/Main.LoanShark.cs`, `src/Host/HostCli.LoanShark.cs`, section `loan_shark`; shared: `Assets/Ashfall.Core/Save/SaveSectionRegistry.cs`, `Assets/Ashfall.Core/HostCliRegistry.cs`, `src/Host/HostCli.cs`, `src/Main.Application.cs`, `src/Main.SaveOrchestrator.cs`, `src/Main.Lifecycle.cs`, `src/Main.ExpandedShelterSystems.cs`, `scripts/ci/generate-architecture-map.py`; plan archivals. | **DONE/FULLY INTEGRATED 2026-09-26:** probes 7/7 (183), 6/6 (118), 5/5 (121), 7/7 (96); clean `--no-incremental` host build 0 errors. |
 | claim-quad-c-155-156-160-28-2026-09-26 | `QUAD-C-155-156-160-28` | Integrator (user-authorized package 2026-09-26) | **155:** `Assets/Ashfall.Core/Encounters/OrphanKnockWhitelist.cs`, `src/Host/KnockWhitelistHostSession.cs`, `src/Main.KnockWhitelist.cs`, `src/Host/HostCli.KnockWhitelist.cs`; **156:** `src/Host/JourneyDiagnosticsHostSession.cs`, `src/Main.JourneyDiagnostics.cs`, `src/Host/HostCli.JourneyDiagnostics.cs`; **160:** `Assets/Ashfall.Core/Survivors/ChildDevelopmentSystem.cs` (additive recorder), `src/Host/SecondGenerationMilestoneHostSession.cs`, `src/Main.SecondGenerationMilestones.cs`, `src/Host/HostCli.SecondGenerationMilestones.cs`; **cloud-seeding:** `src/Host/CloudSeedingHostSession.cs`, `src/Main.CloudSeeding.cs`, `src/Host/HostCli.CloudSeeding.cs`, save section `cloud_seeding`; shared: `Assets/Ashfall.Core/Save/SaveSectionRegistry.cs`, `Assets/Ashfall.Core/HostCliRegistry.cs`, `src/Host/HostCli.cs`, `src/Main.Application.cs`, `src/Main.SaveOrchestrator.cs`, `src/Main.Lifecycle.cs`, `src/Main.ExpandedShelterSystems.cs`, `Ashfall.Core.Tests/Tooling/MainTriadDriftGateTests.cs`, `scripts/ci/generate-architecture-map.py`; plan archivals. | **DONE/FULLY INTEGRATED 2026-09-26:** probes 6/6 (155), 6/6 (156), 7/7 (160), 7/7 (cloud seeding); clean `--no-incremental` host build 0 errors. Foreign-lane notes: concurrent lanes were mid-write in `Main.CampaignOwners.cs`/`HostCli.SoilReclamationProfile.cs` (self-resolved); architecture-map missing nodes belong to those lanes. |
@@ -7826,7 +8390,7 @@ claim of permanent subsystem ownership.
 | claim-c1-briefing-crisis-consumer-2026-09-17 | `C1-BRIEFING-CRISIS-CONSUMER` | Integrator (user-authorized 2026-09-17) | **Core:** `Assets/Ashfall.Core/Campaign/DailyBriefingReportBuilder.cs` (additive `AppendCrisisWarnings` renderer only — existing methods untouched; deferred Plan 24 consumer handoff, task side already DONE); **Host:** `src/Main.BriefingCrisis.cs` (new + `.cs.uid`), `src/Main.Campaign.cs` (one additive `AppendCrisisWarnings` call in `ShowBriefingForDay`); **Tests:** `Ashfall.Core.Tests/Campaign/DailyBriefingCrisisTests.cs` (new); **Docs:** `A1_BRIEFING_DEFERRED.md` (→ RESOLVED), `WAVE9_PART1_CLOSEOUT.md` (A1/B1 status), generated `docs/INDEX.md` + `docs/data/CATALOG_REGISTRY.md` (regenerated after Wave 9 Part 1 markdown/data tranche left them stale); **Governance:** `WORKTREE_OWNERSHIP.md` | **DONE 2026-09-17:** closed the deferred C1.4 DailyBriefing consumer claim-safely. Core gained one additive bounded `AppendCrisisWarnings` renderer; the host assembles read-only `CrisisPredictionInputs` from canonical owners (roster+radiation, inventory by `ItemType`, power-grid runway, sanitation spill, weather-intelligence forecast/station) and calls `CrisisPredictor.Evaluate` — 0 RNG, 0 mutation, 0 persistence. Inputs with no clear canonical source (daily burn rates, distress ambush, working-adult demographics) stay at neutral defaults so no false crisis is fabricated. Verified: `DailyBriefingCrisisTests` 8/8, `CrisisPredictionTests` 16/16, `DailyBriefingReportBuilderTests` 13/13, host build 0/0; architecture-map/ui-catalog/core-systems/selftest-manifest/CLI-catalog/docs-index/catalog-registry `--check` in sync after regen. Not wired: Plan 31 semantic-kind briefing re-grouping is blocked on the pinned `GenericSectionTitle` no-silent-drop contract (decision recorded in `WAVE9_PART1_CLOSEOUT.md`). |
 | claim-wave8-b2-player-routes-2026-09-17 | `WAVE8-B2-PLAYER-ROUTES` | Integrator (user-authorized 2026-09-17) | **Core:** `Assets/Ashfall.Core/SkyDefense/SkyDefenseBatterySystem.cs` (additive read-only `OrdnanceCatalog`), `Assets/Ashfall.Core/Expeditions/VehicleGarageSystem.cs` (`GetRecord`/`IsImmobilized`/`ActiveRecoveries`/`GetInstalledSlots`/`DecorateProfile`/`AdvanceRecoveries`), `Assets/Ashfall.Core/HostCliRegistry.cs` (two selftest descriptors); **UI:** `src/UI/SkyDefenseBatteryPanel.cs`, `src/UI/DynamicQuestlinePanel.cs`, `src/UI/VehicleGaragePanel.cs` (all new + `.cs.uid`), `src/Main.SkyDefense.cs`, `src/Main.DynamicQuests.cs`, `src/Main.VehicleGarage.cs` (all new + `.cs.uid`); **Host:** `src/Host/ExpeditionHostSession.cs` (optional `Garage` seam: profile decoration + trip-wear feed + immobilized dispatch gate), `src/Main.Expeditions.cs`, `src/Main.CampaignOwners.cs` (recovery day tick + pre-day snapshot/restore), `src/Host/HostCli.SkyDefense.cs` (new), `src/Host/HostCli.VehicleGarage.cs` (new), `src/Host/HostCli.cs`, `src/Main.Application.cs`, `src/Host/UiAccessibilitySelfTest.cs`; **Routing:** `Assets/Ashfall.Core/UI/PanelRegistryBootstrap.cs`, `src/Main.PlayerSurfaces.cs`, `src/Main.GameFlow.cs`, `src/Main.ExpandedShelterSystems.cs`; **Tests:** `Ashfall.Core.Tests/Expeditions/Plan50VehicleGarageIntegrationTests.cs` (new); **Generated:** `scripts/ci/generate-architecture-map.py`, `docs/architecture/ARCHITECTURE_TEST_MAP.md`, `docs/ui/UI_PANEL_ARCHITECTURE_GUIDE.md`, `docs/cli/HOST_CLI_COMMAND_CATALOG.md`, `docs/ci/SELFTEST_MANIFEST.json`, `docs/player_surface_manifest.json`, `docs/INDEX.md`; **Docs:** `docs/plans/wave8_part2/B2_PANEL_WAVE.md`; **Governance:** `INTEGRATION_PLANS.md`, `WORKTREE_OWNERSHIP.md` | **DONE 2026-09-17:** B2 player-route wave complete — all three settled systems now have live Expanded panels, and both residual CLI items closed. (1) `sky_defense_battery`: live panel over the campaign-owned system, `--sky-defense-selftest` 17/17, map ✅ 6/6. (2) `dynamic_quests`: read-only Emergency Dynamic Quests board, map ✅ 6/6. (3) `vehicle_garage`: premise correctly re-classified — completed the signed Plan 50 decoration seam (mod effects decorate the expedition profile, trip distance feeds component wear, immobilized vehicles are refused dispatch, recovery advances over campaign days) before building `VehicleGaragePanel` (install/uninstall/service/recovery), `--vehicle-garage-selftest` 19/19, map ✅ 6/6. Gates: host build 0/0; PanelRoute 20/20; PlayerSurfaceCoverage 8/8; PanelSubscriptionHygiene 1/1; ProductionUiNoFabricatedFallback 4/4; PlayerSurfaceBindingPurity 2/2; ArchitectureTestMap 5/5; SelfTestManifest 4/4; UiPanelContract 1/1; HostCliHelpContract 2/2; SkyDefenseBattery 13/13; DynamicQuestline 4/4; VehicleGarage 6/6; Plans50_53 3/3; Plan50VehicleGarageIntegration 5/5; panel-bind-lifecycle 17/17; player-panels-uitest PASS; save-load-ui-failure PASS; 7-day-smoke 10/10; ui-a11y 5/5; architecture-map/ui-catalog/CLI-catalog/self-test-manifest/docs-index `--check` in sync. |
 | claim-wave8-part2-c1-black-market-actions-2026-09-17 | `WAVE8-PART2-C1-BLACK-MARKET-ACTIONS` | Integrator (user-authorized 2026-09-17) | **Core:** `Assets/Ashfall.Core/Economy/BlackMarketSystem.cs`, `Assets/Ashfall.Core/HoldfastTradeSession.cs`, `Assets/Ashfall.Core/Economy/BlackMarketSettlementService.cs` (new); **Data:** `Assets/StreamingAssets/Data/items.json` (additive canonical `diamond` row only; transferred from completed Plan 22 claim), generated `artifacts/asset_registry.json`, `artifacts/asset_registry.md` (full current-input regeneration); **Host:** `src/Host/BlackMarketHostSession.cs`, `src/Main.BlackMarket.cs`; **UI:** `src/UI/BlackMarketPanel.cs`, `src/UI/BlackMarketSnapshotFixture.cs` (new), `src/UI/SnapshotHarness.cs` (additive target only), `snapshots/black_market_default.png`, `docs/ui/snapshot_manifest.json`, `docs/ui/SNAPSHOT_COVERAGE.md`; **Tests:** `Ashfall.Core.Tests/Economy/Plan211BlackMarketSettlementTests.cs` (new), `Ashfall.Core.Tests/Economy/Plan211BlackMarketPanelContractTests.cs` (new), existing Plan 211 focused targets for verification only; **D1 stale-contract adjunct:** `Ashfall.Core.Tests/Economy/Plan14AEconomyIntegrationTests.cs` (one settlement quote assertion rematched to the already-live Plan 56 regionalSupply factor, with drift evidence); **Docs:** `docs/plans/wave8_part2/C1_PREMISE_EVIDENCE.md`, `C1_DECISION.md`, `C1_CHANGE_MATRIX.md`, `C1_ACCEPTANCE.md`, `C1_HANDOFF.md`, `docs/economy/PLAN_211_BLACK_MARKET_CLOSEOUT.md`, generated `docs/INDEX.md` (full current-input regeneration); **Governance:** `INTEGRATION_PLANS.md`, `WORKTREE_OWNERSHIP.md` (user-authorized transfer for this bounded package) | **DONE 2026-09-17:** signed immediate canonical-inventory settlement and Buy/Sell/Take Loan/Repay surface implemented without new authority or save state. Verified settlement 18/18, panel contracts 3/3, Plan 211 19/19, economy 184/184, builds 0/0, data integrity PASS, lifecycle 17/17, a11y 5/5, asset registry 55/55, docs index PASS, `black_market_default` MATCH. Remaining global snapshot drifts route to D1 and RID/resource shutdown warnings route to D3. |
-| claim-c1-plan24-survivor-ledger-2026-09-16 | `C1-PLAN24-SURVIVOR-LEDGER` | Integrator (user-authorized) | **Core:** `Assets/Ashfall.Core/Survivors/FitnessForDutyModel.cs` (new), `Assets/Ashfall.Core/Survivors/NeedsModifierStack.cs` (new), `Assets/Ashfall.Core/Survivors/NeedsSystem.cs`, `Assets/Ashfall.Core/Survivors/CaregivingSystem.cs`, `Assets/Ashfall.Core/DutyRoster/DutyRosterAssignmentEngine.cs`, `Assets/Ashfall.Core/DutyRoster/DutyRosterSystem.cs`, `Assets/Ashfall.Core/Medical/MedicalWardSystem.cs`, `Assets/Ashfall.Core/KitchenNutritionSystem.cs`, `Assets/Ashfall.Core/Campaign/DailyBriefingReportBuilder.cs`, `Assets/Ashfall.Core/CatalogIntegrityValidator.cs`; **Data:** `Assets/StreamingAssets/Data/duty_roles.json` (new); **Host:** `src/Main.SurvivorFitness.cs` (new), `src/Main.DutyRoster.cs`, `src/Main.CampaignOwners.cs`, `src/Main.ShelterSocial.cs`, `src/Main.Expeditions.cs`, `src/Main.Medical.cs`, `src/Main.ShelterBatch3.cs`, `src/Main.UiPanels.cs`, `src/Host/ApprenticeshipHostSession.cs`, `src/Host/DutyRosterHostSession.cs`, `src/Host/ExpeditionHostSession.cs`, `src/Host/MedicalWardHostSession.cs`; **UI:** `src/UI/DutyRosterPanel.cs`, `src/UI/ExpeditionPanel.cs`, `src/UI/SurvivorDetailPanel.cs`; **Tests:** `Ashfall.Core.Tests/Survivors/Plan24FitnessForDutyTests.cs` (new), `Ashfall.Core.Tests/Survivors/Plan24NeedsModifierStackTests.cs` (new), `Ashfall.Core.Tests/DutyRoster/Plan24DutyRosterFitnessTests.cs` (new), `Ashfall.Core.Tests/Medical/Plan24SurvivorJourneyTests.cs` (new), `Ashfall.Core.Tests/Campaign/DailyBriefingReportBuilderTests.cs`, `Ashfall.Core.Tests/KitchenNutritionSystemTests.cs`; **Docs:** `docs/systems/SURVIVOR_JOURNEY_OWNERSHIP.md` (new), `docs/systems/SURVIVOR_STATE_AUTHORITY_MATRIX.md` (new), `docs/plans/C1_planintegration[5]_IMPLEMENTATION_LOG.md` (new), `INTEGRATION_PLANS.md`, `WORKTREE_OWNERSHIP.md`; **Wave 8 Task A1 addendum (2026-09-17, same package continuation):** `Assets/Ashfall.Core/Survivors/SurvivorFateSystem.cs`, `Assets/Ashfall.Core/ShelterThermalSystem.cs`, `Assets/Ashfall.Core/Survivors/RationConflictSystem.cs`, `Assets/Ashfall.Core/Survivors/SurvivorSocialCoordinator.cs`, `Assets/Ashfall.Core/Survivors/MoraleContagionSystem.cs`, `src/Main.Plans162_165.cs`, `src/Main.MoraleContagion.cs`, `Ashfall.Core.Tests/Survivors/Plan24NeedsSourceMigrationTests.cs` (new), `Ashfall.Core.Tests/Flagship11/MoraleContagionSystemTests.cs`, `Ashfall.Core.Tests/Flagship11/CrossSystemSmokeTests.cs`; **Wave 8 Task A2 addendum (2026-09-17):** `Assets/Ashfall.Core/DutyRoster/DutyHourLedger.cs` (new), `Assets/Ashfall.Core/Survivors/LaborProductivity.cs` (new), `Assets/Ashfall.Core/Crafting/CraftingSystem.cs` (additive composed slot), `src/Main.World.cs` (workshop binding), `src/Host/DutyRosterHostSession.cs` (hours preview), `Ashfall.Core.Tests/DutyRoster/Plan24DutyHourTests.cs` (new); **Wave 8 Task A3 addendum (2026-09-17):** `Assets/Ashfall.Core/SurvivorRelationsSystem.cs` (additive grief_since_day + TryGetRelationship), `Assets/Ashfall.Core/Memorial/RelationsGriefSink.cs` (onset stamping + pure rate functions + window constants), `Assets/Ashfall.Core/Memorial/MemorialSystem.cs` (Mourn/LatestUnmourned/MournedDay), `src/Main.Campaign.cs` (mourning subscription), `src/UI/IronCenotaphMemorialPanel.cs` (mourning route), `src/Main.UiPanels.cs` (cenotaph binding), `Ashfall.Core.Tests/Medical/Plan24RecoveryGriefTests.cs` (new) | **ACTIVE 2026-09-16:** user-authorized Plan 24 integrator package; supersedes stale DONE claims only for these listed seams. Existing unrelated edits remain preserved. 24A fitness/health-aware duty contracts are implemented and focused-verified. **Task A1 (Wave 8) DONE 2026-09-17:** the nine stranded needs-source families migrated onto the shared attributed seam with per-family legacy-parity + attribution tests (9/9) and full family-suite regression (24B battery + cross-system + determinism green; needs characterization stays at the inherited 14/15 baseline). Missed-meal, friction-morale, and overwork rows are documented absent (not fabricated); overwork went live under A2. **Task A2 (Wave 8) DONE 2026-09-17 (ward staffing excepted):** duty-hour accumulator (`DutyHourLedger`, derived), measured overwork with data-authored magnitudes routed through the shared needs seam, the one shared `WorkerProductivityContract` (skill-to-yield) with kitchen + workshop-craft-time wiring (producer rows for greenhouse/foundry-output/medical documented open with named blockers), and the roster assignment UI (candidates, vacate, impaired-warning confirm/cancel dialog). Ward staffing = decision memo presented in the Plan 24 log (recommendation: option b, data-authored ward duty role); NO staffing authority fabricated — awaiting foreman signature. **Task A3 (Wave 8) DONE 2026-09-17 (recovery-ramp design excepted):** the 24C grief-to-needs projection (bond-scaled, time-decaying `grief.bond_loss` rates derived from the persisted relationship ledger — reload-safe), the mourning vigil (`MemorialSystem.Mourn`, once-per-death, attributed morale recovery + journal line, cenotaph panel route), and the death → ration re-split → grievance journey verification. The affliction-specific recovery ramp = design note awaiting signature (admissions carry no cause field; no dormant data). **Task A4 (Wave 8) DONE 2026-09-17:** Plan 24 verification closure — needs-characterization baseline repaired 14/15→15/15 (model proven: nine distinct restore emissions; assertion retargeted with drift note), full save/load journey parity (`Plan24JourneyParityTests`: treatment + death/grief continuous==interrupted), the 30-day policy simulation (same-seed identity + day-15 mid-reload suffix identity + per-day impossible-state exclusions), the Plan 24 battery green, data-integrity/utilization PASS, sanctioned aggregate `verify-fast.sh` ALL 47 GATES PASSED CLEANLY, closeout `docs/plans/PLAN_24_CLOSEOUT.md` (status CLOSED-WITH-DEFERRALS pending the two signatures; snapshot rebaseline environment-blocked and enumerated). Plan 24 remains closed-with-deferrals as recorded; a shared-path note: `src/Main.Campaign.cs` received the additive mourning subscription only (the concurrent Campaign/DailyBriefing area was otherwise untouched). 24C remains partial as recorded in the implementation log. Conservative contract: current five roles, data-authored thresholds, hard incapacitation/death/quarantine blocks, explicit confirmation for impaired assignments/dispatch, derived fitness/modifiers use existing persisted state and add no save section (kitchen quality stamp = additive legacy-default fields only). |
+| claim-c1-plan24-survivor-ledger-2026-09-16 | `C1-PLAN24-SURVIVOR-LEDGER` | Integrator (user-authorized) | **Core:** `Assets/Ashfall.Core/Survivors/FitnessForDutyModel.cs` (new), `Assets/Ashfall.Core/Survivors/NeedsModifierStack.cs` (new), `Assets/Ashfall.Core/Survivors/NeedsSystem.cs`, `Assets/Ashfall.Core/Survivors/CaregivingSystem.cs`, `Assets/Ashfall.Core/DutyRoster/DutyRosterAssignmentEngine.cs`, `Assets/Ashfall.Core/DutyRoster/DutyRosterSystem.cs`, `Assets/Ashfall.Core/Medical/MedicalWardSystem.cs`, `Assets/Ashfall.Core/KitchenNutritionSystem.cs`, `Assets/Ashfall.Core/Campaign/DailyBriefingReportBuilder.cs`, `Assets/Ashfall.Core/CatalogIntegrityValidator.cs`; **Data:** `Assets/StreamingAssets/Data/duty_roles.json` (new); **Host:** `src/Main.SurvivorFitness.cs` (new), `src/Main.DutyRoster.cs`, `src/Main.CampaignOwners.cs`, `src/Main.ShelterSocial.cs`, `src/Main.Expeditions.cs`, `src/Main.Medical.cs`, `src/Main.ShelterBatch3.cs`, `src/Main.UiPanels.cs`, `src/Host/ApprenticeshipHostSession.cs`, `src/Host/DutyRosterHostSession.cs`, `src/Host/ExpeditionHostSession.cs`, `src/Host/MedicalWardHostSession.cs`; **UI:** `src/UI/DutyRosterPanel.cs`, `src/UI/ExpeditionPanel.cs`, `src/UI/SurvivorDetailPanel.cs`; **Tests:** `Ashfall.Core.Tests/Survivors/Plan24FitnessForDutyTests.cs` (new), `Ashfall.Core.Tests/Survivors/Plan24NeedsModifierStackTests.cs` (new), `Ashfall.Core.Tests/DutyRoster/Plan24DutyRosterFitnessTests.cs` (new), `Ashfall.Core.Tests/Medical/Plan24SurvivorJourneyTests.cs` (new), `Ashfall.Core.Tests/Campaign/DailyBriefingReportBuilderTests.cs`, `Ashfall.Core.Tests/KitchenNutritionSystemTests.cs`; **Docs:** `docs/systems/SURVIVOR_JOURNEY_OWNERSHIP.md` (new), `docs/systems/SURVIVOR_STATE_AUTHORITY_MATRIX.md` (new), `docs/plans/C1_planintegration[5]_IMPLEMENTATION_LOG.md` (new), `INTEGRATION_PLANS.md`, `WORKTREE_OWNERSHIP.md`; **Wave 8 Task A1 addendum (2026-09-17, same package continuation):** `Assets/Ashfall.Core/Survivors/SurvivorFateSystem.cs`, `Assets/Ashfall.Core/ShelterThermalSystem.cs`, `Assets/Ashfall.Core/Survivors/RationConflictSystem.cs`, `Assets/Ashfall.Core/Survivors/SurvivorSocialCoordinator.cs`, `Assets/Ashfall.Core/Survivors/MoraleContagionSystem.cs`, `src/Main.Plans162_165.cs`, `src/Main.MoraleContagion.cs`, `Ashfall.Core.Tests/Survivors/Plan24NeedsSourceMigrationTests.cs` (new), `Ashfall.Core.Tests/Flagship11/MoraleContagionSystemTests.cs`, `Ashfall.Core.Tests/Flagship11/CrossSystemSmokeTests.cs`; **Wave 8 Task A2 addendum (2026-09-17):** `Assets/Ashfall.Core/DutyRoster/DutyHourLedger.cs` (new), `Assets/Ashfall.Core/Survivors/LaborProductivity.cs` (new), `Assets/Ashfall.Core/Crafting/CraftingSystem.cs` (additive composed slot), `src/Main.World.cs` (workshop binding), `src/Host/DutyRosterHostSession.cs` (hours preview), `Ashfall.Core.Tests/DutyRoster/Plan24DutyHourTests.cs` (new); **Wave 8 Task A3 addendum (2026-09-17):** `Assets/Ashfall.Core/SurvivorRelationsSystem.cs` (additive grief_since_day + TryGetRelationship), `Assets/Ashfall.Core/Memorial/RelationsGriefSink.cs` (onset stamping + pure rate functions + window constants), `Assets/Ashfall.Core/Memorial/MemorialSystem.cs` (Mourn/LatestUnmourned/MournedDay), `src/Main.Campaign.cs` (mourning subscription), `src/UI/IronCenotaphMemorialPanel.cs` (mourning route), `src/Main.UiPanels.cs` (cenotaph binding), `Ashfall.Core.Tests/Medical/Plan24RecoveryGriefTests.cs` (new) | **HANDED_OFF 2026-10-01 (was ACTIVE 2026-09-16):** user-authorized Plan 24 integrator package; supersedes stale DONE claims only for these listed seams. **Released 2026-10-01:** Plan 24 is affirmed terminal CLOSED-with-deferrals (2026-09-23 `UNBLOCK-RESIDUALS-PLANS-24-31`); its two remaining signatures are design memos (ward staffing option b, affliction recovery ramp) and touch none of the paths below. The three paths that overlap `claim-first-hour-instrumentation-p001-p004-2026-10-01` (`src/Host/ExpeditionHostSession.cs`, `src/Main.Expeditions.cs`, `src/UI/ExpeditionPanel.cs`) are released to that claim, whose edits there are additive optional-seam wiring only (no Plan 24 behavior change). Existing unrelated edits remain preserved. 24A fitness/health-aware duty contracts are implemented and focused-verified. **Task A1 (Wave 8) DONE 2026-09-17:** the nine stranded needs-source families migrated onto the shared attributed seam with per-family legacy-parity + attribution tests (9/9) and full family-suite regression (24B battery + cross-system + determinism green; needs characterization stays at the inherited 14/15 baseline). Missed-meal, friction-morale, and overwork rows are documented absent (not fabricated); overwork went live under A2. **Task A2 (Wave 8) DONE 2026-09-17 (ward staffing excepted):** duty-hour accumulator (`DutyHourLedger`, derived), measured overwork with data-authored magnitudes routed through the shared needs seam, the one shared `WorkerProductivityContract` (skill-to-yield) with kitchen + workshop-craft-time wiring (producer rows for greenhouse/foundry-output/medical documented open with named blockers), and the roster assignment UI (candidates, vacate, impaired-warning confirm/cancel dialog). Ward staffing = decision memo presented in the Plan 24 log (recommendation: option b, data-authored ward duty role); NO staffing authority fabricated — awaiting foreman signature. **Task A3 (Wave 8) DONE 2026-09-17 (recovery-ramp design excepted):** the 24C grief-to-needs projection (bond-scaled, time-decaying `grief.bond_loss` rates derived from the persisted relationship ledger — reload-safe), the mourning vigil (`MemorialSystem.Mourn`, once-per-death, attributed morale recovery + journal line, cenotaph panel route), and the death → ration re-split → grievance journey verification. The affliction-specific recovery ramp = design note awaiting signature (admissions carry no cause field; no dormant data). **Task A4 (Wave 8) DONE 2026-09-17:** Plan 24 verification closure — needs-characterization baseline repaired 14/15→15/15 (model proven: nine distinct restore emissions; assertion retargeted with drift note), full save/load journey parity (`Plan24JourneyParityTests`: treatment + death/grief continuous==interrupted), the 30-day policy simulation (same-seed identity + day-15 mid-reload suffix identity + per-day impossible-state exclusions), the Plan 24 battery green, data-integrity/utilization PASS, sanctioned aggregate `verify-fast.sh` ALL 47 GATES PASSED CLEANLY, closeout `docs/plans/PLAN_24_CLOSEOUT.md` (status CLOSED-WITH-DEFERRALS pending the two signatures; snapshot rebaseline environment-blocked and enumerated). Plan 24 remains closed-with-deferrals as recorded; a shared-path note: `src/Main.Campaign.cs` received the additive mourning subscription only (the concurrent Campaign/DailyBriefing area was otherwise untouched). 24C remains partial as recorded in the implementation log. Conservative contract: current five roles, data-authored thresholds, hard incapacitation/death/quarantine blocks, explicit confirmation for impaired assignments/dispatch, derived fitness/modifiers use existing persisted state and add no save section (kitchen quality stamp = additive legacy-default fields only). |
 | claim-c1-plan22-one-food-authority-2026-09-15 | `C1-PLAN22-ONE-FOOD-AUTHORITY` | Builder (this session) | **Core:** `Assets/Ashfall.Core/Inventory/Inventory.cs`, `Assets/Ashfall.Core/KitchenNutritionSystem.cs`, `Assets/Ashfall.Core/DoseLedgerSystem.cs`, `Assets/Ashfall.Core/Campaign/DailyBriefingReportBuilder.cs`; **Host:** `src/Host/InventoryHostSession.cs`, `src/Main.Inventory.cs`, `src/Host/HoldfastRuntimeSession.cs`, `src/Host/HoldfastTerminalPanel.cs`, `src/UI/KitchenNutritionPanel.cs`, `src/Host/KitchenNutritionHostSession.cs`, `src/Main.ShelterBatch3.cs`, `src/Main.CampaignOwners.cs`; **Tests:** `Ashfall.Core.Tests/Inventory/Plan22OneFoodAuthorityTests.cs`, `Ashfall.Core.Tests/Shelter/Plan22KitchenNutritionTests.cs`, `Ashfall.Core.Tests/Medical/Plan22MedicineConsumptionTests.cs`, `Ashfall.Core.Tests/Inventory/Plan22CatalogClassificationParityTests.cs`; **Docs:** `docs/plans/C1_planintegration[4].md`, `docs/campaign/EVENT_SEMANTIC_PARITY_MATRIX.md`; **Governance:** WORKTREE_OWNERSHIP.md, INTEGRATION_PLANS.md | **DONE 2026-09-15** — Plan 22 complete across 22A (one direct consumption authority in InventoryHostSession routing to Core Inventory.Consume with hunger/thirst/morale/rad/contamination effects, 0 trade ledger larder semantics, 0 hardcoded edible arrays or hunger numbers, FeedAllCrew preflight), 22B (KitchenNutritionSystem with meal hunger/morale deltas, portion queries, atomic ServeAllMeals preflight, spoilage ordering before daily production, OnMealServed/OnPortionsSpoiled day events, UI with living crew resolver and Serve All buttons), 22C (authoritative medicine record via DoseLedgerSystem.RecordAntiRadTreatment, chemical dependency integration, medical record log). Verified: focused tests 7+6+4+6=23 PASS, DayEventParitySourceGateTests 2/2 PASS, KitchenNutritionSystemTests 11/11 PASS, full verify-fast suite 47/47 PASS cleanly. |
 | claim-c2-plan20c-presentation-2026-09-15 | `C2-PLAN20C-PRESENTATION` | Builder (this session) | **Core:** `Assets/Ashfall.Core/World/WeatherSystem.cs` (WeatherForecastEntry effects fields + PeekForecast population + EffectsFor helper); **Host:** `src/UI/WeatherForecastPanel.cs` (effects display rows + reliability line + optional intelligence bind), `src/Main.PlayerSurfaces.cs` (intelligence bind); **Docs:** `docs/plans/C2_planintegration[4].md` §70, `docs/INDEX.md`; **Governance:** WORKTREE_OWNERSHIP.md | **DONE 2026-09-15** — §45 forecast rows show decision effects from the table (rad/vis/thermal/travel/traps/trade, one path, legacy-neutral unbound); §37 reliability line (station tier/accuracy/calibration/horizon; uncalibrated → warning color; §37.2 imperfect-but-fair). Verified: World 439/439, host build 0, panel lifecycle PASS, ui-a11y PASS, data-integrity PASS, triad PASS. 20C remaining: §39 briefing differentiation + §43 audio-parity audit (next package). **COMPLETE 2026-09-15 (final pass):** §39 forecast-miss attribution — WeatherWorldDayOwner compares the station cached prediction vs the actual arrival; severe misses emit `weather_forecast_miss` / `weather_unexpected_storm` with briefing Warnings naming the cause (parity matrix current, parity gate green; radio weather predictions = not-yet-authored data, documented). §43 alert parity — `WorldHostSession.IsSevereWeather` classifies from the effects table (rad≥60 ∨ vis≤0.5 ∨ thermal≤−10) replacing the three-kind literal; GlassStorm/RadHail/IceStorm/BioFog/ParticulateFog now alert like Blizzard; ambience beds audited as covering every severe kind (source-gated); exactly-once transition edge; no audio→gameplay edge. Also regenerated the architecture map for the merge-added `echoes` section (+node, 193 subsystems; producing code untouched). Verified: Campaign 112, World 439, Expeditions 248, Inventory 84, Radiation 72, Shelter 588, Radio 323, Tooling 83 — all green; host build 0; data-integrity PASS; bridge/panel-lifecycle/ui-a11y/survivors PASS; triad PASS. **20C COMPLETE (§33–§47).** |
 | claim-c2-plan20c-consumers-2026-09-15 | `C2-PLAN20C-CONSUMER-TRIO` | Builder (this session) | **Core:** `Expeditions/ExpeditionSystem.cs` (ExpeditionWeatherInputs + estimate weather fields + ExpeditionState.weatherSpeedMultiplier + Advance consumption), `WildlifeTrappingSystem.cs` (WeatherPenaltyProvider + EffectiveWeatherPenalty + override param), `Economy/TravelingCaravanSystem.cs` (WeatherAvailabilityProvider progress combination); **Host:** `src/Host/WorldHostSession.cs` (WeatherEffects exposure), `src/Host/ExpeditionHostSession.cs` (weather hook → estimate + ExecuteStart), `src/Main.Expeditions.cs` (dispatch-time sampling bind), `src/Main.ShelterSocial.cs` (trapping provider bind), `src/Main.Economy.cs` (caravan provider bind); **Data:** `weather_effects.json` (trap column re-authored to legacy parity curve; Silence → declared neutral); **Tests:** `Expeditions/Plan20CConsumerWiringTests.cs` (5); **Docs:** `docs/plans/C2_planintegration[4].md` §69; **Governance:** WORKTREE_OWNERSHIP.md | **DONE 2026-09-15** — §36 estimate+runtime share the dispatch-sampled multiplier (additive state field, old saves = 1); §40 trapping migrated to the shared table with exact legacy parity (no duplicate weather table); §41 caravan availability combined with embargo at the decision point. Verified: Expeditions 248/248, World 439/439, WeatherEffects 13/13, host build 0, data-integrity PASS, bridge PASS, panel lifecycle PASS, triad PASS. Presentation layer (§37/§45) completed under C2-PLAN20C-PRESENTATION |
@@ -16473,3 +17037,7 @@ no full suite. Status: COMPLETE / FULLY INTEGRATED — paths released
 reachability 2/2 (census 8), contract 1/1, CombatSave 4/4,
 RealtimeRestore 3/3, validate-json 714/714, ui-layout PASS; plan
 archived at `.ai/plans/integrated/ui/INTEGRATED_dispatch-wave3-war-ledger-salvage-rumors-economy-w1-w5-2026-10-01.md`.
+
+## Wave 4 — Combat playability T28-T32 (2026-10-01)
+
+Claimed + integrated: `sr

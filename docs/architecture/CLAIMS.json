@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "generated_by": "Plan 29 / C1[7] One Truth Capability Authority",
-  "verified_at": "2026-09-17",
-  "total_claims": 28,
+  "verified_at": "2026-10-01",
+  "total_claims": 33,
   "claims": [
     {
       "claim_id": "inv_engine_free_core",
@@ -708,6 +708,92 @@
         "version_gate"
       ],
       "notes": "Hotfix mode enforced via --hotfix flag. HOTFIX.md (Phase 5) will document full classification table and iron rule."
+    },
+    {
+      "claim_id": "info_wasteland_rumor_authority",
+      "category": "Information Flow",
+      "document": "docs/roadmap/e1/E1E_CAPABILITY_CLUSTERS.json",
+      "anchor": "information-flow",
+      "claim": "RumorSystem owns wasteland rumor propagation and decay, integrated through RumorNetworkHostSession and the registered wasteland_rumors save section.",
+      "status": "TRUE",
+      "confidence": "PROVEN_INTEGRATION",
+      "evidence": [
+        {"type": "source", "path": "Assets/Ashfall.Core/InformationFlow/RumorSystem.cs", "symbol": "RumorSystem"},
+        {"type": "source", "path": "src/Host/RumorNetworkHostSession.cs", "symbol": "RumorNetworkHostSession"},
+        {"type": "source", "path": "Assets/Ashfall.Core/Save/SaveSectionRegistry.cs", "symbol": "wasteland_rumors"}
+      ],
+      "tests": ["Ashfall.Core.Tests/InformationFlow/Plan203RumorNetworkIntegrationTests.cs"],
+      "gates": ["test_core_suite"],
+      "notes": "Does not claim internal shelter communications share this authority or that all proposed intelligence operations are implemented."
+    },
+    {
+      "claim_id": "narr_npc_memory_persistence",
+      "category": "Narrative & Memory",
+      "document": "docs/roadmap/e1/E1E_CAPABILITY_CLUSTERS.json",
+      "anchor": "npc-memory",
+      "claim": "NpcMemorySystem applies daily memory decay and persists through NpcMemoryHostSession under the registered npc_memory save section.",
+      "status": "TRUE",
+      "confidence": "PROVEN_INTEGRATION",
+      "evidence": [
+        {"type": "source", "path": "Assets/Ashfall.Core/Narrative/NpcMemorySystem.cs", "symbol": "NpcMemorySystem.TickDailyDecay"},
+        {"type": "source", "path": "src/Host/NpcMemoryHostSession.cs", "symbol": "NpcMemoryHostSession"},
+        {"type": "source", "path": "Assets/Ashfall.Core/Save/SaveSectionRegistry.cs", "symbol": "npc_memory"}
+      ],
+      "tests": ["Ashfall.Core.Tests/Narrative/Plan147NpcMemoryHostIntegrationTests.cs"],
+      "gates": ["test_core_suite"],
+      "notes": "Makes no claim of a player-facing NPC-memory panel or route; current UI gap remains documented."
+    },
+    {
+      "claim_id": "gov_shelter_political_state",
+      "category": "Shelter Governance",
+      "document": "docs/roadmap/e1/E1E_CAPABILITY_CLUSTERS.json",
+      "anchor": "shelter-governance",
+      "claim": "ShelterGovernanceEngine owns shelter political state through ShelterGovernanceHostSession and the registered shelter_governance save section.",
+      "status": "TRUE",
+      "confidence": "PROVEN_INTEGRATION",
+      "evidence": [
+        {"type": "source", "path": "Assets/Ashfall.Core/Governance/ShelterGovernanceEngine.cs", "symbol": "ShelterGovernanceEngine"},
+        {"type": "source", "path": "src/Host/ShelterGovernanceHostSession.cs", "symbol": "ShelterGovernanceHostSession"},
+        {"type": "source", "path": "Assets/Ashfall.Core/Save/SaveSectionRegistry.cs", "symbol": "shelter_governance"}
+      ],
+      "tests": ["Ashfall.Core.Tests/Governance/Plan159ShelterGovernanceHostIntegrationTests.cs"],
+      "gates": ["test_core_suite"],
+      "notes": "Keeps the distinct survivor leadership authority outside the shelter political state claim."
+    },
+    {
+      "claim_id": "surv_needs_performance_projection",
+      "category": "Survivors & Needs",
+      "document": "docs/roadmap/e1/E1E_CAPABILITY_CLUSTERS.json",
+      "anchor": "needs-performance-cascade",
+      "claim": "NeedsPerformanceBridge projects existing survivor needs into work and expedition performance consumers without owning separate persisted needs state.",
+      "status": "TRUE",
+      "confidence": "PROVEN_INTEGRATION",
+      "evidence": [
+        {"type": "source", "path": "Assets/Ashfall.Core/Survivors/NeedsPerformanceBridge.cs", "symbol": "NeedsPerformanceBridge"},
+        {"type": "source", "path": "src/Host/NeedsPerformanceHostSession.cs", "symbol": "NeedsPerformanceHostSession"},
+        {"type": "source", "path": "Assets/Ashfall.Core/Save/SaveSectionRegistry.cs", "symbol": "survivors"}
+      ],
+      "tests": ["Ashfall.Core.Tests/Survivors/NeedsPerformanceBridgeTests.cs", "Ashfall.Core.Tests/Survivors/Plan137NeedsPerformanceHostIntegrationTests.cs"],
+      "gates": ["test_core_suite"],
+      "notes": "The bridge is a projection; durable survivor needs remain under the survivors save owner."
+    },
+    {
+      "claim_id": "food_kitchen_nutrition_route",
+      "category": "Food & Nutrition",
+      "document": "docs/roadmap/e1/E1E_CAPABILITY_CLUSTERS.json",
+      "anchor": "food-pipeline",
+      "claim": "The kitchen_nutrition route exposes KitchenNutritionPanel bound to the current cooking host, with cooking persistence registered under the cooking save section.",
+      "status": "TRUE",
+      "confidence": "PROVEN_INTEGRATION",
+      "evidence": [
+        {"type": "source", "path": "src/Main.ShelterBatch3.cs", "symbol": "SetupKitchenNutrition"},
+        {"type": "source", "path": "src/Main.ExpandedShelterSystems.cs", "symbol": "kitchen_nutrition"},
+        {"type": "source", "path": "src/UI/KitchenNutritionPanel.cs", "symbol": "KitchenNutritionPanel.BindCooking"},
+        {"type": "source", "path": "Assets/Ashfall.Core/Save/SaveSectionRegistry.cs", "symbol": "cooking"}
+      ],
+      "tests": ["Ashfall.Core.Tests/Cooking/Plan136CookingHostIntegrationTests.cs", "Ashfall.Core.Tests/Tooling/ArchitectureTestMapGateTests.cs"],
+      "gates": ["test_core_suite"],
+      "notes": "The route is a cooking UI seam; acquisition, nutrition, and preservation remain separate owners in the food pipeline."
     }
   ]
 }

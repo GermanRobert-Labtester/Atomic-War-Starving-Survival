@@ -168,6 +168,25 @@ namespace AtomicWar.GodotApp
             VerifyUiMotionContracts(Check);
             VerifyUiControllerParity(Check);
 
+            // Task 15 (seventh wave) — bounded machine-readable result artifact so
+            // the wrapper can verify the verdict without scraping stdout.
+            try
+            {
+                string artifactsDir = Path.Combine(CatalogPath.ResolveRepoRoot(), "artifacts");
+                Directory.CreateDirectory(artifactsDir);
+                string reportPath = Path.Combine(artifactsDir, "ui-layout-selftest.json");
+                string status = failures == 0 ? "PASS" : "FAIL";
+                File.WriteAllText(reportPath,
+                    $"{{\"test\":\"ui_layout_selftest\",\"status\":\"{status}\",\"failures\":{failures}}}",
+                    new System.Text.UTF8Encoding(false));
+                GD.Print($"REPORT {reportPath}");
+            }
+            catch (Exception ex)
+            {
+                GD.PrintErr($"[UiLayoutSelfTest] artifact write failed: {ex.Message}");
+                failures++;
+            }
+
             GD.Print($"[UiLayoutSelfTest] Failures: {failures}");
             return EmitSummary("ui_layout_selftest", failures == 0, failures == 0 ? 0 : 1, details: failures == 0 ? "PASS" : $"FAIL ({failures})");
         }
@@ -564,30 +583,44 @@ namespace AtomicWar.GodotApp
                     continue;
 
                 Control? panel = null;
-                try
+
+                // Scene-bound panels (CombatDetailPanel, CraftingPanel, …) resolve
+                // their layout through SceneBinder inside _Ready, so building them
+                // with `new` throws the moment they enter the tree. The engine logs
+                // that and continues, so the sweep used to report padDismissed for a
+                // half-built panel — a false green plus two stray ERROR dumps.
+                // Construct them the way production does, but only when the scene
+                // root really is the requested type: the designer-mirror scenes
+                // (KitchenNutritionPanel, PharmaLabPanel, …) have a plain Control
+                // root and must fall back to `new`, matching their production call
+                // sites. WaterTreatmentPanel.tscn roots at WaterTreatmentPanelContent,
+                // which is also correctly not an instance of WaterTreatmentPanel.
+                string parityScenePath = $"res://assets/ui/panels/{type.Name}.tscn";
+                if (ResourceLoader.Exists(parityScenePath))
                 {
-                    // No manual _Ready() here: panels are anchored in the tree
-                    // below, so the engine fires NOTIFICATION_READY exactly
-                    // once (a manual call would double-build children).
-                    panel = (Control)Activator.CreateInstance(type)!;
-                }
-                catch (Exception)
-                {
-                    string resPath = $"res://assets/ui/panels/{type.Name}.tscn";
-                    if (ResourceLoader.Exists(resPath))
+                    try
                     {
-                        try
-                        {
-                            panel = PanelSceneLoader.Load<Control>(resPath);
-                        }
-                        catch
-                        {
-                            skipped++;
-                            panel?.Free();
-                            continue;
-                        }
+                        var fromScene = PanelSceneLoader.Load<Control>(parityScenePath);
+                        if (fromScene != null && type.IsInstanceOfType(fromScene)) panel = fromScene;
+                        else fromScene?.Free();
                     }
-                    else
+                    catch (Exception)
+                    {
+                        panel?.Free();
+                        panel = null;
+                    }
+                }
+
+                if (panel == null)
+                {
+                    try
+                    {
+                        // No manual _Ready() here: panels are anchored in the tree
+                        // below, so the engine fires NOTIFICATION_READY exactly
+                        // once (a manual call would double-build children).
+                        panel = (Control)Activator.CreateInstance(type)!;
+                    }
+                    catch (Exception)
                     {
                         skipped++;
                         panel?.Free();

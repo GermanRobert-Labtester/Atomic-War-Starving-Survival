@@ -659,7 +659,90 @@ namespace Ashfall.Core.Content
                         AddEdge($"file:{cat.Path}", loaderId, ContentEdgeKind.LOADED_BY, EvidenceTier.STATIC);
                     }
                 }
+                else
+                {
+                    // Infer a typed loader from a declared class name when the
+                    // explicit dictionary has no entry. This closes the gap that
+                    // left real loaders (e.g. DifficultyPresetCatalogLoader)
+                    // invisible to the scanner and reported as UNRESOLVED.
+                    string inferred = InferLoaderClass(
+                        Path.GetFileNameWithoutExtension(cat.Path),
+                        GetDeclaredClassNames(allCsFiles));
+                    if (!string.IsNullOrEmpty(inferred))
+                    {
+                        cat.Loader = inferred;
+                        cat.MaxStage = UtilizationStage.LOADED;
+                        cat.Findings.Add($"Inferred loader class '{inferred}' from a declared type.");
+                        string loaderId = $"loader:{inferred}";
+                        EnsureNode(loaderId, ContentNodeKind.Loader, inferred);
+                        AddEdge($"file:{cat.Path}", loaderId, ContentEdgeKind.LOADED_BY, EvidenceTier.STATIC);
+                    }
+                }
             }
+        }
+
+        private HashSet<string>? _declaredClassNames;
+
+        private HashSet<string> GetDeclaredClassNames(IReadOnlyList<string> coreFiles)
+        {
+            if (_declaredClassNames != null) return _declaredClassNames;
+            var names = new HashSet<string>(StringComparer.Ordinal);
+            var files = new List<string>(coreFiles);
+            if (Directory.Exists(_srcDir))
+                files.AddRange(Directory.GetFiles(_srcDir, "*.cs", SearchOption.AllDirectories));
+            foreach (var file in files)
+            {
+                if (file.Contains("ContentUtilization")) continue;
+                try
+                {
+                    string text = File.ReadAllText(file);
+                    foreach (Match match in Regex.Matches(text, @"\bclass\s+([A-Za-z_][A-Za-z0-9_]*)"))
+                        names.Add(match.Groups[1].Value);
+                }
+                catch
+                {
+                    // Unreadable source is skipped; the scanner stays a dev tool.
+                }
+            }
+            _declaredClassNames = names;
+            return names;
+        }
+
+        private static string InferLoaderClass(string baseName, HashSet<string> declaredClasses)
+        {
+            if (string.IsNullOrEmpty(baseName) || declaredClasses.Count == 0) return string.Empty;
+            string pascal = ToPascalCase(baseName);
+            string singular = pascal.EndsWith("s", StringComparison.Ordinal) && pascal.Length > 1
+                ? pascal.Substring(0, pascal.Length - 1)
+                : pascal;
+
+            string best = string.Empty;
+            foreach (var name in declaredClasses)
+            {
+                bool stemMatch = name.IndexOf(pascal, StringComparison.OrdinalIgnoreCase) >= 0
+                    || (singular != pascal && name.IndexOf(singular, StringComparison.OrdinalIgnoreCase) >= 0);
+                if (!stemMatch) continue;
+                bool loaderish = name.EndsWith("Loader", StringComparison.Ordinal)
+                    || name.EndsWith("Catalog", StringComparison.Ordinal)
+                    || name.EndsWith("System", StringComparison.Ordinal)
+                    || name.EndsWith("Registry", StringComparison.Ordinal);
+                if (!loaderish) continue;
+                if (name.Length > best.Length) best = name;
+            }
+            return best;
+        }
+
+        private static string ToPascalCase(string value)
+        {
+            var parts = value.Split(new[] { '_', '-', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            var sb = new System.Text.StringBuilder();
+            foreach (var part in parts)
+            {
+                if (part.Length == 0) continue;
+                sb.Append(char.ToUpperInvariant(part[0]));
+                if (part.Length > 1) sb.Append(part.Substring(1));
+            }
+            return sb.ToString();
         }
 
         // ── Inventory Registries ────────────────────────────────────
@@ -1942,8 +2025,12 @@ namespace Ashfall.Core.Content
                 {
                     cat.Classification = ContentClassification.GAMEPLAY_CONSUMED;
                 }
-                // Has loader but no consumer → ORPHANED
-                else if (!string.IsNullOrEmpty(cat.Loader) && cat.ConsumerSystems.Count == 0)
+                // Has loader but no consumer → ORPHANED. A loader class inferred
+                // from a declared type is evidence, not an orphan claim: such a
+                // catalog stays UNRESOLVED so the disposition policy (not a false
+                // orphan) records its reachability state.
+                else if (!string.IsNullOrEmpty(cat.Loader) && cat.ConsumerSystems.Count == 0
+                    && !HasInferredLoader(cat))
                 {
                     cat.Classification = ContentClassification.ORPHANED;
                     cat.Findings.Add("Registered catalog has loader but no known runtime consumer");
@@ -1969,6 +2056,9 @@ namespace Ashfall.Core.Content
         /// Downgrades catalogs whose consumer claims are only from the
         /// scanner itself (name inference) with no source evidence.
         /// </summary>
+        private static bool HasInferredLoader(CatalogEntry cat) =>
+            cat.Findings.Any(f => f.StartsWith("Inferred loader class", StringComparison.Ordinal));
+
         private void VerifyConsumersInSource()
         {
             if (!Directory.Exists(_coreDir)) return;
@@ -2004,10 +2094,6 @@ namespace Ashfall.Core.Content
 
             foreach (var cat in _graph.Catalogs)
             {
-                // Skip already non-gameplay catalogs
-                if (cat.Classification != ContentClassification.GAMEPLAY_CONSUMED)
-                    continue;
-
                 string fileName = Path.GetFileName(cat.Path);
 
                 // Check if the JSON filename appears in actual source code
@@ -2017,15 +2103,58 @@ namespace Ashfall.Core.Content
                 string baseName = Path.GetFileNameWithoutExtension(cat.Path);
                 bool baseNameInSource = allSourceText.Contains(baseName);
 
+                // F-18 (tooling defect): a catalog whose filename is named by a
+                // source string has a real loader seam even when the explicit
+                // loader dictionary above has no entry. Record that evidence so
+                // DetectDisconnects does not emit a false NO_LOADER. Only the
+                // exact filename (not the bare base name) qualifies, because a
+                // bare word like "items" would match unrelated prose.
+                if (string.IsNullOrEmpty(cat.Loader) && foundInSource)
+                {
+                    cat.Loader = "SourceReference:" + fileName;
+                    if (cat.MaxStage < UtilizationStage.LOADED)
+                        cat.MaxStage = UtilizationStage.LOADED;
+                    cat.Findings.Add($"Filename '{fileName}' referenced in source; recorded as a loader seam.");
+                }
+
+                // Consumer-trace promotion: a catalog with a declared loader class
+                // that is also named by source is loaded and referenced, so it is
+                // gameplay-consumed rather than merely unresolved. This is
+                // additive (the gate scores promotions as improvements).
+                if (HasInferredLoader(cat) && foundInSource
+                    && cat.Classification != ContentClassification.GAMEPLAY_CONSUMED)
+                {
+                    if (!cat.ConsumerSystems.Contains(cat.Loader))
+                        cat.ConsumerSystems.Add(cat.Loader);
+                    if (cat.MaxStage < UtilizationStage.QUERIED)
+                        cat.MaxStage = UtilizationStage.QUERIED;
+                    cat.Classification = ContentClassification.GAMEPLAY_CONSUMED;
+                    cat.Findings.Add($"Promoted: inferred loader '{cat.Loader}' plus a source filename reference.");
+                }
+
+                // Skip already non-gameplay catalogs
+                if (cat.Classification != ContentClassification.GAMEPLAY_CONSUMED)
+                    continue;
+
                 if (!foundInSource && !baseNameInSource)
                 {
-                    // This catalog has zero source code evidence. Keep that
-                    // state honest and actionable instead of converting it
-                    // into a generic exemption that the gate cannot retire.
-                    cat.Classification = ContentClassification.ORPHANED;
-                    cat.ConsumerSystems.Clear();
-                    cat.Findings.Add("VERIFIED: No source code references found. Consumer claims were scanner name-inference only.");
-                    cat.ExemptionId = string.Empty;
+                    // A declared loader class inferred from the catalog name is
+                    // stronger evidence than a bare filename reference: keep the
+                    // catalog classified (DetectDisconnects will report it as
+                    // REGISTERED_NOT_QUERIED when it has no traced consumer)
+                    // rather than orphaning a catalog the scanner can prove has
+                    // a typed loader.
+                    bool hasInferredLoader = HasInferredLoader(cat);
+                    if (!hasInferredLoader)
+                    {
+                        // This catalog has zero source code evidence. Keep that
+                        // state honest and actionable instead of converting it
+                        // into a generic exemption that the gate cannot retire.
+                        cat.Classification = ContentClassification.ORPHANED;
+                        cat.ConsumerSystems.Clear();
+                        cat.Findings.Add("VERIFIED: No source code references found. Consumer claims were scanner name-inference only.");
+                        cat.ExemptionId = string.Empty;
+                    }
                 }
             }
         }

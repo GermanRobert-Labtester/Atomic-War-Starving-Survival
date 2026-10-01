@@ -121,6 +121,9 @@ namespace Ashfall.Core.Tests.Campaign
             string owners = ReadRepoFile("src", "Main.CampaignOwners.cs");
             Assert.Contains("_campaignDay.Register(\"retention\"", owners);
             Assert.Contains("new RetentionDayOwner(this)", owners);
+            Assert.Contains("RetentionDayOwner : IDayAdvanceOwner, IPreDaySnapshotRestore", owners);
+            Assert.Contains("CaptureRetrySnapshot()", owners);
+            Assert.Contains("RestoreRetrySnapshot(_snapshot)", owners);
 
             string retention = ReadRepoFile("src", "Main.Retention.cs");
             string host = ReadRepoFile("src", "Host", "RetentionHostSession.cs");

@@ -118,6 +118,10 @@ namespace AtomicWar.GodotApp.UI
             binder.Require<Button>("DistillButton");
             binder.Require<Button>("OsmosisButton");
             binder.Require<Button>("ReplaceFilterButton");
+            // P094: the content sub-scene is embedded by the shell below, which does
+            // not reset Visible. A pre-hidden or childless root binds cleanly yet
+            // renders a blank panel, so assert the surface is actually renderable.
+            binder.RequireNonEmptySurface("WaterTreatmentContent");
 
             _contentStack = binder.Get<VBoxContainer>("ContentStack");
             _detailText = binder.Get<Label>("DetailText");

@@ -1,18 +1,6 @@
 # ASHFALL Expansions 01–11 Master Systems & Integration Atlas
 
-> *"Eleven expansions, one shelter, and an atlas that is careful never to say that any of them are
-> the same thing."*
->
-> **Framing.** This is the map, not the territory — a systems and data-seam atlas showing where each
-> expansion touches the code and where two of them would touch the *same* code. Its whole craft is
-> the discipline of the seam: one authority per concern, no overlaps, everything serialised.
->
-> **What stays unsaid here:** whether the eleven expansions describe eleven events or one event
-> seen from eleven positions. The atlas records that they are separate, and it is careful never to
-> assert that they are unrelated.
-
-
-**Authoritative Expansion Catalog** | **Generated:** 2026-09-25 | **Total Expansions:** 11
+**Authoritative Expansion Catalog** | **Generated:** 2026-10-01 | **Total Expansions:** 11
 
 > [!IMPORTANT]
 > **EXPANSION INTEGRATION RULES:**

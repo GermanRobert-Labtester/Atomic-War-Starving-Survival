@@ -31,6 +31,10 @@ namespace AtomicWar.GodotApp
         {
             if (_survivorFate != null) return;
 
+            // P014 — every Game Over path renders the per-survivor loss ledger
+            // through the panel's provider (no caller has to pass it).
+            if (_gameOver != null) _gameOver.LedgerProvider = BuildSurvivorLossLedger;
+
             // Lane dependencies — all lazy-setup so ordering is safe.
             SetupSurvivors();
             SetupMemorial();
@@ -151,6 +155,39 @@ namespace AtomicWar.GodotApp
             string stats = $"The Holdfast is silent. Day {_simDay}. " +
                            $"{_survivorFate.DeathCount} souls lost.";
             ShowGameOver(cause, stats);
+        }
+
+        /// <summary>
+        /// P014 — per-survivor cause-of-death chain for the Game Over screen:
+        /// every fated survivor in death order (name · day · cause), followed by
+        /// the survivors still standing. Read-only projection of the fate owner
+        /// and roster; it fabricates nothing and adds no state.
+        /// </summary>
+        private string BuildSurvivorLossLedger()
+        {
+            SetupSurvivorFate();
+            var lines = new System.Collections.Generic.List<string>();
+            if (_survivorFate != null)
+            {
+                var fates = _survivorFate.Fates;
+                for (int i = 0; i < fates.Count; i++)
+                {
+                    var f = fates[i];
+                    if (f == null || string.IsNullOrEmpty(f.survivorId)) continue;
+                    lines.Add($"{FormatSurvivorName(f.survivorId)} — Day {f.day}: {SurvivorFateSystem.DescribeCause(f)}");
+                }
+            }
+            if (_survivors?.RosterState != null)
+            {
+                for (int i = 0; i < _survivors.RosterState.Count; i++)
+                {
+                    var s = _survivors.RosterState[i];
+                    if (s == null || !s.IsAliveState) continue;
+                    if (_survivorFate?.HasFate(s.Id) == true) continue;
+                    lines.Add($"{FormatSurvivorName(s.Id)} — still standing");
+                }
+            }
+            return string.Join("\n", lines);
         }
 
         private void SaveSurvivorFate()

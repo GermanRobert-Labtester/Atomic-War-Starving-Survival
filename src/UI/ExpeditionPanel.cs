@@ -41,14 +41,21 @@ namespace AtomicWar.GodotApp.UI
         private Label _statusSummary = null!;
         private Label _estimateLabel = null!;
         private Label _dispatchStatusLabel = null!;
+        private Label? _prepLabel;
+        private Label? _returnSummaryLabel;
+
+        /// <summary>P107 — the last return-loot ceremony or failure aftermath text
+        /// rendered by the panel (empty until a sortie ends). Observability only.</summary>
+        public string LastReturnSummary { get; private set; } = string.Empty;
 
         private string _selectedTargetId = "loc_the_allotments";
-        private string _selectedSurvivorId = "survivor_gunner_mikhail";
         private ExpeditionStance _selectedStance = ExpeditionStance.Stealth;
 
-        // ── Dispatch preparation (vehicle + weapon loadout) ──────────
+        // ── Dispatch preparation (survivor + vehicle + weapon loadout) ──
+        private OptionButton? _survivorSelect;
         private OptionButton? _vehicleSelect;
         private OptionButton? _weaponSelect;
+        private readonly List<string> _survivorIds = new();
         private readonly List<string> _vehicleIds = new();
         private readonly List<string> _weaponInstanceIds = new();
         private Ashfall.Core.EquipmentConditionSystem? _equipment;
@@ -65,6 +72,21 @@ namespace AtomicWar.GodotApp.UI
             _weaponSelect != null && _weaponSelect.Selected > 0 && _weaponSelect.Selected - 1 < _weaponInstanceIds.Count
                 ? _weaponInstanceIds[_weaponSelect.Selected - 1]
                 : string.Empty;
+
+        /// <summary>P105 follow-up — the survivor chosen in the dispatch selector, or "".</summary>
+        private string SelectedSurvivorId =>
+            _survivorSelect != null && _survivorSelect.Selected >= 0 && _survivorSelect.Selected < _survivorIds.Count
+                ? _survivorIds[_survivorSelect.Selected]
+                : string.Empty;
+
+        /// <summary>The survivor the estimate/dispatch targets: the selector's
+        /// choice when still dispatchable, otherwise the first living survivor.</summary>
+        private string? ChosenSurvivor(List<string> living)
+        {
+            string selected = SelectedSurvivorId;
+            if (!string.IsNullOrEmpty(selected) && living.Contains(selected)) return selected;
+            return living.Count > 0 ? living[0] : null;
+        }
 
         // ── Encounter surface (modal default / autoplay flag) ────────
         private readonly Queue<ExpeditionEncounterBridge.EncounterSurfaced> _encounterQueue = new();
@@ -90,6 +112,26 @@ namespace AtomicWar.GodotApp.UI
         public VBoxContainer? ChoicesContainer => _choicesContainer;
         public ExpeditionEncounterBridge.EncounterSurfaced? LastSurfaced => _lastSurfaced;
 
+        /// <summary>P105/P106 — the rendered pre-dispatch prep projection (empty
+        /// until the estimate line runs). Observability for the UI gate.</summary>
+        public string PrepSummaryText => _prepLabel?.Text ?? string.Empty;
+
+        /// <summary>Task 10 — clear the ceremony/aftermath surface on a campaign
+        /// reset so a new run never inherits the previous run's return text.</summary>
+        public void ClearReturnSummary() => SetReturnSummary(string.Empty, success: true);
+
+        /// <summary>Test seam (P107): render a returned sortie through the shared
+        /// Core formatter without a live tick loop.</summary>
+        public void PresentReturnForTest(ExpeditionState state)
+            => SetReturnSummary(
+                ExpeditionReturnReport.BuildCeremony(state, id => _expeditionHost?.Items?.Get(id)?.displayName ?? ExpeditionReturnReport.HumanizeToken(id)),
+                success: true);
+
+        /// <summary>Test seam (P108): render a failed sortie through the shared
+        /// Core formatter without a live tick loop.</summary>
+        public void PresentFailureForTest(ExpeditionState state, string reason)
+            => SetReturnSummary(ExpeditionReturnReport.BuildAftermath(state, reason), success: false);
+
         public bool IsBound => _expeditionHost != null;
 
         public void Bind(
@@ -102,6 +144,7 @@ namespace AtomicWar.GodotApp.UI
             if (_expeditionHost != null)
             {
                 _expeditionHost.Engine.OnExpeditionCompleted -= OnExpeditionCompleted;
+                _expeditionHost.Engine.OnExpeditionFailed -= OnExpeditionFailed;
                 _expeditionHost.StateChanged -= RefreshView;
             }
 
@@ -114,6 +157,7 @@ namespace AtomicWar.GodotApp.UI
             if (_expeditionHost != null)
             {
                 _expeditionHost.Engine.OnExpeditionCompleted += OnExpeditionCompleted;
+                _expeditionHost.Engine.OnExpeditionFailed += OnExpeditionFailed;
                 _expeditionHost.StateChanged += RefreshView;
 
                 RefreshView();
@@ -125,6 +169,7 @@ namespace AtomicWar.GodotApp.UI
             if (_expeditionHost != null)
             {
                 _expeditionHost.Engine.OnExpeditionCompleted -= OnExpeditionCompleted;
+                _expeditionHost.Engine.OnExpeditionFailed -= OnExpeditionFailed;
                 _expeditionHost.StateChanged -= RefreshView;
                 _expeditionHost = null;
             }
@@ -135,20 +180,33 @@ namespace AtomicWar.GodotApp.UI
 
         private void OnExpeditionCompleted(ExpeditionState state)
         {
-            if (state != null && state.loot != null && state.loot.Count > 0)
-            {
-                if (_inventoryHost != null)
-                {
-                    foreach (var item in state.loot)
-                    {
-                        if (string.IsNullOrEmpty(item.itemId) || item.quantity <= 0) continue;
-                        _inventoryHost.Add(item.itemId, item.quantity);
-                    }
-                }
+            // P107 — Main is the single depositor; the host session owns the
+            // summary text so it survives an unbound panel. This handler only
+            // surfaces it (and raises the deposit notification).
+            SetReturnSummary(_expeditionHost?.LastReturnSummary ?? string.Empty, success: true);
+            if (state?.loot != null && state.loot.Count > 0)
                 OnLootDeposited?.Invoke(state.loot);
-            }
             OnExpeditionUpdated?.Invoke();
             RefreshView();
+        }
+
+        /// <summary>P108 — failure consequence surfaced once the host has applied
+        /// it through the existing owners (health, fate, journal).</summary>
+        private void OnExpeditionFailed(ExpeditionState state, string reason)
+        {
+            SetReturnSummary(_expeditionHost?.LastReturnSummary ?? string.Empty, success: false);
+            OnExpeditionUpdated?.Invoke();
+            RefreshView();
+        }
+
+        private void SetReturnSummary(string text, bool success)
+        {
+            LastReturnSummary = text ?? string.Empty;
+            if (_returnSummaryLabel == null) return;
+            _returnSummaryLabel.Text = LastReturnSummary;
+            _returnSummaryLabel.Visible = !string.IsNullOrEmpty(LastReturnSummary);
+            _returnSummaryLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(
+                success ? Ashfall.Core.UI.Theme.Lethe : Ashfall.Core.UI.Theme.Critical));
         }
 
         /// <summary>Swap the departure backdrop to the phase variant (dawn/day/dusk/night).</summary>
@@ -196,15 +254,23 @@ namespace AtomicWar.GodotApp.UI
             header.HorizontalAlignment = HorizontalAlignment.Center;
             rootBox.AddChild(header);
 
-            _statusSummary = AshfallUiHelpers.MakeMetadata("Plan reconnaissance and scavenging sorties. Monitor radiation risk, distance, and survivor stamina.");
+            _statusSummary = AshfallUiHelpers.MakeMetadata(AshfallLocalization.Tr("ui.expedition.summary", "Plan reconnaissance and scavenging sorties. Monitor radiation risk, distance, and survivor stamina."));
             _statusSummary.HorizontalAlignment = HorizontalAlignment.Center;
             _statusSummary.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
             rootBox.AddChild(_statusSummary);
 
+            // P107 — persistent return ceremony / failure aftermath block.
+            _returnSummaryLabel = AshfallUiHelpers.MakeBody("", true);
+            _returnSummaryLabel.Visible = false;
+            _returnSummaryLabel.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            _returnSummaryLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Lethe));
+            rootBox.AddChild(_returnSummaryLabel);
+
             rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
             // ── Active Expeditions ──
-            var activeTitle = AshfallUiHelpers.MakeSectionHeader("ACTIVE SORTIES IN THE FIELD");
+            var activeTitle = AshfallUiHelpers.MakeSectionHeader(
+                AshfallLocalization.Tr("ui.expedition.section.active", "ACTIVE SORTIES IN THE FIELD"));
             rootBox.AddChild(activeTitle);
 
             _activeContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
@@ -213,7 +279,8 @@ namespace AtomicWar.GodotApp.UI
             rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
             // ── Pending Surfaced Encounters ──
-            _pendingHeader = AshfallUiHelpers.MakeSectionHeader("PENDING SURFACED ENCOUNTERS");
+            _pendingHeader = AshfallUiHelpers.MakeSectionHeader(
+                AshfallLocalization.Tr("ui.expedition.section.pending", "PENDING SURFACED ENCOUNTERS"));
             _pendingHeader.Visible = false;
             rootBox.AddChild(_pendingHeader);
 
@@ -222,24 +289,31 @@ namespace AtomicWar.GodotApp.UI
             rootBox.AddChild(_pendingContainer);
 
             // ── Dispatch Preparation (vehicle + weapon loadout) ──
-            var prepTitle = AshfallUiHelpers.MakeSectionHeader("DISPATCH PREPARATION // MOTOR POOL & ARMORY");
+            var prepTitle = AshfallUiHelpers.MakeSectionHeader(
+                AshfallLocalization.Tr("ui.expedition.section.prep", "DISPATCH PREPARATION // MOTOR POOL & ARMORY"));
             rootBox.AddChild(prepTitle);
 
             var prepRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingMd);
 
-            prepRow.AddChild(AshfallUiHelpers.MakeBody("VEHICLE:"));
+            prepRow.AddChild(AshfallUiHelpers.MakeBody(AshfallLocalization.Tr("ui.expedition.prep_survivor", "SURVIVOR:")));
+            _survivorSelect = new OptionButton();
+            _survivorSelect.CustomMinimumSize = new Vector2(200, 30);
+            _survivorSelect.ItemSelected += _ => UpdateEstimateLine();
+            prepRow.AddChild(_survivorSelect);
+
+            prepRow.AddChild(AshfallUiHelpers.MakeBody(AshfallLocalization.Tr("ui.expedition.prep_vehicle", "VEHICLE:")));
             _vehicleSelect = new OptionButton();
             _vehicleSelect.CustomMinimumSize = new Vector2(230, 30);
             _vehicleSelect.ItemSelected += _ => UpdateEstimateLine();
             prepRow.AddChild(_vehicleSelect);
 
-            prepRow.AddChild(AshfallUiHelpers.MakeBody("WEAPON:"));
+            prepRow.AddChild(AshfallUiHelpers.MakeBody(AshfallLocalization.Tr("ui.expedition.prep_weapon", "WEAPON:")));
             _weaponSelect = new OptionButton();
             _weaponSelect.CustomMinimumSize = new Vector2(230, 30);
             _weaponSelect.ItemSelected += _ => UpdateEstimateLine();
             prepRow.AddChild(_weaponSelect);
 
-            var btnRefuel = AshfallUiHelpers.MakeButton("REFUEL TOP-UP", () =>
+            var btnRefuel = AshfallUiHelpers.MakeButton(AshfallLocalization.Tr("ui.expedition.refuel", "REFUEL TOP-UP"), () =>
             {
                 string vehicleId = SelectedVehicleId;
                 if (_expeditionHost == null || _inventoryHost == null || string.IsNullOrEmpty(vehicleId)) return;
@@ -251,10 +325,10 @@ namespace AtomicWar.GodotApp.UI
                 SurfaceCommandRefusal(refuelResult, "REFUEL REFUSED");
                 RefreshView();
             });
-            btnRefuel.TooltipText = "Burn 10 carried fuel items into the selected tank.";
+            btnRefuel.TooltipText = AshfallLocalization.Tr("ui.expedition.refuel_tooltip", "Burn 10 carried fuel items into the selected tank.");
             prepRow.AddChild(btnRefuel);
 
-            var btnTrackGear = AshfallUiHelpers.MakeButton("FIT TRACK GEAR", () =>
+            var btnTrackGear = AshfallUiHelpers.MakeButton(AshfallLocalization.Tr("ui.expedition.fit_track_gear", "FIT TRACK GEAR"), () =>
             {
                 string vehicleId = SelectedVehicleId;
                 if (_expeditionHost == null || string.IsNullOrEmpty(vehicleId)) return;
@@ -262,7 +336,7 @@ namespace AtomicWar.GodotApp.UI
                 SurfaceCommandRefusal(trackResult, "TRACK GEAR REFUSED");
                 RefreshView();
             });
-            btnTrackGear.TooltipText = "Install the authored track-gear package, improving rough-terrain traction and reducing breakdown risk.";
+            btnTrackGear.TooltipText = AshfallLocalization.Tr("ui.expedition.track_gear_tooltip", "Install the authored track-gear package, improving rough-terrain traction and reducing breakdown risk.");
             prepRow.AddChild(btnTrackGear);
 
             rootBox.AddChild(prepRow);
@@ -272,13 +346,13 @@ namespace AtomicWar.GodotApp.UI
             // the host resolves the routes.
             var consoleRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingMd);
             consoleRow.Alignment = BoxContainer.AlignmentMode.Center;
-            var btnRadar = AshfallUiHelpers.MakeButton("RADAR SWEEP CONSOLE", () => OnOpenRadarRequested?.Invoke());
+            var btnRadar = AshfallUiHelpers.MakeButton(AshfallLocalization.Tr("ui.expedition.radar_console", "RADAR SWEEP CONSOLE"), () => OnOpenRadarRequested?.Invoke());
             btnRadar.TooltipText = AshfallLocalization.Tr("ui.expedition.radar_tooltip", "Open the expedition radar sweep — every cataloged destination, danger band, and active sortie on one grid.");
             consoleRow.AddChild(btnRadar);
-            var btnCamp = AshfallUiHelpers.MakeButton("OVERNIGHT CAMP CONSOLE", () => OnOpenCampConsoleRequested?.Invoke());
+            var btnCamp = AshfallUiHelpers.MakeButton(AshfallLocalization.Tr("ui.expedition.camp_console", "OVERNIGHT CAMP CONSOLE"), () => OnOpenCampConsoleRequested?.Invoke());
             btnCamp.TooltipText = AshfallLocalization.Tr("ui.expedition.camp_tooltip", "Manage an expedition's overnight camp: firewood, rations, sentry shifts, and night segments.");
             consoleRow.AddChild(btnCamp);
-            var btnRail = AshfallUiHelpers.MakeButton("RAILWAY LOGISTICS TERMINAL", () => OnOpenRailwayTerminalRequested?.Invoke());
+            var btnRail = AshfallUiHelpers.MakeButton(AshfallLocalization.Tr("ui.expedition.rail_console", "RAILWAY LOGISTICS TERMINAL"), () => OnOpenRailwayTerminalRequested?.Invoke());
             btnRail.TooltipText = AshfallLocalization.Tr("ui.expedition.railway_tooltip", "Railway logistics terminal — branch lines, rolling stock, and evacuation capacity.");
             consoleRow.AddChild(btnRail);
             rootBox.AddChild(consoleRow);
@@ -287,13 +361,23 @@ namespace AtomicWar.GodotApp.UI
             _estimateLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
             rootBox.AddChild(_estimateLabel);
 
+            // P105/P106 — advisory pre-dispatch checklist, supply burn, and risk.
+            rootBox.AddChild(AshfallUiHelpers.MakeSectionHeader(
+                AshfallLocalization.Tr("ui.expedition.prep_header", "EXPEDITION PREP // PROJECTED LOADOUT")));
+            _prepLabel = AshfallUiHelpers.MakeMono("");
+            _prepLabel.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+            _prepLabel.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            _prepLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
+            rootBox.AddChild(_prepLabel);
+
             _dispatchStatusLabel = AshfallUiHelpers.MakeMetadata("");
             _dispatchStatusLabel.HorizontalAlignment = HorizontalAlignment.Center;
             _dispatchStatusLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical));
             rootBox.AddChild(_dispatchStatusLabel);
 
             // ── Target Destinations ──
-            var targetsTitle = AshfallUiHelpers.MakeSectionHeader("KNOWN WASTELAND DESTINATIONS");
+            var targetsTitle = AshfallUiHelpers.MakeSectionHeader(
+                AshfallLocalization.Tr("ui.expedition.section.targets", "KNOWN WASTELAND DESTINATIONS"));
             rootBox.AddChild(targetsTitle);
 
             _targetsContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
@@ -304,7 +388,8 @@ namespace AtomicWar.GodotApp.UI
             var btnRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingMd);
             btnRow.Alignment = BoxContainer.AlignmentMode.Center;
 
-            var btnTick = AshfallUiHelpers.MakeButton("ADVANCE SORTIES (2 HOURS)", () =>
+            var btnTick = AshfallUiHelpers.MakeButton(
+                AshfallLocalization.Tr("ui.expedition.advance", "ADVANCE SORTIES (2 HOURS)"), () =>
             {
                 if (_expeditionHost != null)
                 {
@@ -316,19 +401,20 @@ namespace AtomicWar.GodotApp.UI
             btnTick.CustomMinimumSize = new Vector2(220, 42);
             btnRow.AddChild(btnTick);
 
-            var btnClose = AshfallUiHelpers.MakeButton("RETURN TO DASHBOARD [Esc]", () => OnClose?.Invoke(), true);
+            var btnClose = AshfallUiHelpers.MakeButton(
+                AshfallLocalization.Tr("ui.expedition.return_dashboard", "RETURN TO DASHBOARD [Esc]"), () => OnClose?.Invoke(), true);
             btnClose.CustomMinimumSize = new Vector2(220, 42);
             btnRow.AddChild(btnClose);
             rootBox.AddChild(btnRow);
 
-            var hint = AshfallUiHelpers.MakeSmall("Press [Esc] to return");
+            var hint = AshfallUiHelpers.MakeSmall(AshfallLocalization.Tr("ui.expedition.esc_hint", "Press [Esc] to return"));
             hint.HorizontalAlignment = HorizontalAlignment.Center;
             hint.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
             rootBox.AddChild(hint);
 
             _fitnessWarningDialog = new ConfirmationDialog
             {
-                Title = "FITNESS WARNING — EXPEDITION",
+                Title = AshfallLocalization.Tr("ui.expedition.fitness_title", "FITNESS WARNING — EXPEDITION"),
                 DialogText = string.Empty
             };
             _fitnessWarningDialog.Confirmed += ConfirmFitnessDispatch;
@@ -376,7 +462,7 @@ namespace AtomicWar.GodotApp.UI
                 _fitnessWarningDialog!.DialogText =
                     $"{FormatSurvivorName(survivorId)} is impaired. Dispatch is allowed with explicit confirmation. " +
                     $"Recommended maximum duty: {fitness.RecommendedMaxHours:0} hours. " +
-                    (string.IsNullOrEmpty(reasons) ? string.Empty : "Fitness factors: " + reasons + ".");
+                    (string.IsNullOrEmpty(reasons) ? string.Empty : TrFmt("ui.expedition.fitness_factors", "Fitness factors: {0}", reasons + "."));
                 _fitnessWarningDialog.PopupCentered();
                 return;
             }
@@ -430,6 +516,15 @@ namespace AtomicWar.GodotApp.UI
             return string.IsNullOrWhiteSpace(id) ? "PATROL" : HumanizeDisplayToken(id);
         }
 
+        /// <summary>Localize + format a string without throwing on a malformed
+        /// catalog row (falls back to the raw template).</summary>
+        private static string TrFmt(string key, string fallback, params object[] args)
+        {
+            string template = AshfallUiText.Tr(key, fallback);
+            try { return string.Format(template, args); }
+            catch (FormatException) { return template; }
+        }
+
         private static string FormatUnavailableReason(string code)
         {
             return code switch
@@ -457,7 +552,10 @@ namespace AtomicWar.GodotApp.UI
                 "fitness_warning_confirmation_required" => "survivor is impaired and needs explicit confirmation.",
                 "unknown_target" => "unknown destination.",
                 "stale_preview" => "planning data went stale. Retry the dispatch.",
-                _ => code.Replace('_', ' ')
+                // P003 + unknown codes route through the shared refusal
+                // formatter, so the tutorial-ordering gate names its pending
+                // step instead of printing a bare de-underscored code.
+                _ => ActionRefusalText.Describe(code)
             };
         }
 
@@ -475,15 +573,24 @@ namespace AtomicWar.GodotApp.UI
         public void RefreshView()
         {
             if (_activeContainer == null || _targetsContainer == null || _expeditionHost == null) return;
+            var host = _expeditionHost;
+
+            // P107 follow-up — the host session retains the last ceremony/aftermath,
+            // so a panel never bound when the sortie ended (or rebound after a
+            // newer sortie) still shows the current text, not a stale one.
+            if (!string.IsNullOrEmpty(host.LastReturnSummary) &&
+                !string.Equals(LastReturnSummary, host.LastReturnSummary, StringComparison.Ordinal))
+                SetReturnSummary(host.LastReturnSummary, success: !host.LastReturnWasFailure);
 
             // Clear Containers
             AshfallUiHelpers.EmptyChildren(_activeContainer);
             AshfallUiHelpers.EmptyChildren(_targetsContainer);
 
             // 1. Render Active Expeditions
-            if (_expeditionHost.Engine.ActiveCount == 0)
+            if (host.Engine.ActiveCount == 0)
             {
-                _activeContainer.AddChild(AshfallUiHelpers.MakeMetadata("No active scavenging sorties currently deployed."));
+                _activeContainer.AddChild(AshfallUiHelpers.MakeMetadata(
+                    AshfallLocalization.Tr("ui.expedition.no_active", "No active scavenging sorties currently deployed.")));
             }
             else
             {
@@ -495,22 +602,28 @@ namespace AtomicWar.GodotApp.UI
                     var card = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingXs);
                     var topRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
 
-                    var phaseName = ((ExpeditionPhase)exp.phase).ToString().ToUpperInvariant();
+                    var phaseName = ExpeditionPhaseText.Label((ExpeditionPhase)exp.phase);
                     var lblPhase = AshfallUiHelpers.MakeMono($"[{phaseName}] {exp.displayName}");
                     lblPhase.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
                     lblPhase.SizeFlagsHorizontal = SizeFlags.ExpandFill;
                     topRow.AddChild(lblPhase);
 
-                    var lblScout = AshfallUiHelpers.MakeSmall($"SCOUT: {FormatSurvivorName(exp.survivorId)}");
+                    var lblScout = AshfallUiHelpers.MakeSmall(TrFmt(
+                        "ui.expedition.scout", "SCOUT: {0}", FormatSurvivorName(exp.survivorId)));
                     topRow.AddChild(lblScout);
 
-                    var lblStamina = AshfallUiHelpers.MakeMono($"STAMINA {exp.stamina:0}%");
+                    var lblStamina = AshfallUiHelpers.MakeMono(TrFmt(
+                        "ui.expedition.stamina", "STAMINA {0:0}%", exp.stamina));
                     lblStamina.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(exp.stamina < 30 ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Hot));
                     topRow.AddChild(lblStamina);
                     card.AddChild(topRow);
 
                     var midRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
-                    var progress = AshfallUiHelpers.MakeSmall($"Travel Progress: {exp.travelTicksCompleted}/{exp.distanceTicks} legs · Encounters: {exp.encounterCount} · Loot: {exp.loot.Count} items ({exp.currentWeightKg:F1}/{exp.maxLootCapacityKg:F0} kg)");
+                    var progress = AshfallUiHelpers.MakeSmall(TrFmt(
+                        "ui.expedition.progress_line",
+                        "Travel Progress: {0}/{1} legs · Encounters: {2} · Loot: {3} items ({4}/{5} kg)",
+                        exp.travelTicksCompleted, exp.distanceTicks, exp.encounterCount, exp.loot.Count,
+                        exp.currentWeightKg.ToString("F1"), exp.maxLootCapacityKg.ToString("F0")));
                     midRow.AddChild(progress);
                     card.AddChild(midRow);
 
@@ -520,7 +633,8 @@ namespace AtomicWar.GodotApp.UI
 
                     if (exp.phase == (int)ExpeditionPhase.Looting)
                     {
-                        var btnPush = AshfallUiHelpers.MakeButton("PUSH LUCK (SCAVENGE DEEPER)", () =>
+                        var btnPush = AshfallUiHelpers.MakeButton(
+                            AshfallLocalization.Tr("ui.expedition.push_luck", "PUSH LUCK (SCAVENGE DEEPER)"), () =>
                         {
                             _expeditionHost.PushLuck(scoutId);
                             OnExpeditionUpdated?.Invoke();
@@ -529,7 +643,8 @@ namespace AtomicWar.GodotApp.UI
                         btnPush.CustomMinimumSize = new Vector2(230, 30);
                         actionRow.AddChild(btnPush);
 
-                        var btnRetreat = AshfallUiHelpers.MakeButton("ORDER INBOUND RETURN", () =>
+                        var btnRetreat = AshfallUiHelpers.MakeButton(
+                            AshfallLocalization.Tr("ui.expedition.order_return", "ORDER INBOUND RETURN"), () =>
                         {
                             _expeditionHost.Retreat(scoutId);
                             OnExpeditionUpdated?.Invoke();
@@ -541,8 +656,8 @@ namespace AtomicWar.GodotApp.UI
                     else
                     {
                         var lblTransit = AshfallUiHelpers.MakeMetadata(exp.phase == (int)ExpeditionPhase.Outbound
-                            ? "In transit toward objective..."
-                            : "Returning to shelter with salvage...");
+                            ? AshfallLocalization.Tr("ui.expedition.transit_outbound", "In transit toward objective...")
+                            : AshfallLocalization.Tr("ui.expedition.transit_inbound", "Returning to shelter with salvage..."));
                         actionRow.AddChild(lblTransit);
                     }
 
@@ -573,7 +688,8 @@ namespace AtomicWar.GodotApp.UI
             }
 
             RebuildDispatchSelectors();
-            UpdateEstimateLine(livingSurvivors.Count > 0 ? livingSurvivors[0] : null);
+            string? chosen = ChosenSurvivor(livingSurvivors);
+            UpdateEstimateLine(chosen);
 
             foreach (var def in _expeditionHost.Definitions)
             {
@@ -586,13 +702,18 @@ namespace AtomicWar.GodotApp.UI
                 title.SizeFlagsHorizontal = SizeFlags.ExpandFill;
                 row.AddChild(title);
 
-                var danger = AshfallUiHelpers.MakeMono($"DANGER: LVL {def.dangerLevel} · DISTANCE: {def.distanceTicks} LEGS");
+                var danger = AshfallUiHelpers.MakeMono(TrFmt(
+                    "ui.expedition.danger", "DANGER: LVL {0} · DISTANCE: {1} LEGS",
+                    def.dangerLevel, def.distanceTicks));
                 danger.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(def.dangerLevel >= 3 ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Warm));
                 row.AddChild(danger);
                 card.AddChild(row);
 
                 var lootCategories = string.Join(", ", def.lootCategories);
-                var desc = AshfallUiHelpers.MakeBody($"Potential Salvage: {lootCategories} · Encounter Risk: {def.encounterChancePerTick:P0}/hr");
+                var desc = AshfallUiHelpers.MakeBody(TrFmt(
+                    "ui.expedition.target_line",
+                    "Potential Salvage: {0} · Encounter Risk: {1}/hr",
+                    lootCategories, def.encounterChancePerTick.ToString("P0")));
                 desc.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
                 card.AddChild(desc);
 
@@ -610,11 +731,11 @@ namespace AtomicWar.GodotApp.UI
 
                 string defId = def.id;
                 bool blocked = _expeditionHost.IsLocationBlocked(defId);
-                RoleFitnessVerdict? dispatchRoleFitness = livingSurvivors.Count > 0
-                    ? _expeditionHost.GetExpeditionFitness(livingSurvivors[0])
+                RoleFitnessVerdict? dispatchRoleFitness = chosen != null
+                    ? _expeditionHost.GetExpeditionFitness(chosen)
                     : null;
-                FitnessVerdict? dispatchFitness = livingSurvivors.Count > 0
-                    ? _expeditionHost.GetSurvivorFitness(livingSurvivors[0])
+                FitnessVerdict? dispatchFitness = chosen != null
+                    ? _expeditionHost.GetSurvivorFitness(chosen)
                     : null;
                 bool fitnessBlocked = dispatchRoleFitness != null
                     ? !dispatchRoleFitness.Allowed
@@ -626,10 +747,10 @@ namespace AtomicWar.GodotApp.UI
                     float maximumHours = dispatchRoleFitness?.RecommendedMaxHours
                         ?? dispatchFitness!.RecommendedMaxHours;
                     string fitnessState = fitnessBlocked
-                        ? "FITNESS: UNFIT — dispatch blocked"
+                        ? AshfallLocalization.Tr("ui.expedition.fitness.unfit", "FITNESS: UNFIT — dispatch blocked")
                         : level == FitnessLevel.Fit
-                        ? "FITNESS: FIT"
-                        : $"FITNESS: IMPAIRED — allowed, max {maximumHours:0}h";
+                        ? AshfallLocalization.Tr("ui.expedition.fitness.fit", "FITNESS: FIT")
+                        : TrFmt("ui.expedition.fitness.impaired", "FITNESS: IMPAIRED — allowed, max {0:0}h", maximumHours);
                     var fitnessLabel = AshfallUiHelpers.MakeMono(fitnessState);
                     fitnessLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(
                         fitnessBlocked ? Ashfall.Core.UI.Theme.Critical :
@@ -644,7 +765,8 @@ namespace AtomicWar.GodotApp.UI
                     if (reasons != null && reasons.Count > 0)
                     {
                         var reasonLabel = AshfallUiHelpers.MakeSmall(
-                            "Fitness factors: " + string.Join(", ", reasons).Replace('_', ' '), autowrap: true);
+                            TrFmt("ui.expedition.fitness_factors", "Fitness factors: {0}",
+                                string.Join(", ", reasons).Replace('_', ' ')), autowrap: true);
                         reasonLabel.SizeFlagsHorizontal = SizeFlags.ExpandFill;
                         card.AddChild(reasonLabel);
                     }
@@ -666,36 +788,39 @@ namespace AtomicWar.GodotApp.UI
                     dispatchRow.AddChild(gateLabel);
                 }
 
-                var btnEstimate = AshfallUiHelpers.MakeButton("ESTIMATE", () =>
+                var btnEstimate = AshfallUiHelpers.MakeButton(
+                    AshfallLocalization.Tr("ui.expedition.estimate", "ESTIMATE"), () =>
                 {
                     // Focus the risk estimate on this card's destination; the
                     // global estimate line otherwise describes a default target.
                     _selectedTargetId = defId;
-                    UpdateEstimateLine(livingSurvivors.Count > 0 ? livingSurvivors[0] : null);
+                    UpdateEstimateLine(chosen);
                 });
                 btnEstimate.TooltipText = AshfallLocalization.Tr("ui.expedition.estimate_tooltip", "Show fuel, dose, breakdown, and encounter estimates for this destination.");
                 btnEstimate.CustomMinimumSize = new Vector2(110, 32);
                 dispatchRow.AddChild(btnEstimate);
 
-                var btnDispatchStealth = AshfallUiHelpers.MakeButton("DISPATCH STEALTH SORTIE", () =>
+                var btnDispatchStealth = AshfallUiHelpers.MakeButton(
+                    AshfallLocalization.Tr("ui.expedition.dispatch_stealth", "DISPATCH STEALTH SORTIE"), () =>
                 {
-                    if (livingSurvivors.Count > 0)
+                    if (chosen != null)
                         DispatchWithFitnessCheck(
-                            livingSurvivors[0], defId, ExpeditionStance.Stealth, 1, dispatchRoleFitness);
+                            chosen, defId, ExpeditionStance.Stealth, 1, dispatchRoleFitness);
                 });
-                btnDispatchStealth.Disabled = blocked || fitnessBlocked || livingSurvivors.Count == 0 || _expeditionHost.Engine.Active.ContainsKey(livingSurvivors[0]);
+                btnDispatchStealth.Disabled = blocked || fitnessBlocked || chosen == null || _expeditionHost.Engine.Active.ContainsKey(chosen);
                 if (blocked && blockReason != null)
                     btnDispatchStealth.TooltipText = $"Dispatch blocked: {blockReason}";
                 btnDispatchStealth.CustomMinimumSize = new Vector2(200, 32);
                 dispatchRow.AddChild(btnDispatchStealth);
 
-                var btnDispatchSpeed = AshfallUiHelpers.MakeButton("DISPATCH SPEED SORTIE (1.5x)", () =>
+                var btnDispatchSpeed = AshfallUiHelpers.MakeButton(
+                    AshfallLocalization.Tr("ui.expedition.dispatch_speed", "DISPATCH SPEED SORTIE (1.5x)"), () =>
                 {
-                    if (livingSurvivors.Count > 0)
+                    if (chosen != null)
                         DispatchWithFitnessCheck(
-                            livingSurvivors[0], defId, ExpeditionStance.Speed, 1, dispatchRoleFitness);
+                            chosen, defId, ExpeditionStance.Speed, 1, dispatchRoleFitness);
                 });
-                btnDispatchSpeed.Disabled = blocked || fitnessBlocked || livingSurvivors.Count == 0 || _expeditionHost.Engine.Active.ContainsKey(livingSurvivors[0]);
+                btnDispatchSpeed.Disabled = blocked || fitnessBlocked || chosen == null || _expeditionHost.Engine.Active.ContainsKey(chosen);
                 if (blocked && blockReason != null)
                     btnDispatchSpeed.TooltipText = $"Dispatch blocked: {blockReason}";
                 btnDispatchSpeed.CustomMinimumSize = new Vector2(220, 32);
@@ -721,10 +846,15 @@ namespace AtomicWar.GodotApp.UI
                 return string.IsNullOrEmpty(flavor) ? null : TruncateFlavor(flavor);
             }
 
-            string owner = rec.currentOwner == "none" ? "unclaimed" : rec.currentOwner.Replace("faction_", "");
-            string state = rec.isRuined ? " · RUINED" : string.Empty;
-            string threats = rec.activeThreats.Count > 0 ? $" · {rec.activeThreats.Count} threat(s)" : string.Empty;
-            string line = $"WORLD: {owner} · {rec.lootDepletionFactor:P0} spoilage{state}{threats}";
+            string owner = rec.currentOwner == "none"
+                ? AshfallLocalization.Tr("ui.expedition.world_unclaimed", "unclaimed")
+                : rec.currentOwner.Replace("faction_", "");
+            string state = rec.isRuined ? AshfallLocalization.Tr("ui.expedition.world_ruined", " · RUINED") : string.Empty;
+            string threats = rec.activeThreats.Count > 0
+                ? AshfallLocalization.TrFormat("ui.expedition.world_threats", rec.activeThreats.Count)
+                : string.Empty;
+            string line = TrFmt("ui.expedition.world_line", "WORLD: {0} · {1} spoilage{2}{3}",
+                owner, rec.lootDepletionFactor.ToString("P0"), state, threats);
             if (!string.IsNullOrEmpty(flavor))
                 line += "\n" + TruncateFlavor(flavor);
             return line;
@@ -746,6 +876,30 @@ namespace AtomicWar.GodotApp.UI
         private void RebuildDispatchSelectors()
         {
             if (_expeditionHost == null) return;
+
+            // P105 follow-up — the survivor selector lists living, non-active
+            // survivors so the checklist reflects who is actually going.
+            if (_survivorSelect != null)
+            {
+                string previous = SelectedSurvivorId;
+                _survivorSelect.Clear();
+                _survivorIds.Clear();
+                if (_survivorsHost != null)
+                {
+                    foreach (var s in _survivorsHost.RosterState)
+                    {
+                        if (s == null || !s.IsAliveState) continue;
+                        if (_expeditionHost.Engine.Active.ContainsKey(s.Id)) continue;
+                        _survivorIds.Add(s.Id);
+                        _survivorSelect.AddItem(FormatSurvivorName(s.Id), _survivorSelect.ItemCount);
+                    }
+                }
+                if (_survivorSelect.ItemCount > 0)
+                {
+                    int restoreIdx = _survivorIds.IndexOf(previous);
+                    _survivorSelect.Select(restoreIdx >= 0 ? restoreIdx : 0);
+                }
+            }
 
             if (_vehicleSelect != null)
             {
@@ -803,10 +957,10 @@ namespace AtomicWar.GodotApp.UI
             float jam = Ashfall.Core.Combat.WeaponEquipmentBridge.JamRisk(_equipment, weaponInstance);
 
             var preview = _expeditionHost.EstimateExpedition(def.id, ExpeditionStance.Stealth, SelectedVehicleId, readiness, jam,
-                survivorId: survivorId ?? _selectedSurvivorId);
+                survivorId: survivorId ?? SelectedSurvivorId);
             if (preview == null)
             {
-                _estimateLabel.Text = "NO ROUTE DATA.";
+                _estimateLabel.Text = AshfallLocalization.Tr("ui.expedition.no_route", "NO ROUTE DATA.");
                 return;
             }
 
@@ -836,6 +990,23 @@ namespace AtomicWar.GodotApp.UI
             {
                 _estimateLabel.Text +=
                     $" · GEAR FAILS MID-ROUTE (~{est.protectiveLifeHours:F0} h < {est.projectedTripHours:F0} h trip)";
+            }
+
+            // P105/P106 — advisory prep projection over the live shelter inventory.
+            var prepLabel = _prepLabel;
+            if (prepLabel != null)
+            {
+                int Count(string itemId) => _inventoryHost?.Inventory?.CountById(itemId) ?? 0;
+                var prep = ExpeditionPrepPlanner.Build(
+                    def, est, Count,
+                    weaponReady: readiness > 0f,
+                    hasLight: Count(ExpeditionPrepPlanner.LightItemId) > 0);
+                string overnight = prep.OvernightLine();
+                prepLabel.Text = string.IsNullOrEmpty(overnight)
+                    ? prep.Summary()
+                    : prep.Summary() + "\n" + overnight;
+                prepLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(
+                    prep.Ready ? Ashfall.Core.UI.Theme.Lethe : Ashfall.Core.UI.Theme.LetheAmber));
             }
         }
 
@@ -882,7 +1053,8 @@ namespace AtomicWar.GodotApp.UI
                 string pendingId = p.encounterId;
                 string pendingLocation = p.locationId;
                 int pendingLeg = p.legIndex;
-                var btnResolve = AshfallUiHelpers.MakeButton("RESOLVE", () =>
+                var btnResolve = AshfallUiHelpers.MakeButton(
+                    AshfallLocalization.Tr("ui.expedition.resolve", "RESOLVE"), () =>
                 {
                     OpenPendingEncounter(pendingId, pendingLocation, pendingLeg);
                 });
@@ -897,7 +1069,8 @@ namespace AtomicWar.GodotApp.UI
             }
 
             var footer = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
-            var btnDismissAll = AshfallUiHelpers.MakeButton("DISMISS ALL", () =>
+            var btnDismissAll = AshfallUiHelpers.MakeButton(
+                AshfallLocalization.Tr("ui.expedition.dismiss_all", "DISMISS ALL"), () =>
             {
                 int count = _expeditionHost.Pending?.Count ?? 0;
                 _expeditionHost.ClearAllPending();
@@ -1056,7 +1229,7 @@ namespace AtomicWar.GodotApp.UI
                 {
                     _encounterContext.Visible = true;
                     _encounterFactionEmblem.Visible = false;
-                    _encounterContext.Text = "DISCOVERY · MICRO-LOCATION";
+                    _encounterContext.Text = AshfallLocalization.Tr("ui.expedition.micro_location", "DISCOVERY · MICRO-LOCATION");
                 }
                 else
                 {
@@ -1076,7 +1249,7 @@ namespace AtomicWar.GodotApp.UI
                 }
                 else
                 {
-                    string phase = ((ExpeditionPhase)_lastSurfaced!.trigger.phase).ToString().ToUpperInvariant();
+                    string phase = ExpeditionPhaseText.Label((ExpeditionPhase)_lastSurfaced!.trigger.phase);
                     string categoryLine = _lastSurfaced!.is_micro_location
                         ? "DISCOVERY · MICRO-LOCATION"
                         : $"{_lastSurfaced!.category} · {phase} · encounter #{_lastSurfaced!.trigger.encounterCount}";
@@ -1119,7 +1292,8 @@ namespace AtomicWar.GodotApp.UI
 
             _choicesContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
             _choicesContainer.AddChild(AshfallUiHelpers.MakeSeparator());
-            _choicesContainer.AddChild(AshfallUiHelpers.MakeSectionHeader("TACTICAL APPROACH SELECTION"));
+            _choicesContainer.AddChild(AshfallUiHelpers.MakeSectionHeader(
+                AshfallLocalization.Tr("ui.expedition.tactical_header", "TACTICAL APPROACH SELECTION")));
 
             var choiceScroll = new ScrollContainer
             {
@@ -1172,7 +1346,8 @@ namespace AtomicWar.GodotApp.UI
                 {
                     int held = inv?.CountById(c.requiredItemId) ?? 0;
                     string itemName = _expeditionHost?.Items?.Get(c.requiredItemId)?.displayName ?? HumanizeDisplayToken(c.requiredItemId);
-                    requirementText = $"Req: {itemName} x{c.requiredItemQuantity} ({held}/{c.requiredItemQuantity})";
+                    requirementText = TrFmt("ui.expedition.badge.req", "Req: {0} x{1} ({2}/{3})",
+                        itemName, c.requiredItemQuantity, held, c.requiredItemQuantity);
                     if (!authoritativePatrol && held < c.requiredItemQuantity)
                     {
                         canAfford = false;
@@ -1208,7 +1383,7 @@ namespace AtomicWar.GodotApp.UI
                     }
                     if (costParts.Count > 0)
                     {
-                        costText = "Cost: " + string.Join(", ", costParts);
+                        costText = TrFmt("ui.expedition.badge.cost_list", "Cost: {0}", string.Join(", ", costParts));
                     }
                 }
 
@@ -1234,7 +1409,7 @@ namespace AtomicWar.GodotApp.UI
                 if (!string.IsNullOrWhiteSpace(c.grantItemId) && c.grantItemQuantity > 0)
                 {
                     string grantName = _expeditionHost?.Items?.Get(c.grantItemId)?.displayName ?? HumanizeDisplayToken(c.grantItemId);
-                    var rewardLabel = AshfallUiHelpers.MakeSmall($"Gain: {grantName} ×{c.grantItemQuantity}");
+                    var rewardLabel = AshfallUiHelpers.MakeSmall(TrFmt("ui.expedition.badge.gain", "Gain: {0} ×{1}", grantName, c.grantItemQuantity));
                     rewardLabel.Modulate = AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Lethe);
                     choiceCard.AddChild(rewardLabel);
                 }
@@ -1244,7 +1419,8 @@ namespace AtomicWar.GodotApp.UI
                     int neededOffering = -c.grantItemQuantity;
                     int heldOffering = inv?.CountById(c.grantItemId) ?? 0;
                     string offeringName = _expeditionHost?.Items?.Get(c.grantItemId)?.displayName ?? HumanizeDisplayToken(c.grantItemId);
-                    var offeringLabel = AshfallUiHelpers.MakeSmall($"Cost: {offeringName} ×{neededOffering} ({heldOffering}/{neededOffering})");
+                    var offeringLabel = AshfallUiHelpers.MakeSmall(TrFmt("ui.expedition.badge.cost", "Cost: {0} ×{1} ({2}/{3})",
+                        offeringName, neededOffering, heldOffering, neededOffering));
                     offeringLabel.Modulate = heldOffering >= neededOffering
                         ? AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.LetheAmber)
                         : AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical);
@@ -1259,7 +1435,7 @@ namespace AtomicWar.GodotApp.UI
                 if (!string.IsNullOrWhiteSpace(c.journalUnlockId))
                 {
                     string journalName = HumanizeDisplayToken(c.journalUnlockId);
-                    var journalLabel = AshfallUiHelpers.MakeSmall($"[CODEX] Clue Unlocked: {journalName}");
+                    var journalLabel = AshfallUiHelpers.MakeSmall(TrFmt("ui.expedition.badge.codex", "[CODEX] Clue Unlocked: {0}", journalName));
                     journalLabel.Modulate = AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Cyan);
                     choiceCard.AddChild(journalLabel);
                 }
@@ -1268,7 +1444,7 @@ namespace AtomicWar.GodotApp.UI
                 if (!string.IsNullOrWhiteSpace(c.discoverLocationId))
                 {
                     string locName = _expeditionHost?.Definitions?.Find(d => d.id == c.discoverLocationId)?.displayName ?? HumanizeDisplayToken(c.discoverLocationId);
-                    var mapLabel = AshfallUiHelpers.MakeSmall($"[MAP] Discovers: {locName}");
+                    var mapLabel = AshfallUiHelpers.MakeSmall(TrFmt("ui.expedition.badge.map", "[MAP] Discovers: {0}", locName));
                     mapLabel.Modulate = AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Cyan);
                     choiceCard.AddChild(mapLabel);
                 }
@@ -1276,7 +1452,8 @@ namespace AtomicWar.GodotApp.UI
                 // One-time badge: [ONE-TIME] (Theme.LetheAmber)
                 if (c.depletesOnResolve)
                 {
-                    var oneTimeLabel = AshfallUiHelpers.MakeSmall("[ONE-TIME]");
+                    var oneTimeLabel = AshfallUiHelpers.MakeSmall(
+                        AshfallLocalization.Tr("ui.expedition.one_time", "[ONE-TIME]"));
                     oneTimeLabel.Modulate = AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.LetheAmber);
                     choiceCard.AddChild(oneTimeLabel);
                 }
@@ -1285,8 +1462,9 @@ namespace AtomicWar.GodotApp.UI
                 {
                     string reason = authoritativePatrol
                         ? FormatUnavailableReason(c.disabledReason)
-                        : "Cost or requirement unavailable";
-                    var unavailable = AshfallUiHelpers.MakeSmall($"UNAVAILABLE — {reason}", autowrap: true);
+                        : AshfallLocalization.Tr("ui.expedition.badge.cost_unavailable", "Cost or requirement unavailable");
+                    var unavailable = AshfallUiHelpers.MakeSmall(
+                        TrFmt("ui.expedition.badge.unavailable", "UNAVAILABLE — {0}", reason), autowrap: true);
                     unavailable.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical));
                     choiceCard.AddChild(unavailable);
                 }
@@ -1436,11 +1614,13 @@ namespace AtomicWar.GodotApp.UI
             var btnRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
             btnRow.Alignment = BoxContainer.AlignmentMode.Center;
 
-            _encounterBtnOk = AshfallUiHelpers.MakeButton("OK", DismissEncounter, false);
+            _encounterBtnOk = AshfallUiHelpers.MakeButton(
+                AshfallLocalization.Tr("ui.common.ok", "OK"), DismissEncounter, false);
             _encounterBtnOk.CustomMinimumSize = new Vector2(140, 36);
             btnRow.AddChild(_encounterBtnOk);
 
-            var btnLater = AshfallUiHelpers.MakeButton("DECIDE LATER", DeferEncounter, false);
+            var btnLater = AshfallUiHelpers.MakeButton(
+                AshfallLocalization.Tr("ui.expedition.decide_later", "DECIDE LATER"), DeferEncounter, false);
             btnLater.CustomMinimumSize = new Vector2(160, 36);
             btnRow.AddChild(btnLater);
 
@@ -1452,7 +1632,7 @@ namespace AtomicWar.GodotApp.UI
             BuildAutoplayBanner();
             if (_encounterBanner == null || _encounterBannerLabel == null) return;
 
-            string phase = ((ExpeditionPhase)surfaced.trigger.phase).ToString().ToUpperInvariant();
+            string phase = ExpeditionPhaseText.Label((ExpeditionPhase)surfaced.trigger.phase);
             _encounterBannerLabel.Text = surfaced.resolved_at_lead == false
                 ? $"[!] ENCOUNTER — {FormatSurvivorName(surfaced.trigger.survivorId)} at {surfaced.trigger.displayName} [{phase}] # {surfaced.trigger.encounterCount}"
                 : $"[!] {surfaced.title} — {FormatSurvivorName(surfaced.trigger.survivorId)} [{phase}] # {surfaced.trigger.encounterCount}";

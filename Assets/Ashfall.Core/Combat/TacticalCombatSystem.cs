@@ -56,6 +56,26 @@ namespace Ashfall.Core.Combat
         /// </summary>
         public Func<string, (float accuracy, float damage)>? PerformanceLookup { get; set; }
 
+        /// <summary>
+        /// T32 — optional difficulty hook supplying the campaign's
+        /// enemy_damage_mult. Null (or out of the validated [0.25, 2.5] band)
+        /// means the legacy neutral 1.0. Multiplies every enemy-dealt damage
+        /// figure; player-side damage is never scaled by this hook.
+        /// </summary>
+        public Func<float>? EnemyDamageMultLookup { get; set; }
+
+        /// <summary>Resolved enemy-damage scale for the current call (clamped, neutral by default).</summary>
+        private float EnemyDamageScale
+        {
+            get
+            {
+                if (EnemyDamageMultLookup == null) return 1f;
+                float v = EnemyDamageMultLookup();
+                if (float.IsNaN(v) || float.IsInfinity(v)) return 1f;
+                return Math.Clamp(v, 0.25f, 2.5f);
+            }
+        }
+
         public TacticalCombatSystem(CombatState? state = null, CombatHostPorts? ports = null)
         {
             if (state != null) _state = state;

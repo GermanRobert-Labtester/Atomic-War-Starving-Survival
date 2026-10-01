@@ -27,6 +27,7 @@ import time
 import argparse
 import pathlib
 import subprocess
+import tempfile
 from datetime import datetime, timezone
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent.parent
@@ -134,6 +135,83 @@ def list_gates(manifest):
     print(f"=================================================================================\n")
 
 
+# Plan VIII · Task 24.1 — the generated inventory is a deterministic projection of
+# the manifest so `gate_inventory_drift` can fail closed when prose drifts.
+INVENTORY_TIER_CONTRACT = (
+    "## Tier contract\n"
+    "\n"
+    "- **fast** — pre-merge standard: build + unit suite + data integrity + bridge + asset registry + drift guards + case alias guard + save/failure UX smoke. Target < 10 min on a clean machine.\n"
+    "- **full** — shippable standard: everything in fast plus runtime-scale performance and `export_parity` (exported-build packaged-data parity; requires a fresh `scripts/ci/export-build.sh` artifact — on runners without export templates, run the export on a capable machine and verify the artifact, per docs/RELEASE_EXPORT.md).\n"
+    "- **performance** — long runtime-scale runs; never hides release requirements.\n"
+)
+
+
+def render_inventory(manifest):
+    """Render docs/ci/GATE_INVENTORY.md deterministically from the manifest."""
+    gates = manifest.get("gates", [])
+    fast = sum(1 for g in gates if g.get("classification") == "fast")
+    out = []
+    out.append("# CI Gate Inventory (Plan VIII · Task 24.1)")
+    out.append("")
+    out.append(
+        "Generated from `docs/ci/CI_GATE_MANIFEST.json` — "
+        f"{len(gates)} gates, {fast} fast. Regenerate with "
+        "`python3 scripts/ci/run-gates.py --write-inventory docs/ci/GATE_INVENTORY.md`. "
+        "The manifest is the single authority: add or change gates THERE, never in prose only."
+    )
+    out.append("")
+    out.append(
+        "Runtimes below are budgeted timeouts (enforced ceiling), not measured durations; "
+        "measured durations land in every `--report-json` run (Task 24.10 budgets)."
+    )
+    out.append("")
+    out.append("| Tier | Gate | Category | Timeout ceiling | Depends on |")
+    out.append("|---|---|---|---|---|")
+    for g in gates:
+        deps = ", ".join(g.get("depends_on", []) or []) or "—"
+        out.append(
+            f"| {g.get('classification', 'fast')} | `{g.get('gate_id', 'unknown')}` | "
+            f"{g.get('category', 'General')} | {g.get('timeout_seconds', 30)}s | {deps} |"
+        )
+    out.append("")
+    out.append(INVENTORY_TIER_CONTRACT.rstrip("\n"))
+    out.append("")
+    return "\n".join(out)
+
+
+def check_inventory(manifest, inventory_path):
+    expected = render_inventory(manifest)
+
+    def matches(path):
+        p = pathlib.Path(path)
+        actual = p.read_text(encoding="utf-8") if p.exists() else ""
+        return actual == expected
+
+    if matches(inventory_path):
+        # F10 — negative self-check: a mutated inventory must fail, so the
+        # drift gate can never become vacuously green.
+        mutated = expected.replace("| fast |", "| full |", 1)
+        if mutated == expected:
+            mutated = expected + "\n<!-- mutation -->\n"
+        with tempfile.NamedTemporaryFile("w", suffix=".md", delete=False, encoding="utf-8") as tmp:
+            tmp.write(mutated)
+            tmp_path = tmp.name
+        try:
+            if matches(tmp_path):
+                print("GATE_INVENTORY FAIL: self-check — a mutated inventory unexpectedly matched", file=sys.stderr)
+                return 1
+        finally:
+            os.unlink(tmp_path)
+        print("GATE_INVENTORY PASS")
+        return 0
+    print(
+        f"GATE_INVENTORY FAIL: {inventory_path} is out of sync with docs/ci/CI_GATE_MANIFEST.json",
+        file=sys.stderr,
+    )
+    print("Run: python3 scripts/ci/run-gates.py --write-inventory docs/ci/GATE_INVENTORY.md", file=sys.stderr)
+    return 1
+
+
 def write_failure_artifact(artifact_path, failed_gates, total_gates, start_time, end_time):
     artifact_path.parent.mkdir(parents=True, exist_ok=True)
     duration = end_time - start_time
@@ -172,6 +250,9 @@ def write_failure_artifact(artifact_path, failed_gates, total_gates, start_time,
         lines.append(f"### `{gid}` — {name}")
         lines.append(f"**Command:** `{cmd}`  ")
         lines.append(f"**Reason:** {g['error_reason']}  ")
+        hint = GATE_REMEDIATION.get(gid)
+        if hint:
+            lines.append(f"**Remediation:** `{hint}`  ")
         lines.append("")
         lines.append("```text")
         # Tail last 60 lines
@@ -258,6 +339,73 @@ def validate_dependencies(all_gates):
     return problems
 
 
+# F12/G06 — actionable remediation for gates most likely to be misread.
+GATE_REMEDIATION = {
+    "whitespace_hygiene": "bash scripts/ci/no-whitespace-churn.sh",
+    "json_schema_policy": "python3 scripts/ci/json-schema-policy-gate.py",
+    "build_core_tests": "dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo",
+    "test_core_suite": "dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo",
+    "build_godot_host": "dotnet build Ashfall.csproj --nologo",
+    "data_integrity": "godot --headless --path . -- --data-integrity-selftest",
+    "triad_drift": "bash scripts/ci/triad-drift-gate.sh",
+    "cli_catalog_drift": "bash scripts/ci/generate-cli-catalog.sh",
+    "save_store_matrix_drift": "bash scripts/ci/generate-save-store-matrix.sh",
+    "architecture_map_drift": "python3 scripts/ci/generate-architecture-map.py",
+    "catalog_registry_drift": "python3 scripts/ci/generate-catalog-registry.py",
+    "docs_index_drift": "python3 scripts/ci/generate-docs-index.py",
+    "forbidden_core_apis": "bash scripts/ci/forbidden-api-gate.sh",
+    "catch_policy_lint": "bash scripts/ci/catch-policy-gate.sh",
+    "persistent_filename_registry": "bash scripts/ci/persistent-filename-gate.sh",
+    "central_package_management": "bash scripts/ci/nuget-dependency-gate.sh",
+    "compiler_warning_baseline": "bash scripts/ci/warning-baseline-gate.sh",
+    "release_workflow_parity": "go run -C tools/gotools ./cmd/releasepolicy --root ../.. --out ../../build/reports/monitoring/release-policy.json",
+    "gate_inventory_drift": "python3 scripts/ci/run-gates.py --write-inventory docs/ci/GATE_INVENTORY.md",
+    "catalog_audit": "go run -C tools/gotools ./cmd/ashfall-dev audit-catalogs --root ../.. --json",
+    "gotools_test": "go test -C tools/gotools ./...",
+    "content_certification": "bash scripts/ci/run-godot-bounded.sh --path . -- --content-certification-selftest",
+    "content_utilization": "bash scripts/ci/run-godot-bounded.sh --path . -- --content-utilization-selftest",
+}
+
+# G07 — critical gates whose tooling has no stable output token (exit code is the
+# contract). Shrink-only: a NEW critical gate must declare an expected_summary.
+KNOWN_EMPTY_SUMMARY_CRITICAL = {
+    "build_core_tests",
+    "build_godot_host",
+    "godot_import",
+    "catalog_registry_drift",
+}
+
+
+def validate_critical_summaries(manifest):
+    problems = []
+    for g in manifest.get("gates", []):
+        if not g.get("critical"):
+            continue
+        if (g.get("expected_summary") or "").strip():
+            continue
+        if g.get("gate_id") not in KNOWN_EMPTY_SUMMARY_CRITICAL:
+            problems.append(
+                f"critical gate '{g.get('gate_id')}' declares no expected_summary token "
+                f"(add one, or add it to KNOWN_EMPTY_SUMMARY_CRITICAL with a reason)"
+            )
+    return problems
+
+
+def validate_manifest_counts(manifest):
+    """F08 — the header count fields must match the gates array."""
+    problems = []
+    gates = manifest.get("gates", [])
+    actual_total = len(gates)
+    actual_fast = sum(1 for g in gates if g.get("classification") == "fast")
+    total = manifest.get("total_gates")
+    fast = manifest.get("fast_tier_count")
+    if total != actual_total:
+        problems.append(f"total_gates is {total} but the manifest declares {actual_total} gates")
+    if fast != actual_fast:
+        problems.append(f"fast_tier_count is {fast} but {actual_fast} gates are classified 'fast'")
+    return problems
+
+
 def main():
     parser = argparse.ArgumentParser(description="Canonical ASHFALL Gate Runner")
     parser.add_argument("--tier", choices=["fast", "full", "performance", "release", "all"], default="fast",
@@ -276,6 +424,12 @@ def main():
                         help="Do not stop on first failure; run remaining gates")
     parser.add_argument("--check-only", action="store_true",
                         help="Validate gate manifest consistency and exit")
+    parser.add_argument("--write-inventory", type=str, default=None,
+                        help="Render the manifest into a GATE_INVENTORY.md path and exit")
+    parser.add_argument("--check-inventory", type=str, default=None,
+                        help="Fail if the GATE_INVENTORY.md path does not match the manifest")
+    parser.add_argument("--explain", type=str, default=None,
+                        help="Print one gate's command/timeout/deps/classification and exit")
 
     args = parser.parse_args()
 
@@ -284,6 +438,30 @@ def main():
 
     if args.list:
         list_gates(manifest)
+        return 0
+
+    if args.write_inventory:
+        pathlib.Path(args.write_inventory).write_text(render_inventory(manifest), encoding="utf-8")
+        print(f"GATE_INVENTORY written: {args.write_inventory}")
+        return 0
+
+    if args.check_inventory:
+        return check_inventory(manifest, args.check_inventory)
+
+    if args.explain:
+        gate = next((g for g in manifest.get("gates", []) if g.get("gate_id") == args.explain), None)
+        if gate is None:
+            print(f"❌ Unknown gate ID: {args.explain}", file=sys.stderr)
+            return 1
+        print(f"gate_id:          {gate.get('gate_id')}")
+        print(f"name:             {gate.get('name')}")
+        print(f"category:         {gate.get('category')}")
+        print(f"classification:   {gate.get('classification')}")
+        print(f"timeout_seconds:  {gate.get('timeout_seconds')}")
+        print(f"critical:         {gate.get('critical')}")
+        print(f"expected_summary: {gate.get('expected_summary')!r}")
+        print(f"depends_on:       {', '.join(gate.get('depends_on', []) or []) or '(none)'}")
+        print(f"command:          {gate.get('command')}")
         return 0
 
     # Task 24.7 — quarantine policy. Policy violations are fatal: an expired
@@ -330,6 +508,18 @@ def main():
         print(f"[Prerequisites] Adding {len(added)} required gate(s): {', '.join(added)}")
 
     if args.check_only:
+        count_problems = validate_manifest_counts(manifest)
+        if count_problems:
+            print("❌ Error: gate manifest count problems:", file=sys.stderr)
+            for p in count_problems:
+                print(f"   - {p}", file=sys.stderr)
+            return 1
+        summary_problems = validate_critical_summaries(manifest)
+        if summary_problems:
+            print("❌ Error: critical gate summary problems:", file=sys.stderr)
+            for p in summary_problems:
+                print(f"   - {p}", file=sys.stderr)
+            return 1
         print(f"✅ Gate manifest valid: {len(all_gates)} total gates, "
               f"{len(gates_to_run)} in tier '{args.tier}', dependencies resolve cleanly.")
         return 0

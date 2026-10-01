@@ -173,6 +173,11 @@ namespace Ashfall.Core.Difficulty
                     _state.CustomScalars.hostile_encounter_mult = clamped;
                     updated = true;
                     break;
+                case "enemy_damage_mult":
+                case "enemy":
+                    _state.CustomScalars.enemy_damage_mult = clamped;
+                    updated = true;
+                    break;
                 case "market_price_mult":
                 case "market":
                 case "economy":
@@ -247,6 +252,7 @@ namespace Ashfall.Core.Difficulty
             if (scalars.radiation_gain_mult != 1f) customized++;
             if (scalars.disease_onset_mult != 1f) customized++;
             if (scalars.hostile_encounter_mult != 1f) customized++;
+            if (scalars.enemy_damage_mult != 1f) customized++;
             if (scalars.market_price_mult != 1f) customized++;
             if (scalars.equipment_decay_mult != 1f) customized++;
             if (scalars.crisis_deadline_mult != 1f) customized++;
@@ -287,6 +293,11 @@ namespace Ashfall.Core.Difficulty
             _state.IsLocked = saved.IsLocked;
             _state.IsCustom = saved.IsCustom;
             _state.CustomScalars = saved.CustomScalars?.Clone() ?? DifficultyScalars.Legacy();
+            // Legacy v1 payloads predate enemy_damage_mult: a missing JSON key
+            // deserializes to 0f, which fails Validate and would crash
+            // GetEffectiveProvider. Normalize the unset scalar to neutral.
+            if (_state.CustomScalars.enemy_damage_mult <= 0f)
+                _state.CustomScalars.enemy_damage_mult = 1f;
         }
     }
 }

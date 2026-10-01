@@ -77,6 +77,15 @@ namespace AtomicWar.GodotApp
         public string LastEvent { get; private set; } = string.Empty;
 
         /// <summary>
+        /// Task 11 — survivors already alerted for crossing the shared radiation
+        /// warn band. Re-armed when their dose falls back below the band so a
+        /// later re-exposure alerts again. This is the single host-side
+        /// radiation warn feed; the player path no longer re-emits it.
+        /// </summary>
+        private readonly System.Collections.Generic.HashSet<string> _radWarnNotified =
+            new System.Collections.Generic.HashSet<string>(StringComparer.Ordinal);
+
+        /// <summary>
         /// Raised when a survivor dies through the needs/radiation survival
         /// loop. Carries the survivor id, the normalized cause, and a detail
         /// string. The host's SurvivorFateSystem is the subscriber — this is
@@ -129,6 +138,48 @@ namespace AtomicWar.GodotApp
             Shelter.UpgradeCeiling("room_radio_tuner", MaterialShieldingSystem.WallMaterial.Concrete);
 
             Needs.OnNeedChanged += (s, kind, v) => RaiseStateChanged();
+            // Dead-event sweep repair (task 5): OnNeedCritical previously had no
+            // subscriber, so a genuine threshold crossing (starvation /
+            // dehydration / hypothermia onset) never produced a host fact. This
+            // records it as the last roster event and refreshes presentation.
+            Needs.OnNeedCritical += (s, kind) =>
+            {
+                string stateValue = s == null
+                    ? kind.ToString()
+                    : kind switch
+                    {
+                        NeedKind.Hunger => s.Hunger.ToString("F0"),
+                        NeedKind.Thirst => s.Thirst.ToString("F0"),
+                        NeedKind.Warmth => s.Warmth.ToString("F0"),
+                        _ => kind.ToString()
+                    };
+                LastEvent = $"{s?.Id}: {kind} critical ({stateValue}).";
+                // T6 — surface the crossing as a visible toast. Per-survivor
+                // dedupe keys keep the alert once-per-crossing and stop the
+                // player path in Main.GameFlow from double-emitting hunger/thirst.
+                string feedbackKey = kind switch
+                {
+                    NeedKind.Hunger => "starvation_imminent",
+                    NeedKind.Thirst => "dehydration_imminent",
+                    NeedKind.Warmth => "hypothermia_risk",
+                    _ => string.Empty
+                };
+                if (feedbackKey.Length > 0)
+                {
+                    // Loop-3 repair: the toast must name the person, not the
+                    // raw stable id. Fall back to the id only when the catalog
+                    // has no definition yet.
+                    string displayName = s == null
+                        ? "A survivor"
+                        : (Roster.FindDefinition(s.Id)?.displayName ?? s.Id);
+                    AtomicWar.GodotApp.UI.FeedbackMessages.Emit(new Ashfall.Core.Feedback.FeedbackEvent(
+                        feedbackKey,
+                        new object[] { displayName },
+                        category: "health_warning",
+                        dedupeKey: $"need_critical_{s?.Id}_{kind}"));
+                }
+                RaiseStateChanged();
+            };
             Needs.OnDied += s =>
             {
                 // Normalize the cause: a 0-HP death while in acute radiation
@@ -154,6 +205,25 @@ namespace AtomicWar.GodotApp
                     LastEvent = $"RADIATION ALERT: {radState.Id} developed chronic illness.";
                     RaiseStateChanged();
                 }
+            };
+
+            // Task 11 — surface the radiation warn-band crossing as a visible
+            // toast from the host that owns the dose state. Deduped per
+            // survivor and re-armed when the dose drops back below the band.
+            Radiation.OnDoseChanged += (radState, dose) =>
+            {
+                if (radState == null || string.IsNullOrEmpty(radState.Id)) return;
+                if (dose < RadiationSystem.WarnThreshold)
+                {
+                    _radWarnNotified.Remove(radState.Id);
+                    return;
+                }
+                if (!_radWarnNotified.Add(radState.Id)) return;
+                AtomicWar.GodotApp.UI.FeedbackMessages.Emit(new Ashfall.Core.Feedback.FeedbackEvent(
+                    "radiation_high",
+                    new object[] { (int)dose },
+                    category: "health_warning",
+                    dedupeKey: $"radiation_warn_{radState.Id}"));
             };
         }
 
@@ -299,6 +369,49 @@ namespace AtomicWar.GodotApp
         {
             return _radStates.TryGetValue(id, out var r) ? r : null;
         }
+
+        // ── Day-over-day need trend (P010) ──────────────────────────────
+        // Transient, presentation-only read model owned by Core
+        // (NeedsDayDeltaTracker). The daily needs owner captures a baseline
+        // immediately before the day's tick; the panels then read the delta
+        // between the live value and that baseline. It is deliberately not
+        // persisted and never mutates needs.
+        private readonly NeedsDayDeltaTracker _needsTrend = new NeedsDayDeltaTracker();
+
+        /// <summary>Day the current baseline was captured for, or -1 when none.</summary>
+        public int NeedsBaselineDay => _needsTrend.BaselineDay;
+
+        /// <summary>
+        /// Days the current needs baseline spans up to <paramref name="day"/>,
+        /// or 0 when no baseline exists. Presentation uses this to annotate a
+        /// skipped/offline gap rather than reading <see cref="NeedsBaselineDay"/>.
+        /// </summary>
+        public int NeedDaySpan(int day) => _needsTrend.DaySpan(day);
+
+        /// <summary>True when at least one survivor has a captured day baseline.</summary>
+        public bool HasNeedsBaseline => _needsTrend.HasBaseline;
+
+        /// <summary>
+        /// Snapshot every registered survivor's needs as the start-of-day
+        /// baseline. Called by the daily needs owner immediately before the
+        /// day's tick. Safe to call repeatedly (a retry re-captures the
+        /// restored pre-day values).
+        /// </summary>
+        public void CaptureNeedsBaseline(int day) => _needsTrend.Capture(day, RosterState);
+
+        /// <summary>
+        /// Day-over-day delta for one need, or false when no baseline exists for
+        /// the survivor/need (just loaded, unregistered, or unsupported kind).
+        /// Positive means the need rose since the baseline was captured.
+        /// </summary>
+        public bool TryGetNeedDayDelta(string survivorId, NeedKind kind, out float delta)
+        {
+            var survivor = Find(survivorId);
+            return _needsTrend.TryGetDelta(survivor!, kind, out delta);
+        }
+
+        /// <summary>Clears the transient trend baseline (restore / fresh session).</summary>
+        private void ClearNeedsBaseline() => _needsTrend.Clear();
 
         private ExposureContext BuildExposure(SurvivorRadState state)
         {
@@ -676,6 +789,9 @@ namespace AtomicWar.GodotApp
         public void RestoreSave(SurvivorsSaveState save)
         {
             if (save == null || save.survivors == null) return;
+            // A loaded campaign has no captured prior-day baseline; the next
+            // daily tick re-captures it. Never carry a previous session's trend.
+            ClearNeedsBaseline();
             var roster = ValidateSaveIdentity(save);
 
             // Remove every old component before dropping host references. Both
@@ -693,6 +809,9 @@ namespace AtomicWar.GodotApp
             Roster.RestoreState(roster);
             RosterState.Clear();
             _radStates.Clear();
+            // Loop-4 hardening — a restored campaign re-arms the radiation warn
+            // toast instead of inheriting the previous session's notified set.
+            _radWarnNotified.Clear();
             var ordered = new System.Collections.Generic.List<SurvivorSliceState>(save.survivors);
             ordered.Sort((a, b) => string.CompareOrdinal(a?.id, b?.id));
             foreach (var slice in ordered)

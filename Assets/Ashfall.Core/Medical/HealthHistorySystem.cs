@@ -377,6 +377,27 @@ namespace Ashfall.Core.Medical
         public IReadOnlyList<HealthEvent> GetSurvivorEvents(string survivorId) =>
             _state.Events.Where(e => string.Equals(e.SurvivorId, survivorId, StringComparison.OrdinalIgnoreCase)).ToList();
 
+        /// <summary>
+        /// Most recent event for a survivor whose type starts with the given
+        /// prefix, or null when none match. One canonical lookup so consumers
+        /// (e.g. the StatusPanel expedition-injury chip) do not each re-roll the
+        /// ordering rule.
+        /// </summary>
+        public HealthEvent? GetLatestEventOfTypePrefix(string survivorId, string typePrefix)
+        {
+            if (string.IsNullOrEmpty(survivorId) || string.IsNullOrEmpty(typePrefix)) return null;
+            HealthEvent? latest = null;
+            for (int i = 0; i < _state.Events.Count; i++)
+            {
+                var e = _state.Events[i];
+                if (e == null) continue;
+                if (!string.Equals(e.SurvivorId, survivorId, StringComparison.OrdinalIgnoreCase)) continue;
+                if (!e.EventType.StartsWith(typePrefix, StringComparison.Ordinal)) continue;
+                if (latest == null || e.EventDay >= latest.EventDay) latest = e;
+            }
+            return latest;
+        }
+
         public IReadOnlyList<VaccinationRecord> GetVaccinations(string survivorId) =>
             _state.Vaccinations.Where(v => string.Equals(v.SurvivorId, survivorId, StringComparison.OrdinalIgnoreCase)).ToList();
 

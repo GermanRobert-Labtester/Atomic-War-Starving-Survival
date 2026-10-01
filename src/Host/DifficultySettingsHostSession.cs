@@ -47,7 +47,7 @@ namespace AtomicWar.GodotApp
     /// </summary>
     public sealed class DifficultySettingsHostSession : HostSessionBase
     {
-        /// <summary>The eight authored scalar lanes, in catalog order, exposed to the settings UI.</summary>
+        /// <summary>The nine authored scalar lanes, in catalog order, exposed to the settings UI.</summary>
         public static readonly string[] ScalarNames =
         {
             "hunger_rate_mult",
@@ -55,6 +55,7 @@ namespace AtomicWar.GodotApp
             "radiation_gain_mult",
             "disease_onset_mult",
             "hostile_encounter_mult",
+            "enemy_damage_mult",
             "market_price_mult",
             "equipment_decay_mult",
             "crisis_deadline_mult"

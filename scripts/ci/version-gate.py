@@ -221,6 +221,44 @@ def run_self_test() -> int:
             failures.append("Test 5: missing project.godot should return None")
         shutil.copy(os.path.join(tmpdir, "project.godot.bak"), os.path.join(tmpdir, "project.godot"))
 
+    # Hotfix iron-rule rehearsal (Plan 48 / C2[21] phase 5 residual): prove the
+    # schema-constant detector PASSES a non-schema change and FAILS a synthetic
+    # schema bump, in a throwaway git repo. This is the non-mutating equivalent
+    # of a dry-run hotfix branch.
+    with tempfile.TemporaryDirectory(prefix="vgate_hotfix_rehearsal_") as repo:
+        def _git(*git_args: str) -> None:
+            subprocess.run(
+                ["git", *git_args], cwd=repo, check=True,
+                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+            )
+
+        _git("init", "-q")
+        _git("config", "user.email", "rehearsal@ashfall.local")
+        _git("config", "user.name", "Ashfall Rehearsal")
+        os.makedirs(os.path.join(repo, "src"), exist_ok=True)
+        store = os.path.join(repo, "src", "Store.cs")
+        with open(store, "w") as f:
+            f.write("public static class Store { public const int SchemaVersion = 1; }\n")
+        _git("add", "-A")
+        _git("commit", "-q", "-m", "base")
+        _git("tag", "v0.0.1")
+
+        # Non-schema change: must be clean.
+        with open(os.path.join(repo, "README.md"), "w") as f:
+            f.write("rehearsal\n")
+        _git("add", "-A")
+        _git("commit", "-q", "-m", "docs-only")
+        if detect_schema_constant_changes(repo, "v0.0.1"):
+            failures.append("Hotfix rehearsal: a non-schema change was wrongly flagged")
+
+        # Schema bump: must be detected.
+        with open(store, "w") as f:
+            f.write("public static class Store { public const int SchemaVersion = 2; }\n")
+        _git("add", "-A")
+        _git("commit", "-q", "-m", "schema-bump")
+        if not detect_schema_constant_changes(repo, "v0.0.1"):
+            failures.append("Hotfix rehearsal: a schema constant bump was not detected")
+
     if failures:
         print("version-gate self-test FAIL:")
         for f in failures:

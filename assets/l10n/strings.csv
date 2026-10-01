@@ -57,7 +57,7 @@ tutorial.inventory.objective,"Equip protection, or use something from stores.",S
 tutorial.day_advance.title,End Day 1,Tag 1 beenden,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
 tutorial.day_advance.objective,Confirm Advance Day. Morning briefing comes with Day 2.,Tag bestätigen. Die Morgenbesprechung kommt mit Tag 2.,Assets/Ashfall.Core/Onboarding/OnboardingJourney.cs
 warning.radiation.acute,ACUTE RADIATION: {0} at {1:F0} mSv (-5 HP/h). Give Rad-Away or iodine.,AKUTE STRAHLUNG: {0} bei {1:F0} mSv (-5 HP/h). Rad-Away oder Jod verabreichen.,Assets/Ashfall.Core/Radiation/RadiationSystem.cs
-warning.radiation.storm,FALLOUT STORM: Outdoor dose is rising. Keep people inside or kit them in hazmat.,FALLOUT-STURM: Die Außendosis steigt. Halte die Menschen drinnen oder rüste sie mit Schutzanzügen aus.,Assets/Ashfall.Core/Weather/WeatherSystem.cs
+warning.radiation.storm,FALLOUT STORM: Outdoor dose is rising. Keep people inside or kit them in hazmat.,FALLOUT-STURM: Die Außendosis steigt. Halte die Menschen drinnen oder rüste sie mit Schutzanzügen aus.,Assets/Ashfall.Core/Localization/LocalizationService.cs
 warning.water.low,WATER LOW: {0:F1} units left (~{1:F1} days). Run filtration or desalination.,WASSER KNAPP: Noch {0:F1} Einheiten (~{1:F1} Tage). Filtration oder Entsalzung betreiben.,Assets/Ashfall.Core/Survivors/NeedsSystem.cs
 warning.food.low,FOOD LOW: {0:F1} units left (~{1:F1} days). Tighten rations or scavenge.,NAHRUNG KNAPP: Noch {0:F1} Einheiten (~{1:F1} Tage). Rationen kürzen oder Vorräte suchen.,Assets/Ashfall.Core/Survivors/NeedsSystem.cs
 warning.power.brownout,POWER DEFICIT: Generator reserve is gone. Filters are offline; indoor contamination is rising.,STROMDEFIZIT: Der Generatorvorrat ist aufgebraucht. Filter sind offline; die Innenkontamination steigt.,Assets/Ashfall.Core/Shelter/PowerGridSystem.cs
@@ -302,6 +302,10 @@ onboarding.hint.duty,Open the Duty Roster and put one survivor on a shift. Nothi
 onboarding.hint.dose,Open the dose ledger before the day ends. The number only moves one way.,Vor Tagesende das Dosisprotokoll öffnen. Die Zahl bewegt sich nur in eine Richtung.,src/UI/OnboardingHintPanel.cs
 onboarding.hint.research,Start an available research node. It appears in the queue.,Einen verfügbaren Forschungsknoten starten. Er erscheint in der Warteschlange.,src/UI/OnboardingHintPanel.cs
 onboarding.hint.expedition,Send a team with the expedition command. They leave the shelter.,Ein Team mit dem Expeditionsbefehl entsenden. Sie verlassen den Bunker.,src/UI/OnboardingHintPanel.cs
+onboarding.action.skip_all,SKIP TUTORIAL,TUTORIAL ÜBERSPRINGEN,src/UI/OnboardingHintPanel.cs
+onboarding.tooltip.skip_all,Mark every remaining tutorial step known. The expedition itself is still yours to run.,Alle verbleibenden Tutorial-Schritte als bekannt markieren. Die Expedition selbst bleibt dir überlassen.,src/UI/OnboardingHintPanel.cs
+onboarding.hud.progress,{0}/{1} · {2},{0}/{1} · {2},src/Main.Onboarding.cs
+onboarding.status.days_on_stage,{0} day(s) on this step,{0} Tag(e) bei diesem Schritt,src/Main.Onboarding.cs
 wildlife.trap.trap_snare.name,Wire Snare,Drahtschlinge,Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
 wildlife.trap.trap_snare.description,"A loop of cord or wire set across a game trail, tightened by a springy branch. Cheap enough to deploy more than one, unreliable enough that materials still matter. The wire remembers the shape of the animal it was meant to hold.","Eine Schnur- oder Drahtschlinge über einem Wildwechsel. Billig genug für mehrere Versuche, unzuverlässig genug, dass Material zählt.",Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
 wildlife.trap.trap_deadfall.name,Deadfall Trap,Steinfallfalle,Assets/StreamingAssets/Data/wildlife_trapping_catalog.json
@@ -368,10 +372,575 @@ ui.tooltip.prerequisites_unmet,Currently unavailable — prerequisites not met.,
 ui.devinspector.export_report_tooltip,"Write a read-only JSON coverage report to user:// listing every authored id whose art does not resolve.","Schreibt einen schreibgeschützten JSON-Abdeckungsbericht nach user:// mit jeder Autoren-ID, deren Grafik nicht aufgelöst wird.",src/UI/AssetInspectorPanel.cs
 ui.devinspector.close_tooltip,Return to the grid (Esc),Zurück zum Raster (Esc),src/UI/AssetInspectorPanel.cs
 ui.expedition.estimate_tooltip,"Show fuel, dose, breakdown, and encounter estimates for this destination.","Zeigt Treibstoff-, Dosis-, Ausfall- und Begegnungsschätzungen für dieses Ziel.",src/UI/ExpeditionPanel.cs
+ui.expedition.railway_tooltip,"Open the railway logistics terminal — branch lines, rolling stock, and evacuation capacity.","Öffne das Eisenbahn-Logistikterminal — Nebenstrecken, Rollmaterial und Evakuierungskapazität.",src/UI/ExpeditionPanel.cs
 ui.expedition.radar_tooltip,"Open the expedition radar sweep — every cataloged destination, danger band, and active sortie on one grid.","Öffnet die Radar-Abtastung der Expedition — jedes erfasste Ziel, jede Gefahrenstufe und jeder aktive Einsatz auf einem Raster.",src/UI/ExpeditionPanel.cs
 ui.expedition.camp_tooltip,"Manage an expedition's overnight camp: firewood, rations, sentry shifts, and night segments.","Verwaltet das Nachtlager einer Expedition: Brennholz, Rationen, Wachen und Nachtabschnitte.",src/UI/ExpeditionPanel.cs
+ui.expedition.prep_header,EXPEDITION PREP // PROJECTED LOADOUT,EXPEDITIONSVORBEREITUNG // PROGNOSTIZIERTE AUSRÜSTUNG,src/UI/ExpeditionPanel.cs
+ui.expedition.return_header,RETURN LOOT CEREMONY,RÜCKKEHR-BEUTEZEREMONIE,src/UI/ExpeditionPanel.cs
+ui.expedition.failure_header,SORTIE AFTERMATH,NACHWIRKUNGEN DES EINSATZES,src/UI/ExpeditionPanel.cs
+ui.expedition.prep_survivor,SURVIVOR:,ÜBERLEBENDER:,src/UI/ExpeditionPanel.cs
+ui.expedition.refuel_tooltip,Burn 10 carried fuel items into the selected tank.,Verbrennt 10 mitgeführte Treibstoff-Einheiten im gewählten Tank.,src/UI/ExpeditionPanel.cs
+ui.expedition.track_gear_tooltip,"Install the authored track-gear package, improving rough-terrain traction and reducing breakdown risk.","Installiert das autorisierte Kettenlaufwerk-Paket; verbessert die Traktion im rauen Gelände und senkt das Ausfallrisiko.",src/UI/ExpeditionPanel.cs
+ui.expedition.fitness_title,FITNESS WARNING — EXPEDITION,TAUGLICHKEITSWARNUNG — EXPEDITION,src/UI/ExpeditionPanel.cs
+ui.expedition.no_route,NO ROUTE DATA.,KEINE ROUTENDATEN.,src/UI/ExpeditionPanel.cs
+ui.expedition.micro_location,DISCOVERY · MICRO-LOCATION,ENTDECKUNG · MIKRO-ORT,src/UI/ExpeditionPanel.cs
+ui.expedition.scout,SCOUT: {0},SPÄHER: {0},src/UI/ExpeditionPanel.cs
+ui.expedition.stamina,STAMINA {0:0}%,AUSDAUER {0:0}%,src/UI/ExpeditionPanel.cs
+ui.expedition.danger,DANGER: LVL {0} · DISTANCE: {1} LEGS,GEFAHR: STUFE {0} · ENTFERNUNG: {1} ABSCHNITTE,src/UI/ExpeditionPanel.cs
+ui.expedition.dispatch_stealth,DISPATCH STEALTH SORTIE,TARN-EINSATZ ENTSENDEN,src/UI/ExpeditionPanel.cs
+ui.expedition.section.active,ACTIVE SORTIES IN THE FIELD,AKTIVE EINSÄTZE IM FELD,src/UI/ExpeditionPanel.cs
+ui.expedition.section.pending,PENDING SURFACED ENCOUNTERS,AUSSTEHENDE BEGEGNUNGEN,src/UI/ExpeditionPanel.cs
+ui.expedition.section.prep,DISPATCH PREPARATION // MOTOR POOL & ARMORY,EINSATZVORBEREITUNG // FUHRPARK & WAFFENKAMMER,src/UI/ExpeditionPanel.cs
+ui.expedition.section.targets,KNOWN WASTELAND DESTINATIONS,BEKANNTE ÖDLAND-ZIELE,src/UI/ExpeditionPanel.cs
+ui.expedition.advance,ADVANCE SORTIES (2 HOURS),EINSÄTZE VORANTREIBEN (2 STUNDEN),src/UI/ExpeditionPanel.cs
+ui.expedition.return_dashboard,RETURN TO DASHBOARD [Esc],ZURÜCK ZUM DASHBOARD [Esc],src/UI/ExpeditionPanel.cs
+ui.expedition.push_luck,PUSH LUCK (SCAVENGE DEEPER),GLÜCK HERAUSFORDERN (TIEFER PLÜNDERN),src/UI/ExpeditionPanel.cs
+ui.expedition.order_return,ORDER INBOUND RETURN,RÜCKKEHR ANORDNEN,src/UI/ExpeditionPanel.cs
+ui.expedition.estimate,ESTIMATE,SCHÄTZEN,src/UI/ExpeditionPanel.cs
+ui.expedition.resolve,RESOLVE,LÖSEN,src/UI/ExpeditionPanel.cs
+ui.expedition.dismiss_all,DISMISS ALL,ALLE VERWERFEN,src/UI/ExpeditionPanel.cs
+ui.expedition.tactical_header,TACTICAL APPROACH SELECTION,TAKTISCHE VORGEHENSWEISE,src/UI/ExpeditionPanel.cs
+ui.expedition.decide_later,DECIDE LATER,SPÄTER ENTSCHEIDEN,src/UI/ExpeditionPanel.cs
+ui.expedition.fitness_factors,Fitness factors: {0},Tauglichkeitsfaktoren: {0},src/UI/ExpeditionPanel.cs
+ui.expedition.radar.filter.all,All Targets,Alle Ziele,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.filter.all.hint,every wasteland destination,jedes Ödland-Ziel,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.filter.near,Near Range,Nahbereich,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.filter.near.hint,<= 6 legs / short sortie,<= 6 Abschnitte / kurzer Einsatz,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.filter.medium,Mid Range,Mittelbereich,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.filter.medium.hint,7 .. 12 legs / day trip,7 .. 12 Abschnitte / Tagesausflug,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.filter.far,Far Range,Weitbereich,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.filter.far.hint,> 12 legs / multi-day,> 12 Abschnitte / mehrtägig,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.col.survivor,Survivor,Überlebender,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.col.phase,Phase,Etappe,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.col.distance,Distance,Entfernung,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.col.stamina,Stamina,Ausdauer,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.col.loot,Loot,Beute,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.col.encounters,Encounters,Begegnungen,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.col.location,Location,Ort,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.col.legs,Legs,Abschnitte,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.col.danger,Danger,Gefahr,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.col.enc_pct,Enc %,Begegn. %,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.col.status,Status,Zustand,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.active_header,Active Sorties In The Field,Aktive Einsätze im Feld,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.targets_header,Known Wasteland Destinations,Bekannte Ödland-Ziele,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.detail_header,TARGET DETAIL,ZIELDETAIL,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.select_hint,Select a sortie or destination row to view phase / cargo / blocking state.,"Wähle eine Einsatz- oder Zielzeile, um Phase / Fracht / Sperrstatus zu sehen.",src/UI/ExpeditionRadarPanel.cs
+ui.expedition.phase.outbound,OUTBOUND,HINAUS,src/UI/ExpeditionPhaseText.cs
+ui.expedition.phase.looting,LOOTING,PLÜNDERN,src/UI/ExpeditionPhaseText.cs
+ui.expedition.phase.inbound,INBOUND,RÜCKWEG,src/UI/ExpeditionPhaseText.cs
+ui.expedition.phase.completed,COMPLETED,ABGESCHLOSSEN,src/UI/ExpeditionPhaseText.cs
+ui.expedition.phase.failed,FAILED,GESCHEITERT,src/UI/ExpeditionPhaseText.cs
+ui.expedition.phase.camp,CAMP,NACHTLAGER,src/UI/ExpeditionPhaseText.cs
+ui.expedition.radar.title,Sortie Radar // Wasteland Movement Network,Einsatzradar // Ödland-Bewegungsnetz,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.range_filter,Range Filter,Reichweitenfilter,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.rail.active,Active,Aktiv,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.rail.queued,Queued,In Warteschlange,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.rail.blocked,Blocked,Blockiert,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.rail.median,Median,Mittelwert,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.rail.max_danger,Max Danger,Max. Gefahr,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.rail.enc_pct,Encounter %,Begegnung %,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.rail.median_value,{0} legs,{0} Abschnitte,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.rail.median_empty,— legs,— Abschnitte,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.summary,"Plan reconnaissance and scavenging sorties. Monitor radiation risk, distance, and survivor stamina.","Plant Aufklärungs- und Plündereinsätze. Überwacht Strahlungsrisiko, Entfernung und Ausdauer der Überlebenden.",src/UI/ExpeditionPanel.cs
+ui.expedition.esc_hint,Press [Esc] to return,[Esc] drücken zum Zurückkehren,src/UI/ExpeditionPanel.cs
+ui.expedition.no_active,No active scavenging sorties currently deployed.,Derzeit keine aktiven Plündereinsätze im Feld.,src/UI/ExpeditionPanel.cs
+ui.expedition.one_time,[ONE-TIME],[EINMALIG],src/UI/ExpeditionPanel.cs
+ui.expedition.fitness.unfit,FITNESS: UNFIT — dispatch blocked,TAUGLICHKEIT: UNTAUGLICH — Einsatz blockiert,src/UI/ExpeditionPanel.cs
+ui.expedition.fitness.fit,FITNESS: FIT,TAUGLICHKEIT: GEEIGNET,src/UI/ExpeditionPanel.cs
+ui.expedition.fitness.impaired,"FITNESS: IMPAIRED — allowed, max {0:0}h","TAUGLICHKEIT: EINGESCHRÄNKT — erlaubt, max. {0:0} Std.",src/UI/ExpeditionPanel.cs
+ui.expedition.radar.detail.scout,Scout,Späher,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.detail.travel,Travel,Reise,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.detail.cargo,Cargo,Fracht,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.detail.encounter_hr,Encounter/hr,Begegnung/Std.,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.detail.route,Route,Wegstrecke,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.sortie_title,{0} SORTIE,{0} EINSATZ,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.target_title,{0} DETAIL,{0} EINZELHEITEN,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.status.blocked,BLOCKED,BLOCKIERT,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.status.ready,READY,BEREIT,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.status.needs_survivor,NEEDS SURVIVOR,ÜBERLEBENDER NÖTIG,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.no_targets,— no targets in range —,— keine Ziele in Reichweite —,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.no_sorties,— no sorties active —,— keine aktiven Einsätze —,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.subsection.loot,Loot Categories,Beutekategorien,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.subsection.status,Status,Zustand,src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.level_value,LVL {0},STUFE {0},src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.push_suffix,[PUSH],[VORSTOSS],src/UI/ExpeditionRadarPanel.cs
+ui.expedition.radar.pushing_luck_suffix,[PUSHING LUCK],[GLÜCK HERAUSFORDERN],src/UI/ExpeditionRadarPanel.cs
+ui.expedition.prep_vehicle,VEHICLE:,FAHRZEUG:,src/UI/ExpeditionPanel.cs
+ui.expedition.prep_weapon,WEAPON:,WAFFE:,src/UI/ExpeditionPanel.cs
+ui.expedition.refuel,REFUEL TOP-UP,TREIBSTOFF AUFFÜLLEN,src/UI/ExpeditionPanel.cs
+ui.expedition.fit_track_gear,FIT TRACK GEAR,KETTENLAUFWERK MONTIEREN,src/UI/ExpeditionPanel.cs
+ui.expedition.radar_console,RADAR SWEEP CONSOLE,RADARKONSOLE,src/UI/ExpeditionPanel.cs
+ui.expedition.camp_console,OVERNIGHT CAMP CONSOLE,NACHTLAGERKONSOLE,src/UI/ExpeditionPanel.cs
+ui.expedition.rail_console,RAILWAY LOGISTICS TERMINAL,EISENBAHN-LOGISTIKTERMINAL,src/UI/ExpeditionPanel.cs
+ui.expedition.progress_line,Travel Progress: {0}/{1} legs · Encounters: {2} · Loot: {3} items ({4}/{5} kg),Reisefortschritt: {0}/{1} Abschnitte · Begegnungen: {2} · Beute: {3} Gegenstände ({4}/{5} kg),src/UI/ExpeditionPanel.cs
+ui.expedition.transit_outbound,In transit toward objective...,Unterwegs zum Ziel...,src/UI/ExpeditionPanel.cs
+ui.expedition.transit_inbound,Returning to shelter with salvage...,Rückkehr zum Unterstand mit Beute...,src/UI/ExpeditionPanel.cs
+ui.expedition.target_line,Potential Salvage: {0} · Encounter Risk: {1}/hr,Mögliche Beute: {0} · Begegnungsrisiko: {1}/Std.,src/UI/ExpeditionPanel.cs
+ui.expedition.world_line,WORLD: {0} · {1} spoilage{2}{3},WELT: {0} · {1} Verderb{2}{3},src/UI/ExpeditionPanel.cs
+ui.expedition.world_unclaimed,unclaimed,herrenlos,src/UI/ExpeditionPanel.cs
+ui.expedition.world_ruined,· RUINED,· ZERSTÖRT,src/UI/ExpeditionPanel.cs
+ui.expedition.world_threats,· {0} threat(s),· {0} Bedrohung(en),src/UI/ExpeditionPanel.cs
+ui.expedition.badge.req,Req: {0} x{1} ({2}/{3}),Benötigt: {0} x{1} ({2}/{3}),src/UI/ExpeditionPanel.cs
+ui.expedition.badge.cost,Cost: {0} ×{1} ({2}/{3}),Kosten: {0} ×{1} ({2}/{3}),src/UI/ExpeditionPanel.cs
+ui.expedition.badge.cost_list,Cost: {0},Kosten: {0},src/UI/ExpeditionPanel.cs
+ui.expedition.badge.gain,Gain: {0} ×{1},Gewinn: {0} ×{1},src/UI/ExpeditionPanel.cs
+ui.expedition.badge.codex,[CODEX] Clue Unlocked: {0},[CODEX] Hinweis freigeschaltet: {0},src/UI/ExpeditionPanel.cs
+ui.expedition.badge.map,[MAP] Discovers: {0},[KARTE] Entdeckt: {0},src/UI/ExpeditionPanel.cs
+ui.expedition.badge.unavailable,UNAVAILABLE — {0},NICHT VERFÜGBAR — {0},src/UI/ExpeditionPanel.cs
+ui.expedition.badge.cost_unavailable,Cost or requirement unavailable,Kosten oder Voraussetzung nicht erfüllt,src/UI/ExpeditionPanel.cs
+ui.expedition.dispatch_speed,DISPATCH SPEED SORTIE (1.5x),"SCHNELL-EINSATZ ENTSENDEN (1,5x)",src/UI/ExpeditionPanel.cs
+ui.status.expedition_injury,Expedition Injury,Expeditionsverletzung,src/UI/StatusPanel.cs
 ui.inventory.capacity_placeholder,CAPACITY // —,KAPAZITÄT // —,src/UI/InventoryPanel.cs
 ui.mainmenu.dev_run_tooltip,"Boot a fresh campaign and open the Item & Asset Inspector over it.","Startet eine neue Kampagne und öffnet darüber den Gegenstands- und Asset-Inspektor.",src/UI/MainMenuPanel.cs
 ui.settings.close_tooltip,Close settings (Esc) — discards unsaved changes,Einstellungen schließen (Esc) – verwirft ungespeicherte Änderungen,src/UI/SettingsPanel.cs
 ui.settings.visual_audio_alerts_tooltip,"Emit concise visual equivalents for critical audio cues (Plan 169).","Gibt knappe visuelle Entsprechungen für kritische Audiohinweise aus (Plan 169).",src/UI/SettingsPanel.cs
-ui.research.atlas_tooltip,Research technology atlas — every project, tier, and unlock.,Forschungstechnologie-Atlas — jedes Projekt, jede Stufe und jede Freischaltung.,src/UI/ResearchPanel.cs
+ui.research.atlas_tooltip,"Research technology atlas — every project, tier, and unlock.","Forschungstechnologie-Atlas — jedes Projekt, jede Stufe und jede Freischaltung.",src/UI/ResearchPanel.cs
+ui.difficulty.offline,Difficulty settings are offline until a campaign is composed.,"Die Schwierigkeitseinstellungen sind offline, bis eine Kampagne zusammengestellt wurde.",src/UI/DifficultySettingsPanel.cs
+ui.workshop.status_idle,WORKSHOP STATUS: IDLE,WERKSTATT-STATUS: LEER,src/UI/WorkshopPanel.cs
+ui.workshop.no_session,No workshop session bound.,Keine Werkstattsitzung verbunden.,src/UI/WorkshopPanel.cs
+ui.workshop.collect_job,COLLECT JOB,AUFTRAG ABHOLEN,src/UI/WorkshopPanel.cs
+ui.workshop.abort_job,ABORT JOB,AUFTRAG ABBRECHEN,src/UI/WorkshopPanel.cs
+ui.workshop.no_active_job,No active job.,Kein aktiver Auftrag.,src/UI/WorkshopPanel.cs
+ui.workshop.tooling,TOOLING,WERKZEUGE,src/UI/WorkshopPanel.cs
+ui.workshop.calibration,CALIBRATION,KALIBRIERUNG,src/UI/WorkshopPanel.cs
+ui.workshop.overhaul_tooling,OVERHAUL TOOLING,WERKZEUGE ÜBERHOLEN,src/UI/WorkshopPanel.cs
+ui.workshop.start_job,START JOB,AUFTRAG STARTEN,src/UI/WorkshopPanel.cs
+ui.workshop.abandon_restoration,ABANDON RESTORATION,RESTAURIERUNG AUFGEBEN,src/UI/WorkshopPanel.cs
+ui.workshop.abandon,ABANDON,AUFGEBEN,src/UI/WorkshopPanel.cs
+ui.workshop.status_restored,STATUS: RESTORED,STATUS: WIEDERHERGESTELLT,src/UI/WorkshopPanel.cs
+ui.workshop.start_restoration,START RESTORATION,RESTAURIERUNG STARTEN,src/UI/WorkshopPanel.cs
+ui.workshop.bench_occupied,The bench is occupied. Finish or abandon the current restoration first.,Die Werkbank ist belegt. Schließe zuerst die laufende Restaurierung ab oder brich sie ab.,src/UI/WorkshopPanel.cs
+ui.visitors.active_stays,ACTIVE VISITOR STAYS,AKTIVE BESUCHERAUFENTHALTE,src/UI/VisitorIntegrationPanel.cs
+ui.visitors.admit,ADMIT NEXT ARRIVAL (LOCAL),NÄCHSTE ANKUNFT ZULASSEN (LOKAL),src/UI/VisitorIntegrationPanel.cs
+ui.visitors.empty,No visitors are currently housed. Admitted airlock guests appear here.,Derzeit sind keine Besucher untergebracht. Zugelassene Schleusengäste erscheinen hier.,src/UI/VisitorIntegrationPanel.cs
+ui.visitors.pending,PENDING PROCESSING REQUIREMENTS,AUSSTEHENDE BEARBEITUNGSANFORDERUNGEN,src/UI/VisitorIntegrationPanel.cs
+ui.visitors.receipts,DEPARTURE & RECRUITMENT RECEIPTS,ABGANG UND REKRUTIERUNGSBELEGE,src/UI/VisitorIntegrationPanel.cs
+ui.visitors.shared_quarter,Shared Quarter,Gemeinschaftsquartier,src/UI/VisitorIntegrationPanel.cs
+ui.visitors.private_room,Private Room,Privatzimmer,src/UI/VisitorIntegrationPanel.cs
+ui.visitors.guest_suite,Guest Suite,Gästesuite,src/UI/VisitorIntegrationPanel.cs
+ui.visitors.recruit,RECRUIT AS RESIDENT,ALS BEWOHNER ANWERBEN,src/UI/VisitorIntegrationPanel.cs
+ui.visitors.depart,LOG DEPARTURE,ABGANG ERFASSEN,src/UI/VisitorIntegrationPanel.cs
+ui.visitors.no_tasks,No outstanding processing requirements.,Keine offenen Bearbeitungsanforderungen.,src/UI/VisitorIntegrationPanel.cs
+ui.visitors.satisfy,Satisfy,Erfüllen,src/UI/VisitorIntegrationPanel.cs
+ui.visitors.no_departures,No departures or recruitment conversions recorded.,Keine Abgänge oder Rekrutierungsumwandlungen erfasst.,src/UI/VisitorIntegrationPanel.cs
+ui.shelter.nav_overview,Overview,Übersicht,src/UI/ShelterHudPanel.cs
+ui.shelter.nav_survivors,Survivors,Überlebende,src/UI/ShelterHudPanel.cs
+ui.shelter.nav_inventory,Inventory,Inventar,src/UI/ShelterHudPanel.cs
+ui.shelter.nav_crafting,Crafting,Herstellung,src/UI/ShelterHudPanel.cs
+ui.shelter.nav_medical,Medical,Medizin,src/UI/ShelterHudPanel.cs
+ui.shelter.nav_expeditions,Expeditions,Expeditionen,src/UI/ShelterHudPanel.cs
+ui.shelter.nav_weather,Weather,Wetter,src/UI/ShelterHudPanel.cs
+ui.shelter.nav_shelter,Shelter,Schutzraum,src/UI/ShelterHudPanel.cs
+ui.shelter.nav_factions,Factions,Fraktionen,src/UI/ShelterHudPanel.cs
+ui.shelter.nav_verdict,Verdict,Urteil,src/UI/ShelterHudPanel.cs
+ui.shelter.forecast_pending,FORECAST // --,VORHERSAGE // --,src/UI/ShelterHudPanel.cs
+ui.shelter.roster_pending,DUTY ROSTER // --,DIENSTPLAN // --,src/UI/ShelterHudPanel.cs
+ui.shelter.no_signal,No fresh signal.,Kein frisches Signal.,src/UI/ShelterHudPanel.cs
+ui.duty_roster.scope_all,All Roles,Alle Rollen,src/UI/DutyRosterPanel.cs
+ui.duty_roster.scope_night_watch,Night Watch,Nachtwache,src/UI/DutyRosterPanel.cs
+ui.duty_roster.scope_mess,Mess & Rations,Messe & Rationen,src/UI/DutyRosterPanel.cs
+ui.duty_roster.scope_hatch,Hatch Defense,Lukenverteidigung,src/UI/DutyRosterPanel.cs
+ui.duty_roster.scope_intake,Intake Filtration,Zuluftfilterung,src/UI/DutyRosterPanel.cs
+ui.duty_roster.scope_expedition,Scavenging Sortie,Plünderungseinsatz,src/UI/DutyRosterPanel.cs
+ui.duty_roster.scope_unassigned,Unassigned,Nicht zugewiesen,src/UI/DutyRosterPanel.cs
+ui.duty_roster.shift_detail,SHIFT DETAIL,SCHICHTDETAIL,src/UI/DutyRosterPanel.cs
+ui.duty_roster.confirm_assign,CONFIRM ASSIGN,ZUWEISUNG BESTÄTIGEN,src/UI/DutyRosterPanel.cs
+ui.duty_roster.assign_prefix,ASSIGN:,ZUWEISEN:,src/UI/DutyRosterPanel.cs
+ui.duty_roster.vacate,VACATE SHIFT,SCHICHT FREIGEBEN,src/UI/DutyRosterPanel.cs
+ui.foundry.nav_all,All Heats,Alle Schmelzen,src/UI/SilentFoundryPanel.cs
+ui.foundry.nav_agricultural,Agricultural Tools,Landwirtschaftliche Werkzeuge,src/UI/SilentFoundryPanel.cs
+ui.foundry.nav_structural,Structural Beams,Strukturträger,src/UI/SilentFoundryPanel.cs
+ui.foundry.nav_water,Water / Brine Items,Wasser-/Sole-Teile,src/UI/SilentFoundryPanel.cs
+ui.foundry.nav_heavy_alloy,Heavy Alloy Parts,Schwere Legierungsteile,src/UI/SilentFoundryPanel.cs
+ui.foundry.nav_repair_plate,Repair Plates,Reparaturplatten,src/UI/SilentFoundryPanel.cs
+ui.foundry.machine_nominal,MACHINE // NOMINAL,MASCHINE // NOMINAL,src/UI/SilentFoundryPanel.cs
+ui.foundry.forge_tooltip,Begin a forging pass on the latest provenance-bearing batch of the output item.,Beginne einen Schmiededurchgang für die neueste herkunftsbehaftete Charge des Ausgabepostens.,src/UI/SilentFoundryPanel.cs
+"ui.foundry.complete_tooltip","Score the recorded sequence against the profile's authored order; deterministic, no RNG.","Bewerte die aufgezeichnete Sequenz gegen die vorgegebene Reihenfolge des Profils; deterministisch, kein Zufall.",src/UI/SilentFoundryPanel.cs
+ui.foundry.machine_prefix,MACHINE //,MASCHINE //,src/UI/SilentFoundryPanel.cs
+ui.foundry.cast_detail,CAST DETAIL,GUSSDETAIL,src/UI/SilentFoundryPanel.cs
+ui.skill_matrix.scope_all,All Survivors,Alle Überlebenden,src/UI/SkillMatrixPanel.cs
+ui.skill_matrix.scope_active,Active Skills,Aktive Fähigkeiten,src/UI/SkillMatrixPanel.cs
+ui.skill_matrix.scope_dormant,Dormant Skills,Ruhende Fähigkeiten,src/UI/SkillMatrixPanel.cs
+ui.skill_matrix.scope_expert,Expert Tracks,Expertenpfade,src/UI/SkillMatrixPanel.cs
+ui.skill_matrix.scope_medical,Medical Focus,Medizinischer Fokus,src/UI/SkillMatrixPanel.cs
+ui.skill_matrix.scope_crafting,Crafting Focus,Herstellungsfokus,src/UI/SkillMatrixPanel.cs
+ui.skill_matrix.scope_combat,Combat Focus,Kampffokus,src/UI/SkillMatrixPanel.cs
+ui.skill_matrix.scope_survival,Survival Focus,Überlebensfokus,src/UI/SkillMatrixPanel.cs
+ui.skill_matrix.actor_detail,ACTOR DETAIL,AKTEURDETAIL,src/UI/SkillMatrixPanel.cs
+ui.triangulation.signal_none,Signal: None under direction-finding,Signal: Keines bei Peilung,src/UI/TriangulationPanel.cs
+ui.triangulation.observations_none,Observations: —,Beobachtungen: —,src/UI/TriangulationPanel.cs
+ui.triangulation.candidate_none_dash,Candidate: —,Kandidat: —,src/UI/TriangulationPanel.cs
+ui.triangulation.confidence_none,Confidence: —,Konfidenz: —,src/UI/TriangulationPanel.cs
+ui.triangulation.uncertainty_none,Uncertainty: —,Unsicherheit: —,src/UI/TriangulationPanel.cs
+ui.triangulation.discovery_none,Discovery: —,Entdeckung: —,src/UI/TriangulationPanel.cs
+ui.triangulation.candidate_none,Candidate: None,Kandidat: Keiner,src/UI/TriangulationPanel.cs
+ui.triangulation.discovery_nodata,Discovery: No data,Entdeckung: Keine Daten,src/UI/TriangulationPanel.cs
+ui.hud.needs.hunger,HUN,HUN,src/UI/GameHudOverlay.cs
+ui.hud.needs.thirst,THI,DUR,src/UI/GameHudOverlay.cs
+ui.hud.needs.fatigue,FAT,MÜD,src/UI/GameHudOverlay.cs
+ui.hud.needs.morale,MOR,MOR,src/UI/GameHudOverlay.cs
+expedition.protection.title,Protection Before Dispatch,Schutz vor dem Einsatz,src/UI/TutorialPanel.cs
+expedition.protection.body,"Radiation does not announce itself. Check the party's protection and dose — gear, anti-rad, or a shorter route.","Strahlung kündigt sich nicht an. Prüfe den Schutz und die Dosis der Gruppe — Ausrüstung, Anti-Strahlung oder eine kürzere Route.",src/UI/TutorialPanel.cs
+weather.storm_prep.title,Severe Weather,Schweres Wetter,src/UI/TutorialPanel.cs
+weather.storm_prep.body,"Weather carries the dose with it. A severe day raises exposure and cuts travel; read the forecast before you commit people or supplies.","Das Wetter trägt die Dosis mit sich. Ein schwerer Tag erhöht die Belastung und bremst Reisen; lies die Vorhersage, bevor du Menschen oder Vorräte einsetzt.",src/UI/TutorialPanel.cs
+combat.basics.title,Combat Basics,Kampfgrundlagen,src/UI/TutorialPanel.cs
+combat.basics.body,"The fight runs in real time. Pick a target, FIRE, and reload when the magazine runs dry; WASD or the left stick repositions the squad. If contact turns bad, RETREAT to the extract zone — you can still be shot while running.","Der Kampf läuft in Echtzeit. Wähle ein Ziel, FEUERE, und lade nach, wenn das Magazin leer ist; WASD oder der linke Stick verlegt den Trupp. Wenn der Kontakt schlecht wird, ZIEH DICH in die Extraktionszone zurück — du kannst auch beim Laufen getroffen werden.",src/UI/TutorialPanel.cs
+medical.acute_radiation.title,Acute Radiation,Akute Strahlenkrankheit,src/UI/TutorialPanel.cs
+medical.acute_radiation.body,"Acute radiation sickness is already burning down this survivor's health. Open MEDICAL and give Rad-Away or iodine now — every hour untreated costs health.","Die akute Strahlenkrankheit zehrt bereits an der Gesundheit dieses Überlebenden. Öffne MEDIZIN und gib sofort Rad-Away oder Jod — jede unbehandelte Stunde kostet Gesundheit.",src/UI/TutorialPanel.cs
+ui.hud.needs.warmth,WARM,WÄRME,src/UI/GameHudOverlay.cs
+ui.status.threshold.header,LETHAL THRESHOLDS,TÖDLICHE SCHWELLEN,src/UI/StatusPanel.cs
+ui.status.threshold.needs,Needs thresholds,Bedarfsschwellen,src/UI/StatusPanel.cs
+ui.status.threshold.starvation,Starvation,Unterernährung,src/UI/StatusPanel.cs
+ui.status.threshold.dehydration,Dehydration,Dehydrierung,src/UI/StatusPanel.cs
+ui.status.threshold.hypothermia,Hypothermia,Unterkühlung,src/UI/StatusPanel.cs
+ui.status.threshold.acute_radiation,Acute radiation,Akute Strahlenkrankheit,src/UI/StatusPanel.cs
+ui.status.threshold.chronic_exposure,Chronic exposure,Chronische Exposition,src/UI/StatusPanel.cs
+ui.status.drift.header,Needs Drift,Bedarfstrend,src/UI/StatusPanel.cs
+ui.status.drift.pending,trend available after the first day advance,Trend nach dem ersten Tageswechsel verfügbar,src/UI/StatusPanel.cs
+ui.status.drift.hunger,Hunger Drift,Hungertrend,src/UI/StatusPanel.cs
+ui.status.drift.thirst,Thirst Drift,Dursttrend,src/UI/StatusPanel.cs
+ui.status.drift.fatigue,Fatigue Drift,Müdigkeitstrend,src/UI/StatusPanel.cs
+ui.status.drift.morale,Morale Drift,Moralstrend,src/UI/StatusPanel.cs
+ui.status.drift.warmth,Warmth Drift,Wärmetrend,src/UI/StatusPanel.cs
+ui.status.drift.per_day,/ day,/ Tag,src/UI/StatusPanel.cs
+ui.status.drift.per_span,/ {0}d,/ {0}T,src/UI/StatusPanel.cs
+ui.status.cohort.survivors,Survivor Cohort,Überlebendenkohorte,src/UI/StatusPanel.cs
+ui.status.cohort.avg_health,Average Health,Durchschnittliche Gesundheit,src/UI/StatusPanel.cs
+ui.status.cohort.morale,Bunker Morale,Bunkermoral,src/UI/StatusPanel.cs
+ui.status.cohort.dose,Dosimetry Dose,Dosimeterdosis,src/UI/StatusPanel.cs
+ui.resource.food,Food,Nahrung,src/Main.GameFlow.cs
+ui.resource.water,Water,Wasser,src/Main.GameFlow.cs
+ui.survivors.filter.all,Filter: All,Filter: Alle,src/UI/SurvivorsPanel.cs
+ui.survivors.filter.living,Filter: Living,Filter: Lebende,src/UI/SurvivorsPanel.cs
+ui.survivors.filter.strained,Filter: Strained,Filter: Belastet,src/UI/SurvivorsPanel.cs
+ui.survivors.filter.critical,Filter: Critical,Filter: Kritisch,src/UI/SurvivorsPanel.cs
+ui.survivors.header.roster,RESIDENT ROSTER,BEWOHNERLISTE,src/UI/SurvivorsPanel.cs
+ui.survivors.header.telemetry,COHORT TELEMETRY,KOHORTEN-TELEMETRIE,src/UI/SurvivorsPanel.cs
+ui.hud.needs.tooltip.high,Warn ≥ {0} · critical ≥ {1},Warnung ≥ {0} · kritisch ≥ {1},src/UI/GameHudOverlay.cs
+ui.hud.needs.tooltip.low,Warn ≤ {0} · critical ≤ {1},Warnung ≤ {0} · kritisch ≤ {1},src/UI/GameHudOverlay.cs
+ui.status.threshold.value.starvation,hunger ≥ {0} → −{1} HP/h,Hunger ≥ {0} → −{1} HP/h,src/UI/StatusPanel.cs
+ui.status.threshold.value.dehydration,thirst ≥ {0} → −{1} HP/h,Durst ≥ {0} → −{1} HP/h,src/UI/StatusPanel.cs
+ui.status.threshold.value.hypothermia,warmth ≤ {0} → −{1} HP/h,Wärme ≤ {0} → −{1} HP/h,src/UI/StatusPanel.cs
+ui.status.threshold.value.acute_radiation,dose ≥ {0}/100 → −{1} HP/h until treated,Dosis ≥ {0}/100 → −{1} HP/h bis behandelt,src/UI/StatusPanel.cs
+ui.status.threshold.value.chronic_exposure,lifetime dose ≥ {0} mSv → chronic illness,Lebensdosis ≥ {0} mSv → chronische Erkrankung,src/UI/StatusPanel.cs
+ui.status.title,HOLDFAST STATUS & OPERATIONS,HOLDFAST-STATUS & BETRIEB,src/UI/StatusPanel.cs
+ui.status.section.day_environment,DAY & ENVIRONMENT,TAG & UMGEBUNG,src/UI/StatusPanel.cs
+ui.status.section.directives,STANDING DIRECTIVES,DAUERANWEISUNGEN,src/UI/StatusPanel.cs
+ui.status.section.cohort,COHORT & SUPPLY TELEMETRY,KOHORTEN- & VERSORGUNGSTELEMETRIE,src/UI/StatusPanel.cs
+ui.status.section.shelter,SHELTER SUBSYSTEM HEALTH,UNTERSTANDS-SUBSYSTEMSTATUS,src/UI/StatusPanel.cs
+ui.status.section.thermal,WARMTH & THERMAL,WÄRME & THERMIK,src/UI/StatusPanel.cs
+ui.status.section.forecast,3-DAY SUPPLY FORECAST,3-TAGE-VERSORGUNGSPROGNOSE,src/UI/StatusPanel.cs
+ui.status.day.current_day,Current Day,Aktueller Tag,src/UI/StatusPanel.cs
+ui.status.day.survivors,Survivors,Überlebende,src/UI/StatusPanel.cs
+ui.status.day.external_conditions,External Conditions,Außenbedingungen,src/UI/StatusPanel.cs
+ui.status.day.power_reserve,Power Reserve,Energiereserve,src/UI/StatusPanel.cs
+ui.status.stores.water,Water Stores,Wasservorräte,src/UI/StatusPanel.cs
+ui.status.stores.food,Food Stores,Nahrungsvorräte,src/UI/StatusPanel.cs
+ui.status.system.power_grid,Power Grid,Stromnetz,src/UI/StatusPanel.cs
+ui.status.system.radiation_shielding,Radiation Shielding,Strahlenschutz,src/UI/StatusPanel.cs
+ui.status.system.outdoor_radiation,Outdoor Radiation,Außenstrahlung,src/UI/StatusPanel.cs
+ui.survivors.shell.title,SURVIVOR ROSTER & DUTY COHORT,ÜBERLEBENDENLISTE & DIENSTKOHORTE,src/UI/SurvivorsPanel.cs
+ui.status.thermal.roster_warmth,Roster Warmth,Besatzungswärme,src/UI/StatusPanel.cs
+ui.status.thermal.clothing_warmth,Clothing Warmth,Kleidungswärme,src/UI/StatusPanel.cs
+ui.status.thermal.shelter_thermal,Shelter Thermal,Unterstandsthermik,src/UI/StatusPanel.cs
+ui.status.thermal.waterway,Waterway,Wasserlauf,src/UI/StatusPanel.cs
+ui.status.forecast.supply_projection,Supply projection,Versorgungsprognose,src/UI/StatusPanel.cs
+ui.status.forecast.shortfall,Shortfall,Defizit,src/UI/StatusPanel.cs
+ui.status.not_monitored,NOT MONITORED,NICHT ÜBERWACHT,src/UI/StatusPanel.cs
+ui.status.no_roster,No survivor roster bound.,Keine Überlebendenliste gebunden.,src/UI/StatusPanel.cs
+ui.survivors.empty.no_session,No survivor session bound.,Keine Überlebenden-Sitzung gebunden.,src/UI/SurvivorsPanel.cs
+ui.survivors.empty.roster,Roster empty. No registered shelter survivors.,Liste leer. Keine registrierten Unterstands-Überlebenden.,src/UI/SurvivorsPanel.cs
+ui.survivors.empty.no_match,No survivors match the current filter.,Keine Überlebenden entsprechen dem aktuellen Filter.,src/UI/SurvivorsPanel.cs
+ui.survivors.event.latest,Latest roster event,Letztes Listenereignis,src/UI/SurvivorsPanel.cs
+ui.survivors.rail.living,LIVING,LEBEND,src/UI/SurvivorsPanel.cs
+ui.survivors.rail.avg_hp,AVG HP,Ø HP,src/UI/SurvivorsPanel.cs
+ui.survivors.rail.avg_rad,AVG RAD,Ø RAD,src/UI/SurvivorsPanel.cs
+ui.survivors.rail.avg_mor,AVG MOR,Ø MOR,src/UI/SurvivorsPanel.cs
+ui.survivors.rail.strained,STRAINED,BELASTET,src/UI/SurvivorsPanel.cs
+ui.survivor.need.health,Health,Gesundheit,src/UI/SurvivorDetailPanel.cs
+ui.survivor.need.hunger,Hunger,Hunger,src/UI/SurvivorDetailPanel.cs
+ui.survivor.need.thirst,Thirst,Durst,src/UI/SurvivorDetailPanel.cs
+ui.survivor.need.fatigue,Fatigue,Müdigkeit,src/UI/SurvivorDetailPanel.cs
+ui.survivor.need.warmth,Warmth,Wärme,src/UI/SurvivorDetailPanel.cs
+ui.survivor.need.morale,Morale,Moral,src/UI/SurvivorDetailPanel.cs
+ui.survivor.need.hygiene,Hygiene,Hygiene,src/UI/SurvivorDetailPanel.cs
+ui.survivor.trait.radiation_dose,Radiation Dose,Strahlendosis,src/UI/SurvivorDetailPanel.cs
+ui.survivor.trait.lifetime_exposure,Lifetime Exposure,Lebensdosis,src/UI/SurvivorDetailPanel.cs
+ui.survivor.trait.rad_resistance,Rad Resistance,Strahlenresistenz,src/UI/SurvivorDetailPanel.cs
+ui.survivor.trait.acute_sickness,Acute Sickness,Akute Strahlenkrankheit,src/UI/SurvivorDetailPanel.cs
+ui.survivor.trait.chronic_illness,Chronic Illness,Chronische Erkrankung,src/UI/SurvivorDetailPanel.cs
+ui.status.day.value,Day {0},Tag {0},src/UI/StatusPanel.cs
+ui.status.day.alive,{0} / {1} Alive,{0} / {1} lebend,src/UI/StatusPanel.cs
+ui.status.day.hazard,HAZARD WATCH,GEFAHRENWACHE,src/UI/StatusPanel.cs
+ui.status.day.nominal,Nominal,Normal,src/UI/StatusPanel.cs
+ui.status.day.battery,Battery {0}/{1} Wh · Fuel {2},Batterie {0}/{1} Wh · Treibstoff {2},src/UI/StatusPanel.cs
+ui.survivor.info.name,Name: {0},Name: {0},src/UI/SurvivorDetailPanel.cs
+ui.survivor.info.profession,Profession: {0},Beruf: {0},src/UI/SurvivorDetailPanel.cs
+ui.survivor.info.unspecified,Unspecified,Unbestimmt,src/UI/SurvivorDetailPanel.cs
+ui.survivor.info.alive,Alive: {0},Am Leben: {0},src/UI/SurvivorDetailPanel.cs
+ui.survivor.info.max_health,Max Health Cap: {0},Maximale Gesundheit: {0},src/UI/SurvivorDetailPanel.cs
+ui.survivor.info.tenure,In shelter: {0} day(s) (since day {1}),Im Unterstand: {0} Tag(e) (seit Tag {1}),src/UI/SurvivorDetailPanel.cs
+ui.survivors.status.stable,STABLE,STABIL,src/UI/SurvivorsPanel.cs
+ui.survivors.status.strained,STRAINED,BELASTET,src/UI/SurvivorsPanel.cs
+ui.survivors.status.critical,CRITICAL,KRITISCH,src/UI/SurvivorsPanel.cs
+ui.survivors.status.dead,DEAD,TOT,src/UI/SurvivorsPanel.cs
+ui.survivors.cohort.summary,Cohort morale reads {0}% (bunker-wide); average survivor wellness sits at {1}% HP. Skill Matrix is deferred — see docs/ui/PHASE13_DATA_AVAILABILITY.md.,Kohortenmoral liegt bei {0}% (bunkerweit); die durchschnittliche Gesundheit liegt bei {1}% HP. Die Fähigkeitsmatrix ist zurückgestellt — siehe docs/ui/PHASE13_DATA_AVAILABILITY.md.,src/UI/SurvivorsPanel.cs
+ui.survivors.filter.all.hint,every survivor,jeder Überlebende,src/UI/SurvivorsPanel.cs
+ui.survivors.filter.living.hint,alive only,nur Lebende,src/UI/SurvivorsPanel.cs
+ui.survivors.filter.strained.hint,STRAINED + worse,BELASTET + schlimmer,src/UI/SurvivorsPanel.cs
+ui.survivors.filter.critical.hint,CRITICAL + DEAD,KRITISCH + TOT,src/UI/SurvivorsPanel.cs
+ui.survivors.sidebar.title,ROSTER OPS,LISTENBETRIEB,src/UI/SurvivorsPanel.cs
+ui.survivor.trait.origin,Origin: {0},Herkunft: {0},src/UI/SurvivorDetailPanel.cs
+ui.survivor.status.critical_flags,Critical flags: hunger={0} thirst={1} warmth={2},Kritische Flags: Hunger={0} Durst={1} Wärme={2},src/UI/SurvivorDetailPanel.cs
+ui.survivor.status.fitness,Fitness: {0},Fitness: {0},src/UI/SurvivorDetailPanel.cs
+ui.survivor.status.factors,Factors:,Faktoren:,src/UI/SurvivorDetailPanel.cs
+ui.survivor.fitness.fit,FIT,FIT,src/UI/SurvivorDetailPanel.cs
+ui.survivor.fitness.impaired,IMPAIRED,BEEINTRÄCHTIGT,src/UI/SurvivorDetailPanel.cs
+ui.survivor.fitness.unfit,UNFIT / INCAPACITATED,UNTAUGLICH / DIENSTUNFÄHIG,src/UI/SurvivorDetailPanel.cs
+ui.status.objective.critical_health,{0} survivor(s) in critical health — triage immediately,{0} Überlebende in kritischem Zustand — sofort triagieren,src/UI/StatusPanel.cs
+ui.status.objective.dosed,{0} survivor(s) above {1} mSv dose — iodine/chelation required,{0} Überlebende über {1} mSv Dosis — Jod/Chelat erforderlich,src/UI/StatusPanel.cs
+ui.status.objective.acute_rad,{0} survivor(s) in acute radiation sickness — anti-rad chelation clears the dose,{0} Überlebende mit akuter Strahlenkrankheit — Anti-Strahlen-Chelat senkt die Dosis,src/UI/StatusPanel.cs
+ui.status.objective.brownout,Power grid in brownout — shed load or add fuel,Stromnetz im Brownout — Last senken oder Treibstoff zuführen,src/UI/StatusPanel.cs
+ui.status.objective.hazard_weather,Hazard weather active — keep survivors indoors,Gefahrenwetter aktiv — Überlebende drinnen halten,src/UI/StatusPanel.cs
+ui.status.objective.water_critical,Water stores critical — purify or trade for clean water,Wasservorräte kritisch — aufbereiten oder sauberes Wasser handeln,src/UI/StatusPanel.cs
+ui.status.objective.standing,"Keep the roster fed, hydrated, and below dose ceiling","Die Liste ernährt, hydriert und unter der Dosisgrenze halten",src/UI/StatusPanel.cs
+ui.status.system.power_brownout,BROWNOUT · Gen {0} W vs Draw {1} W,BROWNOUT · Erz {0} W vs Verbr {1} W,src/UI/StatusPanel.cs
+ui.status.system.power_online,Online · Gen {0} W · Draw {1} W,Online · Erz {0} W · Verbr {1} W,src/UI/StatusPanel.cs
+ui.status.system.shielding_value,Weakest ceiling {0}% attenuation,Schwächste Decke {0}% Dämpfung,src/UI/StatusPanel.cs
+ui.status.system.outdoor_value,+{0} mSv/h modifier active,+{0} mSv/h Modifikator aktiv,src/UI/StatusPanel.cs
+ui.status.system.outdoor_none,No weather modifier,Kein Wettermodifikator,src/UI/StatusPanel.cs
+ui.status.objective.tag.primary,PRIMARY,PRIMÄR,src/UI/StatusPanel.cs
+ui.status.objective.tag.daily,DAILY,TÄGLICH,src/UI/StatusPanel.cs
+ui.status.objective.tag.secondary,SECONDARY,SEKUNDÄR,src/UI/StatusPanel.cs
+ui.status.objective.tag.standing,STANDING,DAUERHAFT,src/UI/StatusPanel.cs
+ui.status.thermal.roster_value,avg {0} · coldest {1} / 100,Ø {0} · kältester {1} / 100,src/UI/StatusPanel.cs
+ui.status.thermal.clothing_value,−{0}% cold loss (worn layers),−{0}% Kälteverlust (getragene Schichten),src/UI/StatusPanel.cs
+ui.status.thermal.shelter_value,coldest {0}°C · boiler {1} · fuel {2},kältester {0}°C · Kessel {1} · Treibstoff {2},src/UI/StatusPanel.cs
+ui.status.thermal.boiler_on,on,an,src/UI/StatusPanel.cs
+ui.status.thermal.boiler_off,off,aus,src/UI/StatusPanel.cs
+ui.status.forecast.day_value,food {0} · water {1},Nahrung {0} · Wasser {1},src/UI/StatusPanel.cs
+ui.status.forecast.shortfall_value,stores run short on Day {0},Vorräte werden knapp an Tag {0},src/UI/StatusPanel.cs
+ui.hud.day,Day {0},Tag {0},src/UI/GameHudOverlay.cs
+ui.hud.health,HP: {0}/{1},LP: {0}/{1},src/UI/GameHudOverlay.cs
+ui.hud.radiation,RAD: {0:F1} mSv,RAD: {0:F1} mSv,src/UI/GameHudOverlay.cs
+ui.hud.value,Value: {0},Wert: {0},src/UI/GameHudOverlay.cs
+ui.hud.label.hp,HP,LP,src/UI/GameHudOverlay.cs
+ui.hud.label.rad,RAD,RAD,src/UI/GameHudOverlay.cs
+ui.status.expedition_injury.value,{0} — Day {1}: {2},{0} — Tag {1}: {2},src/UI/StatusPanel.cs
+ui.status.day.weather_value,{0} — {1},{0} — {1},src/UI/StatusPanel.cs
+ui.survivor.info.specialization,"Specialization: {0} (Level {1}, {2} practice XP)","Spezialisierung: {0} (Stufe {1}, {2} Übungs-EP)",src/UI/SurvivorDetailPanel.cs
+ui.survivor.info.clothing,"Clothing: {0} layer(s), warmth {1}, wetness {2}, cold reduction {3}%","Kleidung: {0} Schicht(en), Wärme {1}, Nässe {2}, Kältereduktion {3}%",src/UI/SurvivorDetailPanel.cs
+ui.survivor.info.body,Body: {0} · {1},Körper: {0} · {1},src/UI/SurvivorDetailPanel.cs
+ui.survivor.performance.row,"{0}Performance: {1} (Work {2}%, Combat {3}%)","{0}Leistung: {1} (Arbeit {2}%, Kampf {3}%)",src/UI/SurvivorDetailPanel.cs
+ui.survivors.event.line,{0}: {1},{0}: {1},src/UI/SurvivorsPanel.cs
+ui.survivors.event.none,No roster events recorded yet.,Noch keine Listeneinträge verzeichnet.,src/UI/SurvivorsPanel.cs
+ui.survivor.info.no_selection,No survivor selected.,Kein Überlebender ausgewählt.,src/UI/SurvivorDetailPanel.cs
+ui.survivor.info.not_found,Survivor '{0}' not found in roster.,Überlebender '{0}' nicht in der Liste gefunden.,src/UI/SurvivorDetailPanel.cs
+ui.survivor.info.no_radiation,No radiation state tracked.,Kein Strahlungszustand erfasst.,src/UI/SurvivorDetailPanel.cs
+ui.survivor.info.unknown,Unknown,Unbekannt,src/UI/SurvivorDetailPanel.cs
+ui.survivor.info.unknown_source,Unknown source,Unbekannte Quelle,src/UI/SurvivorDetailPanel.cs
+ui.survivor.info.worldview,Worldview: {0},Weltbild: {0},src/UI/SurvivorDetailPanel.cs
+ui.survivor.info.keepsake,Associated Keepsake: {0}{1},Zugehöriges Andenken: {0}{1},src/UI/SurvivorDetailPanel.cs
+ui.survivor.info.duty,Duty Affinity: {0}{1},Dienstaffinität: {0}{1},src/UI/SurvivorDetailPanel.cs
+ui.survivor.info.duty_bonus,(+{0}% comfort),(+{0}% Komfort),src/UI/SurvivorDetailPanel.cs
+ui.survivor.info.traits,Traits: {0},Eigenschaften: {0},src/UI/SurvivorDetailPanel.cs
+ui.survivor.info.ideological_tension,Ideological Tension: Opposes {0},Ideologische Spannung: Gegen {0},src/UI/SurvivorDetailPanel.cs
+ui.survivor.info.faction,Bunker Faction: {0},Bunkerfraktion: {0},src/UI/SurvivorDetailPanel.cs
+ui.survivor.info.relationship,Relationship: {0} ({1}{2}),Beziehung: {0} ({1}{2}),src/UI/SurvivorDetailPanel.cs
+ui.survivor.info.soulmate,· Soulmate,· Seelenverwandte,src/UI/SurvivorDetailPanel.cs
+ui.survivor.info.family,Family Unit: {0},Familieneinheit: {0},src/UI/SurvivorDetailPanel.cs
+ui.survivor.info.lineage,Lineage: {0},Abstammung: {0},src/UI/SurvivorDetailPanel.cs
+ui.survivor.info.political_bloc,Political Bloc: {0},Politische Gruppierung: {0},src/UI/SurvivorDetailPanel.cs
+ui.survivor.info.demographic,Demographic: {0} yrs · {1}{2},Demografie: {0} Jahre · {1}{2},src/UI/SurvivorDetailPanel.cs
+ui.survivor.info.retired_elder,[Retired Elder],[Ruhestand-Ältester],src/UI/SurvivorDetailPanel.cs
+ui.survivor.info.retirement_eligible,[Retirement Eligible],[Ruhestand möglich],src/UI/SurvivorDetailPanel.cs
+ui.survivor.info.personal_effects,Personal effects: {0},Persönliche Effekten: {0},src/UI/SurvivorDetailPanel.cs
+ui.survivor.info.personal_effect_row,{0} · {1} · sentiment {2}{3},{0} · {1} · Sentiment {2}{3},src/UI/SurvivorDetailPanel.cs
+ui.survivor.info.favorite,· favorite,· Favorit,src/UI/SurvivorDetailPanel.cs
+ui.survivor.info.more,+{0} more,+{0} weitere,src/UI/SurvivorDetailPanel.cs
+ui.survivor.info.authored_records,Authored records: {0},Verfasste Aufzeichnungen: {0},src/UI/SurvivorDetailPanel.cs
+ui.survivor.info.record_row,{0} · {1} · quality {2},{0} · {1} · Qualität {2},src/UI/SurvivorDetailPanel.cs
+ui.survivor.status.top_contributors,Top active need contributors,Wichtigste aktive Bedarfsbeiträge,src/UI/SurvivorDetailPanel.cs
+ui.survivor.status.recent_contributors,Recent need contributors,Jüngste Bedarfsbeiträge,src/UI/SurvivorDetailPanel.cs
+ui.survivor.status.other_contributors,+{0} other active contributors,+{0} weitere aktive Beiträge,src/UI/SurvivorDetailPanel.cs
+ui.survivor.status.modifier_row,{0}: {1} {2}/h,{0}: {1} {2}/h,src/UI/SurvivorDetailPanel.cs
+ui.survivor.status.recent_row,{0}: {1} {2},{0}: {1} {2},src/UI/SurvivorDetailPanel.cs
+ui.survival_detail.no_roster,No survivor roster bound.,Keine Überlebendenliste gebunden.,src/UI/SurvivalDetailPanel.cs
+ui.survival_detail.roster,Roster: {0} / {1} alive,Liste: {0} / {1} lebend,src/UI/SurvivalDetailPanel.cs
+ui.survival_detail.avg_health,Avg Health: {0} / 100,Durchschn. Gesundheit: {0} / 100,src/UI/SurvivalDetailPanel.cs
+ui.survival_detail.avg_hunger,Avg Hunger: {0},Durchschn. Hunger: {0},src/UI/SurvivalDetailPanel.cs
+ui.survival_detail.avg_thirst,Avg Thirst: {0},Durchschn. Durst: {0},src/UI/SurvivalDetailPanel.cs
+ui.survival_detail.avg_fatigue,Avg Fatigue: {0},Durchschn. Müdigkeit: {0},src/UI/SurvivalDetailPanel.cs
+ui.survival_detail.avg_morale,Avg Morale: {0} / 100,Durchschn. Moral: {0} / 100,src/UI/SurvivalDetailPanel.cs
+ui.survival_detail.avg_dose,Avg Dose: {0:F1} mSv,Durchschn. Dosis: {0:F1} mSv,src/UI/SurvivalDetailPanel.cs
+ui.survival_detail.above_threshold,Survivors above {0} mSv: {1},Überlebende über {0} mSv: {1},src/UI/SurvivalDetailPanel.cs
+ui.survival_detail.critical_health,Critical health: {0} survivor(s),Kritische Gesundheit: {0} Überlebende(r),src/UI/SurvivalDetailPanel.cs
+ui.survival_detail.weakest_ceiling,Shelter weakest ceiling: {0}%,Schwächste Decke: {0}%,src/UI/SurvivalDetailPanel.cs
+ui.status.forecast.day_label,Day +{0},Tag +{0},src/UI/StatusPanel.cs
+ui.status.forecast.day_value_short,food {0} · water {1} — SHORT,Nahrung {0} · Wasser {1} — KNAPP,src/UI/StatusPanel.cs
+ui.status.expedition_injury.unnamed,[UNNAMED],[OHNE NAMEN],src/UI/StatusPanel.cs
+ui.survivor.trait.dose_tooltip,Dose band: warn at {0} mSv — critical at {1} mSv,Dosisband: Warnung ab {0} mSv — kritisch ab {1} mSv,src/UI/SurvivorDetailPanel.cs
+ui.survivor.trait.lifetime_tooltip,Lifetime band: chronic at {0} mSv,Gesamtdosisband: chronisch ab {0} mSv,src/UI/SurvivorDetailPanel.cs
+ui.status.cohort.alive_of_total,{0} / {1} Alive,{0} / {1} Lebend,src/UI/StatusPanel.cs
+ui.status.stores.water_value,{0} unit(s),{0} Einheit(en),src/UI/StatusPanel.cs
+ui.status.stores.food_value,{0} unit(s),{0} Einheit(en),src/UI/StatusPanel.cs
+ui.achievements.no_roster,No survivor roster bound.,Keine Überlebendenliste gebunden.,src/UI/AchievementsPanel.cs
+ui.achievements.days_survived,Days Survived: {0},Überlebte Tage: {0},src/UI/AchievementsPanel.cs
+ui.achievements.roster_alive,Roster Alive: {0} / {1},Lebende Besatzung: {0} / {1},src/UI/AchievementsPanel.cs
+ui.achievements.avg_health,Average Health: {0} / 100,Durchschnittliche Gesundheit: {0} / 100,src/UI/AchievementsPanel.cs
+ui.achievements.avg_dose,Average Dose: {0} mSv,Durchschnittsdosis: {0} mSv,src/UI/AchievementsPanel.cs
+ui.achievements.no_milestones,No milestones reached yet.,Noch keine Meilensteine erreicht.,src/UI/AchievementsPanel.cs
+ui.afflictions.critical_health,{0} — Critical health ({1}/100),{0} — Kritische Gesundheit ({1}/100),src/UI/AfflictionsPanel.cs
+ui.medical.hp,HP {0}/{1},LP {0}/{1},src/UI/MedicalPanel.cs
+ui.medical.rad,RAD {0} mSv{1},STR {0} mSv{1},src/UI/MedicalPanel.cs
+ui.medical.resist_suffix,[⚡RESIST],[⚡RESISTENT],src/UI/MedicalPanel.cs
+ui.medical.hunger,HUN {0},HUNGER {0},src/UI/MedicalPanel.cs
+ui.medical.thirst,THI {0},DUR {0},src/UI/MedicalPanel.cs
+ui.medical.lung_row,LUNG: {0}  ({1}%),LUNGE: {0}  ({1}%),src/UI/MedicalPanel.cs
+ui.medical.last_event,Last medical event: {0},Letztes medizinisches Ereignis: {0},src/UI/MedicalPanel.cs
+ui.medical.reserved,RESERVED: {0},RESERVIERT: {0},src/UI/MedicalPanel.cs
+ui.medical.severe_cough,SEVERE COUGH  [STAMINA -{0}%],STARKER HUSTEN  [AUSDAUER -{0}%],src/UI/MedicalPanel.cs
+ui.medical.lung.clear,CLEAR,FREI,src/UI/MedicalPanel.cs
+ui.medical.lung.mild,MILD COUGH,LEICHTER HUSTEN,src/UI/MedicalPanel.cs
+ui.medical.lung.permanent,PERMANENT LUNG DAMAGE  [INHALER REQUIRED],PERMANENTER LUNGENSCHADEN  [INHALATOR ERFORDERLICH],src/UI/MedicalPanel.cs
+ui.medical.lung.critical,CRITICAL — INHALER REQUIRED,KRITISCH — INHALATOR ERFORDERLICH,src/UI/MedicalPanel.cs
+ui.medical.lung.terminal,TERMINAL LUNG DAMAGE,TERMINALER LUNGENSCHADEN,src/UI/MedicalPanel.cs
+ui.medical.ready_for_tick,READY FOR TICK,BEREIT FÜR TICK,src/UI/MedicalPanel.cs
+ui.medical.ready_in,READY IN {0}h,BEREIT IN {0}h,src/UI/MedicalPanel.cs
+ui.afflictions.recent_record,Recent medical record — {0}:,Jüngster medizinischer Eintrag — {0}:,src/UI/AfflictionsPanel.cs
+ui.achievements.title,ACHIEVEMENTS & MILESTONES,ERFOLGE & MEILENSTEINE,src/UI/AchievementsPanel.cs
+ui.achievements.section.stats,RUN STATISTICS,LAUFSTATISTIK,src/UI/AchievementsPanel.cs
+ui.achievements.section.earned,EARNED MILESTONES,ERWORBENE MEILENSTEINE,src/UI/AchievementsPanel.cs
+ui.achievements.section.targets,NEXT TARGETS,NÄCHSTE ZIELE,src/UI/AchievementsPanel.cs
+ui.achievements.close,CLOSE [Esc],SCHLIESSEN [Esc],src/UI/AchievementsPanel.cs
+ui.afflictions.fit_accommodation,FIT,ANPASSEN,src/UI/AfflictionsPanel.cs
+ui.afflictions.remove_accommodation,REMOVE,ENTFERNEN,src/UI/AfflictionsPanel.cs
+ui.achievements.milestone.first_week,First Week Survivor — reached Day 7,Erste-Woche-Überlebender — Tag 7 erreicht,src/UI/AchievementsPanel.cs
+ui.achievements.milestone.two_week,Two-Week Endurance — reached Day 14,Zwei-Wochen-Ausdauer — Tag 14 erreicht,src/UI/AchievementsPanel.cs
+ui.achievements.milestone.month_ash,Month of Ash — reached Day 30,Monat der Asche — Tag 30 erreicht,src/UI/AchievementsPanel.cs
+ui.achievements.milestone.no_casualties,No Casualties — full roster alive,Keine Verluste — volle Besatzung lebt,src/UI/AchievementsPanel.cs
+ui.achievements.milestone.low_exposure,Low Exposure — average dose below 20 mSv,Geringe Exposition — Durchschnittsdosis unter 20 mSv,src/UI/AchievementsPanel.cs
+ui.achievements.milestone.healthy_cohort,Healthy Cohort — average health above 80,Gesunde Kohorte — Durchschnittsgesundheit über 80,src/UI/AchievementsPanel.cs
+ui.achievements.target.day7,Next: survive to Day 7,Nächstes: bis Tag 7 überleben,src/UI/AchievementsPanel.cs
+ui.achievements.target.day7_done,Day 7 milestone reached,Meilenstein Tag 7 erreicht,src/UI/AchievementsPanel.cs
+ui.achievements.target.day14,Next: survive to Day 14,Nächstes: bis Tag 14 überleben,src/UI/AchievementsPanel.cs
+ui.achievements.target.day14_done,Day 14 milestone reached,Meilenstein Tag 14 erreicht,src/UI/AchievementsPanel.cs
+ui.achievements.target.day30,Next: survive to Day 30,Nächstes: bis Tag 30 überleben,src/UI/AchievementsPanel.cs
+ui.achievements.target.day30_done,Day 30 milestone reached,Meilenstein Tag 30 erreicht,src/UI/AchievementsPanel.cs
+ui.afflictions.fit_tooltip,Fit {0} (consumes {1}).,{0} anpassen (verbraucht {1}).,src/UI/AfflictionsPanel.cs
+ui.afflictions.missing_tooltip,Missing: {0}.,Fehlt: {0}.,src/UI/AfflictionsPanel.cs
+ui.afflictions.cannot_fit,Cannot fit {0}: accommodation command not wired.,{0} kann nicht angepasst werden: Unterbringungsbefehl nicht verbunden.,src/UI/AfflictionsPanel.cs
+ui.afflictions.fitted,Fitted {0} for {1}.,{0} für {1} angepasst.,src/UI/AfflictionsPanel.cs
+ui.afflictions.cannot_fit_short,Cannot fit {0},{0} kann nicht angepasst werden,src/UI/AfflictionsPanel.cs
+ui.afflictions.cannot_remove,Cannot remove {0}: accommodation command not wired.,{0} kann nicht entfernt werden: Unterbringungsbefehl nicht verbunden.,src/UI/AfflictionsPanel.cs
+ui.afflictions.removed,Removed {0} from {1}.,{0} von {1} entfernt.,src/UI/AfflictionsPanel.cs
+ui.afflictions.cannot_remove_short,Cannot remove {0},{0} kann nicht entfernt werden,src/UI/AfflictionsPanel.cs
+ui.medical.bandage,BANDAGE (+{0} HP) [{1}],VERBAND (+{0} LP) [{1}],src/UI/MedicalPanel.cs
+ui.medical.iodine,IODINE (+RESIST) [{0}],JOD (+RESISTENZ) [{0}],src/UI/MedicalPanel.cs
+ui.medical.anti_rad,ANTI-RAD (−{0} mSv) [{1}],STRAHLENSCHUTZ (−{0} mSv) [{1}],src/UI/MedicalPanel.cs
+ui.medical.inhaler_apply,APPLY INHALER (−{0}% lung) [{1}],INHALATOR ANWENDEN (−{0}% Lunge) [{1}],src/UI/MedicalPanel.cs
+ui.medical.inhaler_plain,APPLY INHALER [{0}],INHALATOR ANWENDEN [{0}],src/UI/MedicalPanel.cs
+ui.medical.herbal_tea,HERBAL TEA (−{0}%) [{1}],KRÄUTERTEE (−{0}%) [{1}],src/UI/MedicalPanel.cs
+ui.medical.inhaler_relief,[INHALER ACTIVE {0}h],[INHALATOR AKTIV {0}h],src/UI/MedicalPanel.cs
+ui.medical.inhaler_no_item,No inhaler in inventory — craft recipe_inhaler,Kein Inhalator im Inventar — recipe_inhaler herstellen,src/UI/MedicalPanel.cs
+ui.medical.inhaler_no_damage,No respiratory damage,Kein Lungenschaden,src/UI/MedicalPanel.cs
+ui.medical.cohort_penalty,Crafting {0} · Combat {1},Handwerk {0} · Kampf {1},src/UI/MedicalPanel.cs
+ui.medical.care_cancelled,Cancelled {0}; reserved treatment inputs released.,{0} abgebrochen; reservierte Behandlungsmittel freigegeben.,src/UI/MedicalPanel.cs
+ui.medical.unnamed,[UNNAMED],[UNBENANNT],src/UI/MedicalPanel.cs
+ui.medical.care_bandage,Applied sterile bandage.,Steriler Verband angelegt.,src/UI/MedicalPanel.cs
+ui.medical.care_iodine,Administered Potassium Iodide.,Kaliumjodid verabreicht.,src/UI/MedicalPanel.cs
+ui.medical.care_anti_rad,Administered anti-rad chelation agent.,Anti-Strahlen-Chelatmittel verabreicht.,src/UI/MedicalPanel.cs
+ui.medical.care_inhaler,Applied improvised inhaler.,Behelfsmäßiger Inhalator angewendet.,src/UI/MedicalPanel.cs
+ui.medical.care_herbal_tea,Administered herbal tea.,Kräutertee verabreicht.,src/UI/MedicalPanel.cs
+ui.medical.no_session,No medical session bound.,Keine medizinische Sitzung verbunden.,src/UI/MedicalPanel.cs
+ui.medical.no_treatment_ledger,No treatment ledger available.,Kein Behandlungsjournal verfügbar.,src/UI/MedicalPanel.cs
+ui.medical.no_inventory,No inventory session bound.,Keine Inventarsitzung verbunden.,src/UI/MedicalPanel.cs
+ui.medical.no_health_readout,No survivor health readout bound.,Keine Gesundheitsanzeige gebunden.,src/UI/MedicalPanel.cs
+ui.medical.no_chem_dependencies,No active chemical dependencies or withdrawal ledgers.,Keine aktiven chemischen Abhängigkeiten oder Entzugsjournale.,src/UI/MedicalPanel.cs
+ui.medical.inventory_not_bound,Inventory session not bound.,Inventarsitzung nicht verbunden.,src/UI/MedicalPanel.cs
+ui.medical.no_procedures,No procedures currently queued.,Derzeit keine Verfahren in der Warteschlange.,src/UI/MedicalPanel.cs
+ui.medical.disease_ward_offline,Disease ward offline (pipeline not bound).,Krankenstation offline (Pipeline nicht verbunden).,src/UI/MedicalPanel.cs
+ui.medical.no_infections,No suspected or confirmed infections in the shelter.,Keine vermuteten oder bestätigten Infektionen im Unterstand.,src/UI/MedicalPanel.cs
+ui.medical.active_penalties,Active Cohort Penalties,Aktive Kohortenstrafen,src/UI/MedicalPanel.cs
+ui.afflictions.no_roster,No survivor roster bound.,Keine Überlebendenliste gebunden.,src/UI/AfflictionsPanel.cs
+ui.afflictions.no_active,No active afflictions.,Keine aktiven Leiden.,src/UI/AfflictionsPanel.cs
+ui.afflictions.no_chronic,No chronic conditions.,Keine chronischen Erkrankungen.,src/UI/AfflictionsPanel.cs
+ui.afflictions.no_inventory,No inventory session bound.,Keine Inventarsitzung verbunden.,src/UI/AfflictionsPanel.cs
+ui.afflictions.no_supplies,No treatment supplies in stock.,Keine Behandlungsvorräte auf Lager.,src/UI/AfflictionsPanel.cs
+ui.afflictions.unknown,Unknown,Unbekannt,src/UI/AfflictionsPanel.cs
+ui.medical.vigil_idle,Vigil: idle,Vigil: inaktiv,src/UI/MedicalVigilText.cs
+ui.medical.vigil_left_early,Vigil: left early,Vigil: vorzeitig verlassen,src/UI/MedicalVigilText.cs
+ui.medical.vigil_kept,Vigil: kept to the end for {0},Vigil: bis zum Ende gehalten für {0},src/UI/MedicalVigilText.cs
+ui.medical.vigil_active,Vigil: {0} · {1}/{2}s · {3}/{4} names,Vigil: {0} · {1}/{2}s · {3}/{4} Namen,src/UI/MedicalVigilText.cs
+ui.medical.vigil_phantom,· phantom knock,· phantomhaftes Klopfen,src/UI/MedicalVigilText.cs
+ui.medical.vigil_standby,STANDBY,BEREITSCHAFT,src/UI/MedicalPanel.cs
+ui.medical.identify,IDENTIFY,IDENTIFIZIEREN,src/UI/MedicalPanel.cs
+ui.medical.isolate,ISOLATE,ISOLIEREN,src/UI/MedicalPanel.cs
+ui.medical.release,RELEASE,FREIGEBEN,src/UI/MedicalPanel.cs
+ui.medical.apply,APPLY,ANWENDEN,src/UI/MedicalPanel.cs
+ui.medical.affliction_unidentified,{0} — {1} (unidentified),{0} — {1} (unidentifiziert),src/UI/MedicalPanel.cs
+ui.medical.affliction_row,{0} — {1} · day {2},{0} — {1} · Tag {2},src/UI/MedicalPanel.cs
+ui.medical.clinical_note,↳ [CLINICAL NOTE] {0} · Observe: {1},↳ [KLINISCHE NOTIZ] {0} · Beobachten: {1},src/UI/MedicalPanel.cs
+ui.medical.treatment_ready,ok,bereit,src/UI/MedicalPanel.cs
+ui.medical.no_supplies,no supplies needed,keine Vorräte nötig,src/UI/MedicalPanel.cs
+ui.afflictions.supply_bandage,Bandage (+25 HP),Verband (+25 LP),src/UI/AfflictionsPanel.cs
+ui.afflictions.supply_iodine,Iodine Pills (rad resistance),Jodtabletten (Strahlenresistenz),src/UI/AfflictionsPanel.cs
+ui.afflictions.supply_anti_rad,Anti-Rad / Chelation (−40 mSv),Anti-Rad / Chelat (−40 mSv),src/UI/AfflictionsPanel.cs
+ui.afflictions.supply_inhaler,Inhaler (respiratory relief),Inhalator (Atemhilfe),src/UI/AfflictionsPanel.cs
+ui.afflictions.supply_herbal_tea,Herbal Tea (respiratory soothe),Kräutertee (Atemberuhigung),src/UI/AfflictionsPanel.cs
+ui.afflictions.supply_antibiotics,Antibiotics (infection),Antibiotika (Infektion),src/UI/AfflictionsPanel.cs
+ui.afflictions.supply_row,{0} — {1} in stock,{0} — {1} auf Lager,src/UI/AfflictionsPanel.cs
+ui.afflictions.acute_rad,{0} — Acute radiation sickness (dose {1} mSv),{0} — Akute Strahlenkrankheit (Dosis {1} mSv),src/UI/AfflictionsPanel.cs
+ui.afflictions.severe_respiratory,{0} — Severe respiratory degeneration ({1}%),{0} — Schwere Atemwegsdegeneration ({1}%),src/UI/AfflictionsPanel.cs
+ui.afflictions.respiratory_irritation,{0} — Respiratory irritation ({1}%),{0} — Atemwegsreizung ({1}%),src/UI/AfflictionsPanel.cs
+ui.afflictions.clinical_note,↳ {0} · Observe: {1},↳ {0} · Beobachten: {1},src/UI/AfflictionsPanel.cs
+ui.cohort.title,EXPEDITION ROSTER COMMISSION,EXPEDITIONSTROSS-KOMMISSION,src/UI/StartingCohortSetupPanel.cs
+ui.cohort.subtitle,Designate starting cohort and assigned holdfast origin profile before opening bunker seal.,Startkohorte und zugewiesenes Holdfast-Herkunftsprofil festlegen bevor das Bunkersiegel geöffnet wird.,src/UI/StartingCohortSetupPanel.cs
+ui.cohort.section.cohort,STARTING COHORT,STARTKOHORTE,src/UI/StartingCohortSetupPanel.cs
+ui.cohort.section.stores,STARTING STORES,STARTVORRÄTE,src/UI/StartingCohortSetupPanel.cs
+ui.cohort.section.difficulty,CAMPAIGN DIFFICULTY,KAMPAGNENSCHWIERIGKEIT,src/UI/StartingCohortSetupPanel.cs
+ui.cohort.cancel,CANCEL,ABBRECHEN,src/UI/StartingCohortSetupPanel.cs
+ui.cohort.start,START CAMPAIGN,KAMPAGNE STARTEN,src/UI/StartingCohortSetupPanel.cs
+ui.cohort.note.acute_rad,acute radiation,akute Strahlung,src/UI/StartingCohortSetupPanel.cs
+ui.cohort.note.injured,injured,verletzt,src/UI/StartingCohortSetupPanel.cs
+ui.cohort.note.strained,strained,belastet,src/UI/StartingCohortSetupPanel.cs
+ui.cohort.note.stable,stable,stabil,src/UI/StartingCohortSetupPanel.cs
+ui.shelter_hud.condition.health,HEALTH,GESUNDHEIT,src/UI/ShelterHudPanel.cs
+ui.shelter_hud.condition.radiation,RADIATION,STRAHLUNG,src/UI/ShelterHudPanel.cs
+ui.shelter_hud.condition.hunger,HUNGER,HUNGER,src/UI/ShelterHudPanel.cs
+ui.shelter_hud.condition.thirst,THIRST,DURST,src/UI/ShelterHudPanel.cs
+ui.shelter_hud.condition.roster,ROSTER,BESATZUNG,src/UI/ShelterHudPanel.cs
+ui.dashboard.memorialized,{0} MEMORIALIZED,{0} GEDENKT,src/UI/GameDashboardPanel.cs
+ui.dashboard.youth,{0} YOUTH,{0} JUGENDLICHE,src/UI/GameDashboardPanel.cs
+ui.dashboard.unassigned,UNASSIGNED,NICHT ZUGEWIESEN,src/UI/GameDashboardPanel.cs
+ui.dashboard.duty_intake,DUTY ROSTER // INTAKE FILTRATION: {0},DIENSTPLAN // ZUFUHRFILTERUNG: {0},src/UI/GameDashboardPanel.cs
+ui.dashboard.hold_hatch,Hold the hatch. {0} is reading {1} mSv outside with visibility at {2}.,Luke geschlossen halten. {0} misst draußen {1} mSv bei Sicht {2}.,src/UI/GameDashboardPanel.cs
+ui.dashboard.air_warning,Atmospheric contamination rising. Service the HEPA filtration stack before toxic air settles.,Atmosphärische Kontamination steigt. HEPA-Filterstapel warten bevor giftige Luft sich setzt.,src/UI/GameDashboardPanel.cs
+ui.dashboard.rations_next,Rations are becoming the next problem. Reconcile food and water before the next shift.,Rationen werden zum nächsten Problem. Nahrung und Wasser vor der nächsten Schicht abgleichen.,src/UI/GameDashboardPanel.cs
+ui.dashboard.keep_quiet,Keep the shelter quiet. Check the filter pressure before the next outdoor shift.,Den Unterstand ruhig halten. Filterdruck vor der nächsten Außenschicht prüfen.,src/UI/GameDashboardPanel.cs
+ui.dashboard.next_shift.hold,HOLD / {0},HALTEN / {0},src/UI/GameDashboardPanel.cs
+ui.dashboard.next_shift.open,OPEN / {0},OFFEN / {0},src/UI/GameDashboardPanel.cs
+ui.dashboard.hatch.sealed_hazard,SEALED // HAZARD,VERSIEGELT // GEFAHR,src/UI/GameDashboardPanel.cs
+ui.dashboard.hatch.sealed,SEALED,VERSIEGELT,src/UI/GameDashboardPanel.cs
+ui.medical.cancel_reservation,CANCEL / RELEASE RESERVATION,RESERVIERUNG ABBRECHEN / FREIGEBEN,src/UI/MedicalPanel.cs
+ui.medical.section.health,SURVIVOR HEALTH DOSIMETRY & RESPIRATORY,ÜBERLEBENDEN-GESUNDHEIT DOSIMETRIE & ATEMWEGE,src/UI/MedicalPanel.cs
+ui.medical.section.treatment,TREATMENT & DETOXIFICATION LEDGER,BEHANDLUNGS- & ENTGIFTUNGSJOURNAL,src/UI/MedicalPanel.cs
+ui.medical.section.supplies,MEDICAL SUPPLIES ON HAND,MEDIZINISCHE VORRÄTE,src/UI/MedicalPanel.cs
+ui.ward.section.matrix,WARD BED MATRIX,STATION-BETTMATRIX,src/UI/MedicalWardPanel.cs
+ui.ward.section.telemetry,BAY TELEMETRY & PROCEDURES,BAY-TELEMETRIE & VERFAHREN,src/UI/MedicalWardPanel.cs
+ui.ward.section.catalog,SURGICAL CATALOG & LOGS,CHIRURGIEKATALOG & PROTOKOLLE,src/UI/MedicalWardPanel.cs
+ui.ward.no_events,No recent ward events.,Keine jüngsten Stationsereignisse.,src/UI/MedicalWardPanel.cs
+ui.ward.bed_unit,BED UNIT: {0},BETTEINHEIT: {0},src/UI/MedicalWardPanel.cs
+ui.ward.run,RUN {0},{0} AUSFÜHREN,src/UI/MedicalWardPanel.cs
+ui.ward.vacant,Bed unit is currently vacant and sterilized. Patients requiring intensive trauma triage or surgical intervention will be admitted from shelter wards.,Die Betteneinheit ist derzeit frei und sterilisiert. Patienten mit intensiver Traumatriage oder chirurgischem Eingriff werden aus den Unterstandstationen aufgenommen.,src/UI/MedicalWardPanel.cs
+ui.ward.select_bed,Select a bed from the matrix to inspect telemetry and run procedures.,Ein Bett aus der Matrix wählen um Telemetrie zu prüfen und Verfahren auszuführen.,src/UI/MedicalWardPanel.cs
+ui.ward.section.procedures,PROCEDURE CATALOG,VERFAHRENSKATALOG,src/UI/MedicalWardPanel.cs
+ui.ward.system,System: {0},Zuordnung: {0},src/UI/MedicalWardPanel.cs
+ui.ward.section.recent,RECENT PROCEDURES RUN,JÜNGSTE DURCHGEFÜHRTE VERFAHREN,src/UI/MedicalWardPanel.cs
+ui.ward.no_procedures,No procedures logged yet.,Noch keine Verfahren protokolliert.,src/UI/MedicalWardPanel.cs
+ui.ward.discharge,DISCHARGE PATIENT,PATIENT ENTLASSEN,src/UI/MedicalWardPanel.cs
+ui.ward.section.clinical_note,CLINICAL NOTE,KLINISCHE NOTIZ,src/UI/MedicalWardPanel.cs
+ui.ward.sign,Sign: {0},Anzeichen: {0},src/UI/MedicalWardPanel.cs
+ui.ward.also,Also: {0},Außerdem: {0},src/UI/MedicalWardPanel.cs
+ui.ward.section.available,AVAILABLE PROCEDURES,VERFÜGBARE VERFAHREN,src/UI/MedicalWardPanel.cs
+ui.ward.section.administer,ADMINISTER TREATMENT,BEHANDLUNG VERABREICHEN,src/UI/MedicalWardPanel.cs

@@ -130,7 +130,7 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_survivors?.RosterState == null || _survivors.RosterState.Count == 0)
             {
-                _activeList.AddChild(MakeDimLine("No survivor roster bound."));
+                _activeList.AddChild(MakeDimLine(Tr("ui.afflictions.no_roster", "No survivor roster bound.")));
                 return;
             }
 
@@ -140,9 +140,9 @@ namespace AtomicWar.GodotApp.UI
                 var rad = _survivors.RadStateFor(s.Id);
                 float respDeg = _respiratory?.RespiratoryDegradation(s.Id) ?? 0f;
 
-                if (s.Health < 30f)
+                if (s.Health < Ashfall.Core.Survivors.NeedsProfile.DefaultHealthWarn)
                 {
-                    AddAffliction(_activeList, $"{Name(s.Id)} — Critical health ({s.Health:0}/100)",
+                    AddAffliction(_activeList, TrFormat("ui.afflictions.critical_health", Name(s.Id), $"{s.Health:0}"),
                         Ashfall.Core.UI.Theme.Critical);
                     RenderedActiveCount++;
                     if (_medicalTexts != null)
@@ -151,13 +151,13 @@ namespace AtomicWar.GodotApp.UI
                         if (prose != null)
                         {
                             string summary = prose.DiagnosisSummary.Length > 70 ? prose.DiagnosisSummary.Substring(0, 67) + "..." : prose.DiagnosisSummary;
-                            AddDimSubline(_activeList, $"   ↳ {summary} · Observe: {prose.SymptomLine}");
+                            AddDimSubline(_activeList, "   " + TrFormat("ui.afflictions.clinical_note", summary, prose.SymptomLine));
                         }
                     }
                 }
                 if (rad is { HasAcuteRadiationSickness: true })
                 {
-                    AddAffliction(_activeList, $"{Name(s.Id)} — Acute radiation sickness (dose {rad.RadiationDose:0} mSv)",
+                    AddAffliction(_activeList, TrFormat("ui.afflictions.acute_rad", Name(s.Id), $"{rad.RadiationDose:0}"),
                         Ashfall.Core.UI.Theme.Critical);
                     RenderedActiveCount++;
                     if (_medicalTexts != null)
@@ -166,13 +166,13 @@ namespace AtomicWar.GodotApp.UI
                         if (prose != null)
                         {
                             string summary = prose.DiagnosisSummary.Length > 70 ? prose.DiagnosisSummary.Substring(0, 67) + "..." : prose.DiagnosisSummary;
-                            AddDimSubline(_activeList, $"   ↳ {summary} · Observe: {prose.SymptomLine}");
+                            AddDimSubline(_activeList, "   " + TrFormat("ui.afflictions.clinical_note", summary, prose.SymptomLine));
                         }
                     }
                 }
                 if (respDeg >= RespiratoryDegenerationSystem.SevereCoughThreshold)
                 {
-                    AddAffliction(_activeList, $"{Name(s.Id)} — Severe respiratory degeneration ({respDeg:0}%)",
+                    AddAffliction(_activeList, TrFormat("ui.afflictions.severe_respiratory", Name(s.Id), $"{respDeg:0}"),
                         Ashfall.Core.UI.Theme.Critical);
                     RenderedActiveCount++;
                     if (_medicalTexts != null)
@@ -181,13 +181,13 @@ namespace AtomicWar.GodotApp.UI
                         if (prose != null)
                         {
                             string summary = prose.DiagnosisSummary.Length > 70 ? prose.DiagnosisSummary.Substring(0, 67) + "..." : prose.DiagnosisSummary;
-                            AddDimSubline(_activeList, $"   ↳ {summary} · Observe: {prose.SymptomLine}");
+                            AddDimSubline(_activeList, "   " + TrFormat("ui.afflictions.clinical_note", summary, prose.SymptomLine));
                         }
                     }
                 }
                 else if (respDeg > 0f)
                 {
-                    AddAffliction(_activeList, $"{Name(s.Id)} — Respiratory irritation ({respDeg:0}%)",
+                    AddAffliction(_activeList, TrFormat("ui.afflictions.respiratory_irritation", Name(s.Id), $"{respDeg:0}"),
                         Ashfall.Core.UI.Theme.Warm);
                     RenderedActiveCount++;
                 }
@@ -234,7 +234,7 @@ namespace AtomicWar.GodotApp.UI
                                 if (prose != null)
                                 {
                                     string summary = prose.DiagnosisSummary.Length > 70 ? prose.DiagnosisSummary.Substring(0, 67) + "..." : prose.DiagnosisSummary;
-                                    AddDimSubline(_activeList, $"   ↳ {summary} · Observe: {prose.SymptomLine}");
+                                    AddDimSubline(_activeList, "   " + TrFormat("ui.afflictions.clinical_note", summary, prose.SymptomLine));
                                 }
                             }
                         }
@@ -249,7 +249,7 @@ namespace AtomicWar.GodotApp.UI
                                 if (prose != null)
                                 {
                                     string summary = prose.DiagnosisSummary.Length > 70 ? prose.DiagnosisSummary.Substring(0, 67) + "..." : prose.DiagnosisSummary;
-                                    AddDimSubline(_activeList, $"   ↳ {summary} · Observe: {prose.SymptomLine}");
+                                    AddDimSubline(_activeList, "   " + TrFormat("ui.afflictions.clinical_note", summary, prose.SymptomLine));
                                 }
                             }
                         }
@@ -261,7 +261,7 @@ namespace AtomicWar.GodotApp.UI
                 if (_medical?.Bridge != null)
                 {
                     var activeAfflictionIds = new List<string>();
-                    if (s.Health < 30f) activeAfflictionIds.Add(MedicalTreatmentCatalog.HealthDeficitId);
+                    if (s.Health < Ashfall.Core.Survivors.NeedsProfile.DefaultHealthWarn) activeAfflictionIds.Add(MedicalTreatmentCatalog.HealthDeficitId);
                     if (rad is { HasAcuteRadiationSickness: true }) activeAfflictionIds.Add(MedicalTreatmentCatalog.RadiationSicknessId);
                     if (respDeg > 0f) activeAfflictionIds.Add(MedicalTreatmentCatalog.RespiratoryDegenerationId);
                     if (_medical.Pipeline != null && Ashfall.Core.Survivors.SurvivorId.TryParse(s.Id, out var projSv))
@@ -292,7 +292,7 @@ namespace AtomicWar.GodotApp.UI
             }
 
             if (RenderedActiveCount == 0)
-                _activeList.AddChild(MakeDimLine("No active afflictions."));
+                _activeList.AddChild(MakeDimLine(Tr("ui.afflictions.no_active", "No active afflictions.")));
 
             // Plan 193/198 — bounded medical record projection (day + event id only;
             // no free-text notes, no second diagnosis store).
@@ -308,7 +308,7 @@ namespace AtomicWar.GodotApp.UI
                         var recent = _medical.Pipeline.Record.ForSurvivor(rs.Id, 2);
                         if (recent.Count == 0) continue;
 
-                        _activeList.AddChild(MakeDimLine($"Recent medical record — {Name(rs.Id)}:"));
+                        _activeList.AddChild(MakeDimLine(TrFormat("ui.afflictions.recent_record", Name(rs.Id))));
                         for (int ei = 0; ei < recent.Count; ei++)
                         {
                             var entry = recent[ei];
@@ -338,7 +338,7 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_survivors?.RosterState == null || _survivors.RosterState.Count == 0)
             {
-                _chronicList.AddChild(MakeDimLine("No survivor roster bound."));
+                _chronicList.AddChild(MakeDimLine(Tr("ui.afflictions.no_roster", "No survivor roster bound.")));
                 return;
             }
 
@@ -448,7 +448,7 @@ namespace AtomicWar.GodotApp.UI
             }
 
             if (chronicCount == 0)
-                _chronicList.AddChild(MakeDimLine("No chronic conditions."));
+                _chronicList.AddChild(MakeDimLine(Tr("ui.afflictions.no_chronic", "No chronic conditions.")));
         }
 
         /// <summary>
@@ -488,7 +488,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 string accId = def.accommodation_id;
                 row.AddChild(AshfallUiHelpers.MakeButton(
-                    AshfallLocalization.Tr("ui.afflictions.remove_accommodation", "REMOVE"),
+                    AshfallUiText.Tr("ui.afflictions.remove_accommodation", "REMOVE"),
                     () => RemoveAccommodation(survivorId, accId)));
             }
             else
@@ -497,12 +497,12 @@ namespace AtomicWar.GodotApp.UI
                 bool affordable = missing.Count == 0;
                 string cond = conditionId;
                 var fit = AshfallUiHelpers.MakeButton(
-                    AshfallLocalization.Tr("ui.afflictions.fit_accommodation", "FIT"),
+                    AshfallUiText.Tr("ui.afflictions.fit_accommodation", "FIT"),
                     () => FitAccommodation(survivorId, cond, def.accommodation_id),
                     disabled: !affordable);
                 fit.TooltipText = affordable
-                    ? $"Fit {def.display_name} (consumes {cost})."
-                    : $"Missing: {string.Join(", ", missing)}.";
+                    ? TrFormat("ui.afflictions.fit_tooltip", def.display_name, cost)
+                    : TrFormat("ui.afflictions.missing_tooltip", string.Join(", ", missing));
                 row.AddChild(fit);
             }
             _chronicList.AddChild(row);
@@ -542,14 +542,14 @@ namespace AtomicWar.GodotApp.UI
             string name = def?.display_name ?? accommodationId;
             if (_fitAccommodation == null)
             {
-                _accommodationFeedback = $"Cannot fit {name}: accommodation command not wired.";
+                _accommodationFeedback = TrFormat("ui.afflictions.cannot_fit", name);
                 RefreshView();
                 return;
             }
             var result = _fitAccommodation(survivorId, conditionId, accommodationId);
             _accommodationFeedback = result.IsSuccess
-                ? $"Fitted {name} for {Name(survivorId)}."
-                : ActionRefusalText.Line(result, $"Cannot fit {name}");
+                ? TrFormat("ui.afflictions.fitted", name, Name(survivorId))
+                : ActionRefusalText.Line(result, TrFormat("ui.afflictions.cannot_fit_short", name));
             RefreshView();
         }
 
@@ -560,14 +560,14 @@ namespace AtomicWar.GodotApp.UI
             string name = def?.display_name ?? accommodationId;
             if (_removeAccommodation == null)
             {
-                _accommodationFeedback = $"Cannot remove {name}: accommodation command not wired.";
+                _accommodationFeedback = TrFormat("ui.afflictions.cannot_remove", name);
                 RefreshView();
                 return;
             }
             var result = _removeAccommodation(survivorId, accommodationId);
             _accommodationFeedback = result.IsSuccess
-                ? $"Removed {name} from {Name(survivorId)}."
-                : ActionRefusalText.Line(result, $"Cannot remove {name}");
+                ? TrFormat("ui.afflictions.removed", name, Name(survivorId))
+                : ActionRefusalText.Line(result, TrFormat("ui.afflictions.cannot_remove_short", name));
             RefreshView();
         }
 
@@ -575,30 +575,30 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_inventory?.Inventory == null)
             {
-                _treatmentList.AddChild(MakeDimLine("No inventory session bound."));
+                _treatmentList.AddChild(MakeDimLine(Tr("ui.afflictions.no_inventory", "No inventory session bound.")));
                 return;
             }
 
             var rows = new (string label, int count)[]
             {
-                ("Bandage (+25 HP)", CountItem("bandage", "item_bandage")),
-                ("Iodine Pills (rad resistance)", CountItem("iodine_pills", "item_potassium_iodide")),
-                ("Anti-Rad / Chelation (−40 mSv)", CountItem("rad_away", "item_rad_away")),
-                ("Inhaler (respiratory relief)", CountItem("inhaler")),
-                ("Herbal Tea (respiratory soothe)", CountItem("herbal_tea")),
-                ("Antibiotics (infection)", CountItem("antibiotics", "item_antibiotics")),
+                (Tr("ui.afflictions.supply_bandage", "Bandage (+25 HP)"), CountItem("bandage", "item_bandage")),
+                (Tr("ui.afflictions.supply_iodine", "Iodine Pills (rad resistance)"), CountItem("iodine_pills", "item_potassium_iodide")),
+                (Tr("ui.afflictions.supply_anti_rad", "Anti-Rad / Chelation (−40 mSv)"), CountItem("rad_away", "item_rad_away")),
+                (Tr("ui.afflictions.supply_inhaler", "Inhaler (respiratory relief)"), CountItem("inhaler")),
+                (Tr("ui.afflictions.supply_herbal_tea", "Herbal Tea (respiratory soothe)"), CountItem("herbal_tea")),
+                (Tr("ui.afflictions.supply_antibiotics", "Antibiotics (infection)"), CountItem("antibiotics", "item_antibiotics")),
             };
 
             bool any = false;
             foreach (var (label, count) in rows)
             {
                 if (count <= 0) continue;
-                AddAffliction(_treatmentList, $"{label} — {count} in stock", Ashfall.Core.UI.Theme.Warm);
+                AddAffliction(_treatmentList, TrFormat("ui.afflictions.supply_row", label, count), Ashfall.Core.UI.Theme.Warm);
                 any = true;
             }
 
             if (!any)
-                _treatmentList.AddChild(MakeDimLine("No treatment supplies in stock."));
+                _treatmentList.AddChild(MakeDimLine(Tr("ui.afflictions.no_supplies", "No treatment supplies in stock.")));
         }
 
         private void AddAffliction(VBoxContainer parent, string text, (float r, float g, float b, float a) col)
@@ -635,9 +635,13 @@ namespace AtomicWar.GodotApp.UI
                 || afflictionId == MedicalTreatmentCatalog.GuiltInsomniaId;
         }
 
+        private static string Tr(string key, string fallback) => AshfallUiText.Tr(key, fallback);
+
+        private static string TrFormat(string key, params object[] args) => AshfallUiText.TrFormat(key, args);
+
         private static string Name(string id)
         {
-            if (string.IsNullOrEmpty(id)) return "Unknown";
+            if (string.IsNullOrEmpty(id)) return Tr("ui.afflictions.unknown", "Unknown");
             int us = id.IndexOf('_');
             return us >= 0 ? id.Substring(us + 1).Replace('_', ' ') : id;
         }

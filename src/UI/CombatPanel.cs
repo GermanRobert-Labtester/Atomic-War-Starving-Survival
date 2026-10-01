@@ -66,6 +66,11 @@ namespace AtomicWar.GodotApp.UI
         // T13 — true while a nonzero movement input frame is armed on the pump.
         private bool _movementSent;
 
+        // T28 — event-tail cursor for player-hit detection + the active flash
+        // tween. -1 means "synced on bind, don't replay history".
+        private int _lastSeenEventCount = -1;
+        private Tween? _damageFlashTween;
+
         public bool IsBound => _bound;
 
         /// <summary>Typed binding to the real combat host session.</summary>
@@ -73,6 +78,9 @@ namespace AtomicWar.GodotApp.UI
         {
             _combat = combat;
             _bound = true;
+            // T28 — rebinds happen on every panel open; resync the event cursor
+            // without flashing for damage that landed while the panel was closed.
+            _lastSeenEventCount = -1;
             if (_combat != null)
             {
                 // OpenCombatPanel re-binds on every open — never stack refresh
@@ -92,6 +100,10 @@ namespace AtomicWar.GodotApp.UI
             if (!Visible) return;
 
             var snap = _combat.Snapshot();
+
+            // T28 — enemy-dealt hits on the squad pulse the panel red once per
+            // new event batch; reduced-motion users get no flash at all.
+            DetectPlayerHitFlash(snap);
 
             _header.Text = "COMBAT & ENCOUNTERS  ·  " + (string.IsNullOrEmpty(snap.LocationName) ? "NO ACTIVE" : snap.LocationName);
             if (snap.IsActive)
@@ -190,6 +202,51 @@ namespace AtomicWar.GodotApp.UI
 
             // T15 — full end-state: aftermath casualties + recovered loot.
             RefreshResultLog(snap);
+        }
+
+        /// <summary>
+        /// T28 — scans only the events appended since the last refresh and
+        /// flashes the panel when an enemy hit landed on a player combatant.
+        /// </summary>
+        private void DetectPlayerHitFlash(CombatSnapshot snap)
+        {
+            if (_lastSeenEventCount < 0 || _lastSeenEventCount > snap.Events.Count)
+            {
+                // First refresh after bind (or a pruned/rotated event list):
+                // sync the cursor silently, never replay history as a flash.
+                _lastSeenEventCount = snap.Events.Count;
+                return;
+            }
+
+            var playerIds = new HashSet<string>();
+            foreach (var c in snap.Combatants)
+                if (c.IsPlayer) playerIds.Add(c.Id);
+
+            bool playerHit = false;
+            for (int i = _lastSeenEventCount; i < snap.Events.Count && !playerHit; i++)
+            {
+                var e = snap.Events[i];
+                if (e == null) continue;
+                if (e.Kind != "enemy_fire" && e.Kind != "ai_charge_hit" && e.Kind != "flee_hit") continue;
+                if (playerIds.Contains(e.TargetId)) playerHit = true;
+            }
+            _lastSeenEventCount = snap.Events.Count;
+
+            if (playerHit) FlashDamage();
+        }
+
+        /// <summary>T28 — restrained red pulse on the whole panel (white → critical red → white).</summary>
+        private void FlashDamage()
+        {
+            if (!UiMotion.CanAnimate) return;
+            _damageFlashTween?.Kill();
+            var crit = AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical);
+            Modulate = Colors.White;
+            _damageFlashTween = CreateTween();
+            _damageFlashTween.TweenProperty(this, "modulate", crit, 0.06f)
+                .SetTrans(Tween.TransitionType.Cubic).SetEase(Tween.EaseType.Out);
+            _damageFlashTween.TweenProperty(this, "modulate", Colors.White, 0.22f)
+                .SetTrans(Tween.TransitionType.Cubic).SetEase(Tween.EaseType.In);
         }
 
         private void RefreshResultLog(CombatSnapshot snap)

@@ -1,0 +1,165 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Read-only catalog-hygiene audit policy for Assets/StreamingAssets/Data. Consumed by `ashfall-dev audit-catalogs` (tools/gotools/pkg/catalogaudit) and the `catalog_audit` CI gate. This is a fast static pre-flight over the authored JSON; the runtime authority for catalog cross-references remains Ashfall.Core.CatalogIntegrityValidator (--data-integrity-selftest).",
+  "data_dir": "Assets/StreamingAssets/Data",
+  "id_naming_regex": "^[a-z0-9]+(_[a-z0-9]+)*$",
+  "default_domain": "unclassified",
+  "id_domains": [
+    {
+      "domain": "mirror",
+      "globs": ["asset_registry.json", "questline_master.json"],
+      "note": "Registries that intentionally mirror ids from every domain. Excluded from cross-domain duplicate detection."
+    },
+    {
+      "domain": "faction_war_journal",
+      "globs": ["faction_war_journal.json"],
+      "note": "Journal entries keyed by doctrine id (intentional cross-file reuse of warlord_doctrine ids)."
+    },
+    {
+      "domain": "faction_war_radio",
+      "globs": ["faction_war_radio.json"],
+      "note": "Broadcasts keyed by doctrine id (intentional cross-file reuse of warlord_doctrine ids)."
+    },
+    {
+      "domain": "warlord_doctrine",
+      "globs": ["warlord_doctrines.json"],
+      "note": "Doctrine authority; owns the journal_warlord_*/radio_warlord_* reference ids."
+    },
+    {
+      "domain": "currents",
+      "globs": ["currents.json"],
+      "note": "Regional current table; carries a faction id from the faction domain."
+    },
+    {
+      "domain": "propaganda_campaign",
+      "globs": ["propaganda_campaigns.json"]
+    },
+    {
+      "domain": "propaganda_template",
+      "globs": ["propaganda_templates.json"]
+    },
+    {
+      "domain": "item",
+      "globs": ["items.json", "economy_goods.json", "combat_catalog.json", "*_items.json"],
+      "note": "Merged item catalog surface (all *_items.json + economy goods + ammo)."
+    },
+    {
+      "domain": "canonical_item",
+      "globs": ["items.json", "*_items.json"],
+      "note": "Canonical authored item authorities only (excludes the economy/ammo projections). Used as a reference target for G01/G02 so a market id must resolve to a real item."
+    },
+    {
+      "domain": "scavenging_table",
+      "globs": ["scavenging_tables.json"],
+      "note": "Plan 46 weighted scavenging-table authority."
+    },
+    {
+      "domain": "location",
+      "globs": ["*location*.json", "expeditions.json", "wasteland_map_v1.json"]
+    },
+    {
+      "domain": "quest",
+      "globs": ["*quest*.json"]
+    },
+    {
+      "domain": "survivor",
+      "globs": ["*survivor*.json"]
+    },
+    {
+      "domain": "npc",
+      "globs": ["characters.json", "*npcs.json", "dose_registers.json"]
+    },
+    {
+      "domain": "room",
+      "globs": ["shelter_room*.json", "power_grid.json"]
+    },
+    {
+      "domain": "radio",
+      "globs": ["*radio*.json"]
+    },
+    {
+      "domain": "faction",
+      "globs": ["*faction*.json"]
+    },
+    {
+      "domain": "narrative",
+      "globs": ["*encounter*.json"]
+    },
+    {
+      "domain": "audio",
+      "globs": ["*audio*.json", "audio_cues.json", "events.json"]
+    },
+    {
+      "domain": "catalog",
+      "globs": ["*"],
+      "note": "Catch-all for catalogs that do not own entity ids (tuning, templates, prose)."
+    }
+  ],
+  "duplicate_id_allowlist": [
+    "faction_hydro_barons",
+    "journal_warlord_annexation_doctrine",
+    "journal_warlord_consolidation_doctrine",
+    "journal_warlord_toll_doctrine",
+    "journal_warlord_withdrawal_doctrine",
+    "psyops_campaign_scavenger_lantern_hour",
+    "radio_warlord_annexation",
+    "radio_warlord_consolidation",
+    "radio_warlord_toll_standing",
+    "radio_warlord_withdrawal"
+  ],
+  "advisory_allowlist": [],
+  "mirror_unresolved_max": 393,
+  "reference_rules": [
+    {
+      "source_glob": "expeditions.json",
+      "field": "lootCategories",
+      "target_domain": "item",
+      "note": "Plan 76: expedition lootCategories are literal item ids, not abstract tags (generalizes the Plan76DestinationLootReferenceTests gate)."
+    },
+    {
+      "source_glob": "expeditions.json",
+      "field": "scavenging_table_id",
+      "target_domain": "scavenging_table",
+      "note": "Plan 46 table bindings on authored destinations."
+    },
+    {
+      "source_glob": "wasteland_map_v1.json",
+      "field": "lootTable",
+      "target_domain": "scavenging_table",
+      "note": "Wasteland-map salvage nodes forward this id as a scavenging_table_id."
+    },
+    {
+      "source_glob": "economy_goods.json",
+      "field": "id",
+      "target_domain": "canonical_item",
+      "note": "G01: every economy good id must resolve to a canonical item (the 9mm_ammo class of bug). Three grandfathered market-projection ids are allowlisted.",
+      "allowlist": ["bandages", "coal", "crowbar"]
+    },
+    {
+      "source_glob": "combat_catalog.json",
+      "field": "id",
+      "container": "ammo",
+      "target_domain": "canonical_item",
+      "note": "G02: every combat ammo id must resolve to a canonical item."
+    }
+  ],
+  "reference_rules_excluded": [
+    {
+      "source_glob": "locations_expansion3.json",
+      "field": "lootCategories",
+      "reason": "locations_expansion3.json uses abstract category tags (alloy_plates, rations, tools, ...), not item ids. Deliberately out of scope; do not add without an authored contract."
+    }
+  ],
+  "schema_version_default": 1,
+  "schema_version_expectations": {
+    "combat_catalog.json": 2,
+    "disease_catalog.json": 3,
+    "dive_sites.json": 2,
+    "muster_witnesses.json": 2,
+    "starting_supplies.json": 2,
+    "survivor_roles.json": 2,
+    "wasteland_map_v1.json": 2,
+    "weather_effects.json": 2,
+    "year_of_ash_storm_windows.json": 3
+  }
+}

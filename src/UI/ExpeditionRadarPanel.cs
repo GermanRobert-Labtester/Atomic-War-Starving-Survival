@@ -6,6 +6,7 @@ using Ashfall.Core;
 using Ashfall.Core.Expeditions;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
+using AtomicWar.GodotApp.Localization;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI;
@@ -60,36 +61,38 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
     {
         SetAnchorsPreset(LayoutPreset.FullRect);
 
-        _shell = new AshfallDashboardShell("Sortie Radar // Wasteland Movement Network", minWidth: 1100, minHeight: 640);
+        _shell = new AshfallDashboardShell(
+            AshfallLocalization.Tr("ui.expedition.radar.title", "Sortie Radar // Wasteland Movement Network"),
+            minWidth: 1100, minHeight: 640);
         SetContentRoot(_shell);
 
         var categories = new[]
         {
-            new AshfallSidebar.Item { Id = "all", Label = "All Targets", Hint = "every wasteland destination", IconPath = "" },
-            new AshfallSidebar.Item { Id = "near", Label = "Near Range", Hint = "<= 6 legs / short sortie", IconPath = "" },
-            new AshfallSidebar.Item { Id = "medium", Label = "Mid Range", Hint = "7 .. 12 legs / day trip", IconPath = "" },
-            new AshfallSidebar.Item { Id = "far", Label = "Far Range", Hint = "> 12 legs / multi-day", IconPath = "" },
+            new AshfallSidebar.Item { Id = "all", Label = AshfallLocalization.Tr("ui.expedition.radar.filter.all", "All Targets"), Hint = AshfallLocalization.Tr("ui.expedition.radar.filter.all.hint", "every wasteland destination"), IconPath = "" },
+            new AshfallSidebar.Item { Id = "near", Label = AshfallLocalization.Tr("ui.expedition.radar.filter.near", "Near Range"), Hint = AshfallLocalization.Tr("ui.expedition.radar.filter.near.hint", "<= 6 legs / short sortie"), IconPath = "" },
+            new AshfallSidebar.Item { Id = "medium", Label = AshfallLocalization.Tr("ui.expedition.radar.filter.medium", "Mid Range"), Hint = AshfallLocalization.Tr("ui.expedition.radar.filter.medium.hint", "7 .. 12 legs / day trip"), IconPath = "" },
+            new AshfallSidebar.Item { Id = "far", Label = AshfallLocalization.Tr("ui.expedition.radar.filter.far", "Far Range"), Hint = AshfallLocalization.Tr("ui.expedition.radar.filter.far.hint", "> 12 legs / multi-day"), IconPath = "" },
         };
-        _sidebar = _shell.SetSidebar(categories, "Range Filter", "all");
+        _sidebar = _shell.SetSidebar(categories, AshfallLocalization.Tr("ui.expedition.radar.range_filter", "Range Filter"), "all");
         _sidebar.OnSelected += HandleSidebar;
 
         _statusRail = _shell.SetStatusRail();
-        _statusRail.AddCard("active", "Active", "—", AshfallMetricCard.Criticality.Normal, minWidth: 80);
-        _statusRail.AddCard("queued", "Queued", "—", AshfallMetricCard.Criticality.Normal, minWidth: 80);
-        _statusRail.AddCard("blocked", "Blocked", "—", AshfallMetricCard.Criticality.Caution, minWidth: 90);
-        _statusRail.AddCard("median", "Median", "— legs", AshfallMetricCard.Criticality.Normal, minWidth: 110);
-        _statusRail.AddCard("danger", "Max Danger", "—", AshfallMetricCard.Criticality.Normal, minWidth: 110);
-        _statusRail.AddCard("enc", "Encounter %", "—", AshfallMetricCard.Criticality.Normal, minWidth: 110);
+        _statusRail.AddCard("active", AshfallLocalization.Tr("ui.expedition.radar.rail.active", "Active"), "—", AshfallMetricCard.Criticality.Normal, minWidth: 80);
+        _statusRail.AddCard("queued", AshfallLocalization.Tr("ui.expedition.radar.rail.queued", "Queued"), "—", AshfallMetricCard.Criticality.Normal, minWidth: 80);
+        _statusRail.AddCard("blocked", AshfallLocalization.Tr("ui.expedition.radar.rail.blocked", "Blocked"), "—", AshfallMetricCard.Criticality.Caution, minWidth: 90);
+        _statusRail.AddCard("median", AshfallLocalization.Tr("ui.expedition.radar.rail.median", "Median"), AshfallLocalization.Tr("ui.expedition.radar.rail.median_empty", "— legs"), AshfallMetricCard.Criticality.Normal, minWidth: 110);
+        _statusRail.AddCard("danger", AshfallLocalization.Tr("ui.expedition.radar.rail.max_danger", "Max Danger"), "—", AshfallMetricCard.Criticality.Normal, minWidth: 110);
+        _statusRail.AddCard("enc", AshfallLocalization.Tr("ui.expedition.radar.rail.enc_pct", "Encounter %"), "—", AshfallMetricCard.Criticality.Normal, minWidth: 110);
 
         // ── Active sorties DataGrid ──
         var activeCols = new[]
         {
-            new AshfallDataGrid.Column { Header = "Survivor", MinWidth = 130, Alignment = AshfallDataGrid.ColumnAlign.Left },
-            new AshfallDataGrid.Column { Header = "Phase",    MinWidth = 100, Alignment = AshfallDataGrid.ColumnAlign.Left },
-            new AshfallDataGrid.Column { Header = "Distance", MinWidth = 140, Alignment = AshfallDataGrid.ColumnAlign.Right },
-            new AshfallDataGrid.Column { Header = "Stamina",  MinWidth = 90,  Alignment = AshfallDataGrid.ColumnAlign.Right },
-            new AshfallDataGrid.Column { Header = "Loot",     MinWidth = 110, Alignment = AshfallDataGrid.ColumnAlign.Right },
-            new AshfallDataGrid.Column { Header = "Encounters", MinWidth = 100, Alignment = AshfallDataGrid.ColumnAlign.Right },
+            new AshfallDataGrid.Column { Header = AshfallLocalization.Tr("ui.expedition.radar.col.survivor", "Survivor"), MinWidth = 130, Alignment = AshfallDataGrid.ColumnAlign.Left },
+            new AshfallDataGrid.Column { Header = AshfallLocalization.Tr("ui.expedition.radar.col.phase", "Phase"),    MinWidth = 100, Alignment = AshfallDataGrid.ColumnAlign.Left },
+            new AshfallDataGrid.Column { Header = AshfallLocalization.Tr("ui.expedition.radar.col.distance", "Distance"), MinWidth = 140, Alignment = AshfallDataGrid.ColumnAlign.Right },
+            new AshfallDataGrid.Column { Header = AshfallLocalization.Tr("ui.expedition.radar.col.stamina", "Stamina"),  MinWidth = 90,  Alignment = AshfallDataGrid.ColumnAlign.Right },
+            new AshfallDataGrid.Column { Header = AshfallLocalization.Tr("ui.expedition.radar.col.loot", "Loot"),     MinWidth = 110, Alignment = AshfallDataGrid.ColumnAlign.Right },
+            new AshfallDataGrid.Column { Header = AshfallLocalization.Tr("ui.expedition.radar.col.encounters", "Encounters"), MinWidth = 100, Alignment = AshfallDataGrid.ColumnAlign.Right },
         };
         _activeGrid = new AshfallDataGrid(activeCols, showHeader: true, minWidth: 720, minHeight: 165);
         _activeGrid.OnRowSelected += HandleActiveRowSelected;
@@ -97,12 +100,12 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
         // ── Targets DataGrid ──
         var targetCols = new[]
         {
-            new AshfallDataGrid.Column { Header = "Location", MinWidth = 200, Alignment = AshfallDataGrid.ColumnAlign.Left },
-            new AshfallDataGrid.Column { Header = "Legs",     MinWidth = 70,  Alignment = AshfallDataGrid.ColumnAlign.Right },
-            new AshfallDataGrid.Column { Header = "Danger",   MinWidth = 90,  Alignment = AshfallDataGrid.ColumnAlign.Right },
-            new AshfallDataGrid.Column { Header = "Enc %",    MinWidth = 70,  Alignment = AshfallDataGrid.ColumnAlign.Right },
-            new AshfallDataGrid.Column { Header = "Loot",     MinWidth = 280, Alignment = AshfallDataGrid.ColumnAlign.Left },
-            new AshfallDataGrid.Column { Header = "Status",   MinWidth = 110, Alignment = AshfallDataGrid.ColumnAlign.Left },
+            new AshfallDataGrid.Column { Header = AshfallLocalization.Tr("ui.expedition.radar.col.location", "Location"), MinWidth = 200, Alignment = AshfallDataGrid.ColumnAlign.Left },
+            new AshfallDataGrid.Column { Header = AshfallLocalization.Tr("ui.expedition.radar.col.legs", "Legs"),     MinWidth = 70,  Alignment = AshfallDataGrid.ColumnAlign.Right },
+            new AshfallDataGrid.Column { Header = AshfallLocalization.Tr("ui.expedition.radar.col.danger", "Danger"),   MinWidth = 90,  Alignment = AshfallDataGrid.ColumnAlign.Right },
+            new AshfallDataGrid.Column { Header = AshfallLocalization.Tr("ui.expedition.radar.col.enc_pct", "Enc %"),    MinWidth = 70,  Alignment = AshfallDataGrid.ColumnAlign.Right },
+            new AshfallDataGrid.Column { Header = AshfallLocalization.Tr("ui.expedition.radar.col.loot", "Loot"),     MinWidth = 280, Alignment = AshfallDataGrid.ColumnAlign.Left },
+            new AshfallDataGrid.Column { Header = AshfallLocalization.Tr("ui.expedition.radar.col.status", "Status"),   MinWidth = 110, Alignment = AshfallDataGrid.ColumnAlign.Left },
         };
         _targetGrid = new AshfallDataGrid(targetCols, showHeader: true, minWidth: 720, minHeight: 165);
         _targetGrid.OnRowSelected += HandleTargetRowSelected;
@@ -113,13 +116,15 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
         body.SizeFlagsHorizontal = SizeFlags.ExpandFill;
         body.SizeFlagsVertical = SizeFlags.ExpandFill;
 
-        var activeLabel = AshfallUiHelpers.MakeSectionHeader("Active Sorties In The Field");
+        var activeLabel = AshfallUiHelpers.MakeSectionHeader(
+            AshfallLocalization.Tr("ui.expedition.radar.active_header", "Active Sorties In The Field"));
         body.AddChild(activeLabel);
         body.AddChild(_activeGrid);
 
         body.AddChild(AshfallUiHelpers.MakeSeparator());
 
-        var targetLabel = AshfallUiHelpers.MakeSectionHeader("Known Wasteland Destinations");
+        var targetLabel = AshfallUiHelpers.MakeSectionHeader(
+            AshfallLocalization.Tr("ui.expedition.radar.targets_header", "Known Wasteland Destinations"));
         body.AddChild(targetLabel);
 
         var targetRow = new HBoxContainer();
@@ -134,12 +139,13 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
         _detailBox.SizeFlagsVertical = SizeFlags.ExpandFill;
         targetRow.AddChild(_detailBox);
 
-        _detailTitle = AshfallUiHelpers.MakeSectionHeader("TARGET DETAIL");
+        _detailTitle = AshfallUiHelpers.MakeSectionHeader(
+            AshfallLocalization.Tr("ui.expedition.radar.detail_header", "TARGET DETAIL"));
         _detailTitle.HorizontalAlignment = HorizontalAlignment.Left;
         _detailBox.AddChild(_detailTitle);
         _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
         _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
-            "Select a sortie or destination row to view phase / cargo / blocking state."));
+            AshfallLocalization.Tr("ui.expedition.radar.select_hint", "Select a sortie or destination row to view phase / cargo / blocking state.")));
 
         body.AddChild(targetRow);
         _shell.SetContent(body);
@@ -223,8 +229,8 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
         _statusRail.Set("queued", $"{defs.Count}", AshfallMetricCard.Criticality.Normal);
         _statusRail.Set("blocked", $"{blocked}",
             blocked > 0 ? AshfallMetricCard.Criticality.Warn : AshfallMetricCard.Criticality.Normal);
-        _statusRail.Set("median", $"{medianLegs} legs", AshfallMetricCard.Criticality.Normal);
-        _statusRail.Set("danger", $"LVL {maxDanger}",
+        _statusRail.Set("median", AshfallLocalization.TrFormat("ui.expedition.radar.rail.median_value", medianLegs), AshfallMetricCard.Criticality.Normal);
+        _statusRail.Set("danger", AshfallLocalization.TrFormat("ui.expedition.radar.level_value", maxDanger),
             maxDanger >= 4 ? AshfallMetricCard.Criticality.Critical :
             maxDanger >= 2 ? AshfallMetricCard.Criticality.Caution : AshfallMetricCard.Criticality.Normal);
         _statusRail.Set("enc", $"{avgEnc}%",
@@ -249,7 +255,7 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
             if (exp == null) continue;
 
             var phase = (ExpeditionPhase)exp.phase;
-            var phaseText = phase.ToString().ToUpperInvariant();
+            var phaseText = ExpeditionPhaseText.Label(phase);
 
             int totalLegs = Math.Max(1, exp.distanceTicks);
             int traveled = Math.Clamp(exp.travelTicksCompleted, 0, totalLegs);
@@ -264,6 +270,11 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
                            : phase == ExpeditionPhase.Inbound ? AshfallDataGrid.CellState.Caution
                            : AshfallDataGrid.CellState.Normal;
 
+            // Task 10 — name the dominant risk driver on the live sortie row.
+            string riskNote = Ashfall.Core.Expeditions.ExpeditionPrepPlanner.DescribeStateRisk(exp);
+            string riskSuffix = string.IsNullOrEmpty(riskNote) || riskNote == Ashfall.Core.Expeditions.ExpeditionPrepPlanner.LowRiskNote
+                ? string.Empty : $" \u00b7 {riskNote}";
+
             var cells = new List<AshfallDataGrid.Cell>
             {
                 new(FormatSurvivor(exp.survivorId), AshfallDataGrid.CellState.Normal),
@@ -271,7 +282,7 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
                 new($"{traveled}/{totalLegs} \u0394{remaining}", AshfallDataGrid.CellState.Normal),
                 new($"{exp.stamina:0}%", staminaState),
                 new($"{(exp.loot != null ? exp.loot.Count : 0)} \u00b7 {exp.currentWeightKg:0}/{exp.maxLootCapacityKg:0} kg", AshfallDataGrid.CellState.Normal),
-                new($"{exp.encounterCount}{(exp.isPushingLuck ? " [PUSH]" : "")}", AshfallDataGrid.CellState.Normal),
+                new($"{exp.encounterCount}{(exp.isPushingLuck ? AshfallLocalization.Tr("ui.expedition.radar.push_suffix", " [PUSH]") : "")}{riskSuffix}", AshfallDataGrid.CellState.Normal),
             };
             rows.Add(new AshfallDataGrid.Row { Cells = cells, Selectable = true });
         }
@@ -303,9 +314,14 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
 
             int encPct = (int)(d.encounterChancePerTick * 100f);
             bool blocked = _host.IsLocationBlocked(d.id);
-            string status = blocked ? "BLOCKED" : (IsEscortedAvailable() ? "READY" : "NEEDS SURVIVOR");
+            bool ready = !blocked && IsEscortedAvailable();
+            string status = blocked
+                ? AshfallLocalization.Tr("ui.expedition.radar.status.blocked", "BLOCKED")
+                : ready
+                    ? AshfallLocalization.Tr("ui.expedition.radar.status.ready", "READY")
+                    : AshfallLocalization.Tr("ui.expedition.radar.status.needs_survivor", "NEEDS SURVIVOR");
             var statusState = blocked ? AshfallDataGrid.CellState.Critical
-                           : status == "READY" ? AshfallDataGrid.CellState.Positive
+                           : ready ? AshfallDataGrid.CellState.Positive
                            : AshfallDataGrid.CellState.Caution;
             var dangerState = d.dangerLevel >= 4 ? AshfallDataGrid.CellState.Critical
                             : d.dangerLevel >= 2 ? AshfallDataGrid.CellState.Caution
@@ -318,7 +334,7 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
             {
                 new(d.displayName ?? d.id, AshfallDataGrid.CellState.Normal),
                 new($"{d.distanceTicks}", AshfallDataGrid.CellState.Normal),
-                new($"LVL {d.dangerLevel}", dangerState),
+                new(AshfallLocalization.TrFormat("ui.expedition.radar.level_value", d.dangerLevel), dangerState),
                 new($"{encPct}%", AshfallDataGrid.CellState.Normal),
                 new(lootList, AshfallDataGrid.CellState.Muted),
                 new(status, statusState),
@@ -331,7 +347,7 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
             {
                 Cells = new List<AshfallDataGrid.Cell>
                 {
-                    new("— no targets in range —", AshfallDataGrid.CellState.Muted),
+                    new(AshfallLocalization.Tr("ui.expedition.radar.no_targets", "— no targets in range —"), AshfallDataGrid.CellState.Muted),
                     new("—", AshfallDataGrid.CellState.Muted),
                     new("—", AshfallDataGrid.CellState.Muted),
                     new("—", AshfallDataGrid.CellState.Muted),
@@ -368,7 +384,7 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
         AshfallUiHelpers.EmptyChildrenExcept(_detailBox, _detailTitle);
         if (_host == null)
         {
-            _detailTitle.Text = "TARGET DETAIL";
+            _detailTitle.Text = AshfallLocalization.Tr("ui.expedition.radar.detail_header", "TARGET DETAIL");
             _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
                 "Expedition engine offline. Bind an ExpeditionHostSession to see alive sorties + destinations."));
             return;
@@ -388,7 +404,7 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
             return;
         }
 
-        _detailTitle.Text = "TARGET DETAIL";
+        _detailTitle.Text = AshfallLocalization.Tr("ui.expedition.radar.detail_header", "TARGET DETAIL");
         _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
             "Select a sortie row to view phase and stamina, or a destination row to view loot categories and blocking status."));
     }
@@ -436,41 +452,47 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
 
     private void RenderActiveDetail(ExpeditionState exp)
     {
-        _detailTitle.Text = $"{(string.IsNullOrEmpty(exp.displayName) ? exp.locationId : exp.displayName).ToUpperInvariant()} SORTIE";
+        _detailTitle.Text = AshfallLocalization.TrFormat(
+            "ui.expedition.radar.sortie_title",
+            (string.IsNullOrEmpty(exp.displayName) ? exp.locationId : exp.displayName).ToUpperInvariant());
 
         var phase = (ExpeditionPhase)exp.phase;
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Phase", phase.ToString().ToUpperInvariant(),
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(
+            AshfallLocalization.Tr("ui.expedition.radar.col.phase", "Phase"),
+            ExpeditionPhaseText.Label(phase),
             AshfallUiHelpers.ToColor(DesignTheme.Warm)));
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Scout", FormatSurvivor(exp.survivorId),
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallLocalization.Tr("ui.expedition.radar.detail.scout", "Scout"), FormatSurvivor(exp.survivorId),
             AshfallUiHelpers.ToColor(DesignTheme.Pale)));
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Stamina", $"{exp.stamina:0}%",
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallLocalization.Tr("ui.expedition.radar.col.stamina", "Stamina"), $"{exp.stamina:0}%",
             exp.stamina < 30f ? AshfallUiHelpers.ToColor(DesignTheme.Critical) :
             exp.stamina < 60f ? AshfallUiHelpers.ToColor(DesignTheme.Entropy) :
                                   AshfallUiHelpers.ToColor(DesignTheme.Dim)));
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Travel", $"{exp.travelTicksCompleted}/{exp.distanceTicks} legs",
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallLocalization.Tr("ui.expedition.radar.detail.travel", "Travel"), $"{exp.travelTicksCompleted}/{exp.distanceTicks} legs",
             AshfallUiHelpers.ToColor(DesignTheme.Dim)));
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Cargo", $"{(exp.loot != null ? exp.loot.Count : 0)} items \u00b7 {exp.currentWeightKg:0}/{exp.maxLootCapacityKg:0} kg",
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallLocalization.Tr("ui.expedition.radar.detail.cargo", "Cargo"), $"{(exp.loot != null ? exp.loot.Count : 0)} items \u00b7 {exp.currentWeightKg:0}/{exp.maxLootCapacityKg:0} kg",
             AshfallUiHelpers.ToColor(DesignTheme.Dim)));
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Encounters", $"{exp.encounterCount}{(exp.isPushingLuck ? " [PUSHING LUCK]" : string.Empty)}",
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallLocalization.Tr("ui.expedition.radar.col.encounters", "Encounters"), $"{exp.encounterCount}{(exp.isPushingLuck ? AshfallLocalization.Tr("ui.expedition.radar.pushing_luck_suffix", " [PUSHING LUCK]") : string.Empty)}",
             exp.encounterCount > 0 ? AshfallUiHelpers.ToColor(DesignTheme.Entropy) : AshfallUiHelpers.ToColor(DesignTheme.Dim)));
     }
 
     private void RenderTargetDetail(ExpeditionDefinition def)
     {
-        _detailTitle.Text = $"{(string.IsNullOrEmpty(def.displayName) ? def.id : def.displayName).ToUpperInvariant()} DETAIL";
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Legs", $"{def.distanceTicks}",
+        _detailTitle.Text = AshfallLocalization.TrFormat(
+            "ui.expedition.radar.target_title",
+            (string.IsNullOrEmpty(def.displayName) ? def.id : def.displayName).ToUpperInvariant());
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallLocalization.Tr("ui.expedition.radar.col.legs", "Legs"), $"{def.distanceTicks}",
             AshfallUiHelpers.ToColor(DesignTheme.Pale)));
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Danger", $"LVL {def.dangerLevel}",
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallLocalization.Tr("ui.expedition.radar.col.danger", "Danger"), AshfallLocalization.TrFormat("ui.expedition.radar.level_value", def.dangerLevel),
             def.dangerLevel >= 4 ? AshfallUiHelpers.ToColor(DesignTheme.Critical) :
             def.dangerLevel >= 2 ? AshfallUiHelpers.ToColor(DesignTheme.Entropy) :
                                     AshfallUiHelpers.ToColor(DesignTheme.Dim)));
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Encounter/hr", $"{(def.encounterChancePerTick * 100f):0}%",
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallLocalization.Tr("ui.expedition.radar.detail.encounter_hr", "Encounter/hr"), $"{(def.encounterChancePerTick * 100f):0}%",
             AshfallUiHelpers.ToColor(DesignTheme.Dim)));
 
         if (def.lootCategories != null && def.lootCategories.Count > 0)
         {
             _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
-            _detailBox.AddChild(AshfallUiHelpers.MakeSubsectionHeader("Loot Categories"));
+            _detailBox.AddChild(AshfallUiHelpers.MakeSubsectionHeader(AshfallLocalization.Tr("ui.expedition.radar.subsection.loot", "Loot Categories")));
             for (int i = 0; i < def.lootCategories.Count; i++)
             {
                 _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(def.lootCategories[i], "—", AshfallUiHelpers.ToColor(DesignTheme.Muted)));
@@ -479,9 +501,14 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
 
         bool blocked = _host != null && _host.IsLocationBlocked(def.id);
         _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
-        _detailBox.AddChild(AshfallUiHelpers.MakeSubsectionHeader("Status"));
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Route",
-            blocked ? "BLOCKED" : (IsEscortedAvailable() ? "READY" : "NEEDS SURVIVOR"),
+        _detailBox.AddChild(AshfallUiHelpers.MakeSubsectionHeader(AshfallLocalization.Tr("ui.expedition.radar.subsection.status", "Status")));
+        string routeStatus = blocked
+            ? AshfallLocalization.Tr("ui.expedition.radar.status.blocked", "BLOCKED")
+            : IsEscortedAvailable()
+                ? AshfallLocalization.Tr("ui.expedition.radar.status.ready", "READY")
+                : AshfallLocalization.Tr("ui.expedition.radar.status.needs_survivor", "NEEDS SURVIVOR");
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallLocalization.Tr("ui.expedition.radar.detail.route", "Route"),
+            routeStatus,
             blocked ? AshfallUiHelpers.ToColor(DesignTheme.Critical) : AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
     }
 
@@ -531,7 +558,7 @@ public partial class ExpeditionRadarPanel : Control, IBindablePanel
             {
                 Cells = new List<AshfallDataGrid.Cell>
                 {
-                    new("— no sorties active —", AshfallDataGrid.CellState.Muted),
+                    new(AshfallLocalization.Tr("ui.expedition.radar.no_sorties", "— no sorties active —"), AshfallDataGrid.CellState.Muted),
                     new("—", AshfallDataGrid.CellState.Muted),
                     new("—", AshfallDataGrid.CellState.Muted),
                     new("—", AshfallDataGrid.CellState.Muted),

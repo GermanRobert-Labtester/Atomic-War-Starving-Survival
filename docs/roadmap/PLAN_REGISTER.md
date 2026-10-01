@@ -3,15 +3,15 @@
 
 This file is generated from plan front matter and repository state. The JSON sibling is the integration substrate; do not edit either artifact by hand.
 
-- Register schema: `1`
-- Repository HEAD: `b87752e91cc1b6933ce594e1a72a3e4c052e1097`
+- Register schema: `2`
+- Repository HEAD: `1cc4c773a37285bfc6205a049db2044b1b0bdb17`
 - Plans: **621**
 - Namespaces: `integration` 245, `next_steps` 242, `piagents` 134
 - Metadata state: `COMPLETE` 621
 
 | Plan ID | Status | Category | Wave | Premise | Ref health | Rails | Metric | Overlap | Path |
 |---|---|---|---|---|---|---|---|---|---|
-| E1 | READY | PROCESS | — | — | MISSING | UNDECLARED | — | — | C-integration-plans/E1_planintegration.md |
+| E1 | READY | PROCESS | — | — | MISSING | UNDECLARED | — | shelter-governance | C-integration-plans/E1_planintegration.md |
 | C1-10 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | C-integration-plans/C1_planintegration[10].md |
 | C1-11 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | C-integration-plans/C1_planintegration[11].md |
 | C1-12 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | C-integration-plans/C1_planintegration[12].md |
@@ -190,7 +190,7 @@ This file is generated from plan front matter and repository state. The JSON sib
 | LEGACY-0463C2024CFC | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_202_Survivor_Interpersonal_Conflict_Grievance_System.md |
 | LEGACY-052E6746AA9A | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | C-integration-plans/ASHFALL_Batch40_Quality_Next_Steps_Plan.md |
 | LEGACY-065A805F68EA | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_57_Shop_Window_Store_Kit_Statements_Launch_Ops.md |
-| LEGACY-06763CA3818E | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_185_Memory_Knowledge_Decay_System.md |
+| LEGACY-06763CA3818E | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | npc-memory | Next-steps-plans/Plan_185_Memory_Knowledge_Decay_System.md |
 | LEGACY-09331352A86E | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_157_Communications_Radio_Network_Infrastructure.md |
 | LEGACY-0AD61485CA0E | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_204_Survivor_Recruitment_Defection_System.md |
 | LEGACY-0C3C9C4CCB0B | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_140_Generational_Legacy_Campaign_Inheritance.md |
@@ -204,7 +204,7 @@ This file is generated from plan front matter and repository state. The JSON sib
 | LEGACY-15BBB02E16F1 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_154_Survivor_Education_Knowledge_Transfer.md |
 | LEGACY-1815AFBB7063 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_191_Item_Identification_Appraisal_System.md |
 | LEGACY-18489CFF91C5 | PROPOSED | PROCESS | — | — | WARN | UNDECLARED | — | — | C-integration-plans/ASHFALL_Batch3_Quality_Next_Steps_Plan.md |
-| LEGACY-18D16079DCEB | PROPOSED | PROCESS | — | — | WARN | UNDECLARED | — | — | Next-steps-plans/Plan_137_Needs_Performance_Cascade.md |
+| LEGACY-18D16079DCEB | PROPOSED | PROCESS | — | — | WARN | UNDECLARED | — | needs-performance-cascade | Next-steps-plans/Plan_137_Needs_Performance_Cascade.md |
 | LEGACY-19F9F12EBC25 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | C-integration-plans/ASHFALL_Batch1_Quality_Next_Steps_Plan.md |
 | LEGACY-1B9D30469C2F | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_18_Living_Content_Codex_To_Consequence.md |
 | LEGACY-1BC8725CF840 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_220_Shelter_Atmosphere_Ambiance.md |
@@ -222,7 +222,7 @@ This file is generated from plan front matter and repository state. The JSON sib
 | LEGACY-29A22596F508 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | C-integration-plans/ASHFALL_Batch25_Quality_Next_Steps_Plan.md |
 | LEGACY-2B20A22E8B1E | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_14_Economy_Weather_Shelter_Loop.md |
 | LEGACY-2BAC93C547BB | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_44_Relations_That_Change_Outcomes.md |
-| LEGACY-2D0AD23A05FF | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_182_Relationship_Decay_Drift_System.md |
+| LEGACY-2D0AD23A05FF | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | npc-memory | Next-steps-plans/Plan_182_Relationship_Decay_Drift_System.md |
 | LEGACY-2F263EEE3753 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_135_Weather_Deep_Gameplay_Cascade.md |
 | LEGACY-2FA150C4F084 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_156_Shelter_Expansion_Physical_Renovation.md |
 | LEGACY-2FEF0946A98D | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_220_Shelter_Atmosphere_Ambiance.md |
@@ -230,7 +230,7 @@ This file is generated from plan front matter and repository state. The JSON sib
 | LEGACY-3301835621C8 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_178_Art_Culture_Creation_System.md |
 | LEGACY-34EE0F45C42D | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_41_Memory_That_Acts_Heirlooms_Eulogies_Generations.md |
 | LEGACY-350480C2CDBC | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_200_Survivor_Personal_Quests_Character_Arcs.md |
-| LEGACY-3580577BE629 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_196_Food_Type_Differentiation_Temperature_Spoilage.md |
+| LEGACY-3580577BE629 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | food-pipeline | Next-steps-plans/Plan_196_Food_Type_Differentiation_Temperature_Spoilage.md |
 | LEGACY-366750398C7C | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_148_Ideological_Friction_Events_Quests.md |
 | LEGACY-374C182A2DBA | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | C-integration-plans/ASHFALL_Batch7_Quality_Next_Steps_Plan.md |
 | LEGACY-386EC1C3E342 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_133_Expedition_Discovery_Persistent_World_Consequences.md |
@@ -252,7 +252,7 @@ This file is generated from plan front matter and repository state. The JSON sib
 | LEGACY-4904973CB9AC | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_193_Chronic_Conditions_Disabilities_System.md |
 | LEGACY-4932F2685AA9 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_164_Nuclear_Winter_Progression_System.md |
 | LEGACY-49F2041985C3 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_183_Child_Development_Stages_System.md |
-| LEGACY-4AB98E63E0CC | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_203_Intelligence_Rumor_Network_System.md |
+| LEGACY-4AB98E63E0CC | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | information-flow | Next-steps-plans/Plan_203_Intelligence_Rumor_Network_System.md |
 | LEGACY-4B18DA023344 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | C-integration-plans/ASHFALL_Batch21_Quality_Next_Steps_Plan.md |
 | LEGACY-4BD83B58491F | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_170_Seasonal_Events_Celebrations.md |
 | LEGACY-4C1C29F02FC2 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_134_Dynamic_Faction_Territory_Supply_Lines.md |
@@ -275,7 +275,7 @@ This file is generated from plan front matter and repository state. The JSON sib
 | LEGACY-627895406880 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_47_Mod_Content_Pack_Contract.md |
 | LEGACY-62B6D7B06A6C | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_174_Procedural_Survivor_Backstories.md |
 | LEGACY-633DB0E7B03B | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | C-integration-plans/ASHFALL_Batch10_Quality_Next_Steps_Plan.md |
-| LEGACY-644ECF5D803E | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_147_Per_NPC_Memory_Relationship_Depth.md |
+| LEGACY-644ECF5D803E | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | npc-memory | Next-steps-plans/Plan_147_Per_NPC_Memory_Relationship_Depth.md |
 | LEGACY-6456AF820A6E | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_176_Aging_Elderly_Survivor_System.md |
 | LEGACY-64DCD51067EE | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_197_Faction_Diplomacy_Treaty_System.md |
 | LEGACY-6511065DC230 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_179_Unified_Psychology_Phobia_System.md |
@@ -314,7 +314,7 @@ This file is generated from plan front matter and repository state. The JSON sib
 | LEGACY-80A65AC5F862 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_166_Shelter_Identity_Naming_System.md |
 | LEGACY-815D3EA4CCF9 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_179_Unified_Psychology_Phobia_System.md |
 | LEGACY-81871B578255 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | C-integration-plans/ASHFALL_Batch32_Quality_Next_Steps_Plan.md |
-| LEGACY-81DDA14E9037 | PROPOSED | PROCESS | — | — | WARN | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_137_Needs_Performance_Cascade.md |
+| LEGACY-81DDA14E9037 | PROPOSED | PROCESS | — | — | WARN | UNDECLARED | — | needs-performance-cascade | Next-steps-plans/shipped_to_chat/Plan_137_Needs_Performance_Cascade.md |
 | LEGACY-82AE51646E85 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_180_Skill_Certification_Tier_System.md |
 | LEGACY-84A9A91B1868 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_163_Wasteland_Cartography_Mapping.md |
 | LEGACY-880B652CD7BE | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | C-integration-plans/ASHFALL_Batch26_Quality_Next_Steps_Plan.md |
@@ -335,11 +335,11 @@ This file is generated from plan front matter and repository state. The JSON sib
 | LEGACY-989585384AF3 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_203_Intelligence_Rumor_Network_System.md |
 | LEGACY-99064CD4D112 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | C-integration-plans/ASHFALL_Batch15_Quality_Next_Steps_Plan.md |
 | LEGACY-999F7678A857 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_144_Survivor_Autonomy_Initiative.md |
-| LEGACY-9A6ED688F224 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_159_Shelter_Governance_Political_System.md |
-| LEGACY-9ACBF4ED6294 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_22_One_Food_Authority_Consumption.md |
+| LEGACY-9A6ED688F224 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | shelter-governance | Next-steps-plans/Plan_159_Shelter_Governance_Political_System.md |
+| LEGACY-9ACBF4ED6294 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | food-pipeline | Next-steps-plans/Plan_22_One_Food_Authority_Consumption.md |
 | LEGACY-9DD959CFDECA | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_145_Unified_Ending_Resolution_Epilogue_Personalization.md |
-| LEGACY-9DFDC555156F | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_196_Food_Type_Differentiation_Temperature_Spoilage.md |
-| LEGACY-A3D2F4E91606 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_43_Governing_Together_Leadership_Policy_Consent.md |
+| LEGACY-9DFDC555156F | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | food-pipeline | Next-steps-plans/shipped_to_chat/Plan_196_Food_Type_Differentiation_Temperature_Spoilage.md |
+| LEGACY-A3D2F4E91606 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | shelter-governance | Next-steps-plans/Plan_43_Governing_Together_Leadership_Policy_Consent.md |
 | LEGACY-A3DA4D3D5D54 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_144_Survivor_Autonomy_Initiative.md |
 | LEGACY-A4EBCDC06042 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_40_Authored_Personality_Not_Inferred.md |
 | LEGACY-A527BE8485D6 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_200_Survivor_Personal_Quests_Character_Arcs.md |
@@ -351,7 +351,7 @@ This file is generated from plan front matter and repository state. The JSON sib
 | LEGACY-A8F3EE1505AA | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_216_Survivor_Exercise_Physical_Training.md |
 | LEGACY-AA1B03ED8912 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | C-integration-plans/ASHFALL_Batch36_Quality_Next_Steps_Plan.md |
 | LEGACY-AA2340A1F6C8 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_149_Persistent_Achievement_Milestone_System.md |
-| LEGACY-AA448DEC2320 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_41_Memory_That_Acts_Heirlooms_Eulogies_Generations.md |
+| LEGACY-AA448DEC2320 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | npc-memory | Next-steps-plans/Plan_41_Memory_That_Acts_Heirlooms_Eulogies_Generations.md |
 | LEGACY-AA738B655403 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | C-integration-plans/ASHFALL_Batch34_Quality_Next_Steps_Plan.md |
 | LEGACY-AAF790529F5E | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_57_Shop_Window_Store_Kit_Statements_Launch_Ops.md |
 | LEGACY-AAF95D8EFF4E | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_154_Survivor_Education_Knowledge_Transfer.md |
@@ -369,7 +369,7 @@ This file is generated from plan front matter and repository state. The JSON sib
 | LEGACY-B7D53AF351EA | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_171_Dynamic_Quest_Generation_System.md |
 | LEGACY-B80B07492B0D | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_161_Survivor_Hobby_Leisure_System.md |
 | LEGACY-B92938379FB6 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_211_Internal_Communication_Network.md |
-| LEGACY-B96B59EEEE27 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_136_Wildlife_Trapping_Food_Pipeline_Cooking.md |
+| LEGACY-B96B59EEEE27 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | food-pipeline | Next-steps-plans/Plan_136_Wildlife_Trapping_Food_Pipeline_Cooking.md |
 | LEGACY-B9C3C3AEE202 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_146_Radiation_Economy_Social_Bridge.md |
 | LEGACY-BA0EBE37972C | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_206_Survivor_Death_Legacy_Inheritance_System.md |
 | LEGACY-BB267932F0ED | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_35_Goods_Must_Arrive_Production_Provisioning_Chain.md |
@@ -424,7 +424,7 @@ This file is generated from plan front matter and repository state. The JSON sib
 | LEGACY-E95A77C5CE50 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_192_Player_Trade_Route_Establishment.md |
 | LEGACY-ED9DA71AF50F | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_207_Maritime_Underwater_Exploration_Expansion.md |
 | LEGACY-EDB00DDE76AF | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_213_Survivor_Barter_Informal_Economy.md |
-| LEGACY-EE186DA031A1 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_136_Wildlife_Trapping_Food_Pipeline_Cooking.md |
+| LEGACY-EE186DA031A1 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | food-pipeline | Next-steps-plans/shipped_to_chat/Plan_136_Wildlife_Trapping_Food_Pipeline_Cooking.md |
 | LEGACY-EFDEED74307E | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_177_Dream_Sleep_Event_System.md |
 | LEGACY-F109E1239117 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_167_Underground_Tunnel_Network.md |
 | LEGACY-F1D456763005 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_182_Relationship_Decay_Drift_System.md |
@@ -433,7 +433,7 @@ This file is generated from plan front matter and repository state. The JSON sib
 | LEGACY-F5D3BD53FB2C | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_142_Clothing_Warmth_Gear_Progression.md |
 | LEGACY-F5FFCF6DDC53 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_157_Communications_Radio_Network_Infrastructure.md |
 | LEGACY-F6B75F038E4D | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | C-integration-plans/ASHFALL_Batch11_Quality_Next_Steps_Plan.md |
-| LEGACY-F6E4E903345B | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_159_Shelter_Governance_Political_System.md |
+| LEGACY-F6E4E903345B | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | shelter-governance | Next-steps-plans/shipped_to_chat/Plan_159_Shelter_Governance_Political_System.md |
 | LEGACY-FA5C4378165B | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_205_Shelter_Noise_Discipline_Acoustic_Management.md |
 | LEGACY-FAAA988D6A8A | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_199_Seasonal_Migration_Human_Faction.md |
 | LEGACY-FB1D29B82F18 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_184_Accessibility_Options_System.md |
@@ -441,23 +441,23 @@ This file is generated from plan front matter and repository state. The JSON sib
 | LEGACY-FC1F265A446F | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_187_Bestiary_Creature_Encounter_Tracking_UI.md |
 | LEGACY-FC516899CD3F | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/Plan_207_Maritime_Underwater_Exploration_Expansion.md |
 | LEGACY-FFE5B5967681 | PROPOSED | PROCESS | — | — | WARN | UNDECLARED | — | — | C-integration-plans/ASHFALL_Batch4_Quality_Next_Steps_Plan.md |
-| NEXT-PLAN-131 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_131_Wasteland_Information_Rumor_Network.md |
+| NEXT-PLAN-131 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | information-flow | Next-steps-plans/shipped_to_chat/Plan_131_Wasteland_Information_Rumor_Network.md |
 | NEXT-PLAN-15 | PROPOSED | PROCESS | — | — | WARN | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_15_Moral_Choice_Decision_Spine.md |
 | NEXT-PLAN-16 | PROPOSED | PROCESS | — | — | WARN | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_16_Honest_Navigation_Console_Triage.md |
 | NEXT-PLAN-186 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_186_Shelter_Maintenance_Degradation_System.md |
 | NEXT-PLAN-195 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_195_Survivor_Specialization_Roles.md |
 | NEXT-PLAN-201 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_201_Shelter_Sanitation_Waste_Management_System.md |
 | NEXT-PLAN-214 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_214_Visitor_Integration_Housing.md |
-| NEXT-PLAN-215 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_215_Shelter_Resource_Rationing_Crisis_Management.md |
+| NEXT-PLAN-215 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | food-pipeline | Next-steps-plans/shipped_to_chat/Plan_215_Shelter_Resource_Rationing_Crisis_Management.md |
 | NEXT-PLAN-217 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_217_Survivor_Genealogy_Family_Tree.md |
 | NEXT-PLAN-218 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_218_Shelter_Museum_Historical_Archive.md |
 | NEXT-PLAN-23 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_23_Power_Is_A_Dependency_Life_Support_Loop.md |
-| NEXT-PLAN-24 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_24_People_Not_Abstraction_Health_Duty_Ledger.md |
+| NEXT-PLAN-24 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | needs-performance-cascade | Next-steps-plans/shipped_to_chat/Plan_24_People_Not_Abstraction_Health_Duty_Ledger.md |
 | NEXT-PLAN-26 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_26_Ship_Gate_Exported_Builds_Find_Their_Data.md |
 | NEXT-PLAN-30 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_30_War_Runs_Without_You_Autonomous_World.md |
 | NEXT-PLAN-31 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_31_Event_Layer_Semantic_Kinds_No_Silent_Drops.md |
 | NEXT-PLAN-32 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_32_One_Map_Three_Notions_Of_Place.md |
-| NEXT-PLAN-33 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_33_Intel_Worth_Something_Radio_Traces_Secrets.md |
+| NEXT-PLAN-33 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | information-flow | Next-steps-plans/shipped_to_chat/Plan_33_Intel_Worth_Something_Radio_Traces_Secrets.md |
 | NEXT-PLAN-34 | PROPOSED | PROCESS | — | — | WARN | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_34_Long_Arc_Milestones_Difficulty_Legacy.md |
 | NEXT-PLAN-36 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_36_Port_Contract_Unbound_Effects_Fail_CI.md |
 | NEXT-PLAN-37 | PROPOSED | PROCESS | — | — | WARN | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_37_Hands_On_The_Wheel_Input_Focus_Controller.md |
@@ -476,7 +476,7 @@ This file is generated from plan front matter and repository state. The JSON sib
 | NEXT-PLAN-58 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_58_Outposts_Waystations_Second_Holdfast.md |
 | NEXT-PLAN-59 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | Next-steps-plans/shipped_to_chat/Plan_59_Retrospective_Gates_Rules_Then_Stop.md |
 | PIA-0 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | piagentsplans/00-master-roadmap.md |
-| PIA-1 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | piagentsplans/01-needs-radiation-save-roundtrip-tests.md |
+| PIA-1 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | needs-performance-cascade | piagentsplans/01-needs-radiation-save-roundtrip-tests.md |
 | PIA-10 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | piagentsplans/10-combat-expedition-depth.md |
 | PIA-101 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | piagentsplans/101-dose-quests-expansion.md |
 | PIA-102 | PROPOSED | PROCESS | — | — | OK | UNDECLARED | — | — | piagentsplans/102-foundry-accords-expansion.md |
@@ -518,10 +518,10 @@ This file is generated from plan front matter and repository state. The JSON sib
 | PIA-18 | PROPOSED | PROCESS | — | — | WARN | UNDECLARED | — | — | piagentsplans/18-expansion-deepening.md |
 | PIA-19 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | piagentsplans/19-dynamic-world-systems.md |
 | PIA-20 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | piagentsplans/20-wasteland-inhabitants.md |
-| PIA-21 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | piagentsplans/21-phantom-memory-heirloom.md |
+| PIA-21 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | npc-memory | piagentsplans/21-phantom-memory-heirloom.md |
 | PIA-22 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | piagentsplans/22-foundry-greenhouse-production.md |
 | PIA-23 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | piagentsplans/23-maritime-black-flotilla.md |
-| PIA-24 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | piagentsplans/24-radio-signals-airwaves.md |
+| PIA-24 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | information-flow | piagentsplans/24-radio-signals-airwaves.md |
 | PIA-25 | PROPOSED | PROCESS | — | — | OK | UNDECLARED | — | — | piagentsplans/25-faction-ecology-muster.md |
 | PIA-26 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | piagentsplans/26-knowledge-research-skills.md |
 | PIA-27 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | piagentsplans/27-body-and-mind.md |
@@ -544,7 +544,7 @@ This file is generated from plan front matter and repository state. The JSON sib
 | PIA-42 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | piagentsplans/42-batch1-roadmap-scaffolding-systems.md |
 | PIA-43 | PROPOSED | PROCESS | — | — | WARN | UNDECLARED | — | — | piagentsplans/43-settlements-catalog.md |
 | PIA-44 | PROPOSED | PROCESS | — | — | WARN | UNDECLARED | — | — | piagentsplans/44-faction-territory-map.md |
-| PIA-45 | PROPOSED | PROCESS | — | — | OK | UNDECLARED | — | — | piagentsplans/45-faction-patrol-encounters.md |
+| PIA-45 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | piagentsplans/45-faction-patrol-encounters.md |
 | PIA-46 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | piagentsplans/46-scavenging-tables.md |
 | PIA-47 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | piagentsplans/47-collectibles-world-culture.md |
 | PIA-48 | PROPOSED | PROCESS | — | — | MISSING | UNDECLARED | — | — | piagentsplans/48-weather-route-gates.md |

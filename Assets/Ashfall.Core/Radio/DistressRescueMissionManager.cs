@@ -456,6 +456,29 @@ namespace Ashfall.Core.Radio
         }
 
         /// <summary>
+        /// Records that a dispatched rescue expedition failed before reaching
+        /// the destination (survivor collapsed / sortie lost). Transitions
+        /// Dispatched → TerminalFailed exactly once so the mission never dangles
+        /// as Dispatched forever. <see cref="DistressRescueMission.ArrivalResolved"/> is
+        /// deliberately left false: the expedition did not arrive, so the
+        /// dead-arrival salvage branch must never grant rewards for a failed run.
+        /// </summary>
+        public bool RecordExpeditionFailed(string questId, string reason, int currentDay)
+        {
+            var mission = GetMissionByQuest(questId);
+            if (mission == null) return false;
+            if (mission.IsTerminal || mission.ArrivalResolved) return false;
+            if (mission.Stage != DistressRescueMissionStage.Dispatched) return false;
+
+            mission.Stage = DistressRescueMissionStage.TerminalFailed;
+            mission.OutcomeSummary = string.IsNullOrWhiteSpace(reason)
+                ? $"The rescue expedition failed before reaching the signal (Day {currentDay})."
+                : $"The rescue expedition failed before reaching the signal (Day {currentDay}): {reason}";
+            OnStageChanged?.Invoke(mission, DistressRescueMissionStage.TerminalFailed);
+            return true;
+        }
+
+        /// <summary>
         /// Transitions a mission to Reached stage when an expedition arrives at
         /// the destination site. Resolution authority is the **arrival day**:
         /// with a live-sender model, arrival on/after the sender death day

@@ -117,7 +117,9 @@ namespace Ashfall.Core.Tests
             //   MapDetail 0.74 → Muted 2.74:1; Expedition 0.82 → Dim 3.78:1;
             //   GameOver 0.80 → Dim 3.44:1. At Ink-dim ≥ 0.90 every token
             // holds ≥ 4.96:1 over any art. Changing an alpha re-opens §3.
-            AssertSourceContains("src", "UI", "MapDetailPanel.cs", "0.03f, 0.04f, 0.05f, 0.90f");
+            AssertSourceContains("src", "UI", "MapDetailPanel.cs", "AshfallUiHelpers.PanelScrim()");
+            Assert.True(Theme.InkPanelStrong.a >= 0.90f,
+                $"InkPanelStrong alpha {Theme.InkPanelStrong.a} is below the 0.90 closed-scrim floor.");
             AssertSourceContains("src", "UI", "ExpeditionPanel.cs", "BackdropArt.ExpeditionDeparture, 0.90f");
             AssertSourceContains("src", "UI", "GameOverPanel.cs", "UiAssetManifest.GameOverBackgrounds, 0.90f)");
             AssertSourceContains("src", "UI", "GameHudOverlay.cs", "Theme.Ink.b, 0.9f");

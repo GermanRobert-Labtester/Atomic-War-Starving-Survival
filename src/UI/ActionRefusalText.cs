@@ -27,6 +27,17 @@ namespace AtomicWar.GodotApp.UI
         public static string Describe(string? code)
         {
             if (string.IsNullOrEmpty(code)) return "the action was refused.";
+            // P003 — the tutorial-ordering gate carries the pending stage after
+            // the ':' so the refusal can name the next onboarding step.
+            if (code.StartsWith("tutorial_step_locked", System.StringComparison.Ordinal))
+            {
+                string stage = code.Length > "tutorial_step_locked:".Length
+                    ? code.Substring("tutorial_step_locked:".Length).Replace('_', ' ').ToUpperInvariant()
+                    : string.Empty;
+                return stage.Length > 0
+                    ? $"finish the earlier onboarding steps first — next: {stage}."
+                    : "finish the earlier onboarding steps first.";
+            }
             return code switch
             {
                 // Generic preflight / wiring

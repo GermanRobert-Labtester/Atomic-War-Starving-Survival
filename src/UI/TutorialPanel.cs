@@ -141,7 +141,7 @@ namespace AtomicWar.GodotApp.UI
             if (_contextualDialog == null || string.IsNullOrWhiteSpace(tutorialId)) return;
             if (_contextualDialog.Visible) return;
             string title = AshfallLocalization.Tr(
-                WildlifeTrappingLocalization.TutorialTitleKey(tutorialId), tutorialId);
+                WildlifeTrappingLocalization.TutorialTitleKey(tutorialId), LessonTitleFallback(tutorialId));
             string fallbackBody = tutorialId switch
             {
                 WildlifeTrappingLocalization.FirstSnareTutorialId =>
@@ -154,6 +154,8 @@ namespace AtomicWar.GodotApp.UI
                     "Radiation does not announce itself. Check the party's protection and dose \u2014 gear, anti-rad, or a shorter route.",
                 Ashfall.Core.Localization.OnboardingLessonLocalization.SevereWeatherPrepId =>
                     "Weather carries the dose with it. A severe day raises exposure and cuts travel; read the forecast before you commit people or supplies.",
+                Ashfall.Core.Localization.OnboardingLessonLocalization.AcuteRadiationId =>
+                    "Acute radiation sickness is already burning down this survivor's health. Open MEDICAL and give Rad-Away or iodine now \u2014 every hour untreated costs health.",
                 Ashfall.Core.Localization.OnboardingLessonLocalization.CombatBasicsId =>
                     "The fight runs in real time. Pick a target, FIRE, and reload when the magazine runs dry; WASD or the left stick repositions the squad. If contact turns bad, RETREAT to the extract zone \u2014 you can still be shot while running.",
                 _ => "A new lesson is ready. Check the related shelter panel before you continue."
@@ -164,6 +166,24 @@ namespace AtomicWar.GodotApp.UI
             _activeContextualId = tutorialId;
             _contextualDialog.PopupCentered(new Vector2I(720, 300));
         }
+
+        /// <summary>
+        /// Human title used when the localization table has no row for the
+        /// lesson. Previously the raw stable id ("medical.acute_radiation")
+        /// leaked into the dialog title, so every un-localized onboarding
+        /// lesson showed its key.
+        /// </summary>
+        private static string LessonTitleFallback(string tutorialId) => tutorialId switch
+        {
+            WildlifeTrappingLocalization.FirstSnareTutorialId => "The First Snare",
+            WildlifeTrappingLocalization.WearOutTutorialId => "When a Trap Wears Out",
+            WildlifeTrappingLocalization.BycatchTutorialId => "Bycatch",
+            OnboardingLessonLocalization.ProtectionBeforeDispatchId => "Protection Before Dispatch",
+            OnboardingLessonLocalization.SevereWeatherPrepId => "Severe Weather",
+            OnboardingLessonLocalization.CombatBasicsId => "Combat Basics",
+            OnboardingLessonLocalization.AcuteRadiationId => "Acute Radiation",
+            _ => "Lesson",
+        };
 
         public override void _Ready()
         {

@@ -104,7 +104,17 @@ namespace AtomicWar.GodotApp
             CloseAllOverlayPanels();
             UiNodeDiagnostics.Report(this, "shelter");
 
-            OpenExpandedPanel("water_treatment");
+            // Exercise the player registry route, then drive one real action
+            // through the panel button into the canonical water-source owner.
+            _sharedResearch.UnlockManual("knowledge_deep_well_hydraulics");
+            bool buildInputsAdded = _inventory.Inventory.AddById("item_hydraulic_actuator", 1)
+                && _inventory.Inventory.AddById("mechanical_parts", 2);
+            _state = GameState.Playing;
+            OpenPlayerPanel("water_treatment");
+            int partsBeforeBuild = _inventory.Inventory.CountById("mechanical_parts");
+            _waterTreatmentPanel?.DeepWellActionButton?.EmitSignal(BaseButton.SignalName.Pressed);
+            bool deepWellBuilt = _waterSources?.DeepWellState.built == true
+                && _inventory.Inventory.CountById("mechanical_parts") == partsBeforeBuild - 2;
             bool waterSources = _waterTreatmentPanel != null
                 && _waterTreatmentPanel.IsBound
                 && _waterTreatmentPanel.AreWaterSourcesBound
@@ -114,7 +124,8 @@ namespace AtomicWar.GodotApp
                 && _waterTreatmentPanel.PiezometerInstallButton != null
                 && _waterTreatmentPanel.WaterSourcesStatusText.Contains("DEEP WELL", StringComparison.Ordinal)
                 && _waterTreatmentPanel.WaterSourcesStatusText.Contains("CONDENSER", StringComparison.Ordinal)
-                && _waterTreatmentPanel.WaterSourcesStatusText.Contains("AQUIFER MONITORING", StringComparison.Ordinal);
+                && _waterTreatmentPanel.WaterSourcesStatusText.Contains("AQUIFER MONITORING", StringComparison.Ordinal)
+                && buildInputsAdded && deepWellBuilt;
             CloseAllOverlayPanels();
 
             SetupOrphanSealWave1();
@@ -127,7 +138,14 @@ namespace AtomicWar.GodotApp
             UiNodeDiagnostics.Report(this, "shelter_operations");
             ResetShelterOperations();
 
+            // Task 11 — StatusPanel must be re-bind safe, including the
+            // health-history subscription added for the expedition-injury chip.
+            SetupHealthHistory();
             _statusPanel.Bind(_survivors, _world.Weather, _powerGrid, _inventory, _simDay);
+            _statusPanel.Bind(_survivors, _world.Weather, _powerGrid, _inventory, _simDay,
+                null, null, null, _healthHistory);
+            _statusPanel.Bind(_survivors, _world.Weather, _powerGrid, _inventory, _simDay,
+                null, null, null, _healthHistory);
             UiNodeDiagnostics.Mark(this, "status");
             _statusPanel.Open();
             bool status = _statusPanel.IsBound

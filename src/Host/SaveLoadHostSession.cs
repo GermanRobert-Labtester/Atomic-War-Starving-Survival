@@ -625,7 +625,10 @@ public partial class SaveLoadHostSession : Node
                 var loaded = _slotService.TryLoadAggregate(_currentProfileId, _activeSlotId.Value);
                 if (!loaded.IsSuccess || loaded.Envelope?.manifest == null)
                 {
-                    GD.PrintErr($"[SaveLoad] Aggregate save refused: current campaign envelope could not be loaded for slot '{_activeSlotId}'.");
+                    string detail = loaded.Details != null && loaded.Details.Count > 0
+                        ? " " + string.Join("; ", loaded.Details)
+                        : string.Empty;
+                    GD.PrintErr($"[SaveLoad] Aggregate save refused: current campaign envelope could not be loaded for slot '{_activeSlotId}' ({loaded.Status}).{detail}");
                     return false;
                 }
                 manifest = CloneManifest(loaded.Envelope.manifest);

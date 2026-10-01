@@ -110,7 +110,11 @@ namespace Ashfall.Core.Tests.Campaign
             Assert.Contains("public bool Settle(", session);
             Assert.Contains("public void TickDay(int day)", session);
             Assert.Contains("public void DrainDayEvents(List<DayStateChangeEvent> events)", session);
-            Assert.Contains("CommitmentSaveStore.TrySave", session);
+            // Durability rides the aggregate CaptureSection path (the per-session
+            // Save() override was removed as dead); pin the section contract and
+            // the capture seam the save store exposes.
+            Assert.Contains("public const string SectionName", session);
+            Assert.Contains("TryCapturePersisted", session);
         }
     }
 }

@@ -97,6 +97,10 @@ namespace Ashfall.Core.Radiation
     public class RadiationSystem
     {
         public const float AcuteThreshold = 80f;
+        /// <summary>Presentation "watch" band: dose at or above this is surfaced as
+        /// elevated. Not a simulation consequence — acute sickness begins at
+        /// <see cref="AcuteThreshold"/>; panels read this instead of re-typing 50.</summary>
+        public const float WarnThreshold = 50f;
         public const float ChronicLifetimeThreshold = 400f;
         public const float HealthLossPerHourAtAcute = 5f;
         public const float IodineResistanceHours = 6f;
@@ -388,6 +392,7 @@ Func<SurvivorRadState, bool>? radiotrophic = null,
         {
             if (survivor == null || !survivor.IsAlive || radsRemoved <= 0f) return;
             survivor.RadiationDose = MathfCompat.Clamp(survivor.RadiationDose - radsRemoved, 0f, 100f);
+            ClearResolvedAcuteStatus(survivor);
             OnDoseChanged?.Invoke(survivor, survivor.RadiationDose);
         }
 
@@ -395,7 +400,22 @@ Func<SurvivorRadState, bool>? radiotrophic = null,
         {
             if (survivor == null || !survivor.IsAlive) return;
             survivor.RadiationDose = MathfCompat.Clamp(dose, 0f, 100f);
+            ClearResolvedAcuteStatus(survivor);
             OnDoseChanged?.Invoke(survivor, survivor.RadiationDose);
+        }
+
+        /// <summary>
+        /// P013 — the acute-sickness status is a consequence of the acute dose
+        /// band. Once a reduction (anti-rad chelation, or an explicit dose set)
+        /// brings the dose back below <see cref="AcuteThreshold"/>, the status
+        /// clears so a treated survivor is not stuck reading "acute" forever.
+        /// Only reductions clear it; further exposure at/above the threshold
+        /// re-grants it through <see cref="GrantStatus"/>.
+        /// </summary>
+        private static void ClearResolvedAcuteStatus(SurvivorRadState survivor)
+        {
+            if (survivor.RadiationDose < AcuteThreshold)
+                survivor.HasAcuteRadiationSickness = false;
         }
 
         public void AdjustDose(SurvivorRadState survivor, float delta)

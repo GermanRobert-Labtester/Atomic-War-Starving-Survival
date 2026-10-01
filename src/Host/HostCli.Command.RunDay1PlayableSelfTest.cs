@@ -81,6 +81,19 @@ namespace AtomicWar.GodotApp
                 Check(mikhail != null && mikhail.Health > 70f, "Gunner Mikhail present with combat traits");
                 Check(elena != null && elena.Health > 80f, "Elena Vasquez present with machinist expertise");
 
+                // P012 — the day-1 acute-radiation trigger condition is real, and
+                // the persisted onboarding authority queues the lesson exactly once.
+                var mikhailRad = survivorsSession.RadStateFor("survivor_gunner_mikhail");
+                Check(mikhailRad != null && mikhailRad.HasAcuteRadiationSickness,
+                    "day-1 roster includes acute radiation (P012 trigger condition)");
+                var onboarding = Ashfall.Core.Onboarding.OnboardingJourney.CreateFirstHour();
+                Check(onboarding.RequestContextualTutorial(
+                        Ashfall.Core.Localization.OnboardingLessonLocalization.AcuteRadiationId),
+                    "acute-radiation lesson queued on the day-1 acute-rad start");
+                Check(!onboarding.RequestContextualTutorial(
+                        Ashfall.Core.Localization.OnboardingLessonLocalization.AcuteRadiationId),
+                    "acute-radiation lesson is at most once per campaign");
+
                 // 3. Inventory & Supplies
                 var invSession = InventoryHostSession.Create(dataDirectory, seedWhenNoSave: true);
                 var inv = invSession.Inventory;

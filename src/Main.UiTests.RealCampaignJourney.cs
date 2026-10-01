@@ -383,6 +383,26 @@ namespace AtomicWar.GodotApp
                 int scrapMetalBeforeEncounter = _inventory.Inventory.CountById("scrap_metal");
                 int ammoBeforeEncounter = _inventory.Inventory.CountById("ammo_556");
 
+                // P003 — in full-onboarding mode the terminal Expedition dispatch
+                // is gated behind Water→Dose. This harness drives the real
+                // campaign, so it performs the ordered prerequisites the same
+                // way a player does (through the production sigil seam) before
+                // dispatching; an out-of-order dispatch is refused instead.
+                ObserveSigil("water.treatment_started");
+                ObserveSigil("power.breaker_toggled");
+                ObserveSigil("food.ration_consumed");
+                ObserveSigil("duty.assigned");
+                ObserveSigil("dose.read");
+
+                // P004 — exercise the live hint-panel path: opening the
+                // onboarding checklist emits `hint_shown`, dismissing emits
+                // `hint_dismissed`, both through the production UI seam into the
+                // local metrics sink (the stage is Research once Water→Dose are
+                // done, so the funnel can read a real hint→no-action drop-off).
+                EnsureOnboardingPanel();
+                _onboardingHintPanel?.Show();
+                _onboardingHintPanel?.MarkHintDismissed();
+
                 var dispatchResult = _expeditions.StartExpedition(encounterSurvivor, testExpeditionLocId, stateVersion: _expeditions.StateVersion);
                 Check(dispatchResult.IsSuccess, $"real expedition dispatch succeeds through the production StartExpedition API: {dispatchResult.FailureCode}");
 

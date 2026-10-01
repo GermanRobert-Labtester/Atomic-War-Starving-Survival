@@ -127,10 +127,10 @@ namespace AtomicWar.GodotApp
                     GD.PrintErr("[FAIL] Check 8: Origin resolution was not stable.");
                 }
 
-                // Check 9: keepsake resolution is truthful — resolvable keepsakes
-                // resolve in the canonical item catalog; orphaned keepsake ids are
-                // reported, never invented. (The authored enrichment catalog
-                // contains orphaned keepsake ids; that is a recorded data gap.)
+                // Check 9: keepsake resolution is truthful — every authored
+                // keepsake must resolve in the canonical item catalog. The 65
+                // orphaned ids recorded in KNOWN_DEBT.md were authored into
+                // items.json, so a future orphan is a regression, not a gap.
                 int keepsakes = 0;
                 int present = 0;
                 int missing = 0;
@@ -142,14 +142,14 @@ namespace AtomicWar.GodotApp
                     if (itemsJson.Contains($"\"{mod.GrantedKeepsakeItemId}\"", StringComparison.Ordinal)) present++;
                     else missing++;
                 }
-                if (keepsakes > 0 && present > 0 && present + missing == keepsakes)
+                if (keepsakes > 0 && missing == 0)
                 {
-                    GD.Print($"[PASS] Check 9: {present} of {keepsakes} authored keepsakes resolve in the item catalog; {missing} orphaned ids reported (recorded data gap).");
+                    GD.Print($"[PASS] Check 9: all {keepsakes} authored keepsakes resolve in the item catalog (0 orphaned).");
                     passed++;
                 }
                 else
                 {
-                    GD.PrintErr($"[FAIL] Check 9: Keepsake resolution inconsistent (present={present}, missing={missing}, total={keepsakes}).");
+                    GD.PrintErr($"[FAIL] Check 9: {missing} of {keepsakes} authored keepsakes are orphaned (present={present}).");
                 }
 
                 // Check 10: no fabricated skills — a survivor with an authored

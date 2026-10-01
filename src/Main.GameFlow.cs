@@ -487,7 +487,7 @@ namespace AtomicWar.GodotApp
                     break;
                 case "survivors":
                     SetupSurvivors();
-                    _survivorsOverlay.Bind(_survivors);
+                    _survivorsOverlay.Bind(_survivors, _simDay);
                     _survivorsOverlay.Open();
                     break;
                 case "inventory":
@@ -799,6 +799,11 @@ namespace AtomicWar.GodotApp
             SetupWorld();
             SetupInventory();
             SetupSurvivors();
+            // Lifecycle resets can null the roster; capture a local so the rest of
+            // this method is provably non-null (fixes a latent NRE flagged by
+            // CS8602 during the P009 sweep).
+            var survivors = _survivors;
+            if (survivors == null) return;
 
             long value = _holdfastRuntime.Trade.PlayerValue;
             string faction = _holdfastTerminal?.SelectedFactionId ?? "";
@@ -806,42 +811,60 @@ namespace AtomicWar.GodotApp
             _hudOverlay.UpdateState(_holdfastRuntime.Day, value, faction, weather);
             _hudOverlay.UpdateHealth(_holdfastRuntime.Health, HoldfastRuntimeSession.MaxHealth);
             _hudOverlay.UpdateRadiation(_holdfastRuntime.Radiation);
+            // P009 — glanceable survival pressure for the player survivor. The
+            // runtime session owns the projection from the needs authority, and
+            // the owning NeedsProfile supplies the critical thresholds.
+            _hudOverlay.UpdateNeeds(
+                _holdfastRuntime.Hunger, _holdfastRuntime.Thirst,
+                _holdfastRuntime.Fatigue, _holdfastRuntime.Morale,
+                _holdfastRuntime.Warmth,
+                survivors.Needs.Profile);
+            // P012 — once per campaign, warn about day-1 acute radiation through
+            // the persisted onboarding lesson queue (no-op when already seen).
+            MaybeRequestAcuteRadiationLesson();
 
-            // Plan 140 — evaluate critical survival transitions
+            // Plan 140 — evaluate critical survival transitions. Thresholds are
+            // read from the owning NeedsProfile (task 4): the feedback feed and
+            // the simulation can no longer disagree about what "critical" means.
             if (_feedbackService != null)
             {
-                if (_feedbackService.Deduplicator.EvaluateTransition("health_injury_critical", _holdfastRuntime.Health <= 25))
+                var needsProfile = survivors.Needs.Profile;
+                float hungerCritical = needsProfile?.hungerCritical ?? 90f;
+                float thirstCritical = needsProfile?.thirstCritical ?? 90f;
+                float hungerWarn = needsProfile?.hungerWarn ?? 70f;
+                float thirstWarn = needsProfile?.thirstWarn ?? 70f;
+                float healthCritical = needsProfile?.healthCritical ?? 25f;
+                if (_feedbackService.Deduplicator.EvaluateTransition("health_injury_critical", _holdfastRuntime.Health <= healthCritical))
                 {
                     _feedbackService.Emit(new Ashfall.Core.Feedback.FeedbackEvent("injury_critical", new object[] { "Dr. Sarah Chen" }, category: "health_warning", dedupeKey: "health_injury_critical"));
                 }
-                if (_feedbackService.Deduplicator.EvaluateTransition("survival_food_critical", _holdfastRuntime.Hunger >= 90))
+                // Starvation/dehydration critical alerts are emitted once per
+                // survivor by SurvivorsHostSession's OnNeedCritical bridge (T6),
+                // so this block keeps only the warn-band and health rows to
+                // avoid a duplicate toast for the player.
+                if (_feedbackService.Deduplicator.EvaluateTransition("survival_food_low", _holdfastRuntime.Hunger >= hungerWarn && _holdfastRuntime.Hunger < hungerCritical))
                 {
-                    _feedbackService.Emit(new Ashfall.Core.Feedback.FeedbackEvent("food_critical", new object[] { _holdfastRuntime.Hunger }, category: "resource_warning", dedupeKey: "survival_food_critical"));
+                    // Task 15 — the toast argument is a localized resource display
+                    // name, so the German catalog names the resource instead of
+                    // the English template noun leaking through.
+                    _feedbackService.Emit(new Ashfall.Core.Feedback.FeedbackEvent("food_low", new object[] { 100 - _holdfastRuntime.Hunger, AshfallUiText.Tr("ui.resource.food", "Food") }, category: "resource_warning", dedupeKey: "survival_food_low"));
                 }
-                else if (_feedbackService.Deduplicator.EvaluateTransition("survival_food_low", _holdfastRuntime.Hunger >= 70 && _holdfastRuntime.Hunger < 90))
+                if (_feedbackService.Deduplicator.EvaluateTransition("survival_water_low", _holdfastRuntime.Thirst >= thirstWarn && _holdfastRuntime.Thirst < thirstCritical))
                 {
-                    _feedbackService.Emit(new Ashfall.Core.Feedback.FeedbackEvent("food_low", new object[] { 100 - _holdfastRuntime.Hunger }, category: "resource_warning", dedupeKey: "survival_food_low"));
+                    _feedbackService.Emit(new Ashfall.Core.Feedback.FeedbackEvent("water_low", new object[] { 100 - _holdfastRuntime.Thirst, AshfallUiText.Tr("ui.resource.water", "Water") }, category: "resource_warning", dedupeKey: "survival_water_low"));
                 }
-                if (_feedbackService.Deduplicator.EvaluateTransition("survival_dehydration_imminent", _holdfastRuntime.Thirst >= 90))
-                {
-                    _feedbackService.Emit(new Ashfall.Core.Feedback.FeedbackEvent("dehydration_imminent", new object[] { "Dr. Sarah Chen" }, category: "health_warning", dedupeKey: "survival_dehydration_imminent"));
-                }
-                else if (_feedbackService.Deduplicator.EvaluateTransition("survival_water_low", _holdfastRuntime.Thirst >= 70 && _holdfastRuntime.Thirst < 90))
-                {
-                    _feedbackService.Emit(new Ashfall.Core.Feedback.FeedbackEvent("water_low", new object[] { 100 - _holdfastRuntime.Thirst }, category: "resource_warning", dedupeKey: "survival_water_low"));
-                }
-                if (_feedbackService.Deduplicator.EvaluateTransition("radiation_high_rate", _holdfastRuntime.Radiation >= 50f))
-                {
-                    _feedbackService.Emit(new Ashfall.Core.Feedback.FeedbackEvent("radiation_high", new object[] { (int)_holdfastRuntime.Radiation }, category: "health_warning", dedupeKey: "radiation_high_rate"));
-                }
+                // Task 11 — the radiation warn-band toast is now emitted by
+                // SurvivorsHostSession (the owner of the dose state) with a
+                // per-survivor dedupe, so the player path no longer re-emits it
+                // and cannot double-toast the player survivor.
             }
 
             int totalSurvivors = 0;
             int livingSurvivors = 0;
             float livingHealth = 0f;
-            for (int i = 0; i < _survivors.RosterState.Count; i++)
+            for (int i = 0; i < survivors.RosterState.Count; i++)
             {
-                var survivor = _survivors.RosterState[i];
+                var survivor = survivors.RosterState[i];
                 if (survivor == null) continue;
                 totalSurvivors++;
                 if (!survivor.IsAliveState) continue;
@@ -860,7 +883,7 @@ namespace AtomicWar.GodotApp
                 ? _holdfastRuntime.World.LastEvent
                 : !string.IsNullOrWhiteSpace(_world.LastEvent)
                     ? _world.LastEvent
-                    : _survivors.LastEvent;
+                    : survivors.LastEvent;
 
             SetupStartingLevel();
             string intakeAssignee = _dutyRoster?.Roster.GetAssignment(Ashfall.Core.DutyRosterIds.RoleIntakeSleeper) ?? "Dr. Sarah Chen";

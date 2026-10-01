@@ -126,6 +126,32 @@ For JSON-only fixes (no C# changes):
 
 ---
 
+## Dry-Run Rehearsal
+
+A hotfix path nobody has rehearsed is a rumour of a route. Run the non-mutating
+rehearsal before tagging:
+
+```bash
+# Throwaway fixture git repo: docs-only change must PASS the iron rule; a
+# production schema bump must FAIL it; the three version sources must agree.
+bash scripts/release/hotfix-rehearsal.sh
+
+# Proves the iron rule detects a schema bump and clears a non-schema change
+# in a throwaway git repo (no branch/worktree mutation of this checkout):
+python3 scripts/ci/version-gate.py --self-test
+
+# Proves the live curated codecs still match the immutable v1.1.0 snapshot:
+bash scripts/run_test.sh Ashfall.Core.Tests/Save/HotfixRehearsalGateTests.cs
+```
+
+The self-test includes the `Hotfix iron-rule rehearsal` cases (a synthetic
+`schema` constant bump must be flagged; a docs-only change must be clean).
+`HotfixRehearsalGateTests` pins the v1.1.0 `schema_map` against
+`VersionReport.SaveSchemaVersions`, so a codec bump cannot ship as a hotfix
+without failing the gate.
+
+---
+
 ## Related Documents
 
 - [PROCESS.md](PROCESS.md) — full release process

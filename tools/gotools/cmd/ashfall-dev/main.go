@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"ashfall/gotools/pkg/agentsync"
+	"ashfall/gotools/pkg/catalogaudit"
 	"ashfall/gotools/pkg/checkplan"
 	"ashfall/gotools/pkg/config"
 	"ashfall/gotools/pkg/indexer"
@@ -40,6 +41,8 @@ Commands:
   parse-results    Test-result parser with taxonomy classification and markdown summary
   validate-json    Fast JSON schema & UTF-8 validator (sub-second runtime)
   validate-config  JSON Schema validator for quest, save, and config files (JSON/YAML)
+  audit-catalogs   Read-only catalog-hygiene audit (reference integrity, duplicate ids,
+                   id naming, schema_version drift) with a ratcheting findings baseline
   scan-saves       Save-file & save-store contract scanner
   build-manifest   Asset manifest builder with image dimensions and SHA256 hashes
   run-tasks        Parallel subprocess / task runner with timeout and RSS metrics
@@ -76,6 +79,8 @@ func main() {
 		runValidateJSON(args)
 	case "validate-config":
 		runValidateConfig(args)
+	case "audit-catalogs":
+		runAuditCatalogs(args)
 	case "scan-saves":
 		runScanSaves(args)
 	case "build-manifest":
@@ -224,6 +229,163 @@ func runValidateJSON(args []string) {
 		} else {
 			fmt.Println("✅ All catalog files adhere strictly to schema policy (schema_version >= 1, root object {}).")
 		}
+	}
+}
+
+func runAuditCatalogs(args []string) {
+	fs := flag.NewFlagSet("audit-catalogs", flag.ExitOnError)
+	rootDir := fs.String("root", ".", "Repository root directory")
+	policyPath := fs.String("policy", "", "Path to catalog_audit_policy.json (default: <root>/docs/ci/catalog_audit_policy.json)")
+	baselinePath := fs.String("baseline", "", "Path to catalog_audit_baseline.json (default: <root>/docs/ci/catalog_audit_baseline.json)")
+	asJSON := fs.Bool("json", false, "Output the full report as JSON")
+	check := fs.Bool("check", false, "Exit non-zero when a finding is not in the baseline")
+	updateBaseline := fs.Bool("update-baseline", false, "Rewrite the baseline with every current finding")
+	strictStale := fs.Bool("strict-stale", false, "Treat stale baseline / allowlist entries as failures")
+	failOnAdvisory := fs.Bool("fail-on-advisory", false, "Promote advisories (unit-suffix, mirror-resolution) to failures")
+	reportJSON := fs.String("report-json", "", "Write the full JSON report to this path")
+	summary := fs.Bool("summary", false, "Print a one-line JSON summary for CI logs")
+	listChecks := fs.Bool("list-checks", false, "List the audit checks and exit")
+	listAdvisories := fs.Bool("list-advisories", false, "Print the advisories (check, key, detail) and exit")
+	_ = fs.Parse(args)
+
+	if *listChecks {
+		fmt.Println("audit-catalogs checks:")
+		fmt.Println("  reference_integrity    declared reference fields resolve to a target id-domain (D01)")
+		fmt.Println("  duplicate_ids          an id defined across two different id-domains (D02)")
+		fmt.Println("  id_naming              ids conform to the canonical snake_case regex (D03)")
+		fmt.Println("  schema_version_drift   a catalog's schema_version matches its expected value (D04)")
+		fmt.Println("advisories (never fail): id_unit_suffix, mirror_resolution")
+		return
+	}
+
+	root, err := filepath.Abs(*rootDir)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "[audit-catalogs] ERROR: resolve root: %v\n", err)
+		os.Exit(2)
+	}
+	policy := *policyPath
+	if policy == "" {
+		policy = filepath.Join(root, "docs", "ci", "catalog_audit_policy.json")
+	} else if !filepath.IsAbs(policy) {
+		policy = filepath.Join(root, policy)
+	}
+	baseline := *baselinePath
+	if baseline == "" {
+		baseline = filepath.Join(root, "docs", "ci", "catalog_audit_baseline.json")
+	} else if !filepath.IsAbs(baseline) {
+		baseline = filepath.Join(root, baseline)
+	}
+
+	pol, err := catalogaudit.LoadPolicy(policy)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "[audit-catalogs] ERROR: %v\n", err)
+		os.Exit(2)
+	}
+	base, err := catalogaudit.LoadBaseline(baseline)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "[audit-catalogs] ERROR: %v\n", err)
+		os.Exit(2)
+	}
+	report, err := catalogaudit.Run(root, pol, base)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "[audit-catalogs] ERROR: %v\n", err)
+		os.Exit(2)
+	}
+
+	if *updateBaseline {
+		if err := catalogaudit.WriteBaseline(baseline, catalogaudit.BaselineFromReport(report)); err != nil {
+			fmt.Fprintf(os.Stderr, "[audit-catalogs] ERROR: write baseline: %v\n", err)
+			os.Exit(2)
+		}
+		fmt.Printf("CATALOG_AUDIT baseline updated: %s (%d findings)\n", baseline, len(report.Accepted)+len(report.Findings))
+		return
+	}
+
+	if *listAdvisories {
+		for _, a := range report.Advisories {
+			fmt.Printf("%s\t%s\t%s\n", a.Check, a.Key, a.Detail)
+		}
+		return
+	}
+
+	if *asJSON {
+		data, _ := json.MarshalIndent(report, "", "  ")
+		fmt.Println(string(data))
+	} else {
+		fmt.Printf("[audit-catalogs] scanned %d catalogs, indexed %d ids\n", report.FilesScanned, report.IDsIndexed)
+		for _, f := range report.Findings {
+			fmt.Printf("  ✗ [%s] %s — %s\n", f.Check, f.Key, f.Detail)
+		}
+		for _, f := range report.Advisories {
+			fmt.Printf("  · [%s] %s — %s\n", f.Check, f.Key, f.Detail)
+		}
+		if report.MirrorResolution != nil {
+			fmt.Printf("[audit-catalogs] mirror resolution: %d mirror id(s) lack a primary-domain author (advisory; %d mirror catalog(s))\n",
+				report.MirrorResolution.MirrorUnresolved, report.MirrorResolution.MirrorCatalogs)
+		}
+		if len(report.StaleBaseline) > 0 {
+			fmt.Printf("[audit-catalogs] %d stale baseline entries (safe to prune):\n", len(report.StaleBaseline))
+			for _, s := range report.StaleBaseline {
+				fmt.Printf("  · %s\n", s)
+			}
+		}
+	}
+
+	if len(report.ParseErrors) > 0 {
+		for _, f := range report.ParseErrors {
+			fmt.Fprintf(os.Stderr, "[audit-catalogs] unreadable catalog %s: %s\n", f.File, f.Detail)
+		}
+	}
+
+	if *reportJSON != "" {
+		data, _ := json.MarshalIndent(report, "", "  ")
+		if err := os.WriteFile(*reportJSON, append(data, '\n'), 0o644); err != nil {
+			fmt.Fprintf(os.Stderr, "[audit-catalogs] ERROR: write report: %v\n", err)
+			os.Exit(2)
+		}
+	}
+	if *summary {
+		s := map[string]interface{}{
+			"files_scanned": report.FilesScanned,
+			"findings":      len(report.Findings),
+			"acknowledged":  len(report.Accepted),
+			"advisories":    len(report.Advisories),
+			"parse_errors":  len(report.ParseErrors),
+			"stale":         len(report.StaleBaseline),
+		}
+		data, _ := json.Marshal(s)
+		fmt.Println(string(data))
+	}
+
+	if *check {
+		staleFail := *strictStale && report.HasStale()
+		advisoryFail := false
+		if *failOnAdvisory {
+			allowedAdv := map[string]bool{}
+			for _, k := range pol.AdvisoryAllowlist {
+				allowedAdv[k] = true
+			}
+			for _, a := range report.Advisories {
+				if !allowedAdv[a.Key] {
+					advisoryFail = true
+					break
+				}
+			}
+		}
+		if len(report.Findings) > 0 || len(report.ParseErrors) > 0 || staleFail || advisoryFail {
+			fmt.Printf("CATALOG_AUDIT FAIL (%d new finding(s), %d unreadable catalog(s), %d stale acknowledgement(s), %d advisory(ies))\n",
+				len(report.Findings), len(report.ParseErrors), len(report.StaleBaseline), len(report.Advisories))
+			if len(report.Findings) > 0 {
+				fmt.Printf("[audit-catalogs] if every finding is reviewed and intended, re-record with: %s --update-baseline\n", os.Args[0])
+			}
+			os.Exit(1)
+		}
+		fmt.Printf("CATALOG_AUDIT PASS (%d catalog(s), %d acknowledged finding(s), %d advisory(ies))\n",
+			report.FilesScanned, len(report.Accepted), len(report.Advisories))
+		return
+	}
+	if len(report.Findings) > 0 || len(report.ParseErrors) > 0 {
+		os.Exit(1)
 	}
 }
 

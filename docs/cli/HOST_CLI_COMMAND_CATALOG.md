@@ -1,7 +1,7 @@
 # ASHFALL — Host CLI Command Catalog
 
 **Last Verified:** 2026-10-01<br>
-**Total Registered Actions:** 358 entries / 590 flag tokens (aliases included)
+**Total Registered Actions:** 359 entries / 593 flag tokens (aliases included)
 
 > **GENERATED FILE — do not edit by hand.**
 > Source of truth: the live `godot --headless --path . -- --host-help`
@@ -37,6 +37,7 @@
 | `--campaign-fuzz-selftest` | — | Core-level campaign fuzz harness gate (Task #129); delegates to Ashfall.Core.Tests.CampaignFuzz suite |
 | `--composition-root-selftest` | — | Composition root architecture gate: verifies ComposeCampaign() is the single entry point (Task #131) |
 | `--real-campaign-journey-selftest` | `--campaign-journey-selftest`, `--real-main-journey-selftest` | Real Main-composed player journey: New Game -> ComposeCampaign() -> real gameplay action -> real day advance through the coordinator -> SaveAll -> full in-memory reset -> Continue -> restored composed state (Plan #5) |
+| `--ui-composition-harness-selftest` | `--ui-sim-harness-selftest`, `--composition-retry-selftest` | UI-built headless simulation harness: builds the real UI/composition root, drives a deterministic multi-day run, injects a late-owner fault, retries the same day (fail-closed rollback), compares the persisted campaign.json checksum to the in-memory envelope, and soaks the retry cycle over the full production owner set |
 | `--failure-restart-selftest` | `--restart-journey-selftest`, `--gameover-restart-selftest` | Failure & restart path proof: survivor deaths -> ShowGameOver terminal seal -> ReturnToMenu -> fresh New Game (no stale state) -> Continue after a simulated crash -> corrupt campaign.json fails closed with the live session intact -> verified backup recovery (Task 9) |
 | `--food-loop-selftest` | — | Food loop from the UI: fresh-game starter cooking recipes known, kitchen panel prep -> day advance -> serve-all, holdfast eat/drink seam, Plan 136 cooking authority live |
 | `--year-two-chapter-selftest` | `--play-on-selftest`, `--chapter-selftest` | Year-two chapter continuation probe |

@@ -492,6 +492,9 @@ namespace AtomicWar.GodotApp.UI
                 foreach (var exp in _expeditions.Engine.Active.Values)
                 {
                     string status = $"{exp.survivorId} -> {exp.displayName} (Step {exp.travelTicksCompleted}/{exp.distanceTicks}) [Stamina {exp.stamina:F0}%]";
+                    // Task 13 — name the dominant risk driver on the live sortie card.
+                    string risk = Ashfall.Core.Expeditions.ExpeditionPrepPlanner.DescribeStateRisk(exp);
+                    if (!string.IsNullOrEmpty(risk) && risk != Ashfall.Core.Expeditions.ExpeditionPrepPlanner.LowRiskNote) status += $" · risk {risk}";
                     routesBox.AddChild(AshfallUiHelpers.MakeDataRow("Sortie in Progress", status, AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Hot)));
                 }
             }

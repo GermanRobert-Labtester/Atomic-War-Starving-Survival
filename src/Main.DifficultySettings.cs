@@ -12,6 +12,7 @@
 using System;
 using Godot;
 using Ashfall.Core.Difficulty;
+using AtomicWar.GodotApp.UI;
 
 namespace AtomicWar.GodotApp
 {
@@ -19,6 +20,7 @@ namespace AtomicWar.GodotApp
     {
         private DifficultySettingsHostSession? _difficultySettings;
         private bool _difficultySettingsDirty;
+        private DifficultySettingsPanel? _difficultySettingsPanel;
 
         public DifficultySettingsHostSession? DifficultySettings => _difficultySettings;
         public bool DifficultySettingsDirty => _difficultySettingsDirty;
@@ -131,6 +133,34 @@ namespace AtomicWar.GodotApp
         {
             _difficultySettings = null;
             _difficultySettingsDirty = false;
+        }
+
+        /// <summary>
+        /// Plan 181 / DEBT-PLAN181-DIFFICULTY-RUNTIME-UI: lazily builds and binds
+        /// the runtime difficulty settings panel. The panel routes every edit
+        /// through the canonical commands below, so the XP-01 bound consumers see
+        /// the new provider immediately and the ironman lock stays enforced by the
+        /// single difficulty authority.
+        /// </summary>
+        public void SetupDifficultySettingsPanel()
+        {
+            SetupDifficultySettings();
+            if (_difficultySettings == null) return;
+
+            if (_difficultySettingsPanel == null || !GodotObject.IsInstanceValid(_difficultySettingsPanel))
+            {
+                _difficultySettingsPanel = new DifficultySettingsPanel();
+                _difficultySettingsPanel.Visible = false;
+                AddChild(_difficultySettingsPanel);
+            }
+
+            _difficultySettingsPanel.Bind(
+                _difficultySettings,
+                SelectDifficultyPreset,
+                SetDifficultyCustomScalar,
+                LockDifficultySettings,
+                isDirty: () => _difficultySettingsDirty,
+                save: SaveDifficultySettings);
         }
     }
 }

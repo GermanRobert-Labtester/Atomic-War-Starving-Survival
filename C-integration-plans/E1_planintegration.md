@@ -1577,7 +1577,7 @@ session able to continue from evidence.
 - [ ] E1B canonical schema and register implemented.
 - [ ] E1C active corpus metadata migrated.
 - [ ] E1D premise verifier integrated.
-- [ ] E1E overlap clusters reviewed.
+- [x] E1E overlap clusters reviewed; five seed domains map to existing authorities with evidence, receipt format, and no plan-status changes (2026-10-01).
 - [ ] E1F pillars and rubric accepted.
 - [ ] E1G whole backlog triaged.
 - [ ] E1H rails generated.

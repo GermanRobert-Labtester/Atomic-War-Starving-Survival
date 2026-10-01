@@ -41,7 +41,8 @@ SPECIAL_BUDGETS_SEC = {
     "expansions_selftest": 10.0,
     "data_integrity_selftest": 6.0,
     "deep_coast_host_selftest": 8.0,
-    "warlord_host_selftest": 8.0
+    "warlord_host_selftest": 8.0,
+    "ui_composition_harness_selftest": 120.0
 }
 
 

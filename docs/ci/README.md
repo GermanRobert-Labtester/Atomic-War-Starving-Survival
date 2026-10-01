@@ -25,6 +25,36 @@ python3 scripts/ci/run-gates.py --report-json artifacts/gates.json --no-fail-fas
   with `scripts/ci/export-build.sh` (see `docs/RELEASE_EXPORT.md`). A full-tier
   green without export parity is **not** shippable.
 
+## Catalog hygiene gates (D01–D05, E01–E15)
+
+- **`catalog_audit`** (fast) — `ashfall-dev audit-catalogs --check --strict-stale`.
+  Four checks: `reference_integrity` (D01), `duplicate_ids` (D02), `id_naming`
+  (D03), `schema_version_drift` (D04), plus two non-failing advisories
+  (`id_unit_suffix`, `mirror_resolution`). Policy:
+  `docs/ci/catalog_audit_policy.json`; findings baseline:
+  `docs/ci/catalog_audit_baseline.json`. The runtime cross-reference authority
+  remains `Ashfall.Core.CatalogIntegrityValidator` (the `data_integrity` gate).
+- **`content_certification`** (fast) — Plan 49 / DEC-62 orphan certification
+  over the family manifest (`--content-certification-selftest`).
+- **`content_utilization`** (fast) — Ticket #127 ratchet: no
+  `GAMEPLAY_CONSUMED` regression and no new orphan versus
+  `artifacts/content-utilization-baseline.json`
+  (`--content-utilization-selftest`).
+- **`gotools_test`** (fast) — `go test -C tools/gotools ./...`.
+- **`gate_inventory_drift`** (fast) — `GATE_INVENTORY.md` must match the
+  manifest; regenerate with
+  `python3 scripts/ci/run-gates.py --write-inventory docs/ci/GATE_INVENTORY.md`.
+
+### The two `lootCategories` contracts
+
+`lootCategories` is **not one contract**. Expedition destinations
+(`expeditions.json`) use **literal item ids** — Plan 76 requires every value to
+resolve in the merged item catalog. `locations_expansion3.json` uses **abstract
+category tags** (`alloy_plates`, `rations`, `tools`, …) and is deliberately
+excluded from the reference rules (`reference_rules_excluded` in the audit
+policy). Never add the expansion file to the reference rules without first
+authoring the item-id contract.
+
 ## What green means
 
 | Tier | Meaning | Target |

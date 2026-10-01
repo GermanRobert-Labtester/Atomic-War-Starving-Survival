@@ -1045,7 +1045,7 @@
       "key": "food_low",
       "category": "resource_warning",
       "severity": "warning",
-      "template": "WARNING: Food at {0}%. Send someone for more.",
+      "template": "WARNING: {1} at {0}%. Send someone for more.",
       "parameter_count": 1,
       "display_duration_seconds": 4
     },
@@ -1053,7 +1053,7 @@
       "key": "water_low",
       "category": "resource_warning",
       "severity": "warning",
-      "template": "WARNING: Water at {0}%. The filter needs work.",
+      "template": "WARNING: {1} at {0}%. The filter needs work.",
       "parameter_count": 1,
       "display_duration_seconds": 4
     },

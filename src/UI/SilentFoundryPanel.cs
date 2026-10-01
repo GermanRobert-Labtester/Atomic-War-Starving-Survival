@@ -7,6 +7,7 @@ using Ashfall.Core;
 using Ashfall.Core.Foundry;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
+using AtomicWar.GodotApp.Localization;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI;
@@ -42,6 +43,9 @@ public partial class SilentFoundryPanel : Control, IBindablePanel
     private Ashfall.Core.Shelter.ShelterMachineTellCatalog? _machineTellCatalog;
     private Label? _tellLabel;
 
+    /// <summary>Localization shim: catalog key with an English fallback.</summary>
+    private static string T(string key, string fallback) => AshfallUiText.Tr(key, fallback);
+
     public bool IsBound => _host != null;
 
     private LineEdit? _forgeOutputEdit;
@@ -73,12 +77,12 @@ public partial class SilentFoundryPanel : Control, IBindablePanel
         // Sidebar: filter by sink category, plus status shortcuts.
         var sidebarItems = new[]
         {
-            new AshfallSidebar.Item { Id = "all", Label = "All Heats", Hint = "every castable product", IconPath = "" },
-            new AshfallSidebar.Item { Id = "agricultural_tool", Label = "Agricultural Tools", Hint = "shovels, harrows, plowshares", IconPath = "" },
-            new AshfallSidebar.Item { Id = "structural_beam", Label = "Structural Beams", Hint = "rods, plates, fasteners", IconPath = "" },
-            new AshfallSidebar.Item { Id = "water_component", Label = "Water / Brine Items", Hint = "pipes, winches", IconPath = "" },
-            new AshfallSidebar.Item { Id = "heavy_alloy_part", Label = "Heavy Alloy Parts", Hint = "defense plates, brackets", IconPath = "" },
-            new AshfallSidebar.Item { Id = "repair_plate", Label = "Repair Plates", Hint = "expedition spares", IconPath = "" },
+            new AshfallSidebar.Item { Id = "all", Label = T("ui.foundry.nav_all", "All Heats"), Hint = "every castable product", IconPath = "" },
+            new AshfallSidebar.Item { Id = "agricultural_tool", Label = T("ui.foundry.nav_agricultural", "Agricultural Tools"), Hint = "shovels, harrows, plowshares", IconPath = "" },
+            new AshfallSidebar.Item { Id = "structural_beam", Label = T("ui.foundry.nav_structural", "Structural Beams"), Hint = "rods, plates, fasteners", IconPath = "" },
+            new AshfallSidebar.Item { Id = "water_component", Label = T("ui.foundry.nav_water", "Water / Brine Items"), Hint = "pipes, winches", IconPath = "" },
+            new AshfallSidebar.Item { Id = "heavy_alloy_part", Label = T("ui.foundry.nav_heavy_alloy", "Heavy Alloy Parts"), Hint = "defense plates, brackets", IconPath = "" },
+            new AshfallSidebar.Item { Id = "repair_plate", Label = T("ui.foundry.nav_repair_plate", "Repair Plates"), Hint = "expedition spares", IconPath = "" },
         };
         _sidebar = _shell.SetSidebar(sidebarItems, "Heat Categories", "all");
         _sidebar.OnSelected += HandleSidebar;
@@ -127,7 +131,7 @@ public partial class SilentFoundryPanel : Control, IBindablePanel
         // Plan 29 Phase 10: machine tell line for the foundry cupola.
         _tellLabel = new Label
         {
-            Text = "MACHINE // NOMINAL",
+            Text = T("ui.foundry.machine_nominal", "MACHINE // NOMINAL"),
             HorizontalAlignment = HorizontalAlignment.Left,
             VerticalAlignment = VerticalAlignment.Center,
             SizeFlagsHorizontal = SizeFlags.ExpandFill,
@@ -160,7 +164,7 @@ public partial class SilentFoundryPanel : Control, IBindablePanel
             _forgeFeedback.Text = _host.BeginForging(_forgeOutputEdit.Text.Trim(), _currentDay);
             RefreshView();
         });
-        forgeBeginBtn.TooltipText = "Begin a forging pass on the latest provenance-bearing batch of the output item.";
+        forgeBeginBtn.TooltipText = T("ui.foundry.forge_tooltip", "Begin a forging pass on the latest provenance-bearing batch of the output item.");
         forgeRow.AddChild(forgeBeginBtn);
         var idEdit = new LineEdit { PlaceholderText = "output item id", SizeFlagsHorizontal = SizeFlags.ExpandFill };
         forgeRow.AddChild(idEdit);
@@ -198,7 +202,7 @@ public partial class SilentFoundryPanel : Control, IBindablePanel
             _forgeFeedback.Text = _host.CompleteForging(_currentDay);
             RefreshView();
         });
-        completeBtn.TooltipText = "Score the recorded sequence against the profile's authored order; deterministic, no RNG.";
+        completeBtn.TooltipText = T("ui.foundry.complete_tooltip", "Score the recorded sequence against the profile's authored order; deterministic, no RNG.");
         completeRow.AddChild(completeBtn);
         _detailBox.AddChild(completeRow);
 
@@ -314,12 +318,12 @@ public partial class SilentFoundryPanel : Control, IBindablePanel
         }
         if (fired.Count == 0)
         {
-            _tellLabel.Text = "MACHINE // NOMINAL";
+            _tellLabel.Text = T("ui.foundry.machine_nominal", "MACHINE // NOMINAL");
             _tellLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Pale));
         }
         else
         {
-            _tellLabel.Text = "MACHINE // " + string.Join(" // ", fired);
+            _tellLabel.Text = T("ui.foundry.machine_prefix", "MACHINE //") + " " + string.Join(" // ", fired);
             _tellLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Entropy));
         }
     }
@@ -432,7 +436,7 @@ public partial class SilentFoundryPanel : Control, IBindablePanel
         AshfallUiHelpers.EmptyChildren(_detailContent);
         if (_host == null || _selectedIndex < 0 || _productGrid == null || _selectedIndex >= _productGrid.Rows.Count)
         {
-            _detailTitle.Text = "CAST DETAIL";
+            _detailTitle.Text = T("ui.foundry.cast_detail", "CAST DETAIL");
             _detailContent.AddChild(AshfallUiHelpers.MakeMetadata(
                 _host == null
                     ? "Foundry engine offline. Bind a SilentFoundryHostSession to see live cast rows."

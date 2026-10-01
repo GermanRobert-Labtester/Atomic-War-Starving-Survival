@@ -6,13 +6,16 @@
 // where R is one of the migrated detail panels, then resolves each
 // scene's typed unique-name node contract via SceneBinder.
 //
-// The Godot-side dispatcher is a thin wrapper over the SceneBindingHeadlessProbe
-// declarations; we register each scene (+ contract) below so the verb is
-// owned by a single self-contained file and the existing ProjectBuild
-// coverage path picks it up.
+// Unlike src/UI/SceneBindingHeadlessProbe (whose Register/Run have no callers),
+// this verb owns its own scene + contract table, so the whole check lives in one
+// self-contained file that the existing ProjectBuild coverage path picks up. The
+// RootType column is asserted against the scene root's actual Script — a plain
+// unique-name contract check cannot catch a request/root type mismatch, which is
+// how a scene could pass here yet throw InvalidCastException in production.
 
 using System;
 using System.Collections.Generic;
+using System.Text;
 using Godot;
 using AtomicWar.GodotApp.UI;
 
@@ -221,7 +224,15 @@ public static class SceneBindingSelfTest
             ("RelicWorkshopButton", typeof(Button)),
             ("PharmaLabButton", typeof(Button))
         );
-        Check("res://assets/ui/panels/KitchenNutritionPanel.tscn", typeof(KitchenNutritionPanelContent),
+        // ── Designer mirrors (not scene-bound in production) ──────────────
+        // KitchenNutritionPanel, OpeningProtocolModal, SafeCrackModal, PharmaLabPanel
+        // and DailyBriefingModal are layout mirrors of surfaces whose real UI is built
+        // in C#: each constructs its own tree in _Ready and is created with `new`.
+        // Their scene roots carry no Script, so the declared RootType is Control.
+        // WaterTreatmentPanel.tscn (interleaved below) is the one genuine scene-bound
+        // surface: WaterTreatmentPanel._Ready loads it as WaterTreatmentPanelContent
+        // and binds ContentStack/DetailText/the four batch buttons via SceneBinder.
+        Check("res://assets/ui/panels/KitchenNutritionPanel.tscn", typeof(Control),
             ("RecipeList", typeof(VBoxContainer)),
             ("PrepStation", typeof(VBoxContainer)),
             ("ServiceLogContainer", typeof(VBoxContainer)),
@@ -235,7 +246,7 @@ public static class SceneBindingSelfTest
             ("OsmosisButton", typeof(Button)),
             ("ReplaceFilterButton", typeof(Button))
         );
-        Check("res://assets/ui/panels/PharmaLabPanel.tscn", typeof(PharmaLabPanelContent),
+        Check("res://assets/ui/panels/PharmaLabPanel.tscn", typeof(Control),
             ("RecipeListContainer", typeof(VBoxContainer)),
             ("DetailContainer", typeof(VBoxContainer)),
             ("LabStatusHeader", typeof(Label)),
@@ -252,7 +263,7 @@ public static class SceneBindingSelfTest
             ("CatAntibiotic", typeof(Button)),
             ("CatAntiseptic", typeof(Button))
         );
-        Check("res://assets/ui/modals/OpeningProtocolModal.tscn", typeof(OpeningProtocolModalContent),
+        Check("res://assets/ui/modals/OpeningProtocolModal.tscn", typeof(Control),
             ("RationStatus", typeof(Label)),
             ("MaintenanceStatus", typeof(Label)),
             ("RadioStatus", typeof(Label)),
@@ -268,7 +279,7 @@ public static class SceneBindingSelfTest
             ("RadioSilenceButton", typeof(Button)),
             ("RadioBeaconButton", typeof(Button))
         );
-        Check("res://assets/ui/modals/SafeCrackModal.tscn", typeof(SafeCrackModalContent),
+        Check("res://assets/ui/modals/SafeCrackModal.tscn", typeof(Control),
             ("HeaderLabel", typeof(Label)),
             ("SafeInfoLabel", typeof(Label)),
             ("DifficultyLabel", typeof(Label)),
@@ -288,7 +299,7 @@ public static class SceneBindingSelfTest
             ("TransferLootButton", typeof(Button)),
             ("AbandonButton", typeof(Button))
         );
-        Check("res://assets/ui/modals/DailyBriefingModal.tscn", typeof(DailyBriefingModalContent),
+        Check("res://assets/ui/modals/DailyBriefingModal.tscn", typeof(Control),
             ("TitleLabel", typeof(Label)),
             ("BodyLabel", typeof(RichTextLabel)),
             ("AckLabel", typeof(Label)),
@@ -302,6 +313,8 @@ public static class SceneBindingSelfTest
     {
         RegisterMigratedPanels();
         int passed = 0, failed = 0;
+        var report = new StringBuilder();
+        report.AppendLine("[SCENE_BIND_REPORT] scene | expected loader type | actual root type | attached script");
         foreach (var sc in _checks)
         {
             Node? root = null;
@@ -310,11 +323,28 @@ public static class SceneBindingSelfTest
                 root = PanelSceneLoader.Load<Node>(sc.ResPath);
                 if (!(root is Control c))
                     throw new InvalidCastException("scene root is not Control");
+                string scriptPath = AttachedScriptPath(c);
+                report.AppendLine($"[SCENE_BIND_REPORT] {sc.ResPath} | {sc.RootType.FullName} | {c.GetType().FullName} | {scriptPath}");
+                // RootType is the type a production PanelSceneLoader.Load<T> call asks
+                // this scene for. Asserting assignability is what catches a scene whose
+                // root Script does not satisfy the request — the exact mismatch that made
+                // DailyBriefingModal.tscn (a plain Control with no Script attached) throw
+                // InvalidCastException from Main.Campaign.SetupDailyBriefingModal, while
+                // the unique-name contract below still passed.
+                if (!sc.RootType.IsInstanceOfType(c))
+                    throw new SceneBindingException(
+                        sc.ResPath, nameof(SceneBindingSelfTest), "<root>", sc.RootType.Name,
+                        actualPath: c.GetType().Name,
+                        "scene root does not satisfy the declared binding type. Attach a Script " +
+                        "that derives from it, or declare the type the root actually is.",
+                        nodeHint: false);
                 var binder = new SceneBinder(c, sc.RootType);
                 foreach (var (name, type) in sc.Contract)
                 {
                     binder.Require(type, name);
                 }
+                if (sc.RootType.Name.EndsWith("Content", StringComparison.Ordinal))
+                    binder.RequireNonEmptySurface(sc.RootType.Name);
                 GD.Print($"[SCENE_BIND] PASS {sc.ResPath} ({c.GetChildCount()} children, {sc.Contract.Count} contract entries)");
                 passed++;
             }
@@ -332,7 +362,73 @@ public static class SceneBindingSelfTest
                 }
             }
         }
-        GD.Print($"[SCENE_BIND] Summary: {passed} passed, {failed} failed (of {_checks.Count})");
+        GD.Print(report.ToString());
+        if (!VerifyMismatchDiagnostics()) failed++;
+        if (!VerifyDynamicScenePath()) failed++;
+        GD.Print($"[SCENE_BIND] Summary: {passed} passed, {failed} failed (of {_checks.Count} scene contracts + 2 runtime probes)");
         return failed == 0 ? 0 : 1;
+    }
+
+    private static string AttachedScriptPath(Node root)
+    {
+        var scriptVariant = root.GetScript();
+        if (scriptVariant.VariantType == Variant.Type.Nil) return "<no script attached>";
+        var script = scriptVariant.As<Script>();
+        return string.IsNullOrWhiteSpace(script?.ResourcePath) ? "<script path unavailable>" : script!.ResourcePath;
+    }
+
+    private static bool VerifyMismatchDiagnostics()
+    {
+        const string scenePath = "res://assets/ui/modals/DailyBriefingModal.tscn";
+        try
+        {
+            var load = typeof(PanelSceneLoader).GetMethod(nameof(PanelSceneLoader.Load));
+            if (load == null)
+                throw new InvalidOperationException("PanelSceneLoader.Load<T> method was not found");
+            load.MakeGenericMethod(typeof(DailyBriefingModal)).Invoke(null, new object[] { scenePath });
+            GD.PrintErr("[SCENE_BIND_MISMATCH] FAIL expected a SceneBindingException for the unbound Control root");
+            return false;
+        }
+        catch (System.Reflection.TargetInvocationException wrapper) when (wrapper.InnerException is SceneBindingException ex)
+        {
+            bool truthful = ex.ScenePath == scenePath &&
+                            ex.ExpectedType == nameof(DailyBriefingModal) &&
+                            ex.ActualPath != null && ex.ActualPath.Contains("NO Script attached", StringComparison.Ordinal);
+            if (truthful)
+            {
+                GD.Print("[SCENE_BIND_MISMATCH] PASS requested type and actual unbound root are reported");
+                return true;
+            }
+            GD.PrintErr($"[SCENE_BIND_MISMATCH] FAIL incomplete diagnostic: {ex.Message}");
+            return false;
+        }
+        catch (Exception ex)
+        {
+            GD.PrintErr($"[SCENE_BIND_MISMATCH] FAIL expected SceneBindingException, got {ex.GetType().Name}: {ex.Message}");
+            return false;
+        }
+    }
+
+    private static bool VerifyDynamicScenePath()
+    {
+        const string scenePath = "res://assets/ui/panels/WaterTreatmentPanel.tscn";
+        WaterTreatmentPanelContent? root = null;
+        try
+        {
+            root = PanelSceneLoader.Load<WaterTreatmentPanelContent>(scenePath);
+            var binder = new SceneBinder(root, typeof(WaterTreatmentPanelContent));
+            binder.RequireNonEmptySurface(nameof(WaterTreatmentPanelContent));
+            GD.Print($"[SCENE_BIND_DYNAMIC] PASS {scenePath} -> {root.GetType().Name} ({AttachedScriptPath(root)})");
+            return true;
+        }
+        catch (Exception ex)
+        {
+            GD.PrintErr($"[SCENE_BIND_DYNAMIC] FAIL {scenePath}: {ex.Message}");
+            return false;
+        }
+        finally
+        {
+            if (root != null && GodotObject.IsInstanceValid(root)) root.Free();
+        }
     }
 }

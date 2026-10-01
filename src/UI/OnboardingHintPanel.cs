@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Godot;
 using Ashfall.Core.Onboarding;
 using AtomicWar.GodotApp.Host;
-using AtomicWar.GodotApp.Localization;
 
 namespace AtomicWar.GodotApp.UI
 {
@@ -29,7 +28,19 @@ namespace AtomicWar.GodotApp.UI
         public event Action? OnCurrentStepSkipped;
         public event Action? OnJourneyReplayed;
         public event Action? OnHintDismissed;
+        /// <summary>
+        /// P004 — the panel presented a live hint for a stage (stage
+        /// localization id). Raised once per visible presentation, not once per
+        /// refresh, so the metric counts what the player actually saw.
+        /// </summary>
+        public event Action<string>? OnHintShown;
+        /// <summary>P004 — the player dismissed the current stage's hint.</summary>
+        public event Action<string>? OnHintDismissedForStage;
         public event Action<OnboardingAssistance>? OnAssistanceChanged;
+        /// <summary>P007 — the player asked to skip every remaining tutorial
+        /// step at once. The host routes it to the existing
+        /// <c>Main.SkipAllOnboardingStages</c> seam.</summary>
+        public event Action? OnSkipAllRequested;
 
         private Label _titleLabel = null!;
         private Label _objectiveLabel = null!;
@@ -43,8 +54,13 @@ namespace AtomicWar.GodotApp.UI
         private Button _replayBtn = null!;
         private Button _cycleAssistBtn = null!;
         private Button _closeBtn = null!;
+        private Button _skipAllBtn = null!;
 
         private OnboardingJourney? _journey = null;
+
+        /// <summary>Last stage id whose hint was already reported as shown while
+        /// the panel was visible; cleared on close so each open counts once.</summary>
+        private string _lastHintShownStageId = string.Empty;
 
         public OnboardingJourney? Journey => _journey;
         public bool IsOpen => Visible;
@@ -107,7 +123,7 @@ namespace AtomicWar.GodotApp.UI
             header.AddChild(_titleLabel);
             _closeBtn = AshfallUiHelpers.MakeButton(
                 T("ui.common.close_short", $"CLOSE [{AshfallInputActions.GetActionPrompt(AshfallInputActions.Close)}]"),
-                () => { Visible = false; });
+                () => { Visible = false; ResetHintShownTracking(); });
             _closeBtn.TooltipText = T("onboarding.tooltip.close",
                 "Close the onboarding hint panel. Your progress is preserved.");
             _closeBtn.CustomMinimumSize = new Vector2(110, 32);
@@ -178,8 +194,19 @@ namespace AtomicWar.GodotApp.UI
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            vbox.AddChild(AshfallUiHelpers.MakeSectionHeader(T("onboarding.checklist.title",
+            // ── Checklist header (P007 adds the single "skip tutorial" affordance) ──
+            var checklistHeader = new HBoxContainer();
+            checklistHeader.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
+            checklistHeader.AddChild(AshfallUiHelpers.MakeSectionHeader(T("onboarding.checklist.title",
                 "JOURNEY CHECKLIST")));
+            checklistHeader.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
+            _skipAllBtn = AshfallUiHelpers.MakeButton(T("onboarding.action.skip_all", "SKIP TUTORIAL"),
+                () => OnSkipAllRequested?.Invoke(), false);
+            _skipAllBtn.TooltipText = T("onboarding.tooltip.skip_all",
+                "Mark every remaining tutorial step known. The expedition itself is still yours to run.");
+            _skipAllBtn.CustomMinimumSize = new Vector2(160, 32);
+            checklistHeader.AddChild(_skipAllBtn);
+            vbox.AddChild(checklistHeader);
 
             _checklistScroll = new ScrollContainer
             {
@@ -216,6 +243,7 @@ namespace AtomicWar.GodotApp.UI
                 EmptyChecklist();
                 SetActionEnabledStates(false);
                 UpdateAssistanceButtonLabel(OnboardingAssistance.Standard);
+                RaiseHintShownIfChanged(null);
                 return;
             }
 
@@ -241,7 +269,32 @@ namespace AtomicWar.GodotApp.UI
             RebuildChecklist(j);
             SetActionEnabledStates(!complete);
             UpdateAssistanceButtonLabel(j.Assistance);
+            RaiseHintShownIfChanged(j);
         }
+
+        /// <summary>
+        /// P004 — raises <see cref="OnHintShown"/> once per distinct visible
+        /// hint presentation. A hint counts only while the panel is visible and
+        /// actually renders authored copy (not MINIMAL, not dismissed, not the
+        /// completion state), so the counter reflects what the player saw.
+        /// </summary>
+        private void RaiseHintShownIfChanged(OnboardingJourney? j)
+        {
+            string stageId = string.Empty;
+            if (Visible && j != null && !j.JourneyComplete
+                && j.Assistance != OnboardingAssistance.Minimal
+                && StageHintCopy.ContainsKey(j.CurrentStageDef.Id)
+                && !j.IsHintDismissed(MakeHintKey(j.CurrentStage)))
+            {
+                stageId = StageLocalizationId(j.CurrentStage);
+            }
+
+            if (string.Equals(stageId, _lastHintShownStageId, StringComparison.Ordinal)) return;
+            _lastHintShownStageId = stageId;
+            if (stageId.Length > 0) OnHintShown?.Invoke(stageId);
+        }
+
+        private void ResetHintShownTracking() => _lastHintShownStageId = string.Empty;
 
         public override void _UnhandledInput(InputEvent @event)
         {
@@ -249,6 +302,7 @@ namespace AtomicWar.GodotApp.UI
             if (AshfallInputActions.IsCloseOrCancel(@event))
             {
                 Visible = false;
+                ResetHintShownTracking();
                 GetViewport().SetInputAsHandled();
             }
         }
@@ -259,6 +313,7 @@ namespace AtomicWar.GodotApp.UI
             if (j == null) return;
             j.DismissHint(MakeHintKey(j.CurrentStage));
             OnHintDismissed?.Invoke();
+            OnHintDismissedForStage?.Invoke(StageLocalizationId(j.CurrentStage));
             RefreshView();
         }
 
@@ -323,6 +378,7 @@ namespace AtomicWar.GodotApp.UI
             _dismissBtn.Disabled = !journeyOpen;
             _replayBtn.Disabled = !journeyOpen;
             _cycleAssistBtn.Disabled = !journeyOpen;
+            _skipAllBtn.Disabled = !journeyOpen;
         }
 
         private void EmptyChecklist()
@@ -403,7 +459,7 @@ namespace AtomicWar.GodotApp.UI
         }
 
         private static string T(string key, string fallback) =>
-            AshfallLocalization.Tr(key, fallback);
+            AshfallUiText.Tr(key, fallback);
 
         private static string LocalizedStageTitle(OnboardingStageDef def) =>
             T(StageKey(def.Id, "title"), def.Title).ToUpperInvariant();

@@ -90,6 +90,29 @@ namespace Ashfall.Core.Tests.UI
         }
 
         [Fact]
+        public void BandHelper_EmitsOnlyApprovedThemeTokens()
+        {
+            // The shared band helper decides the colour of every needs, health,
+            // morale and dose reading in the game. If it can emit an ad-hoc
+            // colour it silently bypasses the whole a11y token system, and the
+            // drift gate cannot see a raw float literal. Bands must resolve to
+            // Theme tokens only.
+            string root = FindRepoRoot();
+            string path = Path.Combine(root, "src", "UI", "AshfallUiBands.cs");
+            Assert.True(File.Exists(path), $"Band helper {path} must exist.");
+
+            string clean = StripComments(File.ReadAllText(path));
+
+            Assert.DoesNotContain("new Color(", clean);
+            Assert.DoesNotMatch(new Regex(@"#[0-9A-Fa-f]{6}"), clean);
+            Assert.DoesNotMatch(new Regex(@"Color\s*\(\s*0?\.\d"), clean);
+
+            // Every token it hands out is a named Theme colour.
+            foreach (string token in new[] { "Theme.Pale", "Theme.Lethe", "Theme.Warm", "Theme.Critical" })
+                Assert.Contains(token, clean);
+        }
+
+        [Fact]
         public void MigratedPanels_DoNotUseRawEscapeKey()
         {
             string root = FindRepoRoot();
@@ -190,6 +213,45 @@ namespace Ashfall.Core.Tests.UI
 
             string content = StripComments(File.ReadAllText(host));
             Assert.Contains("FocusOpenerMeta", content);
+        }
+
+        [Fact]
+        public void ExpeditionEncounterModal_OpensWithFocusAndRestoresToOpener()
+        {
+            string root = FindRepoRoot();
+            string panelPath = Path.Combine(root, "src", "UI", "ExpeditionPanel.cs");
+            Assert.True(File.Exists(panelPath), "ExpeditionPanel.cs must exist");
+
+            string content = StripComments(File.ReadAllText(panelPath));
+            Assert.Contains("AshfallFocusPolicy.OpenWithFocus(_encounterModal, opener: this)", content);
+            Assert.Contains("private void CloseCurrentEncounter()", content);
+            Assert.Contains("AshfallFocusPolicy.FocusFirstDeferred(this)", content);
+
+            string lifecycle = StripComments(File.ReadAllText(
+                Path.Combine(root, "src", "Main.PanelLifecycle.cs")));
+            Assert.Contains("AshfallFocusPolicy.TrapFocus(topmost, @event)", lifecycle);
+
+            string playerSurfaces = StripComments(File.ReadAllText(
+                Path.Combine(root, "src", "Main.PlayerSurfaces.cs")));
+            Assert.Contains("!panel.IsInsideTree()", playerSurfaces);
+        }
+
+        /// <summary>
+        /// Task 10 (survival-legibility third wave): the WARMTH need chip must
+        /// carry an accessible tooltip that names its warn/critical band, so a
+        /// colour-blind or keyboard user gets the same warning the colour gives.
+        /// </summary>
+        [Fact]
+        public void Hud_WarmthChip_CarriesThresholdTooltip()
+        {
+            string root = FindRepoRoot();
+            string hudPath = Path.Combine(root, "src", "UI", "GameHudOverlay.cs");
+            Assert.True(File.Exists(hudPath), "GameHudOverlay.cs must exist");
+
+            string content = StripComments(File.ReadAllText(hudPath));
+            Assert.Contains("ui.hud.needs.warmth", content);
+            Assert.Contains("TooltipText", content);
+            Assert.Contains("ui.hud.needs.tooltip", content);
         }
     }
 }

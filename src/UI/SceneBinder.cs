@@ -42,20 +42,28 @@ public sealed class SceneBindingException : Exception
     public string ExpectedType { get; }
     public string? ActualPath { get; }
 
+    /// <param name="nodeHint">
+    /// False for surface-level failures (a hidden or childless bound content root),
+    /// where the "declare a unique_name_in_owner node" remedy does not apply and
+    /// would send the reader to the wrong fix.
+    /// </param>
     public SceneBindingException(
         string scenePath,
         string binderName,
         string nodeName,
         string expectedType,
         string? actualPath,
-        string message)
+        string message,
+        bool nodeHint = true)
         : base($"SceneBindingException: {message}" +
                $"\n  Scene         : {scenePath}" +
                $"\n  Binder        : {binderName}" +
                $"\n  Expected Node : %'{nodeName}' : {expectedType}" +
                (actualPath != null ? $"\n  Actual Path   : {actualPath}" : "") +
-               $"\nExpected scene file should declare a [node name=\"{nodeName}\" type=\"{expectedType}\"] " +
-               "with unique_name_in_owner=true.")
+               (nodeHint
+                   ? $"\nExpected scene file should declare a [node name=\"{nodeName}\" type=\"{expectedType}\"] " +
+                     "with unique_name_in_owner=true."
+                   : string.Empty))
     {
         ScenePath = scenePath;
         BinderName = binderName;
@@ -137,6 +145,49 @@ public sealed class SceneBinder
     {
         Require<T>(uniqueName);
         return (T)_cache[(uniqueName, typeof(T))];
+    }
+
+    /// <summary>
+    /// P094 empty-surface guard. A scene-bound content root that is hidden, or
+    /// that carries no visible Control children, reaches the player as a blank
+    /// surface while every typed binding still resolves — so nothing downstream
+    /// reports it. Fail loudly here instead: an empty bound content must never
+    /// pass for a rendered one.
+    /// </summary>
+    /// <remarks>
+    /// Applies to content sub-scenes that a host embeds (e.g. through
+    /// <c>AshfallDashboardShell.SetContent</c>). Top-level modals that the host
+    /// shows and hides itself legitimately start hidden and must not call this.
+    /// </remarks>
+    public void RequireNonEmptySurface(string surfaceName)
+    {
+        if (!(_root is Control control)) return;
+
+        if (!control.Visible)
+        {
+            throw new SceneBindingException(
+                _scenePath, _binderType.FullName ?? "<unknown>", surfaceName,
+                "visible Control content root", actualPath: control.GetPath().ToString(),
+                "bound content root is hidden (visible = false in the scene), so the whole " +
+                "surface renders blank even though every node binds. A content sub-scene is " +
+                "embedded by its host and must not ship pre-hidden; remove `visible = false` " +
+                "from the scene root.",
+                nodeHint: false);
+        }
+
+        foreach (var child in control.GetChildren())
+        {
+            if (child is Control c && c.Visible) return;
+        }
+
+        throw new SceneBindingException(
+            _scenePath, _binderType.FullName ?? "<unknown>", surfaceName,
+            "content root with at least one visible Control child",
+            actualPath: control.GetPath().ToString(),
+            "bound content root has no visible Control children — the surface would render " +
+            "empty. Bind the scene that supplies its content, or render a truthful empty " +
+            "state naming why there is nothing to show.",
+            nodeHint: false);
     }
 
     /// <summary>

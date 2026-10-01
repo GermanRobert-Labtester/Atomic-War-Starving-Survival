@@ -25,6 +25,8 @@ using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Difficulty;
 using Ashfall.Core.Economy;
+using Ashfall.Core.Onboarding;
+using Ashfall.Core.PlayerCommand;
 using Ashfall.Core.Shelter;
 using Ashfall.Core.Telemetry;
 
@@ -116,6 +118,34 @@ namespace AtomicWar.GodotApp
             _playMetricsDirty = true;
         }
 
+        /// <summary>
+        /// P002 — record the published first-hour verb (a
+        /// <see cref="PlayerCommandCode"/> value) for the stage whose sigil was
+        /// just observed. target_id carries the stage localization id so the
+        /// funnel can attribute the verb to exactly one stage.
+        /// </summary>
+        private void RecordPlayMetricFirstHourVerb(string verb, string stageId)
+        {
+            if (string.IsNullOrWhiteSpace(verb)) return;
+            var session = EnsurePlayMetrics();
+            session.RecordAction(verb, stageId ?? string.Empty, "observed", Math.Max(1, _simDay));
+            _playMetricsDirty = true;
+        }
+
+        /// <summary>
+        /// P004 — record a hint presentation or dismissal for a stage. The
+        /// action is one of <see cref="PlaySessionActions.HintShown"/> /
+        /// <see cref="PlaySessionActions.HintDismissed"/>; target_id is the
+        /// stage localization id, so hint→action drop-off is measurable.
+        /// </summary>
+        private void RecordPlayMetricHint(string action, string stageId)
+        {
+            if (string.IsNullOrWhiteSpace(action) || string.IsNullOrWhiteSpace(stageId)) return;
+            var session = EnsurePlayMetrics();
+            session.RecordAction(action, stageId, "observed", Math.Max(1, _simDay));
+            _playMetricsDirty = true;
+        }
+
         private void RecordPlayMetricRationPolicyChanged(RationTarget target)
         {
             if (target == null) return;
@@ -128,6 +158,14 @@ namespace AtomicWar.GodotApp
         {
             var session = EnsurePlayMetrics();
             session.RecordExpeditionReturned(lootUnits, Math.Max(1, _simDay));
+            _playMetricsDirty = true;
+        }
+
+        /// <summary>Plan 46 — observe a failed sortie in the play-session stream.</summary>
+        private void RecordPlayMetricExpeditionFailed(string reason)
+        {
+            var session = EnsurePlayMetrics();
+            session.RecordExpeditionFailed(reason, Math.Max(1, _simDay));
             _playMetricsDirty = true;
         }
 

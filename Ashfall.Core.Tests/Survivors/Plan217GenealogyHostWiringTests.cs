@@ -74,7 +74,11 @@ namespace Ashfall.Core.Tests.Survivors
             // Canonical producers only — no inference from names.
             Assert.Contains("OnFamilyUnitEstablishedSeam", main);
             Assert.Contains("OnChildWelcomedToFamilySeam", main);
-            Assert.Contains("_survivorFate.OnSurvivorFate", main);
+            // The host aliases the fate owner (`_genealogyFateSource = _survivorFate`)
+            // before subscribing, so the canonical producer assertion follows the
+            // current source name rather than the retired direct field name.
+            Assert.Contains("_genealogyFateSource = _survivorFate", main);
+            Assert.Contains("_genealogyFateSource.OnSurvivorFate", main);
             Assert.DoesNotContain("GenerateFamilyName", main);
 
             // The union route must NOT go through the bridge's unit-forming path.
