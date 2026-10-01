@@ -27,6 +27,9 @@ namespace AtomicWar.GodotApp.UI
 
         public void Bind(CombatHostSession combat)
         {
+            // Bind runs on every console open; unsubscribe-first keeps repeated
+            // binds from stacking StateChanged handlers (MapPanel T11 pattern).
+            Unbind();
             _combat = combat;
             _bound = true;
             if (_combat != null) _combat.StateChanged += RefreshView;

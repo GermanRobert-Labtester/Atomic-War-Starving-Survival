@@ -18,6 +18,7 @@ namespace AtomicWar.GodotApp.UI
     {
         public event Action? OnClose;
         public event Action? OnOpenCalibrationRequested;
+        public event Action? OnOpenPlumeProjectionRequested;
 
         private Label _lblCurrentTitle;
         private VBoxContainer _currentData;
@@ -282,6 +283,7 @@ namespace AtomicWar.GodotApp.UI
             _eventsList = binder.Get<VBoxContainer>("EventsList");
             binder.Get<Button>("CloseButton").Pressed += () => OnClose?.Invoke();
             binder.Get<Button>("CalibrationButton").Pressed += () => OnOpenCalibrationRequested?.Invoke();
+            binder.Get<Button>("PlumeButton").Pressed += () => OnOpenPlumeProjectionRequested?.Invoke();
 
             Visible = false;
         }

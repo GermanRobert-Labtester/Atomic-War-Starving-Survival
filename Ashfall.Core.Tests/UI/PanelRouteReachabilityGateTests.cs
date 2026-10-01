@@ -39,13 +39,10 @@ namespace Ashfall.Core.Tests.UI
             ("brine_extraction", "natural launcher GameDashboardPanel is ACTIVE-claimed (claim-pfgl-codex-luna6-octet)"),
             ("aquifer_treaty_concession", "natural launcher GameDashboardPanel is ACTIVE-claimed (claim-pfgl-codex-luna6-octet)"),
             ("slurry_dewatering_sump", "natural launcher GameDashboardPanel is ACTIVE-claimed (claim-pfgl-codex-luna6-octet)"),
-            ("combat_detail", "combat seam actively foreign-dirty (TacticalCombatSystem streams); wire after they land"),
-            ("combat_history", "combat seam actively foreign-dirty (TacticalCombatSystem streams); wire after they land"),
             ("emergency_response", "crisis HUD; auto-open trigger not yet wired — needs event-owner decision"),
             // Found by this gate on first run (2026-10-01) — ids previously
             // quoted only in dev/test surfaces, not player emitters:
             ("chem_warfare_defense", "toxic hazard monitor; host surface ambiguous (shelter vs. medical) — foreman pick"),
-            ("comms_array_transceiver", "natural host RadioPanel; not wired in R1 wave — follow-up batch"),
             ("ceremony_ritual", "festival/ceremony surface; seasonal event owner decision needed"),
             ("robotics_assembly", "workshop family surface; WorkshopPanel deep link needs foreman sign-off (workshop seam recently repaired)"),
             ("survivor_downtime", "hobbies/downtime; survivors surface family is C1-claimed territory"),
@@ -54,10 +51,7 @@ namespace Ashfall.Core.Tests.UI
             ("justice_tribunal", "tribunal surface; Verdict tribunal reckoning is a known unwired debt item — wire with that debt, not before"),
             // Found by this gate on second run (2026-10-01) — previously
             // quoted only in dev surfaces that have since churned:
-            ("railway_logistics", "railway terminal surface; no player emitter — follow-up wiring batch"),
             ("archaeology_excavation", "archaeology surface; no player emitter — follow-up wiring batch"),
-            ("mercenary_bounty_board", "bounty board surface; no player emitter — follow-up wiring batch"),
-            ("expansion_fallout_plume", "fallout plume radar; natural host fallout_detail — follow-up wiring batch"),
             ("desperation_crisis", "desperation/taboo monitor; host ambiguous (medical vs. moral) — foreman pick"),
         };
 

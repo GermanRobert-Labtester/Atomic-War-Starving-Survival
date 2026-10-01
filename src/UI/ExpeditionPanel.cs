@@ -27,6 +27,7 @@ namespace AtomicWar.GodotApp.UI
         // expedition_radar / expedition_camp PanelRegistry routes.
         public event Action? OnOpenRadarRequested;
         public event Action? OnOpenCampConsoleRequested;
+        public event Action? OnOpenRailwayTerminalRequested;
 
         private ExpeditionHostSession? _expeditionHost;
         private WorldHostSession? _worldHost;
@@ -277,6 +278,9 @@ namespace AtomicWar.GodotApp.UI
             var btnCamp = AshfallUiHelpers.MakeButton("OVERNIGHT CAMP CONSOLE", () => OnOpenCampConsoleRequested?.Invoke());
             btnCamp.TooltipText = AshfallLocalization.Tr("ui.expedition.camp_tooltip", "Manage an expedition's overnight camp: firewood, rations, sentry shifts, and night segments.");
             consoleRow.AddChild(btnCamp);
+            var btnRail = AshfallUiHelpers.MakeButton("RAILWAY LOGISTICS TERMINAL", () => OnOpenRailwayTerminalRequested?.Invoke());
+            btnRail.TooltipText = AshfallLocalization.Tr("ui.expedition.railway_tooltip", "Railway logistics terminal — branch lines, rolling stock, and evacuation capacity.");
+            consoleRow.AddChild(btnRail);
             rootBox.AddChild(consoleRow);
 
             _estimateLabel = AshfallUiHelpers.MakeMono("");

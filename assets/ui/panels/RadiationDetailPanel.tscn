@@ -119,6 +119,13 @@ layout_mode = 2
 size_flags_horizontal = 4
 text = "GEIGER CALIBRATION CONSOLE"
 
+[node name="PlumeButton" type="Button" parent="Dialog/Frame/Margin/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "FALLOUT PLUME PROJECTION"
+
 [node name="CloseButton" type="Button" parent="Dialog/Frame/Margin/Content"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 40)

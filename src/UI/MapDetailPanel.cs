@@ -173,7 +173,8 @@ namespace AtomicWar.GodotApp.UI
             Ashfall.Core.Narrative.BunkerGraffitiCatalog? graffitiCatalog = null,
             int currentDay = int.MaxValue,
             bool uncharted = false,
-            List<string>? subLayouts = null)
+            List<string>? subLayouts = null,
+            List<string>? salvageSurvey = null)
         {
             if (holdfastLoc != null)
             {
@@ -186,7 +187,7 @@ namespace AtomicWar.GodotApp.UI
                     holdfastLoc.travelHours,
                     holdfastLoc.description ?? "",
                     holdfastLoc.inspect ?? "",
-                    lootCategories: null,
+                    lootCategories: salvageSurvey,
                     graffitiCatalog: graffitiCatalog,
                     currentDay: currentDay,
                     uncharted: uncharted,
@@ -204,7 +205,7 @@ namespace AtomicWar.GodotApp.UI
                     journalLoc.description ?? "",
                     inspectNotes: "",
                     subLayouts: null,
-                    lootCategories: null,
+                    lootCategories: salvageSurvey,
                     graffitiCatalog: graffitiCatalog,
                     currentDay: currentDay,
                     uncharted: uncharted);

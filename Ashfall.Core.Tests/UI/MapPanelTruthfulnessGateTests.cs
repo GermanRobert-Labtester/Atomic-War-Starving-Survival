@@ -134,6 +134,14 @@ namespace Ashfall.Core.Tests.UI
             Assert.Contains("!canonicalMap.IsDiscovered(locationId)", funnel, StringComparison.Ordinal);
             Assert.Contains("MapFogState.Unknown", funnel, StringComparison.Ordinal);
             Assert.Contains(", uncharted", funnel, StringComparison.Ordinal);
+
+            // S2 salvage survey: the same funnel resolves the node's authored
+            // loot table through the Plan 46 catalog, fog-gated identically —
+            // Surveyed/Visited only, never Rumored or Unknown sectors.
+            Assert.Contains("TryGetTable", funnel, StringComparison.Ordinal);
+            Assert.Contains("MapFogState.Surveyed", funnel, StringComparison.Ordinal);
+            Assert.Contains("MapFogState.Visited", funnel, StringComparison.Ordinal);
+            Assert.Contains("salvageSurvey", funnel, StringComparison.Ordinal);
         }
 
         [Fact]

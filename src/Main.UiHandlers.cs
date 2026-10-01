@@ -218,7 +218,37 @@ namespace AtomicWar.GodotApp
                     if (subLayouts.Count == 0) subLayouts = null;
                 }
             }
-            _mapDetailPanel.Bind(holdfastLoc, journalLoc, GetBunkerGraffitiCatalog(), currentDay, uncharted, subLayouts);
+            // Salvage survey (route-reachability wave, S2): the node's authored
+            // loot table resolved through the live Plan 46 scavenging catalog.
+            // Fog-gated like the hazard rows — Surveyed shows the table
+            // category, Visited adds the yield tiers actually rolled against;
+            // Rumored/Unknown sectors keep the truthful empty state.
+            List<string>? salvageSurvey = null;
+            var salvageTableId = canonicalMap?.GetNode(locationId)?.LootTableId ?? string.Empty;
+            if (canonicalMap != null && !string.IsNullOrEmpty(salvageTableId))
+            {
+                var salvageFog = canonicalMap.GetFogState(locationId);
+                if (salvageFog == Ashfall.Core.World.MapFogState.Surveyed
+                    || salvageFog == Ashfall.Core.World.MapFogState.Visited)
+                {
+                    var salvageTables = _expeditions?.Engine?.ScavengingCatalog;
+                    if (salvageTables != null
+                        && salvageTables.TryGetTable(salvageTableId, out var salvageTable)
+                        && !string.IsNullOrEmpty(salvageTable.display_name))
+                    {
+                        salvageSurvey = new List<string> { salvageTable.display_name };
+                        if (salvageFog == Ashfall.Core.World.MapFogState.Visited
+                            && salvageTable.entries != null && salvageTable.entries.Count > 0)
+                        {
+                            var tiers = new SortedSet<string>();
+                            foreach (var entry in salvageTable.entries)
+                                tiers.Add(entry.rarity_tier);
+                            salvageSurvey.Add("Yield tiers: " + string.Join(", ", tiers).ToUpperInvariant());
+                        }
+                    }
+                }
+            }
+            _mapDetailPanel.Bind(holdfastLoc, journalLoc, GetBunkerGraffitiCatalog(), currentDay, uncharted, subLayouts, salvageSurvey);
             _mapDetailPanel.Open();
         }
         public void OpenFactionDetailPanel(string factionId)

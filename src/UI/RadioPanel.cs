@@ -25,6 +25,7 @@ namespace AtomicWar.GodotApp.UI
     {
         public event Action? OnClose;
         public event Action? OnRadioBroadcastSent;
+        public event Action? OnOpenCommsConsoleRequested;
 
         private const string DefaultPresenterId = "presenter_shelter_desk";
 
@@ -414,6 +415,12 @@ namespace AtomicWar.GodotApp.UI
             btnBeacon.CustomMinimumSize = new Vector2(0, 34);
             btnBeacon.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
             presetCol.AddChild(btnBeacon);
+
+            var btnComms = AshfallUiHelpers.MakeButton("COMMS ARRAY TRANSCEIVER", () => OnOpenCommsConsoleRequested?.Invoke());
+            btnComms.CustomMinimumSize = new Vector2(0, 34);
+            btnComms.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            btnComms.TooltipText = "Open the comms array transceiver console — dish alignment, signal budgets, and long-range traffic.";
+            presetCol.AddChild(btnComms);
             topRow.AddChild(presetCol);
 
             // ── Right: stations & intercepts DataGrids ──

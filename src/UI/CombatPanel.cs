@@ -21,6 +21,10 @@ namespace AtomicWar.GodotApp.UI
     public partial class CombatPanel : Control, IBindablePanel
     {
         public event Action? OnClose;
+        // Route-reachability wave — deep links to the registered combat_detail /
+        // combat_history consoles (bind and open handled by the host funnel).
+        public event Action? OnOpenCombatDetailRequested;
+        public event Action? OnOpenCombatHistoryRequested;
 
         private CombatHostSession _combat = null!;
         private bool _bound;
@@ -385,6 +389,14 @@ namespace AtomicWar.GodotApp.UI
             vbox.AddChild(_outcome);
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+            var btnDetail = AshfallUiHelpers.MakeButton("ENGAGEMENT DETAIL", () => OnOpenCombatDetailRequested?.Invoke());
+            btnDetail.CustomMinimumSize = new Vector2(200, 40);
+            vbox.AddChild(btnDetail);
+
+            var btnHistory = AshfallUiHelpers.MakeButton("ENGAGEMENT HISTORY", () => OnOpenCombatHistoryRequested?.Invoke());
+            btnHistory.CustomMinimumSize = new Vector2(200, 40);
+            vbox.AddChild(btnHistory);
 
             var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
             btnClose.CustomMinimumSize = new Vector2(200, 40);

@@ -205,5 +205,68 @@ namespace Ashfall.Core.Tests.Expeditions
             Assert.True(offenders.Count == 0,
                 "Plan 76 repaired refs regressed:\n" + string.Join("\n", offenders));
         }
+
+        private sealed class WastelandMapNodeDto
+        {
+            public string id { get; set; } = string.Empty;
+            public string? lootTable { get; set; }
+        }
+
+        private sealed class WastelandMapContainerDto
+        {
+            public List<WastelandMapNodeDto>? nodes { get; set; }
+        }
+
+        [Fact]
+        public void WastelandMapLootTables_ResolveAgainstPlan46Authority()
+        {
+            // Route-reachability wave (S2): wasteland_map_v1.json nodes carry
+            // lootTable ids (salvage_common, ...) that the map estimate seam
+            // forwards as scavenging_table_id and the MapDetail salvage survey
+            // resolves through the live catalog — before the five salvage
+            // tables were authored these were dangling references.
+            string mapRaw = _fileIO.ReadAllText(Path.Combine(_dataDir, "wasteland_map_v1.json"));
+            var map = _serializer.Deserialize<WastelandMapContainerDto>(mapRaw);
+            Assert.NotNull(map?.nodes);
+
+            string tablesRaw = _fileIO.ReadAllText(Path.Combine(_dataDir, "scavenging_tables.json"));
+            var catalog = ScavengingTableCatalog.LoadFromJson(tablesRaw, _serializer);
+            var known = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var table in catalog.Tables) known.Add(table.id);
+
+            var broken = new List<string>();
+            int bound = 0;
+            foreach (var node in map!.nodes!)
+            {
+                if (string.IsNullOrEmpty(node.lootTable)) continue;
+                bound++;
+                if (!known.Contains(node.lootTable))
+                    broken.Add($"{node.id}: '{node.lootTable}'");
+            }
+
+            Assert.True(broken.Count == 0,
+                "wasteland map lootTable ids must resolve to Plan 46 tables. Unresolved:\n" + string.Join("\n", broken));
+            Assert.Equal(20, bound);
+
+            // The five salvage tables must themselves be loot-real: every
+            // entry's item id resolves against the merged item catalog.
+            var itemIds = LoadAllItemIds();
+            string[] salvageTables = { "salvage_common", "salvage_rare", "salvage_electronic", "salvage_weapons", "trade_goods" };
+            var badEntries = new List<string>();
+            foreach (var tableId in salvageTables)
+            {
+                Assert.True(catalog.TryGetTable(tableId, out var table), $"salvage table '{tableId}' missing");
+                Assert.True(table.entries.Count > 0, $"salvage table '{tableId}' has no entries");
+                Assert.False(string.IsNullOrEmpty(table.display_name), $"salvage table '{tableId}' lacks display_name");
+                foreach (var entry in table.entries)
+                {
+                    if (!itemIds.Contains(entry.item_id))
+                        badEntries.Add($"{tableId}: '{entry.item_id}'");
+                }
+            }
+
+            Assert.True(badEntries.Count == 0,
+                "salvage table entry item ids must resolve. Unresolved:\n" + string.Join("\n", badEntries));
+        }
     }
 }

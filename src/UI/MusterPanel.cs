@@ -20,6 +20,7 @@ namespace AtomicWar.GodotApp.UI
     {
         public event Action? OnClose;
         public event Action? OnOpenMusterAtlasRequested;
+        public event Action? OnOpenBountyBoardRequested;
         public event Action<string, IReadOnlyList<ApproachOption>>? OnApproachModalRequested;
 
         private MusterHostSession? _muster;
@@ -148,6 +149,10 @@ namespace AtomicWar.GodotApp.UI
             var btnAtlas = AshfallUiHelpers.MakeButton("MUSTER ATLAS", () => OnOpenMusterAtlasRequested?.Invoke(), false);
             btnAtlas.TooltipText = "Full muster atlas — personnel, currents, and escalation records.";
             btnRow.AddChild(btnAtlas);
+
+            var btnBounty = AshfallUiHelpers.MakeButton("MERCENARY BOUNTY BOARD", () => OnOpenBountyBoardRequested?.Invoke(), false);
+            btnBounty.TooltipText = "Open contract board — posted bounties and hired-gun terms.";
+            btnRow.AddChild(btnBounty);
 
             var btnClose = AshfallUiHelpers.MakeButton("RETURN TO DASHBOARD [Esc]", () => OnClose?.Invoke(), false);
             btnClose.CustomMinimumSize = new Vector2(260, 42);

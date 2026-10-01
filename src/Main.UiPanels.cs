@@ -739,6 +739,22 @@ namespace AtomicWar.GodotApp
             // ── Combat panel (overlay) ──
             _combatPanel = new CombatPanel();
             _combatPanel.OnClose += CloseCombatPanel;
+            // Route-reachability wave — the registered "combat_detail" /
+            // "combat_history" consoles. Bind + Open directly (T16 convention):
+            // OpenPlayerPanel would close this combat console mid-encounter.
+            // Panel Bind is idempotent, so repeated opens are safe.
+            _combatPanel.OnOpenCombatDetailRequested += () =>
+            {
+                SetupCombat();
+                _combatDetailPanel.Bind(_combat);
+                _combatDetailPanel.Open();
+            };
+            _combatPanel.OnOpenCombatHistoryRequested += () =>
+            {
+                SetupCombat();
+                _combatHistoryPanel.Bind(_combat);
+                _combatHistoryPanel.Open();
+            };
             AddChild(_combatPanel);
 
             // ── Map panel (overlay) ──
@@ -854,6 +870,12 @@ namespace AtomicWar.GodotApp
             _tradePanel.OnOpenCaravanBarterRequested += () => OpenPlayerPanel("caravan_barter");
             _radiationDetailPanel.OnOpenCalibrationRequested += () => OpenPlayerPanel("geiger_calibration");
             _journalPanel.OnOpenStandingRecordAtlasRequested += () => OpenPlayerPanel("standing_record_atlas");
+            // Dispatch wave 2 (S3): remaining registered-but-unreached routes
+            // with clear natural hosts; same host-owns-routing convention.
+            _radioPanel.OnOpenCommsConsoleRequested += () => OpenPlayerPanel("comms_array_transceiver");
+            _musterPanel.OnOpenBountyBoardRequested += () => OpenPlayerPanel("mercenary_bounty_board");
+            _expeditionPanel.OnOpenRailwayTerminalRequested += () => OpenPlayerPanel("railway_logistics");
+            _radiationDetailPanel.OnOpenPlumeProjectionRequested += () => OpenPlayerPanel("expansion_fallout_plume");
 
             // ── Events Log panel (overlay) ──
             _eventsLogPanel = new EventsLogPanel();

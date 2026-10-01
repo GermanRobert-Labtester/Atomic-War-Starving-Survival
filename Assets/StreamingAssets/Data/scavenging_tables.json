@@ -5195,6 +5195,320 @@
           "rarity_tier": "uncommon"
         }
       ]
+    },
+    {
+      "id": "salvage_common",
+      "location_type": "salvage_field",
+      "display_name": "Wasteland Structural Salvage",
+      "description": "Depot racks, cache cribs, and lean-to stores picked over by successive parties. The load-bearing bones are still there: framing, sheet goods, fasteners, and whatever the last occupants sealed and never came back for.",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.05,
+      "primary_hazard_type": "injury",
+      "entries": [
+        {
+          "item_id": "scrap_metal",
+          "weight": 40,
+          "min_quantity": 3,
+          "max_quantity": 7,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "wooden_plank",
+          "weight": 30,
+          "min_quantity": 2,
+          "max_quantity": 5,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "scrap_wood",
+          "weight": 25,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "box_of_nails_10",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "metal_pipe",
+          "weight": 18,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "cloth",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "mechanical_parts",
+          "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_galvanized_rebar",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "fuel_canister",
+          "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        }
+      ]
+    },
+    {
+      "id": "salvage_rare",
+      "location_type": "salvage_restricted",
+      "display_name": "Restricted-Zone Deep Salvage",
+      "description": "Behind the fallout fencing and the blast-sealed doors: instrument rooms, command mezzanines, and research racks nobody looted because nobody left in good order. Whatever is still shelved here was valuable before the war.",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.2,
+      "primary_hazard_type": "radiation",
+      "entries": [
+        {
+          "item_id": "electronic_scrap",
+          "weight": 30,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "copper_wire_10m_of_10m",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "dosimeter",
+          "weight": 18,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_metallurgy_steel_billet",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_lead_shielded_sample_cask",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        },
+        {
+          "item_id": "item_thermal_paste",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "gas_mask",
+          "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        }
+      ]
+    },
+    {
+      "id": "salvage_electronic",
+      "location_type": "salvage_electronics",
+      "display_name": "Signal & Power Electronics Recovery",
+      "description": "Relay racks and switchgear rooms, dry and dark, where the copper stayed bright. Filaments, electrodes, and sealed maintenance stock — the things a working bench misses most.",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.1,
+      "primary_hazard_type": "chemical",
+      "entries": [
+        {
+          "item_id": "electronic_scrap",
+          "weight": 35,
+          "min_quantity": 2,
+          "max_quantity": 5,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "battery",
+          "weight": 25,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "copper_wire_10m_of_10m",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "item_thermal_paste",
+          "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_battery_electrolyte_concentrate",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_radon_detector_electret",
+          "weight": 7,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "item_electron_gun_tungsten_filament",
+          "weight": 5,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        }
+      ]
+    },
+    {
+      "id": "salvage_weapons",
+      "location_type": "salvage_munitions",
+      "display_name": "Munitions Site Ordnance Sweep",
+      "description": "Collapsed armory racks and blacksite issue rooms. Most lockers were opened with cutting torches, not keys; what remains is heavy, corroded, and still very much ordnance.",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.2,
+      "primary_hazard_type": "radiation",
+      "entries": [
+        {
+          "item_id": "ammo_9x19",
+          "weight": 35,
+          "min_quantity": 10,
+          "max_quantity": 30,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "ammo_556",
+          "weight": 28,
+          "min_quantity": 8,
+          "max_quantity": 25,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "empty_brass_shell",
+          "weight": 20,
+          "min_quantity": 2,
+          "max_quantity": 5,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "gas_mask",
+          "weight": 15,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "military_mre",
+          "weight": 12,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "military_grade_hatchet",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "hazmat_suit",
+          "weight": 5,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "rare"
+        }
+      ]
+    },
+    {
+      "id": "trade_goods",
+      "location_type": "salvage_trade",
+      "display_name": "Caravanserai Trade Stock",
+      "description": "Bonded store rooms and vault shelving where movable value was concentrated: sealed consumables, fuel in date-stamped cans, and the small durable goods a market will always take.",
+      "depletion_model": "finite",
+      "base_hazard_chance": 0.0,
+      "primary_hazard_type": "none",
+      "entries": [
+        {
+          "item_id": "canned_food",
+          "weight": 30,
+          "min_quantity": 2,
+          "max_quantity": 5,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "battery",
+          "weight": 22,
+          "min_quantity": 1,
+          "max_quantity": 3,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "fuel_canister",
+          "weight": 20,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "cloth",
+          "weight": 15,
+          "min_quantity": 2,
+          "max_quantity": 4,
+          "rarity_tier": "common"
+        },
+        {
+          "item_id": "water_filter",
+          "weight": 10,
+          "min_quantity": 1,
+          "max_quantity": 1,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "military_mre",
+          "weight": 8,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "uncommon"
+        },
+        {
+          "item_id": "mechanical_parts",
+          "weight": 6,
+          "min_quantity": 1,
+          "max_quantity": 2,
+          "rarity_tier": "uncommon"
+        }
+      ]
     }
   ]
 }

@@ -1,5 +1,780 @@
 # ASHFALL Worktree Ownership
 
+## claim-chronic-accommodation-t18-2026-10-01
+
+User-directed T18 (`ChronicConditionSystem` orphan → decision-gated
+accommodations; PFGL W8; no parallel medical ledger). Owned exact paths:
+`src/UI/AfflictionsPanel.cs`, `src/Main.ChronicConditions.cs`,
+`src/Main.SurvivorFitness.cs`, `src/Main.GameFlow.cs` (afflictions bind only),
+`src/Main.PlayerSurfaces.cs` (afflictions bind only),
+`src/Main.UiTests.PlayerPanels.cs` (afflictions bind only),
+`Assets/Ashfall.Core/Medical/AfflictionDutyBridge.cs`,
+`Assets/Ashfall.Core/Survivors/FitnessForDutyModel.cs`,
+`Assets/StreamingAssets/Data/chronic_conditions.json`,
+`Ashfall.Core.Tests/Medical/Plan193ChronicConditionIntegrationTests.cs`;
+**follow-up wave paths:** `src/Main.Aging.cs`, `src/Main.Amputation.Integration.cs`,
+`src/Main.Expeditions.cs` (producer binding only), `src/UI/DutyRosterPanel.cs`,
+`src/UI/ResearchPanel.cs` (pilot tooltip localization), `assets/l10n/strings.csv`,
+`Assets/Ashfall.Core/CatalogIntegrityValidator.cs`,
+`Ashfall.Core.Tests/Tooling/LocalizationRatchetTests.cs`; plus the
+plan `.ai/plans/integrated/medical/INTEGRATED_chronic-accommodation-t18-2026-10-01.md`,
+`.ai/state.md`, `INTEGRATION_PLANS.md`, this claim. Status: **COMPLETE / FULLY
+INTEGRATED; paths released.** Evidence: host build 0 errors;
+`--chronic-condition-selftest` 12/12; `--ui-layout-selftest` Failures: 0;
+`Plan193ChronicConditionIntegrationTests` 13/13, `CatalogIntegrityValidatorTests`
+17/17, `CatalogIntegrityWeatherGateTests` 10/10 (full real-data pass),
+`Plan24FitnessForDutyTests` 11/11, `Plan24DutyRosterFitnessTests` 7/7,
+`Plan143AfflictionBridgeIntegrationTests` 6/6, `Plan176AgingHostIntegrationTests`
+10/10, `AmputationSystemTests` 7/7, `PanelSubscriptionHygieneTests` 2/2,
+`PanelLiveRefreshGateTests` 2/2, `MainTriadDriftGateTests` 8/8,
+`UiA11yTargetSizeGateTests` 31/31, `PanelRouteReachabilityGateTests` 2/2,
+`ActionResultSurfacingGateTests` 3/3, `LocalizationRatchetTests` 2/2;
+`l10n_drift_gate.py` PASS; `bin/run-scoped-tests` 11/11 PASSED. No Core
+gameplay-math change; no new save section; no new route; foreign dirty worktree
+preserved. Full suite not run (user will request separately).
+
+## claim-flags-endgame-verdict-coordinator-drownedcoast-2026-10-01
+
+User-directed: "tackle the open flags, coordinator and drowned coast! and the
+zero callers needing to be written and the dead fields wiring". Owned paths:
+`Assets/Ashfall.Core/Endgame/EndgameSystem.cs`, `src/Host/EndgameHostSession.cs`,
+`src/Main.Endgame.cs`, `Assets/Ashfall.Core/Verdict/VerdictSave.cs`,
+`src/Host/VerdictHostSession.cs`, `src/Main.Verdict.cs`,
+`src/Main.CampaignOwners.cs` (day-owner snapshot seams only),
+`src/Host/GreenhouseHostSession.cs` (additive `RestoreSave`),
+`docs/expansions/expansion_drowned_coast_plan.md`,
+`docs/architecture/TRIAD_GATE_AND_SAVE_OWNERSHIP.md`, `KNOWN_DEBT.md`,
+`.ai/plans/integrated/campaign/INTEGRATED_flags-coordinator-drownedcoast-endgame-verdict-2026-10-01.md`, this
+claim, `.ai/state.md`, and the `INTEGRATION_PLANS.md` entry. Status: **COMPLETE /
+FULLY INTEGRATED; paths released.** Evidence: host build 0 errors / 0 new
+warnings; `--verdict-selftest` PASS; `--year-two-chapter-selftest` 7/7;
+`--7-day-smoke-selftest` 10/10; `EndgameSystemTests` 9/9, `YearTwoPlayOnTests`
+9/9, `ChapterProfileTests` 17/17, `VerdictSaveMigrationTests` 14/14,
+`VerdictSystemTests` 54/54, `CampaignDayCoordinatorTests` 20/20,
+`CampaignDayCoordinatorSourceGateTests` 5/5 (new inventory-rollback source gate).
+No commit; full suite not run; foreign dirty worktree preserved.
+
+## claim-texture25-batch17-2026-10-01
+
+Owner /root; RELEASED 14:59 UTC. Exactnewpaths artifacts/asset-generation/texture25-17-2026-10-01/ (25IDs in prompts.json), .ai/plans/asset-generation-texture25-17-2026-10-01.md; own additiveclaim/state entries. Complete25subjects20textures5alpha details,72,062,369PNG bytes, all1254square. Producer+independent auditor passed staged review. Start14:34UTC deadline15:34UTC user60minmax; finishedabout25minutes. No pending generation; no runtime/source/data/liveasset/registry/UI edits.
+
+## claim-kitchen-cooking-bind-t19-2026-10-01
+
+User-directed T19 ("Cooking/kitchen UI mismatch → bind `CookingSystem`"; PFGL
+master-plan loop W5 P2). Owned exact paths: `src/UI/KitchenNutritionPanel.cs`,
+`src/Host/CookingHostSession.cs`, `src/Main.Cooking.cs`, `src/Main.ShelterBatch3.cs`,
+`src/Main.UiTests.FoodLoop.cs`; follow-up repair wave: `src/UI/ExpeditionPanel.cs`
+(two foreign raw tooltips localized to keep the shared ratchet green),
+`assets/l10n/strings.csv`, `Ashfall.Core.Tests/Journeys/MoralChoiceJourneyTests.cs`,
+`Ashfall.Core.Tests/Journeys/FireIncidentJourneyTests.cs`,
+`Ashfall.Core.Tests/Factions/Plan134TerritoryControlHostIntegrationTests.cs`,
+`Ashfall.Core.Tests/Legacy/Plan140CampaignLegacyHostIntegrationTests.cs`,
+`Ashfall.Core.Tests/Cooking/Plan136CookingHostIntegrationTests.cs`; second
+follow-up: 81 uncalled host `override void Save()` methods across 67
+`src/Host/*.cs` files plus the `src/Host/MedicalWardSaveSelfTest.cs` dirty-guard
+fix; plus the plan
+`.ai/plans/integrated/kitchen/INTEGRATED_kitchen-cooking-bind-t19-2026-10-01.md`,
+`KNOWN_DEBT.md`, this claim, `.ai/state.md`, and the `INTEGRATION_PLANS.md` T19 entry. Status:
+**COMPLETE / FULLY INTEGRATED; paths released.** Evidence: build 0 errors (6
+pre-existing CS0162 warnings); `--food-loop-selftest` PASS with 6 cooking-strip
+gates (incl. the host refusal path); `--ui-layout-selftest` Failures: 0;
+`--expedition-panel-uitest` PASS; `PanelLiveRefreshGateTests` 2/2;
+`PanelSubscriptionHygieneTests` 2/2; `UiA11yTargetSizeGateTests` 31/31;
+`KitchenNutritionSystemTests` 12/12; `Plan136WildlifeCookingIntegrationTests` 5/5;
+`Plan136CookingHostIntegrationTests` 8/8; `Plan140CampaignLegacyHostIntegrationTests`
+8/8; `Plan134TerritoryControlHostIntegrationTests` 6/6; `MoralChoiceJourneyTests`
+4/4; `FireIncidentJourneyTests` 5/5; `MainTriadDriftGateTests` 8/8;
+`LocalizationRatchetTests` 2/2 (≤ 612); `StringsCsvLocaleGateTests` 4/4;
+`l10n_drift_gate.py` PASS (375 keys). The `DEBT-DEAD-FLUSH-IFDIRTY-METHODS`
+promotion condition was executed: all **141** dead/redundant `Flush*` staging wrappers (131 `Flush*IfDirty` + 10 other dead `Flush*` methods) and **16**
+call statements removed across **131** `src/Main.*.cs` partials (owned for that
+removal), with `docs/architecture/TRIAD_GATE_AND_SAVE_OWNERSHIP.md` and
+`docs/CURRENT_AUTHORITY.md` updated to the two-entry durability contract
+(`SaveAll` + `FlushDirtyStoresForDayAdvance`); `triad-drift-gate.sh` GATE PASS;
+`--7-day-smoke-selftest` PASS; `--dose-ledger-selftest` PASS;
+`--chronic-condition-selftest` 12/12; `--playable-metrics-selftest` 17/0. Host
+`Save()` overrides: 81 uncalled removed (67 files); `--medical-ward-save-selftest`
+fixed (non-dirty session → `MarkDirty()`) and PASS; `HostSessionConventionGateTests`
+1/1; `HostSessionStateSemanticsTests` 9/9. No Core
+gameplay/save change; no commit; full suite not run; foreign dirty worktree
+preserved.
+
+## claim-texture25-batch16-2026-10-01
+
+Owner /root; RELEASED — generation finished/staged about14:31UTC. Exact newpaths artifacts/asset-generation/texture25-16-2026-10-01/ (25IDs in prompts.json), .ai/plans/asset-generation-texture25-16-2026-10-01.md; own additiveclaim/state entries.20textures+5alpha details, allsaved/reviewed/packaged; no pendinggeneration. Start14:05UTC deadline15:05UTC user60-minute batchmaximum. No runtime/source/data/liveasset/registry/UI edits; auditorread-only.
+
+## claim-texture25-batch15-2026-10-01
+
+Owner /root; RELEASED — generation deliverable finished/staged about14:05UTC. Exact new paths: artifacts/asset-generation/texture25-15-2026-10-01/ (25IDs in prompts.json, plus2preserved ash revisions), .ai/plans/asset-generation-texture25-15-2026-10-01.md; own additive state/claim entries.20textures+5alpha graphics,25selected/27PNGs reviewed and packaged; no pending generation. Start13:34UTC deadline14:34UTC per user60-minute max. No runtime/source/data/registry/UI edits, auditor read-only.
+
+## claim-action-result-surfacing-sweep-t10-2026-10-01
+
+User-directed T10 ("Sweep remaining discarded `ActionResult`s; extend matrix |
+`docs/ACTION_RESULT_SURFACING_MATRIX.md`; flagged pattern"). Owned exact paths:
+new `src/UI/ActionRefusalText.cs`; `src/UI/WorkshopPanel.cs`,
+`src/UI/PharmaLabPanel.cs`, `src/UI/WeatherForecastPanel.cs`,
+`src/UI/ExpeditionPanel.cs`, `src/UI/AmphibiousDraisinePanel.cs`,
+`src/UI/CvdDiamondPanel.cs`, `src/UI/SolidOxideFuelCellPanel.cs`,
+`src/UI/SoundRangingPanel.cs`; host failure-branch `LastEvent` in
+`src/Host/ArchiveDeskHostSession.cs`, `ContractorRosterHostSession.cs`,
+`DecontaminationHostSession.cs`, `DefenseHostSession.cs`,
+`EquipmentConditionHostSession.cs`, `ShelterScheduleHostSession.cs`,
+`ShelterThermalHostSession.cs`, `SurvivorRelationsHostSession.cs`,
+`SumpFloodingHostSession.cs`, `VinylMoraleHostSession.cs`,
+`WildlifeTrappingHostSession.cs`, `AirlockSecurityHostSession.cs`,
+`RadioProgramProductionHostSession.cs`, `ApprenticeshipHostSession.cs`,
+`LowBackgroundMetrologyHostSession.cs`, `AutopsyHostSession.cs`,
+`ChemicalDependencyHostSession.cs`, `DutyRosterHostSession.cs`,
+`ExcavationHostSession.cs`, `GreenhouseHostSession.cs`,
+`KitchenNutritionHostSession.cs`, `LibraryStudyHostSession.cs`,
+`MentalHealthCrisisHostSession.cs`, `RegionalTreatyHostSession.cs`,
+`WaterTreatmentHostSession.cs`, `NightWatchHostSession.cs`,
+`FluidLogisticsHostSession.cs`, `SalvageHostSession.cs`; ratchet-down
+localization in
+`assets/l10n/strings.csv`, `src/UI/AshfallUiTheme.cs`,
+`src/UI/AssetInspectorPanel.cs`, `src/UI/FeedbackPanel.cs`,
+`src/UI/InventoryPanel.cs`, `src/UI/MainMenuPanel.cs`,
+`src/UI/SettingsPanel.cs` (foreign-dirty files, line-local `Tr` wraps only); new
+`Ashfall.Core.Tests/UI/ActionResultSurfacingGateTests.cs`;
+`docs/ACTION_RESULT_SURFACING_MATRIX.md`; plus the plan
+`.ai/plans/integrated/ui/INTEGRATED_action-result-surfacing-sweep-t10-2026-10-01.md`,
+this claim, `.ai/state.md`, and the `INTEGRATION_PLANS.md` T10 entry. Status:
+**COMPLETE / FULLY INTEGRATED; paths released.** Evidence: build 0 errors;
+new gate 3/3 (TDD-proven, 73-method pin across 26 host sessions);
+**host `LastEvent` convention scanner reports 0 remaining hits**;
+`--ui-layout-selftest` Failures: 0;
+`--workshop-relic-uitest` PASS; `--expedition-panel-uitest` PASS;
+`--player-panels-uitest` 22/22; `--cloud-seeding-selftest` 7/7;
+`--plans-122-125-selftest` 41/41; `--precision-metrology-selftest` 12/12;
+`--duty-roster-selftest` 40/40; `--food-loop-selftest` PASS;
+`--greenhouse-selftest` 24/24; `--treaty-selftest` 8/8;
+`--water-sources-selftest` 11/11; `--apprenticeship-curriculum-selftest` 6/6;
+`SalvageTeardownSystemTests` 9/9; `MainTriadDriftGateTests` 8/8;
+`git diff --check` clean. No Core gameplay/save change; no commit; full suite not
+run; foreign dirty worktree preserved (`WorkshopPanel` already carried
+deferred-refresh and gear-icon edits — kept). **Ratchet-down:**
+`LocalizationRatchetTests` was red at 620 > 612 from foreign UI growth; the 8
+grown literals were localized into `strings.csv` (8 EN/DE rows) and a dead
+`FeedbackPanel` tooltip removed → 611 ≤ 612 GREEN; `StringsCsvLocaleGateTests`
+4/4, l10n drift gate PASS.
+
+## claim-texture25-batch14-2026-10-01
+
+Owner /root; GENERATION FINISHED / RELEASED. Exact new paths: artifacts/asset-generation/texture25-14-2026-10-01/ (IDs in prompts.json; selected snail_v2 and original preserved), .ai/plans/asset-generation-texture25-14-2026-10-01.md; own state/claim entries only.25subjects,18materials+7alpha details,26PNGfiles including revision. Producer/auditor review, dimensions/alpha, Go manifest26/58.16MiB, fullpreview/provenance/report complete. Start13:02UTC, finished within14:02UTC deadline per user60-minute maximum. No pending generation or runtime/source/data/registry/UI edits; staged only.
+
+## claim-texture25-batch13-2026-10-01
+
+Owner /root; GENERATION FINISHED / RELEASED. Exact new paths: artifacts/asset-generation/texture25-13-2026-10-01/ (IDs in prompts.json), .ai/plans/asset-generation-texture25-13-2026-10-01.md; own state/claim entries. All25 saved, producer and independent auditor reviewed25; dimensions/alpha passed, Go manifest25/62.68MB, fullpreview/provenance/report complete. User60-minute asset batch maximum applied. No pending generation or runtime/source/data/registry/UI edits; staged only.
+
+## claim-texture25-batch12-2026-10-01
+
+Owner /root; GENERATION FINISHED / RELEASED. Exact new paths:artifacts/asset-generation/texture25-12-2026-10-01/ (IDs in prompts.json), .ai/plans/asset-generation-texture25-12-2026-10-01.md; own additive state/claim entries.25/25saved/reviewed; dimensions/alpha, Go manifest25/67.48MB, provenance/fullpreview/report complete. No pending generation or runtime/source/data/registry/UI edits; staged only.
+
+## claim-first-hour-stage-panel-a11y-2026-10-01
+
+User-directed T05 ("Expand a11y self-test to first-hour panels | 561-control
+focusability gate; verify the 7 stage panels"). Owned exact paths:
+`src/Host/UiAccessibilitySelfTest.cs`,
+`src/Host/HostCli.Command.RunUiLayoutSelfTest.cs`, new
+`Ashfall.Core.Tests/UI/FirstHourStagePanelAccessibilityGateTests.cs`,
+`docs/ui/KEYBOARD_FIRST_HOUR_WALKTHROUGH.md`,
+`docs/alpha/FIRST_HOUR_PLAYTEST_KIT.md`, plus the plan
+`.ai/plans/integrated/ui/INTEGRATED_first-hour-stage-panel-a11y-2026-10-01.md`,
+this claim, `.ai/state.md`, and the `INTEGRATION_PLANS.md` T05 entry.
+**Finding:** the focusability corpus filtered on `IBindablePanel`, so
+`PowerGridPanel`, `ResearchPanel`, and `ExpeditionPanel` — three of the seven
+first-hour stage panels — were never audited; the a11y smoke set covered only
+`DutyRosterPanel`. **Fix:** all seven stage panels added to
+`UiAccessibilitySelfTest` with a new Gate 6 driven by
+`OnboardingCatalog.FirstHourOrder`, and `FirstHourStagePanelNames` folded into
+the `AuditPanelInteractivity` filter. Status: **COMPLETE / FULLY INTEGRATED;
+paths released.** Evidence: `--ui-accessibility-selftest` PASS 6/6 (Gate 6
+`7/7`); `--ui-layout-selftest` `panels=172 interactive=676 unreachable=0
+panelsWithNoFocus=0 blankUnboundPanels=0` Failures: 0; new guard 3/3
+(TDD-proven); `UiAccessibilityGateTests` 3/3; `OnboardingWiringGateTests` 4/4;
+generators `--check` in sync; build 0 errors; `git diff --check` clean. No
+commit, no full suite; foreign dirty worktree preserved.
+
+## claim-texture25-batch11-2026-10-01
+
+Owner /root; GENERATION FINISHED / RELEASED. Exact new paths:artifacts/asset-generation/texture25-11-2026-10-01/ (IDs in prompts.json), .ai/plans/asset-generation-texture25-11-2026-10-01.md; own additive state/claim entries.25/25 saved/reviewed; dimensions/alpha checked; Go manifest25/57.46 MB and preview/provenance/report complete. User requested25texture/graphic candidates. No pending requests or runtime/source/data/UI replacement edits; not runtime integrated.
+
+## claim-tutorial-review-t04-2026-10-01
+
+User-directed T04 ("Run `ashfall-tutorial-review` on the 7-stage onboarding |
+Teach-vs-demand audit before more content | code/repair/harden, multiple sweep
+loops, see if anything is missing"). Owned exact paths:
+`src/UI/OnboardingHintPanel.cs` (assistance-cycle re-entrancy fix),
+`src/Main.Onboarding.cs` (dead bookkeeping removal), new
+`Ashfall.Core.Tests/UI/OnboardingAssistanceLoopGateTests.cs`,
+`docs/onboarding/TUTORIAL_REVIEW.md` (refreshed audit),
+`.ai/plans/integrated/onboarding/INTEGRATED_onboarding-tutorial-review-t04-2026-10-01.md`,
+this claim, `.ai/state.md`, and the `INTEGRATION_PLANS.md` T04 entry.
+**Finding:** `CycleAssistance` raised `OnAssistanceChanged` and the host handler
+`SetOnboardingAssistance` calls back into it — unbounded synchronous loop →
+stack overflow on one press of the ASSISTANCE cycle button (no headless test
+covered it). **Fix:** `CycleAssistance` is a one-way reactive update; the button
+handler is the single raise site; new 3-gate source gate TDD-proves it
+(red→green). Also removed never-read `_onboardingFailedActions` /
+`_onboardingLastInteractionSeconds` and the stale heuristic comment. Status:
+**COMPLETE / FULLY INTEGRATED; paths released.** Evidence: gate 3/3,
+`OnboardingWiringGateTests` 4/4, `OnboardingTruthfulnessGateTests` 4/4,
+`OnboardingJourneyTests` 34/34, `dotnet build Ashfall.csproj` 0 errors /
+6 pre-existing warnings, `--onboarding-journey-selftest` PASS, `git diff
+--check` clean. No commit, no full suite; foreign dirty worktree preserved.
+
+## claim-mixed-visual15-batch10-2026-10-01
+
+Owner /root; GENERATION FINISHED / RELEASED. Exact new paths: artifacts/asset-generation/mixed15-10-2026-10-01/ (IDs in prompts.json), .ai/plans/asset-generation-mixed15-10-2026-10-01.md; own additive state/claim entries.15/15 saved/reviewed, alpha/dimensions inspected, Go manifest15/33.47 MB, preview/report/provenance complete. User authorized15 more staged images. No runtime/source/data edits or runtime integration claimed.
+
+## claim-onboarding-truthfulness-hardening-sweep-2026-10-01
+
+User-directed T03b ("pass a repairing and hardening sweep, 5 loops and then
+deep validation"). Owned exact paths:
+`Assets/Ashfall.Core/Campaign/SliceScenario.cs`, `src/UI/OpeningProtocolModal.cs`,
+`src/Main.Campaign.cs`, `src/Main.SliceScenario.cs`, `src/UI/OnboardingHintPanel.cs`,
+`src/Main.Onboarding.cs`,
+`Ashfall.Core.Tests/Campaign/Plan54SevenDaySliceIntegrationTests.cs`,
+`Ashfall.Core.Tests/Campaign/Plan54SevenDaySliceHostIntegrationTests.cs`, plus
+the plan
+`.ai/plans/integrated/ui/INTEGRATED_onboarding-truthfulness-hardening-sweep-2026-10-01.md`,
+this claim, `.ai/state.md`, and the `INTEGRATION_PLANS.md` T03b entry.
+**Finding (5 loops):** four real defects — a stale status-bar comment, a naive
+`title — body` goal join that renders a dangling `—` for a body-less beat (the
+`ae6e54387` empty-join class), a terminal-stage hint shown after
+`JOURNEY COMPLETE`, and `TryGetSliceGoal` accepting a copy-less beat. **Fix:**
+one `SliceGoalText.Join` Core authority, `TryGetSliceGoal` empty-beat rejection,
+a cleared hint on completion, a truthful comment, a 5-case join theory, and a
+host-wiring source gate. Status: **COMPLETE / FULLY INTEGRATED; paths released.**
+Evidence: build 0 errors; Plan54 integration 10/10; Plan54 host 7/7;
+`OnboardingTruthfulnessGateTests` 4/4; `OnboardingWiringGateTests` 4/4;
+`StringsCsvLocaleGateTests` 4/4; `ProductionUiNoFabricatedFallbackGateTests` 4/4;
+l10n gate PASS; `--day1-selftest` PASS; `--seven-day-slice-selftest` 25/25;
+`--onboarding-journey-selftest` PASS; `--ui-layout-selftest` Failures: 0;
+`git diff --check` clean. No commit, no full suite; foreign dirty worktree
+preserved (a concurrent `Main.Campaign.cs` WorldIncidents edit and a newer
+`src/Main.UiTests.Expeditions.cs` were left untouched).
+
+## claim-mixed-visual25-batch09-2026-10-01
+
+Owner /root; GENERATION FINISHED / RELEASED. Exact new paths: artifacts/asset-generation/mixed25-09-2026-10-01/ (IDs in prompts.json), .ai/plans/asset-generation-mixed25-09-2026-10-01.md; additive state/claim entries only.25/25 saved/reviewed with preview, dimensions/alpha inspection and Go manifest. Staged generation requested by user, no runtime/source/data edits. Not runtime integrated.
+
+## claim-onboarding-truthfulness-guard-2026-10-01
+
+User-directed T03 ("Onboarding-truthfulness guard (no `HINT: —` / empty
+objectives); regression guard for the `ae6e54387` fix class"). Owned exact
+paths: `src/UI/OnboardingHintPanel.cs`, `src/Main.Onboarding.cs`,
+`assets/l10n/strings.csv` (one row), `scripts/ci/l10n_drift_gate.py` (stage-key
+family now derived from the catalog), new
+`Ashfall.Core.Tests/UI/OnboardingTruthfulnessGateTests.cs`, plus the plan
+`.ai/plans/integrated/ui/INTEGRATED_onboarding-truthfulness-guard-2026-10-01.md`,
+this claim, `.ai/state.md`, and the `INTEGRATION_PLANS.md` T03 entry.
+**Finding:** the `ae6e54387` fix added the missing Duty/Dose hint copy, but
+nothing prevented the same silent failure for a future stage: `BuildHintLine`
+still carried a fabricated `_ => "HINT: —"` default and the per-stage
+`onboarding.hint.*` keys were never covered by the Python l10n gate. **Fix:**
+one authoritative `StageHintCopy` map (no parallel switches), a truthful empty
+default, a shared `StageLocalizationId` normalization for panel + status bar,
+a catalog-driven 4-test guard, and a catalog-derived Python stage-key family
+(`stage_family_keys()` now also covers the per-stage hint keys the Python gate
+never checked; 83 → 97 references). Status: **COMPLETE / FULLY INTEGRATED; paths
+released.** Evidence: new gate 4/4 (TDD-proven pre-fix failures),
+`OnboardingWiringGateTests` 4/4, `StringsCsvLocaleGateTests` 3/3,
+`LocalizationPilotTests` 4/4, l10n_drift_gate PASS (365 keys, 97 refs),
+`--onboarding-journey-selftest`
+PASS, `--ui-layout-selftest` Failures: 0, `dotnet build Ashfall.csproj` 0 errors.
+No commit, no full suite; foreign dirty worktree preserved.
+
+## claim-l10n-micro-location-drift-repair-2026-10-01
+
+User-directed T02 ("Fix l10n drift (`discovery.micro_frozen_bus.description`);
+known FAIL in `--expedition-panel-uitest`; stale at HEAD"). Owned exact paths:
+`assets/l10n/strings.csv`, `assets/l10n/strings.en.translation`,
+`assets/l10n/strings.de.translation`,
+`Ashfall.Core.Tests/Localization/StringsCsvLocaleGateTests.cs`,
+`src/Main.UiTests.Expeditions.cs` (check-label string only),
+`docs/discovery/MICRO_LOCATION_LOCALIZATION.md`,
+`docs/discovery/MICRO_LOCATION_TEST_MATRIX.md`,
+`docs/discovery/MICRO_LOCATION_UI.md`, `docs/INDEX.md` (owning generator only),
+the plan
+`.ai/plans/integrated/i18n/INTEGRATED_l10n-micro-location-drift-repair-2026-10-01.md`,
+this claim, `.ai/state.md`, and the `INTEGRATION_PLANS.md` T02 entry. No Core,
+data, or save change.
+
+**Root cause:** `AshfallLocalization.Initialize()` loads `strings.csv` through
+`LocalizationService.LoadFromCsv`, whose `RegisterString` overwrites Core's
+defaults; round-54/55 prose trims updated `micro_locations.json` and
+`LocalizationService` but not the CSV, so `ExpeditionPanel` rendered the
+pre-trim `discovery.micro_frozen_bus.description` and the uitest's
+`Contains(full JSON description)` check failed. Audit found seven EN rows and
+three DE rows with the same drift. **Fix:** synced all seven EN descriptions to
+the authoritative JSON and the seven DE descriptions to the folded-clause form
+(Core literal where it exists); added two gates —
+`Catalog_MicroLocationEnglishMatchesAuthoritativeJson` (CSV↔JSON runtime seam)
+and `Catalog_MicroLocationMatchesCoreDefaults_EnglishAndGerman` (CSV↔Core
+authority seam over all 135 micro-location keys, closing the Task-6
+"two copies can drift" finding); regenerated the two `.translation` resources
+via the Godot importer; and regenerated `docs/INDEX.md` with its owning
+generator. Status:
+**COMPLETE / FULLY INTEGRATED; paths released.** Also corrected the same stale
+German strings in `docs/discovery/MICRO_LOCATION_LOCALIZATION.md`, the stale
+`198`-character/longest wording in `MICRO_LOCATION_TEST_MATRIX.md` /
+`MICRO_LOCATION_UI.md` and the `--expedition-panel-uitest` check label (actual
+length 246; the current longest catalog description is
+`micro_hospital_chapel_ledger` at 307). Evidence: gates 4/4
+(TDD-proven pre-fix failures on both the bus EN and bus DE keys), localization
+suite 25/25, l10n_drift_gate PASS, `generate-docs-index.py --check` PASS,
+`--expedition-panel-uitest` 59/59 (was 58/1), `--string-freeze-selftest` 8/8,
+`dotnet build Ashfall.csproj` 0 errors, `git diff --check` clean. No commit, no
+full suite; foreign dirty worktree preserved.
+
+## claim-ui-motion-pass11-seal-close-paths-2026-09-30
+
+User-authorized eleventh pass (same motion remit as PASS 10). Owned exact
+paths: `src/Main.*.cs` (25 files — mechanical close routing only) and
+`src/UI/AshfallSidebar.cs` (selection settle), plus plan
+`.ai/plans/integrated/ui/INTEGRATED_ui-motion-pass11-seal-close-paths-2026-09-30.md`.
+**Finding:** PASS 10 sealed the *seam* (`AnimateClose` can now fade a panel that
+hid itself), but 45 `Close*` methods in `Main.*.cs` hid their panel **without
+calling the animated seam at all** (`CloseOpeningProtocolModal`,
+`CloseTradePanel`, `CloseEconomyPanel`, `CloseExpeditionPanel`, `CloseMapPanel`,
+`CloseCombatPanel`, `CloseChroniclePanel`, `CloseDutyRosterPanel`,
+`CloseWorkshopPanel`, `CloseInventoryOverlay`, `CloseSurvivorsOverlay`, ...)
+while 53 sibling methods did — so some panels faded and their neighbours popped.
+**Fix:** one mechanical transform rewrote every direct hide in those methods to
+the existing `ClosePanelAnimated` helper (the `if (x != null)` guard collapses
+because the helper null-checks). `ClosePanelAnimated` call sites 53 → 98;
+methods still hiding directly 45 → 0, re-verified with the same scanner. The
+transform collapsed the opening brace onto the statement for single-line
+bodies; a follow-up normalised indentation and `git diff --check` is clean.
+Being mechanical, it was validated by build + the full UI battery rather than
+by reading 45 diffs. **Subtle cue:** `AshfallSidebar` selection now settles the
+row's *label* through the shared `UiPanelFlow.Pulse` seam — deliberately not the
+row, since rows are full-width and scaling one would overflow its column.
+Status: **COMPLETE / FULLY INTEGRATED; paths released.** Evidence:
+`dotnet build` 0 errors; 13 headless targets all PASS with issues=0
+(`player-panels-uitest`, `ui-accessibility-selftest`, `ui-layout-selftest`
+Failures: 0, `dashboard-uitest`, `settings-selftest`, `inventory-uitest`,
+`economy-uitest`, `panel-bind-lifecycle-selftest`, `shelter-decor-selftest`
+19 checks, `workshop-relic-selftest`, `warlord-ui-selftest` 17 checks,
+`shelter-maintenance-selftest` 12 checks, `barter-selftest` 7 checks);
+`bin/run-scoped-tests` 3/3 suites; `git diff --check` clean. Verification limit:
+`UiMotion.CanAnimate` is false headless, so the fades themselves are not
+exercised — the tests prove no regression. No commit, no full suite. Foreign
+dirty worktree preserved.
+
+## claim-first-hour-keyboard-playtest-2026-10-01
+
+User-directed T01 ("Play keyboard-only first-hour session; triage ≤3 fixes"),
+executed per `docs/alpha/FIRST_HOUR_PLAYTEST_KIT.md` in its strongest available
+automated form. Owned exact paths: `src/Main.UiPanels.cs` (one subscription
+line at the `_inventoryOverlay` creation site), `src/UI/DutyRosterPanel.cs`
+(assignment-change event discipline), new
+`Ashfall.Core.Tests/UI/FirstHourKeyboardPlaytestGateTests.cs`, plus plan
+`.ai/plans/first-hour-keyboard-playtest-2026-10-01.md` and `.ai/state.md`.
+**Defect 1 — the Food stage's `inventory` route had a dead SELECT:** the
+player-facing `_inventoryOverlay` never subscribed `OnItemSelected`, so the
+only consume path (`OnInventoryItemSelected` → inventory detail →
+`food.ration_consumed`) was unreachable; only the legacy hidden `_inventoryPanel`
+was wired. **Defect 2 — the Duty stage sigil was inverted:**
+`DutyRosterPanel.HandleRowSelected` raised `OnAssignmentChanged` (→
+`ObserveSigil("duty.assigned")`) while the real assignment mutations raised it
+never, so the stage completed from selecting a row (Enter) and a genuine
+assignment produced no signal. Both fixes extend existing owners; no new
+authority, save schema, or determinism change. Status: **COMPLETE / FULLY
+INTEGRATED; paths released.** Plan archived
+`.ai/plans/integrated/ui/INTEGRATED_first-hour-keyboard-playtest-2026-10-01.md`.
+Evidence: new gate 2/2 (TDD-proven pre-fix failure), OnboardingWiringGate 4/4,
+`dotnet build` 0 errors, `--duty-roster-uitest` / `--inventory-uitest` /
+`--onboarding-journey-selftest` / `--playable-metrics-selftest` (17/17) /
+`--ui-accessibility-selftest` (5/5) / `--player-panels-uitest` (22/22) /
+`--ui-layout-selftest` (0 failures) all PASS, `git diff --check` clean. No
+commit; full suite not run; foreign dirty worktree preserved verbatim.
+
+## claim-ui-motion-pass10-seal-transitions-2026-09-30
+
+User-authorized tenth pass ("seal UI transitions and animate subtle UI visual
+ques!"). Owned exact paths: `src/UI/UiMotion.cs`, `src/UI/AshfallMetricCard.cs`,
+`src/UI/AshfallUiHelpers.cs`, `src/UI/GameDashboardPanel.cs` (5 gauge calls + 2
+status lines), `src/Main.PlayerSurfaces.cs` (visibility-hook guard only), plus
+plan `.ai/plans/integrated/ui/INTEGRATED_ui-motion-pass10-seal-transitions-2026-09-30.md`.
+**Finding 1 — close transition unsealed at ~100 sites:** the dominant panel
+pattern is `Visible = false; OnClose?.Invoke();`, which hides the panel before
+`UiMotion.AnimateClose` runs — and `AnimateClose` began with
+`if (!panel.Visible) return false;`, so it never animated and every such panel
+hard-popped. Fixed at the seam: `AnimateClose` revives a self-hidden panel and
+fades it (seamless — undrawn since it hid), guarded by a new `_opened` set so a
+never-shown panel can never flash into being. **Finding 2 — interaction bug in
+that fix, caught pre-ship:** reviving `Visible` raises `VisibilityChanged`, whose
+open hook would have run `AnimateOpen` (fading IN against the fade OUT) and
+stolen focus. Fixed by registering the closing state before the revive and
+guarding the hook with `IsClosing`. **Finding 3 — open side already sealed:**
+`RegisterOpenMotionRecursive`'s `VisibilityChanged` hook animates every panel
+that becomes visible; recorded, not duplicated. **Subtle cues:** metric-card
+urgency escalation pulses (de-escalation deliberately silent), 5 dashboard
+gauges ease via new `AshfallUiHelpers.SetBarValue` (one tween per bar,
+ReducedMotion/headless fall back to instant), status + alert lines pulse on
+change only — while numeric stores summaries stay unpulsed because they move
+every tick. Status: **COMPLETE / FULLY INTEGRATED; paths released.** Evidence:
+`dotnet build` 0 errors; `--player-panels-uitest`,
+`--ui-accessibility-selftest`, `--dashboard-uitest`, `--inventory-uitest`,
+`--economy-uitest` all PASS with issues=0; `--ui-layout-selftest` Failures: 0;
+`--settings-selftest` Failures: 0; `bin/run-scoped-tests` 2/2 suites; `git
+diff --check` clean. Note: `UiMotion.CanAnimate` is false headless, so the
+animations themselves cannot be exercised by these tests — they prove no
+regression. No commit, no full suite. Foreign dirty worktree preserved.
+
+## claim-ui-audit-polish-pass9-2026-09-30
+
+User-authorized ninth pass ("another deeper pass!"), aimed below the product at
+the verification infrastructure. Owned exact paths:
+`scripts/ci/run-godot-bounded.sh` only (29 additive lines), plus plan
+`.ai/plans/integrated/ui/INTEGRATED_ui-audit-polish-pass9-2026-09-30.md`. No
+C#, data, test, or generated-output changes. **Hazard A probed —
+"any-of" blindness in gates:** scanned all `Ashfall.Core.Tests` gates for
+`.Any(` deciding pass/fail; every observed use checks existence (correct
+semantics). The PASS-7 bug was `Any` over a set of declared obligations, a
+different kind. No further instances. **Hazard B probed — REAL and systemic:**
+`generate-selftest-manifest.py` and `generate-cli-catalog.sh` query the compiled
+host, so editing C# without rebuilding makes their `--check` report "OK" against
+stale data (both sides equally stale) — the exact failure that silently skipped
+four aliases in PASS 8. **Fix at the single seam:** every headless Godot
+invocation used by verification already routes through
+`scripts/ci/run-godot-bounded.sh`; a build-staleness guard was added there that
+blocks only when staleness is *provable* (`.godot/mono/temp/bin/Debug/Ashfall.dll`
+exists AND is older than the newest `src/**.cs` / `Assets/Ashfall.Core/**.cs`),
+so a missing assembly can never false-positive into blocking. Emits the exact
+assembly, reason and fix; escape hatch `ASHFALL_SKIP_BUILD_STALENESS=1`.
+**Proof:** current build runs fine; `touch src/Host/HostCli.cs` (mtime only) →
+BLOCKED exit 2 with the exact diagnosis; override honoured; rebuild restores.
+**Coverage audit:** six scripts merely *mention* godot in documentation strings
+(`generate-catalog-registry.py`, `generate-core-systems-catalog.py`,
+`generate-ui-panel-catalog.py`, `sync-agent-rulebooks.py`, `pre-commit`,
+`asset-orphan-sweep.sh`) and none execute it; `input-map-gate.sh` /
+`version-gate.py` have no Godot execution — so the wrapper is genuinely a
+single seam and the guard covers the class. Status: **COMPLETE / FULLY
+INTEGRATED; paths released.** Evidence: scoped tests 2/2, both generator
+`--check` OK, 5 headless targets PASS with staleBlocked=0, `dotnet build` 0
+errors, `git diff --check` clean. No commit, no full suite. Foreign dirty
+worktree preserved.
+
+## claim-ui-audit-polish-pass8-2026-09-30
+
+User-authorized eighth pass ("another pass!"). Closes the one item left open
+by PASS 7. Owned exact paths:
+`Ashfall.Core.Tests/Tooling/HostCliActionParityGateTests.cs` (gate logic only),
+`Assets/Ashfall.Core/HostCliRegistry.cs` (4 alias arrays), regenerated
+`docs/ci/SELFTEST_MANIFEST.json` + `docs/cli/HOST_CLI_COMMAND_CATALOG.md`, plus
+plan `.ai/plans/integrated/ui/INTEGRATED_ui-audit-polish-pass8-2026-09-30.md`.
+**Gate blindness root cause:** `EveryManifestFlag_IsParsedByHostCli` used
+`Any(...)` — an entry passed if ONE flag in its set parsed, so a
+registered-but-dead alias could never be reported. Changed to per-flag checking
+naming the exact `test_id -> flag`, and added the reverse gate
+`EveryParsedProbeFlag_IsDeclaredInTheManifest` (probe-shaped flags only).
+**Tightened gate immediately found 4 more real instances** of the same drift
+class: `--outposts-selftest`, `--port-contracts-selftest`,
+`--the-network-selftest`, `--the-underneath-selftest` — all parsed and
+advertised in `--host-help` but absent from their registry alias arrays, so the
+generated manifest omitted them. Declared and regenerated. **TDD proof the gate
+works:** temporarily reverting the PASS-7 parse fix produced
+`ui_accessibility_selftest -> --ui-a11y-selftest` — exactly the flag that had
+silently shipped dead — then the fix was restored. **Generator pitfall
+recorded:** `generate-selftest-manifest.py` shells out to the built host, so
+regenerating before rebuilding silently produced a stale manifest that still
+reported "OK"; rebuilding first made the aliases land. Status: **COMPLETE /
+FULLY INTEGRATED; paths released.** Evidence: parity gate 5/5 (was 4), help
+contract 2/2, both generator `--check` OK, all four aliases now run at runtime,
+`dotnet build` 0 errors, `git diff --check` clean. No commit, no full suite.
+`src/Host/HostCli.cs` was touched only transiently for the TDD proof and
+restored byte-identically; foreign dirty worktree preserved.
+
+## claim-ui-audit-polish-pass7-2026-09-30
+
+User-authorized seventh pass ("another pass!"). Extension of
+`claim-ui-audit-polish-pass6-2026-09-30`. Owned exact paths:
+`src/Host/HostCli.cs` (one parse condition + one help line only),
+`src/Host/HostCli.SelfTests.cs` (warlord teardown only),
+`Assets/Ashfall.Core/HostCliRegistry.cs` (one alias array), regenerated
+`docs/cli/HOST_CLI_COMMAND_CATALOG.md` + `docs/ci/SELFTEST_MANIFEST.json`, plus
+plan `.ai/plans/integrated/ui/INTEGRATED_ui-audit-polish-pass7-2026-09-30.md`.
+**Defect 1 — catalogued CLI flag that does nothing:** `--ui-a11y-selftest` was a
+registered alias of `UiAccessibilitySelfTest` (`HostCliRegistry.cs:2220`) but
+`HostCli.cs:812` never parsed it → "Unrecognized headless argument", silently
+no-op. Drift ran both ways (the parser also accepted the unregistered
+`--ui-access-selftest`). Both sides reconciled; help text updated.
+`HostCliActionParityGateTests` was green before and after, so its alias↔Parse
+gate has a coverage hole — recorded, not silently widened.
+**Defect 2 — warlord harness teardown:** `RunWarlordUiSelfTest` built a
+`FactionsPanel`, `_Ready()`/`Bind()`/`Open()`ed it and abandoned it (590
+ObjectDB, 243 CanvasItem RIDs, 8/22/3 RIDs, 11 resources leaked); now released
+in a `finally`. **Generated hygiene:** the alias change invalidated
+`HOST_CLI_COMMAND_CATALOG.md` and `SELFTEST_MANIFEST.json`; both regenerated
+through their owning generators (never hand-edited) and `--check` is OK/OK.
+**Honest false positives recorded:** 100 panels with `OnClose` but no keyboard
+close (close is centralized in `Main.PanelLifecycle`); 25 apparent Bind/Unbind
+subscription imbalances (`Unbind()` uses multi-level access the regex missed —
+spot-checked `DutyRosterPanel`, 3/3 correctly removed); 24 "item surfaces
+without art" are trains/mods/research, not item catalogs — **the item-art tail
+I deferred twice does not exist**, and the three empty-state helpers are two
+deliberate levels, not competitors. Status: **COMPLETE / FULLY INTEGRATED;
+paths released.** Evidence: parity gate 4/4, help contract 2/2, 12 headless
+targets green, `dotnet build` 0 errors, `git diff --check` clean. No commit, no
+full suite. Pre-existing foreign edits in `HostCli.cs` / `HostCliRegistry.cs`
+preserved verbatim.
+
+## claim-ui-audit-polish-pass6-2026-09-30
+
+User-authorized sixth pass ("another pass"). Extension of
+`claim-fix-free-during-signal-orphan-leak-2026-09-30`. Owned exact paths:
+`src/UI/AshfallUiHelpers.cs`, `src/UI/SnapshotOrchestrator.cs`,
+`src/Host/HostCli.Command.RunUiLayoutSelfTest.cs`, plus plan
+`.ai/plans/integrated/ui/INTEGRATED_ui-audit-polish-pass6-2026-09-30.md`.
+Delivered: new `AshfallUiHelpers.InvokePanelHook(node, method, fallback?)` that
+reflects first and only invokes a lifecycle hook the panel actually declares —
+replacing four unguarded `panel.Call("Open")` sites that made the engine log
+"Nonexistent function 'Open'" for 47 panels even though the C# exception was
+swallowed (`IBindablePanel` contracts only `IsBound`/`Unbind()`, so `Open()` is
+a convention, not API). The interactivity audit now falls back to `RefreshView`
+(which all 47 expose), widening audit coverage — `inert=0 unreachable=0
+blankUnboundPanels=0`, gate stayed green. The `ui-layout-selftest` 8-resolution
+loop built 8 panels per resolution and freed none; now tracked and freed in a
+`finally`. **Risk-managed asymmetry:** `SnapshotOrchestrator` gets NO
+`RefreshView` fallback because it captures golden snapshots and the change
+would be unverifiable headlessly (`--ui-snapshot-uitest` needs a real renderer);
+snapshot behaviour is byte-identical, only the error spam removed.
+**Measured:** `Nonexistent function` 47→0; ObjectDB 24,731→12; CanvasItem
+7,822→6; ShapedTextData 4,496→0; Shape2D/Body2D/Area2D/Viewport/DummyTexture/Font
+all →0; resources-in-use 26→0; `ui-layout-selftest` Failures: 0 both sides.
+Status: **COMPLETE / FULLY INTEGRATED; paths released.** Regression sweep: 12
+headless targets + `bin/run-scoped-tests` 2/2 suites all PASS with zero
+locked/nonexistent/leak issues; `dotnet build` 0 errors; `git diff --check`
+clean. No commit, no full suite. Foreign dirty worktree preserved untouched.
+
+## claim-fix-free-during-signal-orphan-leak-2026-09-30
+
+User-directed ("fix the flag!") closure of the PASS-5 flagged bug.
+Owned exact paths: `src/UI/AshfallUiHelpers.cs`, `src/UI/WorkshopPanel.cs`,
+`src/Main.UiTests.WorkshopRelic.cs`, plus plan
+`.ai/plans/integrated/ui/INTEGRATED_free-during-signal-orphan-leak-fix-2026-09-30.md`.
+**Root cause (proved, correcting the original flag's guess):** `WorkshopPanel`
+rebuilt its own container from inside the signal dispatch of a button living in
+that container — `StartRepair` fires `OnWorkshopStateChanged` mid-dispatch, and
+`AshfallUiHelpers.EmptyChildren` then `Free()`s the very button being dispatched.
+Godot locks objects during dispatch so the free is refused, but `RemoveChild`
+already ran ⇒ permanent orphan. The original flag's diagnosis ("the selftest
+never frees its panel") was falsified: `--player-panels-uitest` and
+`--dashboard-uitest` build the same tree and leak nothing. **Fix:** (1)
+`FreeDetached` seam — `Free()` then `QueueFree()` only if the node survived,
+preserving the immediate-free contract that ownership gates assert; (2)
+`WorkshopPanel` defers its rebuild out of the dispatch (`RefreshViewDeferred`
+for both Core event subscriptions and the five button handlers); (3) selftest
+teardown + explicit rebuild flush; (4) `TryLoadTexture` now disposes the native
+`Godot.Image` after `ImageTexture.CreateFromImage` copies it (two call sites).
+**Measured:** ObjectDB 30→0, CanvasItem 2→0, DummyTexture 3→0, ShapedTextData
+6→0, FontAdvanced 1→0, resources-in-use 1→0, locked-object errors gone,
+14/14 assertions still PASS. **Regression sweep over the global seam:** 14
+headless targets + 3 scoped xUnit suites all PASS with zero locked/leak issues,
+including `player-panels-uitest` Gate 19. **Regression caused and fixed within
+this work (recorded):** a first attempt that always `QueueFree()`d broke Gate 19
+in 5 panels; reverted to the fallback form. Status: **COMPLETE / FULLY
+INTEGRATED; paths released.** No commit, no full suite. Foreign dirty worktree
+preserved untouched.
+
+## claim-world-incident-picker-2026-10-01
+
+User-authorized ("Well do the flag!" — the open item flagged after the
+week-1 decision reachability task). Owned exact paths:
+`Assets/Ashfall.Core/Narrative/WorldIncidentSystem.cs` (new),
+`src/Host/WorldIncidentHostSession.cs` (new),
+`src/Host/WorldIncidentSaveStore.cs` (new),
+`src/Main.WorldIncidents.cs` (new),
+`src/Host/HostCli.WorldIncidents.cs` (new),
+`Ashfall.Core.Tests/Narrative/WorldIncidentSystemTests.cs` (new), plus
+bounded additive edits in `Assets/Ashfall.Core/Random/CampaignRngStream.cs`,
+`src/Main.CampaignOwners.cs`, `src/Main.Campaign.cs`, `src/Main.Narrative.cs`,
+`src/Main.SaveOrchestrator.cs`,
+`Assets/Ashfall.Core/Save/SaveSectionRegistry.cs`,
+`Assets/Ashfall.Core/HostCliRegistry.cs`, `src/Host/HostCli.cs`,
+`src/Main.Application.cs`, section-pin test files, and the regenerated
+`docs/ci/SELFTEST_MANIFEST.json`. Delivered: weighted runtime picker for
+events.json as the third fallback of the per-day decision stream
+(arc -> echo -> incident), fail-closed consequence port, `world_incidents`
+save section, `--world-incidents-selftest` probe. Status: **COMPLETE /
+FULLY INTEGRATED; paths released.** Evidence: build 0 errors;
+`WorldIncidentSystemTests` 11/11; scoped gates (week-1 reachability 6/6,
+save pins, parity 4/4, triad drift, RNG source, Plan138 wiring, help
+contract 2/2) all PASS; headless world-incidents 12/12, data-integrity
+430/430, 7day smoke, day1, journey, reasonable-player all PASS;
+validate-json 714/714; manifest 317 `--check` OK. No commit, no full suite.
+Foreign dirty work preserved; edits to foreign-dirty files additive only
+(including documenting four previously-undocumented foreign probe aliases
+in PrintHelp to turn the red help-contract gate green).
+
+## Asset generation batch 08 — 2026-10-01
+
+Owner /root: artifacts/asset-generation/batch25-08-2026-10-01/; .ai/plans/asset-generation-batch25-08-2026-10-01.md; bounded additive state and ownership entries. COMPLETE / RELEASED, staged generation only. 25 opaque 1280×720 PNGs; four polish flags documented in REPORT.md/prompts.json. No source/data/runtime paths claimed.
+
+## claim-ui-audit-polish-pass5-2026-09-30
+
+User-authorized fifth pass ("another pass!"). Extension of
+`claim-ui-audit-polish-pass4-2026-09-30`. Owned exact paths:
+`src/UI/AshfallUiHelpers.cs`, `src/UI/AshfallUiTheme.cs`,
+`src/UI/ShelterDecorPanel.cs`, `src/UI/WorkshopPanel.cs`, plus plan
+`.ai/plans/integrated/ui/INTEGRATED_ui-audit-polish-pass5-2026-09-30.md`.
+Delivered: named `AshfallUiHelpers.ColorNeutral` seam replacing the raw
+`Colors.White` modulate-identity in `ShelterDecorPanel` (raw engine colours in
+`src/UI` now exist in one named constant plus comments); a disabled-control
+tooltip **fallback** in `AshfallUiTheme.EnforceControlDefaults` (authored
+tooltips never overwritten); item art on `WorkshopPanel` protective-gear rows
+and `ShelterDecorPanel` decor chooser rows; authored reason tooltips on
+`WorkshopPanel`'s disabled REPAIR button. Probed clean and unchanged: Esc
+input-parity (0 violations). Probed real but deliberately not churned: three
+competing empty-state helper presentations (17 / 14 / 32 files) — consolidating
+means churning 32 files or breaking 14 signature-dependent callers; recorded as
+accepted consistency debt. Status: **COMPLETE / FULLY INTEGRATED; paths
+released.** Evidence: host build 0 errors; `--ui-accessibility-selftest` 5/5,
+`--player-panels-uitest`, `--panel-bind-lifecycle-selftest`,
+`--shelter-decor-selftest`, `--shelter-maintenance-selftest` 12/12,
+`--workshop-relic-selftest` all PASS; scoped `git diff --check` clean. No
+commit, no full suite. **Flagged, not fixed (outside claim):**
+`--workshop-relic-selftest` prints at-exit RID/ObjectDB leak diagnostics caused
+by `src/Main.UiTests.WorkshopRelic.cs` never freeing `_workshopPanel` —
+pre-existing (control run with `--settings-selftest` shows none). Foreign dirty
+worktree preserved untouched.
+
+## claim-ui-audit-polish-pass4-2026-09-30
+
+User-authorized fourth pass ("another pass!"). Extension of
+`claim-ui-audit-polish-pass3-2026-09-30`. Owned exact paths:
+`src/UI/AssetInspectorPanel.cs` only, plus plan
+`.ai/plans/integrated/ui/INTEGRATED_ui-audit-polish-pass4-2026-09-30.md`.
+Delivered (developer-session depth per the user's explicit ask): a per-entry
+detail overlay behind a keyboard-accessible VIEW button on every inspector card
+(220px art preview, resolved asset path, id / kind / art-status / authored
+stats); layered Esc that dismisses the detail first then the panel; a sort
+closure (Id / Name / Missing art first) that re-sorts the grid in place; and
+the shared `UiMotion.AnimateOpen` entrance on the dialog body only (exit
+synchronous per the codebase convention, scrim does not slide). Three
+plausible-looking defect classes were probed against source and deliberately
+**not** changed as false positives: event-subscription "leaks" (31 hits, all
+sidebar-owned children that die with the panel), `Open()` without refresh (29
+hits, but `PanelRegistry.ConfigureActions` runs bindAction before openAction),
+and empty-state gaps (20 hits, all with real fallbacks). Status: **COMPLETE /
+FULLY INTEGRATED; paths released.** Evidence: host build 0 errors;
+`--ui-accessibility-selftest` 5/5; `--player-panels-uitest` 22/22;
+`--settings-selftest` Failures 0; `--asset-registry-selftest` 55/55 (0 missing,
+0 load-failed); scoped `git diff --check` clean. No commit, no full suite.
+Foreign dirty worktree preserved untouched.
+
+## claim-ui-audit-polish-pass3-2026-09-30
+
+User-authorized third pass ("another pass!"). Extension of
+`claim-ui-audit-polish-pass2-2026-09-30`. Owned exact paths:
+`src/UI/AshfallUiHelpers.cs`, `src/UI/InventoryPanel.cs`,
+`src/UI/SurvivalWorkstationPanel.cs`, `src/UI/EconomyDetailPanel.cs`,
+`src/UI/SettingsPanel.cs`, `src/UI/ShelterBarterPanel.cs`,
+`src/UI/FeedbackPanel.cs`, and plan
+`.ai/plans/integrated/ui/INTEGRATED_ui-audit-polish-pass3-2026-09-30.md`.
+Delivered: `InventoryPanel._weightLabel` (built once as "CAPACITY // —" and
+never written) wired to live weight/carry-limit with the status-rail
+criticality ladder and shared change pulse; new `AshfallUiHelpers.ResolveItemTexture`
+so every surface resolves item art through one chain ( `MakeItemIcon` now
+delegates to it) and `AshfallDataGrid.Cell.IconTexture` populated for
+`SurvivalWorkstationPanel` recipe outputs (the grid already rendered icons —
+no caller ever supplied one; `AshfallDataGrid` itself untouched);
+`EconomyDetailPanel.AddItemRow` leads market demand rows with resolved good
+art; accessible tooltips on every symbol-only button (Settings ✕ / volume ± /
+bind, FeedbackPanel ×, ShelterBarter offer/request ±); settings resolution
+dropdown now reports `Custom (W × H)` for a saved non-preset resolution instead
+of silently relabelling it 1920×1080. No Core, data JSON, save section, or new
+owner. Status: **COMPLETE / FULLY INTEGRATED; paths released.** Evidence: host
+build 0 errors; scoped xUnit 2/2 suites; `--inventory-uitest`,
+`--economy-uitest`, `--dashboard-uitest`, `--player-panels-uitest` (22/22),
+`--ui-accessibility-selftest` (5/5), `--panel-lifecycle-selftest`,
+`--panel-bind-selftest`, `--ui-layout-selftest`,
+`--accessibility-settings-selftest` (12/12) all PASS;
+`--settings-selftest` Failures 0; scoped `git diff --check` clean. No commit,
+no full suite. Foreign dirty worktree preserved untouched.
+
+## claim-ui-audit-polish-pass2-2026-09-30
+
+User-authorized second pass ("address all the gaps and go for another pass for
+repair"). Extension of `claim-ui-audit-polish-settings-dev-session-2026-09-30`.
+Owned exact paths: `src/UI/UiPanelFlow.cs`, `src/UI/AshfallUiHelpers.cs`,
+`src/UI/GameDashboardPanel.cs`, `src/UI/SettingsPanel.cs`,
+`src/UI/AssetInspectorPanel.cs`, `src/UI/ShelterBarterPanel.cs`,
+`src/UI/PhantomMemoryPanel.cs`, single-line dead-field removal in
+`src/UI/{AchievementsPanel,CombatDetailPanel,DutyRosterDetailPanel,EventDetailPanel,EventsLogPanel,ExpansionsHubPanel,JournalDetailPanel,RadiationDetailPanel,RadiationHistoryPanel,SaveLoadPanel,SurvivalDetailPanel,TutorialPanel}.cs`,
+and plan `.ai/plans/integrated/ui/INTEGRATED_ui-audit-polish-pass2-2026-09-30.md`.
+Delivered: 13 never-constructed `null!` controls removed; `_radonLabel` built as
+a real RADON row (thresholds read from the canonical
+`YearOfAshRadonSystem.SafeRadonThreshold`/`DangerousRadonThreshold` constants —
+none invented) and the fused air-quality string split into two readable rows;
+the "RESET TUTORIALS" button's false success claim removed; `EnabledMods`
+readout added; `EXPORT MISSING-ART REPORT` dev affordance plus coverage % added
+in the inspector; shared `AshfallUiHelpers.SetTextPulsed` value-change seam
+applied to dashboard stores; `UiPanelFlow.Pulse` centre-pivoted; item art wired
+into `ShelterBarterPanel` offer rows and `PhantomMemoryPanel` relic rows. Core
+read-only (one existing `public const`), no data JSON, no save section, no new
+owner. Status: **COMPLETE / FULLY INTEGRATED; paths released.** Evidence: host
+build 0 errors; scoped xUnit 3/3 suites; `--settings-selftest` Failures 0;
+`--dashboard-uitest`, `--economy-uitest`, `--barter-selftest` (7/7),
+`--player-panels-uitest` (22/22), `--ui-accessibility-selftest` (5/5) all PASS;
+scoped `git diff --check` clean. No commit, no full suite. Foreign dirty
+worktree (incl. the WEEK-ONE nav edits inside `GameDashboardPanel.cs`) preserved
+untouched.
+
+## claim-asset-generation-batch15-06-2026-09-30
+
+Root owns exact staging files in `.ai/plans/asset-generation-batch15-06-2026-09-30.md`, that plan and bounded additive state/claim entries. Output `artifacts/asset-generation/batch15-06-2026-09-30/`. Status COMPLETE —15saved/reviewed; claim released. Two scenes retain documented promotion polish. Runtime/source/data/prior batches remained read-only.
+
+## claim-ui-audit-polish-settings-dev-session-2026-09-30
+
+User-authorized UI audit/diagnose/repair package. Owned exact paths:
+`src/UI/SettingsPanel.cs`, `src/UI/AshfallUiHelpers.cs`,
+`src/UI/AssetInspectorPanel.cs`, `src/UI/MainMenuPanel.cs`,
+`src/UI/CraftingPanel.cs`, `src/UI/InventoryDetailPanel.cs`,
+`src/Main.UiPanels.cs` (dev-session wiring only), plan + archive
+`.ai/plans/integrated/ui/INTEGRATED_ui-audit-polish-settings-dev-session-2026-09-30.md`,
+this claim and a bounded integration-ledger entry. Delivered: four previously
+UI-less persisted settings (auto_save_on_day, visual_audio_alerts,
+audio_mix_preset, mods_enabled), unsaved-changes indicator, settings-recovery
+banner, canonical `MakeItemIcon` placeholder fallback (was the medical pill
+sprite), item art in the inventory detail view and crafting recipe/ingredient
+rows, shared value-change pulse on settings/inspector readouts, item stat rows
+in the dev inspector, and `START GAME — DEV SESSION (RUN + INSPECT)` on the
+main menu. No Core, data JSON, save section, or gameplay owner touched.
+Status: **COMPLETE / FULLY INTEGRATED; paths released.** Evidence: host build
+0 errors; `UserSettingsRecoveryTests` 20/20; `CraftingSystemTests` +
+`InventorySystemTests` 2/2 suites; `--settings-selftest` Failures 0;
+`--inventory-uitest` PASS; `--player-panels-uitest` 22/22;
+`--ui-accessibility-selftest` 5/5; scoped `git diff --check` clean. No commit,
+no full suite. Pre-existing dirty worktree files preserved untouched.
+
+## claim-failure-restart-and-first-week-panels-2026-09-30
+
+User-authorized two-task package (tasks 9 & 10 of the 2026-09-30 host/QOL list); approved plan `.ai/plans/failure-restart-and-first-week-panels-2026-09-30.md`. Owned paths: `src/Main.UiTests.FailureRestart.cs` (new), `Assets/Ashfall.Core/HostCliRegistry.cs` (new selftest enum member + descriptor only), `src/Host/HostCli.cs` (enum mirror, arg parse, help line only), `src/Main.Application.cs` (dispatch case only), `src/UI/GameDashboardPanel.cs` (navigation rail week-one section only), plus this claim, the plan file/archive entry, and a bounded `.ai/state.md` entry. All other systems, panels, and shared seams remain read-only; foreign dirty worktree changes preserved. Status: COMPLETE / FULLY INTEGRATED; paths released. `--failure-restart-selftest` 43/43 PASS; week-one rail foregrounded with all surfaces still reachable (player-panels, ui-layout, dashboard gates PASS); time-to-menu measured (14701/23265/20275 ms vs 9909/11588 ms baseline). Plan marked FULLY INTEGRATED and archived at `.ai/plans/integrated/ui/failure-restart-and-first-week-panels-2026-09-30.md`. No commit, no full suite.
+
+## claim-asset-generation-batch15-05-2026-09-30
+
+Root owns exact staging outputs in `.ai/plans/asset-generation-batch15-05-2026-09-30.md`, that plan and bounded additive state/claim entries. Output `artifacts/asset-generation/batch15-05-2026-09-30/`. Status COMPLETE — all15 saved and reviewed; claim released. Runtime/source/data/prior batches remained read-only.
+
+## claim-asset-generation-batch15-04-2026-09-30
+
+Root owns exact staging files in `.ai/plans/asset-generation-batch15-04-2026-09-30.md`, that plan and bounded additive state/claim entries. Output under `artifacts/asset-generation/batch15-04-2026-09-30/`. Status COMPLETE — 15 distinct candidates saved and reviewed; claim released. Runtime art, source, data and earlier batches remained read-only.
+
+## claim-asset-generation-batch15-03-2026-09-30
+
+Root owns exact staging outputs in `.ai/plans/asset-generation-batch15-03-2026-09-30.md`, that plan and bounded task-state/claim entries. Output under `artifacts/asset-generation/batch15-03-2026-09-30/`. Status COMPLETE — all 15 candidates saved and reviewed; claim released. Existing runtime assets, source, data and previous batches remained read-only.
+
+## claim-asset-generation-batch15-02-2026-09-30
+
+Root owns exact candidate files listed in `.ai/plans/asset-generation-batch15-02-2026-09-30.md`, that plan, and bounded additive state/claim entries. All output under `artifacts/asset-generation/batch15-02-2026-09-30/`. Status COMPLETE — generation staging saved and reviewed; claim released. Existing art, source, data and previous batch remained read-only.
+
+## claim-asset-generation-batch15-2026-09-30
+
+Root foreman/integrator; user-authorized fifteen-asset generation. Exact assets and metadata paths enumerated in `.ai/plans/asset-generation-batch15-2026-09-30.md`; all under `artifacts/asset-generation/batch15-2026-09-30/`. Claims plan, bounded additive claim and task-state entry. Runtime Surface/Characters images, their manifests, foreign `scripts/tools/bake-surface.py`, all source/data and prior visual reports remain read-only. Status: COMPLETE — generation outputs saved and reviewed; claim released. No runtime integration or commit.
+
 ## claim-year-two-p4b-elders-2026-09-30
 
 DEFERRED; CLAIM RELEASED. User declined authored age changes and requested another plan. All P4b implementation/test changes from this attempt precisely reverted; P4a preserved. Plan unsealed at `.ai/plans/y2-p4b-elders-2026-09-30.md`; fresh-campaign age prerequisite unresolved.
@@ -15457,3 +16232,168 @@ User-authorized ("Search for bugs, errors, warnings, silent bugs, missing tool c
 ## claim-ui-pass2-encounter-focus-2026-09-30
 
 User-authorized ("continue with another pass" — bug-hunt pass 2). Repair: ExpeditionPanel's nested encounter modal (the single repo-wide bypass of the pkg-12 bare-.Visible=true class outside Main.*) surfaced mid-session with no keyboard focus; fixed via shared seams — OpenWithFocus(_encounterModal, opener: this) on open, FocusFirstDeferred(this) when the encounter queue drains (full Close() unchanged; Main owns that restore). Known limit documented: modal not in OverlayPanelCatalog, so the Main Tab trap doesn't bind inside it. Pass-2 sweeps clean: Core determinism/purity (no System.Random/Guid/wall-clock outside IWallClock), data integrity 0 errors/430 catalogs, double-subscription flags = correct rebind idiom, no TODO markers. Verified: build 0 errors; expedition/expedition-playtest/expedition-encounter-bridge selftests PASS; day1 PASS; seven-day-slice 25/25; layout 0 FAIL; panels 22/22; snapshots 32/32. INCIDENT + REPAIR: initial commit 21f424127 absorbed a foreign uncommitted hunk (LastChoiceWasDuplicate guard) from src/UI/ExpeditionPanel.cs via pathspec add while its definition stayed in foreign ExpeditionHostSession WIP — committed tree would not compile standalone. Amended to eb7fa8cd6 with only my hunks; foreign hunk restored to the worktree uncommitted; foreign symbol verified absent from HEAD. Plan archived at .ai/plans/integrated/ui/ui-pass2-encounter-focus-2026-09-30.md. Commit: eb7fa8cd6. Status: COMPLETE.
+
+## claim-food-loop-verification-reasonable-player-bot-2026-09-30
+
+User-authorized (tasks 5 and 6: food-loop UI verification + reasonable-player
+week-1 bot). Paths: `src/Main.Cooking.cs` (null-guarded legacy
+CookingSaveStore restore — fixed the fresh-boot discovered-recipe wipe),
+`src/Host/HoldfastRuntimeSession.cs` (WireInventorySession now clears the
+no-survivors fallback overrides on every survivors-attached wire — fixed the
+stale ApplyNeedOverride silently swallowing consume need-deltas),
+`src/Main.UiTests.FoodLoop.cs` (new `--food-loop-selftest`),
+`src/Host/HostCli.ReasonablePlayerBot.cs` (new
+`--reasonable-player-selftest`), `src/Host/HostCli.cs`,
+`Assets/Ashfall.Core/HostCliRegistry.cs`, `src/Main.Application.cs` (probe
+registration/dispatch), plan archived at
+`.ai/plans/integrated/kitchen/food-loop-verification-and-reasonable-player-bot-2026-09-30.md`.
+Acceptance: food-loop selftest 19/19 PASS (15/15 starter recipes known on a
+fresh game; prep → day advance → serve-all and consume seams move real
+survivor needs); reasonable-player selftest 17/17 PASS (4 seeds x 4 presets,
+baseline sanity, determinism hash, divergence, plant-leg pipeline). Plan136
+scoped regression: 12/13 pass; the 1 failure
+(HostWiring_SourceFilesExistAndDeclareSeams expects FlushCookingIfDirty in
+src/Main.Application.cs) is pre-existing at HEAD, flagged as test debt, not
+introduced here. Status: COMPLETE (uncommitted).
+# Asset generation batch 07 — 2026-10-01
+
+Owner /root: artifacts/asset-generation/batch25-07-2026-10-01/; .ai/plans/asset-generation-batch25-07-2026-10-01.md; bounded additive .ai/state.md and this claim. COMPLETE / RELEASED, staged generation only. 25 assets saved, four require polish before promotion. No runtime/source/data paths claimed. Exact asset IDs in batch prompts.json.
+
+# Expedition/map UI loop + action-result surfacing — 2026-10-01
+
+User-authorized two-task package (tasks 14 & 15 of the playability checklist);
+approved plan `.ai/plans/integrated/ui/INTEGRATED_expedition-map-loop-and-action-result-surfacing-2026-10-01.md`.
+Owned paths: `src/UI/ExpeditionPanel.cs`, `src/UI/MapPanel.cs`,
+`src/UI/CraftingPanel.cs` (refusal-surfacing hunks only; pre-existing foreign
+item-icon hunks preserved), `src/UI/SurvivalWorkstationPanel.cs`
+(refusal-surfacing hunks only; pre-existing foreign grid-icon hunks preserved),
+`src/Main.UiPanels.cs` (loot-toast hunk only; pre-existing foreign dev-session
+hunks preserved), `docs/ACTION_RESULT_SURFACING_MATRIX.md`, the plan file, a
+bounded `.ai/state.md` entry, and this claim. Acceptance: build 0 errors;
+`--expedition-panel-uitest` 58/59 (single failure pre-existing at HEAD,
+`strings.csv` EN `discovery.micro_frozen_bus.description` stale vs JSON — task
+16 scope); `--player-panels-uitest` 22/22; `--ui-layout-selftest` PASS;
+`--expedition-selftest` 43/43. Status: COMPLETE / FULLY INTEGRATED; paths
+released. No commit, no full suite.
+
+# Map panel truthfulness + subscription repair (T11) — 2026-10-01
+
+User-authorized task T11 (repair checklist); approved plan
+`.ai/plans/map-panel-truthfulness-and-subscription-repair-2026-10-01.md`.
+Owned paths: `src/UI/MapDetailPanel.cs`, `src/UI/MapPanel.cs` (the prior
+task-14 claim on this file is released), the `OpenMapDetailPanel` hunks of
+`src/Main.UiHandlers.cs`, new
+`Ashfall.Core.Tests/UI/MapPanelTruthfulnessGateTests.cs`, a bounded
+`[Fact]` addition to `Ashfall.Core.Tests/UI/PanelSubscriptionHygieneTests.cs`,
+the plan file, a bounded `.ai/state.md` entry, and this claim. Acceptance:
+scoped gate tests pass; host build 0 errors; focused headless checks pass.
+Status: COMPLETE / FULLY INTEGRATED — paths released (2026-10-01). Gates
+3/3 + 2/2, build 0/0, scene-binding 25/25, ui-layout PASS; plan archived at
+`.ai/plans/integrated/ui/INTEGRATED_map-panel-truthfulness-and-subscription-repair-2026-10-01.md`. No commit, no full suite.
+
+# MapPanel route projection (T12) + T13 verify — 2026-10-01
+
+User-authorized tasks T12 + T13 (repair checklist); approved plan
+`.ai/plans/mappanel-route-projection-t12-t13-verify-2026-10-01.md`. Owned
+paths: `src/UI/MapPanel.cs` (routes-card hunks only), bounded additions to
+`Ashfall.Core.Tests/UI/MapPanelTruthfulnessGateTests.cs`, the plan file, a
+bounded `.ai/state.md` entry, and this claim. T13 is verify-only (premise
+already fixed by the T10 stream; no files claimed for it beyond running its
+existing gate). Acceptance: map gates + surfacing gate pass; host build 0
+errors; ui-layout headless PASS. Status: COMPLETE / FULLY INTEGRATED — paths
+released (2026-10-01). Truthfulness gate 5/5, hygiene 2/2, surfacing 3/3,
+build 0 errors (6 benign foreign CS0162), ui-layout PASS; plan archived at
+`.ai/plans/integrated/ui/INTEGRATED_mappanel-route-projection-t12-t13-verify-2026-10-01.md`.
+T13 closed verify-only (premise already fixed by the T10 stream). No commit,
+no full suite.
+
+| claim-combat-playability-t12-2026-10-01 | `COMBAT-PLAYABILITY-T12` (user-directed realtime combat playability pass, 2026-10-01; note: a separate stream used the label T12 for the map-panel verify task — distinct claims) | Builder (this stream) | **Plan:** `.ai/plans/combat-playability-t12-2026-10-01.md` (STATUS: APPROVED BY USER). **Exact paths:** `src/Host/CombatHostSession.cs` (pump guard on Resolved + pump-disable on OnEncounterEnded), `src/UI/CombatPanel.cs` (idempotent Bind, closed-panel refresh skip), `src/Main.Application.cs` (one realtime pump call in `_Process`, Playing-gated), `src/Main.Expeditions.cs` (ambush/resolution feedback notices + one OnEncounterEnded subscription in guarded SetupCombat), `Ashfall.Core.Tests/Combat/RealtimeFullEncounterTerminationTests.cs` (new), this claim, `.ai/state.md`, plan archive. Forensic finding: `StartCombat` always arms realtime but `PumpRealtime` had zero callers — enemies never acted, flee extract never completed, unresolved encounters suppressed all later ambush handoffs. **Status: COMPLETE / FULLY INTEGRATED 2026-10-01; paths released.** Core realtime loop proven terminal+deterministic (3 new tests, 31/31 Realtime suite), host build 0 errors, `--combat-selftest` 26/26, `--real-campaign-journey-selftest` PASS, `--ui-layout-selftest` Failures: 0, headless boot 0 errors, `git diff --check` clean. No Core gameplay/save change. Foreign dirty hunks preserved. No commit, no full suite. |
+
+# Expedition console routing (T14) + MapPanel counter truthfulness (T15) + T16 verify — 2026-10-01
+
+User-authorized tasks T14+T15+T16 (repair checklist); approved plan
+`.ai/plans/expedition-console-routing-t14-t15-t16-2026-10-01.md`. Owned
+paths: `src/UI/ExpeditionPanel.cs` (console deep-link hunks only),
+`src/Main.UiPanels.cs` (two additive wiring lines only; foreign dirty hunks
+preserved), `src/UI/MapPanel.cs` (fallback/counter hunks only), bounded
+additions to `Ashfall.Core.Tests/UI/PanelRouteGateTests.cs` and
+`Ashfall.Core.Tests/UI/MapPanelTruthfulnessGateTests.cs`, the plan file, a
+bounded `.ai/state.md` entry, and this claim. Explicitly NOT touched
+(ACTIVE foreign claim `claim-pfgl-codex-luna6-octet-2026-09-25`):
+`Assets/Ashfall.Core/UI/PanelRegistryBootstrap.cs`,
+`src/Main.PlayerSurfaces.cs`, `src/UI/GameDashboardPanel.cs`,
+`src/Main.PanelLifecycle.cs`. T16 is verify-only (premise already fixed by a
+foreign stream). Acceptance: route + truthfulness gates pass; build 0
+errors; expedition-panel uitest 59/59; ui-layout PASS. Status: COMPLETE /
+FULLY INTEGRATED — paths released (2026-10-01). Route gate 22/22,
+truthfulness 6/6, hygiene 2/2, build 0 errors, uitest 59/59, ui-layout
+PASS; plan archived at
+`.ai/plans/integrated/ui/INTEGRATED_expedition-console-routing-t14-t15-t16-2026-10-01.md`.
+T16 closed verify-only (foreign stream fixed the CSV + gate). No commit,
+no full suite.
+
+| claim-combat-playability-t13-t17-2026-10-01 | `COMBAT-PLAYABILITY-T13-T17` (user-directed follow-up wave to T12, 2026-10-01) | Builder (this stream) | **Plan:** `.ai/plans/integrated/combat/INTEGRATED_combat-playability-t13-t17-2026-10-01.md` (STATUS: APPROVED BY USER). **T13:** `src/UI/CombatPanel.cs` movement adapter (WASD/arrows/Shift → `SetInputFrame`, cleared on hide/resolve). **T14:** Core `TacticalCombatSystem.cs` `EvaluateBandage()` preflight + session forward + BANDAGE button. **T15:** `CombatPanel` result block (aftermath deaths/injuries + loot lines). **T16:** `src/UI/CombatHudOverlay.cs` ADOPTED as truthful live monitor (idempotent Bind, closed-panel refresh skip, live preflight action rows when bound; fixtures only unbound), routed via CombatPanel LIVE MONITOR [M] → `Main.UiPanels.cs` wiring; overlay action results surfaced via `ShowAdvanceFeedback` (T10 convention). **T17:** `TacticalCombatSystem.Realtime.cs` (SeedPoses skips already-seeded; new `EnsureRealtimePosesSeeded`), `TacticalCombatSystem.Persistence.cs` (RestoreState seeds missing poses), `src/Host/CombatHostSession.cs` (Create re-arms pump after realtime-active restore); new `Ashfall.Core.Tests/Combat/RealtimeRestoreHardeningTests.cs` (3). **Baseline repair:** `CombatSaveRoundTripTests.Migrate_ClampsAndDefaultsForeignSaves` stale phase-clamp assertion (DEC-358 added ActiveRealtime ceiling; failed at HEAD before this wave) updated to current bound. **Status: COMPLETE / FULLY INTEGRATED 2026-10-01; paths released.** 61/61 combat Core tests; build 0 errors; `--combat-selftest` 26/26; `--real-campaign-journey-selftest` PASS; `--ui-layout-selftest` Failures: 0; boot 0 script errors; snapshot goldens unaffected (orchestrator forces Visible=true); `git diff --check` clean. No save-section/schema change; no RNG change. No commit, no full suite. |
+
+# Route reachability wave (R1-R5) — 2026-10-01
+
+User-authorized ("Continue with all the 5 suggested tasks!"); approved plan
+`.ai/plans/route-reachability-map-truthfulness-r1-r5-2026-10-01.md`. Owned
+paths: `src/UI/MapPanel.cs`, `src/UI/FactionsPanel.cs`,
+`src/UI/CraftingPanel.cs` (deep-link hunks only; foreign icon hunks
+preserved), `src/UI/WeatherPanel.cs`, `src/UI/QuestsPanel.cs`,
+`src/UI/ResearchPanel.cs`, `src/UI/MusterPanel.cs`, `src/UI/TradePanel.cs`,
+`src/UI/RadiationDetailPanel.cs`, `src/UI/MapDetailPanel.cs`,
+`src/Main.UiHandlers.cs` (R4 funnel hunk), `src/Main.UiPanels.cs` (deep-link
+wiring + LongWalk removal hunks only; foreign hunks preserved), retirement
+of `src/UI/LongWalkExpeditionPanel.cs` (+.uid), single dead-reference line
+removals in `src/Main.PanelLifecycle.cs` (pfgl-claimed; justified in plan)
+and `src/Host/HostCli.Command.RunUiLayoutSelfTest.cs`,
+`Assets/Ashfall.Core/StandingRecord/LocationLayoutSystem.cs` (read-only
+def accessor only), `Assets/StreamingAssets/Data/wasteland_map_v1.json`
+(tag column only), new
+`Ashfall.Core.Tests/UI/PanelRouteReachabilityGateTests.cs`, the plan file,
+bounded `.ai/state.md` entry, this claim, and the R5 series commit.
+Explicitly NOT touched: `GameDashboardPanel.cs`, `Main.PlayerSurfaces.cs`,
+`Assets/Ashfall.Core/UI/PanelRegistryBootstrap.cs` (ACTIVE pfgl claim).
+Acceptance: reachability gate green; build 0 errors; data-integrity PASS;
+uitest/ui-layout PASS; series committed hunk-level. Status: COMPLETE /
+FULLY INTEGRATED — paths released (2026-10-01). Reachability 2/2,
+truthfulness 6/6, route 22/22, hygiene 2/2, contract 1/1, build 0 errors,
+data-integrity 0 errors, scene-binding 25/25, ui-layout PASS, uitest 59/59;
+plan archived at
+`.ai/plans/integrated/ui/INTEGRATED_route-reachability-map-truthfulness-r1-r5-2026-10-01.md`.
+
+| claim-combat-playability-t18-t22-2026-10-01 | `COMBAT-PLAYABILITY-T18-T22` (user-directed follow-up wave to T13-T17, 2026-10-01) | Builder (this stream) | **Plan:** `.ai/plans/integrated/combat/INTEGRATED_combat-playability-t18-t22-2026-10-01.md` (STATUS: APPROVED BY USER). **T18:** `src/UI/CombatPanel.cs` joypad parity (pad A fire / pad X reload raw `JoyButton` handling, left-stick movement via `Input.GetJoyAxis` deadzone 0.25 additive with WASD; no project.godot change). **T19:** live monitor stays MANUAL by decision — auto-show would interrupt onboarding/day flow; notices now mention LIVE MONITOR (`src/Main.Expeditions.cs` copy only). **T20:** `CombatTypes.CombatantSnapshot.WeaponAmmoRemaining` + `BuildSnapshot` mapping + panel weapon cell "[n rds]" (hostile fire legibility; enemy weapons already mapped). **T21:** `TacticalCombatSystem.Breaching.cs` phase guards admit `ActiveRealtime` (Evaluate/Begin/Advance; legacy turn-based unchanged); `TacticalCombatSystem.Realtime.cs` `TickRealtimeBreach` auto-advances active breaches once per `RealtimeBreachAdvanceSeconds` (1.0 s sim, deterministic tick rng, default skill 0.5/cond 1.0); no UI surface (standard ambushes spawn no barriers). **T22:** new `Ashfall.Core.Tests/Combat/RealtimeSeedSweepGateTests.cs` 12 seeds × 3 scenarios — 100% termination-or-verified-exit; starved-retreat requires strict termination; FINDING: some seeds stalemate unattended (enemy cannot connect after ammo out) with extract exit verified available — balance telemetry recorded, no tuning claimed. New `RealtimeBreachingTests.cs` 3/3 (catalog+logistics bound like existing breach tests). **Status: COMPLETE / FULLY INTEGRATED 2026-10-01; paths released.** 53/53 combat Core tests; build 0 errors; `--combat-selftest` 26/26; `--real-campaign-journey-selftest` PASS; `--ui-layout-selftest` PASS; boot 0 script errors; `git diff --check` clean. No save-section/schema change; foreign dirty hunks preserved. No commit, no full suite. |
+
+## claim-combat-consoles-salvage-survey-t17-s2-2026-10-01
+
+User-authorized task T17 (RecruitmentSystem orphan premise — verified STALE,
+closed verify-only; Plan 204 already integrated 2026-09-26, 7/7 tests) plus
+the top follow-ups from the R1-R5 report: combat console routing (S1),
+salvage survey authority (S2), and a PendingForeman dispatch subset (S3, as
+budget allows). Owned paths: `src/UI/CombatPanel.cs` (console deep-link
+hunks only; combat-stream hunks preserved), `src/UI/CombatDetailPanel.cs`
+(idempotent-Bind hunk only), `src/UI/CombatHistoryPanel.cs`
+(idempotent-Bind hunk only), `src/Main.UiPanels.cs` (two wiring lambdas
+only; foreign hunks preserved), `src/Main.UiHandlers.cs` (salvage-survey
+funnel hunk only), `Assets/StreamingAssets/Data/scavenging_tables.json`
+(five appended tables only),
+`Ashfall.Core.Tests/UI/PanelRouteReachabilityGateTests.cs` (list moves
+only), `Ashfall.Core.Tests/Expeditions/Plan76DestinationLootReferenceTests.cs`
+(one new map-side fact), the plan file, a bounded `.ai/state.md` entry,
+this claim, and the series commit. Explicitly NOT touched (ACTIVE pfgl
+claim): `Assets/Ashfall.Core/UI/PanelRegistryBootstrap.cs`,
+`src/Main.PlayerSurfaces.cs`, `src/UI/GameDashboardPanel.cs`,
+`src/Main.PanelLifecycle.cs`. Combat-stream files touched additively only
+(paths released by `claim-combat-playability-t13-t17` / `-t18-t22`, both
+COMPLETE). Acceptance: reachability gate green; Plan 76 gate green; build
+0 errors; `validate-json` PASS; no full suite. Status: COMPLETE /
+FULLY INTEGRATED — paths released (2026-10-01). Reachability 2/2,
+truthfulness 6/6, Plan76 6/6, contract 1/1, route gate 22/22, build 0
+errors, validate-json 714/714, ui-layout PASS; plan archived at
+`.ai/plans/integrated/ui/INTEGRATED_combat-consoles-salvage-survey-route-dispatch-t17-s1-s3-2026-10-01.md`.
+T17 closed verify-only (Plan 204 already integrated; 7/7). Commit
+landed line-filtered via temporary index (foreign staged hunks in
+CombatPanel.cs / Main.UiPanels.cs / CombatDetailPanel.cs excluded).
+
+| claim-combat-playability-t23-t27-2026-10-01 | `COMBAT-PLAYABILITY-T23-T27` (user-directed follow-up wave to T18-T22, 2026-10-01) | Builder (this stream) | **Plan:** `.ai/plans/integrated/combat/INTEGRATED_combat-playability-t23-t27-2026-10-01.md` (STATUS: APPROVED BY USER). **T23 ROOT-CAUSE FIX:** realtime had no bleed-out tick — a downed last enemy blocked resolution forever (the T22 sweep stalemates were this bug). `TacticalCombatSystem.Realtime.cs` `TickRealtimeBleedOut`: every downed combatant bleeds 1 turn per 1.0 sim-second (deterministic), dies via existing `Kill`, then resolves; post-fix sweep 12/12/12 terminate (seeds 7/12 Won @t60). Regression test `DownedLastEnemy_BleedsOut_AndResolvesWon`. **T24:** `StartCombat` optional `obstacleProfileIds` → `EnsureObstacleBarrier`; Iron Raiders den raid fortified (barricaded_gate + debris_choke); `combat_arenas.json` load seam left dormant (separate plan). **T25:** `AudioEventBridge` cues for flee_start/breach_begin/breach_advance/breach_cleared. **T26:** `CombatBasicsId` lesson + TutorialPanel fallback + first-encounter trigger in SetupCombat (dedupe Core-owned). **T27:** `CombatHudSnapshotFixture` + `combat_hud_bound` target + `--ui-snapshot-ids=` scoped run filter in `BeginSnapshotRun`; golden regenerated scoped (1/33); diff 2/2 match incl. untouched unbound golden. **Status: COMPLETE / FULLY INTEGRATED 2026-10-01; paths released.** 71/71 combat Core tests; build 0 errors; `--combat-selftest` 26/26; `--real-campaign-journey-selftest` PASS; `--ui-layout-selftest` PASS; boot 0 script errors; `git diff --check` clean. Foreign T18a hearing-loss hunk in the same OnEncounterEnded handler preserved. No commit, no full suite. |
