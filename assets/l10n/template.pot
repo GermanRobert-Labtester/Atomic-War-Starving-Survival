@@ -6,7 +6,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Source-Row-Count: 1473\n"
+"X-Source-Row-Count: 1485\n"
 "X-Generator: scripts/ci/generate_pot_template.py\n"
 
 #: src/UI/AshfallUiHelpers.cs
@@ -5900,3 +5900,51 @@ msgstr "Panel not bound to active Muster session."
 #: src/UI/StandingRecordPanel.cs
 msgid "ui.standing_record.unavailable"
 msgstr "Standing Record system unavailable."
+
+#: src/UI/CraftingPanel.cs
+msgid "ui.crafting.no_session"
+msgstr "No crafting session bound."
+
+#: src/UI/CraftingPanel.cs
+msgid "ui.crafting.no_active"
+msgstr "No active crafts. Start a recipe above."
+
+#: src/UI/DynamicQuestlinePanel.cs
+msgid "ui.dynamic_questline.active_operations"
+msgstr "ACTIVE OPERATIONS"
+
+#: src/UI/DynamicQuestlinePanel.cs
+msgid "ui.dynamic_questline.resolved_failed"
+msgstr "RESOLVED & FAILED"
+
+#: src/UI/InSarMappingPanel.cs
+msgid "ui.insar.survey_platform"
+msgstr "SURVEY PLATFORM"
+
+#: src/UI/InSarMappingPanel.cs
+msgid "ui.insar.repeat_pass_survey"
+msgstr "REPEAT-PASS SURVEY"
+
+#: src/UI/InventoryDetailPanel.cs
+msgid "ui.inventory_detail.no_item"
+msgstr "No item selected."
+
+#: src/UI/InventoryDetailPanel.cs
+msgid "ui.inventory_detail.no_stats"
+msgstr "No special stats."
+
+#: src/UI/JournalDetailPanel.cs
+msgid "ui.journal_detail.no_session"
+msgstr "No journal session bound."
+
+#: src/UI/JournalDetailPanel.cs
+msgid "ui.journal_detail.no_entries"
+msgstr "No journal entries yet."
+
+#: src/UI/ShelterSchedulePanel.cs
+msgid "ui.shelter_schedule.toggle_curfew"
+msgstr "Toggle Night Curfew"
+
+#: src/UI/ShelterSchedulePanel.cs
+msgid "ui.shelter_schedule.emergency_override"
+msgstr "Emergency Override"

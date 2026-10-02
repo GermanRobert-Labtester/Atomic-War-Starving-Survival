@@ -14,9 +14,9 @@ Verification: `go test -C tools/gotools ./pkg/selector/ ./pkg/runner/` PASS;
 focused `go vet` PASS; both Go CLIs rebuilt; selector dry run mapped changed
 host files to the Tooling xUnit target; manifest/inventory checks PASS; scoped
 serial hygiene gate PASS; 3 unaffected light gates PASS with `--jobs 4`; default
-and fast Core test-project builds both PASS (0 warnings/errors). POT drift check
-remains blocked by concurrent, out-of-scope localization catalog edits; those
-files were preserved and excluded from this plan's commit. No full test suite.
+and fast Core test-project builds both PASS (0 warnings/errors). A concurrent
+POT update was regenerated; l10n drift passed at 1485 keys and the localized
+test targets passed 3/3 and 211/211. No full test suite.
 
 Plan archived at
 `.ai/plans/integrated/tooling/INTEGRATED_test-build-speedups-2026-10-02.md`.

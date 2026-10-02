@@ -9,8 +9,9 @@ compilation; and added `--jobs N` light-gate execution through the Go task
 runner. Build, Godot, and dependency gates remain serial; the default remains
 `--jobs 1`. Focused Go test/vet, selector dry-run, gate manifest/inventory,
 serial gate, three parallel light gates, and both Core test-project build modes
-passed. The unrelated POT drift gate is currently stale from concurrent
-localization catalog changes and was excluded from this plan's scope.
+passed. The staged localization wave also passed the regenerated POT drift
+check and l10n drift at 1485 keys; its two scoped test targets passed 3/3 and
+211/211, and the Godot host build passed with 0 warnings/errors.
 Archived plan:
 `.ai/plans/integrated/tooling/INTEGRATED_test-build-speedups-2026-10-02.md`.
 
