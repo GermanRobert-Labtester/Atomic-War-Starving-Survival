@@ -2419,7 +2419,7 @@
     {
       "panel": "CombatPanel",
       "file": "src/UI/CombatPanel.cs",
-      "loc": 723,
+      "loc": 740,
       "bind_target": "CombatHostSession",
       "has_unbind": true,
       "bindable": true,

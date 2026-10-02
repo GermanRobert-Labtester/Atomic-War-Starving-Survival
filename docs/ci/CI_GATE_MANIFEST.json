@@ -1,8 +1,8 @@
 {
   "schema_version": "1.1.9",
-  "_schema_version_note": "1.1.0 \u2014 Plan 48 / C2[21] Phase 2: added version_gate and changelog_drift (fast, +2 gates); Phase 3: added save_support_window (full, +1 gate). 1.1.1 \u2014 Plans 210/214 audit package: added plan_integration_audit_drift and ui_design_map_drift (fast, +2 gates). 1.1.2 \u2014 W1 assurance: four fast monitors and release_required metadata on three full release gates. 1.1.3 \u2014 P008: added first_hour_onboarding_journey (fast, +1 gate) guarding the 7-stage onboarding floor. 1.1.4 \u2014 P096: added scene_binding_truth (fast, +1 gate) so no *Content.cs stub, unassigned/dangling scene script, PanelSceneLoader request-vs-root type mismatch, or pre-hidden bound content scene can regress. 1.1.5 \u2014 D01\u2013D05 catalog-hygiene wave: added catalog_audit (fast, +1 gate) and content_certification (fast, +1 gate). 1.1.6 \u2014 E01\u2013E15 follow-ups: added gotools_test, gate_inventory_drift, and content_utilization (fast, +3 gates). 1.1.7 \u2014 I01\u2013I15: added gotools_vet (fast, +1 gate); migrated per-gate remediation hints into the manifest. 1.1.8 \u2014 L01\u2013L04: added pot_template_drift (fast, +1 gate) for generated translator template freshness. 1.1.9 \u2014 Stage 4 Rust cutover: replaced gotools_test/gotools_vet with rstools_test/rstools_vet and added build_rstools (fast, net +1 gate); retargeted the releasepolicy/monitor/audit gates to tools/rstools (Rust).",
+  "_schema_version_note": "1.1.0 \u2014 Plan 48 / C2[21] Phase 2: added version_gate and changelog_drift (fast, +2 gates); Phase 3: added save_support_window (full, +1 gate). 1.1.1 \u2014 Plans 210/214 audit package: added plan_integration_audit_drift and ui_design_map_drift (fast, +2 gates). 1.1.2 \u2014 W1 assurance: four fast monitors and release_required metadata on three full release gates. 1.1.3 \u2014 P008: added first_hour_onboarding_journey (fast, +1 gate) guarding the 7-stage onboarding floor. 1.1.4 \u2014 P096: added scene_binding_truth (fast, +1 gate) so no *Content.cs stub, unassigned/dangling scene script, PanelSceneLoader request-vs-root type mismatch, or pre-hidden bound content scene can regress. 1.1.5 \u2014 D01\u2013D05 catalog-hygiene wave: added catalog_audit (fast, +1 gate) and content_certification (fast, +1 gate). 1.1.6 \u2014 E01\u2013E15 follow-ups: added gotools_test, gate_inventory_drift, and content_utilization (fast, +3 gates). 1.1.7 \u2014 I01\u2013I15: added gotools_vet (fast, +1 gate); migrated per-gate remediation hints into the manifest. 1.1.8 \u2014 L01\u2013L04: added pot_template_drift (fast, +1 gate) for generated translator template freshness. 1.1.9 \u2014 Stage 4 Rust cutover: replaced gotools_test/gotools_vet with rstools_test/rstools_vet and added build_rstools (fast, net +1 gate); retargeted the releasepolicy/monitor/audit gates to tools/rstools (Rust). Perf sprint 1: added perf_baseline_regression (performance, +1 gate; non-critical warn-only runtime baseline regression).",
   "description": "Authoritative manifest of all verification gates for ASHFALL shared between local runner and hosted CI",
-  "total_gates": 74,
+  "total_gates": 75,
   "fast_tier_count": 70,
   "gates": [
     {
@@ -281,6 +281,20 @@
       "critical": false
     },
     {
+      "gate_id": "perf_baseline_regression",
+      "depends_on": [
+        "build_godot_host"
+      ],
+      "name": "Runtime Performance Baseline Regression (perf sprint 1)",
+      "category": "Performance",
+      "command": "python3 scripts/ci/perf-baseline-gate.py check --measured artifacts/performance/perf-baseline.json --warn-only",
+      "timeout_seconds": 60,
+      "expected_summary": "PERF_BASELINE_GATE",
+      "classification": "performance",
+      "critical": false,
+      "remediation": "Inspect artifacts/performance/perf-baseline.json against docs/ci/PERFORMANCE_BASELINE.json; optimize the regressed benchmark, or refresh the reference only after confirming an intended, measured change."
+    },
+    {
       "gate_id": "expansions_completeness",
       "depends_on": [
         "build_godot_host"
@@ -396,6 +410,7 @@
       "expected_summary": "COMPILER WARNING BASELINE GATE PASSED",
       "classification": "fast",
       "critical": true,
+      "paths": ["*.cs", "*.csproj", "*.props", "*.targets", "*.slnx", "*.sln", "global.json", ".editorconfig"],
       "remediation": "bash scripts/ci/warning-baseline-gate.sh"
     },
     {

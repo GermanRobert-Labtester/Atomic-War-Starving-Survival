@@ -62,12 +62,19 @@ namespace AtomicWar.GodotApp
             SetAnchorsPreset(LayoutPreset.FullRect);
             BuildLayout();
             Visible = false;
+            // The terminal cooldown only matters while the terminal is open;
+            // OpenTerminal resets the NEW LEDGER button, so hidden frames need
+            // no processing. Gating here keeps the panel off the global
+            // per-frame process list when it is closed.
+            VisibilityChanged += OnVisibilityChanged;
+            SetProcess(false);
         }
+
+        private void OnVisibilityChanged() => SetProcess(Visible);
 
         public void BindSession(HoldfastRuntimeSession session)
         {
-            if (_session != null)
-                _session.StateChanged -= RefreshView;
+            Unbind();
             _session = session;
             if (_session != null)
             {
@@ -77,6 +84,28 @@ namespace AtomicWar.GodotApp
                 _dispatch.OnSessionOpened("holdfast");
             }
             RefreshView();
+        }
+
+        /// <summary>
+        /// Detach from the bound session. BindSession is re-invoked on every
+        /// terminal open, and the panel can be freed while the session lives;
+        /// leaving the StateChanged subscription attached would keep this panel
+        /// alive (event-handler leak). Called from BindSession and _ExitTree.
+        /// </summary>
+        public void Unbind()
+        {
+            if (_session != null)
+            {
+                _session.StateChanged -= RefreshView;
+                _session = null;
+            }
+        }
+
+        public override void _ExitTree()
+        {
+            VisibilityChanged -= OnVisibilityChanged;
+            Unbind();
+            base._ExitTree();
         }
 
         public void OpenTerminal()

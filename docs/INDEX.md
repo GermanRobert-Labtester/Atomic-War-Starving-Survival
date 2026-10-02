@@ -1,18 +1,18 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 4158 | **Total Characters:** 4,169,296,682 | **Last Verified:** 2026-10-02
-**Oversized (>= 100,000 characters):** 2210 documents carrying 4,138,691,836 characters — tracked in full, see the register below
+**Total Indexed Documents:** 4162 | **Total Characters:** 4,171,401,282 | **Last Verified:** 2026-10-02
+**Oversized (>= 100,000 characters):** 2212 documents carrying 4,140,789,424 characters — tracked in full, see the register below
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
 | 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 4105 |
-| 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 51 |
+| 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 55 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 2 |
 
 ---
 
-## Oversized Document Register (>= 100,000 characters) — 2210 documents, 4,138,691,836 characters
+## Oversized Document Register (>= 100,000 characters) — 2212 documents, 4,140,789,424 characters
 
 Authored prose documents at or above the size threshold, recorded to the exact character count. These documents are tracked in full: the register reports their size so it stays visible and reviewable, and no indexed document is excluded from the corpus. Plan documents have their own size record in the plan register.
 
@@ -921,6 +921,7 @@ Authored prose documents at or above the size threshold, recorded to the exact c
 | 1,615,432 | [`docs/expansions/prose_wave133/cw133_07_the_most_movable_constraint_plan.md`](expansions/prose_wave133/cw133_07_the_most_movable_constraint_plan.md) |
 | 1,612,255 | [`docs/ui/PLAN_14_UX_ONBOARDING_ACCESSIBILITY_CLOSEOUT.md`](ui/PLAN_14_UX_ONBOARDING_ACCESSIBILITY_CLOSEOUT.md) |
 | 1,611,948 | [`docs/progression/PLAN33_CLOSEOUT.md`](progression/PLAN33_CLOSEOUT.md) |
+| 1,610,904 | [`docs/archive/coordination/2026-10-02/WORKTREE_OWNERSHIP_full.md`](archive/coordination/2026-10-02/WORKTREE_OWNERSHIP_full.md) |
 | 1,610,070 | [`docs/shelter/PLAN41_BASELINE.md`](shelter/PLAN41_BASELINE.md) |
 | 1,609,060 | [`docs/expansions/prose_wave133/cw133_03_a_bulb_is_not_a_metaphor_plan.md`](expansions/prose_wave133/cw133_03_a_bulb_is_not_a_metaphor_plan.md) |
 | 1,608,494 | [`docs/expansions/prose_wave132/cw132_18_hope_is_lighter_plan.md`](expansions/prose_wave132/cw132_18_hope_is_lighter_plan.md) |
@@ -1409,6 +1410,7 @@ Authored prose documents at or above the size threshold, recorded to the exact c
 | 490,119 | [`piagentsplans/21-phantom-memory-heirloom.md`](../piagentsplans/21-phantom-memory-heirloom.md) |
 | 489,495 | [`docs/expansions/prose_wave117/cw117_06_for_whoever_walked_out_plan.md`](expansions/prose_wave117/cw117_06_for_whoever_walked_out_plan.md) |
 | 488,372 | [`docs/expansions/prose_wave117/cw117_04_the_arithmetic_of_the_first_tin_plan.md`](expansions/prose_wave117/cw117_04_the_arithmetic_of_the_first_tin_plan.md) |
+| 486,684 | [`docs/archive/coordination/2026-10-02/INTEGRATION_PLANS_full.md`](archive/coordination/2026-10-02/INTEGRATION_PLANS_full.md) |
 | 486,664 | [`docs/expansions/prose_wave117/cw117_09_the_token_wall_ledger_plan.md`](expansions/prose_wave117/cw117_09_the_token_wall_ledger_plan.md) |
 | 485,708 | [`piagentsplans/94-verdict-radio-expansion.md`](../piagentsplans/94-verdict-radio-expansion.md) |
 | 482,951 | [`docs/expansions/prose_wave115/cw115_02_the_count_that_went_up_plan.md`](expansions/prose_wave115/cw115_02_the_count_that_went_up_plan.md) |
@@ -2472,7 +2474,7 @@ The following documents share identical or near-identical filenames across root,
 |---|---|---|---|
 | 🟢 `CURRENT` | [`docs/CI.md`](CI.md) | 8,164 | **ASHFALL — Continuous Integration & Verification Guide** — **Authoritative host/engine:** Godot 4.7+ (.NET / C#) (`project.godot`) |
 | 🟢 `CURRENT` | [`docs/ci/CATALOG_AUDIT_POLICY.md`](ci/CATALOG_AUDIT_POLICY.md) | 2,942 | **Catalog Audit Policy (`docs/ci/catalog_audit_policy.json`)** — Read-only reference for the `catalog_audit` CI gate |
-| 🟢 `CURRENT` | [`docs/ci/GATE_INVENTORY.md`](ci/GATE_INVENTORY.md) | 7,009 | **CI Gate Inventory (Plan VIII · Task 24.1)** — Generated from `docs/ci/CI_GATE_MANIFEST.json` — 74 gates, 70 fast. Regenerate with `python3 scripts/ci/run-gates.py ... |
+| 🟢 `CURRENT` | [`docs/ci/GATE_INVENTORY.md`](ci/GATE_INVENTORY.md) | 7,098 | **CI Gate Inventory (Plan VIII · Task 24.1)** — Generated from `docs/ci/CI_GATE_MANIFEST.json` — 75 gates, 70 fast. Regenerate with `python3 scripts/ci/run-gates.py ... |
 | 🟢 `CURRENT` | [`docs/ci/GATING_VS_DIAGNOSTIC_CHECKS.md`](ci/GATING_VS_DIAGNOSTIC_CHECKS.md) | 9,494 | **ASHFALL — Verification Gates vs. Diagnostic-Only Checks** — **Date:** 2026-10-02 |
 | 🟢 `CURRENT` | [`docs/ci/LANGUAGE_POLICY.md`](ci/LANGUAGE_POLICY.md) | 3,514 | **ASHFALL Language Policy — Authoritative** — **Status:** ACTIVE (user-directed 2026-10-02). Canonical summary lives in |
 | 🟢 `CURRENT` | [`docs/ci/README.md`](ci/README.md) | 5,641 | **ASHFALL CI — Canonical Verification Contract (Plan VIII · Task 24)** — One runner, one manifest, one meaning of "green". |
@@ -4523,7 +4525,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md`](tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md) | 9,685 | **ASHFALL — Non-Runtime Tooling Architecture, Classification, & Lifecycle** — **Date:** 2026-08-27<br> |
 | 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | 2,358 | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |
 
-## 9. General Project Guides & Archive Reference (2080 documents)
+## 9. General Project Guides & Archive Reference (2084 documents)
 
 | Status | Document | Characters | Title / Summary |
 |---|---|---|---|
@@ -4782,7 +4784,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`DESIGN.md`](../DESIGN.md) | 3,238 | **Design** — ASHFALL is a 2D atomic-war survival management game. The UI must reflect a cold, exhausted, human, restrained, materi... |
 | 🟢 `CURRENT` | [`GEMINI.md`](../GEMINI.md) | 19,536 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
 | 🟢 `CURRENT` | [`GOOSE.md`](../GOOSE.md) | 19,536 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
-| 🟢 `CURRENT` | [`KNOWN_DEBT.md`](../KNOWN_DEBT.md) | 44,980 | **ASHFALL Known Debt** — Only current, decision-relevant debt belongs here. Historical detail lives in |
+| 🟢 `CURRENT` | [`KNOWN_DEBT.md`](../KNOWN_DEBT.md) | 6,338 | **ASHFALL Known Debt** — Only current, decision-relevant debt belongs here. Historical detail lives in |
 | 🟢 `CURRENT` | [`MIMOCODE.md`](../MIMOCODE.md) | 19,536 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
 | 🟢 `CURRENT` | [`Next-steps-plans/Plan_132_Survivor_Hidden_Agendas_Betrayal_Arc.md`](../Next-steps-plans/Plan_132_Survivor_Hidden_Agendas_Betrayal_Arc.md) | 13,653 | **Plan 132 — Survivor Hidden Agendas & Betrayal Arc** — Create a persistent hidden-agenda system where survivors carry secret motivations, loyalties, and goals that unfold o... |
 | 🟢 `CURRENT` | [`Next-steps-plans/Plan_133_Expedition_Discovery_Persistent_World_Consequences.md`](../Next-steps-plans/Plan_133_Expedition_Discovery_Persistent_World_Consequences.md) | 136,680 | **Plan 133 — Expedition Discovery → Persistent World Consequences** — docs/newest-ashfall-master-expansion-authority-v2-0-complete-compiled-edition-volumes-1-57.md. |
@@ -6589,6 +6591,10 @@ The following documents share identical or near-identical filenames across root,
 | 🟡 `HISTORICAL` | [`docs/archive/coordination/2026-09-27/A1_COORDINATION_RECORD.md`](archive/coordination/2026-09-27/A1_COORDINATION_RECORD.md) | 1,931 | **A1 Coordination Record — Crisis Prediction & Plan 24 Coordination Gate** — **Date:** 2026-09-17 |
 | 🟡 `HISTORICAL` | [`docs/archive/coordination/2026-09-27/SESSION_HANDOFF.md`](archive/coordination/2026-09-27/SESSION_HANDOFF.md) | 6,854 | **SESSION HANDOFF — Rescue Signal Runtime + Complementary Expansions (2026-09-13)** — **Batch:** `RESCUE-SIGNAL-RUNTIME-TASKS-1-4` + `FOLLOWUPS-210-213-THINSEAMS` + `PLANS-122-125-SECOND-TOOL-REVIEW` |
 | 🟡 `HISTORICAL` | [`docs/archive/coordination/2026-09-27/WAVE9_PART1_CLOSEOUT.md`](archive/coordination/2026-09-27/WAVE9_PART1_CLOSEOUT.md) | 10,325 | **ASHFALL — GENERATION WAVE 9 — MASTER PLAN PART 1 — CLOSEOUT REPORT** — // SPDX-License-Identifier: MIT |
+| 🟡 `HISTORICAL` | [`docs/archive/coordination/2026-10-02/INTEGRATION_PLANS_full.md`](archive/coordination/2026-10-02/INTEGRATION_PLANS_full.md) | 486,684 | **ASHFALL Integration Plans** — Ran all 69 fast-tier gates in batches across six find→repair→harden loops and |
+| 🟡 `HISTORICAL` | [`docs/archive/coordination/2026-10-02/KNOWN_DEBT_full.md`](archive/coordination/2026-10-02/KNOWN_DEBT_full.md) | 44,980 | **ASHFALL Known Debt** — Only current, decision-relevant debt belongs here. Historical detail lives in |
+| 🟡 `HISTORICAL` | [`docs/archive/coordination/2026-10-02/README.md`](archive/coordination/2026-10-02/README.md) | 585 | **Coordination ledger archive — 2026-10-02** — Full, verbatim snapshots of the coordination ledgers as they stood before the |
+| 🟡 `HISTORICAL` | [`docs/archive/coordination/2026-10-02/WORKTREE_OWNERSHIP_full.md`](archive/coordination/2026-10-02/WORKTREE_OWNERSHIP_full.md) | 1,610,904 | **ASHFALL Worktree Ownership** — Perf sprint 2 (user brief suggested order 21/22/31/32/39). Plan: |
 | 🟡 `HISTORICAL` | [`docs/archive/forensics/2026-09-12/BUG_HUNT_25_OPTIMIZED_FIX_BATCH_REPORT.md`](archive/forensics/2026-09-12/BUG_HUNT_25_OPTIMIZED_FIX_BATCH_REPORT.md) | 6,153 | **Bug Hunt + Optimized Fix Batch — Handoff Report** — **Date:** 2026-09-12 |
 | 🟡 `HISTORICAL` | [`docs/archive/forensics/2026-09-12/BUG_HUNT_26_SECOND_PASS_FIX_BATCH_REPORT.md`](archive/forensics/2026-09-12/BUG_HUNT_26_SECOND_PASS_FIX_BATCH_REPORT.md) | 5,319 | **Bug Hunt Second Pass — Handoff Report** — **Date:** 2026-09-12 |
 | 🟡 `HISTORICAL` | [`docs/archive/forensics/2026-09-12/BUG_HUNT_27_THIRD_PASS_FIX_BATCH_REPORT.md`](archive/forensics/2026-09-12/BUG_HUNT_27_THIRD_PASS_FIX_BATCH_REPORT.md) | 3,970 | **Bug Hunt Third Pass — Handoff Report** — **Date:** 2026-09-12 |

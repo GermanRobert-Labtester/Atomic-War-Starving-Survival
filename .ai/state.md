@@ -1,5 +1,93 @@
 # Current Task State
 
+## COORDINATION LEDGER TRIM — Task 55 (2026-10-02)
+
+Claim `claim-coordination-ledger-trim-2026-10-02`; plan
+`.ai/plans/coordination-ledger-trim-2026-10-02.md` (STATUS: APPROVED BY USER).
+
+**Outcome:** full verbatim snapshots archived under
+`docs/archive/coordination/2026-10-02/` and the canonical ledgers reduced to
+short indexes: `WORKTREE_OWNERSHIP.md` 1.61 MB → 19.5 KB,
+`INTEGRATION_PLANS.md` 487 KB → 2.1 KB, `KNOWN_DEBT.md` 45 KB → 6.3 KB.
+Active/policy sections and the current debt rows are preserved inline.
+
+**Gates:** archive line counts match originals (17502/2276/90);
+`doc-link-gate.sh` PASS (6130 files); `generate-docs-index.py --check` PASS
+(4162 docs); `git diff --check` clean. `docs/INDEX.md` regenerated — this also
+closed a pre-existing 74→75-gate drift from the sprint-1 `perf_baseline_regression`
+manifest addition.
+
+**Concurrency note:** a separate session (`perf-track-c-ci-tiering`) is actively
+owned Task 49 in `.github/workflows/ci.yml` + new `nightly-core-suite.yml`; I
+did not touch workflows. Tasks 41/42/45 (generator caching/consolidation, Rust
+audit ports) were not started — they need their own premise audit and could
+overlap the generator/`tools/` ownership.
+
+## PERF SPRINT 2 — process ownership + panel/session teardown (2026-10-02)
+
+Claim `claim-perf-runtime-lifecycle-sprint2-2026-10-02`; plan
+`.ai/plans/perf-runtime-lifecycle-sprint2-2026-10-02.md` (STATUS: APPROVED BY USER).
+
+**Outcome:** gated every per-frame processor in `src/` and fixed two real
+findings: `HoldfastTerminalPanel` subscribed to `_session.StateChanged` with no
+`_ExitTree` (event-handler leak) and `CombatPanel` ran `_Process` every frame
+while hidden; `SurvivorActorView` now disables `_PhysicsProcess` once idle and
+grounded. Two new static gates enforce the contract.
+
+**Files:** `src/Host/HoldfastTerminalPanel.cs` (+`Unbind`/`_ExitTree`,
+visibility-gated process), `src/UI/CombatPanel.cs` (visibility-gated process,
+clears held input on hide), `src/World/SurvivorActorView.cs`
+(`RefreshPhysicsProcess`), new `Ashfall.Core.Tests/Tooling/ProcessOwnershipGateTests.cs`,
+new `Ashfall.Core.Tests/Tooling/PanelTeardownGateTests.cs`.
+
+**Evidence:** gate tests 4/4 + 3/3, `PanelSubscriptionHygieneTests` 3/3; host
+build 0 warnings / 0 errors; `--player-panels-uitest` **22/22 lifecycle gates
+PASS**; `git diff --check` clean.
+
+**Deferred (own packages, premise evidence in the plan §7):** tasks 21/22
+(spatial/entity indexes — the two obvious lookups are already O(1); no
+production "nearby" query to serve yet) and 39 (test tiers — gate tiers exist,
+xUnit traits would need a curated manifest across ~11.7k tests). Broader Task-32
+sweep: 29 of 123 session-subscribing panels lack `_ExitTree`; each needs a
+per-panel ownership decision. No commit.
+
+## PERF SPRINT 1 — runtime baseline suite + CI regression gate + day profile + frame profiler (2026-10-02)
+
+Claim `claim-perf-runtime-baseline-sprint-2026-10-02`; plan
+`.ai/plans/perf-runtime-baseline-sprint-2026-10-02.md` (STATUS: APPROVED BY USER).
+
+**Outcome:** the Task-130 harness now captures a ranked per-owner day profile,
+constructs 50/100/250/500-survivor tiers deterministically, runs a repeatable
+baseline suite (cold start, 30/180/360-day advance, save/load/checksum,
+large-shelter soak, 720-day replay) that writes
+`artifacts/performance/perf-baseline.json`, and is guarded by a committed
+reference + `scripts/ci/perf-baseline-gate.py` (`perf_baseline_regression`,
+performance tier, non-critical warn-only). `frame_profile.gd` now emits
+per-frame process/physics/draw/memory/object stats plus CSV and JSON.
+
+**Files:** new `Assets/Ashfall.Core/Performance/PerfDayProfile.cs`,
+`Assets/Ashfall.Core/Performance/PerformanceBaselineSuite.cs`,
+`Ashfall.Core.Tests/Performance/PerformanceBaselineSuiteTests.cs`,
+`scripts/ci/perf-baseline-gate.py`, `docs/ci/PERFORMANCE_BASELINE.json`; edited
+`ScaleTier.cs`, `WorkloadProfile.cs`, `PerformanceCampaignHarness.cs`,
+`src/Host/PerformanceSelfTest.cs`, `tools/performance/frame_profile.gd`,
+`docs/ci/CI_GATE_MANIFEST.json` (+1 gate), regenerated `docs/ci/GATE_INVENTORY.md`.
+
+**Evidence:** focused tests 9/9 and Performance directory 61/61; host build
+0 warnings / 0 errors; host `--runtime-scale-selftest` PASS and wrote 12 baseline
+results; gate PASS 12/12 against the real artifact, FAIL exit 1 on a synthetic
+breach, PASS on a missing artifact; `run-gates.py --check-only` valid (75 gates /
+70 fast) and `--check-inventory` PASS; `godot --check-only --script
+frame_profile.gd` exit 0.
+
+**Known limitation (deferred, needs a new package):** the Core harness is a
+structural proxy (five synthetic owners; survivor loop is a liveness scan), so
+large-shelter numbers measure coordinator/owner overhead, not the real
+needs/social/Utility-AI stack. Sprint items 6/7/8 (dirty-state scheduling,
+survivor-social, Utility AI) and host save compression/incremental-save are NOT
+in this package. `artifacts/runtime-scale-results.json` was regenerated by the
+selftest and restored to HEAD (outside claim). No commit.
+
 ## Rust port Stage 4 cutover COMPLETE — Go deleted (2026-10-02)
 
 User-directed "stage 4" → "Full cutover now" → "finish the remaining". Go toolchain

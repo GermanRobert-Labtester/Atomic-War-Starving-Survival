@@ -1,0 +1,98 @@
+{
+  "schema_version": "1.0.0",
+  "description": "ASHFALL runtime performance references for scripts/ci/perf-baseline-gate.py. A measured median more than default_tolerance_ratio over its reference is SUSPICIOUS. Missing entries are NO-REFERENCE and never fail. References are provisional host observations and must be refreshed from a quiet host run before they are treated as authoritative.",
+  "default_tolerance_ratio": 1.30,
+  "min_delta_ms": 0.5,
+  "measurement_context": {
+    "source": "artifacts/runtime-scale-results.json (host --runtime-scale-selftest, 2026-10-02)",
+    "seed": 9001,
+    "runtime": "godot",
+    "note": "Day-advance and save references are host observations on a shared, concurrently-loaded machine; refresh from a quiet window. Sprint-1 references (cold_start, load_30d, checksum_30d, large_shelter_*, long_replay_720d) are provisional single host runs from 2026-10-02. min_delta_ms is an absolute floor: sub-millisecond benchmarks must exceed it before a relative breach flags, because timer noise dominates at that scale."
+  },
+  "benchmarks": {
+    "day_advance_30d": {
+      "median_ms": 1.277,
+      "p95_ms": 2.43,
+      "median_allocated_bytes": 84160,
+      "reference_kind": "host-baseline-2026-10-02",
+      "note": "30-day Core proxy harness advance."
+    },
+    "day_advance_180d": {
+      "median_ms": 8.098,
+      "p95_ms": 19.408,
+      "median_allocated_bytes": 507128,
+      "reference_kind": "host-baseline-2026-10-02",
+      "note": "180-day Core proxy harness advance."
+    },
+    "day_advance_360d": {
+      "median_ms": 15.649,
+      "p95_ms": 17.577,
+      "median_allocated_bytes": 1002720,
+      "reference_kind": "host-baseline-2026-10-02",
+      "note": "360-day Core proxy harness advance."
+    },
+    "save_30d": {
+      "median_ms": 0.057,
+      "p95_ms": 0.161,
+      "median_allocated_bytes": 27664,
+      "reference_kind": "host-baseline-2026-10-02",
+      "note": "Steady-state envelope capture latency after warmup=1."
+    },
+    "load_30d": {
+      "median_ms": 0.026,
+      "p95_ms": 0.096,
+      "median_allocated_bytes": 1288,
+      "reference_kind": "host-baseline-2026-10-02-sprint1",
+      "note": "Envelope deserialize latency; provisional single host run."
+    },
+    "checksum_30d": {
+      "median_ms": 0.011,
+      "p95_ms": 0.061,
+      "median_allocated_bytes": 11608,
+      "reference_kind": "host-baseline-2026-10-02-sprint1",
+      "note": "SaveChecksum.Compute over the 30-day payload; provisional single host run."
+    },
+    "cold_start": {
+      "median_ms": 0.039,
+      "p95_ms": 0.138,
+      "median_allocated_bytes": 23480,
+      "reference_kind": "host-baseline-2026-10-02-sprint1",
+      "note": "Core proxy harness construction (roster/journal/world seed + owner registration); provisional single host run."
+    },
+    "large_shelter_50": {
+      "median_ms": 0.063,
+      "p95_ms": 0.106,
+      "median_allocated_bytes": 2784,
+      "reference_kind": "host-baseline-2026-10-02-sprint1",
+      "note": "Per-day advance at 50 survivors after a 90-day soak; measures coordinator/owner overhead (survivor loop is structural)."
+    },
+    "large_shelter_100": {
+      "median_ms": 0.117,
+      "p95_ms": 0.123,
+      "median_allocated_bytes": 2784,
+      "reference_kind": "host-baseline-2026-10-02-sprint1",
+      "note": "Per-day advance at 100 survivors after a 90-day soak; coordinator/owner overhead only."
+    },
+    "large_shelter_250": {
+      "median_ms": 0.510,
+      "p95_ms": 0.521,
+      "median_allocated_bytes": 2784,
+      "reference_kind": "host-baseline-2026-10-02-sprint1",
+      "note": "Per-day advance at 250 survivors after a 90-day soak; coordinator/owner overhead only."
+    },
+    "large_shelter_500": {
+      "median_ms": 1.716,
+      "p95_ms": 1.769,
+      "median_allocated_bytes": 2784,
+      "reference_kind": "host-baseline-2026-10-02-sprint1",
+      "note": "Per-day advance at 500 survivors after a 90-day soak; coordinator/owner overhead only."
+    },
+    "long_replay_720d": {
+      "median_ms": 31.895,
+      "p95_ms": 36.105,
+      "median_allocated_bytes": 2008080,
+      "reference_kind": "host-baseline-2026-10-02-sprint1",
+      "note": "720-day replay at the stress tier on one reused harness; provisional single host run."
+    }
+  }
+}

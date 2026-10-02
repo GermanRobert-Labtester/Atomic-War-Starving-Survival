@@ -145,6 +145,7 @@ namespace AtomicWar.GodotApp.World
                 GlobalPosition = target;
                 Velocity = Vector2.Zero;
             }
+            SetPhysicsProcess(true);
         }
 
         public Vector2 MoveTarget => _moveTarget;
@@ -170,6 +171,26 @@ namespace AtomicWar.GodotApp.World
 
             _moving = Mathf.Abs(Velocity.X) > 4f && IsOnFloor();
             UpdateAnimation(dt);
+            RefreshPhysicsProcess();
+        }
+
+        /// <summary>
+        /// Enables physics only while the actor has work to do: settling to the
+        /// floor, seeking a target, or visible and off-floor. An idle, grounded,
+        /// arrived actor pays nothing per physics frame, so actor cost scales
+        /// with movement rather than with roster size.
+        /// </summary>
+        private void RefreshPhysicsProcess()
+        {
+            bool needsPhysics = Visible && (!IsOnFloor() || (_hasTarget && !SettledAtTarget()));
+            SetPhysicsProcess(needsPhysics);
+        }
+
+        private bool SettledAtTarget()
+        {
+            if (!_hasTarget) return true;
+            return Mathf.Abs(_moveTarget.X - GlobalPosition.X) <= ArriveRadius
+                && Mathf.Abs(Velocity.X) < 4f;
         }
 
         private void UpdateAnimation(float dt)
@@ -257,6 +278,7 @@ namespace AtomicWar.GodotApp.World
             if (state == null)
             {
                 Visible = false;
+                SetPhysicsProcess(false);
                 return;
             }
 
@@ -282,6 +304,7 @@ namespace AtomicWar.GodotApp.World
             );
 
             UpdateStatusIndicator();
+            RefreshPhysicsProcess();
         }
 
         private void UpdateStatusIndicator()

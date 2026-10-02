@@ -150,12 +150,47 @@ namespace AtomicWar.GodotApp
                 failures++;
             }
 
+            // 7. Runtime baseline suite (perf sprint 1): cold start, day advance,
+            //    save/load/checksum, large-population soak (50/100/250/500), and a
+            //    720-day long replay. Writes machine-readable results consumed by
+            //    scripts/ci/perf-baseline-gate.py. Observational only.
+            try
+            {
+                string perfDir = Path.Combine(artifactsDir, "performance");
+                Directory.CreateDirectory(perfDir);
+                var baseline = PerformanceBaselineSuite.Run(new PerformanceBaselineOptions
+                {
+                    Platform = platform,
+                    Runtime = runtime,
+                    BuildConfiguration = CurrentBuildConfiguration(),
+                });
+                var baselineJsonOptions = new System.Text.Json.JsonSerializerOptions { WriteIndented = true };
+                string baselineJson = System.Text.Json.JsonSerializer.Serialize(baseline, baselineJsonOptions);
+                string baselinePath = Path.Combine(perfDir, "perf-baseline.json");
+                File.WriteAllText(baselinePath, baselineJson);
+                GD.Print($"PERF_BASELINE_REPORT {baselinePath} ({baseline.Results.Count} results)");
+            }
+            catch (Exception ex)
+            {
+                GD.PrintErr($"PERF_BASELINE_SUITE FAIL: {ex.Message}");
+                failures++;
+            }
+
             GD.Print(failures == 0
                 ? "RUNTIME_SCALE_SELFTEST PASS"
                 : $"RUNTIME_SCALE_SELFTEST FAIL — {failures} failing check(s)");
             EmitSummary("runtime_scale_selftest", failures == 0, failures == 0 ? 0 : 1,
                 passedCount: 6 - failures, failedCount: failures);
             return failures == 0 ? 0 : 1;
+        }
+
+        private static string CurrentBuildConfiguration()
+        {
+#if DEBUG
+            return "Debug";
+#else
+            return "Release";
+#endif
         }
 
         private static PerfWorkloadContext BuildContext(WorkloadProfile profile, string platform, string runtime)

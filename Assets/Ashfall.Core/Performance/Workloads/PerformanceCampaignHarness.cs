@@ -24,7 +24,16 @@ namespace Ashfall.Core.Performance.Workloads;
 public sealed class PerformanceCampaignHarness : IDisposable
 {
     private readonly PerfWorkloadContext _context;
+    private readonly PerfDayProfile _dayProfile;
     private bool _disposed;
+
+    /// <summary>
+    /// Per-owner inclusive-time profile accumulated from every
+    /// <see cref="CampaignDayCoordinator.Advance"/> this harness has observed.
+    /// Populated from the coordinator's existing per-owner duration report; it
+    /// is observational and never feeds back into the tick.
+    /// </summary>
+    public PerfDayProfile DayProfile => _dayProfile;
 
     /// <summary>Campaign day coordinator under test.</summary>
     public CampaignDayCoordinator Coordinator { get; }
@@ -58,6 +67,7 @@ public sealed class PerformanceCampaignHarness : IDisposable
     public PerformanceCampaignHarness(PerfWorkloadContext context)
     {
         _context = context ?? throw new ArgumentNullException(nameof(context));
+        _dayProfile = new PerfDayProfile(context.WorkloadId);
 
         Rng = new SeededRng(context.Seed);
         Coordinator = new CampaignDayCoordinator(
@@ -113,9 +123,28 @@ public sealed class PerformanceCampaignHarness : IDisposable
             ("survivor_perf_xray", "Xray", "Scout", 87f),
         };
 
-        for (int i = 0; i < Math.Min(count, defs.Length); i++)
+        for (int i = 0; i < count; i++)
         {
-            var (id, name, profession, health) = defs[i];
+            string id;
+            string name;
+            string profession;
+            float health;
+
+            if (i < defs.Length)
+            {
+                (id, name, profession, health) = defs[i];
+            }
+            else
+            {
+                // Deterministic synthesis beyond the authored 24 so the
+                // large-population soak tiers (50/100/250/500) construct the
+                // same roster every run. No RNG: index arithmetic only.
+                id = $"survivor_perf_{i:D4}";
+                name = $"Survivor {i:D4}";
+                profession = SyntheticProfessions[i % SyntheticProfessions.Length];
+                health = 70f + (i * 7 % 30);
+            }
+
             Survivors.RegisterDefinition(new SurvivorDefinition
             {
                 id = id,
@@ -126,6 +155,12 @@ public sealed class PerformanceCampaignHarness : IDisposable
             Survivors.Join(id, 1);
         }
     }
+
+    private static readonly string[] SyntheticProfessions =
+    {
+        "Farmer", "Doctor", "Engineer", "Scout", "Medic",
+        "Soldier", "Teacher", "Chef", "Mechanic", "Student",
+    };
 
     private void SeedCatalog()
     {
@@ -285,6 +320,7 @@ public sealed class PerformanceCampaignHarness : IDisposable
             var result = Coordinator.Advance(day);
             if (result == null)
                 throw new InvalidOperationException($"Day {day} advance returned null (re-entrant or stale day guard).");
+            _dayProfile.Record(result);
         }
         return sw.Stop().ElapsedMilliseconds;
     }
