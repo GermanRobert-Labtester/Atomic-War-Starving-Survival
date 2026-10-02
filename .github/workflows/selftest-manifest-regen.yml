@@ -15,6 +15,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 concurrency:
   group: selftest-manifest-regen
@@ -55,6 +56,8 @@ jobs:
         run: python3 scripts/ci/generate-selftest-manifest.py --check
 
       - name: Commit regenerated manifest (best-effort)
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name "ashfall-docs-regen[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -70,6 +73,13 @@ jobs:
           AUTOGEN_BRANCH="ci-autogen-${GITHUB_RUN_ID}"
           if out=$(git push origin HEAD:refs/heads/$AUTOGEN_BRANCH 2>&1); then
             echo "Pushed regenerated manifest to $AUTOGEN_BRANCH."
+            # Open a PR so the branch lands and is auto-deleted on merge instead
+            # of accumulating as an orphan branch. Best-effort.
+            if ! gh pr create --base main --head "$AUTOGEN_BRANCH" \
+                 --title "ci: regenerate SELFTEST_MANIFEST.json (automated)" \
+                 --body "Automated regeneration from run ${GITHUB_RUN_ID}. Land via merge; the branch is then cleaned up by ci-autogen-cleanup.yml." ; then
+              echo "::warning::could not open a PR for $AUTOGEN_BRANCH (branch pushed; clean up via ci-autogen-cleanup.yml)"
+            fi
           else
             echo "::error::MANIFEST-REGEN PUSH FAILED — ${out}"
             exit 1

@@ -1,0 +1,67 @@
+# ASHFALL ci-autogen Cleanup — deletes merged run-unique regen branches.
+#
+# docs-regen.yml and selftest-manifest-regen.yml push `ci-autogen-${GITHUB_RUN_ID}`
+# branches (branch creation is allowed; force-push and direct push to main are
+# blocked by the repository ruleset). Those branches are meant to land via a PR,
+# but nothing removed them afterwards, so they accumulated (22+ on 2026-10-02).
+#
+# This workflow is the safety net: it deletes any origin `ci-autogen-*` branch
+# whose tip is already reachable from origin/main (i.e. it has been merged).
+# Unmerged branches are left untouched — never delete unmerged work.
+#
+# Local parity:
+#   git fetch --prune origin
+#   for r in $(git for-each-ref --format='%(refname:short)' refs/remotes/origin \
+#              | grep -E '^origin/ci-autogen-'); do
+#     git merge-base --is-ancestor "$r" origin/main && git push origin --delete "${r#origin/}"
+#   done
+
+name: ci-autogen Cleanup
+
+on:
+  schedule:
+    - cron: "17 4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ci-autogen-cleanup
+  cancel-in-progress: false
+
+jobs:
+  cleanup:
+    name: Delete merged ci-autogen-* branches
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout (full history for merge checks)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Delete merged ci-autogen-* branches
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -uo pipefail
+          git fetch --prune origin
+          deleted=0
+          kept=0
+          for ref in $(git for-each-ref --format='%(refname:short)' refs/remotes/origin \
+                       | grep -E '^origin/ci-autogen-'); do
+            if git merge-base --is-ancestor "$ref" origin/main; then
+              branch="${ref#origin/}"
+              if git push origin --delete "$branch"; then
+                echo "deleted merged branch: $branch"
+                deleted=$((deleted + 1))
+              else
+                echo "::warning::could not delete $branch (ruleset?)"
+              fi
+            else
+              echo "kept unmerged branch: ${ref#origin/}"
+              kept=$((kept + 1))
+            fi
+          done
+          echo "ci-autogen cleanup: deleted=$deleted kept_unmerged=$kept"
