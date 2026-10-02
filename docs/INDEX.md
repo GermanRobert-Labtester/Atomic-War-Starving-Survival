@@ -1,12 +1,12 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 4159 | **Total Characters:** 4,169,298,723 | **Last Verified:** 2026-10-02
+**Total Indexed Documents:** 4156 | **Total Characters:** 4,169,282,776 | **Last Verified:** 2026-10-02
 **Oversized (>= 100,000 characters):** 2210 documents carrying 4,138,691,836 characters — tracked in full, see the register below
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 4106 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 4103 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 51 |
 | 🔵 `GENERATED` | Programmatically generated or updated catalogs (contracts, CLI reference, AI logs) | 2 |
 
@@ -4490,7 +4490,7 @@ The following documents share identical or near-identical filenames across root,
 
 | Status | Document | Characters | Title / Summary |
 |---|---|---|---|
-| 🟢 `CURRENT` | [`docs/data/CATALOG_REGISTRY.md`](data/CATALOG_REGISTRY.md) | 84,543 | **ASHFALL Data Authority & Master Catalog Registry** — **Authoritative Location:** `Assets/StreamingAssets/Data/` \| **Last Verified:** 2026-10-01 |
+| 🟢 `CURRENT` | [`docs/data/CATALOG_REGISTRY.md`](data/CATALOG_REGISTRY.md) | 73,122 | **ASHFALL Data Authority & Master Catalog Registry** — **Authoritative Location:** `Assets/StreamingAssets/Data/` \| **Last Verified:** 2026-10-02 |
 | 🟢 `CURRENT` | [`docs/data/DATA_AUTHORITY_NAMING_DRIFT.md`](data/DATA_AUTHORITY_NAMING_DRIFT.md) | 2,656 | **ASHFALL — Data Authority Naming Drift Inventory & Migration Notes** — **Date:** 2026-09-06 |
 | 🟢 `CURRENT` | [`docs/data/DATA_GAP_AUDIT.md`](data/DATA_GAP_AUDIT.md) | 11,916 | **ASHFALL Data Gap Audit** — Counted entries in every top-level JSON catalog, identified C# consumers per catalog, |
 | 🟢 `CURRENT` | [`docs/data/SNAKE_CASE_MIGRATION.md`](data/SNAKE_CASE_MIGRATION.md) | 6,317 | **ASHFALL — snake_case Migration Tracker (Plans 47+)** — **Policy:** spelling-only migration. ID values, schema versions and value |
@@ -4523,7 +4523,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`docs/tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md`](tools/TOOLING_CLASSIFICATION_AND_LIFECYCLE.md) | 9,685 | **ASHFALL — Non-Runtime Tooling Architecture, Classification, & Lifecycle** — **Date:** 2026-08-27<br> |
 | 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | 2,358 | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |
 
-## 9. General Project Guides & Archive Reference (2081 documents)
+## 9. General Project Guides & Archive Reference (2078 documents)
 
 | Status | Document | Characters | Title / Summary |
 |---|---|---|---|
@@ -5118,9 +5118,6 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`Seal-steps/ashfall-wave2-successor-corpus-tranche-two-and-ship-readiness-program-2026-09-19.md`](../Seal-steps/ashfall-wave2-successor-corpus-tranche-two-and-ship-readiness-program-2026-09-19.md) | 90,201 | **ASHFALL — Wave 2, Program B: Successor Corpus Tranche-2 & Ship-Readiness Program** — This is Wave 2 Program B, the final forward document in the 2026-09-19 |
 | 🟢 `CURRENT` | [`TEST_POLICY.md`](../TEST_POLICY.md) | 6,117 | **ASHFALL Test Policy** — Tests protect current behavior; they are not a production-count target. This |
 | 🟢 `CURRENT` | [`VIBE.md`](../VIBE.md) | 19,536 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
-| 🟢 `CURRENT` | [`addons/godot_mcp/commands/master_checklist.md`](../addons/godot_mcp/commands/master_checklist.md) | 1,457 | **Master Checklist** — - [x] 01. `project_creation_commands.gd` |
-| 🟢 `CURRENT` | [`addons/ziva_agent/LICENSE.md`](../addons/ziva_agent/LICENSE.md) | 282 | **Proprietary License** — All rights reserved. |
-| 🟢 `CURRENT` | [`addons/ziva_agent/README.md`](../addons/ziva_agent/README.md) | 2,787 | **Ziva AI Agent – The S-Tier AI Coding Assistant for Godot** — ![Godot 4.2+](https://godotengine.org/) |
 | 🟢 `CURRENT` | [`ai-experiments/README.md`](../ai-experiments/README.md) | 565 | **AI Experiments Lab (Python)** — This directory is the dedicated Python research lab for: |
 | 🟢 `CURRENT` | [`assets/sprites/AI_Generated/manifest.md`](../assets/sprites/AI_Generated/manifest.md) | 94,305 | **ASHFALL — Complete AI Game Assets Master Manifest (1,019 Assets Total)** — - **Location**: `generated_AIassets/` |
 | 🟢 `CURRENT` | [`data-tools/README.md`](../data-tools/README.md) | 387 | **Data Analysis & Telemetry Tools (Python)** — This directory is dedicated to offline data science, telemetry, and balance tooling: |

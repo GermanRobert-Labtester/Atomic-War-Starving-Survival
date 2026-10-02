@@ -61,13 +61,13 @@
       },
       "host_ref_files": {
         "BroadsheetPressLedger": [
-          "src/Host/BroadsheetPressHostSession.cs",
-          "src/Host/HostCli.BroadsheetPress.cs"
+          "src/Host/HostCli.BroadsheetPress.cs",
+          "src/Host/BroadsheetPressHostSession.cs"
         ],
         "BroadsheetPressState": [
           "src/Main.CampaignOwners.cs",
-          "src/Host/BroadsheetPressHostSession.cs",
-          "src/Host/HostCli.BroadsheetPress.cs"
+          "src/Host/HostCli.BroadsheetPress.cs",
+          "src/Host/BroadsheetPressHostSession.cs"
         ],
         "BroadsheetPressCensus": [
           "src/Main.BroadsheetPress.cs",
@@ -75,8 +75,8 @@
         ],
         "PublicBroadsheetPressEngine": [
           "src/Main.BroadsheetPress.cs",
-          "src/Host/BroadsheetPressHostSession.cs",
-          "src/Host/HostCli.BroadsheetPress.cs"
+          "src/Host/HostCli.BroadsheetPress.cs",
+          "src/Host/BroadsheetPressHostSession.cs"
         ],
         "BroadsheetPressHostSession": [
           "src/Main.BroadsheetPress.cs",
@@ -140,13 +140,13 @@
       "host_ref_files": {
         "KilnFiringLedger": [
           "src/Main.Kilnworks.cs",
-          "src/Host/KilnworksHostSession.cs",
-          "src/Host/HostCli.Kilnworks.cs"
+          "src/Host/HostCli.Kilnworks.cs",
+          "src/Host/KilnworksHostSession.cs"
         ],
         "KilnFiringState": [
           "src/Main.CampaignOwners.cs",
-          "src/Host/KilnworksHostSession.cs",
-          "src/Host/HostCli.Kilnworks.cs"
+          "src/Host/HostCli.Kilnworks.cs",
+          "src/Host/KilnworksHostSession.cs"
         ],
         "KilnFiringCensus": [
           "src/Main.Kilnworks.cs",
@@ -154,8 +154,8 @@
         ],
         "KilnFiringEngine": [
           "src/Main.Kilnworks.cs",
-          "src/Host/KilnworksHostSession.cs",
-          "src/Host/HostCli.Kilnworks.cs"
+          "src/Host/HostCli.Kilnworks.cs",
+          "src/Host/KilnworksHostSession.cs"
         ],
         "KilnworksHostSession": [
           "src/Main.Kilnworks.cs",
@@ -218,8 +218,8 @@
       },
       "host_ref_files": {
         "DependencyTaperLedger": [
-          "src/Host/DependencyTaperWithdrawalHostSession.cs",
-          "src/Host/HostCli.DependencyTaperWithdrawal.cs"
+          "src/Host/HostCli.DependencyTaperWithdrawal.cs",
+          "src/Host/DependencyTaperWithdrawalHostSession.cs"
         ],
         "DependencyTaperState": [
           "src/Main.CampaignOwners.cs",
@@ -231,13 +231,13 @@
         ],
         "DependencyTaperWithdrawalEngine": [
           "src/Main.DependencyTaperWithdrawal.cs",
-          "src/Host/DependencyTaperWithdrawalHostSession.cs",
-          "src/Host/HostCli.DependencyTaperWithdrawal.cs"
+          "src/Host/HostCli.DependencyTaperWithdrawal.cs",
+          "src/Host/DependencyTaperWithdrawalHostSession.cs"
         ],
         "DependencyTaperWithdrawalHostSession": [
           "src/Main.DependencyTaperWithdrawal.cs",
-          "src/Host/DependencyTaperWithdrawalHostSession.cs",
-          "src/Host/HostCli.DependencyTaperWithdrawal.cs"
+          "src/Host/HostCli.DependencyTaperWithdrawal.cs",
+          "src/Host/DependencyTaperWithdrawalHostSession.cs"
         ]
       }
     },
@@ -300,9 +300,9 @@
         ],
         "NightWatchHostSession": [
           "src/Main.NightWatch.cs",
+          "src/UI/NightWatchPanel.cs",
           "src/Host/NightWatchHostSession.cs",
-          "src/Host/HostCli.NightWatch.cs",
-          "src/UI/NightWatchPanel.cs"
+          "src/Host/HostCli.NightWatch.cs"
         ]
       }
     },
@@ -361,8 +361,8 @@
       },
       "host_ref_files": {
         "AntenatalMaternalCareLedger": [
-          "src/Host/AntenatalMaternalHealthHostSession.cs",
-          "src/Host/HostCli.AntenatalMaternalHealth.cs"
+          "src/Host/HostCli.AntenatalMaternalHealth.cs",
+          "src/Host/AntenatalMaternalHealthHostSession.cs"
         ],
         "AntenatalMaternalCareState": [
           "src/Main.CampaignOwners.cs",
@@ -374,13 +374,13 @@
         ],
         "AntenatalMaternalHealthEngine": [
           "src/Main.AntenatalMaternalHealth.cs",
-          "src/Host/AntenatalMaternalHealthHostSession.cs",
-          "src/Host/HostCli.AntenatalMaternalHealth.cs"
+          "src/Host/HostCli.AntenatalMaternalHealth.cs",
+          "src/Host/AntenatalMaternalHealthHostSession.cs"
         ],
         "AntenatalMaternalHealthHostSession": [
           "src/Main.AntenatalMaternalHealth.cs",
-          "src/Host/AntenatalMaternalHealthHostSession.cs",
-          "src/Host/HostCli.AntenatalMaternalHealth.cs"
+          "src/Host/HostCli.AntenatalMaternalHealth.cs",
+          "src/Host/AntenatalMaternalHealthHostSession.cs"
         ]
       }
     },
@@ -529,13 +529,13 @@
         ],
         "ChemicalReagentSynthesisEngine": [
           "src/Main.ChemicalReagentSynthesis.cs",
-          "src/Host/ChemicalReagentSynthesisHostSession.cs",
-          "src/Host/HostCli.ChemicalReagentSynthesis.cs"
+          "src/Host/HostCli.ChemicalReagentSynthesis.cs",
+          "src/Host/ChemicalReagentSynthesisHostSession.cs"
         ],
         "ChemicalReagentSynthesisHostSession": [
           "src/Main.ChemicalReagentSynthesis.cs",
-          "src/Host/ChemicalReagentSynthesisHostSession.cs",
-          "src/Host/HostCli.ChemicalReagentSynthesis.cs"
+          "src/Host/HostCli.ChemicalReagentSynthesis.cs",
+          "src/Host/ChemicalReagentSynthesisHostSession.cs"
         ]
       }
     },
@@ -594,8 +594,8 @@
       },
       "host_ref_files": {
         "MechanicalDrivelineLedger": [
-          "src/Host/MechanicalDrivelineHostSession.cs",
-          "src/Host/HostCli.MechanicalDriveline.cs"
+          "src/Host/HostCli.MechanicalDriveline.cs",
+          "src/Host/MechanicalDrivelineHostSession.cs"
         ],
         "MechanicalDrivelineState": [
           "src/Main.CampaignOwners.cs",
@@ -611,8 +611,8 @@
         ],
         "MechanicalDrivelineHostSession": [
           "src/Main.MechanicalDriveline.cs",
-          "src/Host/MechanicalDrivelineHostSession.cs",
-          "src/Host/HostCli.MechanicalDriveline.cs"
+          "src/Host/HostCli.MechanicalDriveline.cs",
+          "src/Host/MechanicalDrivelineHostSession.cs"
         ]
       }
     },
@@ -683,13 +683,13 @@
         ],
         "SleepAcousticRestEngine": [
           "src/Main.SleepAcousticRest.cs",
-          "src/Host/SleepAcousticRestHostSession.cs",
-          "src/Host/HostCli.SleepAcousticRest.cs"
+          "src/Host/HostCli.SleepAcousticRest.cs",
+          "src/Host/SleepAcousticRestHostSession.cs"
         ],
         "SleepAcousticRestHostSession": [
           "src/Main.SleepAcousticRest.cs",
-          "src/Host/SleepAcousticRestHostSession.cs",
-          "src/Host/HostCli.SleepAcousticRest.cs"
+          "src/Host/HostCli.SleepAcousticRest.cs",
+          "src/Host/SleepAcousticRestHostSession.cs"
         ]
       }
     },
@@ -749,9 +749,9 @@
       "host_ref_files": {
         "CommitmentSystem": [
           "src/Main.Commitments.cs",
-          "src/Host/CommitmentHostSession.cs",
           "src/Host/HostCli.Commitments.cs",
-          "src/Host/HostCli.SliceScenario.cs"
+          "src/Host/HostCli.SliceScenario.cs",
+          "src/Host/CommitmentHostSession.cs"
         ],
         "CommitmentHostSession": [
           "src/Main.Commitments.cs",
@@ -815,22 +815,22 @@
       "host_ref_files": {
         "SessionDurabilityManager": [
           "src/Main.SessionDurability.cs",
-          "src/Host/SessionDurabilityHostSession.cs",
-          "src/Host/HostCli.SessionDurability.cs"
+          "src/Host/HostCli.SessionDurability.cs",
+          "src/Host/SessionDurabilityHostSession.cs"
         ],
         "SessionDurabilityHostSession": [
           "src/Main.SessionDurability.cs",
           "src/Host/SessionDurabilityHostSession.cs"
         ],
         "SaveLoadHostSession": [
-          "src/Main.cs",
-          "src/Main.SessionDurability.cs",
           "src/Main.UiTests.FailureRestart.cs",
-          "src/Main.UiTests.FoodLoop.cs",
-          "src/Main.UiTests.StartingCohortLifecycle.cs",
+          "src/Main.cs",
           "src/Main.Application.cs",
+          "src/Main.UiTests.CompositionHarness.cs",
+          "src/Main.UiTests.FoodLoop.cs",
           "src/Main.UiTests.RealCampaignJourney.cs",
-          "src/Main.UiTests.CompositionHarness.cs"
+          "src/Main.SessionDurability.cs",
+          "src/Main.UiTests.StartingCohortLifecycle.cs"
         ]
       }
     },
@@ -889,8 +889,8 @@
       },
       "host_ref_files": {
         "SurvivorVoiceSystem": [
-          "src/Main.ContentCertification.cs",
           "src/Main.SurvivorVoice.cs",
+          "src/Main.ContentCertification.cs",
           "src/Host/SurvivorVoiceHostSession.cs",
           "src/Host/HostCli.SurvivorVoice.cs",
           "src/Host/ContentCertificationHostSession.cs"
@@ -962,8 +962,8 @@
       },
       "host_ref_files": {
         "PlaySessionRecorder": [
-          "src/Host/PlayMetricsHostSession.cs",
           "src/Host/PlayMetricJsonlSink.cs",
+          "src/Host/PlayMetricsHostSession.cs",
           "src/Host/HostCli.PlayMetrics.cs"
         ],
         "FirstHourFunnel": [
@@ -1154,14 +1154,14 @@
       },
       "host_ref_files": {
         "ScarcityAudioStateMachine": [
-          "src/Audio/ScarcityAudioController.cs",
-          "src/Audio/HostCli.ScarcityAudio.cs"
+          "src/Audio/HostCli.ScarcityAudio.cs",
+          "src/Audio/ScarcityAudioController.cs"
         ],
         "ScarcityAudioController": [
           "src/Audio/AudioManager.cs",
           "src/Audio/SurfaceAmbienceController.cs",
-          "src/Audio/ScarcityAudioController.cs",
-          "src/Audio/HostCli.ScarcityAudio.cs"
+          "src/Audio/HostCli.ScarcityAudio.cs",
+          "src/Audio/ScarcityAudioController.cs"
         ]
       }
     },
@@ -1291,13 +1291,13 @@
           "src/Host/RetentionHostSession.cs"
         ],
         "RetentionPolicyCatalogLoader": [
-          "src/Host/RetentionHostSession.cs",
-          "src/Host/HostCli.Retention.cs"
+          "src/Host/HostCli.Retention.cs",
+          "src/Host/RetentionHostSession.cs"
         ],
         "RetentionHostSession": [
           "src/Main.Retention.cs",
-          "src/Host/RetentionHostSession.cs",
-          "src/Host/HostCli.Retention.cs"
+          "src/Host/HostCli.Retention.cs",
+          "src/Host/RetentionHostSession.cs"
         ]
       }
     },
@@ -1370,19 +1370,19 @@
         ],
         "OutpostSettlementState": [
           "src/Main.CampaignOwners.cs",
-          "src/Host/HostCli.OutpostSettlement.cs",
-          "src/Host/OutpostSettlementHostSession.cs"
+          "src/Host/OutpostSettlementHostSession.cs",
+          "src/Host/HostCli.OutpostSettlement.cs"
         ],
         "OutpostSettlementHostSession": [
           "src/Main.OutpostSettlement.cs",
-          "src/Host/HostCli.OutpostSettlement.cs",
           "src/Host/OutpostSettlementHostSession.cs",
+          "src/Host/HostCli.OutpostSettlement.cs",
           "src/Host/ShelterOperationsHostSession.cs"
         ],
         "ShelterOperationsHostSession": [
           "src/Main.ShelterOperations.cs",
-          "src/Host/ShelterOperationsHostSession.cs",
-          "src/UI/ShelterOperationsPanel.cs"
+          "src/UI/ShelterOperationsPanel.cs",
+          "src/Host/ShelterOperationsHostSession.cs"
         ]
       }
     },
@@ -1444,8 +1444,8 @@
           "src/Host/StandingGatesHostSession.cs"
         ],
         "StandingGatesHostSession": [
-          "src/Host/StandingGatesHostSession.cs",
-          "src/Host/HostCli.StandingGates.cs"
+          "src/Host/HostCli.StandingGates.cs",
+          "src/Host/StandingGatesHostSession.cs"
         ]
       }
     },
@@ -1510,10 +1510,10 @@
         ],
         "HiddenAgendaHostSession": [
           "src/Main.HiddenAgenda.cs",
-          "src/Host/HiddenAgendaSaveStore.cs",
+          "src/UI/HiddenAgendaPanel.cs",
           "src/Host/HiddenAgendaHostSession.cs",
-          "src/Host/HiddenAgendaSelfTest.cs",
-          "src/UI/HiddenAgendaPanel.cs"
+          "src/Host/HiddenAgendaSaveStore.cs",
+          "src/Host/HiddenAgendaSelfTest.cs"
         ]
       }
     },
@@ -1577,13 +1577,13 @@
         ],
         "TerritoryControlSaveState": [
           "src/Main.CampaignOwners.cs",
-          "src/Host/TerritoryControlHostSession.cs",
-          "src/Host/HostCli.TerritoryControl.cs"
+          "src/Host/HostCli.TerritoryControl.cs",
+          "src/Host/TerritoryControlHostSession.cs"
         ],
         "TerritoryControlHostSession": [
           "src/Main.TerritoryControl.cs",
-          "src/Host/TerritoryControlHostSession.cs",
-          "src/Host/HostCli.TerritoryControl.cs"
+          "src/Host/HostCli.TerritoryControl.cs",
+          "src/Host/TerritoryControlHostSession.cs"
         ]
       }
     },
@@ -1720,11 +1720,11 @@
       "host_ref_files": {
         "CookingSystem": [
           "src/Main.Cooking.cs",
-          "src/Main.ShelterBatch3.cs",
           "src/Main.UiTests.FoodLoop.cs",
-          "src/Host/CookingHostSession.cs",
+          "src/Main.ShelterBatch3.cs",
+          "src/UI/KitchenNutritionPanel.cs",
           "src/Host/HostCli.Cooking.cs",
-          "src/UI/KitchenNutritionPanel.cs"
+          "src/Host/CookingHostSession.cs"
         ],
         "CookingRecipe": [
           "src/Host/HostCli.Cooking.cs"
@@ -1737,20 +1737,20 @@
           "src/Host/CookingHostSession.cs"
         ],
         "CookingRecipeCatalogLoader": [
-          "src/Host/CookingHostSession.cs",
-          "src/Host/HostCli.Cooking.cs"
+          "src/Host/HostCli.Cooking.cs",
+          "src/Host/CookingHostSession.cs"
         ],
         "InventoryCookingSource": [
           "src/Main.Cooking.cs",
-          "src/Host/CookingHostSession.cs",
-          "src/Host/HostCli.Cooking.cs"
+          "src/Host/HostCli.Cooking.cs",
+          "src/Host/CookingHostSession.cs"
         ],
         "CookingHostSession": [
           "src/Main.Cooking.cs",
           "src/Main.UiTests.FoodLoop.cs",
-          "src/Host/CookingHostSession.cs",
+          "src/UI/KitchenNutritionPanel.cs",
           "src/Host/HostCli.Cooking.cs",
-          "src/UI/KitchenNutritionPanel.cs"
+          "src/Host/CookingHostSession.cs"
         ]
       }
     },
@@ -1809,9 +1809,9 @@
       },
       "host_ref_files": {
         "NeedsPerformanceBridge": [
+          "src/UI/SurvivorDetailPanel.cs",
           "src/Host/NeedsPerformanceHostSession.cs",
-          "src/Host/HostCli.NeedsPerformance.cs",
-          "src/UI/SurvivorDetailPanel.cs"
+          "src/Host/HostCli.NeedsPerformance.cs"
         ]
       }
     },
@@ -1871,17 +1871,17 @@
       "host_ref_files": {
         "ShelterSecuritySystem": [
           "src/Main.ShelterSecurity.cs",
-          "src/Host/ShelterSecurityHostSession.cs",
           "src/Host/ShelterSecuritySelfTest.cs",
           "src/Host/NightWatchHostSession.cs",
+          "src/Host/ShelterSecurityHostSession.cs",
           "src/Host/HostCli.NightWatch.cs"
         ],
         "ShelterSecurityHostSession": [
           "src/Main.ShelterSecurity.cs",
-          "src/Host/ShelterSecuritySaveStore.cs",
-          "src/Host/ShelterSecurityHostSession.cs",
+          "src/UI/ShelterSecurityPanel.cs",
           "src/Host/ShelterSecuritySelfTest.cs",
-          "src/UI/ShelterSecurityPanel.cs"
+          "src/Host/ShelterSecuritySaveStore.cs",
+          "src/Host/ShelterSecurityHostSession.cs"
         ]
       }
     },
@@ -1940,14 +1940,14 @@
       },
       "host_ref_files": {
         "CampaignLegacySystem": [
-          "src/Host/CampaignLegacyHostSession.cs",
-          "src/Host/HostCli.CampaignLegacy.cs"
+          "src/Host/HostCli.CampaignLegacy.cs",
+          "src/Host/CampaignLegacyHostSession.cs"
         ],
         "CampaignLegacy": [
-          "src/Main.CampaignLegacy.cs",
           "src/Main.Endgame.cs",
-          "src/Host/CampaignLegacyHostSession.cs",
-          "src/Host/HostCli.CampaignLegacy.cs"
+          "src/Main.CampaignLegacy.cs",
+          "src/Host/HostCli.CampaignLegacy.cs",
+          "src/Host/CampaignLegacyHostSession.cs"
         ],
         "CampaignLegacyCensus": [
           "src/Host/CampaignLegacyHostSession.cs"
@@ -2025,9 +2025,9 @@
         ],
         "ResearchUnlockHostSession": [
           "src/Main.ResearchUnlock.cs",
+          "src/UI/ResearchPanel.cs",
           "src/Host/ResearchUnlockHostSession.cs",
-          "src/Host/HostCli.ResearchUnlock.cs",
-          "src/UI/ResearchPanel.cs"
+          "src/Host/HostCli.ResearchUnlock.cs"
         ]
       }
     },
@@ -2086,8 +2086,8 @@
       },
       "host_ref_files": {
         "AfflictionQuestWorkBridge": [
-          "src/Host/MedicalHostSession.cs",
-          "src/Host/AfflictionBridgeSelfTest.cs"
+          "src/Host/AfflictionBridgeSelfTest.cs",
+          "src/Host/MedicalHostSession.cs"
         ]
       }
     },
@@ -2298,9 +2298,9 @@
         ],
         "IdeologicalFrictionHostSession": [
           "src/Main.IdeologicalFriction.cs",
+          "src/UI/PfglOctetBoardPanels.cs",
           "src/Host/IdeologicalFrictionHostSession.cs",
-          "src/Host/HostCli.IdeologicalFriction.cs",
-          "src/UI/PfglOctetBoardPanels.cs"
+          "src/Host/HostCli.IdeologicalFriction.cs"
         ]
       }
     },
@@ -2360,15 +2360,15 @@
       "host_ref_files": {
         "RomanceFamilySystem": [
           "src/Main.Genealogy.cs",
-          "src/Host/RomanceFamilyHostSession.cs",
-          "src/Host/GenealogyHostSession.cs"
+          "src/Host/GenealogyHostSession.cs",
+          "src/Host/RomanceFamilyHostSession.cs"
         ],
         "RomanticRelationship": [
           "src/Host/RomanceFamilyHostSession.cs"
         ],
         "FamilyUnit": [
-          "src/Host/RomanceFamilyHostSession.cs",
           "src/Host/GenealogyHostSession.cs",
+          "src/Host/RomanceFamilyHostSession.cs",
           "src/Host/HostCli.Genealogy.cs"
         ],
         "RomanceCourtshipCatalog": [
@@ -2382,9 +2382,9 @@
         ],
         "RomanceFamilyHostSession": [
           "src/Main.RomanceFamily.cs",
+          "src/UI/PfglOctetBoardPanels.cs",
           "src/Host/RomanceFamilyHostSession.cs",
-          "src/Host/HostCli.RomanceFamily.cs",
-          "src/UI/PfglOctetBoardPanels.cs"
+          "src/Host/HostCli.RomanceFamily.cs"
         ]
       }
     },
@@ -2444,9 +2444,9 @@
       "host_ref_files": {
         "CompanionAnimalSystem": [
           "src/Main.Companion.cs",
-          "src/Host/CompanionAnimalHostSession.cs",
+          "src/UI/KennelPanel.cs",
           "src/Host/WorkingAnimalsSelfTest.cs",
-          "src/UI/KennelPanel.cs"
+          "src/Host/CompanionAnimalHostSession.cs"
         ]
       }
     },
@@ -2581,16 +2581,16 @@
       },
       "host_ref_files": {
         "BlackMarketSystem": [
-          "src/Host/BlackMarketHostSession.cs",
+          "src/UI/BlackMarketSnapshotFixture.cs",
           "src/Host/BlackMarketSelfTest.cs",
-          "src/UI/BlackMarketSnapshotFixture.cs"
+          "src/Host/BlackMarketHostSession.cs"
         ],
         "BlackMarketHostSession": [
           "src/Main.BlackMarket.cs",
-          "src/Host/BlackMarketHostSession.cs",
-          "src/Host/BlackMarketSelfTest.cs",
+          "src/UI/BlackMarketPanel.cs",
           "src/UI/BlackMarketSnapshotFixture.cs",
-          "src/UI/BlackMarketPanel.cs"
+          "src/Host/BlackMarketSelfTest.cs",
+          "src/Host/BlackMarketHostSession.cs"
         ]
       }
     },
@@ -2649,10 +2649,10 @@
       },
       "host_ref_files": {
         "ShelterArchiveSystem": [
-          "src/Main.ShelterArchive.cs",
           "src/Main.ShelterArchiveProjection.Integration.cs",
-          "src/Host/ShelterArchiveHostSession.cs",
-          "src/Host/HostCli.ShelterArchive.cs"
+          "src/Main.ShelterArchive.cs",
+          "src/Host/HostCli.ShelterArchive.cs",
+          "src/Host/ShelterArchiveHostSession.cs"
         ],
         "ShelterArchiveState": [
           "src/Main.CampaignOwners.cs",
@@ -2664,8 +2664,8 @@
         ],
         "ShelterArchiveHostSession": [
           "src/Main.ShelterArchive.cs",
-          "src/Host/ShelterArchiveHostSession.cs",
-          "src/Host/HostCli.ShelterArchive.cs"
+          "src/Host/HostCli.ShelterArchive.cs",
+          "src/Host/ShelterArchiveHostSession.cs"
         ]
       }
     },
@@ -2788,13 +2788,13 @@
           "src/Host/ShelterIdentityHostSession.cs"
         ],
         "ShelterOriginCatalogLoader": [
-          "src/Host/ShelterIdentityHostSession.cs",
-          "src/Host/HostCli.ShelterIdentity.cs"
+          "src/Host/HostCli.ShelterIdentity.cs",
+          "src/Host/ShelterIdentityHostSession.cs"
         ],
         "ShelterIdentityHostSession": [
           "src/Main.ShelterIdentity.cs",
-          "src/Host/ShelterIdentityHostSession.cs",
-          "src/Host/HostCli.ShelterIdentity.cs"
+          "src/Host/HostCli.ShelterIdentity.cs",
+          "src/Host/ShelterIdentityHostSession.cs"
         ]
       }
     },
@@ -2914,15 +2914,15 @@
       "host_ref_files": {
         "PropagandaSystem": [
           "src/Main.Propaganda.cs",
-          "src/Host/PropagandaHostSession.cs",
-          "src/Host/PropagandaSelfTest.cs"
+          "src/Host/PropagandaSelfTest.cs",
+          "src/Host/PropagandaHostSession.cs"
         ],
         "PropagandaHostSession": [
           "src/Main.Propaganda.cs",
-          "src/Host/PropagandaSaveStore.cs",
-          "src/Host/PropagandaHostSession.cs",
+          "src/UI/PropagandaPanel.cs",
           "src/Host/PropagandaSelfTest.cs",
-          "src/UI/PropagandaPanel.cs"
+          "src/Host/PropagandaSaveStore.cs",
+          "src/Host/PropagandaHostSession.cs"
         ]
       }
     },
@@ -3043,9 +3043,9 @@
       "host_ref_files": {
         "DynamicQuestGenerator": [
           "src/Main.DynamicQuestGeneration.cs",
-          "src/Host/ProceduralNarrativeHostSession.cs",
+          "src/Host/HostCli.DynamicQuest.cs",
           "src/Host/DynamicQuestHostSession.cs",
-          "src/Host/HostCli.DynamicQuest.cs"
+          "src/Host/ProceduralNarrativeHostSession.cs"
         ]
       }
     },
@@ -3106,10 +3106,10 @@
         "MutationSystem": [
           "src/Main.Audio.cs",
           "src/Main.Mutations.Integration.cs",
-          "src/Host/RadiationMutationHostSession.cs",
-          "src/UI/MutationTreePanel.cs",
           "src/Audio/ExpansionAudioBridge.cs",
-          "src/Audio/AudioSelfTest.cs"
+          "src/Audio/AudioSelfTest.cs",
+          "src/UI/MutationTreePanel.cs",
+          "src/Host/RadiationMutationHostSession.cs"
         ]
       }
     },
@@ -3174,9 +3174,9 @@
         ],
         "RadioProgramProductionHostSession": [
           "src/Main.RadioProgramProduction.cs",
+          "src/UI/RadioPanel.cs",
           "src/Host/RadioProgramProductionHostSession.cs",
-          "src/Host/RadioProgramProductionSelfTest.cs",
-          "src/UI/RadioPanel.cs"
+          "src/Host/RadioProgramProductionSelfTest.cs"
         ]
       }
     },
@@ -3242,8 +3242,8 @@
         ],
         "BackstoryHostSession": [
           "src/Main.Backstory.cs",
-          "src/Host/BackstoryHostSession.cs",
-          "src/Host/HostCli.Backstory.cs"
+          "src/Host/HostCli.Backstory.cs",
+          "src/Host/BackstoryHostSession.cs"
         ]
       }
     },
@@ -3304,8 +3304,8 @@
         "DreamSystem": [
           "src/Main.DreamSystem.cs",
           "src/Main.SleepNarrative.cs",
-          "src/Host/DreamHostSession.cs",
-          "src/Host/HostCli.DreamSystem.cs"
+          "src/Host/HostCli.DreamSystem.cs",
+          "src/Host/DreamHostSession.cs"
         ],
         "DreamSystemState": [
           "src/Main.CampaignOwners.cs",
@@ -3317,8 +3317,8 @@
         ],
         "DreamHostSession": [
           "src/Main.DreamSystem.cs",
-          "src/Host/DreamHostSession.cs",
-          "src/Host/HostCli.DreamSystem.cs"
+          "src/Host/HostCli.DreamSystem.cs",
+          "src/Host/DreamHostSession.cs"
         ]
       }
     },
@@ -3381,8 +3381,8 @@
         ],
         "CultureCreationHostSession": [
           "src/Main.CultureCreation.cs",
-          "src/Host/CultureCreationHostSession.cs",
-          "src/Host/CultureCreationSelfTest.cs"
+          "src/Host/CultureCreationSelfTest.cs",
+          "src/Host/CultureCreationHostSession.cs"
         ]
       }
     },
@@ -3578,27 +3578,27 @@
           "src/Host/DifficultySettingsHostSession.cs"
         ],
         "DifficultyPresetCatalog": [
-          "src/Main.Difficulty.cs",
           "src/Main.DifficultySettings.cs",
+          "src/Main.Difficulty.cs",
+          "src/UI/StartingCohortSetupPanel.cs",
           "src/Host/DifficultySettingsHostSession.cs",
-          "src/Host/HostCli.DifficultySettings.cs",
-          "src/UI/StartingCohortSetupPanel.cs"
+          "src/Host/HostCli.DifficultySettings.cs"
         ],
         "DifficultyScalarsProvider": [
-          "src/Main.Difficulty.cs",
           "src/Main.DifficultySettings.cs",
+          "src/Main.Difficulty.cs",
           "src/Main.PlayMetrics.cs",
+          "src/UI/StartingCohortSetupPanel.cs",
           "src/Host/HostCli.Difficulty.cs",
-          "src/Host/PlayMetricsHostSession.cs",
           "src/Host/DifficultySettingsHostSession.cs",
-          "src/Host/HostCli.DifficultyConsequence.cs",
-          "src/Host/HostCli.DifficultySettings.cs"
+          "src/Host/HostCli.DifficultySettings.cs",
+          "src/Host/PlayMetricsHostSession.cs"
         ],
         "DifficultySettingsHostSession": [
           "src/Main.DifficultySettings.cs",
+          "src/UI/DifficultySettingsPanel.cs",
           "src/Host/DifficultySettingsHostSession.cs",
-          "src/Host/HostCli.DifficultySettings.cs",
-          "src/UI/DifficultySettingsPanel.cs"
+          "src/Host/HostCli.DifficultySettings.cs"
         ]
       }
     },
@@ -3663,10 +3663,10 @@
         ],
         "RelationshipDecayHostSession": [
           "src/Main.RelationshipDecay.cs",
-          "src/Host/RelationshipDecaySaveStore.cs",
+          "src/UI/RelationshipDecayPanel.cs",
           "src/Host/RelationshipDecayHostSession.cs",
           "src/Host/RelationshipDecaySelfTest.cs",
-          "src/UI/RelationshipDecayPanel.cs"
+          "src/Host/RelationshipDecaySaveStore.cs"
         ]
       }
     },
@@ -3725,14 +3725,14 @@
       },
       "host_ref_files": {
         "ChildDevelopmentSystem": [
-          "src/Main.AntenatalMaternalHealth.cs",
-          "src/Main.ChildDevelopment.cs",
           "src/Main.ShelterSocial.cs",
-          "src/Host/AntenatalMaternalHealthHostSession.cs",
-          "src/Host/ChildDevelopmentHostSession.cs",
-          "src/Host/SecondGenerationMilestoneHostSession.cs",
+          "src/Main.ChildDevelopment.cs",
+          "src/Main.AntenatalMaternalHealth.cs",
           "src/Host/HostCli.SecondGenerationMilestones.cs",
-          "src/Host/ChildDevelopmentSelfTest.cs"
+          "src/Host/SecondGenerationMilestoneHostSession.cs",
+          "src/Host/AntenatalMaternalHealthHostSession.cs",
+          "src/Host/ChildDevelopmentSelfTest.cs",
+          "src/Host/ChildDevelopmentHostSession.cs"
         ],
         "ChildDevelopmentCensus": [
           "src/Main.ChildDevelopment.cs",
@@ -3740,9 +3740,9 @@
         ],
         "ChildDevelopmentHostSession": [
           "src/Main.ChildDevelopment.cs",
-          "src/Host/ChildDevelopmentHostSession.cs",
           "src/Host/HostCli.SecondGenerationMilestones.cs",
-          "src/Host/ChildDevelopmentSelfTest.cs"
+          "src/Host/ChildDevelopmentSelfTest.cs",
+          "src/Host/ChildDevelopmentHostSession.cs"
         ]
       }
     },
@@ -3802,8 +3802,8 @@
       "host_ref_files": {
         "AccessibilitySettingsSystem": [
           "src/Main.AccessibilitySettings.cs",
-          "src/Host/AccessibilitySettingsHostSession.cs",
-          "src/Host/HostCli.AccessibilitySettings.cs"
+          "src/Host/HostCli.AccessibilitySettings.cs",
+          "src/Host/AccessibilitySettingsHostSession.cs"
         ],
         "AccessibilitySettingsState": [
           "src/Host/AccessibilitySettingsHostSession.cs"
@@ -3814,8 +3814,8 @@
         ],
         "AccessibilitySettingsHostSession": [
           "src/Main.AccessibilitySettings.cs",
-          "src/Host/AccessibilitySettingsHostSession.cs",
-          "src/Host/HostCli.AccessibilitySettings.cs"
+          "src/Host/HostCli.AccessibilitySettings.cs",
+          "src/Host/AccessibilitySettingsHostSession.cs"
         ]
       }
     },
@@ -3875,8 +3875,8 @@
       "host_ref_files": {
         "MemoryDecaySystem": [
           "src/Main.MemoryDecay.cs",
-          "src/Host/MemoryDecayHostSession.cs",
-          "src/Host/HostCli.MemoryDecay.cs"
+          "src/Host/HostCli.MemoryDecay.cs",
+          "src/Host/MemoryDecayHostSession.cs"
         ],
         "MemoryDecayState": [
           "src/Main.CampaignOwners.cs",
@@ -3888,8 +3888,8 @@
         ],
         "MemoryDecayHostSession": [
           "src/Main.MemoryDecay.cs",
-          "src/Host/MemoryDecayHostSession.cs",
-          "src/Host/HostCli.MemoryDecay.cs"
+          "src/Host/HostCli.MemoryDecay.cs",
+          "src/Host/MemoryDecayHostSession.cs"
         ]
       }
     },
@@ -4170,9 +4170,9 @@
         ],
         "HealthHistoryHostSession": [
           "src/Main.HealthHistory.cs",
-          "src/Host/HealthHistoryHostSession.cs",
+          "src/UI/StatusPanel.cs",
           "src/Host/HealthHistorySelfTest.cs",
-          "src/UI/StatusPanel.cs"
+          "src/Host/HealthHistoryHostSession.cs"
         ]
       }
     },
@@ -4235,17 +4235,17 @@
         ],
         "PersonalQuestSaveState": [
           "src/Main.CampaignOwners.cs",
-          "src/Host/PersonalQuestHostSession.cs",
-          "src/Host/PersonalQuestSaveStore.cs"
+          "src/Host/PersonalQuestSaveStore.cs",
+          "src/Host/PersonalQuestHostSession.cs"
         ],
         "PersonalQuestCensus": [
           "src/Main.PersonalQuests.cs"
         ],
         "PersonalQuestHostSession": [
           "src/Main.PersonalQuests.cs",
-          "src/Host/PersonalQuestHostSession.cs",
+          "src/UI/PersonalQuestPanel.cs",
           "src/Host/PersonalQuestSelfTest.cs",
-          "src/UI/PersonalQuestPanel.cs"
+          "src/Host/PersonalQuestHostSession.cs"
         ]
       }
     },
@@ -4378,19 +4378,19 @@
       },
       "host_ref_files": {
         "RumorSystem": [
+          "src/Main.RumorNetwork.cs",
           "src/Main.BroadsheetPress.cs",
           "src/Main.MoralChoice.cs",
-          "src/Main.RumorNetwork.cs",
-          "src/Host/RumorNetworkHostSession.cs",
           "src/Host/RumorNetworkSelfTest.cs",
+          "src/Host/RumorNetworkHostSession.cs",
           "src/Host/BroadsheetPressHostSession.cs"
         ],
         "RumorNetworkHostSession": [
           "src/Main.RumorNetwork.cs",
-          "src/Host/RumorNetworkSaveStore.cs",
-          "src/Host/RumorNetworkHostSession.cs",
+          "src/UI/RumorBoardPanel.cs",
           "src/Host/RumorNetworkSelfTest.cs",
-          "src/UI/RumorBoardPanel.cs"
+          "src/Host/RumorNetworkSaveStore.cs",
+          "src/Host/RumorNetworkHostSession.cs"
         ]
       }
     },
@@ -4450,18 +4450,18 @@
       "host_ref_files": {
         "ShelterNoiseSystem": [
           "src/Main.ShelterAtmosphere.cs",
-          "src/Host/ShelterAtmosphereHostSession.cs",
-          "src/Host/ShelterAtmosphereSelfTest.cs",
+          "src/UI/ShelterAtmospherePanel.cs",
           "src/Host/SleepAcousticRestHostSession.cs",
-          "src/UI/ShelterAtmospherePanel.cs"
+          "src/Host/ShelterAtmosphereSelfTest.cs",
+          "src/Host/ShelterAtmosphereHostSession.cs"
         ],
         "ShelterAtmosphereHostSession": [
           "src/Main.ShelterAtmosphere.cs",
+          "src/UI/ShelterAtmospherePanel.cs",
           "src/Host/ShelterAtmosphereSaveStore.cs",
-          "src/Host/ShelterNoiseSaveStore.cs",
-          "src/Host/ShelterAtmosphereHostSession.cs",
           "src/Host/ShelterAtmosphereSelfTest.cs",
-          "src/UI/ShelterAtmospherePanel.cs"
+          "src/Host/ShelterAtmosphereHostSession.cs",
+          "src/Host/ShelterNoiseSaveStore.cs"
         ]
       }
     },
@@ -4526,10 +4526,10 @@
         ],
         "SurvivorDeathLegacyHostSession": [
           "src/Main.SurvivorDeathLegacy.cs",
+          "src/UI/SurvivorDeathLegacyPanel.cs",
           "src/Host/SurvivorDeathLegacySaveStore.cs",
           "src/Host/SurvivorDeathLegacyHostSession.cs",
-          "src/Host/SurvivorDeathLegacySelfTest.cs",
-          "src/UI/SurvivorDeathLegacyPanel.cs"
+          "src/Host/SurvivorDeathLegacySelfTest.cs"
         ]
       }
     },
@@ -4594,10 +4594,10 @@
         ],
         "ShelterReputationHostSession": [
           "src/Main.ShelterReputation.cs",
-          "src/Host/ShelterReputationSaveStore.cs",
+          "src/UI/ShelterReputationPanel.cs",
           "src/Host/ShelterReputationHostSession.cs",
-          "src/Host/ShelterReputationSelfTest.cs",
-          "src/UI/ShelterReputationPanel.cs"
+          "src/Host/ShelterReputationSaveStore.cs",
+          "src/Host/ShelterReputationSelfTest.cs"
         ]
       }
     },
@@ -4728,9 +4728,9 @@
         ],
         "PersonalBelongingsHostSession": [
           "src/Main.PersonalBelongings.cs",
+          "src/UI/PersonalBelongingsPanel.cs",
           "src/Host/PersonalBelongingsHostSession.cs",
-          "src/Host/PersonalBelongingsSelfTest.cs",
-          "src/UI/PersonalBelongingsPanel.cs"
+          "src/Host/PersonalBelongingsSelfTest.cs"
         ]
       }
     },
@@ -4795,10 +4795,10 @@
         ],
         "TimeCapsuleHostSession": [
           "src/Main.TimeCapsule.cs",
-          "src/Host/TimeCapsuleSaveStore.cs",
+          "src/UI/TimeCapsulePanel.cs",
           "src/Host/TimeCapsuleHostSession.cs",
-          "src/Host/TimeCapsuleSelfTest.cs",
-          "src/UI/TimeCapsulePanel.cs"
+          "src/Host/TimeCapsuleSaveStore.cs",
+          "src/Host/TimeCapsuleSelfTest.cs"
         ]
       }
     },
@@ -4858,15 +4858,15 @@
       "host_ref_files": {
         "VisitorIntegrationSystem": [
           "src/Main.VisitorIntegration.cs",
-          "src/Host/VisitorIntegrationHostSession.cs",
-          "src/Host/VisitorIntegrationSelfTest.cs"
+          "src/Host/VisitorIntegrationSelfTest.cs",
+          "src/Host/VisitorIntegrationHostSession.cs"
         ],
         "VisitorIntegrationHostSession": [
           "src/Main.VisitorIntegration.cs",
+          "src/UI/VisitorIntegrationPanel.cs",
           "src/Host/VisitorIntegrationSaveStore.cs",
-          "src/Host/VisitorIntegrationHostSession.cs",
           "src/Host/VisitorIntegrationSelfTest.cs",
-          "src/UI/VisitorIntegrationPanel.cs"
+          "src/Host/VisitorIntegrationHostSession.cs"
         ]
       }
     },
@@ -4938,8 +4938,8 @@
         ],
         "ExerciseHostSession": [
           "src/Main.Exercise.cs",
-          "src/Host/ExerciseHostSession.cs",
-          "src/Host/HostCli.Exercise.cs"
+          "src/Host/HostCli.Exercise.cs",
+          "src/Host/ExerciseHostSession.cs"
         ]
       }
     },
@@ -4999,16 +4999,16 @@
       "host_ref_files": {
         "ShelterAtmosphereSystem": [
           "src/Main.ShelterAtmosphere.cs",
-          "src/Host/ShelterAtmosphereHostSession.cs",
-          "src/Host/ShelterAtmosphereSelfTest.cs"
+          "src/Host/ShelterAtmosphereSelfTest.cs",
+          "src/Host/ShelterAtmosphereHostSession.cs"
         ],
         "ShelterAtmosphereHostSession": [
           "src/Main.ShelterAtmosphere.cs",
+          "src/UI/ShelterAtmospherePanel.cs",
           "src/Host/ShelterAtmosphereSaveStore.cs",
-          "src/Host/ShelterNoiseSaveStore.cs",
-          "src/Host/ShelterAtmosphereHostSession.cs",
           "src/Host/ShelterAtmosphereSelfTest.cs",
-          "src/UI/ShelterAtmospherePanel.cs"
+          "src/Host/ShelterAtmosphereHostSession.cs",
+          "src/Host/ShelterNoiseSaveStore.cs"
         ]
       }
     }
