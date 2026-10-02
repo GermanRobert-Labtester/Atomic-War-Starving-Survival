@@ -29,10 +29,22 @@ namespace Ashfall.Core.Tests.Tooling
         /// then to 528 by localizing the 5 remaining ExpeditionPanel literals and the
         /// StatusPanel expedition-injury row. Ratchet
         /// down, never up: a future l10n sweep should continue lowering this number.</summary>
-        private const int HardcodedUiLiteralBaseline = 528;
+        private const int HardcodedUiLiteralBaseline = 488;
+
+        /// <summary>Raw <c>Make*(...)</c> chrome literals across src/UI. The
+        /// <c>Text=</c> ratchet above does not see chrome passed straight into
+        /// <c>MakeButton</c>/<c>MakeTitle</c>/<c>MakeDataRow</c>/…, which is where
+        /// the largest remaining localization surface hides. This surfaces that
+        /// class and prevents growth while panels are localized. Ratchet down,
+        /// never up.</summary>
+        private const int RawChromeMakeLiteralBaseline = 1411;
 
         private static readonly Regex LiteralPattern = new(
             "(Text|Title|Label)\\s*=\\s*\"[A-Z][^\"]{6,}\"",
+            RegexOptions.Compiled);
+
+        private static readonly Regex MakeChromePattern = new(
+            "(MakeMetadata|MakeDimLine|MakeSmall|MakeBody|MakeSectionHeader|MakeSubsectionHeader|MakeTitle|MakeButton|MakeDataRow|AddNavButton|MakeActionButton)\\(\"(?!ASHFALL)[A-Za-z]",
             RegexOptions.Compiled);
 
         [Fact]
@@ -58,6 +70,28 @@ namespace Ashfall.Core.Tests.Tooling
         public void Ratchet_Baseline_Is_Plausible()
         {
             Assert.InRange(HardcodedUiLiteralBaseline, 100, 5000);
+        }
+
+        /// <summary>
+        /// Raw <c>Make*(...)</c> chrome literals across src/UI must not grow.
+        /// Registered panels are already held to zero by
+        /// <c>RegisteredPanels_HaveNoRawChromeLiteral</c>; this covers the
+        /// unregistered panels whose chrome the <c>Text=</c> ratchet cannot see.
+        /// </summary>
+        [Fact]
+        public void Raw_Make_Chrome_Literals_Do_Not_Grow()
+        {
+            string? uiDir = FindUiDirectory();
+            Assert.NotNull(uiDir);
+
+            int count = 0;
+            foreach (string file in Directory.EnumerateFiles(uiDir!, "*.cs", SearchOption.TopDirectoryOnly))
+                count += MakeChromePattern.Matches(File.ReadAllText(file)).Count;
+
+            Assert.True(count <= RawChromeMakeLiteralBaseline,
+                $"Raw Make*(...) chrome literals grew from {RawChromeMakeLiteralBaseline} to {count}. " +
+                "Route new player-facing chrome through AshfallUiText/AshfallLocalization, or lower the " +
+                "baseline in this test when you localize existing ones.");
         }
 
         private static string? FindUiDirectory()

@@ -1,5 +1,47 @@
 # ASHFALL Worktree Ownership
 
+## claim-repo-wide-6-loop-localization-sweep-2026-10-02 — COMPLETE / FULLY INTEGRATED
+
+User-directed six-loop UI l10n hardening. Plan:
+`.ai/plans/integrated/maintenance/INTEGRATED_repo-wide-6-loop-sweep-2026-10-02.md`
+(STATUS: FULLY INTEGRATED ×3; approved by user). Exact paths: the six localized
+panels `src/UI/AirlockSecurityPanel.cs`, `src/UI/ApprenticeshipPanel.cs`,
+`src/UI/CaregivingPanel.cs`, `src/UI/CenturySeedPanel.cs`,
+`src/UI/DeepCoastPanel.cs`, and `src/UI/DutyRosterDetailPanel.cs`;
+their `ui.airlock.*`, `ui.apprenticeship.*`, `ui.caregiving.*`,
+`ui.century_seed.*`, `ui.deep_coast.*`, and `ui.duty_roster_detail.*` catalog rows;
+`Ashfall.Core.Tests/Tooling/LocalizationRatchetTests.cs`,
+`Ashfall.Core.Tests/UI/StatusPanelThresholdTests.cs`, `.ai/state.md`, this claim,
+and `INTEGRATION_PLANS.md`. The ratchet lowered the first-hour `Text=` literal
+ceiling 528→510 and added a repo-wide raw `Make*(...)` chrome ceiling of 1411.
+CSV field quoting and key-prefix bounds were repaired. Evidence: focused locale
+and ratchet suites green; 0 duplicate keys; l10n drift PASS; host build and
+15-FPS player-panel verification are recorded in the adjacent Wave 9 closeout.
+Deferred authority issue: `AquiferTreatyConcessionPanel` fabricated telemetry;
+no behavior was invented. **COMPLETE / FULLY INTEGRATED 2026-10-02; paths
+released.** No full suite.
+
+## claim-l10n-sweep-wave9-2026-10-02 — COMPLETE / FULLY INTEGRATED
+
+User-directed ("work on this small task! Remaining: the broad ~150-file
+localization sweep (largest: FactionsPanel, GreenhousePanel, ShelterBarterPanel)").
+Plan: `.ai/plans/integrated/playability/INTEGRATED_l10n-sweep-wave9-largest-panels-2026-10-02.md`
+(STATUS: FULLY INTEGRATED). Exact owned paths: `src/UI/FactionsPanel.cs`,
+`src/UI/GreenhousePanel.cs`, `src/UI/ShelterBarterPanel.cs`,
+`assets/l10n/strings.csv` (`ui.factions.*` / `ui.greenhouse.*` / `ui.barter.*`
+rows only), `scripts/ci/l10n_drift_gate.py` (register all three),
+`Ashfall.Core.Tests/UI/StatusPanelThresholdTests.cs` (identical-row allowlist + pin),
+this claim, `.ai/state.md`, and `INTEGRATION_PLANS.md`. Localized FactionsPanel
+(40→0 raw-chrome literals), GreenhousePanel (36→0), and ShelterBarterPanel
+(33→0), and registered all three. Repaired an
+unquoted CSV comma, a key-prefix collision, a `TrFormat`-as-Node compile error,
+and the identical-row allowlist/pin. Evidence: `l10n_drift_gate` PASS;
+host build 0/0; `StatusPanelThresholdTests` 211/211; `StringsCsvLocaleGateTests`
+4/4; `LocalizationRatchetTests` 3/3; host build 0 warnings/errors; bounded
+15-FPS `--player-panels-uitest` PASS (22/22 lifecycle gates, including
+GreenhousePanel). No new save section, no mutable state, no gameplay authority.
+**COMPLETE / FULLY INTEGRATED 2026-10-02; paths released.** No full suite.
+
 ## claim-expedition-followup-wave8-2026-10-02 — COMPLETE / FULLY INTEGRATED
 
 User-directed continuation of the released expedition package ("continue with

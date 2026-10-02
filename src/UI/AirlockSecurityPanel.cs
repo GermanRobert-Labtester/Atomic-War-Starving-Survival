@@ -6,6 +6,7 @@ using Ashfall.Core.UI;
 using AtomicWar.GodotApp;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
+using AtomicWar.GodotApp.Localization;
 namespace AtomicWar.GodotApp.UI
 {
     public partial class AirlockSecurityPanel : Control, IBindablePanel
@@ -104,7 +105,8 @@ namespace AtomicWar.GodotApp.UI
             {
                 if (_detailText != null)
                 {
-                    _detailText.Text = "Airlock security session is not bound. Sentry post & biometric scanners are offline.";
+                    _detailText.Text = AshfallLocalization.Tr("ui.airlock.unbound",
+                        "Airlock security session is not bound. Sentry post & biometric scanners are offline.");
                 }
                 if (_admitBtn != null) _admitBtn.Disabled = true;
                 if (_quarantineBtn != null) _quarantineBtn.Disabled = true;

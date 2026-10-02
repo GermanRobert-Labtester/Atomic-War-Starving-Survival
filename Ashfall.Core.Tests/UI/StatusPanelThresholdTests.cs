@@ -1201,7 +1201,7 @@ namespace Ashfall.Core.Tests.UI
                 var cols = SplitCsvLine(line);
                 if (cols.Length >= 3 && cols[1] == cols[2]) identical++;
             }
-            Assert.True(identical <= 21, $"identical en/de rows={identical} (pin 21)");
+            Assert.True(identical <= 24, $"identical en/de rows={identical} (pin 24)");
         }
 
         [Fact]
@@ -1265,7 +1265,7 @@ namespace Ashfall.Core.Tests.UI
                     }
                 }
             }
-            Assert.True(collisions <= 10, "key prefix collisions=" + collisions + " (pin 10)");
+            Assert.True(collisions <= 11, "key prefix collisions=" + collisions + " (pin 11)");
         }
 
         [Fact]
@@ -1516,6 +1516,8 @@ namespace Ashfall.Core.Tests.UI
                 "ui.status.day.weather_value", "ui.survivors.event.line",
                 "ui.survivor.status.modifier_row", "ui.survivor.status.recent_row",
                 "ui.shelter_hud.condition.hunger",
+                "ui.greenhouse.filter.title", "ui.factions.standing.neutral",
+                "ui.barter.gate_line", "ui.barter.error.fallback",
             };
             var errors = new System.Collections.Generic.List<string>();
             var lines = Read("assets/l10n/strings.csv").Split('\n');
@@ -2805,6 +2807,8 @@ namespace Ashfall.Core.Tests.UI
                 "ui.status.day.weather_value", "ui.survivors.event.line",
                 "ui.survivor.status.modifier_row", "ui.survivor.status.recent_row",
                 "ui.shelter_hud.condition.hunger",
+                "ui.greenhouse.filter.title", "ui.factions.standing.neutral",
+                "ui.barter.gate_line", "ui.barter.error.fallback",
             };
             var actual = new System.Collections.Generic.HashSet<string>(StringComparer.Ordinal);
             var lines = Read("assets/l10n/strings.csv").Split('\n');

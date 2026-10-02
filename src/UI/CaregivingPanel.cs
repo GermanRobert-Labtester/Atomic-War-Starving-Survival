@@ -5,6 +5,7 @@ using Ashfall.Core.Survivors;
 using AtomicWar.GodotApp;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
+using AtomicWar.GodotApp.Localization;
 namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
@@ -95,7 +96,8 @@ namespace AtomicWar.GodotApp.UI
             {
                 if (_detailText != null)
                 {
-                    _detailText.Text = "Caregiving host session is not bound. Bedside tending assignments and bond records are offline.";
+                    _detailText.Text = AshfallLocalization.Tr("ui.caregiving.unbound",
+                        "Caregiving host session is not bound. Bedside tending assignments and bond records are offline.");
                 }
                 return;
             }

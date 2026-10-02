@@ -6,6 +6,7 @@ using Ashfall.Core;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
 
+using AtomicWar.GodotApp.Localization;
 namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
@@ -101,7 +102,7 @@ namespace AtomicWar.GodotApp.UI
             }
             else
             {
-                var lbl = new Label { Text = "Marks: none yet. The wall is blank." };
+                var lbl = new Label { Text = AshfallLocalization.Tr("ui.duty_roster_detail.no_marks", "Marks: none yet. The wall is blank.") };
                 labelify(lbl);
                 _performanceList.AddChild(lbl);
             }

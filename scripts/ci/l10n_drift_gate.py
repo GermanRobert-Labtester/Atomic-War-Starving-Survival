@@ -89,6 +89,12 @@ LOCALIZED_SURFACES = [
     ROOT / "src" / "UI" / "RadioIntelligencePanel.cs",
     ROOT / "src" / "UI" / "GameOverPanel.cs",
     ROOT / "src" / "UI" / "ExpeditionCampPanel.cs",
+    # Wave-9 sweep 2026-10-02: the three largest remaining raw-chrome panels now
+    # route their chrome through AshfallUiText; register them so a new untranslated
+    # key fails the gate.
+    ROOT / "src" / "UI" / "FactionsPanel.cs",
+    ROOT / "src" / "UI" / "GreenhousePanel.cs",
+    ROOT / "src" / "UI" / "ShelterBarterPanel.cs",
 ]
 
 

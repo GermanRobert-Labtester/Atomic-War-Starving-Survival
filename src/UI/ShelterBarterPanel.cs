@@ -177,7 +177,7 @@ namespace AtomicWar.GodotApp.UI
             leftVbox.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
             leftMargin.AddChild(leftVbox);
 
-            leftVbox.AddChild(AshfallUiHelpers.MakeSectionHeader("CARAVAN REGISTRY & SCHEDULE"));
+            leftVbox.AddChild(AshfallUiHelpers.MakeSectionHeader(AshfallUiText.Tr("ui.barter.caravan_registry", "CARAVAN REGISTRY & SCHEDULE")));
             leftVbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
             var leftScroll = new ScrollContainer
@@ -210,27 +210,27 @@ namespace AtomicWar.GodotApp.UI
             merchantMargin.AddChild(merchantVbox);
 
             var merchantHeaderRow = new HBoxContainer();
-            merchantHeaderRow.AddChild(AshfallUiHelpers.MakeSectionHeader("MERCHANT STOCK (OFFERED)"));
-            var brokerBadge = AshfallUiHelpers.MakeMetadata("[BROKER INVENTORY]");
+            merchantHeaderRow.AddChild(AshfallUiHelpers.MakeSectionHeader(AshfallUiText.Tr("ui.barter.merchant_stock", "MERCHANT STOCK (OFFERED)")));
+            var brokerBadge = AshfallUiHelpers.MakeMetadata(AshfallUiText.Tr("ui.barter.broker_inventory", "[BROKER INVENTORY]"));
             brokerBadge.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
             merchantHeaderRow.AddChild(brokerBadge);
             merchantVbox.AddChild(merchantHeaderRow);
 
             var merchantColsHeader = new HBoxContainer();
             merchantColsHeader.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
-            var mH1 = AshfallUiHelpers.MakeMetadata("ITEM IDENTIFIER");
+            var mH1 = AshfallUiHelpers.MakeMetadata(AshfallUiText.Tr("ui.barter.col.item", "ITEM IDENTIFIER"));
             mH1.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             merchantColsHeader.AddChild(mH1);
-            var mH2 = AshfallUiHelpers.MakeMetadata("STOCK");
+            var mH2 = AshfallUiHelpers.MakeMetadata(AshfallUiText.Tr("ui.barter.col.stock", "STOCK"));
             mH2.CustomMinimumSize = new Vector2(50, 0);
             merchantColsHeader.AddChild(mH2);
-            var mH3 = AshfallUiHelpers.MakeMetadata("VALUE");
+            var mH3 = AshfallUiHelpers.MakeMetadata(AshfallUiText.Tr("ui.barter.col.value", "VALUE"));
             mH3.CustomMinimumSize = new Vector2(65, 0);
             merchantColsHeader.AddChild(mH3);
-            var mH4 = AshfallUiHelpers.MakeMetadata("TAKE (QTY)");
+            var mH4 = AshfallUiHelpers.MakeMetadata(AshfallUiText.Tr("ui.barter.col.take", "TAKE (QTY)"));
             mH4.CustomMinimumSize = new Vector2(85, 0);
             merchantColsHeader.AddChild(mH4);
-            var mH5 = AshfallUiHelpers.MakeMetadata("SUBTOTAL");
+            var mH5 = AshfallUiHelpers.MakeMetadata(AshfallUiText.Tr("ui.barter.col.subtotal", "SUBTOTAL"));
             mH5.CustomMinimumSize = new Vector2(65, 0);
             merchantColsHeader.AddChild(mH5);
             merchantVbox.AddChild(merchantColsHeader);
@@ -248,7 +248,7 @@ namespace AtomicWar.GodotApp.UI
             merchantVbox.AddChild(merchantScroll);
 
             merchantVbox.AddChild(AshfallUiHelpers.MakeSeparator());
-            _merchantSubtotalLabel = AshfallUiHelpers.MakeBody("REQUESTED: 0.0 VALUE UNITS");
+            _merchantSubtotalLabel = AshfallUiHelpers.MakeBody(AshfallUiText.Tr("ui.barter.requested_zero", "REQUESTED: 0.0 VALUE UNITS"));
             _merchantSubtotalLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
             merchantVbox.AddChild(_merchantSubtotalLabel);
 
@@ -265,27 +265,27 @@ namespace AtomicWar.GodotApp.UI
             playerMargin.AddChild(playerVbox);
 
             var playerHeaderRow = new HBoxContainer();
-            playerHeaderRow.AddChild(AshfallUiHelpers.MakeSectionHeader("SHELTER STORES (OFFERED)"));
-            var vaultBadge = AshfallUiHelpers.MakeMetadata("[VAULT STORAGE]");
+            playerHeaderRow.AddChild(AshfallUiHelpers.MakeSectionHeader(AshfallUiText.Tr("ui.barter.shelter_stores", "SHELTER STORES (OFFERED)")));
+            var vaultBadge = AshfallUiHelpers.MakeMetadata(AshfallUiText.Tr("ui.barter.vault_storage", "[VAULT STORAGE]"));
             vaultBadge.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Success));
             playerHeaderRow.AddChild(vaultBadge);
             playerVbox.AddChild(playerHeaderRow);
 
             var playerColsHeader = new HBoxContainer();
             playerColsHeader.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
-            var pH1 = AshfallUiHelpers.MakeMetadata("ITEM IDENTIFIER");
+            var pH1 = AshfallUiHelpers.MakeMetadata(AshfallUiText.Tr("ui.barter.col.item", "ITEM IDENTIFIER"));
             pH1.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             playerColsHeader.AddChild(pH1);
-            var pH2 = AshfallUiHelpers.MakeMetadata("AVAIL");
+            var pH2 = AshfallUiHelpers.MakeMetadata(AshfallUiText.Tr("ui.barter.col.avail", "AVAIL"));
             pH2.CustomMinimumSize = new Vector2(50, 0);
             playerColsHeader.AddChild(pH2);
-            var pH3 = AshfallUiHelpers.MakeMetadata("VALUE");
+            var pH3 = AshfallUiHelpers.MakeMetadata(AshfallUiText.Tr("ui.barter.col.value", "VALUE"));
             pH3.CustomMinimumSize = new Vector2(65, 0);
             playerColsHeader.AddChild(pH3);
-            var pH4 = AshfallUiHelpers.MakeMetadata("OFFER (QTY)");
+            var pH4 = AshfallUiHelpers.MakeMetadata(AshfallUiText.Tr("ui.barter.col.offer", "OFFER (QTY)"));
             pH4.CustomMinimumSize = new Vector2(85, 0);
             playerColsHeader.AddChild(pH4);
-            var pH5 = AshfallUiHelpers.MakeMetadata("SUBTOTAL");
+            var pH5 = AshfallUiHelpers.MakeMetadata(AshfallUiText.Tr("ui.barter.col.subtotal", "SUBTOTAL"));
             pH5.CustomMinimumSize = new Vector2(65, 0);
             playerColsHeader.AddChild(pH5);
             playerVbox.AddChild(playerColsHeader);
@@ -303,7 +303,7 @@ namespace AtomicWar.GodotApp.UI
             playerVbox.AddChild(playerScroll);
 
             playerVbox.AddChild(AshfallUiHelpers.MakeSeparator());
-            _playerSubtotalLabel = AshfallUiHelpers.MakeBody("OFFERED: 0.0 VALUE UNITS");
+            _playerSubtotalLabel = AshfallUiHelpers.MakeBody(AshfallUiText.Tr("ui.barter.offered_zero", "OFFERED: 0.0 VALUE UNITS"));
             _playerSubtotalLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Success));
             playerVbox.AddChild(_playerSubtotalLabel);
 
@@ -333,12 +333,12 @@ namespace AtomicWar.GodotApp.UI
             scaleBox.SizeFlagsStretchRatio = 1.3f;
 
             var scaleHeaderRow = new HBoxContainer();
-            scaleHeaderRow.AddChild(AshfallUiHelpers.MakeSectionHeader("ARBITRATOR BALANCE SCALE"));
-            _arbitratorStatusBadge = AshfallUiHelpers.MakeBody("[SELECT ITEMS]");
+            scaleHeaderRow.AddChild(AshfallUiHelpers.MakeSectionHeader(AshfallUiText.Tr("ui.barter.balance_scale", "ARBITRATOR BALANCE SCALE")));
+            _arbitratorStatusBadge = AshfallUiHelpers.MakeBody(AshfallUiText.Tr("ui.barter.select_items", "[SELECT ITEMS]"));
             scaleHeaderRow.AddChild(_arbitratorStatusBadge);
             scaleBox.AddChild(scaleHeaderRow);
 
-            _balanceMetricsLabel = AshfallUiHelpers.MakeMetadata("OFFERED: 0.0 VU | TOLERANCE THRESHOLD: 0.0 VU | REQUIRED: 0.0 VU");
+            _balanceMetricsLabel = AshfallUiHelpers.MakeMetadata(AshfallUiText.Tr("ui.barter.balance_metrics_zero", "OFFERED: 0.0 VU | TOLERANCE THRESHOLD: 0.0 VU | REQUIRED: 0.0 VU"));
             scaleBox.AddChild(_balanceMetricsLabel);
 
             _balanceProgressBar = new ProgressBar
@@ -352,7 +352,7 @@ namespace AtomicWar.GodotApp.UI
             };
             scaleBox.AddChild(_balanceProgressBar);
 
-            _balanceCoverageLabel = AshfallUiHelpers.MakeMetadata("Coverage: 0% — Fair deal requires offer meeting caravan tolerance margin.");
+            _balanceCoverageLabel = AshfallUiHelpers.MakeMetadata(AshfallUiText.Tr("ui.barter.coverage_zero", "Coverage: 0% — Fair deal requires offer meeting caravan tolerance margin."));
             scaleBox.AddChild(_balanceCoverageLabel);
 
             diagnosticRow.AddChild(scaleBox);
@@ -363,16 +363,16 @@ namespace AtomicWar.GodotApp.UI
             gateBox.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             gateBox.SizeFlagsStretchRatio = 1.0f;
 
-            gateBox.AddChild(AshfallUiHelpers.MakeSectionHeader("PRE-CONDITION GATE DIAGNOSTICS"));
-            _gateAirlockLabel = AshfallUiHelpers.MakeMetadata("AIRLOCK ACCESSIBLE: [ ... ]");
+            gateBox.AddChild(AshfallUiHelpers.MakeSectionHeader(AshfallUiText.Tr("ui.barter.gate_diag", "PRE-CONDITION GATE DIAGNOSTICS")));
+            _gateAirlockLabel = AshfallUiHelpers.MakeMetadata(AshfallUiText.Tr("ui.barter.gate_airlock", "AIRLOCK ACCESSIBLE: [ ... ]"));
             gateBox.AddChild(_gateAirlockLabel);
-            _gatePresenceLabel = AshfallUiHelpers.MakeMetadata("CARAVAN AT AIRLOCK: [ ... ]");
+            _gatePresenceLabel = AshfallUiHelpers.MakeMetadata(AshfallUiText.Tr("ui.barter.gate_presence", "CARAVAN AT AIRLOCK: [ ... ]"));
             gateBox.AddChild(_gatePresenceLabel);
-            _gateRequestsLabel = AshfallUiHelpers.MakeMetadata("GOODS REQUESTED: [ ... ]");
+            _gateRequestsLabel = AshfallUiHelpers.MakeMetadata(AshfallUiText.Tr("ui.barter.gate_requests", "GOODS REQUESTED: [ ... ]"));
             gateBox.AddChild(_gateRequestsLabel);
-            _gateToleranceLabel = AshfallUiHelpers.MakeMetadata("VALUATION THRESHOLD: [ ... ]");
+            _gateToleranceLabel = AshfallUiHelpers.MakeMetadata(AshfallUiText.Tr("ui.barter.gate_tolerance", "VALUATION THRESHOLD: [ ... ]"));
             gateBox.AddChild(_gateToleranceLabel);
-            _gateCounterfeitLabel = AshfallUiHelpers.MakeMetadata("APPRAISAL VERIFICATION: [ ... ]");
+            _gateCounterfeitLabel = AshfallUiHelpers.MakeMetadata(AshfallUiText.Tr("ui.barter.gate_counterfeit", "APPRAISAL VERIFICATION: [ ... ]"));
             gateBox.AddChild(_gateCounterfeitLabel);
 
             diagnosticRow.AddChild(gateBox);
@@ -389,15 +389,15 @@ namespace AtomicWar.GodotApp.UI
             summaryVbox.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
             summaryVbox.SizeFlagsHorizontal = SizeFlags.ExpandFill;
 
-            _costSummaryLabel = AshfallUiHelpers.MakeBody("COST: None allocated.");
+            _costSummaryLabel = AshfallUiHelpers.MakeBody(AshfallUiText.Tr("ui.barter.cost_none", "COST: None allocated."));
             _costSummaryLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Critical));
             summaryVbox.AddChild(_costSummaryLabel);
 
-            _gainSummaryLabel = AshfallUiHelpers.MakeBody("GAIN: None requested.");
+            _gainSummaryLabel = AshfallUiHelpers.MakeBody(AshfallUiText.Tr("ui.barter.gain_none", "GAIN: None requested."));
             _gainSummaryLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Success));
             summaryVbox.AddChild(_gainSummaryLabel);
 
-            _consequenceLabel = AshfallUiHelpers.MakeMetadata("CONSEQUENCE: Deducts stock permanently from caravan; increments trade ledger; logs transaction to Journal.");
+            _consequenceLabel = AshfallUiHelpers.MakeMetadata(AshfallUiText.Tr("ui.barter.consequence", "CONSEQUENCE: Deducts stock permanently from caravan; increments trade ledger; logs transaction to Journal."));
             summaryVbox.AddChild(_consequenceLabel);
 
             costConsequenceRow.AddChild(summaryVbox);
@@ -406,11 +406,11 @@ namespace AtomicWar.GodotApp.UI
             var buttonsVbox = new HBoxContainer();
             buttonsVbox.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
 
-            _clearButton = AshfallUiHelpers.MakeButton("CLEAR ALLOCATIONS", HandleClearAllocations);
+            _clearButton = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.barter.clear", "CLEAR ALLOCATIONS"), HandleClearAllocations);
             _clearButton.CustomMinimumSize = new Vector2(150, 36);
             buttonsVbox.AddChild(_clearButton);
 
-            _executeButton = AshfallUiHelpers.MakeButton("EXECUTE BARTER TRANSACTION", HandleExecuteTrade);
+            _executeButton = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.barter.execute", "EXECUTE BARTER TRANSACTION"), HandleExecuteTrade);
             _executeButton.CustomMinimumSize = new Vector2(240, 36);
             buttonsVbox.AddChild(_executeButton);
 
@@ -474,7 +474,7 @@ namespace AtomicWar.GodotApp.UI
             {
                 _selectedCaravanId = caravan.caravan_id;
             }
-            SetFeedback($"Caravan arrived: {caravan.name} is now docked at the airlock.", isError: false);
+            SetFeedback(AshfallUiText.TrFormat("ui.barter.caravan_arrived", "Caravan arrived: {0} is now docked at the airlock.", caravan.name), isError: false);
             RefreshView();
         }
 
@@ -485,7 +485,7 @@ namespace AtomicWar.GodotApp.UI
                 _playerOffers.Clear();
                 _playerRequests.Clear();
             }
-            SetFeedback($"Caravan departed: {caravan.name} moved on.", isError: false);
+            SetFeedback(AshfallUiText.TrFormat("ui.barter.caravan_departed", "Caravan departed: {0} moved on.", caravan.name), isError: false);
             RefreshView();
         }
 
@@ -629,7 +629,7 @@ namespace AtomicWar.GodotApp.UI
                 if (isAtAirlock)
                 {
                     int daysLeft = Math.Max(1, def.stay_duration_days - (cState?.daysPresent ?? 1) + 1);
-                    var pill = AshfallUiHelpers.MakeMetadata($"[AT AIRLOCK - DEPARTS IN {daysLeft}D]");
+                    var pill = AshfallUiHelpers.MakeMetadata(AshfallUiText.TrFormat("ui.barter.caravan_departure", "[AT AIRLOCK - DEPARTS IN {0}D]", daysLeft));
                     pill.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
                     vbox.AddChild(pill);
                 }
@@ -637,7 +637,7 @@ namespace AtomicWar.GodotApp.UI
                 {
                     int daysUntil = (def.schedule_period_days - (currentDay % def.schedule_period_days)) % def.schedule_period_days;
                     if (daysUntil == 0) daysUntil = def.schedule_period_days;
-                    var pill = AshfallUiHelpers.MakeMetadata($"[EN ROUTE - ARRIVES IN {daysUntil}D]");
+                    var pill = AshfallUiHelpers.MakeMetadata(AshfallUiText.TrFormat("ui.barter.caravan_arrival", "[EN ROUTE - ARRIVES IN {0}D]", daysUntil));
                     pill.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Dim));
                     vbox.AddChild(pill);
                 }
@@ -651,13 +651,13 @@ namespace AtomicWar.GodotApp.UI
                 string demandsStr = def.demanded_item_tags.Count > 0
                     ? string.Join(", ", def.demanded_item_tags.Select(t => FormatTagName(t)))
                     : "None";
-                var demLbl = AshfallUiHelpers.MakeMetadata($"Demands: {demandsStr}");
+                var demLbl = AshfallUiHelpers.MakeMetadata(AshfallUiText.TrFormat("ui.barter.demands", "Demands: {0}", demandsStr));
                 demLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Hot));
                 vbox.AddChild(demLbl);
 
                 if (isSelected)
                 {
-                    var selIndicator = AshfallUiHelpers.MakeMetadata("▶ CURRENTLY INSPECTING");
+                    var selIndicator = AshfallUiHelpers.MakeMetadata(AshfallUiText.Tr("ui.barter.currently_inspecting", "▶ CURRENTLY INSPECTING"));
                     selIndicator.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
                     vbox.AddChild(selIndicator);
                 }
@@ -673,8 +673,8 @@ namespace AtomicWar.GodotApp.UI
 
             if (caravan == null || cState == null)
             {
-                _merchantStockContainer.AddChild(AshfallUiHelpers.MakeMetadata("Select a caravan from the registry."));
-                _merchantSubtotalLabel.Text = "REQUESTED: 0.0 VALUE UNITS";
+                _merchantStockContainer.AddChild(AshfallUiHelpers.MakeMetadata(AshfallUiText.Tr("ui.barter.select_caravan", "Select a caravan from the registry.")));
+                _merchantSubtotalLabel.Text = AshfallUiText.Tr("ui.barter.requested_zero", "REQUESTED: 0.0 VALUE UNITS");
                 return;
             }
 
@@ -683,7 +683,7 @@ namespace AtomicWar.GodotApp.UI
 
             if (caravan.stock.Count == 0)
             {
-                _merchantStockContainer.AddChild(AshfallUiHelpers.MakeMetadata("Caravan has no stock configured."));
+                _merchantStockContainer.AddChild(AshfallUiHelpers.MakeMetadata(AshfallUiText.Tr("ui.barter.no_caravan_stock", "Caravan has no stock configured.")));
             }
 
             var stockItems = _barterSystem != null ? _barterSystem.GetPrioritizedStock(caravan) : (IReadOnlyList<CaravanStockItem>)caravan.stock;
@@ -784,7 +784,7 @@ namespace AtomicWar.GodotApp.UI
                 _merchantStockContainer.AddChild(row);
             }
 
-            _merchantSubtotalLabel.Text = $"REQUESTED: {totalCost:F1} VALUE UNITS";
+            _merchantSubtotalLabel.Text = AshfallUiText.TrFormat("ui.barter.requested_value", "REQUESTED: {0} VALUE UNITS", totalCost.ToString("F1"));
         }
 
         private void RefreshPlayerStoresTable(MerchantCaravanDef? caravan)
@@ -794,8 +794,8 @@ namespace AtomicWar.GodotApp.UI
 
             if (_inventory == null || _barterSystem == null)
             {
-                _playerStoresContainer.AddChild(AshfallUiHelpers.MakeMetadata("Storage system unavailable."));
-                _playerSubtotalLabel.Text = "OFFERED: 0.0 VALUE UNITS";
+                _playerStoresContainer.AddChild(AshfallUiHelpers.MakeMetadata(AshfallUiText.Tr("ui.barter.storage_unavailable", "Storage system unavailable.")));
+                _playerSubtotalLabel.Text = AshfallUiText.Tr("ui.barter.offered_zero", "OFFERED: 0.0 VALUE UNITS");
                 return;
             }
 
@@ -819,8 +819,8 @@ namespace AtomicWar.GodotApp.UI
 
             if (invItems.Count == 0)
             {
-                _playerStoresContainer.AddChild(AshfallUiHelpers.MakeMetadata("No tradeable goods in shelter storage."));
-                _playerSubtotalLabel.Text = "OFFERED: 0.0 VALUE UNITS";
+                _playerStoresContainer.AddChild(AshfallUiHelpers.MakeMetadata(AshfallUiText.Tr("ui.barter.no_goods", "No tradeable goods in shelter storage.")));
+                _playerSubtotalLabel.Text = AshfallUiText.Tr("ui.barter.offered_zero", "OFFERED: 0.0 VALUE UNITS");
                 return;
             }
 
@@ -873,7 +873,7 @@ namespace AtomicWar.GodotApp.UI
 
                 if (isDemanded)
                 {
-                    var bonusLbl = AshfallUiHelpers.MakeMetadata("+DEMAND BONUS");
+                    var bonusLbl = AshfallUiHelpers.MakeMetadata(AshfallUiText.Tr("ui.barter.demand_bonus", "+DEMAND BONUS"));
                     bonusLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Success));
                     nameVbox.AddChild(bonusLbl);
                 }
@@ -942,7 +942,7 @@ namespace AtomicWar.GodotApp.UI
                 _playerStoresContainer.AddChild(row);
             }
 
-            _playerSubtotalLabel.Text = $"OFFERED: {totalOfferVal:F1} VALUE UNITS";
+            _playerSubtotalLabel.Text = AshfallUiText.TrFormat("ui.barter.offered_value", "OFFERED: {0} VALUE UNITS", totalOfferVal.ToString("F1"));
         }
 
         private void RefreshBalanceAndDiagnostics(MerchantCaravanDef? caravan, CaravanRuntimeState? cState)
@@ -964,7 +964,7 @@ namespace AtomicWar.GodotApp.UI
             float toleranceThresholdVal = (caravanRequiredVal * toleranceBp) / (float)ShelterBarterSystem.BasisPointsScale;
 
             // 1. Balance scale visuals
-            _balanceMetricsLabel.Text = $"OFFERED: {playerOfferVal:F1} VU | TOLERANCE THRESHOLD: ≥ {toleranceThresholdVal:F1} VU | REQUIRED: {caravanRequiredVal:F1} VU";
+            _balanceMetricsLabel.Text = AshfallUiText.TrFormat("ui.barter.balance_metrics", "OFFERED: {0} VU | TOLERANCE THRESHOLD: ≥ {1} VU | REQUIRED: {2} VU", playerOfferVal.ToString("F1"), toleranceThresholdVal.ToString("F1"), caravanRequiredVal.ToString("F1"));
 
             float progressPct = 0f;
             if (toleranceThresholdVal > 0.001f)
@@ -979,69 +979,71 @@ namespace AtomicWar.GodotApp.UI
 
             if (!hasRequests)
             {
-                _arbitratorStatusBadge.Text = "[SELECT GOODS TO PURCHASE]";
+                _arbitratorStatusBadge.Text = AshfallUiText.Tr("ui.barter.select_goods", "[SELECT GOODS TO PURCHASE]");
                 _arbitratorStatusBadge.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Dim));
-                _balanceCoverageLabel.Text = "Coverage: 0% — Allocate caravan stock on the left, then offer shelter stores on the right.";
+                _balanceCoverageLabel.Text = AshfallUiText.Tr("ui.barter.coverage_allocate", "Coverage: 0% — Allocate caravan stock on the left, then offer shelter stores on the right.");
             }
             else if (!isCaravanAtAirlock)
             {
-                _arbitratorStatusBadge.Text = "[CARAVAN NOT AT AIRLOCK]";
+                _arbitratorStatusBadge.Text = AshfallUiText.Tr("ui.barter.caravan_not_docked", "[CARAVAN NOT AT AIRLOCK]");
                 _arbitratorStatusBadge.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Critical));
-                _balanceCoverageLabel.Text = "Barter cannot be executed: Caravan is en route.";
+                _balanceCoverageLabel.Text = AshfallUiText.Tr("ui.barter.coverage_enroute", "Barter cannot be executed: Caravan is en route.");
             }
             else if (!isAirlockAccessible)
             {
-                _arbitratorStatusBadge.Text = "[AIRLOCK FROZEN / INACCESSIBLE]";
+                _arbitratorStatusBadge.Text = AshfallUiText.Tr("ui.barter.airlock_inaccessible", "[AIRLOCK FROZEN / INACCESSIBLE]");
                 _arbitratorStatusBadge.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Critical));
-                _balanceCoverageLabel.Text = "Barter blocked: The shelter airlock is frozen.";
+                _balanceCoverageLabel.Text = AshfallUiText.Tr("ui.barter.coverage_frozen", "Barter blocked: The shelter airlock is frozen.");
             }
             else if (isValueSufficient)
             {
                 float surplus = playerOfferVal - toleranceThresholdVal;
-                _arbitratorStatusBadge.Text = "[FAIR DEAL — MERCHANT ACCEPTS]";
+                _arbitratorStatusBadge.Text = AshfallUiText.Tr("ui.barter.fair_deal", "[FAIR DEAL — MERCHANT ACCEPTS]");
                 _arbitratorStatusBadge.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Success));
-                _balanceCoverageLabel.Text = $"Coverage: {progressPct:F0}% — Trade viable. Surplus of +{surplus:F1} VU converts to merchant trust.";
+                _balanceCoverageLabel.Text = AshfallUiText.TrFormat("ui.barter.coverage_viable", "Coverage: {0}% — Trade viable. Surplus of +{1} VU converts to merchant trust.", progressPct.ToString("F0"), surplus.ToString("F1"));
             }
             else
             {
                 float deficit = toleranceThresholdVal - playerOfferVal;
-                _arbitratorStatusBadge.Text = $"[INSUFFICIENT OFFER — NEED +{deficit:F1} VU]";
+                _arbitratorStatusBadge.Text = AshfallUiText.TrFormat("ui.barter.insufficient_offer", "[INSUFFICIENT OFFER — NEED +{0} VU]", deficit.ToString("F1"));
                 _arbitratorStatusBadge.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
-                _balanceCoverageLabel.Text = $"Coverage: {progressPct:F0}% — Offer is below merchant's tolerance threshold.";
+                _balanceCoverageLabel.Text = AshfallUiText.TrFormat("ui.barter.coverage_below", "Coverage: {0}% — Offer is below merchant's tolerance threshold.", progressPct.ToString("F0"));
             }
 
             // 2. Pre-condition Gate Diagnostics
-            FormatGateLabel(_gateAirlockLabel, "AIRLOCK ACCESSIBLE", isAirlockAccessible, isAirlockAccessible ? "PASS" : "BLOCKED (FROZEN)");
-            FormatGateLabel(_gatePresenceLabel, "CARAVAN AT AIRLOCK", isCaravanAtAirlock, isCaravanAtAirlock ? "PASS" : "BLOCKED (EN ROUTE)");
-            FormatGateLabel(_gateRequestsLabel, "GOODS REQUESTED", hasRequests, hasRequests ? $"{_playerRequests.Values.Sum()} ITEMS" : "NONE ALLOCATED");
-            FormatGateLabel(_gateToleranceLabel, "VALUATION THRESHOLD", isValueSufficient, isValueSufficient ? "PASS (MEETS TOLERANCE)" : "INSUFFICIENT OFFER");
+            FormatGateLabel(_gateAirlockLabel, AshfallUiText.Tr("ui.barter.gate_airlock_header", "AIRLOCK ACCESSIBLE"), isAirlockAccessible, AshfallUiText.Tr(isAirlockAccessible ? "ui.barter.gate_pass" : "ui.barter.gate_airlock_blocked", isAirlockAccessible ? "PASS" : "BLOCKED (FROZEN)"));
+            FormatGateLabel(_gatePresenceLabel, AshfallUiText.Tr("ui.barter.gate_presence_header", "CARAVAN AT AIRLOCK"), isCaravanAtAirlock, AshfallUiText.Tr(isCaravanAtAirlock ? "ui.barter.gate_pass" : "ui.barter.gate_presence_blocked", isCaravanAtAirlock ? "PASS" : "BLOCKED (EN ROUTE)"));
+            FormatGateLabel(_gateRequestsLabel, AshfallUiText.Tr("ui.barter.gate_requests_header", "GOODS REQUESTED"), hasRequests, hasRequests ? AshfallUiText.TrFormat("ui.barter.gate_item_count", "{0} ITEMS", _playerRequests.Values.Sum()) : AshfallUiText.Tr("ui.barter.gate_none_allocated", "NONE ALLOCATED"));
+            FormatGateLabel(_gateToleranceLabel, AshfallUiText.Tr("ui.barter.gate_tolerance_header", "VALUATION THRESHOLD"), isValueSufficient, AshfallUiText.Tr(isValueSufficient ? "ui.barter.gate_meets_tolerance" : "ui.barter.gate_insufficient_offer", isValueSufficient ? "PASS (MEETS TOLERANCE)" : "INSUFFICIENT OFFER"));
 
             float riskPct = (caravan?.counterfeit_risk_bp ?? 0) / 100f;
-            string appText = _playerAppraisalSkillLevel >= 2 ? $"PASS (APPRAISAL LVL {_playerAppraisalSkillLevel})" : $"RISK {riskPct:F1}% (UNAPPRAISED)";
-            FormatGateLabel(_gateCounterfeitLabel, "APPRAISAL VERIFICATION", true, appText);
+            string appText = _playerAppraisalSkillLevel >= 2
+                ? AshfallUiText.TrFormat("ui.barter.gate_appraisal_pass", "PASS (APPRAISAL LVL {0})", _playerAppraisalSkillLevel)
+                : AshfallUiText.TrFormat("ui.barter.gate_appraisal_risk", "RISK {0}% (UNAPPRAISED)", riskPct.ToString("F1"));
+            FormatGateLabel(_gateCounterfeitLabel, AshfallUiText.Tr("ui.barter.gate_counterfeit_header", "APPRAISAL VERIFICATION"), true, appText);
 
             // 3. Cost & Consequence Summary
             if (_playerOffers.Count > 0)
             {
                 var costItems = _playerOffers.Select(kv => $"{kv.Value}x {FormatItemName(kv.Key, _itemLookup)}");
-                _costSummaryLabel.Text = $"COST: {string.Join(", ", costItems)} (-{playerOfferVal:F1} VU)";
+                _costSummaryLabel.Text = AshfallUiText.TrFormat("ui.barter.cost_value", "COST: {0} (-{1} VU)", string.Join(", ", costItems), playerOfferVal.ToString("F1"));
             }
             else
             {
-                _costSummaryLabel.Text = "COST: None allocated.";
+                _costSummaryLabel.Text = AshfallUiText.Tr("ui.barter.cost_none", "COST: None allocated.");
             }
 
             if (_playerRequests.Count > 0)
             {
                 var gainItems = _playerRequests.Select(kv => $"{kv.Value}x {FormatItemName(kv.Key, _itemLookup)}");
-                _gainSummaryLabel.Text = $"GAIN: {string.Join(", ", gainItems)} (+{caravanRequiredVal:F1} VU)";
+                _gainSummaryLabel.Text = AshfallUiText.TrFormat("ui.barter.gain_value", "GAIN: {0} (+{1} VU)", string.Join(", ", gainItems), caravanRequiredVal.ToString("F1"));
             }
             else
             {
-                _gainSummaryLabel.Text = "GAIN: None requested.";
+                _gainSummaryLabel.Text = AshfallUiText.Tr("ui.barter.gain_none", "GAIN: None requested.");
             }
 
-            _consequenceLabel.Text = "CONSEQUENCE: Deducts stock permanently from caravan; increments trade ledger; logs transaction to Journal.";
+            _consequenceLabel.Text = AshfallUiText.Tr("ui.barter.consequence", "CONSEQUENCE: Deducts stock permanently from caravan; increments trade ledger; logs transaction to Journal.");
 
             // 4. Action Button State
             bool canExecute = isAirlockAccessible && isCaravanAtAirlock && hasRequests && isValueSufficient;
@@ -1051,7 +1053,7 @@ namespace AtomicWar.GodotApp.UI
 
         private static void FormatGateLabel(Label lbl, string header, bool pass, string text)
         {
-            lbl.Text = $"{header}: [ {text} ]";
+            lbl.Text = AshfallUiText.TrFormat("ui.barter.gate_line", "{0}: [ {1} ]", header, text);
             lbl.AddThemeColorOverride("font_color", pass
                 ? AshfallUiHelpers.ToColor(DesignTheme.Success)
                 : AshfallUiHelpers.ToColor(DesignTheme.Critical));
@@ -1061,7 +1063,7 @@ namespace AtomicWar.GodotApp.UI
         {
             _playerOffers.Clear();
             _playerRequests.Clear();
-            SetFeedback("Allocations cleared.", isError: false);
+            SetFeedback(AshfallUiText.Tr("ui.barter.allocations_cleared", "Allocations cleared."), isError: false);
             RefreshView();
         }
 
@@ -1069,7 +1071,7 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_barterSystem == null || _selectedCaravanId == null)
             {
-                SetFeedback("Cannot execute trade: Barter system not initialized.", isError: true);
+                SetFeedback(AshfallUiText.Tr("ui.barter.system_not_initialized", "Cannot execute trade: Barter system not initialized."), isError: true);
                 return;
             }
 
@@ -1087,7 +1089,7 @@ namespace AtomicWar.GodotApp.UI
                 string gainSummary = string.Join(", ", _playerRequests.Select(kv => $"{kv.Value}x {FormatItemName(kv.Key, _itemLookup)}"));
                 string costSummary = string.Join(", ", _playerOffers.Select(kv => $"{kv.Value}x {FormatItemName(kv.Key, _itemLookup)}"));
 
-                string msg = $"Trade executed with {caravan.name}! Acquired {gainSummary} for {costSummary}. (Trade #{tradeCount})";
+                string msg = AshfallUiText.TrFormat("ui.barter.trade_executed", "Trade executed with {0}! Acquired {1} for {2}. (Trade #{3})", caravan.name, gainSummary, costSummary, tradeCount);
                 SetFeedback(msg, isError: false);
 
                 // Journal integration
@@ -1104,7 +1106,7 @@ namespace AtomicWar.GodotApp.UI
             else
             {
                 string readableError = ResolveReadableError(result.FailureCode);
-                SetFeedback($"Trade blocked: {readableError}", isError: true);
+                SetFeedback(AshfallUiText.TrFormat("ui.barter.trade_blocked", "Trade blocked: {0}", readableError), isError: true);
                 RefreshView();
             }
         }
@@ -1113,16 +1115,18 @@ namespace AtomicWar.GodotApp.UI
         {
             return reason switch
             {
-                "unknown_caravan" => "Selected merchant caravan is not recognized by the manifest.",
-                "caravan_not_at_airlock" => "The caravan is en route and has not arrived at the airlock yet.",
-                "airlock_inaccessible" => "The shelter airlock is frozen or blocked. Restore heat before operating the airlock.",
-                "no_items_requested" => "No merchant goods have been selected for trade.",
-                "insufficient_caravan_stock" => "The caravan does not have enough remaining stock to fulfill this request.",
-                "insufficient_value" => "Offered goods do not meet the merchant's required valuation and tolerance margin.",
-                "counterfeit_detected" => "Counterfeit or defective goods detected during trade appraisal. Negotiation aborted.",
-                "storage_capacity_exceeded" => "Shelter storage capacity or weight limit exceeded. Make room in storage first.",
-                "transaction_commit_failed" => "Failed to commit inventory transfer.",
-                _ => string.IsNullOrWhiteSpace(reason) ? "Unknown barter constraint failed." : reason.Replace('_', ' ')
+                "unknown_caravan" => AshfallUiText.Tr("ui.barter.error.unknown_caravan", "Selected merchant caravan is not recognized by the manifest."),
+                "caravan_not_at_airlock" => AshfallUiText.Tr("ui.barter.error.caravan_not_at_airlock", "The caravan is en route and has not arrived at the airlock yet."),
+                "airlock_inaccessible" => AshfallUiText.Tr("ui.barter.error.airlock_inaccessible", "The shelter airlock is frozen or blocked. Restore heat before operating the airlock."),
+                "no_items_requested" => AshfallUiText.Tr("ui.barter.error.no_items_requested", "No merchant goods have been selected for trade."),
+                "insufficient_caravan_stock" => AshfallUiText.Tr("ui.barter.error.insufficient_stock", "The caravan does not have enough remaining stock to fulfill this request."),
+                "insufficient_value" => AshfallUiText.Tr("ui.barter.error.insufficient_value", "Offered goods do not meet the merchant's required valuation and tolerance margin."),
+                "counterfeit_detected" => AshfallUiText.Tr("ui.barter.error.counterfeit", "Counterfeit or defective goods detected during trade appraisal. Negotiation aborted."),
+                "storage_capacity_exceeded" => AshfallUiText.Tr("ui.barter.error.storage_capacity", "Shelter storage capacity or weight limit exceeded. Make room in storage first."),
+                "transaction_commit_failed" => AshfallUiText.Tr("ui.barter.error.commit_failed", "Failed to commit inventory transfer."),
+                _ => string.IsNullOrWhiteSpace(reason)
+                    ? AshfallUiText.Tr("ui.barter.error.unknown", "Unknown barter constraint failed.")
+                    : AshfallUiText.TrFormat("ui.barter.error.fallback", "{0}", reason.Replace('_', ' '))
             };
         }
 

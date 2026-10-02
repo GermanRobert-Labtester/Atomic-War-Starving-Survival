@@ -1,5 +1,45 @@
 # Current Task State
 
+## l10n sweep wave 9 — the three largest unregistered panels — FULLY INTEGRATED (2026-10-02)
+
+User-directed ("work on this small task! Remaining: the broad ~150-file
+localization sweep (largest: FactionsPanel, GreenhousePanel, ShelterBarterPanel)").
+Plan archived
+`.ai/plans/integrated/playability/INTEGRATED_l10n-sweep-wave9-largest-panels-2026-10-02.md`.
+Localized `FactionsPanel` (40→0 raw-chrome literals), `GreenhousePanel` (36→0),
+and `ShelterBarterPanel` (33→0); all three are registered with `l10n_drift_gate.py`.
+The final pass also localized barter diagnostic/error feedback and greenhouse
+stage/seed names. Repairs during integration: unquoted
+CSV comma in `ui.factions.warlord.tribute_short`; key-prefix collision
+(`ui.factions.standing` → `ui.factions.standing_trust`); a `TrFormat`-as-Node
+compile error in `ShelterBarterPanel`; identical-row allowlist + bounded pin
+21→24 (`ui.greenhouse.filter.title`, `ui.factions.standing.neutral`,
+`ui.barter.gate_line`, `ui.barter.error.fallback`). **Evidence:** `l10n_drift_gate`
+PASS (1467 keys, 928 localized-surface references, German parity); host build
+0 warnings/errors; bounded 15-FPS `--player-panels-uitest` PASS (22/22 lifecycle
+gates including GreenhousePanel);
+`StatusPanelThresholdTests` 211/211; `StringsCsvLocaleGateTests` 4/4;
+`LocalizationRatchetTests` 3/3. No full suite; unrelated concurrent edits preserved.
+
+## Repo-wide 6-loop find→repair→harden sweep — FULLY INTEGRATED (2026-10-02)
+
+User-directed ("do 6 looping phases of find issues, repair them, harden spots where
+issues found and repeat repo wide!"). Plan archived
+`.ai/plans/integrated/maintenance/INTEGRATED_repo-wide-6-loop-sweep-2026-10-02.md`.
+**6 loops** localized unbound/unavailable placeholders in `AirlockSecurityPanel`,
+`ApprenticeshipPanel`, `CaregivingPanel`, `CenturySeedPanel` (4 strings),
+`DeepCoastPanel`, `DutyRosterDetailPanel` (7 new `ui.*` keys). **Cross-cutting
+repairs:** 5 malformed catalog rows with unquoted commas (barter decimal-comma
+German + greenhouse filter hints); key-prefix collision pin 10→11; verified the
+concurrent GreenhousePanel drift-gate registration. **Hardening:** `Text=`
+UI-literal ratchet 528→510; new repo-wide raw `Make*(...)` chrome ratchet
+(baseline 1411). **Deferred finding:** `AquiferTreatyConcessionPanel` renders
+fabricated telemetry with no Core authority (routed in `Main.UiPanels.cs`) — needs
+an authority decision. **Evidence:** host build 0/0; `StringsCsvLocaleGateTests`
+4/4; `StatusPanelThresholdTests` 211/211; `LocalizationRatchetTests` 3/3;
+`ExpeditionLocaleKeysTests` 5/5; `l10n_drift_gate` PASS (1410 keys, German parity);
+0 duplicate keys; `git diff --check` clean. No full suite; no commit.
+
 ## Expedition follow-up wave 8 — remaining player-facing l10n — FULLY INTEGRATED (2026-10-02)
 
 User-directed ("continue with these last remaining and then we are done!"). Plan

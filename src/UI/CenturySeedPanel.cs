@@ -7,6 +7,7 @@ using Ashfall.Core.Legacy;
 using Ashfall.Core.UI;
 using CoreTheme = Ashfall.Core.UI.Theme;
 
+using AtomicWar.GodotApp.Localization;
 namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
@@ -157,11 +158,12 @@ namespace AtomicWar.GodotApp.UI
 
             if (_succession == null)
             {
-                _statusLabel.Text = "Succession engine unavailable.";
+                _statusLabel.Text = AshfallLocalization.Tr("ui.century_seed.unavailable", "Succession engine unavailable.");
                 _lineageContainer.AddChild(AshfallUiHelpers.MakeEmptyState(
-                    "Generational succession engine is not bound. Connect live succession data to view generational chapters and mentorship bonds.",
-                    "GENERATIONAL SUCCESSION OFFLINE",
-                    "Awaiting active campaign state"));
+                    AshfallLocalization.Tr("ui.century_seed.unbound",
+                        "Generational succession engine is not bound. Connect live succession data to view generational chapters and mentorship bonds."),
+                    AshfallLocalization.Tr("ui.century_seed.offline_title", "GENERATIONAL SUCCESSION OFFLINE"),
+                    AshfallLocalization.Tr("ui.century_seed.offline_hint", "Awaiting active campaign state")));
                 _mentorshipContainer.AddChild(AshfallUiHelpers.MakeEmptyStateLabel("Mentorship bindings offline"));
                 return;
             }

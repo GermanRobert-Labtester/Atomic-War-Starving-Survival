@@ -6,6 +6,7 @@ using Ashfall.Core;
 using Ashfall.Core.UI;
 using CoreTheme = Ashfall.Core.UI.Theme;
 
+using AtomicWar.GodotApp.Localization;
 namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
@@ -155,7 +156,7 @@ namespace AtomicWar.GodotApp.UI
 
             if (_deepCoast == null)
             {
-                _statusLabel.Text = "Deep coast session unavailable.";
+                _statusLabel.Text = AshfallLocalization.Tr("ui.deep_coast.unavailable", "Deep coast session unavailable.");
                 return;
             }
 

@@ -1182,3 +1182,287 @@ ui.difficulty.section.scalars,CUSTOM SCALARS,BENUTZERDEFINIERTE SKALARE,src/UI/D
 ui.difficulty.band_note,Custom lanes clamp to the authored 0.25–2.50 band. Any edit switches the campaign to CUSTOM.,"Benutzerdefinierte Spuren werden auf den vorgegebenen Bereich 0,25–2,50 begrenzt. Jede Änderung schaltet die Kampagne auf BENUTZERDEFINIERT.",src/UI/DifficultySettingsPanel.cs
 ui.difficulty.save,SAVE SETTINGS,EINSTELLUNGEN SPEICHERN,src/UI/DifficultySettingsPanel.cs
 ui.difficulty.lock,LOCK DIFFICULTY (IRONMAN),SCHWIERIGKEIT SPERREN (IRONMAN),src/UI/DifficultySettingsPanel.cs
+ui.factions.title,FACTIONS & WASTELAND DIPLOMACY,FRAKTIONEN & ÖDLAND-DIPLOMATIE,src/UI/FactionsPanel.cs
+ui.factions.summary,"Monitor geopolitical standings, faction trust, trade specialization, claim boundaries, and diplomatic treaties.","Überwache geopolitische Lagen, Fraktionsvertrauen, Handelsspezialisierung, Anspruchsgrenzen und diplomatische Verträge.",src/UI/FactionsPanel.cs
+ui.factions.overview.title,WASTELAND DIPLOMATIC & TRADE NETWORK,ÖDLAND-DIPLOMATIE- UND HANDELSNETZWERK,src/UI/FactionsPanel.cs
+ui.factions.overview.kicker,REGISTRY STATUS,REGISTERSTATUS,src/UI/FactionsPanel.cs
+ui.factions.known_major,Known Major Factions,Bekannte große Fraktionen,src/UI/FactionsPanel.cs
+ui.factions.guild_trust,Scavenger Guild Trust,Vertrauen der Vermesser-Gilde,src/UI/FactionsPanel.cs
+ui.factions.guild_claims,Guild Claimed Sites,Von der Gilde beanspruchte Orte,src/UI/FactionsPanel.cs
+ui.factions.sanctions,Sanctions & Blacklists,Sanktionen & Sperrlisten,src/UI/FactionsPanel.cs
+ui.factions.btn_muster,OPEN SECTOR MUSTER // CURRENTS & ESCALATION,SEKTOR-MUSTER ÖFFNEN // STRÖMUNGEN & ESKALATION,src/UI/FactionsPanel.cs
+ui.factions.btn_culture,OPEN FACTION CULTURE CODEX // EVERYDAY CUSTOMS,FRAKTIONS-KULTURKODEX ÖFFNEN // ALLTAGSBRÄUCHE,src/UI/FactionsPanel.cs
+ui.factions.btn_stance,FACTION STANCE MATRIX // RELATIONS GRID,FRAKTIONS-HALTUNGSMATRIX // BEZIEHUNGSRASTER,src/UI/FactionsPanel.cs
+ui.factions.btn_narratives,FACTION NARRATIVES // DISPATCHES & ARCS,FRAKTIONS-NARRATIVE // DEPESCHEN & BÖGEN,src/UI/FactionsPanel.cs
+ui.factions.demand,Demand (Wants),Nachfrage (Bedarf),src/UI/FactionsPanel.cs
+ui.factions.supply,Supply (Offers),Angebot (Lieferungen),src/UI/FactionsPanel.cs
+ui.factions.standing_trust,Standing / Trust,Ansehen / Vertrauen,src/UI/FactionsPanel.cs
+ui.factions.foundry.kicker,ACCORD SYSTEMS // THE WORKS,ABKOMMENSYSTEME // DAS WERK,src/UI/FactionsPanel.cs
+ui.factions.foundry.standing,Foundry Standing,Gießerei-Ansehen,src/UI/FactionsPanel.cs
+ui.factions.foundry.state,Foundry,Gießerei,src/UI/FactionsPanel.cs
+ui.factions.foundry.divisions,Internal Divisions,Interne Abteilungen,src/UI/FactionsPanel.cs
+ui.factions.btn_foundry,OPEN THE FOUNDRY FLOOR,GIESSEREIEBENE ÖFFNEN,src/UI/FactionsPanel.cs
+ui.factions.treaties.title,STRATEGIC TREATIES & LEDGER DEBT,STRATEGISCHE VERTRÄGE & JOURNALSSCHULDEN,src/UI/FactionsPanel.cs
+ui.factions.treaties.kicker,TREATY STATUS,VERTRAGSSTATUS,src/UI/FactionsPanel.cs
+ui.factions.treaty.guild,Scavenger Guild Claim Ledger,Anspruchsjournal der Vermesser-Gilde,src/UI/FactionsPanel.cs
+ui.factions.treaty.crossing,Nobody's Crossing Accord,Abkommen der Niemandspassage,src/UI/FactionsPanel.cs
+ui.factions.treaty.archive,Ledger Keepers Archive,Archiv der Journalwächter,src/UI/FactionsPanel.cs
+ui.factions.warlord.title,WARLORD DOCTRINE — SECTOR 4,KRIEGSFÜRSTEN-DOKTRIN — SEKTOR 4,src/UI/FactionsPanel.cs
+ui.factions.warlord.kicker,ADAPTIVE STRATEGY (identity: {0}),ADAPTIVE STRATEGIE (Identität: {0}),src/UI/FactionsPanel.cs
+ui.factions.warlord.doctrine,Current Doctrine,Aktuelle Doktrin,src/UI/FactionsPanel.cs
+ui.factions.warlord.supply,Supply,Versorgung,src/UI/FactionsPanel.cs
+ui.factions.warlord.tribute,Tribute,Tribut,src/UI/FactionsPanel.cs
+ui.factions.warlord.paid,Paid to Date,Bisher gezahlt,src/UI/FactionsPanel.cs
+ui.factions.warlord.ops,Operations,Operationen,src/UI/FactionsPanel.cs
+ui.factions.warlord.contest,CONTEST,ANFECHTEN,src/UI/FactionsPanel.cs
+ui.factions.warlord.submit,SUBMIT ALL,ALLES ÜBERGEBEN,src/UI/FactionsPanel.cs
+ui.factions.warlord.refuse,REFUSE THIS WEEK,DIESE WOCHE VERWEIGERN,src/UI/FactionsPanel.cs
+ui.factions.branch.title,THE WEIGHT OF CHOICES // FACTION PROGRESSION,DIE LAST DER ENTSCHEIDUNGEN // FRAKTIONSFORTSCHRITT,src/UI/FactionsPanel.cs
+ui.factions.branch.kicker,STRATEGIC ALLEGIANCE,STRATEGISCHE GEFOLGSCHAFT,src/UI/FactionsPanel.cs
+ui.factions.branch.active,Active Allegiance,Aktive Gefolgschaft,src/UI/FactionsPanel.cs
+ui.factions.branch.current,Current Branch,Aktueller Zweig,src/UI/FactionsPanel.cs
+ui.factions.branch.ponr,PoNR Status,PoNR-Status,src/UI/FactionsPanel.cs
+ui.factions.branch.ending,Resolved Ending,Aufgelöstes Ende,src/UI/FactionsPanel.cs
+ui.factions.informant.header,INFORMANT NETWORK // FIELD TRADECRAFT,INFORMANTENNETZ // FELDHANDWERK,src/UI/FactionsPanel.cs
+ui.factions.branch.paths,BRANCH PATH AVAILABILITY & CONSEQUENCES:,VERFÜGBARKEIT & KONSEQUENZEN DER ZWEIGPFADE:,src/UI/FactionsPanel.cs
+ui.factions.branch.warning,WARNING: Committing allegiance permanently locks out competing factions. The door will close.,WARNUNG: Gefolgschaft dauerhaft zu binden sperrt konkurrierende Fraktionen aus. Die Tür schließt sich.,src/UI/FactionsPanel.cs
+ui.factions.events.title,RECENT DIPLOMATIC COMMUNIQUES,AKTUELLE DIPLOMATISCHE MITTEILUNGEN,src/UI/FactionsPanel.cs
+ui.factions.events.kicker,RADIO INTERCEPTS,FUNKABFÄNGE,src/UI/FactionsPanel.cs
+ui.factions.events.status_label,STATUS,ZUSTAND,src/UI/FactionsPanel.cs
+ui.factions.events.none,No diplomatic communiqués intercepted on local frequencies.,Keine diplomatischen Mitteilungen auf lokalen Frequenzen abgefangen.,src/UI/FactionsPanel.cs
+ui.factions.section.factions,KNOWN FACTION PROTOCOLS & ALLIANCES,BEKANNTE FRAKTIONSPROTOKOLLE & ALLIANZEN,src/UI/FactionsPanel.cs
+ui.factions.section.relations,"TREATIES, STANDING & DEBT OBLIGATIONS","VERTRÄGE, ANSEHEN & SCHULDPFLICHTEN",src/UI/FactionsPanel.cs
+ui.factions.section.events,RECENT FACTION COMMUNIQUES & DISPATCHES,AKTUELLE FRAKTIONSMITTEILUNGEN & DEPESCHEN,src/UI/FactionsPanel.cs
+ui.factions.close,CLOSE DIPLOMACY [Esc],DIPLOMATIE SCHLIESSEN [Esc],src/UI/FactionsPanel.cs
+ui.factions.esc_hint,[Esc] to close factions panel,[Esc] zum Schließen des Fraktionsfensters,src/UI/FactionsPanel.cs
+ui.factions.none_registered,None registered,Keine registriert,src/UI/FactionsPanel.cs
+ui.factions.base_stance,Base: {0} · Stance: {1},Basis: {0} · Haltung: {1},src/UI/FactionsPanel.cs
+ui.factions.dossier,DIPLOMATIC DOSSIER // [{0}],DIPLOMATISCHE AKTE // [{0}],src/UI/FactionsPanel.cs
+ui.barter.caravan_registry,CARAVAN REGISTRY & SCHEDULE,KARAWANENREGISTER & ZEITPLAN,src/UI/ShelterBarterPanel.cs
+ui.barter.merchant_stock,MERCHANT STOCK (OFFERED),HÄNDLERBESTAND (ANGEBOTEN),src/UI/ShelterBarterPanel.cs
+ui.barter.col.item,ITEM IDENTIFIER,GEGENSTANDSKENNUNG,src/UI/ShelterBarterPanel.cs
+ui.barter.col.stock,STOCK,BESTAND,src/UI/ShelterBarterPanel.cs
+ui.barter.col.value,VALUE,WERT,src/UI/ShelterBarterPanel.cs
+ui.barter.col.take,TAKE (QTY),NEHMEN (MENGE),src/UI/ShelterBarterPanel.cs
+ui.barter.col.subtotal,SUBTOTAL,ZWISCHENSUMME,src/UI/ShelterBarterPanel.cs
+ui.barter.requested_zero,REQUESTED: 0.0 VALUE UNITS,"ANGEFRAGT: 0,0 WERTEINHEITEN",src/UI/ShelterBarterPanel.cs
+ui.barter.shelter_stores,SHELTER STORES (OFFERED),UNTERSTANDSVORRÄTE (ANGEBOTEN),src/UI/ShelterBarterPanel.cs
+ui.barter.col.avail,AVAIL,VERFÜGBAR,src/UI/ShelterBarterPanel.cs
+ui.barter.col.offer,OFFER (QTY),BIETEN (MENGE),src/UI/ShelterBarterPanel.cs
+ui.barter.offered_zero,OFFERED: 0.0 VALUE UNITS,"GEBOTEN: 0,0 WERTEINHEITEN",src/UI/ShelterBarterPanel.cs
+ui.barter.balance_scale,ARBITRATOR BALANCE SCALE,SCHLICHTER-WAAGSCHALE,src/UI/ShelterBarterPanel.cs
+ui.barter.balance_metrics_zero,OFFERED: 0.0 VU | TOLERANCE THRESHOLD: 0.0 VU | REQUIRED: 0.0 VU,"GEBOTEN: 0,0 WE | TOLERANZSCHWELLE: 0,0 WE | ERFORDERLICH: 0,0 WE",src/UI/ShelterBarterPanel.cs
+ui.barter.coverage_zero,"Coverage: 0% — Fair deal requires offer meeting caravan tolerance margin.","Deckung: 0 % — Ein fairer Handel erfordert ein Angebot, das die Toleranzspanne der Karawane erfüllt.",src/UI/ShelterBarterPanel.cs
+ui.barter.gate_diag,PRE-CONDITION GATE DIAGNOSTICS,VORBEDINGUNGS-GATE-DIAGNOSE,src/UI/ShelterBarterPanel.cs
+ui.barter.gate_airlock,AIRLOCK ACCESSIBLE: [ ... ],SCHLEUSE ZUGÄNGLICH: [ ... ],src/UI/ShelterBarterPanel.cs
+ui.barter.gate_presence,CARAVAN AT AIRLOCK: [ ... ],KARAWANE AN DER SCHLEUSE: [ ... ],src/UI/ShelterBarterPanel.cs
+ui.barter.gate_requests,GOODS REQUESTED: [ ... ],WAREN ANGEFRAGT: [ ... ],src/UI/ShelterBarterPanel.cs
+ui.barter.gate_tolerance,VALUATION THRESHOLD: [ ... ],BEWERTUNGSSCHWELLE: [ ... ],src/UI/ShelterBarterPanel.cs
+ui.barter.gate_counterfeit,APPRAISAL VERIFICATION: [ ... ],SCHÄTZUNGSÜBERPRÜFUNG: [ ... ],src/UI/ShelterBarterPanel.cs
+ui.barter.cost_none,COST: None allocated.,KOSTEN: Nichts zugewiesen.,src/UI/ShelterBarterPanel.cs
+ui.barter.gain_none,GAIN: None requested.,GEWINN: Nichts angefordert.,src/UI/ShelterBarterPanel.cs
+ui.barter.consequence,CONSEQUENCE: Deducts stock permanently from caravan; increments trade ledger; logs transaction to Journal.,KONSEQUENZ: Entzieht dem Karawanenbestand dauerhaft Waren; erhöht das Handelsjournal; protokolliert die Transaktion im Journal.,src/UI/ShelterBarterPanel.cs
+ui.barter.clear,CLEAR ALLOCATIONS,ZUWEISUNGEN LÖSCHEN,src/UI/ShelterBarterPanel.cs
+ui.barter.execute,EXECUTE BARTER TRANSACTION,TAUSCHTRANSAKTION AUSFÜHREN,src/UI/ShelterBarterPanel.cs
+ui.barter.select_caravan,Select a caravan from the registry.,Wähle eine Karawane aus dem Register.,src/UI/ShelterBarterPanel.cs
+ui.barter.no_caravan_stock,Caravan has no stock configured.,Für die Karawane ist kein Bestand konfiguriert.,src/UI/ShelterBarterPanel.cs
+ui.barter.storage_unavailable,Storage system unavailable.,Lagersystem nicht verfügbar.,src/UI/ShelterBarterPanel.cs
+ui.barter.no_goods,No tradeable goods in shelter storage.,Keine handelbaren Waren im Unterstandslager.,src/UI/ShelterBarterPanel.cs
+ui.barter.requested_value,REQUESTED: {0} VALUE UNITS,ANGEFRAGT: {0} WERTEINHEITEN,src/UI/ShelterBarterPanel.cs
+ui.barter.offered_value,OFFERED: {0} VALUE UNITS,GEBOTEN: {0} WERTEINHEITEN,src/UI/ShelterBarterPanel.cs
+ui.barter.balance_metrics,OFFERED: {0} VU | TOLERANCE THRESHOLD: ≥ {1} VU | REQUIRED: {2} VU,GEBOTEN: {0} WE | TOLERANZSCHWELLE: ≥ {1} WE | ERFORDERLICH: {2} WE,src/UI/ShelterBarterPanel.cs
+ui.barter.coverage_allocate,"Coverage: 0% — Allocate caravan stock on the left, then offer shelter stores on the right.","Deckung: 0 % — Weise links Karawanenbestand zu und biete dann rechts Unterstandsvorräte an.",src/UI/ShelterBarterPanel.cs
+ui.barter.coverage_enroute,Barter cannot be executed: Caravan is en route.,Tausch kann nicht ausgeführt werden: Die Karawane ist unterwegs.,src/UI/ShelterBarterPanel.cs
+ui.barter.coverage_frozen,Barter blocked: The shelter airlock is frozen.,Tausch blockiert: Die Unterstandsschleuse ist eingefroren.,src/UI/ShelterBarterPanel.cs
+ui.barter.coverage_viable,Coverage: {0}% — Trade viable. Surplus of +{1} VU converts to merchant trust.,Deckung: {0} % — Handel machbar. Überschuss von +{1} WE wird zu Händlervertrauen.,src/UI/ShelterBarterPanel.cs
+ui.barter.coverage_below,Coverage: {0}% — Offer is below merchant's tolerance threshold.,Deckung: {0} % — Das Angebot liegt unter der Toleranzschwelle des Händlers.,src/UI/ShelterBarterPanel.cs
+ui.barter.cost_value,COST: {0} (-{1} VU),KOSTEN: {0} (-{1} WE),src/UI/ShelterBarterPanel.cs
+ui.barter.broker_inventory,[BROKER INVENTORY],[HÄNDLERBESTAND],src/UI/ShelterBarterPanel.cs
+ui.barter.vault_storage,[VAULT STORAGE],[TRESORLAGER],src/UI/ShelterBarterPanel.cs
+ui.barter.select_items,[SELECT ITEMS],[WAREN AUSWÄHLEN],src/UI/ShelterBarterPanel.cs
+ui.barter.caravan_departure,[AT AIRLOCK - DEPARTS IN {0}D],[AN DER SCHLEUSE - ABFAHRT IN {0} T],src/UI/ShelterBarterPanel.cs
+ui.barter.caravan_arrival,[EN ROUTE - ARRIVES IN {0}D],[UNTERWEGS - ANKUNFT IN {0} T],src/UI/ShelterBarterPanel.cs
+ui.barter.demands,Demands: {0},Bedarf: {0},src/UI/ShelterBarterPanel.cs
+ui.barter.currently_inspecting,▶ CURRENTLY INSPECTING,▶ WIRD GERADE UNTERSUCHT,src/UI/ShelterBarterPanel.cs
+ui.barter.demand_bonus,+DEMAND BONUS,+BEDARFSBONUS,src/UI/ShelterBarterPanel.cs
+ui.barter.gain_value,GAIN: {0} (+{1} VU),GEWINN: {0} (+{1} WE),src/UI/ShelterBarterPanel.cs
+ui.airlock.unbound,Airlock security session is not bound. Sentry post & biometric scanners are offline.,Luftschleusen-Sicherheitssitzung ist nicht gebunden. Wachposten und biometrische Scanner sind offline.,src/UI/AirlockSecurityPanel.cs
+ui.apprenticeship.unbound,Apprenticeship host session is not bound. Mentor-apprentice skill progression records are offline.,Lehrlings-Host-Sitzung ist nicht gebunden. Mentor-Lehrling-Fortschrittsdaten sind offline.,src/UI/ApprenticeshipPanel.cs
+ui.caregiving.unbound,Caregiving host session is not bound. Bedside tending assignments and bond records are offline.,Pflege-Host-Sitzung ist nicht gebunden. Bettpflege-Zuweisungen und Bindungsdaten sind offline.,src/UI/CaregivingPanel.cs
+ui.century_seed.unavailable,Succession engine unavailable.,Nachfolge-Engine nicht verfügbar.,src/UI/CenturySeedPanel.cs
+ui.century_seed.unbound,Generational succession engine is not bound. Connect live succession data to view generational chapters and mentorship bonds.,"Generationelle Nachfolge-Engine ist nicht gebunden. Live-Nachfolgedaten verbinden, um Generationenkapitel und Mentorschaftsbindungen zu sehen.",src/UI/CenturySeedPanel.cs
+ui.century_seed.offline_title,GENERATIONAL SUCCESSION OFFLINE,GENERATIONELLE NACHFOLGE OFFLINE,src/UI/CenturySeedPanel.cs
+ui.century_seed.offline_hint,Awaiting active campaign state,Warte auf aktiven Kampagnenzustand,src/UI/CenturySeedPanel.cs
+ui.deep_coast.unavailable,Deep coast session unavailable.,Tiefküsten-Sitzung nicht verfügbar.,src/UI/DeepCoastPanel.cs
+ui.duty_roster_detail.no_marks,Marks: none yet. The wall is blank.,Markierungen: noch keine. Die Wand ist leer.,src/UI/DutyRosterDetailPanel.cs
+ui.greenhouse.bed_detail,BED DETAIL,BEETDETAIL,src/UI/GreenhousePanel.cs
+ui.greenhouse.select_plot_hint,"Select a plot row to view irrigation balance, contamination history, and harvest yields.","Wähle eine Beetzeile, um Bewässerung, Belastungsverlauf und Ernteertrag zu sehen.",src/UI/GreenhousePanel.cs
+ui.greenhouse.hive_unit,Hive Unit,Bienenstock,src/UI/GreenhousePanel.cs
+ui.greenhouse.colony_pop,Colony Pop,Volksstärke,src/UI/GreenhousePanel.cs
+ui.greenhouse.queen_vitality,Queen Vitality,Königinnenzustand,src/UI/GreenhousePanel.cs
+ui.greenhouse.feed_level,Feed Level,Futterstand,src/UI/GreenhousePanel.cs
+ui.greenhouse.water_level,Water Level,Wasserstand,src/UI/GreenhousePanel.cs
+ui.greenhouse.hive_temp,Hive Temp,Stocktemperatur,src/UI/GreenhousePanel.cs
+ui.greenhouse.pollination,Pollination,Bestäubung,src/UI/GreenhousePanel.cs
+ui.greenhouse.honey_reserve,Honey Reserve,Honigvorrat,src/UI/GreenhousePanel.cs
+ui.greenhouse.wax_reserve,Wax Reserve,Wachsvorrat,src/UI/GreenhousePanel.cs
+ui.greenhouse.apiary_actions,APIARY ACTIONS,IMKEREIAKTIONEN,src/UI/GreenhousePanel.cs
+ui.greenhouse.btn_inspect,INSPECT,PRÜFEN,src/UI/GreenhousePanel.cs
+ui.greenhouse.btn_feed_water,FEED/WATER,FÜTTERN/WÄSSERN,src/UI/GreenhousePanel.cs
+ui.greenhouse.btn_harvest,HARVEST,ERNTEN,src/UI/GreenhousePanel.cs
+ui.greenhouse.no_hive,"No active beehive installed in the Orchard Apiary bay. Install a colony to provide pollination boost.","Im Obstgarten-Bienenstand ist kein Stock aktiv. Installiere ein Volk, um die Bestäubung zu verbessern.",src/UI/GreenhousePanel.cs
+ui.greenhouse.btn_install_hive,INSTALL HIVE,BIENENSTOCK INSTALLIEREN,src/UI/GreenhousePanel.cs
+ui.greenhouse.host_offline,"Greenhouse engine offline. Bind a GreenhouseHostSession to see live plot data.","Gewächshaus-Engine offline. Verbinde eine GreenhouseHostSession, um aktuelle Beetdaten zu sehen.",src/UI/GreenhousePanel.cs
+ui.greenhouse.row_status,Status,Zustand,src/UI/GreenhousePanel.cs
+ui.greenhouse.row_seed,Seed,Saatgut,src/UI/GreenhousePanel.cs
+ui.greenhouse.row_growth,Growth,Wachstum,src/UI/GreenhousePanel.cs
+ui.greenhouse.row_moisture,Moisture,Feuchtigkeit,src/UI/GreenhousePanel.cs
+ui.greenhouse.row_soil,Soil mSv,Boden mSv,src/UI/GreenhousePanel.cs
+ui.greenhouse.row_blight,Blight,Mehltau,src/UI/GreenhousePanel.cs
+ui.greenhouse.row_blight_risk,Blight risk,Mehltaurisiko,src/UI/GreenhousePanel.cs
+ui.greenhouse.unfed_note,Unfed crop — nutrient dosing lowers blight risk.,Ungedüngte Pflanzen — Nährstoffgabe senkt das Mehltaurisiko.,src/UI/GreenhousePanel.cs
+ui.greenhouse.header_actions,ACTIONS,AKTIONEN,src/UI/GreenhousePanel.cs
+ui.greenhouse.btn_plant,PLANT,PFLANZEN,src/UI/GreenhousePanel.cs
+ui.greenhouse.btn_treat,TREAT,BEHANDELN,src/UI/GreenhousePanel.cs
+ui.greenhouse.btn_clear,CLEAR,RODEN,src/UI/GreenhousePanel.cs
+ui.greenhouse.btn_dose,DOSE NUTRIENTS,NÄHRSTOFFE GEBEN,src/UI/GreenhousePanel.cs
+ui.greenhouse.header_watering,WATERING,BEWÄSSERUNG,src/UI/GreenhousePanel.cs
+ui.greenhouse.btn_clean25,CLEAN 25,SAUBER 25,src/UI/GreenhousePanel.cs
+ui.greenhouse.btn_clean50,CLEAN 50,SAUBER 50,src/UI/GreenhousePanel.cs
+ui.greenhouse.btn_tainted50,TAINTED 50,BELASTET 50,src/UI/GreenhousePanel.cs
+ui.greenhouse.irradiated_note,irradiated — crops remember,belastet — Pflanzen erinnern sich,src/UI/GreenhousePanel.cs
+ui.greenhouse.header_seed_select,SEED SELECT,SAATGUT AUSWÄHLEN,src/UI/GreenhousePanel.cs
+ui.greenhouse.title,The Glass Orchard // Sub-surface Hydroponics,Der Glassgarten // unterirdischer Hydroponikanbau,src/UI/GreenhousePanel.cs
+ui.greenhouse.col_bed,Bed,Beet,src/UI/GreenhousePanel.cs
+ui.greenhouse.col_stage,Stage,Phase,src/UI/GreenhousePanel.cs
+ui.greenhouse.col_water,Water,Wasser,src/UI/GreenhousePanel.cs
+ui.greenhouse.col_soil,Soil mSv,Boden mSv,src/UI/GreenhousePanel.cs
+ui.greenhouse.col_growth,Growth,Wachstum,src/UI/GreenhousePanel.cs
+ui.greenhouse.col_ready,Ready,Bereit,src/UI/GreenhousePanel.cs
+ui.greenhouse.col_dry,Dry,Ausgetrocknet,src/UI/GreenhousePanel.cs
+ui.greenhouse.col_seed,Seed,Saatgut,src/UI/GreenhousePanel.cs
+ui.greenhouse.apiary_title,APIARY // HIVE CONTROL,IMKEREI // STOCKSTEUERUNG,src/UI/GreenhousePanel.cs
+ui.greenhouse.bed_detail_number,BED #{0} DETAIL,BEET #{0} IM DETAIL,src/UI/GreenhousePanel.cs
+ui.greenhouse.stage_fallow,FALLOW,BRACHE,src/UI/GreenhousePanel.cs
+ui.greenhouse.stage_sprouting,SPROUTING,KEIMT,src/UI/GreenhousePanel.cs
+ui.greenhouse.stage_growing,GROWING,WÄCHST,src/UI/GreenhousePanel.cs
+ui.greenhouse.stage_mature,READY TO HARVEST,ERNTEREIF,src/UI/GreenhousePanel.cs
+ui.greenhouse.stage_failed,FAILED,FEHLGESCHLAGEN,src/UI/GreenhousePanel.cs
+ui.greenhouse.risk_prevented,none (prevented),kein Risiko (verhindert),src/UI/GreenhousePanel.cs
+ui.greenhouse.risk_low,low,niedrig,src/UI/GreenhousePanel.cs
+ui.greenhouse.risk_elevated,elevated,erhöht,src/UI/GreenhousePanel.cs
+ui.greenhouse.risk_high,high,hoch,src/UI/GreenhousePanel.cs
+ui.greenhouse.rotation_pressure,"Repeated {0} crops exhaust this bed — rotate to another crop to clear the pressure.","Wiederholter {0}-Anbau erschöpft dieses Beet — eine andere Kultur baut den Druck ab.",src/UI/GreenhousePanel.cs
+ui.greenhouse.water_stock,clean ×{0}  ·  irradiated ×{1},sauber ×{0}  ·  bestrahlt ×{1},src/UI/GreenhousePanel.cs
+ui.greenhouse.seed_option,{0} — {1:0.#}d · yield {2} · blight {3:0}% · {4:0} water/day,{0} — {1:0.#} T · Ertrag {2} · Mehltau {3:0}% · {4:0} Wasser/Tag,src/UI/GreenhousePanel.cs
+ui.greenhouse.seed_vault_sealed,[SEED VAULT SEALED],[SAATGUTTRESOR VERRIEGELT],src/UI/GreenhousePanel.cs
+ui.greenhouse.no_stock,[no stock],[kein Vorrat],src/UI/GreenhousePanel.cs
+ui.greenhouse.filter.title,Filter,Filter,src/UI/GreenhousePanel.cs
+ui.greenhouse.filter.all,All Beds,Alle Beete,src/UI/GreenhousePanel.cs
+ui.greenhouse.filter.all_hint,every plot · stage / water / soil,alle Beete · Phase / Wasser / Boden,src/UI/GreenhousePanel.cs
+ui.greenhouse.filter.fallow,Fallow Only,Nur Brachflächen,src/UI/GreenhousePanel.cs
+ui.greenhouse.filter.fallow_hint,empty soil beds ready to seed,leere Beete bereit zur Aussaat,src/UI/GreenhousePanel.cs
+ui.greenhouse.filter.damaged,Damaged,Beschädigt,src/UI/GreenhousePanel.cs
+ui.greenhouse.filter.damaged_hint,failed or blight-stricken beds,fehlgeschlagene oder befallene Beete,src/UI/GreenhousePanel.cs
+ui.greenhouse.filter.ready,Ready,Bereit,src/UI/GreenhousePanel.cs
+ui.greenhouse.filter.ready_hint,beds at mature stage,Beete im erntereifen Stadium,src/UI/GreenhousePanel.cs
+ui.greenhouse.filter.tubers,Tubers,Knollen,src/UI/GreenhousePanel.cs
+ui.greenhouse.filter.tubers_hint,frost & hardy tuber lines,frost- und kälteresistente Knollen,src/UI/GreenhousePanel.cs
+ui.greenhouse.filter.grains,Grains,Getreide,src/UI/GreenhousePanel.cs
+ui.greenhouse.filter.grains_hint,"ash-barley, winter rye & wheat","Aschengerste, Winterroggen und Weizen",src/UI/GreenhousePanel.cs
+ui.greenhouse.filter.fungi,Fungi,Pilze,src/UI/GreenhousePanel.cs
+ui.greenhouse.filter.fungi_hint,spore & phosphor cap mycelium,Sporen- und Leuchtkappenmyzel,src/UI/GreenhousePanel.cs
+ui.greenhouse.filter.greens,Greens & Herbs,Grünzeug und Kräuter,src/UI/GreenhousePanel.cs
+ui.greenhouse.filter.greens_hint,"winter cress, herbs & greens","Winterkresse, Kräuter und Blattgrün",src/UI/GreenhousePanel.cs
+ui.greenhouse.filter.legumes,Legumes & Seeds,Hülsenfrüchte und Saaten,src/UI/GreenhousePanel.cs
+ui.greenhouse.filter.legumes_hint,"iron pea, oilseed & algae slurry","Eisenerbse, Ölsaat und Algenschlamm",src/UI/GreenhousePanel.cs
+ui.greenhouse.filter.apiary,Apiary (Hives),Imkerei (Bienenstöcke),src/UI/GreenhousePanel.cs
+ui.greenhouse.filter.apiary_hint,colony health · pollination · honey & wax,Volkszustand · Bestäubung · Honig und Wachs,src/UI/GreenhousePanel.cs
+ui.greenhouse.rail.season,Season,Jahreszeit,src/UI/GreenhousePanel.cs
+ui.greenhouse.rail.active,Active Beds,Aktive Beete,src/UI/GreenhousePanel.cs
+ui.greenhouse.rail.plot_count,Plot Count,Beetanzahl,src/UI/GreenhousePanel.cs
+ui.greenhouse.rail.harvests,Harvests,Ernten,src/UI/GreenhousePanel.cs
+ui.greenhouse.rail.seed_vault,Seed Vault,Saatguttresor,src/UI/GreenhousePanel.cs
+ui.greenhouse.rail.blight,Blighted Beds,Befallene Beete,src/UI/GreenhousePanel.cs
+ui.greenhouse.rail.glass,Glass,Glas,src/UI/GreenhousePanel.cs
+ui.greenhouse.rail.blight_supply,Blight,Mehltau,src/UI/GreenhousePanel.cs
+ui.greenhouse.rail.medium,Medium,Nährboden,src/UI/GreenhousePanel.cs
+ui.factions.treaty.guild_detail,"Two-color boundary system active. Stripping marked sites causes immediate blacklist.","Zweifarbige Grenzmarkierung aktiv. Das Abernten markierter Orte führt sofort zur Sperrliste.",src/UI/FactionsPanel.cs
+ui.factions.treaty.crossing_detail,Vouch access required for passage across the northern ice road gate.,Für die Durchfahrt am nördlichen Eisstraßentor ist eine Bürgschaft nötig.,src/UI/FactionsPanel.cs
+ui.factions.treaty.archive_detail,Knowledge reciprocity active. Relic blueprints grant credit value.,Wissensaustausch aktiv. Reliktbaupläne gewähren Kreditwert.,src/UI/FactionsPanel.cs
+ui.factions.warlord.tribute_short,"ask {0}× {1} — {2} short week(s), collector is keeping notes",Forderung {0}× {1} — {2} knappe Woche(n); der Eintreiber führt Buch,src/UI/FactionsPanel.cs
+ui.factions.warlord.tribute_current,ask {0}× {1} — ledger current,Forderung {0}× {1} — Buch ausgeglichen,src/UI/FactionsPanel.cs
+ui.factions.warlord.pay,PAY TRIBUTE ({0}× {1}),TRIBUT ZAHLEN ({0}× {1}),src/UI/FactionsPanel.cs
+ui.factions.warlord.response_logged,This week's answer is already logged: {0}. The collector will be back next week.,Die Antwort für diese Woche ist erfasst: {0}. Der Eintreiber kommt nächste Woche wieder.,src/UI/FactionsPanel.cs
+ui.factions.branch.unaligned,Unaligned (Prospective Paths Open),Ungebunden (mögliche Wege offen),src/UI/FactionsPanel.cs
+ui.factions.branch.ponr_locked,LOCKED (Point of No Return Reached),GESPERRT (Punkt ohne Rückkehr erreicht),src/UI/FactionsPanel.cs
+ui.factions.branch.ponr_open,Open (Pre-PoNR),Offen (vor dem Punkt ohne Rückkehr),src/UI/FactionsPanel.cs
+ui.factions.branch.unresolved,Unresolved,Ungeklärt,src/UI/FactionsPanel.cs
+ui.factions.standing.joined,Joined / Allied,Beigetreten / verbündet,src/UI/FactionsPanel.cs
+ui.factions.standing.opposed,Opposed,Entgegengestellt,src/UI/FactionsPanel.cs
+ui.factions.standing.hostile,Hostile,Feindlich,src/UI/FactionsPanel.cs
+ui.factions.standing.allied,Allied,Verbündet,src/UI/FactionsPanel.cs
+ui.factions.standing.neutral,Neutral,Neutral,src/UI/FactionsPanel.cs
+ui.factions.standing.summary,Standing: {0} | Alignment: {1} ({2}),Ansehen: {0} | Ausrichtung: {1} ({2}),src/UI/FactionsPanel.cs
+ui.factions.informant.burned,BURNED · suspicion {0}/1000,ENTTARNT · Verdacht {0}/1000,src/UI/FactionsPanel.cs
+ui.factions.informant.readout,loyalty {0}/1000 · suspicion {1}/1000 · yield {2}/1000,Loyalität {0}/1000 · Verdacht {1}/1000 · Ertrag {2}/1000,src/UI/FactionsPanel.cs
+ui.factions.branch.consequence,Consequence: {0} · Trigger: {1},Folge: {0} · Auslöser: {1},src/UI/FactionsPanel.cs
+ui.factions.branch.commit,COMMIT ALLEGIANCE // [{0}],GEFOLGSCHAFT FESTLEGEN // [{0}],src/UI/FactionsPanel.cs
+ui.factions.events.day,[Day {0:D2}] {1},[Tag {0:D2}] {1},src/UI/FactionsPanel.cs
+ui.barter.caravan_arrived,Caravan arrived: {0} is now docked at the airlock.,Karawane eingetroffen: {0} liegt jetzt an der Schleuse.,src/UI/ShelterBarterPanel.cs
+ui.barter.caravan_departed,Caravan departed: {0} moved on.,Karawane abgefahren: {0} ist weitergezogen.,src/UI/ShelterBarterPanel.cs
+ui.barter.select_goods,[SELECT GOODS TO PURCHASE],[WAREN ZUM KAUF AUSWÄHLEN],src/UI/ShelterBarterPanel.cs
+ui.barter.caravan_not_docked,[CARAVAN NOT AT AIRLOCK],[KARAWANE NICHT AN DER SCHLEUSE],src/UI/ShelterBarterPanel.cs
+ui.barter.airlock_inaccessible,[AIRLOCK FROZEN / INACCESSIBLE],[SCHLEUSE EINGEFROREN / UNZUGÄNGLICH],src/UI/ShelterBarterPanel.cs
+ui.barter.fair_deal,[FAIR DEAL — MERCHANT ACCEPTS],[FAIRER HANDEL — HÄNDLER STIMMT ZU],src/UI/ShelterBarterPanel.cs
+ui.barter.insufficient_offer,[INSUFFICIENT OFFER — NEED +{0} VU],[ANGEBOT ZU NIEDRIG — FEHLEN +{0} VU],src/UI/ShelterBarterPanel.cs
+ui.barter.gate_airlock_header,AIRLOCK ACCESSIBLE,Schleuse zugänglich,src/UI/ShelterBarterPanel.cs
+ui.barter.gate_presence_header,CARAVAN AT AIRLOCK,KARAWANE AN DER SCHLEUSE,src/UI/ShelterBarterPanel.cs
+ui.barter.gate_requests_header,GOODS REQUESTED,WAREN ANGEFRAGT,src/UI/ShelterBarterPanel.cs
+ui.barter.gate_tolerance_header,VALUATION THRESHOLD,BEWERTUNGSSCHWELLE,src/UI/ShelterBarterPanel.cs
+ui.barter.gate_counterfeit_header,APPRAISAL VERIFICATION,SCHÄTZUNGSÜBERPRÜFUNG,src/UI/ShelterBarterPanel.cs
+ui.barter.gate_pass,PASS,BESTANDEN,src/UI/ShelterBarterPanel.cs
+ui.barter.gate_airlock_blocked,BLOCKED (FROZEN),GESPERRT (EINGEFROREN),src/UI/ShelterBarterPanel.cs
+ui.barter.gate_presence_blocked,BLOCKED (EN ROUTE),GESPERRT (UNTERWEGS),src/UI/ShelterBarterPanel.cs
+ui.barter.gate_item_count,{0} ITEMS,{0} ARTIKEL,src/UI/ShelterBarterPanel.cs
+ui.barter.gate_none_allocated,NONE ALLOCATED,NICHTS ZUGEWIESEN,src/UI/ShelterBarterPanel.cs
+ui.barter.gate_meets_tolerance,PASS (MEETS TOLERANCE),BESTANDEN (TOLERANZ ERFÜLLT),src/UI/ShelterBarterPanel.cs
+ui.barter.gate_insufficient_offer,INSUFFICIENT OFFER,ANGEBOT UNZUREICHEND,src/UI/ShelterBarterPanel.cs
+ui.barter.gate_appraisal_pass,PASS (APPRAISAL LVL {0}),BESTANDEN (BEWERTUNGSSTUFE {0}),src/UI/ShelterBarterPanel.cs
+ui.barter.gate_appraisal_risk,RISK {0}% (UNAPPRAISED),RISIKO {0}% (UNGEPRÜFT),src/UI/ShelterBarterPanel.cs
+ui.barter.gate_line,{0}: [ {1} ],{0}: [ {1} ],src/UI/ShelterBarterPanel.cs
+ui.barter.allocations_cleared,Allocations cleared.,Zuweisungen gelöscht.,src/UI/ShelterBarterPanel.cs
+ui.barter.system_not_initialized,Cannot execute trade: Barter system not initialized.,Handel nicht möglich: Tauschsystem nicht initialisiert.,src/UI/ShelterBarterPanel.cs
+ui.barter.trade_executed,Trade executed with {0}! Acquired {1} for {2}. (Trade #{3}),Handel mit {0} abgeschlossen! Erhalten: {1} für {2}. (Handel Nr. {3}),src/UI/ShelterBarterPanel.cs
+ui.barter.trade_blocked,Trade blocked: {0},Handel blockiert: {0},src/UI/ShelterBarterPanel.cs
+ui.barter.error.unknown_caravan,Selected merchant caravan is not recognized by the manifest.,Die ausgewählte Händlerkarawane ist im Manifest nicht bekannt.,src/UI/ShelterBarterPanel.cs
+ui.barter.error.caravan_not_at_airlock,The caravan is en route and has not arrived at the airlock yet.,Die Karawane ist unterwegs und noch nicht an der Schleuse eingetroffen.,src/UI/ShelterBarterPanel.cs
+ui.barter.error.airlock_inaccessible,"The shelter airlock is frozen or blocked. Restore heat before operating the airlock.","Die Schleuse ist eingefroren oder blockiert. Stelle die Wärme wieder her, bevor du sie bedienst.",src/UI/ShelterBarterPanel.cs
+ui.barter.error.no_items_requested,No merchant goods have been selected for trade.,Es wurden keine Händlerwaren zum Tausch ausgewählt.,src/UI/ShelterBarterPanel.cs
+ui.barter.error.insufficient_stock,The caravan does not have enough remaining stock to fulfill this request.,Die Karawane hat nicht genug Vorrat für diese Anfrage.,src/UI/ShelterBarterPanel.cs
+ui.barter.error.insufficient_value,Offered goods do not meet the merchant's required valuation and tolerance margin.,Der Wert des Angebots erreicht die geforderte Bewertungstoleranz des Händlers nicht.,src/UI/ShelterBarterPanel.cs
+ui.barter.error.counterfeit,Counterfeit or defective goods detected during trade appraisal. Negotiation aborted.,Bei der Prüfung wurden gefälschte oder fehlerhafte Waren entdeckt. Verhandlung abgebrochen.,src/UI/ShelterBarterPanel.cs
+ui.barter.error.storage_capacity,Shelter storage capacity or weight limit exceeded. Make room in storage first.,Lagerkapazität oder Gewichtslimit des Unterschlupfs überschritten. Schaffe zuerst Platz.,src/UI/ShelterBarterPanel.cs
+ui.barter.error.commit_failed,Failed to commit inventory transfer.,Inventartransfer konnte nicht abgeschlossen werden.,src/UI/ShelterBarterPanel.cs
+ui.barter.error.unknown,Unknown barter constraint failed.,Unbekannte Tauschbedingung fehlgeschlagen.,src/UI/ShelterBarterPanel.cs
+ui.barter.error.fallback,{0},{0},src/UI/ShelterBarterPanel.cs
+ui.greenhouse.stage.fallow,FALLOW,BRACHE,src/UI/GreenhousePanel.cs
+ui.greenhouse.stage.sprouting,SPROUTING,KEIMT,src/UI/GreenhousePanel.cs
+ui.greenhouse.stage.growing,GROWING,WÄCHST,src/UI/GreenhousePanel.cs
+ui.greenhouse.stage.ready,READY,ERNTEREIF,src/UI/GreenhousePanel.cs
+ui.greenhouse.stage.failed,FAILED,FEHLGESCHLAGEN,src/UI/GreenhousePanel.cs
+ui.greenhouse.seed.mushroom,Mushroom Spores,Pilzsporen,src/UI/GreenhousePanel.cs
+ui.greenhouse.seed.tuber,Frost Tuber,Frostknolle,src/UI/GreenhousePanel.cs
+ui.greenhouse.seed.grain,Winter Rye Grain,Winterroggenkorn,src/UI/GreenhousePanel.cs
+ui.greenhouse.seed.wheat,Pre-War Heritage Wheat,Vorkriegsweizen,src/UI/GreenhousePanel.cs
+ui.greenhouse.seed.hardy_tuber,Hardy Frost Tuber,Robuste Frostknolle,src/UI/GreenhousePanel.cs
+ui.greenhouse.seed.ash_grain,Ashland Grain,Aschelandgetreide,src/UI/GreenhousePanel.cs
+ui.greenhouse.seed.biolum_mushroom,Bioluminescent Mushroom,Biolumineszenter Pilz,src/UI/GreenhousePanel.cs
+ui.greenhouse.seed.nutrient_algae,Nutrient Algae,Nährstoffalgen,src/UI/GreenhousePanel.cs
+ui.greenhouse.seed.medicinal_herb,Medicinal Herb,Heilpflanze,src/UI/GreenhousePanel.cs
+ui.greenhouse.seed.leafy_green,Leafy Green,Blattgemüse,src/UI/GreenhousePanel.cs
+ui.greenhouse.seed.oilseed,Oilseed,Ölsaat,src/UI/GreenhousePanel.cs
+ui.greenhouse.seed.cold_legume,Cold Legume,Kältebohne,src/UI/GreenhousePanel.cs
+ui.greenhouse.seed.frost_pea,Frost Pea,Frosterbse,src/UI/GreenhousePanel.cs
+ui.greenhouse.seed.glacier_greens,Glacier Greens,Gletschergemüse,src/UI/GreenhousePanel.cs
+ui.greenhouse.seed.mixed_packet,Assorted Seed Packet,Sortierte Samentüte,src/UI/GreenhousePanel.cs

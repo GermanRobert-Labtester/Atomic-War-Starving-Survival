@@ -7,6 +7,7 @@ using Ashfall.Core.UI;
 using AtomicWar.GodotApp;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
+using AtomicWar.GodotApp.Localization;
 namespace AtomicWar.GodotApp.UI
 {
     public partial class ApprenticeshipPanel : Control, IBindablePanel
@@ -102,7 +103,8 @@ namespace AtomicWar.GodotApp.UI
             {
                 if (_detailText != null)
                 {
-                    _detailText.Text = "Apprenticeship host session is not bound. Mentor-apprentice skill progression records are offline.";
+                    _detailText.Text = AshfallLocalization.Tr("ui.apprenticeship.unbound",
+                        "Apprenticeship host session is not bound. Mentor-apprentice skill progression records are offline.");
                 }
                 return;
             }

@@ -129,34 +129,36 @@ namespace AtomicWar.GodotApp.UI
             int guildClaims = _muster?.ScavengerGuild?.State?.claimedSiteIds?.Count ?? 0;
             int blacklistedCount = _muster?.ScavengerGuild?.State?.blacklistedShelterIds?.Count ?? 0;
 
-            var ovCard = AshfallUiHelpers.MakeCardFrame("WASTELAND DIPLOMATIC & TRADE NETWORK", "REGISTRY STATUS");
+            var ovCard = AshfallUiHelpers.MakeCardFrame(
+                AshfallUiText.Tr("ui.factions.overview.title", "WASTELAND DIPLOMATIC & TRADE NETWORK"),
+                AshfallUiText.Tr("ui.factions.overview.kicker", "REGISTRY STATUS"));
             var ovBox = ovCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
 
-            ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Known Major Factions", $"{totalFactions} Sovereign Organizations", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
-            ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Scavenger Guild Trust", $"{guildTrust:F1} / 100", AshfallUiHelpers.ToColor(guildTrust >= 50 ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Critical)));
-            ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Guild Claimed Sites", $"{guildClaims} Active Mining / Scrap Claims", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
-            ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Sanctions & Blacklists", blacklistedCount > 0 ? $"{blacklistedCount} Active Hostile Enforcements" : "Zero Sanctions Imposed", AshfallUiHelpers.ToColor(blacklistedCount > 0 ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Pale)));
+            ovBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.factions.known_major", "Known Major Factions"), $"{totalFactions} Sovereign Organizations", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
+            ovBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.factions.guild_trust", "Scavenger Guild Trust"), $"{guildTrust:F1} / 100", AshfallUiHelpers.ToColor(guildTrust >= 50 ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Critical)));
+            ovBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.factions.guild_claims", "Guild Claimed Sites"), $"{guildClaims} Active Mining / Scrap Claims", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+            ovBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.factions.sanctions", "Sanctions & Blacklists"), blacklistedCount > 0 ? $"{blacklistedCount} Active Hostile Enforcements" : "Zero Sanctions Imposed", AshfallUiHelpers.ToColor(blacklistedCount > 0 ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Pale)));
 
             if (_muster != null)
             {
-                var btnMuster = AshfallUiHelpers.MakeButton("OPEN SECTOR MUSTER // CURRENTS & ESCALATION", () =>
+                var btnMuster = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.factions.btn_muster", "OPEN SECTOR MUSTER // CURRENTS & ESCALATION"), () =>
                 {
                     OnMusterPanelRequested?.Invoke();
                 });
                 ovBox.AddChild(btnMuster);
             }
 
-            var btnCulture = AshfallUiHelpers.MakeButton("OPEN FACTION CULTURE CODEX // EVERYDAY CUSTOMS", () =>
+            var btnCulture = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.factions.btn_culture", "OPEN FACTION CULTURE CODEX // EVERYDAY CUSTOMS"), () =>
             {
                 OnCultureCodexRequested?.Invoke();
             });
             ovBox.AddChild(btnCulture);
-            var btnStanceMatrix = AshfallUiHelpers.MakeButton("FACTION STANCE MATRIX // RELATIONS GRID", () =>
+            var btnStanceMatrix = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.factions.btn_stance", "FACTION STANCE MATRIX // RELATIONS GRID"), () =>
             {
                 OnOpenStanceMatrixRequested?.Invoke();
             });
             ovBox.AddChild(btnStanceMatrix);
-            var btnNarratives = AshfallUiHelpers.MakeButton("FACTION NARRATIVES // DISPATCHES & ARCS", () =>
+            var btnNarratives = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.factions.btn_narratives", "FACTION NARRATIVES // DISPATCHES & ARCS"), () =>
             {
                 OnOpenNarrativesRequested?.Invoke();
             });
@@ -220,7 +222,9 @@ namespace AtomicWar.GodotApp.UI
                 quoteLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
                 quoteBox.AddChild(quoteLbl);
 
-                var regionLbl = AshfallUiHelpers.MakeLabel($"Base: {f.HomeRegion} · Stance: {f.AccessRule}", Ashfall.Core.UI.Theme.FontSizeLabel, Ashfall.Core.UI.Theme.Muted);
+                var regionLbl = AshfallUiHelpers.MakeLabel(
+                    AshfallUiText.TrFormat("ui.factions.base_stance", "Base: {0} · Stance: {1}", f.HomeRegion, f.AccessRule),
+                    Ashfall.Core.UI.Theme.FontSizeLabel, Ashfall.Core.UI.Theme.Muted);
                 quoteBox.AddChild(regionLbl);
                 headerRow.AddChild(quoteBox);
                 cardBox.AddChild(headerRow);
@@ -228,16 +232,16 @@ namespace AtomicWar.GodotApp.UI
                 cardBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
                 // Trade profile
-                string wantsText = f.Wants != null && f.Wants.Length > 0 ? string.Join(", ", f.Wants) : "None registered";
-                string offersText = f.Offers != null && f.Offers.Length > 0 ? string.Join(", ", f.Offers) : "None registered";
+                string wantsText = f.Wants != null && f.Wants.Length > 0 ? string.Join(", ", f.Wants) : AshfallUiText.Tr("ui.factions.none_registered", "None registered");
+                string offersText = f.Offers != null && f.Offers.Length > 0 ? string.Join(", ", f.Offers) : AshfallUiText.Tr("ui.factions.none_registered", "None registered");
 
-                cardBox.AddChild(AshfallUiHelpers.MakeDataRow("Demand (Wants)", wantsText.Replace('_', ' '), AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
-                cardBox.AddChild(AshfallUiHelpers.MakeDataRow("Supply (Offers)", offersText.Replace('_', ' '), AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
-                cardBox.AddChild(AshfallUiHelpers.MakeDataRow("Standing / Trust", $"{f.Trust:F1} / 100", AshfallUiHelpers.ToColor(f.Trust >= 50 ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Dim)));
+                cardBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.factions.demand", "Demand (Wants)"), wantsText.Replace('_', ' '), AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
+                cardBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.factions.supply", "Supply (Offers)"), offersText.Replace('_', ' '), AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+                cardBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.factions.standing_trust", "Standing / Trust"), $"{f.Trust:F1} / 100", AshfallUiHelpers.ToColor(f.Trust >= 50 ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Dim)));
 
                 var btnRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
                 string factionId = f.Id;
-                var btnInspect = AshfallUiHelpers.MakeButton($"DIPLOMATIC DOSSIER // [{f.DisplayName}]", () =>
+                var btnInspect = AshfallUiHelpers.MakeButton(AshfallUiText.TrFormat("ui.factions.dossier", "DIPLOMATIC DOSSIER // [{0}]", f.DisplayName), () =>
                 {
                     OnFactionDetailRequested?.Invoke(factionId);
                 });
@@ -255,7 +259,7 @@ namespace AtomicWar.GodotApp.UI
             if (foundrySys != null && foundryFaction != null)
             {
                 var guildCard = AshfallUiHelpers.MakeCardFrame(
-                    foundryFaction.display_name, "ACCORD SYSTEMS // THE WORKS");
+                    foundryFaction.display_name, AshfallUiText.Tr("ui.factions.foundry.kicker", "ACCORD SYSTEMS // THE WORKS"));
                 var guildBox = guildCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
 
                 var guildHeader = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
@@ -269,11 +273,11 @@ namespace AtomicWar.GodotApp.UI
                 guildBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
                 float standing = foundrySys.GuildStanding;
-                guildBox.AddChild(AshfallUiHelpers.MakeDataRow("Foundry Standing", $"{standing:F0} / 100", AshfallUiHelpers.ToColor(standing >= 0 ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Critical)));
-                guildBox.AddChild(AshfallUiHelpers.MakeDataRow("Foundry", foundrySys.IsUnlocked ? $"OPEN · heat {foundrySys.HeatStage} · casts {foundrySys.TotalProductionCount}" : "SEALED — blueprint catalogued", AshfallUiHelpers.ToColor(foundrySys.IsUnlocked ? Ashfall.Core.UI.Theme.Pale : Ashfall.Core.UI.Theme.Dim)));
+                guildBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.factions.foundry.standing", "Foundry Standing"), $"{standing:F0} / 100", AshfallUiHelpers.ToColor(standing >= 0 ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Critical)));
+                guildBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.factions.foundry.state", "Foundry"), foundrySys.IsUnlocked ? $"OPEN · heat {foundrySys.HeatStage} · casts {foundrySys.TotalProductionCount}" : "SEALED — blueprint catalogued", AshfallUiHelpers.ToColor(foundrySys.IsUnlocked ? Ashfall.Core.UI.Theme.Pale : Ashfall.Core.UI.Theme.Dim)));
 
                 if (foundryFaction.internal_divisions != null && foundryFaction.internal_divisions.Length > 0)
-                    guildBox.AddChild(AshfallUiHelpers.MakeDataRow("Internal Divisions", string.Join(", ", foundryFaction.internal_divisions).Replace('_', ' '), AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted)));
+                    guildBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.factions.foundry.divisions", "Internal Divisions"), string.Join(", ", foundryFaction.internal_divisions).Replace('_', ' '), AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted)));
 
                 foreach (var rel in foundryFaction.relationships)
                 {
@@ -283,7 +287,7 @@ namespace AtomicWar.GodotApp.UI
                         rel.stance.Replace('_', ' ') + " — " + rel.notes, AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted)));
                 }
 
-                var btnFoundry = AshfallUiHelpers.MakeButton("OPEN THE FOUNDRY FLOOR", () =>
+                var btnFoundry = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.factions.btn_foundry", "OPEN THE FOUNDRY FLOOR"), () =>
                 {
                     // The host routes this through the standard panel-open path.
                     OnFoundryPanelRequested?.Invoke();
@@ -294,12 +298,14 @@ namespace AtomicWar.GodotApp.UI
             }
 
             // ── 3. Strategic Standing & Legal Accords ──
-            var relCard = AshfallUiHelpers.MakeCardFrame("STRATEGIC TREATIES & LEDGER DEBT", "TREATY STATUS");
+            var relCard = AshfallUiHelpers.MakeCardFrame(
+                AshfallUiText.Tr("ui.factions.treaties.title", "STRATEGIC TREATIES & LEDGER DEBT"),
+                AshfallUiText.Tr("ui.factions.treaties.kicker", "TREATY STATUS"));
             var relBox = relCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
 
-            relBox.AddChild(AshfallUiHelpers.MakeDataRow("Scavenger Guild Claim Ledger", "Two-color boundary system active. Stripping marked sites causes immediate blacklist.", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
-            relBox.AddChild(AshfallUiHelpers.MakeDataRow("Nobody's Crossing Accord", "Vouch access required for passage across the northern ice road gate.", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
-            relBox.AddChild(AshfallUiHelpers.MakeDataRow("Ledger Keepers Archive", "Knowledge reciprocity active. Relic blueprints grant credit value.", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
+            relBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.factions.treaty.guild", "Scavenger Guild Claim Ledger"), AshfallUiText.Tr("ui.factions.treaty.guild_detail", "Two-color boundary system active. Stripping marked sites causes immediate blacklist."), AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+            relBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.factions.treaty.crossing", "Nobody's Crossing Accord"), AshfallUiText.Tr("ui.factions.treaty.crossing_detail", "Vouch access required for passage across the northern ice road gate."), AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+            relBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.factions.treaty.archive", "Ledger Keepers Archive"), AshfallUiText.Tr("ui.factions.treaty.archive_detail", "Knowledge reciprocity active. Relic blueprints grant credit value."), AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
             _relationsContainer.AddChild(relCard);
 
             // ── 3b. Adaptive Warlord Doctrine (Year of Ash, proposed model) ──
@@ -307,22 +313,22 @@ namespace AtomicWar.GodotApp.UI
             {
                 var w = _yearOfAsh.Warlord;
                 var wl = w.Catalog.Warlord;
-                var wCard = AshfallUiHelpers.MakeCardFrame("WARLORD DOCTRINE — SECTOR 4", "ADAPTIVE STRATEGY (identity: " + wl.faction_id + ")");
+                var wCard = AshfallUiHelpers.MakeCardFrame(AshfallUiText.Tr("ui.factions.warlord.title", "WARLORD DOCTRINE — SECTOR 4"), AshfallUiText.TrFormat("ui.factions.warlord.kicker", "ADAPTIVE STRATEGY (identity: {0})", wl.faction_id));
                 var wBox = wCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
 
                 string doctrine = w.Doctrine != null ? w.Doctrine.display_name : w.DoctrineId;
-                wBox.AddChild(AshfallUiHelpers.MakeDataRow("Current Doctrine", doctrine, AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
-                wBox.AddChild(AshfallUiHelpers.MakeDataRow("Supply", w.Supply + " / " + w.SupplyNeed, AshfallUiHelpers.ToColor(w.Supply < w.SupplyNeed ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Pale)));
+                wBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.factions.warlord.doctrine", "Current Doctrine"), doctrine, AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
+                wBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.factions.warlord.supply", "Supply"), w.Supply + " / " + w.SupplyNeed, AshfallUiHelpers.ToColor(w.Supply < w.SupplyNeed ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Pale)));
 
                 // Tribute ledger (player-visible, from Core state).
                 int ask = Math.Max(1, (int)(wl.tribute_base_amount * w.TributeMultiplier));
                 string tributeState = w.State.consecutiveShortWeeks > 0
-                    ? $"ask {ask}× {wl.tribute_currency_item} — {w.State.consecutiveShortWeeks} short week(s), collector is keeping notes"
-                    : $"ask {ask}× {wl.tribute_currency_item} — ledger current";
-                wBox.AddChild(AshfallUiHelpers.MakeDataRow("Tribute", tributeState,
+                    ? AshfallUiText.TrFormat("ui.factions.warlord.tribute_short", "ask {0}× {1} — {2} short week(s), collector is keeping notes", ask, wl.tribute_currency_item, w.State.consecutiveShortWeeks)
+                    : AshfallUiText.TrFormat("ui.factions.warlord.tribute_current", "ask {0}× {1} — ledger current", ask, wl.tribute_currency_item);
+                wBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.factions.warlord.tribute", "Tribute"), tributeState,
                     AshfallUiHelpers.ToColor(w.State.consecutiveShortWeeks > 0 ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Warm)));
-                wBox.AddChild(AshfallUiHelpers.MakeDataRow("Paid to Date", w.State.totalWeeksPaid + " of " + w.State.totalWeeksAsked + " asks", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
-                wBox.AddChild(AshfallUiHelpers.MakeDataRow("Operations", w.TotalOperations + " · " + w.State.casualties + " casualties", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+                wBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.factions.warlord.paid", "Paid to Date"), w.State.totalWeeksPaid + " of " + w.State.totalWeeksAsked + " asks", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+                wBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.factions.warlord.ops", "Operations"), w.TotalOperations + " · " + w.State.casualties + " casualties", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
 
                 // Collector note (authored prose, deterministic by day).
                 if (!string.IsNullOrEmpty(_collectorNote))
@@ -339,19 +345,19 @@ namespace AtomicWar.GodotApp.UI
 
                     var payRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
                     payRow.AddThemeConstantOverride("h_separation", (int)Ashfall.Core.UI.Theme.SpacingSm);
-                    var btnPay = AshfallUiHelpers.MakeButton($"PAY TRIBUTE ({ask}× {wl.tribute_currency_item})", () => OnWarlordTributePay?.Invoke(ask));
+                    var btnPay = AshfallUiHelpers.MakeButton(AshfallUiText.TrFormat("ui.factions.warlord.pay", "PAY TRIBUTE ({0}× {1})", ask, wl.tribute_currency_item), () => OnWarlordTributePay?.Invoke(ask));
                     btnPay.CustomMinimumSize = new Vector2(300, 34);
                     btnPay.Disabled = alreadyResponded;
                     payRow.AddChild(btnPay);
-                    var btnContest = AshfallUiHelpers.MakeButton("CONTEST", () => OnWarlordTributeContest?.Invoke());
+                    var btnContest = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.factions.warlord.contest", "CONTEST"), () => OnWarlordTributeContest?.Invoke());
                     btnContest.CustomMinimumSize = new Vector2(110, 34);
                     btnContest.Disabled = alreadyResponded;
                     payRow.AddChild(btnContest);
-                    var btnSubmit = AshfallUiHelpers.MakeButton("SUBMIT ALL", () => OnWarlordTributeSubmit?.Invoke());
+                    var btnSubmit = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.factions.warlord.submit", "SUBMIT ALL"), () => OnWarlordTributeSubmit?.Invoke());
                     btnSubmit.CustomMinimumSize = new Vector2(130, 34);
                     btnSubmit.Disabled = alreadyResponded;
                     payRow.AddChild(btnSubmit);
-                    var btnRefuse = AshfallUiHelpers.MakeButton("REFUSE THIS WEEK", () => OnWarlordTributeRefuse?.Invoke());
+                    var btnRefuse = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.factions.warlord.refuse", "REFUSE THIS WEEK"), () => OnWarlordTributeRefuse?.Invoke());
                     btnRefuse.CustomMinimumSize = new Vector2(180, 34);
                     btnRefuse.Disabled = alreadyResponded;
                     payRow.AddChild(btnRefuse);
@@ -362,8 +368,7 @@ namespace AtomicWar.GodotApp.UI
                         try
                         {
                             wBox.AddChild(AshfallUiHelpers.MakeBody(
-                                $"This week's answer is already logged: {WarlordResponseStateProvider?.Invoke() ?? "responded"}. "
-                                + "The collector will be back next week."));
+                                AshfallUiText.TrFormat("ui.factions.warlord.response_logged", "This week's answer is already logged: {0}. The collector will be back next week.", WarlordResponseStateProvider?.Invoke() ?? "responded")));
                         }
                         catch { /* projection failure must never break the panel */ }
                     }
@@ -391,20 +396,22 @@ namespace AtomicWar.GodotApp.UI
             // ── 3b. The Weight of Choices: Faction Progression & Branch Storylines ──
             if (_branchCoordinator != null)
             {
-                var branchCard = AshfallUiHelpers.MakeCardFrame("THE WEIGHT OF CHOICES // FACTION PROGRESSION", "STRATEGIC ALLEGIANCE");
+                var branchCard = AshfallUiHelpers.MakeCardFrame(
+                    AshfallUiText.Tr("ui.factions.branch.title", "THE WEIGHT OF CHOICES // FACTION PROGRESSION"),
+                    AshfallUiText.Tr("ui.factions.branch.kicker", "STRATEGIC ALLEGIANCE"));
                 var branchBox = branchCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
 
                 string activeFaction = _branchCoordinator.ActiveFactionKind.ToString();
-                string activeBranch = _branchCoordinator.ActiveBranchId ?? "Unaligned (Prospective Paths Open)";
-                string ponrText = _branchCoordinator.IsPonrLocked ? "LOCKED (Point of No Return Reached)" : "Open (Pre-PoNR)";
-                string endingText = _branchCoordinator.ResolvedEndingId ?? "Unresolved";
+                string activeBranch = _branchCoordinator.ActiveBranchId?.Replace('_', ' ') ?? AshfallUiText.Tr("ui.factions.branch.unaligned", "Unaligned (Prospective Paths Open)");
+                string ponrText = _branchCoordinator.IsPonrLocked ? AshfallUiText.Tr("ui.factions.branch.ponr_locked", "LOCKED (Point of No Return Reached)") : AshfallUiText.Tr("ui.factions.branch.ponr_open", "Open (Pre-PoNR)");
+                string endingText = _branchCoordinator.ResolvedEndingId?.Replace('_', ' ') ?? AshfallUiText.Tr("ui.factions.branch.unresolved", "Unresolved");
 
-                branchBox.AddChild(AshfallUiHelpers.MakeDataRow("Active Allegiance", activeFaction, AshfallUiHelpers.ToColor(_branchCoordinator.IsCommitted ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Pale)));
-                branchBox.AddChild(AshfallUiHelpers.MakeDataRow("Current Branch", activeBranch.Replace('_', ' '), AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Hot)));
-                branchBox.AddChild(AshfallUiHelpers.MakeDataRow("PoNR Status", ponrText, AshfallUiHelpers.ToColor(_branchCoordinator.IsPonrLocked ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Pale)));
+                branchBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.factions.branch.active", "Active Allegiance"), activeFaction, AshfallUiHelpers.ToColor(_branchCoordinator.IsCommitted ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Pale)));
+                branchBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.factions.branch.current", "Current Branch"), activeBranch.Replace('_', ' '), AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Hot)));
+                branchBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.factions.branch.ponr", "PoNR Status"), ponrText, AshfallUiHelpers.ToColor(_branchCoordinator.IsPonrLocked ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Pale)));
                 if (_branchCoordinator.ResolvedEndingId != null)
                 {
-                    branchBox.AddChild(AshfallUiHelpers.MakeDataRow("Resolved Ending", endingText.Replace('_', ' '), AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
+                    branchBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.factions.branch.ending", "Resolved Ending"), endingText.Replace('_', ' '), AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
                 }
 
                 branchBox.AddChild(AshfallUiHelpers.MakeSeparator());
@@ -413,24 +420,24 @@ namespace AtomicWar.GodotApp.UI
                 var standings = _branchCoordinator.GetFactionStandingSummaries();
                 foreach (var s in standings)
                 {
-                    string statusDesc = s.IsJoined ? "Joined / Allied" : (s.IsOpposed ? "Opposed" : (s.IsHostile ? "Hostile" : (s.IsAllied ? "Allied" : "Neutral")));
+                    string statusDesc = s.IsJoined ? AshfallUiText.Tr("ui.factions.standing.joined", "Joined / Allied") : (s.IsOpposed ? AshfallUiText.Tr("ui.factions.standing.opposed", "Opposed") : (s.IsHostile ? AshfallUiText.Tr("ui.factions.standing.hostile", "Hostile") : (s.IsAllied ? AshfallUiText.Tr("ui.factions.standing.allied", "Allied") : AshfallUiText.Tr("ui.factions.standing.neutral", "Neutral"))));
                     branchBox.AddChild(AshfallUiHelpers.MakeDataRow(
                         s.DisplayName,
-                        $"Standing: {s.Standing:+0;-0;0} | Alignment: {s.Alignment:+0;-0;0} ({statusDesc})",
+                        AshfallUiText.TrFormat("ui.factions.standing.summary", "Standing: {0} | Alignment: {1} ({2})", s.Standing.ToString("+0;-0;0"), s.Alignment.ToString("+0;-0;0"), statusDesc),
                         AshfallUiHelpers.ToColor(s.IsHostile ? Ashfall.Core.UI.Theme.Critical : (s.IsJoined || s.IsAllied ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Pale))));
                 }
 
                 branchBox.AddChild(AshfallUiHelpers.MakeSeparator());
                 if (_informantNetwork != null)
                 {
-                    branchBox.AddChild(AshfallUiHelpers.MakeSmall("INFORMANT NETWORK // FIELD TRADECRAFT"));
+                    branchBox.AddChild(AshfallUiHelpers.MakeSmall(AshfallUiText.Tr("ui.factions.informant.header", "INFORMANT NETWORK // FIELD TRADECRAFT")));
                     foreach (var informant in _informantNetwork.System.State.informants)
                     {
                         branchBox.AddChild(AshfallUiHelpers.MakeDataRow(
                             $"{informant.InformantId} ({informant.Archetype})",
                             informant.IsCompromised
-                                ? $"BURNED · suspicion {informant.SuspicionPermille}/1000"
-                                : $"loyalty {informant.LoyaltyPermille}/1000 · suspicion {informant.SuspicionPermille}/1000 · yield {informant.IntelligenceYieldPermille}/1000",
+                                ? AshfallUiText.TrFormat("ui.factions.informant.burned", "BURNED · suspicion {0}/1000", informant.SuspicionPermille)
+                                : AshfallUiText.TrFormat("ui.factions.informant.readout", "loyalty {0}/1000 · suspicion {1}/1000 · yield {2}/1000", informant.LoyaltyPermille, informant.SuspicionPermille, informant.IntelligenceYieldPermille),
                             AshfallUiHelpers.ToColor(informant.IsCompromised
                                 ? Ashfall.Core.UI.Theme.Critical
                                 : (informant.SuspicionPermille >= 500 ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Pale))));
@@ -438,7 +445,7 @@ namespace AtomicWar.GodotApp.UI
                     branchBox.AddChild(AshfallUiHelpers.MakeSmall(_informantNetwork.Readout()));
                     branchBox.AddChild(AshfallUiHelpers.MakeSeparator());
                 }
-                branchBox.AddChild(AshfallUiHelpers.MakeSmall("BRANCH PATH AVAILABILITY & CONSEQUENCES:"));
+                branchBox.AddChild(AshfallUiHelpers.MakeSmall(AshfallUiText.Tr("ui.factions.branch.paths", "BRANCH PATH AVAILABILITY & CONSEQUENCES:")));
 
                 var options = _branchCoordinator.GetBranchOptions(_moralChoice);
                 int rendered = 0;
@@ -456,21 +463,21 @@ namespace AtomicWar.GodotApp.UI
 
                     if (opt.IsCommitted || opt.IsAvailable)
                     {
-                        var desc = AshfallUiHelpers.MakeSmall($"Consequence: {opt.ConsequencesSummary} · Trigger: {opt.PonrTrigger}");
+                        var desc = AshfallUiHelpers.MakeSmall(AshfallUiText.TrFormat("ui.factions.branch.consequence", "Consequence: {0} · Trigger: {1}", opt.ConsequencesSummary, opt.PonrTrigger));
                         branchBox.AddChild(desc);
                     }
 
                     if (opt.IsAvailable && !_branchCoordinator.IsCommitted)
                     {
                         string branchId = opt.BranchId;
-                        var commitBtn = AshfallUiHelpers.MakeButton($"COMMIT ALLEGIANCE // [{opt.DisplayName.ToUpperInvariant()}]", () =>
+                        var commitBtn = AshfallUiHelpers.MakeButton(AshfallUiText.TrFormat("ui.factions.branch.commit", "COMMIT ALLEGIANCE // [{0}]", opt.DisplayName.ToUpperInvariant()), () =>
                         {
                             OnCommitBranchRequested?.Invoke(branchId);
                         });
                         commitBtn.SizeFlagsHorizontal = SizeFlags.ExpandFill;
                         branchBox.AddChild(commitBtn);
 
-                        var warn = AshfallUiHelpers.MakeSmall("WARNING: Committing allegiance permanently locks out competing factions. The door will close.");
+                        var warn = AshfallUiHelpers.MakeSmall(AshfallUiText.Tr("ui.factions.branch.warning", "WARNING: Committing allegiance permanently locks out competing factions. The door will close."));
                         warn.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warning));
                         branchBox.AddChild(warn);
                     }
@@ -481,7 +488,9 @@ namespace AtomicWar.GodotApp.UI
             }
 
             // ── 4. Diplomatic Events & Radio Intercepts ──
-            var evCard = AshfallUiHelpers.MakeCardFrame("RECENT DIPLOMATIC COMMUNIQUES", "RADIO INTERCEPTS");
+            var evCard = AshfallUiHelpers.MakeCardFrame(
+                AshfallUiText.Tr("ui.factions.events.title", "RECENT DIPLOMATIC COMMUNIQUES"),
+                AshfallUiText.Tr("ui.factions.events.kicker", "RADIO INTERCEPTS"));
             var evBox = evCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
 
             var catalog = _yearOfAsh?.WarRunner?.Catalog;
@@ -496,12 +505,12 @@ namespace AtomicWar.GodotApp.UI
             {
                 foreach (var c in visible)
                 {
-                    evBox.AddChild(AshfallUiHelpers.MakeDataRow($"[Day {c.day:D2}] {c.factionId}", c.title, AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+                    evBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.TrFormat("ui.factions.events.day", "[Day {0:D2}] {1}", c.day, c.factionId), c.title, AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
                 }
             }
             else
             {
-                evBox.AddChild(AshfallUiHelpers.MakeDataRow("STATUS", "No diplomatic communiqués intercepted on local frequencies.", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+                evBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.factions.events.status_label", "STATUS"), AshfallUiText.Tr("ui.factions.events.none", "No diplomatic communiqués intercepted on local frequencies."), AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
             }
             _eventsContainer.AddChild(evCard);
         }
@@ -528,11 +537,11 @@ namespace AtomicWar.GodotApp.UI
             rootBox.CustomMinimumSize = new Vector2(760, 0);
             center.AddChild(rootBox);
 
-            var title = AshfallUiHelpers.MakeTitle("FACTIONS & WASTELAND DIPLOMACY", Ashfall.Core.UI.Theme.FontSizeH1);
+            var title = AshfallUiHelpers.MakeTitle(AshfallUiText.Tr("ui.factions.title", "FACTIONS & WASTELAND DIPLOMACY"), Ashfall.Core.UI.Theme.FontSizeH1);
             title.HorizontalAlignment = HorizontalAlignment.Center;
             rootBox.AddChild(title);
 
-            _statusSummary = AshfallUiHelpers.MakeMetadata("Monitor geopolitical standings, faction trust, trade specialization, claim boundaries, and diplomatic treaties.");
+            _statusSummary = AshfallUiHelpers.MakeMetadata(AshfallUiText.Tr("ui.factions.summary", "Monitor geopolitical standings, faction trust, trade specialization, claim boundaries, and diplomatic treaties."));
             _statusSummary.HorizontalAlignment = HorizontalAlignment.Center;
             _statusSummary.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
             rootBox.AddChild(_statusSummary);
@@ -544,7 +553,7 @@ namespace AtomicWar.GodotApp.UI
 
             rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            var factionsTitle = AshfallUiHelpers.MakeSectionHeader("KNOWN FACTION PROTOCOLS & ALLIANCES");
+            var factionsTitle = AshfallUiHelpers.MakeSectionHeader(AshfallUiText.Tr("ui.factions.section.factions", "KNOWN FACTION PROTOCOLS & ALLIANCES"));
             rootBox.AddChild(factionsTitle);
 
             _factionsContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
@@ -552,7 +561,7 @@ namespace AtomicWar.GodotApp.UI
 
             rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            var relTitle = AshfallUiHelpers.MakeSectionHeader("TREATIES, STANDING & DEBT OBLIGATIONS");
+            var relTitle = AshfallUiHelpers.MakeSectionHeader(AshfallUiText.Tr("ui.factions.section.relations", "TREATIES, STANDING & DEBT OBLIGATIONS"));
             rootBox.AddChild(relTitle);
 
             _relationsContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
@@ -560,7 +569,7 @@ namespace AtomicWar.GodotApp.UI
 
             rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            var evTitle = AshfallUiHelpers.MakeSectionHeader("RECENT FACTION COMMUNIQUES & DISPATCHES");
+            var evTitle = AshfallUiHelpers.MakeSectionHeader(AshfallUiText.Tr("ui.factions.section.events", "RECENT FACTION COMMUNIQUES & DISPATCHES"));
             rootBox.AddChild(evTitle);
 
             _eventsContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
@@ -568,11 +577,11 @@ namespace AtomicWar.GodotApp.UI
 
             rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            var btnClose = AshfallUiHelpers.MakeButton("CLOSE DIPLOMACY [Esc]", () => OnClose?.Invoke());
+            var btnClose = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.factions.close", "CLOSE DIPLOMACY [Esc]"), () => OnClose?.Invoke());
             btnClose.CustomMinimumSize = new Vector2(220, 42);
             rootBox.AddChild(btnClose);
 
-            var hint = AshfallUiHelpers.MakeSmall("[Esc] to close factions panel");
+            var hint = AshfallUiHelpers.MakeSmall(AshfallUiText.Tr("ui.factions.esc_hint", "[Esc] to close factions panel"));
             hint.HorizontalAlignment = HorizontalAlignment.Center;
             hint.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
             rootBox.AddChild(hint);

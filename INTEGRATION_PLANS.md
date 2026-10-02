@@ -1,5 +1,21 @@
 # ASHFALL Integration Plans
 
+## l10n sweep wave 9 — the three largest unregistered panels — FULLY INTEGRATED (2026-10-02)
+
+Localized and registered `FactionsPanel` (40→0 raw-chrome literals),
+`GreenhousePanel` (36→0), and `ShelterBarterPanel` (33→0). Barter diagnostics,
+trade feedback, greenhouse stages, and seed names use `AshfallUiText` with German
+catalog rows and placeholder parity. `RegisteredPanels_HasNoRawChromeLiteral`
+enforces all three. Repairs: an unquoted CSV comma, a key-prefix collision, a
+`TrFormat`-as-Node compile error, and the identical-row allowlist/bounded pin.
+**Evidence:** l10n drift PASS (1467 keys, 928 localized-surface references,
+German parity); focused localization tests PASS (LocalizationRatchet 3/3,
+StringsCsvLocaleGate 4/4); host build 0 warnings / 0 errors; bounded 15-FPS
+`--player-panels-uitest` PASS (22/22 lifecycle gates); `git diff --check` clean.
+Archived plan:
+`.ai/plans/integrated/playability/INTEGRATED_l10n-sweep-wave9-largest-panels-2026-10-02.md`.
+The rest of the ~150-file sweep continues as later waves. No full suite.
+
 ## Survival legibility thirteenth wave — FULLY INTEGRATED (2026-10-02)
 
 Localized 15 small panels and six previously registered partial panels; added

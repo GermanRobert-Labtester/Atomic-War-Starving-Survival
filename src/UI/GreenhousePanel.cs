@@ -60,51 +60,51 @@ public partial class GreenhousePanel : Control
         Visible = false;
         SetAnchorsPreset(LayoutPreset.FullRect);
 
-        _shell = new AshfallDashboardShell("The Glass Orchard // Sub-surface Hydroponics", minWidth: 1100, minHeight: 720);
+        _shell = new AshfallDashboardShell(AshfallUiText.Tr("ui.greenhouse.title", "The Glass Orchard // Sub-surface Hydroponics"), minWidth: 1100, minHeight: 720);
         SetContentRoot(_shell);
 
         var cropsItems = new[]
         {
-            new AshfallSidebar.Item { Id = "all",      Label = "All Beds",       Hint = "every plot · stage / water / soil", IconPath = "" },
-            new AshfallSidebar.Item { Id = "fallow",   Label = "Fallow Only",    Hint = "empty soil beds ready to seed",    IconPath = "" },
-            new AshfallSidebar.Item { Id = "critical", Label = "Damaged",        Hint = "failed or blight-stricken beds",   IconPath = "" },
-            new AshfallSidebar.Item { Id = "harvest",  Label = "Ready",          Hint = "beds at mature stage",            IconPath = "" },
-            new AshfallSidebar.Item { Id = "tubers",   Label = "Tubers",         Hint = "frost & hardy tuber lines",        IconPath = "" },
-            new AshfallSidebar.Item { Id = "grains",   Label = "Grains",         Hint = "ash-barley, winter rye & wheat",  IconPath = "" },
-            new AshfallSidebar.Item { Id = "fungi",    Label = "Fungi",          Hint = "spore & phosphor cap mycelium",   IconPath = "" },
-            new AshfallSidebar.Item { Id = "greens",   Label = "Greens & Herbs", Hint = "winter cress, herbs & greens",     IconPath = "" },
-            new AshfallSidebar.Item { Id = "legumes",  Label = "Legumes & Seeds", Hint = "iron pea, oilseed & algae slurry", IconPath = "" },
-            new AshfallSidebar.Item { Id = "apiary",   Label = "Apiary (Hives)", Hint = "colony health · pollination · honey & wax", IconPath = "" },
+            new AshfallSidebar.Item { Id = "all", Label = AshfallUiText.Tr("ui.greenhouse.filter.all", "All Beds"), Hint = AshfallUiText.Tr("ui.greenhouse.filter.all_hint", "every plot · stage / water / soil"), IconPath = "" },
+            new AshfallSidebar.Item { Id = "fallow", Label = AshfallUiText.Tr("ui.greenhouse.filter.fallow", "Fallow Only"), Hint = AshfallUiText.Tr("ui.greenhouse.filter.fallow_hint", "empty soil beds ready to seed"), IconPath = "" },
+            new AshfallSidebar.Item { Id = "critical", Label = AshfallUiText.Tr("ui.greenhouse.filter.damaged", "Damaged"), Hint = AshfallUiText.Tr("ui.greenhouse.filter.damaged_hint", "failed or blight-stricken beds"), IconPath = "" },
+            new AshfallSidebar.Item { Id = "harvest", Label = AshfallUiText.Tr("ui.greenhouse.filter.ready", "Ready"), Hint = AshfallUiText.Tr("ui.greenhouse.filter.ready_hint", "beds at mature stage"), IconPath = "" },
+            new AshfallSidebar.Item { Id = "tubers", Label = AshfallUiText.Tr("ui.greenhouse.filter.tubers", "Tubers"), Hint = AshfallUiText.Tr("ui.greenhouse.filter.tubers_hint", "frost & hardy tuber lines"), IconPath = "" },
+            new AshfallSidebar.Item { Id = "grains", Label = AshfallUiText.Tr("ui.greenhouse.filter.grains", "Grains"), Hint = AshfallUiText.Tr("ui.greenhouse.filter.grains_hint", "ash-barley, winter rye & wheat"), IconPath = "" },
+            new AshfallSidebar.Item { Id = "fungi", Label = AshfallUiText.Tr("ui.greenhouse.filter.fungi", "Fungi"), Hint = AshfallUiText.Tr("ui.greenhouse.filter.fungi_hint", "spore & phosphor cap mycelium"), IconPath = "" },
+            new AshfallSidebar.Item { Id = "greens", Label = AshfallUiText.Tr("ui.greenhouse.filter.greens", "Greens & Herbs"), Hint = AshfallUiText.Tr("ui.greenhouse.filter.greens_hint", "winter cress, herbs & greens"), IconPath = "" },
+            new AshfallSidebar.Item { Id = "legumes", Label = AshfallUiText.Tr("ui.greenhouse.filter.legumes", "Legumes & Seeds"), Hint = AshfallUiText.Tr("ui.greenhouse.filter.legumes_hint", "iron pea, oilseed & algae slurry"), IconPath = "" },
+            new AshfallSidebar.Item { Id = "apiary", Label = AshfallUiText.Tr("ui.greenhouse.filter.apiary", "Apiary (Hives)"), Hint = AshfallUiText.Tr("ui.greenhouse.filter.apiary_hint", "colony health · pollination · honey & wax"), IconPath = "" },
         };
-        _sidebar = _shell.SetSidebar(cropsItems, "Filter", "all");
+        _sidebar = _shell.SetSidebar(cropsItems, AshfallUiText.Tr("ui.greenhouse.filter.title", "Filter"), "all");
         _sidebar.OnSelected += HandleSidebar;
 
         _statusRail = _shell.SetStatusRail();
-        _statusRail.AddCard("season", "Season", "—", AshfallMetricCard.Criticality.Normal, minWidth: 120);
-        _statusRail.AddCard("active", "Active Beds", "—", AshfallMetricCard.Criticality.Normal, minWidth: 110);
-        _statusRail.AddCard("plotcount", "Plot Count", "—", AshfallMetricCard.Criticality.Normal, minWidth: 110);
-        _statusRail.AddCard("harvests", "Harvests", "—", AshfallMetricCard.Criticality.Normal, minWidth: 110);
-        _statusRail.AddCard("vault", "Seed Vault", "—", AshfallMetricCard.Criticality.Normal, minWidth: 130);
-        _statusRail.AddCard("blight", "Blighted Beds", "—", AshfallMetricCard.Criticality.Caution, minWidth: 130);
+        _statusRail.AddCard("season", AshfallUiText.Tr("ui.greenhouse.rail.season", "Season"), "—", AshfallMetricCard.Criticality.Normal, minWidth: 120);
+        _statusRail.AddCard("active", AshfallUiText.Tr("ui.greenhouse.rail.active", "Active Beds"), "—", AshfallMetricCard.Criticality.Normal, minWidth: 110);
+        _statusRail.AddCard("plotcount", AshfallUiText.Tr("ui.greenhouse.rail.plot_count", "Plot Count"), "—", AshfallMetricCard.Criticality.Normal, minWidth: 110);
+        _statusRail.AddCard("harvests", AshfallUiText.Tr("ui.greenhouse.rail.harvests", "Harvests"), "—", AshfallMetricCard.Criticality.Normal, minWidth: 110);
+        _statusRail.AddCard("vault", AshfallUiText.Tr("ui.greenhouse.rail.seed_vault", "Seed Vault"), "—", AshfallMetricCard.Criticality.Normal, minWidth: 130);
+        _statusRail.AddCard("blight", AshfallUiText.Tr("ui.greenhouse.rail.blight", "Blighted Beds"), "—", AshfallMetricCard.Criticality.Caution, minWidth: 130);
 
         // Plan 22 GAP-3: supply stock strip — only items that exist in the
         // current catalog (concurrent worker trimmed the supply list).
-        _statusRail.AddCard("sup_glass", "Glass", "—", AshfallMetricCard.Criticality.Normal, minWidth: 80);
-        _statusRail.AddCard("sup_blight", "Blight", "—", AshfallMetricCard.Criticality.Normal, minWidth: 80);
-        _statusRail.AddCard("sup_medium", "Medium", "—", AshfallMetricCard.Criticality.Normal, minWidth: 80);
+        _statusRail.AddCard("sup_glass", AshfallUiText.Tr("ui.greenhouse.rail.glass", "Glass"), "—", AshfallMetricCard.Criticality.Normal, minWidth: 80);
+        _statusRail.AddCard("sup_blight", AshfallUiText.Tr("ui.greenhouse.rail.blight_supply", "Blight"), "—", AshfallMetricCard.Criticality.Normal, minWidth: 80);
+        _statusRail.AddCard("sup_medium", AshfallUiText.Tr("ui.greenhouse.rail.medium", "Medium"), "—", AshfallMetricCard.Criticality.Normal, minWidth: 80);
 
         // Grid columns: bed #, stage badge, water, contamination, growth %,
         // readiness, dry warning (GAP-7), seed id.
         var cols = new[]
         {
-            new AshfallDataGrid.Column { Header = "Bed",       MinWidth = 60,  Alignment = AshfallDataGrid.ColumnAlign.Left },
-            new AshfallDataGrid.Column { Header = "Stage",     MinWidth = 100, Alignment = AshfallDataGrid.ColumnAlign.Left },
-            new AshfallDataGrid.Column { Header = "Water",     MinWidth = 70,  Alignment = AshfallDataGrid.ColumnAlign.Right },
-            new AshfallDataGrid.Column { Header = "Soil mSv",  MinWidth = 70,  Alignment = AshfallDataGrid.ColumnAlign.Right },
-            new AshfallDataGrid.Column { Header = "Growth",    MinWidth = 70,  Alignment = AshfallDataGrid.ColumnAlign.Right },
-            new AshfallDataGrid.Column { Header = "Ready",     MinWidth = 60,  Alignment = AshfallDataGrid.ColumnAlign.Right },
-            new AshfallDataGrid.Column { Header = "Dry",       MinWidth = 50,  Alignment = AshfallDataGrid.ColumnAlign.Left },
-            new AshfallDataGrid.Column { Header = "Seed",      MinWidth = 180, Alignment = AshfallDataGrid.ColumnAlign.Left },
+            new AshfallDataGrid.Column { Header = AshfallUiText.Tr("ui.greenhouse.col_bed", "Bed"), MinWidth = 60, Alignment = AshfallDataGrid.ColumnAlign.Left },
+            new AshfallDataGrid.Column { Header = AshfallUiText.Tr("ui.greenhouse.col_stage", "Stage"), MinWidth = 100, Alignment = AshfallDataGrid.ColumnAlign.Left },
+            new AshfallDataGrid.Column { Header = AshfallUiText.Tr("ui.greenhouse.col_water", "Water"), MinWidth = 70, Alignment = AshfallDataGrid.ColumnAlign.Right },
+            new AshfallDataGrid.Column { Header = AshfallUiText.Tr("ui.greenhouse.col_soil", "Soil mSv"), MinWidth = 70, Alignment = AshfallDataGrid.ColumnAlign.Right },
+            new AshfallDataGrid.Column { Header = AshfallUiText.Tr("ui.greenhouse.col_growth", "Growth"), MinWidth = 70, Alignment = AshfallDataGrid.ColumnAlign.Right },
+            new AshfallDataGrid.Column { Header = AshfallUiText.Tr("ui.greenhouse.col_ready", "Ready"), MinWidth = 60, Alignment = AshfallDataGrid.ColumnAlign.Right },
+            new AshfallDataGrid.Column { Header = AshfallUiText.Tr("ui.greenhouse.col_dry", "Dry"), MinWidth = 50, Alignment = AshfallDataGrid.ColumnAlign.Left },
+            new AshfallDataGrid.Column { Header = AshfallUiText.Tr("ui.greenhouse.col_seed", "Seed"), MinWidth = 180, Alignment = AshfallDataGrid.ColumnAlign.Left },
         };
         _plotGrid = new AshfallDataGrid(cols, showHeader: true, minWidth: 720, minHeight: 320);
         _plotGrid.OnRowSelected += HandleRowSelected;
@@ -123,12 +123,12 @@ public partial class GreenhousePanel : Control
         _detailBox.SizeFlagsVertical = SizeFlags.ExpandFill;
         body.AddChild(_detailBox);
 
-        _detailTitle = AshfallUiHelpers.MakeSectionHeader("BED DETAIL");
+        _detailTitle = AshfallUiHelpers.MakeSectionHeader(AshfallUiText.Tr("ui.greenhouse.bed_detail", "BED DETAIL"));
         _detailTitle.HorizontalAlignment = HorizontalAlignment.Left;
         _detailBox.AddChild(_detailTitle);
         _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
         _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
-            "Select a plot row to view irrigation balance, contamination history, and harvest yields."));
+            AshfallUiText.Tr("ui.greenhouse.select_plot_hint", "Select a plot row to view irrigation balance, contamination history, and harvest yields.")));
 
         _shell.SetContent(body);
 
@@ -423,7 +423,7 @@ public partial class GreenhousePanel : Control
         if (_detailBox == null) return;
         AshfallUiHelpers.EmptyChildren(_detailBox);
         // Recreate the persistent header — the QueueFree loop above disposed it.
-        _detailTitle = AshfallUiHelpers.MakeSectionHeader("BED DETAIL");
+        _detailTitle = AshfallUiHelpers.MakeSectionHeader(AshfallUiText.Tr("ui.greenhouse.bed_detail", "BED DETAIL"));
         _detailTitle.HorizontalAlignment = HorizontalAlignment.Left;
         _detailBox.AddChild(_detailTitle);
         // Add separator with proper layout constraints
@@ -433,24 +433,24 @@ public partial class GreenhousePanel : Control
 
         if (_cropFilter == "apiary")
         {
-            _detailTitle.Text = "APIARY // HIVE CONTROL";
+            _detailTitle.Text = AshfallUiText.Tr("ui.greenhouse.apiary_title", "APIARY // HIVE CONTROL");
             var hive = _host?.Apiculture.GetHive("hive_01");
             if (hive != null && !hive.isDead)
             {
                 float bonus = _host!.Apiculture.GetPollinationBonus("plot_0");
-                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Hive Unit", "hive_01 (Bay Orchard)", AshfallUiHelpers.ToColor(DesignTheme.Pale)));
-                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Colony Pop", $"{hive.colonyPopulation:P0}", AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
-                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Queen Vitality", $"{hive.queenVitality:P0}",
+                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.greenhouse.hive_unit", "Hive Unit"), "hive_01 (Bay Orchard)", AshfallUiHelpers.ToColor(DesignTheme.Pale)));
+                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.greenhouse.colony_pop", "Colony Pop"), $"{hive.colonyPopulation:P0}", AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
+                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.greenhouse.queen_vitality", "Queen Vitality"), $"{hive.queenVitality:P0}",
                     hive.queenVitality < 0.4f ? AshfallUiHelpers.ToColor(DesignTheme.Critical) : AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
-                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Feed Level", $"{hive.feedLevel:P0}",
+                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.greenhouse.feed_level", "Feed Level"), $"{hive.feedLevel:P0}",
                     hive.feedLevel < 0.2f ? AshfallUiHelpers.ToColor(DesignTheme.LetheAmber) : AshfallUiHelpers.ToColor(DesignTheme.Dim)));
-                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Water Level", $"{hive.waterLevel:P0}",
+                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.greenhouse.water_level", "Water Level"), $"{hive.waterLevel:P0}",
                     hive.waterLevel < 0.2f ? AshfallUiHelpers.ToColor(DesignTheme.LetheAmber) : AshfallUiHelpers.ToColor(DesignTheme.Dim)));
-                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Hive Temp", $"{hive.temperatureC:F1}°C (Optimal 15-32°C)",
+                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.greenhouse.hive_temp", "Hive Temp"), $"{hive.temperatureC:F1}°C (Optimal 15-32°C)",
                     (hive.temperatureC < 15f || hive.temperatureC > 32f) ? AshfallUiHelpers.ToColor(DesignTheme.Entropy) : AshfallUiHelpers.ToColor(DesignTheme.Dim)));
-                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Pollination", $"+{bonus:P0} crop yield bonus", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
-                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Honey Reserve", $"{hive.honeyBuffer:F2} kg (-> Food Rations)", AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
-                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Wax Reserve", $"{hive.waxBuffer:F2} kg (-> Crafting Parts)", AshfallUiHelpers.ToColor(DesignTheme.Dim)));
+                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.greenhouse.pollination", "Pollination"), $"+{bonus:P0} crop yield bonus", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
+                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.greenhouse.honey_reserve", "Honey Reserve"), $"{hive.honeyBuffer:F2} kg (-> Food Rations)", AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
+                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.greenhouse.wax_reserve", "Wax Reserve"), $"{hive.waxBuffer:F2} kg (-> Crafting Parts)", AshfallUiHelpers.ToColor(DesignTheme.Dim)));
 
                 if (!string.IsNullOrEmpty(_host.LastEvent))
                 {
@@ -459,18 +459,18 @@ public partial class GreenhousePanel : Control
                 }
 
                 _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
-                _detailBox.AddChild(AshfallUiHelpers.MakeSectionHeader("APIARY ACTIONS"));
+                _detailBox.AddChild(AshfallUiHelpers.MakeSectionHeader(AshfallUiText.Tr("ui.greenhouse.apiary_actions", "APIARY ACTIONS")));
                 var apiaryActionRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
 
-                var inspectBtn = AshfallUiHelpers.MakeButton("INSPECT", () => OnActionRequested?.Invoke("apiary_inspect", 0));
+                var inspectBtn = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.greenhouse.btn_inspect", "INSPECT"), () => OnActionRequested?.Invoke("apiary_inspect", 0));
                 inspectBtn.CustomMinimumSize = new Vector2(85, 30);
                 apiaryActionRow.AddChild(inspectBtn);
 
-                var feedBtn = AshfallUiHelpers.MakeButton("FEED/WATER", () => OnActionRequested?.Invoke("apiary_feed", 0));
+                var feedBtn = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.greenhouse.btn_feed_water", "FEED/WATER"), () => OnActionRequested?.Invoke("apiary_feed", 0));
                 feedBtn.CustomMinimumSize = new Vector2(100, 30);
                 apiaryActionRow.AddChild(feedBtn);
 
-                var apiaryHarvestBtn = AshfallUiHelpers.MakeButton("HARVEST", () => OnActionRequested?.Invoke("apiary_harvest", 0));
+                var apiaryHarvestBtn = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.greenhouse.btn_harvest", "HARVEST"), () => OnActionRequested?.Invoke("apiary_harvest", 0));
                 apiaryHarvestBtn.CustomMinimumSize = new Vector2(85, 30);
                 apiaryActionRow.AddChild(apiaryHarvestBtn);
 
@@ -478,9 +478,9 @@ public partial class GreenhousePanel : Control
             }
             else
             {
-                _detailBox.AddChild(AshfallUiHelpers.MakeMetadata("No active beehive installed in the Orchard Apiary bay. Install a colony to provide pollination boost."));
+                _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(AshfallUiText.Tr("ui.greenhouse.no_hive", "No active beehive installed in the Orchard Apiary bay. Install a colony to provide pollination boost.")));
                 _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
-                var installBtn = AshfallUiHelpers.MakeButton("INSTALL HIVE", () => OnActionRequested?.Invoke("apiary_install", 0));
+                var installBtn = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.greenhouse.btn_install_hive", "INSTALL HIVE"), () => OnActionRequested?.Invoke("apiary_install", 0));
                 installBtn.CustomMinimumSize = new Vector2(140, 32);
                 _detailBox.AddChild(installBtn);
             }
@@ -491,43 +491,43 @@ public partial class GreenhousePanel : Control
         {
             _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
                 _host == null
-                    ? "Greenhouse engine offline. Bind a GreenhouseHostSession to see live plot data."
-                    : "Select a plot row to view irrigation balance, contamination history, and harvest yields."));
+                    ? AshfallUiText.Tr("ui.greenhouse.host_offline", "Greenhouse engine offline. Bind a GreenhouseHostSession to see live plot data.")
+                    : AshfallUiText.Tr("ui.greenhouse.select_plot_hint", "Select a plot row to view irrigation balance, contamination history, and harvest yields.")));
             return;
         }
         var state = _host.System.State;
         if (_selectedIndex >= state.plots.Count) return;
         var p = state.plots[_selectedIndex];
 
-        _detailTitle.Text = $"BED #{_selectedIndex + 1} DETAIL";
+        _detailTitle.Text = AshfallUiText.TrFormat("ui.greenhouse.bed_detail_number", "BED #{0} DETAIL", _selectedIndex + 1);
 
-        string statusText = GreenhouseSystem.IsFallow(p) ? "FALLOW"
+        string statusText = GreenhouseSystem.IsFallow(p) ? AshfallUiText.Tr("ui.greenhouse.stage_fallow", "FALLOW")
             : ((GreenhouseStage)p.stage) switch
             {
-                GreenhouseStage.Sprouting => "SPROUTING",
-                GreenhouseStage.Growing   => "GROWING",
-                GreenhouseStage.Mature    => "READY TO HARVEST",
-                GreenhouseStage.Failed    => "FAILED",
+                GreenhouseStage.Sprouting => AshfallUiText.Tr("ui.greenhouse.stage_sprouting", "SPROUTING"),
+                GreenhouseStage.Growing   => AshfallUiText.Tr("ui.greenhouse.stage_growing", "GROWING"),
+                GreenhouseStage.Mature    => AshfallUiText.Tr("ui.greenhouse.stage_mature", "READY TO HARVEST"),
+                GreenhouseStage.Failed    => AshfallUiText.Tr("ui.greenhouse.stage_failed", "FAILED"),
                 _ => "?",
             };
 
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Status", statusText,
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.greenhouse.row_status", "Status"), statusText,
             ((GreenhouseStage)p.stage) == GreenhouseStage.Failed ? AshfallUiHelpers.ToColor(DesignTheme.Critical) :
             ((GreenhouseStage)p.stage) == GreenhouseStage.Mature ? AshfallUiHelpers.ToColor(DesignTheme.Lethe) :
             AshfallUiHelpers.ToColor(DesignTheme.Warm)));
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Seed", GreenhouseSystem.IsFallow(p) ? "—" : FriendlySeed(p.seedItemId),
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.greenhouse.row_seed", "Seed"), GreenhouseSystem.IsFallow(p) ? "—" : FriendlySeed(p.seedItemId),
             AshfallUiHelpers.ToColor(DesignTheme.Pale)));
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Growth", $"{(GreenhouseSystem.IsFallow(p) ? 0f : p.growth):0.0}%",
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.greenhouse.row_growth", "Growth"), $"{(GreenhouseSystem.IsFallow(p) ? 0f : p.growth):0.0}%",
             AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Moisture", $"{p.water:0.0} / 100",
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.greenhouse.row_moisture", "Moisture"), $"{p.water:0.0} / 100",
             p.water < 15f ? AshfallUiHelpers.ToColor(DesignTheme.Critical) :
             p.water < 30f ? AshfallUiHelpers.ToColor(DesignTheme.LetheAmber) :
             AshfallUiHelpers.ToColor(DesignTheme.Dim)));
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Soil mSv", $"{p.soilContamination:0.0}",
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.greenhouse.row_soil", "Soil mSv"), $"{p.soilContamination:0.0}",
             p.soilContamination > 70f ? AshfallUiHelpers.ToColor(DesignTheme.Critical) :
             p.soilContamination > 40f ? AshfallUiHelpers.ToColor(DesignTheme.Entropy) :
             AshfallUiHelpers.ToColor(DesignTheme.Dim)));
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Blight", $"{p.blight * 100f:0}%",
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.greenhouse.row_blight", "Blight"), $"{p.blight * 100f:0}%",
             p.blight > 0f ? AshfallUiHelpers.ToColor(DesignTheme.Critical) : AshfallUiHelpers.ToColor(DesignTheme.Dim)));
 
         // ── B5–B8 Phase 4/9: visible blight-risk contributors (§7.12, §17.3) ──
@@ -538,11 +538,11 @@ public partial class GreenhousePanel : Control
             var risk = _host.System.GetBlightRiskProfile(p.plotIndex, hasWater: p.water > 0f);
             if (risk.PlotExists)
             {
-                string band = risk.FinalChancePerDay <= 0f ? "none (prevented)"
-                    : risk.FinalChancePerDay < 0.02f ? "low"
-                    : risk.FinalChancePerDay < 0.08f ? "elevated"
-                    : "high";
-                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Blight risk",
+                string band = risk.FinalChancePerDay <= 0f ? AshfallUiText.Tr("ui.greenhouse.risk_prevented", "none (prevented)")
+                    : risk.FinalChancePerDay < 0.02f ? AshfallUiText.Tr("ui.greenhouse.risk_low", "low")
+                    : risk.FinalChancePerDay < 0.08f ? AshfallUiText.Tr("ui.greenhouse.risk_elevated", "elevated")
+                    : AshfallUiText.Tr("ui.greenhouse.risk_high", "high");
+                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(AshfallUiText.Tr("ui.greenhouse.row_blight_risk", "Blight risk"),
                     $"{band} (contam {risk.ContaminationPressure:P0} · drought ×{risk.DroughtStress:0.#}"
                     + (risk.NutrientReduction > 0f ? $" · fed −{risk.NutrientReduction:F2}" : "")
                     + (risk.RotationPressure > 0f ? $" · monoculture ×{risk.RotationStreak}" : "") + ")",
@@ -550,9 +550,9 @@ public partial class GreenhousePanel : Control
                     : risk.FinalChancePerDay < 0.08f ? AshfallUiHelpers.ToColor(DesignTheme.Warm)
                     : AshfallUiHelpers.ToColor(DesignTheme.Critical)));
                 if (p.nutrientLevel <= 0f)
-                    _detailBox.AddChild(AshfallUiHelpers.MakeSmall("Unfed crop — nutrient dosing lowers blight risk."));
+                    _detailBox.AddChild(AshfallUiHelpers.MakeSmall(AshfallUiText.Tr("ui.greenhouse.unfed_note", "Unfed crop — nutrient dosing lowers blight risk.")));
                 if (risk.RotationPressure > 0f)
-                    _detailBox.AddChild(AshfallUiHelpers.MakeSmall($"Repeated {FriendlySeed(p.seedItemId)} crops exhaust this bed — rotate to another crop to clear the pressure."));
+                    _detailBox.AddChild(AshfallUiHelpers.MakeSmall(AshfallUiText.TrFormat("ui.greenhouse.rotation_pressure", "Repeated {0} crops exhaust this bed — rotate to another crop to clear the pressure.", FriendlySeed(p.seedItemId))));
             }
         }
         if (!string.IsNullOrEmpty(_host.LastEvent))
@@ -567,55 +567,55 @@ public partial class GreenhousePanel : Control
         // Removed (concurrent worker trimmed catalog/host): GAP-2 amend,
         // GAP-4 maintenance, GAP-5 sterilise, GAP-8 degraded copy.
         _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
-        _detailBox.AddChild(AshfallUiHelpers.MakeSectionHeader("ACTIONS"));
+        _detailBox.AddChild(AshfallUiHelpers.MakeSectionHeader(AshfallUiText.Tr("ui.greenhouse.header_actions", "ACTIONS")));
         var actionRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
 
-        var plantBtn = AshfallUiHelpers.MakeButton("PLANT",
+        var plantBtn = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.greenhouse.btn_plant", "PLANT"),
             () => _pendingPicker = _pendingPicker == "plant" ? null : "plant");
         plantBtn.CustomMinimumSize = new Vector2(90, 30);
         actionRow.AddChild(plantBtn);
 
-        var treatBtn = AshfallUiHelpers.MakeButton("TREAT",
+        var treatBtn = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.greenhouse.btn_treat", "TREAT"),
             () => OnActionRequested?.Invoke("treat", _selectedIndex));
         treatBtn.CustomMinimumSize = new Vector2(90, 30);
         actionRow.AddChild(treatBtn);
 
-        var clearBtn = AshfallUiHelpers.MakeButton("CLEAR",
+        var clearBtn = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.greenhouse.btn_clear", "CLEAR"),
             () => OnActionRequested?.Invoke("clear", _selectedIndex));
         clearBtn.CustomMinimumSize = new Vector2(90, 30);
         actionRow.AddChild(clearBtn);
 
-        var harvestBtn = AshfallUiHelpers.MakeButton("HARVEST",
+        var harvestBtn = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.greenhouse.btn_harvest", "HARVEST"),
             () => OnActionRequested?.Invoke("harvest", _selectedIndex));
         harvestBtn.CustomMinimumSize = new Vector2(90, 30);
         actionRow.AddChild(harvestBtn);
 
         // B5–B8 Phase 4: nutrient dosing (canonical item_hydroponic_nutrients).
-        var doseBtn = AshfallUiHelpers.MakeButton("DOSE NUTRIENTS",
+        var doseBtn = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.greenhouse.btn_dose", "DOSE NUTRIENTS"),
             () => OnActionRequested?.Invoke("dose_nutrients", _selectedIndex));
         doseBtn.CustomMinimumSize = new Vector2(140, 30);
         actionRow.AddChild(doseBtn);
         _detailBox.AddChild(actionRow);
 
         // GAP-6: water split — three discrete options.
-        _detailBox.AddChild(AshfallUiHelpers.MakeSectionHeader("WATERING"));
+        _detailBox.AddChild(AshfallUiHelpers.MakeSectionHeader(AshfallUiText.Tr("ui.greenhouse.header_watering", "WATERING")));
         var waterRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
         int cleanStock  = _host?.InventoryHost?.Inventory.CountById("clean_water")     ?? 0;
         int irradStock  = _host?.InventoryHost?.Inventory.CountById("irradiated_water") ?? 0;
 
-        var c25Btn = AshfallUiHelpers.MakeButton("CLEAN 25",
+        var c25Btn = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.greenhouse.btn_clean25", "CLEAN 25"),
             () => OnActionRequested?.Invoke("water:25:clean", _selectedIndex),
             disabled: _host?.InventoryHost != null && cleanStock < 3);
         c25Btn.CustomMinimumSize = new Vector2(100, 28);
         waterRow.AddChild(c25Btn);
 
-        var c50Btn = AshfallUiHelpers.MakeButton("CLEAN 50",
+        var c50Btn = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.greenhouse.btn_clean50", "CLEAN 50"),
             () => OnActionRequested?.Invoke("water:50:clean", _selectedIndex),
             disabled: _host?.InventoryHost != null && cleanStock < 5);
         c50Btn.CustomMinimumSize = new Vector2(100, 28);
         waterRow.AddChild(c50Btn);
 
-        var t50Btn = AshfallUiHelpers.MakeButton("TAINTED 50",
+        var t50Btn = AshfallUiHelpers.MakeButton(AshfallUiText.Tr("ui.greenhouse.btn_tainted50", "TAINTED 50"),
             () => OnActionRequested?.Invoke("water:50:tainted", _selectedIndex),
             disabled: _host?.InventoryHost != null && irradStock < 5);
         t50Btn.CustomMinimumSize = new Vector2(110, 28);
@@ -624,15 +624,15 @@ public partial class GreenhousePanel : Control
 
         _detailBox.AddChild(waterRow);
         _detailBox.AddChild(AshfallUiHelpers.MakeSmall(
-            $"clean ×{cleanStock}  ·  irradiated ×{irradStock}"));
+            AshfallUiText.TrFormat("ui.greenhouse.water_stock", "clean ×{0}  ·  irradiated ×{1}", cleanStock, irradStock)));
         _detailBox.AddChild(AshfallUiHelpers.MakeSmall(
-            "irradiated — crops remember", autowrap: true));
+            AshfallUiText.Tr("ui.greenhouse.irradiated_note", "irradiated — crops remember"), autowrap: true));
 
         // GAP-1: seed selection picker (toggled by PLANT button above).
         if (_pendingPicker == "plant" && _host != null)
         {
             _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
-            _detailBox.AddChild(AshfallUiHelpers.MakeSectionHeader("SEED SELECT"));
+            _detailBox.AddChild(AshfallUiHelpers.MakeSectionHeader(AshfallUiText.Tr("ui.greenhouse.header_seed_select", "SEED SELECT")));
             var cat = GreenhouseExpansionCatalog.CropCatalog.All;
             for (int i = 0; i < cat.Length; i++)
             {
@@ -641,9 +641,9 @@ public partial class GreenhousePanel : Control
                 bool noStock = _host.InventoryHost?.Inventory.CountById(def.SeedItemId) < 1;
                 bool disabled = locked || noStock;
                 var seedRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingXs);
-                var label = $"{FriendlySeed(def.SeedItemId)} — {def.GrowthHoursToMature / 24f:0.#}d · yield {def.BaseYield} · blight {(def.BlightResistance * 100f):0}% · {(def.WaterPerDay):0} water/day";
-                if (locked)  label += "  [SEED VAULT SEALED]";
-                if (noStock) label += "  [no stock]";
+                var label = AshfallUiText.TrFormat("ui.greenhouse.seed_option", "{0} — {1:0.#}d · yield {2} · blight {3:0}% · {4:0} water/day", FriendlySeed(def.SeedItemId), def.GrowthHoursToMature / 24f, def.BaseYield, def.BlightResistance * 100f, def.WaterPerDay);
+                if (locked) label += "  " + AshfallUiText.Tr("ui.greenhouse.seed_vault_sealed", "[SEED VAULT SEALED]");
+                if (noStock) label += "  " + AshfallUiText.Tr("ui.greenhouse.no_stock", "[no stock]");
                 var seedBtn = AshfallUiHelpers.MakeButton(label,
                     () => OnActionRequested?.Invoke($"plant:{def.SeedItemId}", _selectedIndex),
                     disabled);
@@ -660,31 +660,31 @@ public partial class GreenhousePanel : Control
 
     private static (AshfallDataGrid.CellState, string) StageBadge(GreenhouseStage stage) => stage switch
     {
-        GreenhouseStage.Fallow    => (AshfallDataGrid.CellState.Muted, "FALLOW"),
-        GreenhouseStage.Sprouting => (AshfallDataGrid.CellState.Caution, "SPROUTING"),
-        GreenhouseStage.Growing   => (AshfallDataGrid.CellState.Normal, "GROWING"),
-        GreenhouseStage.Mature    => (AshfallDataGrid.CellState.Positive, "READY"),
-        GreenhouseStage.Failed    => (AshfallDataGrid.CellState.Critical, "FAILED"),
+        GreenhouseStage.Fallow    => (AshfallDataGrid.CellState.Muted, AshfallUiText.Tr("ui.greenhouse.stage.fallow", "FALLOW")),
+        GreenhouseStage.Sprouting => (AshfallDataGrid.CellState.Caution, AshfallUiText.Tr("ui.greenhouse.stage.sprouting", "SPROUTING")),
+        GreenhouseStage.Growing   => (AshfallDataGrid.CellState.Normal, AshfallUiText.Tr("ui.greenhouse.stage.growing", "GROWING")),
+        GreenhouseStage.Mature    => (AshfallDataGrid.CellState.Positive, AshfallUiText.Tr("ui.greenhouse.stage.ready", "READY")),
+        GreenhouseStage.Failed    => (AshfallDataGrid.CellState.Critical, AshfallUiText.Tr("ui.greenhouse.stage.failed", "FAILED")),
         _ => (AshfallDataGrid.CellState.Normal, stage.ToString().ToUpperInvariant()),
     };
 
     private static string FriendlySeed(string seedId) => seedId switch
     {
-        GreenhouseExpansionCatalog.Items.SeedMushroom     => "Mushroom Spores",
-        GreenhouseExpansionCatalog.Items.SeedTuber        => "Frost Tuber",
-        GreenhouseExpansionCatalog.Items.SeedGrain        => "Winter Rye Grain",
-        GreenhouseExpansionCatalog.Items.SeedWheat        => "Pre-War Heritage Wheat",
-        GreenhouseExpansionCatalog.Items.SeedHardyTuber   => "Hardy Frost Tuber",
-        GreenhouseExpansionCatalog.Items.SeedAshGrain     => "Ashland Grain",
-        GreenhouseExpansionCatalog.Items.SeedBiolumMushroom => "Bioluminescent Mushroom",
-        GreenhouseExpansionCatalog.Items.SeedNutrientAlgae  => "Nutrient Algae",
-        GreenhouseExpansionCatalog.Items.SeedMedicinalHerb  => "Medicinal Herb",
-        GreenhouseExpansionCatalog.Items.SeedLeafyGreen     => "Leafy Green",
-        GreenhouseExpansionCatalog.Items.SeedOilseed        => "Oilseed",
-        GreenhouseExpansionCatalog.Items.SeedColdLegume     => "Cold Legume",
-        GreenhouseExpansionCatalog.Items.SeedFrostPea       => "Frost Pea",
-        GreenhouseExpansionCatalog.Items.SeedGlacierGreens  => "Glacier Greens",
-        GreenhouseExpansionCatalog.Items.SeedPacketsMixed   => "Assorted Seed Packet",
+        GreenhouseExpansionCatalog.Items.SeedMushroom     => AshfallUiText.Tr("ui.greenhouse.seed.mushroom", "Mushroom Spores"),
+        GreenhouseExpansionCatalog.Items.SeedTuber        => AshfallUiText.Tr("ui.greenhouse.seed.tuber", "Frost Tuber"),
+        GreenhouseExpansionCatalog.Items.SeedGrain        => AshfallUiText.Tr("ui.greenhouse.seed.grain", "Winter Rye Grain"),
+        GreenhouseExpansionCatalog.Items.SeedWheat        => AshfallUiText.Tr("ui.greenhouse.seed.wheat", "Pre-War Heritage Wheat"),
+        GreenhouseExpansionCatalog.Items.SeedHardyTuber   => AshfallUiText.Tr("ui.greenhouse.seed.hardy_tuber", "Hardy Frost Tuber"),
+        GreenhouseExpansionCatalog.Items.SeedAshGrain     => AshfallUiText.Tr("ui.greenhouse.seed.ash_grain", "Ashland Grain"),
+        GreenhouseExpansionCatalog.Items.SeedBiolumMushroom => AshfallUiText.Tr("ui.greenhouse.seed.biolum_mushroom", "Bioluminescent Mushroom"),
+        GreenhouseExpansionCatalog.Items.SeedNutrientAlgae  => AshfallUiText.Tr("ui.greenhouse.seed.nutrient_algae", "Nutrient Algae"),
+        GreenhouseExpansionCatalog.Items.SeedMedicinalHerb  => AshfallUiText.Tr("ui.greenhouse.seed.medicinal_herb", "Medicinal Herb"),
+        GreenhouseExpansionCatalog.Items.SeedLeafyGreen     => AshfallUiText.Tr("ui.greenhouse.seed.leafy_green", "Leafy Green"),
+        GreenhouseExpansionCatalog.Items.SeedOilseed        => AshfallUiText.Tr("ui.greenhouse.seed.oilseed", "Oilseed"),
+        GreenhouseExpansionCatalog.Items.SeedColdLegume     => AshfallUiText.Tr("ui.greenhouse.seed.cold_legume", "Cold Legume"),
+        GreenhouseExpansionCatalog.Items.SeedFrostPea       => AshfallUiText.Tr("ui.greenhouse.seed.frost_pea", "Frost Pea"),
+        GreenhouseExpansionCatalog.Items.SeedGlacierGreens  => AshfallUiText.Tr("ui.greenhouse.seed.glacier_greens", "Glacier Greens"),
+        GreenhouseExpansionCatalog.Items.SeedPacketsMixed   => AshfallUiText.Tr("ui.greenhouse.seed.mixed_packet", "Assorted Seed Packet"),
         _ => "Cultivar",
     };
 
