@@ -1,12 +1,13 @@
 # ASHFALL Worktree Ownership
 
-## claim-perf-track-c-lint-and-warning-baseline-2026-10-02 — IN PROGRESS
+## claim-perf-track-c-lint-and-warning-baseline-2026-10-02 — COMPLETE
 
-Performance program next candidates. Exact owned paths:
-`.github/workflows/workflow-lint.yml` (new), and this claim. The
-`compiler_warning_baseline` analysis is a proposal document only
-(`.ai/plans/perf-compiler-warning-baseline-proposal-2026-10-02.md`) — no gate
-behavior changed. Owner-approved CI addition.
+Performance program next candidates. Delivered `.github/workflows/workflow-lint.yml`
+(actionlint on runner, closes the local-verification gap) and the
+`compiler_warning_baseline` frequency-tiering proposal
+(`.ai/plans/perf-compiler-warning-baseline-proposal-2026-10-02.md`, analysis only).
+Correction recorded: the `--no-build` reuse for the filtered test gates was already
+implemented. **COMPLETE 2026-10-02.** Paths released.
 
 ## claim-perf-track-ce-scanner-algorithm-2026-10-02 — COMPLETE
 
