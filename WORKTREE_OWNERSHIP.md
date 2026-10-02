@@ -1,13 +1,14 @@
 # ASHFALL Worktree Ownership
 
-## claim-perf-track-ce-scanner-algorithm-2026-10-02 — IN PROGRESS
+## claim-perf-track-ce-scanner-algorithm-2026-10-02 — COMPLETE
 
-Performance program (algorithm-first fix for the CPU-bound scanners). Exact owned
-paths: `scripts/ci/generate-architecture-map.py` and its generated outputs
-(`docs/architecture/ARCHITECTURE_TEST_MAP.md` + graph artifact), then the same
-inversion in `scripts/ci/generate-plan-integration-audit.py` and
-`scripts/ci/generate-port-contract.py`, this claim. Verified byte-identical by the
-existing `--check` gates. Owner-approved.
+Performance program (algorithm-first fix for the CPU-bound scanners). Delivered a
+single-pass inversion in `generate-architecture-map.py` (96k whole-file regex
+transforms → one scan per file), `generate-plan-integration-audit.py`, and
+`generate-port-contract.py`. Measured: **63.2→2.67 s / 68.8→1.64 s / 89→1.76 s**;
+all three `--check` gates PASS with byte-identical outputs. `TIMING_BASELINE.json`
+refs lowered to the new normal so a regression re-flags SUSPICIOUS.
+**COMPLETE 2026-10-02.** Paths released.
 
 ## claim-perf-track-d-ci-autogen-cleanup-2026-10-02 — COMPLETE
 
