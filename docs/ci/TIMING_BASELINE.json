@@ -105,28 +105,30 @@
       "note": "coverlet instrumentation over the CLR; conversion infeasible."
     },
     "port_contract_gate": {
-      "reference_seconds": 89.41,
-      "reference_kind": "worst_case_committed_report",
+      "reference_seconds": 1.76,
+      "reference_kind": "measured_after_algorithm_fix",
       "memory_sensitive": false,
       "peak_rss_mb": null,
-      "load_at_start": null,
-      "free_mem_at_start_mb": null,
+      "load_at_start": 12.06,
+      "free_mem_at_start_mb": 2225,
       "threads": 12,
       "observed_seconds": {"n": 3, "min": 53.17, "median": 60.02, "max": 89.41},
+      "fresh_measured_seconds": 1.76,
       "recorded": "2026-10-02",
-      "note": "python3 scripts/ci/generate-port-contract.py --check; corpus scan, Track B cache candidate."
+      "note": "generate-port-contract.py --check. Was ~89 s from a per-(port x src file) regex cross-product in find_callers_in_src; single-pass called-identifier index 2026-10-02 gave 1.76 s, outputs byte-identical."
     },
     "plan_integration_audit_drift": {
-      "reference_seconds": 82.77,
-      "reference_kind": "worst_case_committed_report",
+      "reference_seconds": 1.64,
+      "reference_kind": "measured_after_algorithm_fix",
       "memory_sensitive": false,
       "peak_rss_mb": null,
-      "load_at_start": null,
-      "free_mem_at_start_mb": null,
+      "load_at_start": 12.06,
+      "free_mem_at_start_mb": 2225,
       "threads": 12,
       "observed_seconds": {"n": 2, "min": 60.14, "median": 71.45, "max": 82.77},
+      "fresh_measured_seconds": 1.64,
       "recorded": "2026-10-02",
-      "note": "python3 scripts/ci/generate-plan-integration-audit.py --check; corpus scan, Track B cache candidate."
+      "note": "generate-plan-integration-audit.py --check. Was ~63 s user CPU from per-(identifier x src file) full-text regex scans in refs_in_src; single-pass word index 2026-10-02 gave 1.64 s, --check byte-identical."
     },
     "doc_link_portability": {
       "reference_seconds": 80.65,
@@ -141,16 +143,17 @@
       "note": "doc-link-gate.sh; markdown corpus scan, Track B cache candidate."
     },
     "architecture_map_drift": {
-      "reference_seconds": 80.32,
-      "reference_kind": "worst_case_committed_report",
+      "reference_seconds": 2.67,
+      "reference_kind": "measured_after_algorithm_fix",
       "memory_sensitive": false,
       "peak_rss_mb": null,
-      "load_at_start": null,
-      "free_mem_at_start_mb": null,
+      "load_at_start": 13.45,
+      "free_mem_at_start_mb": 2225,
       "threads": 12,
       "observed_seconds": {"n": 2, "min": 30.09, "median": 55.21, "max": 80.32},
+      "fresh_measured_seconds": 2.67,
       "recorded": "2026-10-02",
-      "note": "generate-architecture-map.sh --check; corpus scan, Track B cache candidate."
+      "note": "generate-architecture-map.sh --check. Was CPU-bound ~63 s from a single-pass-invertible cross-product (306 Main*.cs x 314 setup methods = 96k whole-file regex transforms, ~795 MB re-scanned); single-pass inversion 2026-10-02 gave 2.67 s, --check byte-identical. Caching could not help (IO < 2 s)."
     },
     "ui_panel_contracts_test": {
       "reference_seconds": 60.63,

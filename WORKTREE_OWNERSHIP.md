@@ -1,11 +1,23 @@
 # ASHFALL Worktree Ownership
 
-## claim-perf-track-d-ci-autogen-cleanup-2026-10-02 — IN PROGRESS
+## claim-perf-track-ce-scanner-algorithm-2026-10-02 — IN PROGRESS
 
-Performance program Track D (branch hygiene: stop the ci-autogen-* recurrence).
-Exact owned paths: `.github/workflows/ci-autogen-cleanup.yml` (new),
-`.github/workflows/docs-regen.yml`, `.github/workflows/selftest-manifest-regen.yml`,
-this claim. Owner-approved CI change. No gameplay/Core/save impact.
+Performance program (algorithm-first fix for the CPU-bound scanners). Exact owned
+paths: `scripts/ci/generate-architecture-map.py` and its generated outputs
+(`docs/architecture/ARCHITECTURE_TEST_MAP.md` + graph artifact), then the same
+inversion in `scripts/ci/generate-plan-integration-audit.py` and
+`scripts/ci/generate-port-contract.py`, this claim. Verified byte-identical by the
+existing `--check` gates. Owner-approved.
+
+## claim-perf-track-d-ci-autogen-cleanup-2026-10-02 — COMPLETE
+
+Performance program Track D (stop the ci-autogen-* recurrence). Delivered:
+new `.github/workflows/ci-autogen-cleanup.yml` (daily: deletes merged
+`ci-autogen-*`, leaves unmerged), and `docs-regen.yml` /
+`selftest-manifest-regen.yml` now open a best-effort PR + hold
+`pull-requests: write` so branches land and auto-delete. Validated: PyYAML OK;
+cleanup dry-run deleted 0 while all remaining ci-autogen branches are unmerged.
+**COMPLETE 2026-10-02.** Paths released.
 
 ## claim-perf-track-a-baseline-2026-10-02 — COMPLETE
 

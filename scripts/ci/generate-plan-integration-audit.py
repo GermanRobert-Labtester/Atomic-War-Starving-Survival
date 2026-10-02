@@ -186,9 +186,18 @@ def main(check_only: bool) -> int:
                   for p in collect_files(REPO_ROOT / "Ashfall.Core.Tests", "*Tests.cs")
                   + collect_files(REPO_ROOT / "Ashfall.Core.Tests", "*Test.cs")]
 
+    # Single-pass inversion: index src identifiers once instead of running a
+    # fresh whole-file regex per (identifier, file) pair. refs_in_src is called
+    # for every reach identifier of every plan and for each store/host class,
+    # i.e. hundreds of identifiers × ~1.4k src files.
+    src_word_index = {}
+    _word_rx = re.compile(r"[A-Za-z_]\w*")
+    for _rel, _text in src_cache.items():
+        for _word in set(_word_rx.findall(_text)):
+            src_word_index.setdefault(_word, []).append(_rel)
+
     def refs_in_src(identifier):
-        rx = re.compile(r"\b" + re.escape(identifier) + r"\b")
-        return [rel for rel, text in src_cache.items() if rx.search(text)]
+        return src_word_index.get(identifier, [])
 
     src_type_names = scan_type_names(src_files)
 
