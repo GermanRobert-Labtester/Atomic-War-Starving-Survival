@@ -1,5 +1,12 @@
 # ASHFALL Worktree Ownership
 
+## claim-perf-track-d-ci-autogen-cleanup-2026-10-02 — IN PROGRESS
+
+Performance program Track D (branch hygiene: stop the ci-autogen-* recurrence).
+Exact owned paths: `.github/workflows/ci-autogen-cleanup.yml` (new),
+`.github/workflows/docs-regen.yml`, `.github/workflows/selftest-manifest-regen.yml`,
+this claim. Owner-approved CI change. No gameplay/Core/save impact.
+
 ## claim-perf-track-a-baseline-2026-10-02 — COMPLETE
 
 Performance program Track A (budgeted baseline with measurement context). Plan:
