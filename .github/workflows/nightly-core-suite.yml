@@ -1,0 +1,77 @@
+# ASHFALL Nightly Full Core xUnit Suite (perf-program Track C)
+# Owns the full core regression suite so the PR path stays fast-tier only.
+# ci.yml runs the same gate on merge (push to main/master).
+# `--gate test_core_suite` expands its `depends_on` (build_core_tests), so this
+# job needs the .NET SDKs but not Godot.
+
+name: ASHFALL Nightly Core Suite
+
+on:
+  schedule:
+    - cron: '23 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  core-suite:
+    name: Full Core xUnit Suite (nightly)
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+          fetch-depth: 1
+
+      - name: Setup .NET SDKs (8.0 for Godot host, 9.0 for tests)
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
+          cache: true
+          cache-dependency-path: '**/packages.lock.json'
+
+      - name: Execute Full Core xUnit Regression Gate
+        run: |
+          python3 scripts/ci/run-gates.py --gate test_core_suite --report-json build/reports/nightly-core-test-results.json --fail-artifact build/reports/NIGHTLY_CORE_TEST_FAILURE_REPORT.md
+
+      - name: Surface Gate Failures as Annotations
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import json, pathlib
+          report = pathlib.Path("build/reports/nightly-core-test-results.json")
+          if not report.is_file():
+              print("::warning::no nightly core-suite report was produced")
+          else:
+              try:
+                  data = json.loads(report.read_text(encoding="utf-8"))
+              except (OSError, json.JSONDecodeError) as error:
+                  print(f"::error::could not parse nightly report: {error}")
+              else:
+                  for result in data.get("results", []):
+                      if result.get("passed"):
+                          continue
+                      reason = (result.get("error_reason") or "no reason recorded").replace("\n", " ")[:500]
+                      print(f"::error title={result.get('gate_id','gate')}::NIGHTLY CORE SUITE FAILED: "
+                            f"{result.get('gate_id','?')} ({result.get('name','?')}) - {reason}")
+          PY
+
+      - name: Generate GitHub Actions Step Summary
+        if: always()
+        run: |
+          if [ -f "build/reports/nightly-core-test-results.json" ]; then
+            python3 scripts/ci/github-step-summary.py --input build/reports/nightly-core-test-results.json >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Upload Nightly Core Suite Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightly-core-suite-report
+          path: build/reports/
+          if-no-files-found: ignore

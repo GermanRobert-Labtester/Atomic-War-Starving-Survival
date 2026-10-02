@@ -1,6 +1,6 @@
 # CI Gate Inventory (Plan VIII · Task 24.1)
 
-Generated from `docs/ci/CI_GATE_MANIFEST.json` — 74 gates, 70 fast. Regenerate with `python3 scripts/ci/run-gates.py --write-inventory docs/ci/GATE_INVENTORY.md`. The manifest is the single authority: add or change gates THERE, never in prose only.
+Generated from `docs/ci/CI_GATE_MANIFEST.json` — 75 gates, 70 fast. Regenerate with `python3 scripts/ci/run-gates.py --write-inventory docs/ci/GATE_INVENTORY.md`. The manifest is the single authority: add or change gates THERE, never in prose only.
 
 Runtimes below are budgeted timeouts (enforced ceiling), not measured durations; measured durations land in every `--report-json` run (Task 24.10 budgets).
 
@@ -28,6 +28,7 @@ Runtimes below are budgeted timeouts (enforced ceiling), not measured durations;
 | fast | `first_hour_onboarding_journey` | Campaign Smoke | 60s | yes | build_godot_host |
 | fast | `real_campaign_journey` | Campaign Smoke | 180s | yes | build_godot_host |
 | performance | `runtime_scale_performance` | Performance | 60s | no | build_godot_host |
+| performance | `perf_baseline_regression` | Performance | 60s | no | build_godot_host |
 | fast | `expansions_completeness` | Campaign Smoke | 60s | yes | build_godot_host |
 | fast | `survivors_selftest` | Host Selftests & Lifecycle | 90s | yes | build_godot_host |
 | fast | `expedition_selftest` | Host Selftests & Lifecycle | 90s | yes | build_godot_host |

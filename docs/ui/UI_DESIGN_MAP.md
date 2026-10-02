@@ -338,7 +338,7 @@ Per-surface spec derived from source (binding target, layout, metrics, actions):
 | `BrineExtractionPanel` | `SilentFoundryHostSession` | `code-built` | — | 237 |
 | `CombatDetailPanel` | `CombatHostSession` | `scene-backed` | combat, combat_detail | 162 |
 | `CombatHistoryPanel` | `CombatHostSession` | `code-built` | combat, combat_detail | 211 |
-| `CombatPanel` | `CombatHostSession` | `code-built` | combat, combat_detail | 723 |
+| `CombatPanel` | `CombatHostSession` | `code-built` | combat, combat_detail | 740 |
 | `DutyRosterDetailPanel` | `DutyRosterHostSession` | `scene-backed` | duty_roster, duty_roster_detail | 165 |
 | `EmergencyResponseHud` | `CrisisPresentationSnapshot` | `scene-backed` | — | 330 |
 | `EpiloguePanel` | `CampaignOutcomeSnapshot` | `code-built` | chronicle, epilogue | 252 |

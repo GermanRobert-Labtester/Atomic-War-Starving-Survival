@@ -22,6 +22,18 @@ public static class ScaleTier
     /// <summary>Stress roster: 24 survivors.</summary>
     public const string RosterStress = "stress";     // 24 survivors
 
+    /// <summary>Large-population soak: 50 survivors.</summary>
+    public const string RosterSquad = "squad";       // 50 survivors
+
+    /// <summary>Large-population soak: 100 survivors.</summary>
+    public const string RosterCompany = "company";   // 100 survivors
+
+    /// <summary>Large-population soak: 250 survivors.</summary>
+    public const string RosterCrowd = "crowd";       // 250 survivors
+
+    /// <summary>Large-population soak: 500 survivors.</summary>
+    public const string RosterMass = "mass";         // 500 survivors
+
     // ── Catalog ────────────────────────────────────────────────────
     /// <summary>Minimal catalog subset for smoke tests.</summary>
     public const string CatalogMinimal = "minimal";
@@ -80,6 +92,10 @@ public static class ScaleTier
             RosterNormal => 6,
             RosterLarge => 12,
             RosterStress => 24,
+            RosterSquad => 50,
+            RosterCompany => 100,
+            RosterCrowd => 250,
+            RosterMass => 500,
             _ => 6,
         };
     }

@@ -402,6 +402,10 @@ namespace AtomicWar.GodotApp.UI
         {
             SetAnchorsPreset(LayoutPreset.FullRect);
             Visible = false;
+            // Realtime input is only consumed while the panel is visible; keep
+            // the panel off the per-frame process list when it is closed.
+            VisibilityChanged += OnVisibilityChanged;
+            SetProcess(false);
 
             var bg = new ColorRect { Color = AshfallUiHelpers.PanelScrim() };
             bg.SetAnchorsPreset(LayoutPreset.FullRect);
@@ -705,8 +709,21 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
+        private void OnVisibilityChanged()
+        {
+            // Hiding the panel must drop any held movement frame so a background
+            // encounter never inherits stale input once _Process is disabled.
+            if (!Visible && _movementSent)
+            {
+                _combat?.SetInputFrame(CombatInputFrame.Empty);
+                _movementSent = false;
+            }
+            SetProcess(Visible);
+        }
+
         public void Unbind()
         {
+            VisibilityChanged -= OnVisibilityChanged;
             if (_combat != null)
             {
                 _combat.StateChanged -= RefreshView;
