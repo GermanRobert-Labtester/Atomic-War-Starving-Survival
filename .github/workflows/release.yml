@@ -23,11 +23,8 @@ jobs:
           # also runs (release-gate.sh runs the full fast tier, same as ci.yml).
           fetch-depth: 2
 
-      - name: Setup Go for repository monitors
-        uses: actions/setup-go@v5
-        with:
-          go-version-file: tools/gotools/go.mod
-          cache-dependency-path: tools/gotools/go.sum
+      - name: Setup Rust for repository monitors and dev tools
+        uses: dtolnay/rust-toolchain@stable
 
       - name: Setup .NET SDKs
         uses: actions/setup-dotnet@v4

@@ -37,9 +37,9 @@ project programming language · SQL as application logic · any generated source
 another language · any unapproved embedded scripting language.
 
 **Enforcement:** `scripts/ci/language-policy-gate.py` fails when a prohibited
-source file is added. During the Rust port the transitional Go toolchain
-(`tools/gotools/**`) is allowlisted; it is deleted in Stage 4
-(`.ai/plans/rust-port-gotools-2026-10-02.md`).
+source file is added. The transitional Go toolchain (`tools/gotools/**`) was
+deleted in Stage 4 of the Rust port (`.ai/plans/rust-port-gotools-2026-10-02.md`),
+so there is no allowlist — Go is prohibited outright.
 
 ## Not programming languages (allowed)
 

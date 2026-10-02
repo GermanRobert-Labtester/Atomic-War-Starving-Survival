@@ -186,7 +186,7 @@ pub fn validate_json_file(path: &str) -> Vec<ValidationViolation> {
         )],
         Some(serde_json::Value::Number(n)) => {
             let v = n.as_f64().unwrap_or(f64::NAN);
-            if !(v >= 1.0) || v.fract() != 0.0 {
+            if v.is_nan() || v < 1.0 || v.fract() != 0.0 {
                 vec![violation(
                     path,
                     "schema_version_integer",

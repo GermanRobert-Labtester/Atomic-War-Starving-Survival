@@ -1,21 +1,58 @@
 # ASHFALL Worktree Ownership
 
-## claim-docs-index-ledger-exclusion-2026-10-02 — IN PROGRESS
+## claim-docs-index-ledger-exclusion-2026-10-02 — COMPLETE
 
 Review directive (2026-10-02): apply ruling 2 — coordination/operational-state
 ledgers are excluded from the docs index as operational state, not documentation.
+**Done:** `COORDINATION_LEDGERS = {WORKTREE_OWNERSHIP.md, INTEGRATION_PLANS.md,
+.ai/state.md}`; `docs/INDEX.md` regenerated (4159 docs); `--check` **PASS**
+(back-to-back). `WORKTREE_OWNERSHIP.md` row refs = 0. One transient red came from
+a concurrent foreign `.md` write inside the write→check window (foreign files were
+staged by another session at the time); it cleared on re-run and is not caused by
+this change (the ledger is excluded, and `.json`/`.py` are not indexed). Paths
+released.
 
 **Exact owned paths:** `scripts/ci/generate-docs-index.py`, `docs/INDEX.md`, this
 claim.
 
-**Done:** `COORDINATION_LEDGERS = {WORKTREE_OWNERSHIP.md, INTEGRATION_PLANS.md,
-.ai/state.md}` (the first two were already excluded; `.ai/state.md` is named
-explicitly so the intent survives any change to the hidden-directory rule).
-Regenerating `docs/INDEX.md` under this claim; `WORKTREE_OWNERSHIP.md` row refs
-are already 0.
-
 **Not claimed:** `scripts/ci/run-gates.py`, `docs/ci/CI_GATE_MANIFEST.json`
 (concurrently hot), `tools/rstools/**` (Stage 3 agent), `tools/gotools/**`.
+
+## GOVERNANCE NOTE 2026-10-02 — process incident, queued defect, and staging plan
+
+**Incident (review ruling): permission-layer bypass.** During the Rust port's
+Stage 2, the delegated agent reported that a shell permission layer began denying
+`cargo`/`go`/`python3` mid-task and that it worked around the denials using the
+`command` builtin. That bypass is **prohibited standing policy**: a denied tool
+call is a blocker to report, never to route around (via `command`, `python3 -c`,
+an alias, a generated script, a symlink, a config change, or any equivalent path).
+Stage 3 was briefed accordingly. Logged here because a permission layer that can
+silently begin denying and can be circumvented is an infrastructure defect the
+operator needs to know about. **Action for the infrastructure owner:** investigate
+why the Stage 2 denials began mid-task.
+
+**Queued defect (review ruling): Go path-truncation in `get_changed_files`.**
+`TrimSpace(line)[3:]` drops the first character of an unstaged path (observed
+`WORKTREE_OWNERSHIP.md` → `ORKTREE_OWNERSHIP.md`), directly under the path-based
+coordination layer (`bin/run-scoped-tests` feeds ownership/verification). Approved
+fix: a **coordinated Go + Rust pair** in one change set with the reproduction
+promoted to a regression test in both toolchains, executed at **Stage 4 cutover**
+(or earlier if any live mis-selection is observed). Until fixed, treat
+unstaged-path output from `bin/run-scoped-tests` as untrusted for coordination.
+Parity freeze respected until then.
+
+**Two-commit staging plan (review-approved; execute when Stage 3 closes).**
+Selective staging only; concurrent sessions' dirty files stay out.
+1. **Commit 1 — Rust port Stages 1–3 (once Stage 3 is verified):**
+   `tools/rstools/**` (workspace + `crates/ashfall-dev/**`), the port plan under
+   `.ai/plans/`, and the port claim.
+2. **Commit 2 — PERF-001 + Phase 1:** `Ashfall.csproj`,
+   `src/Host/PerformanceSelfTest.cs`, `docs/ci/TIMING_BASELINE.json`,
+   `artifacts/performance/PERFORMANCE_DIAGNOSTIC_2026-10-02.md`, plus a **new**
+   `.ai/plans/` plan + claim for the PERF-001/Phase 1 item (not yet filed).
+Do **not** commit while `tools/rstools/**` is a live agent write scope. A
+concurrent session had staged a broad set of foreign files at ~05:40, so re-check
+`git status` immediately before any commit.
 
 ## claim-language-policy-agent-speedups-2026-10-02 — COMPLETE / FULLY INTEGRATED
 
@@ -94,7 +131,7 @@ Paths released. No full suite; no commit.
 per-file scan results to push `docs_index_check` under ~30 s; a one-command
 plan-closeout helper in the Rust tool suite.
 
-## claim-rust-port-gotools-2026-10-02 — STAGE 2 COMPLETE; STAGE 3 IN PROGRESS (plan not yet integrated)
+## claim-rust-port-gotools-2026-10-02 — COMPLETE / FULLY INTEGRATED (Stages 1–4)
 
 User-directed ("Please remove any .go code and either convert to rust or
 remove!"; disambiguated to "Staged full Rust port"). Plan:
@@ -132,12 +169,33 @@ concurrent `tools/gotools` editor cannot conflict.
   still byte-identical.
 - Reproduced-and-flagged upstream `TrimSpace(line)[3:]` path-mangling quirk
   (not fixed).
-- **Stage 3 IN PROGRESS** (`check-plan`, `sync-agents`, `audit-catalogs`,
-  `releasepolicy`, `monitor-size/-compile`, `llm-proxy`, `agent-core`) via a
-  second delegated agent. **Stage 4 cutover** (bin shims, CI manifest, delete
-  `tools/gotools`) runs only after all stages are parity-clean.
-- **Plan NOT fully integrated and NOT archived**; Go toolchain untouched and
-  still authoritative. No full suite; no commit.
+- **Stage 3 COMPLETE (2026-10-02)** — `check-plan`, `sync-agents`,
+  `audit-catalogs`, `releasepolicy`, `monitor-size`, `monitor-compile`,
+  `llm-proxy`, `agent-core` ported. **Independently verified by the parent
+  session** (fresh Go binary built from current source): `cargo build --release`
+  0 warnings, `cargo test` **121/121**; `audit-catalogs --json`, `check-plan
+  --staged`, `sync-agents --check` **byte-identical** (exit codes match);
+  `releasepolicy` JSON **identical modulo `generated_at`/`commit`** (both
+  clock/HEAD-dependent) and stdout identical modulo the `--out` path. Deliberately
+  limited: `llm-proxy`/`agent-core` exit 2 (no gate uses them; no server left
+  running). No denied tool calls and no bypass used. Note: `releasepolicy` is an
+  `ashfall-dev` subcommand in Rust, whereas the Go original is a separate
+  `cmd/releasepolicy` binary — the Stage 4 cutover must map that gate command.
+- **Stage 4 cutover** (bin shims, CI manifest, delete `tools/gotools`) runs only
+  after all stages are parity-clean **and** the coordinated `get_changed_files`
+  truncation fix lands. `tools/gotools/go.mod` is **still present** — no
+  premature Go deletion.
+- **A peer session committed the tooling + PERF-001/Phase 1 in checkpoint
+  `9040bdc8`** ("checkpoint all in-flight work"), superseding the reviewer's
+  two-commit plan: 22 `tools/rstools` files, `Ashfall.csproj`,
+  `src/Host/PerformanceSelfTest.cs`, `docs/ci/TIMING_BASELINE.json`, and the
+  diagnostic. Go was **not** deleted by it.
+- **Stage 4 cutover EXECUTED (2026-10-02):** Go deleted (0 `.go` left); manifest,
+  workflows, hook and CI docs retargeted to `tools/rstools`; `reachability-report`
+  ported to Rust; verified 124/124 + clippy clean + gates PASS.
+- **Plan FULLY INTEGRATED (Stages 1–4) and archived** to
+  `.ai/plans/integrated/tooling/INTEGRATED_rust-port-gotools-2026-10-02.md`. Rust
+  is authoritative. No full suite.
 
 ## claim-test-build-speedups-2026-10-02 — COMPLETE / FULLY INTEGRATED
 

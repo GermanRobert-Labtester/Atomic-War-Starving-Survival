@@ -6,9 +6,9 @@ C, C++, Java, Kotlin, Swift, Objective-C, Lua, Ruby, PHP, Dart, Zig, Haskell,
 Perl, VB, and any other unlisted language (see docs/ci/LANGUAGE_POLICY.md).
 
 This scans tracked files by extension and fails when a prohibited-language
-source file is present outside the allowlist. The transitional Go toolchain
-(tools/gotools/**), which is being ported to Rust, is allowlisted until Stage 4
-of `.ai/plans/rust-port-gotools-2026-10-02.md` deletes it.
+source file is present. Stage 4 of `.ai/plans/rust-port-gotools-2026-10-02.md`
+deleted the transitional Go toolchain, so there is no allowlist: Go, JS, TS,
+and the rest are simply prohibited.
 
 Usage:
   python3 scripts/ci/language-policy-gate.py            # human check
@@ -42,8 +42,8 @@ PROHIBITED = {
     "vb": "Visual Basic",
 }
 
-# Transitional allowlist: Go being ported to Rust, deleted in Stage 4.
-ALLOWED_PREFIXES = ("tools/gotools/",)
+# No allowlist: the transitional Go toolchain was deleted in Stage 4.
+ALLOWED_PREFIXES = ()
 # Not application logic: precompiled/external-ish trees, generated output.
 ALLOWED_ANYWHERE = ("node_modules/", ".godot/", "build/", "obj/", "bin/")
 
@@ -97,7 +97,7 @@ def main() -> int:
                   "See docs/ci/LANGUAGE_POLICY.md.")
         else:
             print("LANGUAGE_POLICY PASS: no prohibited-language source outside the "
-                  "transitional allowlist (tools/gotools/**).")
+                  "permitted four languages.")
 
     return 1 if findings else 0
 

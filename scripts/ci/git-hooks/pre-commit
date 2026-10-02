@@ -46,6 +46,8 @@ if [ -x "bin/check-approved-plan" ]; then
     bin/check-approved-plan --staged
 elif [ -x "bin/ashfall-dev" ]; then
     bin/ashfall-dev check-plan --staged
+elif [ -x "tools/rstools/target/release/ashfall-dev" ]; then
+    tools/rstools/target/release/ashfall-dev check-plan --staged
 fi
 
 # --- Docs index guard (artifacts/ is outside the indexed corpus) ---
