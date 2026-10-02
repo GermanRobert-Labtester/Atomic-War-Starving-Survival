@@ -1,6 +1,6 @@
 # Recent Plan Integrations — Programmatic Audit
 
-**Generated:** 2026-10-01
+**Generated:** 2026-10-02
 
 **Method:** programmatic source scan (Core type declarations, src references, SaveSectionRegistry, HostCli, SELFTEST_MANIFEST, test fixtures)
 
