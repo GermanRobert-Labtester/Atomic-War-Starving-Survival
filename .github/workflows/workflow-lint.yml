@@ -1,0 +1,42 @@
+# ASHFALL Workflow Lint — validate .github/workflows with actionlint.
+#
+# Closes the CI-validation gap: locally the workflows are only PyYAML-checked
+# (actionlint is not installed and GitHub Actions cannot run off-runner). This
+# runs actionlint on a GitHub-hosted runner whenever a workflow changes.
+#
+# Local parity (if actionlint is installed):
+#   actionlint .github/workflows/*.yml
+
+name: Workflow Lint
+
+on:
+  push:
+    paths:
+      - ".github/workflows/**"
+  pull_request:
+    paths:
+      - ".github/workflows/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  actionlint:
+    name: actionlint
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install actionlint
+        run: |
+          set -euo pipefail
+          curl -sSfL -o /tmp/actionlint-install.sh \
+            https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash
+          bash /tmp/actionlint-install.sh 1.7.7
+          ./actionlint --version
+
+      - name: Lint workflows
+        run: ./actionlint -color
