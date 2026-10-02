@@ -25,6 +25,7 @@ import sys
 import json
 import time
 import argparse
+import fnmatch
 import pathlib
 import subprocess
 import tempfile
@@ -580,6 +581,36 @@ def validate_manifest_header(manifest):
     return problems
 
 
+def git_changed_files(base_ref):
+    """Files changed vs base_ref (committed range + working tree).
+
+    Used only by opt-in path filters (--changed-base). On any git failure the
+    list is empty, so a filtered gate is skipped only if the caller explicitly
+    opted in and the diff genuinely shows no matching file.
+    """
+    names = set()
+    for diff_args in ([f"{base_ref}...HEAD"], []):
+        try:
+            out = subprocess.run(
+                ["git", "diff", "--name-only", *diff_args],
+                cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=60)
+        except Exception:
+            continue
+        if out.returncode == 0:
+            names.update(line.strip() for line in out.stdout.splitlines() if line.strip())
+    return sorted(names)
+
+
+def path_filter_matches(path, patterns):
+    """True if `path` matches any glob (tested on both full path and basename).
+
+    fnmatch's `*` also matches `/`, so basename matching alone safely covers
+    extension globs like `*.cs` for files in subdirectories.
+    """
+    base = path.rsplit("/", 1)[-1]
+    return any(fnmatch.fnmatch(path, p) or fnmatch.fnmatch(base, p) for p in patterns)
+
+
 def main():
     parser = argparse.ArgumentParser(description="Canonical ASHFALL Gate Runner")
     parser.add_argument("--tier", choices=["fast", "full", "performance", "release", "all"], default="fast",
@@ -607,6 +638,11 @@ def main():
     parser.add_argument("--jobs", type=int, default=1,
                         help="Run independent static gates concurrently (default 1 = serial). "
                              "Gates that build or run Godot always stay serial.")
+    parser.add_argument("--changed-base", type=str, default=None,
+                        help="Opt-in path filter: skip gates that declare a `paths` list "
+                             "when no file changed vs <ref> matches it (e.g. skip "
+                             "compiler_warning_baseline on a doc-only change). Default: "
+                             "run every selected gate.")
 
     args = parser.parse_args()
 
@@ -742,6 +778,10 @@ def main():
     print(f"Fail-Fast:   {'Enabled' if fail_fast else 'Disabled'}")
     print("-----------------------------------------------------------------------------")
 
+    changed_files = set(git_changed_files(args.changed_base)) if args.changed_base else None
+    if changed_files is not None:
+        print(f"Path filter: --changed-base {args.changed_base} — "
+              f"{len(changed_files)} changed file(s)")
     results = []
     failed_gates = []
     outcome_by_id = {}
@@ -796,6 +836,28 @@ def main():
                     print(f"\n❌ [ABORT] Fail-fast active: stopping on gate '{gid}'.")
                     break
             continue
+
+        # Opt-in path filter: when --changed-base is given, a gate that declares
+        # `paths` is skipped if no changed file matches it (e.g. do not rebuild
+        # all C# for compiler_warning_baseline on a doc-only change). Default
+        # (no --changed-base) runs every selected gate.
+        gate_paths = gate.get("paths") or []
+        if changed_files is not None and gate_paths:
+            if not any(path_filter_matches(f, gate_paths) for f in changed_files):
+                print(f"\n[{idx}/{len(gates_to_run)}] SKIP [path filter] {name} ({gid}) "
+                      f"— no changed file matches {gate_paths}")
+                results.append({
+                    "gate_id": gid, "name": name, "category": category, "command": cmd,
+                    "timeout_seconds": timeout, "expected_summary": expected_summary,
+                    "classification": gate.get("classification", "fast"),
+                    "remediation": gate.get("remediation"),
+                    "passed": True, "blocked": False, "quarantined": False,
+                    "skipped": True, "skip_reason": "path-filter",
+                    "failure_type": None, "exit_code": 0, "duration": 0.0,
+                    "error_reason": None, "output": ""
+                })
+                outcome_by_id[gid] = True
+                continue
 
         print(f"\n[{idx}/{len(gates_to_run)}] Running [{category}] {name} ({gid})...")
         if configured_timeout != timeout:
