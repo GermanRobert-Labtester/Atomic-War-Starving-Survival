@@ -12,8 +12,11 @@ namespace AtomicWar.GodotApp
         private ShelterAtmosphereHostSession _shelterAtmosphere = null!;
         private ShelterAtmospherePanel _shelterAtmospherePanel = null!;
         private bool _shelterAtmosphereDirty;
+<<<<<<< main
         private Action? _shelterAtmosphereStateChangedHandler;
         private Action? _shelterAtmospherePanelCloseHandler;
+=======
+>>>>>>> origin/main
 
         public ShelterAtmosphereHostSession ShelterAtmosphere => EnsureShelterAtmosphere();
 
@@ -30,6 +33,7 @@ namespace AtomicWar.GodotApp
             var atmoSys = new ShelterAtmosphereSystem(atmoState);
             var noiseSys = new ShelterNoiseSystem(noiseState);
 
+<<<<<<< main
             // Plan 220 — bind the authored atmosphere profiles so ambiance modifiers
             // come from the canonical catalog rather than hardcoded defaults.
             string atmoCatalogPath = CatalogPath.ResolveCatalog("atmosphere_profiles.json");
@@ -47,6 +51,8 @@ namespace AtomicWar.GodotApp
                 noiseSys.LoadCatalog(atmoCatalogIo.ReadAllText(noiseCatalogPath));
             }
 
+=======
+>>>>>>> origin/main
             // If new game / pristine state, register standard baseline shelter acoustic profile
             if (noiseState.Sources.Count == 0)
             {
@@ -58,8 +64,12 @@ namespace AtomicWar.GodotApp
             }
 
             _shelterAtmosphere = new ShelterAtmosphereHostSession(atmoSys, noiseSys);
+<<<<<<< main
             _shelterAtmosphereStateChangedHandler = OnShelterAtmosphereStateChanged;
             _shelterAtmosphere.StateChanged += _shelterAtmosphereStateChangedHandler;
+=======
+            _shelterAtmosphere.StateChanged += OnShelterAtmosphereStateChanged;
+>>>>>>> origin/main
             return _shelterAtmosphere;
         }
 
@@ -196,12 +206,16 @@ namespace AtomicWar.GodotApp
             EnsureShelterAtmosphere();
             _shelterAtmospherePanel = new ShelterAtmospherePanel();
             _shelterAtmospherePanel.Bind(_shelterAtmosphere);
+<<<<<<< main
             _shelterAtmospherePanelCloseHandler = () =>
             {
                 if (_shelterAtmospherePanel != null)
                     _shelterAtmospherePanel.Visible = false;
             };
             _shelterAtmospherePanel.OnClose += _shelterAtmospherePanelCloseHandler;
+=======
+            _shelterAtmospherePanel.OnClose += () => _shelterAtmospherePanel.Visible = false;
+>>>>>>> origin/main
             _shelterAtmospherePanel.Visible = false;
             AddChild(_shelterAtmospherePanel);
         }
@@ -209,6 +223,7 @@ namespace AtomicWar.GodotApp
         public void ShowShelterAtmospherePanel()
         {
             SetupShelterAtmospherePanel();
+<<<<<<< main
             ShowPanelLifecycle(_shelterAtmospherePanel);
             _shelterAtmospherePanel.RefreshView();
         }
@@ -232,5 +247,10 @@ namespace AtomicWar.GodotApp
             _shelterAtmosphereStateChangedHandler = null;
             _shelterAtmospherePanelCloseHandler = null;
         }
+=======
+            _shelterAtmospherePanel.Visible = true;
+            _shelterAtmospherePanel.RefreshView();
+        }
+>>>>>>> origin/main
     }
 }

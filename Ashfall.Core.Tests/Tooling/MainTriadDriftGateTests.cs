@@ -86,11 +86,15 @@ namespace Ashfall.Core.Tests
                 "Cascade", // D1 2026-09-17: derived cascade-rule projection over the day's served/shed power outcome; the coordinator is built from static cascade_rules.json and holds no persisted state (journal already records its transitions)
                 "ContentCertification", // Plans 46/42 Wave 2026-09-23: Plan 49 cargo certification is a recomputed audit verdict over the live composition (catalogs loaded + owners constructed); it holds no persisted campaign state and its journal line is the published evidence
                 "FitnessForDuty", // D1 2026-09-17: Plan 24A derived fitness verdicts over existing persisted survivor authorities; the model is intentionally not a save section or a second survivor ledger
+<<<<<<< main
                 "Difficulty", // XP-01 difficulty selection and persistence is stored in the campaign envelope manifest, not a standalone save section
                 "NeedsPerformance", // Plan 137: NeedsPerformanceBridge is a pure domain projection over the live survivor needs state; modifiers are calculated dynamically with zero persistent state, avoiding parallel needs stores per Rule 5
                 "AudioAccessibility", // Plan 169: Audio accessibility coordinator binds to live AudioManager and UserSettingsStore; persistent preferences belong to user settings, not campaign save slots
                 "TunnelNetwork", // Plan 167: TunnelNetworkSystem is owned and persisted through WastelandMapSystem.Tunnels inside the canonical world-map save section; no duplicate save store
                 "DynamicQuestGeneration", // Plan 171: DynamicQuestGenerator is candidate generator; accepted quests persist via QuestRuntimeCoordinator; no duplicate save section
+=======
+                "Difficulty", // XP-01: preset id persists on campaign header / save-envelope manifest (difficulty_preset_id / difficultyPresetId); not a standalone SaveDifficulty section
+>>>>>>> origin/main
             };
 
 

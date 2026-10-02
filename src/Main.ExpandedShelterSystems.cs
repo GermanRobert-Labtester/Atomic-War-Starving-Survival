@@ -143,6 +143,7 @@ namespace AtomicWar.GodotApp
             SetupShelterAssignment();   // last — post-wiring to Thermal + Phase0
             SetupShelterDecor();        // uses the final assignment map + inventory catalog
             SetupShelterAtmosphere();
+<<<<<<< main
             SetupHiddenAgenda();
             SetupShelterReputation();
             SetupPropaganda();
@@ -169,6 +170,8 @@ namespace AtomicWar.GodotApp
             SetupOrphanSealWave1();
             SetupNeedsPerformance();
             SetupCampaignLegacy();
+=======
+>>>>>>> origin/main
         }
 
         /// <summary>Binds the Plan 72 electrostatic scrubber console to the ventilation session.</summary>
@@ -321,12 +324,15 @@ namespace AtomicWar.GodotApp
             SaveCaregiving();
             SaveShelterThermal();
             SaveShelterAtmosphere();
+<<<<<<< main
             SaveHiddenAgenda();
             SaveShelterReputation();
             SavePropaganda();
             SaveRumorNetwork();
             SaveShelterSecurity();
             SaveVisitorIntegration();
+=======
+>>>>>>> origin/main
             SaveWeatherHardening();
             SaveGeothermalAquifer();
             SaveShelterSchedule();
@@ -707,6 +713,9 @@ namespace AtomicWar.GodotApp
                     break;
                 case "relationship_decay":
                     ShowRelationshipDecayPanel();
+                    break;
+                case "shelter_atmosphere":
+                    ShowShelterAtmospherePanel();
                     break;
                 case "medical_ward":
                     SetupJournal();

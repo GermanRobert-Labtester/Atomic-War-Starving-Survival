@@ -127,6 +127,7 @@ namespace AtomicWar.GodotApp.UI
                     noiseSb.AppendLine($"  • [{src.Type}] in {src.RoomId}: {src.NoiseOutput:F0} dB (Active: {src.IsActive})");
                 }
             }
+<<<<<<< main
 
             // Alpha feature G5 — quiet-hours tradeoff, stated in the system's
             // own published thresholds and observed events (no invented math).
@@ -139,6 +140,8 @@ namespace AtomicWar.GodotApp.UI
             noiseSb.AppendLine($"  Violations logged:   {noise.QuietHoursViolationCount}");
             if (noise.LatestQuietHoursViolation is { } last)
                 noiseSb.AppendLine($"  Last breach:         day {last.Day} at {last.NoiseLevel:F0} dB (+{last.DetectionRiskAdded:F0}%)");
+=======
+>>>>>>> origin/main
             _noiseSourcesText.Text = noiseSb.ToString().TrimEnd();
 
             _toggleQuietHoursBtn.Text = noise.QuietHoursActive ? "Lift Quiet Hours" : "Enforce Quiet Hours (22:00 - 06:00)";
@@ -158,7 +161,11 @@ namespace AtomicWar.GodotApp.UI
             _statusRail.AddCard("risk", "Detection Risk", "—", AshfallMetricCard.Criticality.Normal, minWidth: 140);
 
             _contentStack = new VBoxContainer();
+<<<<<<< main
             _contentStack.AddThemeConstantOverride("separation", DesignTheme.SpacingLg);
+=======
+            _contentStack.AddThemeConstantOverride("separation", 14);
+>>>>>>> origin/main
             _contentStack.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             _contentStack.SizeFlagsVertical = SizeFlags.ExpandFill;
 
@@ -185,6 +192,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.AddChild(_noiseSourcesText);
 
             var actionRow = new HBoxContainer();
+<<<<<<< main
             actionRow.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
 
             _toggleQuietHoursBtn = new Button { Text = "Toggle Quiet Hours", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
@@ -192,6 +200,15 @@ namespace AtomicWar.GodotApp.UI
             actionRow.AddChild(_toggleQuietHoursBtn);
 
             _soundproofWorkshopBtn = new Button { Text = "Insulate Workshop (+25% Wall)", CustomMinimumSize = new Vector2(0, DesignTheme.MinInteractiveHeight) };
+=======
+            actionRow.AddThemeConstantOverride("separation", 10);
+
+            _toggleQuietHoursBtn = new Button { Text = "Toggle Quiet Hours" };
+            _toggleQuietHoursBtn.Pressed += OnToggleQuietHoursPressed;
+            actionRow.AddChild(_toggleQuietHoursBtn);
+
+            _soundproofWorkshopBtn = new Button { Text = "Insulate Workshop (+25% Wall)" };
+>>>>>>> origin/main
             _soundproofWorkshopBtn.Pressed += OnSoundproofWorkshopPressed;
             actionRow.AddChild(_soundproofWorkshopBtn);
 
@@ -221,7 +238,11 @@ namespace AtomicWar.GodotApp.UI
 
         public override void _UnhandledInput(InputEvent @event)
         {
+<<<<<<< main
             if (AshfallInputActions.IsCloseOrCancel(@event))
+=======
+            if (@event is InputEventKey keyEvent && keyEvent.Pressed && keyEvent.Keycode == Key.Escape)
+>>>>>>> origin/main
             {
                 Visible = false;
                 OnClose?.Invoke();

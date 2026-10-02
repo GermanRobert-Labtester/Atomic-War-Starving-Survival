@@ -17,7 +17,12 @@ namespace AtomicWar.GodotApp
         /// </summary>
         private Control[] OverlayPanelCatalog()
         {
+<<<<<<< main
             return new Control[]
+=======
+            bool briefingWasOpen = _dailyBriefingModal != null && _dailyBriefingModal.IsOpen;
+            Control[] panels =
+>>>>>>> origin/main
             {
                 _settingsPanel,
                 _assetInspectorPanel,
@@ -136,6 +141,7 @@ namespace AtomicWar.GodotApp
                 _magneticDrumArchivePanel,
                 _plans130To133Panel,
                 _blackProjectsArchivePanel,
+<<<<<<< main
                 _chemWarfareDefensePanel,
                 _commsArrayTransceiverPanel,
                 _ceremonyFestivalPanel,
@@ -223,6 +229,17 @@ namespace AtomicWar.GodotApp
                 _weatherHistoryPanel,
                 _workshopPanel,
                 _recruitmentPanel,
+=======
+                _chemWarfareDefensePanel, _commsArrayTransceiverPanel,
+                _ceremonyFestivalPanel, _roboticsWorkshopPanel,
+                _survivorDowntimePanel, _winterFreezePanel,
+                _amputationTriagePanel, _justiceTribunalPanel,
+                _railwayTerminalPanel, _archaeologyExcavationPanel,
+                _desperationCrisisPanel, _mercenaryBountyBoardPanel,
+                _falloutPlumePanel,
+                _shelterAtmospherePanel,
+                _dailyBriefingModal
+>>>>>>> origin/main
             };
         }
 
@@ -271,6 +288,7 @@ namespace AtomicWar.GodotApp
                 _journalBook.Close();
             }
 
+<<<<<<< main
             // Focus restore (a11y audit 2026-09-29 §9.4): one deferred attempt
             // for the topmost closed panel, taken from its recorded opener. The
             // previous per-panel synchronous restore failed for stacked panels
@@ -331,6 +349,15 @@ namespace AtomicWar.GodotApp
             if (topmost is CombatPanel or DailyBriefingModal) return;
             if (AshfallFocusPolicy.TrapFocus(topmost, @event))
                 GetViewport()?.SetInputAsHandled();
+=======
+            // Keep aligned with AnyOverlayPanelOpen: briefing counts as an overlay for Esc.
+            if (briefingWasOpen && _dailyBriefingModal != null)
+            {
+                AtomicWar.GodotApp.UI.AshfallFocusPolicy.RestoreFocusFromRoot(_dailyBriefingModal);
+                _dailyBriefingModal.Hide();
+                _briefingPending = false;
+            }
+>>>>>>> origin/main
         }
 
         private void CloseSettingsPanel()

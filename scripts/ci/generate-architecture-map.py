@@ -141,6 +141,7 @@ ARCHITECTURE_GRAPH = {
         "cli": ["--shelter-atmosphere-selftest"],
         "tests": ["Plan220ShelterAtmosphereIntegrationTests"]
     },
+<<<<<<< main
     "hidden_agenda": {
         "domain": "Survivors (Plan 132)",
         "core": ["HiddenAgendaSystem"],
@@ -267,6 +268,8 @@ ARCHITECTURE_GRAPH = {
         "cli": ["--relationship-decay-selftest"],
         "tests": ["Plan182RelationshipDecayIntegrationTests", "RelationshipDecaySystemTests"]
     },
+=======
+>>>>>>> origin/main
     "ecological_infestation": {
         "domain": "World",
         "core": ["EcologicalInfestationSystem"],

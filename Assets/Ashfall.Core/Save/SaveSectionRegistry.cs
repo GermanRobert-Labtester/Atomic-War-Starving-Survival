@@ -147,6 +147,7 @@ namespace Ashfall.Core.Save
             new("shelter_decor", "SaveShelterDecor", "SetupShelterDecor", "shelter", "Room decor placements, memorial plaques, and localized morale items", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("shelter_atmosphere", "SaveShelterAtmosphere", "SetupShelterAtmosphere", "shelter", "Plan 220 — shelter composite atmosphere, ambiance profile, and environmental facets", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("shelter_noise", "SaveShelterAtmosphere", "SetupShelterAtmosphere", "shelter", "Plan 205 — shelter acoustic noise, room soundproofing, and quiet hours", LifecycleGroup: ExpandedShelterLifecycleGroup),
+<<<<<<< main
             new("hidden_agenda", "SaveHiddenAgenda", "SetupHiddenAgenda", "survivors", "Plan 132 — survivor hidden agendas, secret motivations, clue discovery, and confrontation arcs", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("shelter_reputation", "SaveShelterReputation", "SetupShelterReputation", "shelter", "Plan 207 — shelter reputation, notoriety, public tags, and external perception", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("propaganda_campaigns", "SavePropaganda", "SetupPropaganda", "shelter", "Plan 168 — propaganda messages, multi-day campaigns, detection, and morale warfare", LifecycleGroup: ExpandedShelterLifecycleGroup),
@@ -159,6 +160,8 @@ namespace Ashfall.Core.Save
             new("relationship_decay", "SaveRelationshipDecay", "SetupRelationshipDecay", "social", "Plan 182 — survivor pair bond decay, interaction tracking, and social drift", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("survivor_roles", "SaveSurvivorRoles", "SetupSurvivorRoles", "survivors", "Plan 195 — survivor specialization roles: identity, earned practice XP, level progression, and bonus readout", LifecycleGroup: ExpandedShelterLifecycleGroup),
             new("clothing_warmth", "SaveClothingWarmth", "SetupClothingWarmth", "inventory", "Plan 142 — equipped clothing layers, gear condition, wetness, and cold-loss mitigation", LifecycleGroup: ExpandedShelterLifecycleGroup),
+=======
+>>>>>>> origin/main
             new("survivor_social", "SaveSurvivorSocial", "SetupSurvivorSocial", "social", "Leadership, friction, ration conflict, trauma bonds, skill atrophy"),
             new("morale_contagion", "SaveMoraleContagion", "SetupMoraleContagion", "social", "Flagship XI Plan 154 — morale contagion channels, breakdowns, social isolation, schism ledger, HopeBeacon installation"),
             new("pathogen_strains", "SavePathogenStrains", "SetupPathogenStrains", "medical", "Flagship XI Plan 155 — fictional strain layer: cure projects and unlocked cures"),
@@ -519,6 +522,7 @@ new("genealogy", "SaveGenealogy", "SetupGenealogy", "survivors", "Plan 217 — s
                 { "shelter_decor", "shelter_decor_save.json" },
                 { "shelter_atmosphere", "shelter_atmosphere_save.json" },
                 { "shelter_noise", "shelter_noise_save.json" },
+<<<<<<< main
                 { "hidden_agenda", "hidden_agenda_save.json" },
                 { "shelter_reputation", "shelter_reputation_save.json" },
                 { "propaganda_campaigns", "propaganda_save.json" },
@@ -529,6 +533,8 @@ new("genealogy", "SaveGenealogy", "SetupGenealogy", "survivors", "Plan 217 — s
                 { "internal_communication", "internal_communication_save.json" },
                 { "death_legacy", "death_legacy_save.json" },
                 { "relationship_decay", "relationship_decay_save.json" },
+=======
+>>>>>>> origin/main
                 { "survivor_social", "survivor_social_save.json" },
                 { "morale_contagion", "morale_contagion_save.json" },
                 { "pathogen_strains", "pathogen_strains_save.json" },

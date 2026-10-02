@@ -168,6 +168,7 @@ namespace Ashfall.Core.Shelter
         public IReadOnlyList<RoomAcousticProfile> RoomProfiles => _state.RoomProfiles;
         public IReadOnlyList<NoiseEvent> Events => _state.Events;
         public ShelterNoiseState State => _state;
+<<<<<<< main
 
         private readonly Dictionary<string, NoiseSourceDef> _sourceDefs =
             new Dictionary<string, NoiseSourceDef>(StringComparer.OrdinalIgnoreCase);
@@ -232,6 +233,8 @@ namespace Ashfall.Core.Shelter
             "high" => NoiseFrequency.High,
             _ => NoiseFrequency.Medium
         };
+=======
+>>>>>>> origin/main
 
         public ShelterNoiseSystem(ShelterNoiseState? state = null)
         {

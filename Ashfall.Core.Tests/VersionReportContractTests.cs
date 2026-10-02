@@ -197,6 +197,7 @@ namespace Ashfall.Core.Tests
             // Plan 157 added grain_milling_archive.
             // Plan 159 added leatherwork_archive.
             // Plan 143 added narrative_questlines.
+<<<<<<< main
             // B5–B8 Phase 6 and subsequent registered sections are included;
             // VersionReport is the authority for the current count.
             // Measured 2026-09-26 (Quad Package L gate-seal): the registered
@@ -205,6 +206,15 @@ namespace Ashfall.Core.Tests
             // pins are refreshed to that measured truth rather than left at the
             // stale 261/267 pair so they keep naming the real inventory.
             Assert.Equal(309, envelopes.Count);
+=======
+            // B5–B8 Phase 6 added deep_well (pins were already stale at 186/180
+            // before this package — live registry was 190; bumped to the true count).
+            // D1 drift rematch 2026-09-17: the live registry advanced by one
+            // further unversioned checksum section since that pin (VersionReport
+            // is the authority; pins track its current output).
+            // 2026-09-20: Plan 220/205 +2 checksum envelopes (188 → 190).
+            Assert.Equal(190, envelopes.Count);
+>>>>>>> origin/main
             foreach (var envelope in envelopes)
             {
                 Assert.Null(envelope.Version);
@@ -217,7 +227,11 @@ namespace Ashfall.Core.Tests
         {
             string inventory = VersionReport.FormatPersistenceInventory();
 
+<<<<<<< main
             Assert.Contains("Save Persistence Inventory (315 sections: 6 versioned codecs, 309 checksum envelopes):", inventory);
+=======
+            Assert.Contains("Save Persistence Inventory (196 sections: 6 versioned codecs, 190 checksum envelopes):", inventory);
+>>>>>>> origin/main
             Assert.Contains("holdfast", inventory);
             Assert.Contains("dose_ledger", inventory);
             Assert.Contains("journal", inventory);

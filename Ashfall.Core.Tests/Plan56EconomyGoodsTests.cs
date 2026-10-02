@@ -45,8 +45,17 @@ namespace Ashfall.Core.Tests
         [Fact]
         public void Catalog_reaches_the_51_good_breadth_target()
         {
+<<<<<<< main
             // Plan 56 follow-up: 40 baseline + 8 category-fill goods + 2
             // trade-parity goods + the current crop-roster oilseed good.
+=======
+            // Plan 56 follow-up: 40 + 8 (documents/weapons/contraband/misc
+            // category fill) under the revised count target = 48. D1 drift
+            // rematch: Wave 8 Plan 22 trade parity added `cloth` +
+            // `item_air_filter_hepa` to economy_goods.json (48 -> 50).
+            // 2026-09-19: Crop Roster Phase 2 added `crop_oilseed` (50 -> 51);
+            // breadth target tracks the shipped catalog.
+>>>>>>> origin/main
             var (_, goods) = Load();
             Assert.Equal(51, goods.Count);
         }

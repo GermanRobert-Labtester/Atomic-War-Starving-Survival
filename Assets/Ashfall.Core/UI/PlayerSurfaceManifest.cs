@@ -61,7 +61,10 @@ namespace Ashfall.Core.UI
             "colony_operations", "ideological_mediation_desk",
             "regional_treaty", "vinyl_morale", "wildlife_trapping", "excavation", "apprenticeship",
             "caregiving", "shelter_thermal", "shelter_schedule", "shelter_decor", "shelter_atmosphere", "autopsy_report", "waystation_network",
+<<<<<<< main
             "shelter_operations",
+=======
+>>>>>>> origin/main
             "chemical_dependency", "sump_flooding", "decontamination", "kitchen_nutrition",
             "equipment_condition", "library_study", "archive_desk", "contractor_roster",
             "mental_health_crisis", "phantom_memory", "traveling_caravan", "shelter_barter", "medical_ward",

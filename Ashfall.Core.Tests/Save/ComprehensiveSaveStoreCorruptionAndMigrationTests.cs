@@ -287,6 +287,7 @@ namespace Ashfall.Core.Tests.Save
             // Plan 210 added sanitation; Plan 211 added black_market.
             // B5–B8 expansion added deep_well + water_condenser (Plans 64–67 flagship, §9.8).
             // Plan 18A added the dedicated echoes section.
+<<<<<<< main
             // ORPHAN-SEAL-PRIORITY-W1 sealed twelve authorities (survivor_autonomy …
             // faction_covert_ops); Plans 38/39 added commitment + session_durability;
             // Plans 46/42 added playable_metrics + survivor_voice; Plan 54 added
@@ -334,6 +335,13 @@ namespace Ashfall.Core.Tests.Save
             var keys = SaveSectionRegistry.SectionKeys;
             Assert.Equal(315, keys.Count);
 
+=======
+            // 2026-09-20: Plan 220/205 enrolled shelter_atmosphere + shelter_noise
+            // (194 → 196). Pins track SaveSectionRegistry.All.
+            Assert.Equal(196, SaveSectionRegistry.All.Count);
+            var keys = SaveSectionRegistry.SectionKeys;
+            Assert.Equal(196, keys.Count);
+>>>>>>> origin/main
         }
 
     }

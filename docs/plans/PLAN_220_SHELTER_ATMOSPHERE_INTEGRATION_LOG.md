@@ -1,5 +1,6 @@
 # Plan 220 & Plan 205 Integration Log — Shelter Atmosphere & Noise Discipline
 
+<<<<<<< main
 ## 0. Framing — The Air and the Noise (editorial polish pass — commentary only)
 
 *(Post-hoc, non-contractual editorial block; the recorded log remains the authority.)*
@@ -13,6 +14,8 @@ inside them, whether or not they were consulted.
 - **Air and sound are the two systems nobody notices until they fail** — which is exactly why
   they deserve owners.
 
+=======
+>>>>>>> origin/main
 Date: 2026-09-19
 Status: Implemented and Verified (Sealed)
 
@@ -77,6 +80,7 @@ This log records the full, end-to-end integration of Plan 220 (`C1[42]`: Shelter
 - `python3 scripts/ci/generate-architecture-map.py`: **196 subsystems mapped with 100% mechanical evidence (PASS)**
 - `python3 scripts/ci/generate-docs-index.py --check`: **OK: Master docs index is up to date (PASS)**
 - `git diff --check`: **Clean, 0 errors**
+<<<<<<< main
 
 
 
@@ -81874,3 +81878,5 @@ namespace Ashfall.Core.Tests.UltraLowBackgroundMetrology
 | **Radon Suppression** | Cryogenic charcoal trapping to `< 0.05 Bq/m^3` | Multi-stage chilled adsorption reducing radon by `> 99.9%` |
 | **Gamma Spectroscopy** | High-Purity Germanium (`HPGe`) with archaic lead shield| `FWHM = 1.85 keV` at 1.33 MeV, French/Roman lead shield |
 | **Subterranean Safeguards**| Precision radiological screening of holdfast water & food| Currie `MDA < 0.005 Bq/kg` for trace actinide contamination |
+=======
+>>>>>>> origin/main

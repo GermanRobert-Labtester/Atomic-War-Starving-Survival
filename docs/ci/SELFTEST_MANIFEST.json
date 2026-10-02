@@ -1,8 +1,13 @@
 {
   "schema_version": "1.0.0",
   "description": "Machine-readable manifest of all registered self-tests, UI tests, and diagnostic gates in ASHFALL",
+<<<<<<< main
   "total_tests": 318,
   "headless_test_count": 316,
+=======
+  "total_tests": 127,
+  "headless_test_count": 125,
+>>>>>>> origin/main
   "tests": [
     {
       "test_id": "7_day_smoke_selftest",

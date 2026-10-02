@@ -1045,7 +1045,11 @@
       "owner": "core-architecture",
       "classification": "HOST_REQUIRED",
       "status": "BOUND",
+<<<<<<< main
       "observed_caller_count": 326,
+=======
+      "observed_caller_count": 266,
+>>>>>>> origin/main
       "observed_callers": [
         "src/Audio/AudioConditionHostBridge.cs",
         "src/Audio/AudioManager.cs",
@@ -1122,7 +1126,10 @@
         "src/Main.RunFlatTire.cs",
         "src/Main.Sanitation.cs",
         "src/Main.ShelterAtmosphere.cs",
+<<<<<<< main
         "src/Main.ShelterBarter.Integration.cs",
+=======
+>>>>>>> origin/main
         "src/Main.ShelterBatch3.cs",
         "src/Main.ShelterInfrastructure.cs",
         "src/Main.ShelterOperations.cs",
@@ -1767,7 +1774,11 @@
       "owner": "core-architecture",
       "classification": "HOST_REQUIRED",
       "status": "BOUND",
+<<<<<<< main
       "observed_caller_count": 326,
+=======
+      "observed_caller_count": 266,
+>>>>>>> origin/main
       "observed_callers": [
         "src/Audio/AudioConditionHostBridge.cs",
         "src/Audio/AudioManager.cs",
@@ -1844,7 +1855,10 @@
         "src/Main.RunFlatTire.cs",
         "src/Main.Sanitation.cs",
         "src/Main.ShelterAtmosphere.cs",
+<<<<<<< main
         "src/Main.ShelterBarter.Integration.cs",
+=======
+>>>>>>> origin/main
         "src/Main.ShelterBatch3.cs",
         "src/Main.ShelterInfrastructure.cs",
         "src/Main.ShelterOperations.cs",
@@ -2109,7 +2123,11 @@
       "owner": "core-architecture",
       "classification": "HOST_REQUIRED",
       "status": "BOUND",
+<<<<<<< main
       "observed_caller_count": 326,
+=======
+      "observed_caller_count": 266,
+>>>>>>> origin/main
       "observed_callers": [
         "src/Audio/AudioConditionHostBridge.cs",
         "src/Audio/AudioManager.cs",
@@ -2186,7 +2204,10 @@
         "src/Main.RunFlatTire.cs",
         "src/Main.Sanitation.cs",
         "src/Main.ShelterAtmosphere.cs",
+<<<<<<< main
         "src/Main.ShelterBarter.Integration.cs",
+=======
+>>>>>>> origin/main
         "src/Main.ShelterBatch3.cs",
         "src/Main.ShelterInfrastructure.cs",
         "src/Main.ShelterOperations.cs",
@@ -4670,7 +4691,11 @@
       "owner": "core-architecture",
       "classification": "HOST_REQUIRED",
       "status": "BOUND",
+<<<<<<< main
       "observed_caller_count": 326,
+=======
+      "observed_caller_count": 266,
+>>>>>>> origin/main
       "observed_callers": [
         "src/Audio/AudioConditionHostBridge.cs",
         "src/Audio/AudioManager.cs",
@@ -4747,7 +4772,10 @@
         "src/Main.RunFlatTire.cs",
         "src/Main.Sanitation.cs",
         "src/Main.ShelterAtmosphere.cs",
+<<<<<<< main
         "src/Main.ShelterBarter.Integration.cs",
+=======
+>>>>>>> origin/main
         "src/Main.ShelterBatch3.cs",
         "src/Main.ShelterInfrastructure.cs",
         "src/Main.ShelterOperations.cs",
@@ -7182,7 +7210,11 @@
       "owner": "verdict",
       "classification": "HOST_REQUIRED",
       "status": "BOUND",
+<<<<<<< main
       "observed_caller_count": 326,
+=======
+      "observed_caller_count": 266,
+>>>>>>> origin/main
       "observed_callers": [
         "src/Audio/AudioConditionHostBridge.cs",
         "src/Audio/AudioManager.cs",
@@ -7259,7 +7291,10 @@
         "src/Main.RunFlatTire.cs",
         "src/Main.Sanitation.cs",
         "src/Main.ShelterAtmosphere.cs",
+<<<<<<< main
         "src/Main.ShelterBarter.Integration.cs",
+=======
+>>>>>>> origin/main
         "src/Main.ShelterBatch3.cs",
         "src/Main.ShelterInfrastructure.cs",
         "src/Main.ShelterOperations.cs",

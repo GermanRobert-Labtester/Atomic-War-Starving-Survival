@@ -42,9 +42,16 @@ namespace Ashfall.Core.Tests
     /// </summary>
     public sealed class CaseFoldPolicyPinTests
     {
+<<<<<<< main
         // Observed 403 hits on 2026-09-23 (see the disposition above); allow a band.
         private const int MinOrdinalIgnoreCaseHits = 360;
         private const int MaxOrdinalIgnoreCaseHits = 470;
+=======
+        // Observed ~170 hits at audit #41 remediation; allow a band.
+        // 2026-09-19: main already at 265 (wave growth past 260); bump ceiling with disposition (audit #41).
+        private const int MinOrdinalIgnoreCaseHits = 120;
+        private const int MaxOrdinalIgnoreCaseHits = 280;
+>>>>>>> origin/main
 
         private static string RepoRoot()
         {
