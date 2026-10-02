@@ -1,5 +1,110 @@
 # ASHFALL Worktree Ownership
 
+## claim-language-policy-agent-speedups-2026-10-02 — COMPLETE / FULLY INTEGRATED
+
+User-directed language-policy + speed batch (four-language policy; prohibit
+Go/JS/TS; Rust preferred where better than C#; budget rule ≤30% tolerable,
+>30% investigate & optimize; plus the four selected follow-ups). Plan:
+`.ai/plans/integrated/tooling/INTEGRATED_language-policy-and-agent-speedups-2026-10-02.md`
+(STATUS: FULLY INTEGRATED ×3).
+
+**Exact owned paths:** `AGENTS.md` (canonical; 13 rulebooks are symlinks to it),
+`TEST_POLICY.md`, new `docs/ci/LANGUAGE_POLICY.md`, new
+`scripts/ci/language-policy-gate.py`, `scripts/ci/generate-docs-index.py`,
+`docs/INDEX.md`, `docs/ci/TIMING_BASELINE.json`, `scripts/ci/timing-budget.py`,
+`docs/ci/TIMING_BUDGET.md`, `scripts/ci/run-gates.py` (only if not hot), this
+claim, `.ai/state.md`.
+
+**Not claimed:** `tools/rstools/**` (delegated Stage 2 agent),
+`tools/gotools/**`, `docs/ci/CI_GATE_MANIFEST.json`, `docs/ci/GATE_INVENTORY.md`,
+`.github/**`, game/Core/data paths.
+
+**Status:** **COMPLETE / FULLY INTEGRATED 2026-10-02.** Four-language policy
+encoded in `AGENTS.md` + `TEST_POLICY.md` + `docs/ci/LANGUAGE_POLICY.md`; 13
+rulebooks are symlinks so all update at once. `language-policy-gate.py` PASS on
+the repo and FAIL (exit 1) on synthetic `.ts`/`.js`. Budget rule = 30 %
+(strictly `>` flagged); `run-gates.py` now emits a non-fatal `[TIMING BUDGET]`
+suspicion warning (verified 1.59× flagged, 0.94× not; `--check-only` still
+PASS 73 gates). Coordination ledgers excluded from `docs/INDEX.md`
+(`WORKTREE_OWNERSHIP.md` refs 0); `docs_index_drift --check` PASS (4159 docs).
+Paths released. Rust Stage 2 runs under a separate claim/agent. No full suite.
+
+## claim-repo-wide-6-loop-sweep-2026-10-02 — COMPLETE / FULLY INTEGRATED
+
+User-directed ("do 6 looping phases of find issues, repair them, harden spots
+where issues found and repeat repo wide!"). Plan:
+`.ai/plans/integrated/maintenance/INTEGRATED_repo-wide-6-loop-sweep-2026-10-02.md`
+(STATUS: FULLY INTEGRATED). Exact owned paths: `scripts/ci/run-gates.py`,
+`scripts/ci/regen-generated-docs.sh` (new), `docs/ci/CI_GATE_MANIFEST.json`,
+`docs/ci/GATE_INVENTORY.md`, `docs/INDEX.md`, `docs/ui/UI_DESIGN_MAP.md`,
+`docs/ui/ui_design_map.json`, and the regenerated
+`docs/saves/SAVE_STORE_CONTRACT_MATRIX.md`,
+`docs/plans/RECENT_PLAN_INTEGRATIONS_AUDIT.md`, `assets/l10n/template.pot`; plus
+this claim, `.ai/state.md`, and `INTEGRATION_PLANS.md`. All 69 fast gates pass.
+Raised the runner upper bound to 420s for the 3-rebuild warning gate only, raised
+five under-budget gate timeouts, added two missing remediation hints, and added a
+regen helper that keeps the docs index valid. No gameplay/save/determinism
+change. **COMPLETE / FULLY INTEGRATED 2026-10-02; paths released.** No full test
+suite; no commit.
+
+## claim-agent-speedups-timing-docsindex-2026-10-02 — COMPLETE / FULLY INTEGRATED
+
+User-directed agent-speed batch ("tend to speeding up plan integration ... plan
+.md files shouldn't be all indexed ... having a reference time ... at 20-30%
+longer than usual is when suspicion should set in!"). Plan:
+`.ai/plans/integrated/tooling/INTEGRATED_agent-speedups-timing-and-docs-index-2026-10-02.md`
+(STATUS: FULLY INTEGRATED ×3; approved by user).
+
+**Exact owned paths:** `scripts/ci/generate-docs-index.py`, `docs/INDEX.md`,
+new `docs/ci/TIMING_BASELINE.json`, new `scripts/ci/timing-budget.py`, new
+`docs/ci/TIMING_BUDGET.md`, this claim, `.ai/state.md`.
+
+**Not claimed / untouched:** `scripts/ci/run-gates.py`,
+`docs/ci/CI_GATE_MANIFEST.json`, `docs/ci/GATE_INVENTORY.md`, `tools/**`,
+`.github/**`.
+
+**Status:** **COMPLETE / FULLY INTEGRATED 2026-10-02.** Docs indexed 5955→4160
+(plan corpora excluded); `docs/INDEX.md` plan rows 2816→0; `docs_index_drift`
+215 s (over the 180 s cap) → 67–126 s and **PASS**; `docs/INDEX.md` diff 16+/2827−.
+`timing-budget.py` verified (OK / SUSPICIOUS+exit 1 at 1.59× / NO-REFERENCE /
+`--json` / `update`); seed references recorded (build_core_tests 41.8 s,
+docs_index_check 126 s, plan_register_check 32 s). A slower scanner experiment
+(0.64×) was measured and reverted — only the plan-exclusion change remains.
+Paths released. No full suite; no commit.
+
+**Follow-ups (not claimed here):** wire `timing-budget.py` into
+`run-gates.py`/CI (deferred — those files were concurrently hot); cache
+per-file scan results to push `docs_index_check` under ~30 s; a one-command
+plan-closeout helper in the Rust tool suite.
+
+## claim-rust-port-gotools-2026-10-02 — STAGE 1 COMPLETE (plan not yet integrated)
+
+User-directed ("Please remove any .go code and either convert to rust or
+remove!"; disambiguated to "Staged full Rust port"). Plan:
+`.ai/plans/rust-port-gotools-2026-10-02.md` (STATUS: APPROVED BY USER). This is
+a user-authorized override of the Go-Only Tool Creation Policy in
+`QWEN.md`/`AGENTS.md`/`TEST_POLICY.md`.
+
+**Exact owned paths (Stage 1, this turn):** new `tools/rstools/` — `Cargo.toml`,
+`README.md`, `.gitignore`, `crates/ashfall-dev/Cargo.toml`,
+`crates/ashfall-dev/src/{main.rs,selector.rs,runner.rs,scopedtest.rs}`, and the
+generated `tools/rstools/Cargo.lock`; this claim, `.ai/plans/rust-port-gotools-2026-10-02.md`,
+and `.ai/state.md`.
+
+**Not claimed / untouched in Stage 1:** all of `tools/gotools/**`, `bin/**`,
+`docs/ci/CI_GATE_MANIFEST.json`, `scripts/ci/run-gates.py`, the pre-commit hook,
+and `QWEN.md`/`AGENTS.md`/`TEST_POLICY.md` — those change only in the Stage 4
+cutover after per-command parity is clean. Additive-only this turn so a
+concurrent `tools/gotools` editor cannot conflict.
+
+**Status:** **Stage 1 COMPLETE 2026-10-02.** `select-tests --json` byte-identical
+to Go; `run-tasks -json` structurally identical (timeout path 124/`timed_out`);
+`run-scoped-tests --dry-run` and the full-test ban byte-identical; `cargo build
+--release` 0 warnings, `cargo test` 18/18. Reproduced-and-flagged upstream
+`TrimSpace(line)[3:]` path-mangling quirk (not fixed). **Plan NOT fully
+integrated (Stages 2–4 pending) and NOT archived**; Go toolchain untouched and
+still authoritative. No full suite; no commit.
+
 ## claim-test-build-speedups-2026-10-02 — COMPLETE / FULLY INTEGRATED
 
 User-directed ("find 5 tasks that can help speed up building and testing the game

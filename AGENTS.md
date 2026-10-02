@@ -219,18 +219,38 @@ Wave 5 details: `docs/plans/PARTIAL_2_WAVE5_FULL_INTEGRATION_IMPLEMENTATION_LOG.
 
 ## TOOLS AND CHANGE HYGIENE
 
-- **Strict Go-Only Tool Creation Policy (8 Core Types):** Of the following 8 tool types, **ONLY `.go` implementations (integrated into `tools/gotools` / `bin/ashfall-dev`) can be created or modified by AI agents**. AI agents must NEVER create Python or shell scripts for these 8 concerns:
-  1. Repository file indexer
-  2. Changed-file / changed-test selector
-  3. Test-result parser
-  4. Fast JSON/YAML validator
-  5. Save-file scanner
-  6. Asset manifest builder
-  7. Parallel subprocess/task runner
-  8. LLM API proxy/router
-- **Tooling Language Policy:** For persistent or repeatedly invoked development tools, prefer Go (`bin/ashfall-dev`). Use Python only when a required Python-only AI, data, or testing library provides a clear benefit. Use Rust for CPU-heavy, memory-sensitive simulation, validation, parsing, or fuzzing.
-- **Process Spawning Rule:** Do not launch a Python process for trivial filesystem, JSON, process-management, or test-selection tasks when an existing Go/Rust utility can do the job.
-- **Performance Verification:** Measure peak RSS and total elapsed time before rewriting a working tool.
+- **Language Policy — four languages only:** Permitted languages are **C#
+  (primary), Rust (secondary), Python (tertiary: AI/automation/tools/prototyping
+  only), and GDScript (small Godot scene/editor glue only)**. Every other
+  programming language is prohibited — including **Go, JavaScript, TypeScript,
+  C, C++, Java, Kotlin, Swift, Objective-C, Lua, Ruby, PHP, Dart, Zig, Haskell,
+  Perl, and VB** — unless the user explicitly changes this policy. Config/data
+  formats (JSON, YAML, TOML, XML, INI, engine scene/resource formats) are not
+  programming languages and are allowed. Full detail: `docs/ci/LANGUAGE_POLICY.md`.
+  Enforced by `scripts/ci/language-policy-gate.py`.
+- **Rust is preferred over C# where it is genuinely better:** when a component
+  would plausibly work better in Rust — tools, long-running/heavy checks,
+  validators, parsers, fuzzers, deterministic or CPU-heavy systems, large
+  subsystems, fast-startup CLIs — implement it in Rust, not C#. Rust is not a
+  default for ordinary gameplay; C# stays primary for game logic and systems.
+- **Long-running checks belong in Rust:** any indexer, validator, scanner, or
+  check that takes more than a few seconds must be implemented in Rust and
+  optimized (fast startup, predictable memory), not left in Python or Go. Python
+  is allowed only for AI/automation/tools/prototyping and must be tightly scoped
+  and timeout-bounded.
+- **Go is retired:** `tools/gotools` / `bin/ashfall-dev` are a **transitional
+  toolchain being ported to Rust** (`tools/rstools`, binary `ashfall-dev`) under
+  `.ai/plans/rust-port-gotools-2026-10-02.md`. Do not add, extend, or restore Go
+  code. When a Rust subcommand reaches parity, cut callers over and delete the Go
+  source (Stage 4). New tooling is Rust or C#.
+- **Process Spawning Rule:** Do not launch a Python or Go process for trivial
+  filesystem, JSON, process-management, or test-selection tasks when an existing
+  Rust (or C#) utility can do the job.
+- **Rust performance verification:** measure peak RSS and total elapsed time
+  before rewriting a working tool, and keep the reference-time budget rule
+  (`docs/ci/TIMING_BUDGET.md`): a stage **≤ 30 % over** its reference is
+  tolerable; **> 30 % means investigate and optimize the test**, never simply
+  raise its budget.
 - Prefer repository scripts and current APIs over ad-hoc replacement tooling.
 - Do not modify generated outputs by hand; run the owning generator and its
   `--check` mode when one exists.

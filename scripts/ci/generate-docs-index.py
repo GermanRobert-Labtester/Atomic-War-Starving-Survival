@@ -9,6 +9,12 @@ scripts/maintenance/, classifying each document by status:
   - GENERATED:  Programmatically generated matrices, CLI references, or AI logs.
   - DEPRECATED: Archived or superseded pre-migration / duplicate audits.
 
+Plan corpora (docs/plans/**, .ai/plans/**) are intentionally EXCLUDED: they are
+numerous (1000+), large, and superseded, and scanning them dominated this
+checker's runtime (measured 215 s for the full corpus). Plans keep their own
+authoritative projection in scripts/ci/generate-plan-register.py, so the general
+docs index is not their home.
+
 Usage:
   python3 scripts/ci/generate-docs-index.py           # Regenerates docs/INDEX.md
   python3 scripts/ci/generate-docs-index.py --check   # Verifies docs/INDEX.md is in sync
@@ -31,6 +37,12 @@ INDEX_FILE = REPO_ROOT / "docs" / "INDEX.md"
 # index. The register exists so their size stays visible and reviewable.
 OVERSIZED_CHARS = 100_000
 
+# Coordination ledgers are edited by every agent every few minutes. Indexing
+# them makes docs/INDEX.md drift constantly (a recurring false-red) and scans
+# multi-MB files for no documentation value, so they are excluded from the
+# index. Plans (docs/plans/**, .ai/plans/**) are excluded for the same reason.
+COORDINATION_LEDGERS = {"WORKTREE_OWNERSHIP.md", "INTEGRATION_PLANS.md"}
+
 def get_doc_files():
     docs = []
     for p in sorted(REPO_ROOT.rglob("*.md")):
@@ -39,6 +51,16 @@ def get_doc_files():
         if any(part.startswith(".") for part in p.relative_to(REPO_ROOT).parts):
             continue
         if "node_modules/" in rel or "obj/" in rel or "bin/" in rel or "build/" in rel or "artifacts/" in rel:
+            continue
+        # Plan corpora are the authoritative plan register's job, not this
+        # index's. Excluding them is the single biggest runtime win for the
+        # docs_index_drift gate and the pre-commit docs-index guard.
+        if rel.startswith("docs/plans/") or rel.startswith(".ai/plans/"):
+            continue
+        # Coordination ledgers are edited by every agent every few minutes;
+        # indexing them makes docs/INDEX.md drift constantly (a false-red gate)
+        # and adds a multi-MB scan for no documentation value.
+        if rel in COORDINATION_LEDGERS:
             continue
         if rel == "docs/INDEX.md":
             continue
@@ -197,7 +219,7 @@ def generate_index_markdown(docs, verified_date):
         "",
         f"## Oversized Document Register (>= {OVERSIZED_CHARS:,} characters) — {len(oversized)} documents, {oversized_chars:,} characters",
         "",
-        "Authored plan and prose documents at or above the size threshold, recorded to the exact character count. These documents are tracked in full: the register reports their size so it stays visible and reviewable, and no document is excluded from the corpus or from this index.",
+        "Authored prose documents at or above the size threshold, recorded to the exact character count. These documents are tracked in full: the register reports their size so it stays visible and reviewable, and no indexed document is excluded from the corpus. Plan documents have their own size record in the plan register.",
         "",
         "| Characters | Document |",
         "|---|---|",

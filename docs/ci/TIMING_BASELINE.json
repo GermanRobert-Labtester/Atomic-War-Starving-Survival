@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "description": "Reference wall-clock durations for ASHFALL builds, gates, and audits. Checked by scripts/ci/timing-budget.py: a stage running 30% or less over its reference is tolerable; strictly more than default_tolerance_ratio (1.30 = 30% over) is flagged SUSPICIOUS and means investigate and optimize the test, not raise its budget. References are deliberately authored/recorded values from a quiet-system run, never an automatically-updated live ledger; a single noisy sample must not silently rebase them.",
+  "default_tolerance_ratio": 1.30,
+  "budgets": {
+    "docs_index_check": {
+      "reference_seconds": 126.0,
+      "recorded": "2026-10-02",
+      "note": "scripts/ci/generate-docs-index.py --check. Measured 215s before the plan corpora (docs/plans/**, 1472 files) were excluded; ~126s after; coordination ledgers (WORKTREE_OWNERSHIP.md, INTEGRATION_PLANS.md) also excluded. Load-sensitive \u2014 a concurrent dotnet/godot build can push this well past the reference."
+    },
+    "plan_register_check": {
+      "reference_seconds": 32.0,
+      "recorded": "2026-10-02",
+      "note": "scripts/ci/generate-plan-register.py --check."
+    },
+    "build_core_tests": {
+      "reference_seconds": 41.82,
+      "note": "recorded from a measured run; re-record on a quiet system if load made it unrepresentative",
+      "recorded": "2026-10-02"
+    }
+  }
+}

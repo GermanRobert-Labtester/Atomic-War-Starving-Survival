@@ -34,7 +34,11 @@ REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent.parent
 DEFAULT_MANIFEST = REPO_ROOT / "docs" / "ci" / "CI_GATE_MANIFEST.json"
 DEFAULT_QUARANTINE = REPO_ROOT / "scripts" / "ci" / "quarantine.json"
 QUARANTINE_MAX_DAYS = 14
-MAX_GATE_TIMEOUT_SECONDS = 180
+MAX_GATE_TIMEOUT_SECONDS = 420
+# Upper bound for a single gate. compiler_warning_baseline rebuilds three
+# projects (-t:Rebuild each: Core.Tests ~125s, Core ~58s, host ~140s under load),
+# so it is structurally >180s. Other gates declare <=180s and are unaffected.
+FAST_TIER_DEFAULT_TIMEOUT_SECONDS = 180
 
 
 def load_quarantine(path=DEFAULT_QUARANTINE):
@@ -360,6 +364,44 @@ def write_failure_artifact(artifact_path, failed_gates, total_gates, start_time,
 
     with open(artifact_path, "w", encoding="utf-8") as f:
         f.write("\n".join(lines))
+
+
+def check_timing_budget(results):
+    """Non-fatal: flag gates running >30% over their recorded reference.
+
+    A stage <=30% over is tolerable; >30% means investigate and optimize the
+    test, not raise its budget (docs/ci/TIMING_BUDGET.md). Never changes the
+    exit code — this is a warning only.
+    """
+    baseline_path = REPO_ROOT / "docs" / "ci" / "TIMING_BASELINE.json"
+    if not baseline_path.exists():
+        return
+    try:
+        baseline = json.loads(baseline_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return
+    budgets = baseline.get("budgets", {})
+    default_tol = float(baseline.get("default_tolerance_ratio", 1.30))
+    suspicious = []
+    for row in results:
+        gid = row.get("gate_id")
+        secs = row.get("duration")
+        entry = budgets.get(gid) or {}
+        ref = entry.get("reference_seconds")
+        if not gid or not isinstance(secs, (int, float)):
+            continue
+        if not isinstance(ref, (int, float)) or ref <= 0:
+            continue
+        tol = float(entry.get("tolerance_ratio") or default_tol)
+        ratio = float(secs) / float(ref)
+        if ratio > tol:
+            suspicious.append((gid, float(secs), float(ref), ratio))
+    if suspicious:
+        print("\n[TIMING BUDGET] SUSPICIOUS: gate(s) more than 30% over reference "
+              "— investigate and optimize, do not raise the budget:")
+        for gid, secs, ref, ratio in suspicious:
+            print(f"  ! {gid}: {secs:.2f}s / ref {ref:.2f}s = {ratio:.2f}x")
+        print("  Detail: docs/ci/TIMING_BUDGET.md")
 
 
 def resolve_dependencies(all_gates, selected):
@@ -921,6 +963,9 @@ def main():
             print(f"[Artifact] Wrote failure markdown report to {art_path}")
         elif art_path.exists():
             art_path.unlink()
+
+    # Non-fatal reference-time budget check (never changes the exit code)
+    check_timing_budget(results)
 
     # Final summary banner
     print("\n=============================================================================")

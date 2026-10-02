@@ -82,13 +82,27 @@ and point to stored logs; do not paste large raw test output into handoffs.
 
 ## Tooling Authority for Testing and Development
 
-- AI agents must execute and create tools for the 8 core development tasks strictly in Go (`.go` via `bin/ashfall-dev` / `tools/gotools`):
-  1. Repository file indexer (`ashfall-dev index`)
-  2. Changed-file / changed-test selector (`ashfall-dev select-tests`)
-  3. Test-result parser (`ashfall-dev parse-results`)
-  4. Fast JSON/YAML validator (`ashfall-dev validate-json`)
-  5. Save-file scanner (`ashfall-dev scan-saves`)
-  6. Asset manifest builder (`ashfall-dev build-manifest`)
-  7. Parallel subprocess/task runner (`ashfall-dev run-tasks`)
-  8. LLM API proxy/router (`ashfall-dev llm-proxy`)
-- Do not launch Python processes for these 8 concerns when Go tooling is authoritative.
+- **Language policy:** C# (primary), Rust (secondary), Python (tertiary:
+  AI/automation/tools/prototyping), GDScript (small Godot glue). Every other
+  language is prohibited — **Go, JavaScript, TypeScript, C, C++, Java, Kotlin,
+  Swift, Lua, Ruby, PHP, Dart, Zig, and the rest**. Detail:
+  `docs/ci/LANGUAGE_POLICY.md`; enforced by
+  `scripts/ci/language-policy-gate.py`.
+- **Tools and long-running checks are Rust-first.** The 8 core development
+  tasks — repository file indexer, changed-file/changed-test selector,
+  test-result parser, fast JSON/YAML validator, save-file scanner, asset
+  manifest builder, parallel subprocess/task runner, LLM API proxy/router — are
+  implemented in Rust (`tools/rstools`, binary `ashfall-dev`). The transitional
+  Go toolchain at `tools/gotools` / `bin/ashfall-dev` is being ported and must
+  not be extended (`.ai/plans/rust-port-gotools-2026-10-02.md`).
+- **Python** is for AI/agent orchestration, automation, tools, prototyping, and
+  data/report processing only; it must be tightly scoped and every subprocess
+  must carry a timeout. Do not launch Python (or Go) for trivial filesystem,
+  JSON, process-management, or test-selection work when a Rust or C# utility can
+  do it.
+- **Rust is preferred over C#** wherever a component would work better in Rust
+  (performance, memory, isolation, determinism, fast startup, or a long-running
+  check).
+- **Reference-time budget:** see `docs/ci/TIMING_BUDGET.md` — ≤ 30 % over a
+  recorded reference is tolerable; **> 30 % means investigate and optimize the
+  test**, never just raise its budget.
