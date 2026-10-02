@@ -2410,6 +2410,18 @@ def scan_codebase_symbols():
         if ".UiTests." not in p.name
         and "SelfTest" not in p.name
         and "Tests" not in p.name)
+    # Single-pass inversion: blank the declarations for ALL setup methods once
+    # per file and scan each file once, instead of re-compiling a regex and
+    # re-transforming the whole file for every (file, setup_method) pair. The
+    # previous nested loop did ~96k whole-file transforms (~795 MB re-scanned).
+    # Blanking with spaces (never removing newlines) preserves byte offsets, so
+    # line numbers and results are identical.
+    setup_alt = "|".join(re.escape(m) for m in sorted(setup_methods))
+    declaration_pattern = re.compile(
+        rf"(?m)^[ \t]*(?:(?:public|protected|private|internal|static|virtual|override|async|sealed|partial|new|extern|unsafe)\s+)+"
+        rf"[\w.<>,?\[\]]+\s+(?:{setup_alt})\s*\([^;\n]*"
+    ) if setup_methods else None
+    call_pattern = re.compile(rf"\b({setup_alt})\s*\(") if setup_methods else None
     for p in main_sources:
         content = p.read_text(encoding="utf-8", errors="ignore")
         content = re.sub(r"/\*.*?\*/|//[^\n]*", "", content, flags=re.DOTALL)
@@ -2418,15 +2430,18 @@ def scan_codebase_symbols():
             lambda m: "\n" * m.group(0).count("\n"),
             content)
         rel_path = p.relative_to(REPO_ROOT).as_posix()
-        for setup_method in setup_methods:
-            declaration = re.compile(
-                rf"(?m)^[ \t]*(?:(?:public|protected|private|internal|static|virtual|override|async|sealed|partial|new|extern|unsafe)\s+)+"
-                rf"[\w.<>,?\[\]]+\s+{re.escape(setup_method)}\s*\([^;\n]*"
-            )
-            source_without_declaration = declaration.sub("", content)
-            call_pattern = re.compile(rf"\b{re.escape(setup_method)}\s*\(")
-            for match in call_pattern.finditer(source_without_declaration):
-                line_number = source_without_declaration.count("\n", 0, match.start()) + 1
+        if declaration_pattern is not None:
+            spans = [m.span() for m in declaration_pattern.finditer(content)]
+            if spans:
+                chars = list(content)
+                for start, end in spans:
+                    for i in range(start, end):
+                        if chars[i] != "\n":
+                            chars[i] = " "
+                content = "".join(chars)
+            for match in call_pattern.finditer(content):
+                setup_method = match.group(1)
+                line_number = content.count("\n", 0, match.start()) + 1
                 setup_calls.setdefault(setup_method, []).append({
                     "file": rel_path,
                     "line": line_number

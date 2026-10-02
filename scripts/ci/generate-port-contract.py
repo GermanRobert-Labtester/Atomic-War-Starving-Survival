@@ -99,13 +99,20 @@ def load_src_texts():
     return src_texts
 
 
-def find_callers_in_src(method_name: str, src_texts: dict):
-    pattern = re.compile(r"\b" + re.escape(method_name) + r"\s*\(")
-    callers = []
+def build_called_index(src_texts: dict):
+    """Map called identifier -> src files that call it (`name(`), built once."""
+    call_rx = re.compile(r"\b([A-Za-z_]\w*)\s*\(")
+    index = {}
     for rel_path, text in src_texts.items():
-        if pattern.search(text):
-            callers.append(rel_path)
-    return sorted(callers)
+        for name in set(call_rx.findall(text)):
+            index.setdefault(name, []).append(rel_path)
+    return index
+
+
+def find_callers_in_src(method_name: str, called_index: dict):
+    # Single-pass inversion: look up the prebuilt index instead of running a
+    # fresh whole-file regex across every src file for every port.
+    return sorted(called_index.get(method_name, []))
 
 
 def validate_and_generate(check_mode: bool = False):
@@ -123,6 +130,7 @@ def validate_and_generate(check_mode: bool = False):
     total_seams = policy.get("total_seams", len(ports))
     core_seams = find_core_seams()
     src_texts = load_src_texts()
+    called_index = build_called_index(src_texts)
 
     errors = []
     policy_by_key = {}
@@ -150,7 +158,7 @@ def validate_and_generate(check_mode: bool = False):
         if classification not in valid_classes:
             errors.append(f"Seam '{key}' has invalid classification '{classification}'")
 
-        callers = find_callers_in_src(mname, src_texts)
+        callers = find_callers_in_src(mname, called_index)
         p["observed_callers"] = callers
 
         if classification == "HOST_REQUIRED":
