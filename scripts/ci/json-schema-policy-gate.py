@@ -31,7 +31,7 @@ def get_staged_json_files():
     try:
         res = subprocess.check_output(
             ["git", "diff", "--cached", "--name-only", "--diff-filter=ACMR"],
-            cwd=REPO_ROOT, text=True
+            cwd=REPO_ROOT, text=True, timeout=60
         )
         files = []
         for line in res.strip().splitlines():
@@ -48,7 +48,7 @@ def get_diff_json_files():
     try:
         res = subprocess.check_output(
             ["git", "diff", "HEAD", "--name-only", "--diff-filter=ACMR"],
-            cwd=REPO_ROOT, text=True
+            cwd=REPO_ROOT, text=True, timeout=60
         )
         files = []
         for line in res.strip().splitlines():

@@ -132,7 +132,7 @@ def process_batch(batch, batch_num, total_batches):
                 jpg_path = os.path.join(ART_DIR, f"{item['id']}.jpg")
                 download(s3url, png_path)
                 # Copy to assets/art as jpg
-                subprocess.run(["cp", png_path, jpg_path], check=True)
+                subprocess.run(["cp", png_path, jpg_path], check=True, timeout=60)
                 success += 1
                 print(f"  ✓ {item['id']}")
             else:

@@ -49,6 +49,7 @@ def main() -> int:
         subprocess.run(
             ["sox", "-n", "-r", "44100", "-c", "1", "-b", "16", str(path), *effect],
             check=True,
+            timeout=120,
         )
         print(f"Wrote {path}")
     return 0

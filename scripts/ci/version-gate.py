@@ -102,6 +102,7 @@ def version_changed_since_base(root: str, base_ref: str) -> bool:
             cwd=root,
             stderr=subprocess.DEVNULL,
             text=True,
+            timeout=60,
         )
     except subprocess.CalledProcessError:
         return False
@@ -134,6 +135,7 @@ def detect_schema_constant_changes(root: str, base_ref: str) -> list[str]:
             cwd=root,
             stderr=subprocess.DEVNULL,
             text=True,
+            timeout=60,
         )
     except subprocess.CalledProcessError:
         return []
@@ -152,6 +154,7 @@ def detect_schema_constant_changes(root: str, base_ref: str) -> list[str]:
                 cwd=root,
                 stderr=subprocess.DEVNULL,
                 text=True,
+                timeout=60,
             )
         except subprocess.CalledProcessError:
             continue
@@ -230,6 +233,7 @@ def run_self_test() -> int:
             subprocess.run(
                 ["git", *git_args], cwd=repo, check=True,
                 stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                timeout=60,
             )
 
         _git("init", "-q")

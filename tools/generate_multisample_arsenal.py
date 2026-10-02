@@ -34,7 +34,7 @@ def decode_mp3(filepath: pathlib.Path) -> list[float]:
         "ffmpeg", "-y", "-i", str(filepath),
         "-ar", str(SAMPLE_RATE), "-ac", "1", "-f", "f32le", "-"
     ]
-    proc = subprocess.run(cmd, capture_output=True, check=True)
+    proc = subprocess.run(cmd, capture_output=True, check=True, timeout=300)
     return [val[0] for val in struct.iter_unpack("<f", proc.stdout)]
 
 def resample_pitch(samples: list[float], factor: float) -> list[float]:

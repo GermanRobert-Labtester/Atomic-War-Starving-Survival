@@ -9,6 +9,20 @@
     <UseSharedCompilation>false</UseSharedCompilation>
     <UseRazorBuildServer>false</UseRazorBuildServer>
     <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+    <!--
+      PERF-001 — opt-in lean local build. The host is one ~616k-LOC compilation
+      (1383 src files + all of Assets/Ashfall.Core), so any single-file edit
+      recompiles the whole assembly in Roslyn (Csc measured at 112.6s of a
+      116.9s incremental build). The only deterministic, behavior-preserving
+      lever is to compile fewer files: ASHFALL_BUILD_LEAN=1 excludes the same
+      self-test/harness sources the shipping ExportRelease build already
+      excludes (measured 116.9s -> 81.5s, -27%). The default build is UNCHANGED;
+      this is for gameplay-iteration compile checks, not the test loop (which
+      needs the self-tests). The real structural fix — compiling
+      Assets/Ashfall.Core as its own assembly instead of into the host — is a
+      larger change that needs separate approval.
+    -->
+    <AshfallIncludeSelfTests Condition="'$(AshfallIncludeSelfTests)' == '' and '$(ASHFALL_BUILD_LEAN)' == '1'">false</AshfallIncludeSelfTests>
     <!-- Godot uses ExportRelease for shipping exports. Debug/ExportDebug retain
          the CLI harness; an explicit property also supports development exports. -->
     <AshfallIncludeSelfTests Condition="'$(AshfallIncludeSelfTests)' == '' and '$(Configuration)' == 'ExportRelease'">false</AshfallIncludeSelfTests>

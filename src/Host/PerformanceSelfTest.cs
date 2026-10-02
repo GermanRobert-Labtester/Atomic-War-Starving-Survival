@@ -81,12 +81,24 @@ namespace AtomicWar.GodotApp
             }
 
             // 4. Persistence gate on the 30-day workload.
+            //    Measurement quality (Phase 1 / B-06): the previous harness took
+            //    n=2 with no warmup, so the first save's JIT/first-touch cost was
+            //    reported (observed 0.57ms vs 64.6ms in one recorded run). Discard
+            //    one warmup sample (exercising both harness ops) and then measure
+            //    the checked latency >=5 times.
             using (var harnessP = BuildHarness(WorkloadProfile.Days30, platform, runtime))
             {
                 harnessP.AdvanceDays(WorkloadProfile.Days30.CampaignDays);
                 using var sessionP = new PerfSession(BuildContext(WorkloadProfile.Days30, platform, runtime));
-                sessionP.Measure(() => harnessP.MeasureSaveLatency());
-                sessionP.Measure(() => harnessP.CaptureSavePayload());
+                sessionP.Warmup(() =>
+                {
+                    harnessP.MeasureSaveLatency();
+                    harnessP.CaptureSavePayload();
+                });
+                for (int i = 0; i < measured; i++)
+                {
+                    sessionP.Measure(() => harnessP.MeasureSaveLatency());
+                }
                 var statsP = sessionP.ComputeStatistics();
                 bool passP = statsP.Median < 500;
                 results.Add(sessionP.ToResult("save_30d", passP ? "pass" : "fail"));

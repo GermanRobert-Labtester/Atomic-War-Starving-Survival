@@ -236,7 +236,7 @@ def main() -> int:
     elif args.changed:
         try:
             cmd = ["git", "diff", "--name-only", "HEAD"]
-            out = subprocess.run(cmd, cwd=REPO_ROOT, capture_output=True, text=True, check=True).stdout
+            out = subprocess.run(cmd, cwd=REPO_ROOT, capture_output=True, text=True, check=True, timeout=60).stdout
             for line in out.splitlines():
                 if line.endswith(".md") and ("plans" in line or "Next-steps" in line):
                     candidate = REPO_ROOT / line

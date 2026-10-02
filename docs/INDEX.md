@@ -1,7 +1,7 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 4159 | **Total Characters:** 4,169,290,699 | **Last Verified:** 2026-10-02
+**Total Indexed Documents:** 4159 | **Total Characters:** 4,169,298,723 | **Last Verified:** 2026-10-02
 **Oversized (>= 100,000 characters):** 2210 documents carrying 4,138,691,836 characters — tracked in full, see the register below
 
 | Status Badge | Meaning | Corpus Count |
@@ -6560,7 +6560,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`test-helpers/README.md`](../test-helpers/README.md) | 493 | **Test Helpers & Pytest Infrastructure (Python)** — This directory hosts Python-specific test infrastructure: |
 | 🟢 `CURRENT` | [`tools/README.md`](../tools/README.md) | 7,824 | **ASHFALL — Non-Runtime Tools & Utilities Catalog** — **Date:** 2026-08-27<br> |
 | 🟢 `CURRENT` | [`tools/gotools/README.md`](../tools/gotools/README.md) | 2,297 | **ASHFALL Go Tooling (`tools/gotools`)** — Persistent development/CI tooling, invoked through `bin/ashfall-dev` |
-| 🟢 `CURRENT` | [`tools/rstools/README.md`](../tools/rstools/README.md) | 2,214 | **tools/rstools — ASHFALL dev tool suite (Rust)** — Rust home of the ASHFALL development/CI tool suite, replacing the Go module at |
+| 🟢 `CURRENT` | [`tools/rstools/README.md`](../tools/rstools/README.md) | 10,238 | **tools/rstools — ASHFALL dev tool suite (Rust)** — Rust home of the ASHFALL development/CI tool suite, replacing the Go module at |
 | 🟡 `HISTORICAL` | [`Next-steps-plans/shipped_to_chat/Plan_218_Shelter_Museum_Historical_Archive.md`](../Next-steps-plans/shipped_to_chat/Plan_218_Shelter_Museum_Historical_Archive.md) | 254,597 | **Plan 218 — Shelter Museum Archive — Host, Projection, and Save Custody** — **VERIFIED Core:** `Assets/Ashfall.Core/Culture/ShelterMuseumSystem.cs`. **VERIFIED or absent host:** No ShelterMuseu... |
 | 🟡 `HISTORICAL` | [`docs/ARCHIVE_INDEX.md`](ARCHIVE_INDEX.md) | 2,510 | **ASHFALL Historical Documentation & External Archive Index** — This repository maintains a lean, living documentation corpus in `docs/` representing active, authoritative game spec... |
 | 🟡 `HISTORICAL` | [`docs/archive/ARCHIVE_INK_BALANCE_MATRIX.md`](archive/ARCHIVE_INK_BALANCE_MATRIX.md) | 2,402 | **Archive Ink Balance Matrix** — - **No Universal Dominance:** No single ink provides highest legibility, longest life, lowest fade, and lowest cost s... |

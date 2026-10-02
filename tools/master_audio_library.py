@@ -28,7 +28,7 @@ REPORT_FILE = REPO_ROOT / "docs" / "audio" / "AUDIO_MASTERING_REPORT.md"
 
 def measure_audio(file_path):
     cmd = ['ffmpeg', '-nostats', '-i', str(file_path), '-filter_complex', 'ebur128=peak=true', '-f', 'null', '-']
-    res = subprocess.run(cmd, capture_output=True, text=True)
+    res = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
     m_i = re.search(r'Integrated loudness:\s+I:\s+([-\d\.]+)\s+LUFS', res.stderr)
     m_tp = re.search(r'True peak:\s+Peak:\s+([-\d\.]+)\s+dBFS', res.stderr)
 
@@ -103,7 +103,7 @@ def process_file(file_path):
         else:
             break
 
-        res = subprocess.run(cmd)
+        res = subprocess.run(cmd, timeout=600)
         if res.returncode != 0:
             print(f"Error processing {file_path}: ffmpeg failed", file=sys.stderr)
             if tmp_out.is_file(): tmp_out.unlink()

@@ -350,7 +350,7 @@ def command_version(command: str, args: list[str]) -> str:
     if not executable:
         return "UNAVAILABLE"
     try:
-        return subprocess.run([executable, *args], check=True, capture_output=True, text=True).stdout.strip() or "UNKNOWN"
+        return subprocess.run([executable, *args], check=True, capture_output=True, text=True, timeout=60).stdout.strip() or "UNKNOWN"
     except (OSError, subprocess.CalledProcessError):
         return "UNKNOWN"
 

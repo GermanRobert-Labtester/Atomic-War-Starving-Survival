@@ -78,7 +78,7 @@ for legacy_root in LEGACY_ROOTS:
             lfs = False
             try:
                 import subprocess
-                r = subprocess.run(["git", "check-attr", "filter", str(p.relative_to(REPO))], capture_output=True, text=True)
+                r = subprocess.run(["git", "check-attr", "filter", str(p.relative_to(REPO))], capture_output=True, text=True, timeout=60)
                 if "lfs" in r.stdout:
                     lfs = True
             except Exception:

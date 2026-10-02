@@ -271,7 +271,7 @@ class AudioMeasurer:
             "-filter_complex", "ebur128=peak=true",
             "-f", "null", "-"
         ]
-        res = subprocess.run(cmd, capture_output=True, text=True, check=False)
+        res = subprocess.run(cmd, capture_output=True, text=True, check=False, timeout=300)
         output = res.stderr
 
         # Parse integrated loudness

@@ -2578,7 +2578,7 @@
     {
       "panel": "CraftingPanel",
       "file": "src/UI/CraftingPanel.cs",
-      "loc": 520,
+      "loc": 522,
       "bind_target": null,
       "has_unbind": true,
       "bindable": false,
@@ -3274,7 +3274,7 @@
     {
       "panel": "DynamicQuestlinePanel",
       "file": "src/UI/DynamicQuestlinePanel.cs",
-      "loc": 199,
+      "loc": 201,
       "bind_target": "DynamicQuestlineSystem",
       "has_unbind": true,
       "bindable": true,
@@ -4602,7 +4602,7 @@
     {
       "panel": "InSarMappingPanel",
       "file": "src/UI/InSarMappingPanel.cs",
-      "loc": 275,
+      "loc": 277,
       "bind_target": "InSarMappingHostSession",
       "has_unbind": true,
       "bindable": true,
@@ -4677,7 +4677,7 @@
     {
       "panel": "InventoryDetailPanel",
       "file": "src/UI/InventoryDetailPanel.cs",
-      "loc": 343,
+      "loc": 345,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -4814,7 +4814,7 @@
     {
       "panel": "JournalDetailPanel",
       "file": "src/UI/JournalDetailPanel.cs",
-      "loc": 134,
+      "loc": 136,
       "bind_target": null,
       "has_unbind": false,
       "bindable": false,
@@ -7955,7 +7955,7 @@
     {
       "panel": "ShelterSchedulePanel",
       "file": "src/UI/ShelterSchedulePanel.cs",
-      "loc": 127,
+      "loc": 129,
       "bind_target": "ShelterScheduleHostSession",
       "has_unbind": true,
       "bindable": true,

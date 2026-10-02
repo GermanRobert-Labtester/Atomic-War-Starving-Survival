@@ -1,5 +1,35 @@
 # Current Task State
 
+## Rust port Stage 2 COMPLETE + Stage 3 running + PERF-001/Phase 1 (2026-10-02)
+
+**Rust port (claim `claim-rust-port-gotools-2026-10-02`):**
+- **Stage 2 COMPLETE** (delegated agent; independently verified): `validate-json`,
+  `validate-config`, `parse-results`, `scan-saves`, `build-manifest`, `index` in
+  `tools/rstools/crates/ashfall-dev/src/` (+ helpers `jsonout.rs`, `gowalk.rs`,
+  `gotime.rs`). `cargo build --release` 0 warnings; `cargo test` **76/76**.
+  Independent parity: `scan-saves --json` and `parse-results --json` (with
+  `&`/`<`) byte-identical; `validate-json` identical modulo `duration_ms`.
+  Deliberately limited: `index --watch/--serve` exits 2; `validate-config`
+  failure wording / `validate-json` error text can differ (exit codes match).
+- **Closed the Stage 1 escaping gap** via `jsonout`: `run-tasks -json` is now
+  `RUN_TASKS_ESCAPING_IDENTICAL` with `&&`/angle brackets; `select-tests` still
+  byte-identical.
+- **Stage 3 IN PROGRESS** (second delegated agent): `check-plan`, `sync-agents`,
+  `audit-catalogs`, `releasepolicy`, `monitor-size`, `monitor-compile`,
+  `llm-proxy`, `agent-core`. **Stage 4** (bin shims, CI manifest, delete
+  `tools/gotools`) only after full parity. Go untouched/authoritative.
+- `tools/gotools/**` unmodified; nothing committed.
+
+**PERF-001 (host build time) + diagnostic Phase 1** (uncommitted, plan/claim not
+yet filed): `Ashfall.csproj` gains opt-in `ASHFALL_BUILD_LEAN=1` (excludes the
+self-test set the shipping build already excludes; measured incremental
+116.9 s → 81.5/70.4 s, ~24–46 %); `src/Host/PerformanceSelfTest.cs` `save_30d`
+now warmup=1 + 5 iters (median 32.6 ms first-run artifact → **0.057 ms** steady
+state; `RUNTIME_SCALE_SELFTEST PASS`). PERF-001 Rust conversion **ABORTED**
+(infeasible: Rust cannot compile C#). Diagnostic:
+`artifacts/performance/PERFORMANCE_DIAGNOSTIC_2026-10-02.md`.
+Remaining Phase 1 gap is environmental (GPU frame capture).
+
 ## Language policy (4 languages) + agent speedups — FULLY INTEGRATED (2026-10-02)
 
 User-directed: adopt **C# primary / Rust secondary / Python (AI, automation,

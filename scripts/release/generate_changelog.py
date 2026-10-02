@@ -140,6 +140,7 @@ def run_generate(args: argparse.Namespace) -> int:
         return subprocess.run(
             ["git", "-c", "core.fsmonitor=false", "-C", root, *arguments],
             check=True, capture_output=True, text=True, encoding="utf-8",
+            timeout=60,
         ).stdout.rstrip("\r\n")
 
     try:

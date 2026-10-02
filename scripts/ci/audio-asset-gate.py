@@ -20,7 +20,7 @@ AUDIO_DIR = REPO_ROOT / "assets" / "audio"
 
 def check_untracked():
     cmd = ['git', 'status', '--porcelain', 'assets/audio']
-    res = subprocess.run(cmd, cwd=REPO_ROOT, capture_output=True, text=True)
+    res = subprocess.run(cmd, cwd=REPO_ROOT, capture_output=True, text=True, timeout=60)
     untracked = []
     for line in res.stdout.splitlines():
         if line.startswith('??'):
@@ -36,7 +36,7 @@ def check_audio_file(file_path):
 
     # Run ebur128 true peak and duration
     cmd = ['ffmpeg', '-nostats', '-i', str(file_path), '-filter_complex', 'ebur128=peak=true', '-f', 'null', '-']
-    res = subprocess.run(cmd, capture_output=True, text=True)
+    res = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
 
     m_tp = re.search(r'True peak:\s+Peak:\s+([-\d\.]+)\s+dBFS', res.stderr)
     m_time = re.search(r'time=(\d+):(\d+):([\d\.]+)', res.stderr)

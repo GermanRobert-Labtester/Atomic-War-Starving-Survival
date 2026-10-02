@@ -39,7 +39,7 @@ def ingest_file(input_file: pathlib.Path, target_file: pathlib.Path, preset, cue
         "ffmpeg", "-y", "-i", str(input_file),
         "-ar", "44100", "-ac", "1", "-f", "f32le", "-"
     ]
-    proc = subprocess.run(cmd, capture_output=True, check=True)
+    proc = subprocess.run(cmd, capture_output=True, check=True, timeout=300)
     samples = [val[0] for val in struct.iter_unpack("<f", proc.stdout)]
 
     # 2. Master and export via AudioExporter (enforces peak <= -1.5 dBFS)
@@ -53,7 +53,7 @@ def ingest_file(input_file: pathlib.Path, target_file: pathlib.Path, preset, cue
             "ffmpeg", "-y", "-i", str(temp_wav),
             "-b:a", "128k", "-ar", "44100", "-ac", "1",
             str(target_file)
-        ], capture_output=True, check=True)
+        ], capture_output=True, check=True, timeout=300)
         temp_wav.unlink(missing_ok=True)
         import hashlib
         with open(target_file, "rb") as f:

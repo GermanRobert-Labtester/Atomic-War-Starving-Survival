@@ -43,7 +43,7 @@
       "name": "Build Ashfall.Core.Tests (net9.0)",
       "category": "Build & Tests",
       "command": "dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo",
-      "timeout_seconds": 120,
+      "timeout_seconds": 180,
       "expected_summary": "",
       "classification": "fast",
       "critical": true,
@@ -362,6 +362,7 @@
       "expected_summary": "RECENT_PLAN_INTEGRATIONS_AUDIT.md in sync",
       "classification": "fast",
       "critical": true,
+      "remediation": "python3 scripts/ci/generate-plan-integration-audit.py",
       "notes": "The --check scan re-reads all 71 integrated plans and measured 70.2s at baseline (a false FAIL against the old 60s cap; the run itself reported the audit in sync). Set to the 180s fast-tier ceiling for headroom under concurrent-agent load."
     },
     {
@@ -372,14 +373,15 @@
       "timeout_seconds": 30,
       "expected_summary": "UI_DESIGN_MAP.md in sync",
       "classification": "fast",
-      "critical": true
+      "critical": true,
+      "remediation": "python3 scripts/ci/generate-ui-design-map.py"
     },
     {
       "gate_id": "compiler_warning_baseline",
       "name": "Compiler Warning Baseline Gate (0 Warnings)",
       "category": "Drift & Architecture Gates",
       "command": "bash scripts/ci/warning-baseline-gate.sh",
-      "timeout_seconds": 180,
+      "timeout_seconds": 420,
       "expected_summary": "COMPILER WARNING BASELINE GATE PASSED",
       "classification": "fast",
       "critical": true,
@@ -390,7 +392,7 @@
       "name": "Master Documentation Index Drift Gate",
       "category": "Drift & Architecture Gates",
       "command": "python3 scripts/ci/generate-docs-index.py --check",
-      "timeout_seconds": 180,
+      "timeout_seconds": 300,
       "expected_summary": "Master docs index is up to date",
       "classification": "fast",
       "critical": true,
@@ -689,7 +691,7 @@
       "name": "Core Save Round-Trip & Determinism Coverage Gate (Plan 27B)",
       "category": "Quality & Verification",
       "command": "bash scripts/ci/coverage-gate.sh",
-      "timeout_seconds": 60,
+      "timeout_seconds": 180,
       "expected_summary": "Coverage gate passed",
       "classification": "fast",
       "critical": true

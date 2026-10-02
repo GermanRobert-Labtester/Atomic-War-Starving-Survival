@@ -1,5 +1,19 @@
 # ASHFALL Integration Plans
 
+## Repo-wide 6-loop find→repair→harden sweep (fast-tier gates) — FULLY INTEGRATED (2026-10-02)
+
+Ran all 69 fast-tier gates in batches across six find→repair→harden loops and
+drove them all green. Repaired six generated-artifact drift gates, a stale-host
+certification gate, and four timeout failures; hardened by raising the runner's
+gate upper bound to 420s for the three-rebuild warning gate only, raising five
+under-budget gate timeouts, adding two missing remediation hints, and adding
+`scripts/ci/regen-generated-docs.sh` (regenerates artifacts in the order that
+keeps the master docs index valid — docs index last). **Evidence:**
+`run-gates.py --check-only` valid (73 gates / 69 fast); all 69 fast gates PASS;
+`regen-generated-docs.sh --check` all in sync; `git diff --check` clean. Archived
+plan: `.ai/plans/integrated/maintenance/INTEGRATED_repo-wide-6-loop-sweep-2026-10-02.md`.
+No gameplay/save/determinism change; no full test suite; no commit.
+
 ## Build & test speedups — FULLY INTEGRATED (2026-10-02)
 
 Completed the approved five-task tooling plan: expanded changed-file selector

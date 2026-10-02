@@ -1,0 +1,22 @@
+[package]
+name = "ashfall-dev"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+description = "ASHFALL development & CI tool suite (Rust port of tools/gotools)"
+
+[[bin]]
+name = "ashfall-dev"
+path = "src/main.rs"
+
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true
+serde_yaml.workspace = true
+regex.workspace = true
+sha2.workspace = true
+jsonschema.workspace = true
+
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"

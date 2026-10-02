@@ -224,7 +224,7 @@ def execute_composio_generation(prompt: str) -> str:
         "-d", json.dumps(payload)
     ]
     print(f"  [Composio] Dispatching GEMINI_GENERATE_IMAGE (Nano Banana Pro 1024x1024)...")
-    res = subprocess.run(cmd, capture_output=True, text=True)
+    res = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
     if res.returncode != 0:
         raise RuntimeError(f"Composio execution failed: {res.stderr or res.stdout}")
 
@@ -249,9 +249,9 @@ def download_and_verify(url: str, output_path: str) -> bool:
     """Downloads image and verifies it is 1024x1024."""
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     cmd = ["curl", "-s", url, "-o", output_path]
-    subprocess.run(cmd, check=True)
+    subprocess.run(cmd, check=True, timeout=120)
 
-    res = subprocess.run(["file", output_path], capture_output=True, text=True)
+    res = subprocess.run(["file", output_path], capture_output=True, text=True, timeout=60)
     print(f"  [File Check] {res.stdout.strip()}")
     return "1024x1024" in res.stdout or "1024 x 1024" in res.stdout or os.path.getsize(output_path) > 10000
 
@@ -314,12 +314,12 @@ def main():
                 continue
 
             os.makedirs(os.path.dirname(target_runtime_path), exist_ok=True)
-            subprocess.run(["cp", local_stage_path, target_runtime_path], check=True)
+            subprocess.run(["cp", local_stage_path, target_runtime_path], check=True, timeout=60)
             print(f"  [Import] Copied to {target_runtime_path}")
 
             png_target = os.path.splitext(target_runtime_path)[0] + ".png"
             if not os.path.exists(png_target):
-                subprocess.run(["cp", local_stage_path, png_target], check=True)
+                subprocess.run(["cp", local_stage_path, png_target], check=True, timeout=60)
 
             update_manifest(asset, local_stage_path)
             print(f"  [Manifest] Registered in _manifest.json (approved)")

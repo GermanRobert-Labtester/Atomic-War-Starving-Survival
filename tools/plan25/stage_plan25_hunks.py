@@ -12,7 +12,7 @@ JOBS = [
 
 def head(path):
     return subprocess.run(["git", "show", f"HEAD:{path}"], capture_output=True, text=True,
-                          check=True).stdout
+                          check=True, timeout=60).stdout
 
 def make_mine(kind, src):
     if kind == "runner":
@@ -66,7 +66,7 @@ for path, kind in JOBS:
     with open(f"/tmp/mine_{kind}.cs", "w") as f:
         f.write(mine)
     with open(f"/tmp/{kind}.raw", "w") as f:
-        subprocess.run(["diff", "-u", f"/tmp/head_{kind}.cs", f"/tmp/mine_{kind}.cs"], stdout=f)
+        subprocess.run(["diff", "-u", f"/tmp/head_{kind}.cs", f"/tmp/mine_{kind}.cs"], stdout=f, timeout=60)
     with open(f"/tmp/{kind}.raw") as f:
         text = f.read()
     text = text.replace(f"/tmp/head_{kind}.cs", "a/" + path)
@@ -74,7 +74,7 @@ for path, kind in JOBS:
     with open(f"/tmp/{kind}.patch", "w") as f:
         f.write(text)
     r = subprocess.run(["git", "apply", "--cached", f"/tmp/{kind}.patch"],
-                       capture_output=True, text=True)
+                       capture_output=True, text=True, timeout=60)
     print(kind, "->", "STAGED" if r.returncode == 0 else "FAILED: " + r.stderr.strip())
     if r.returncode != 0:
         sys.exit(1)

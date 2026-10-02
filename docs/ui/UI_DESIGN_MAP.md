@@ -250,7 +250,7 @@ Per-surface spec derived from source (binding target, layout, metrics, actions):
 | `DifficultySettingsPanel` | Difficulty // Campaign Parameters | `—` | `shell:split-body` | 900×620 | 2 | 0 | 0 | 0 | — | 386 |
 | `DoseGeographyPanel` | DOSE GEOGRAPHY — EXPOSURE MAP | `—` | `shell:split-body` | 720×480 | 8 | 0 | 0 | 0 | — | 519 |
 | `DutyRosterPanel` | Duty Roster // Shift Coverage & Sick-List | `—` | `shell:split-body` | 1100×720 | 6 | 0 | 0 | 4 | duty_roster, duty_roster_detail | 757 |
-| `DynamicQuestlinePanel` | EMERGENCY QUESTS // DYNAMIC OPERATIONS | `DynamicQuestlineSystem` | `shell:single-column` | 1100×680 | 5 | 1 | 0 | 0 | dynamic_quests | 199 |
+| `DynamicQuestlinePanel` | EMERGENCY QUESTS // DYNAMIC OPERATIONS | `DynamicQuestlineSystem` | `shell:single-column` | 1100×680 | 5 | 1 | 0 | 0 | dynamic_quests | 201 |
 | `EbPvdCoatingPanel` | EB-PVD COATER // THERMAL BARRIER DEPOSITION | `EbPvdCoatingHostSession` | `shell:single-column` | 1100×720 | 4 | 0 | 0 | 0 | ebpvd_coating | 345 |
 | `EquipmentConditionPanel` | SYS: ARMORY WORKBENCH & CONDITION // DURABILITY MATRIX | `EquipmentConditionHostSession` | `shell:split-body` | 1040×680 | 5 | 3 | 0 | 0 | equipment_condition | 315 |
 | `ExcavationPanel` | Subterranean Excavation // Deep Strata | `ExcavationHostSession` | `shell:single-column` | 1000×650 | 1 | 0 | 0 | 0 | excavation | 107 |
@@ -261,7 +261,7 @@ Per-surface spec derived from source (binding target, layout, metrics, actions):
 | `GeodeticSurveyPanel` | Geodetic Survey // Triangulation Network | `GeodeticSurveyHostSession` | `shell:single-column` | 1100×720 | 5 | 0 | 0 | 0 | — | 399 |
 | `HiddenAgendaPanel` | Survivor Intrigue // Hidden Agendas & Betrayals | `HiddenAgendaHostSession` | `shell:split-body` | 1000×650 | 4 | 1 | 0 | 1 | hidden_agenda | 321 |
 | `HydraulicExtrusionPanel` | Heavy Fabrication // Hydraulic Extrusion | `HydraulicExtrusionHostSession` | `shell:single-column` | 1000×650 | 4 | 0 | 2 | 3 | hydraulic_extrusion | 297 |
-| `InSarMappingPanel` | Deformation Intelligence // InSAR Mapping | `InSarMappingHostSession` | `shell:single-column` | 1000×650 | 4 | 0 | 2 | 2 | insar_mapping | 275 |
+| `InSarMappingPanel` | Deformation Intelligence // InSAR Mapping | `InSarMappingHostSession` | `shell:single-column` | 1000×650 | 4 | 0 | 2 | 2 | insar_mapping | 277 |
 | `JournalPanel` | JOURNAL & NARRATIVE | `JournalHostSession` | `shell:split-body` | 720×480 | 0 | 1 | 0 | 0 | journal | 498 |
 | `JusticeTribunalPanel` | THE RECORD // SHELTER TRIBUNAL | `JusticeSystem` | `shell:single-column` | 1000×650 | 4 | 1 | 1 | 0 | — | 224 |
 | `KennelPanel` | Kennel // Companion Animals | `—` | `shell:single-column` | 900×560 | 4 | 0 | 0 | 0 | — | 126 |
@@ -305,7 +305,7 @@ Per-surface spec derived from source (binding target, layout, metrics, actions):
 | `ShelterDecorPanel` | Shelter Interior // Memorial Wall | `ShelterDecorHostSession` | `shell:single-column` | 1160×700 | 4 | 2 | 1 | 0 | — | 451 |
 | `ShelterOperationsPanel` | Shelter Operations // Works, Crews & Outposts | `ShelterOperationsHostSession` | `shell:single-column` | 1120×720 | 4 | 1 | 1 | 0 | shelter_operations | 399 |
 | `ShelterReputationPanel` | Shelter Reputation // External Perception & Notoriety | `ShelterReputationHostSession` | `shell:split-body` | 1000×650 | 4 | 1 | 0 | 0 | shelter_reputation | 329 |
-| `ShelterSchedulePanel` | Shelter Schedule // Shift Assignment | `ShelterScheduleHostSession` | `shell:single-column` | 1000×650 | 3 | 0 | 0 | 0 | shelter_schedule | 127 |
+| `ShelterSchedulePanel` | Shelter Schedule // Shift Assignment | `ShelterScheduleHostSession` | `shell:single-column` | 1000×650 | 3 | 0 | 0 | 0 | shelter_schedule | 129 |
 | `ShelterSecurityPanel` | Shelter Security // Access Control & Lockdown Protocols | `ShelterSecurityHostSession` | `shell:split-body` | 1000×650 | 4 | 2 | 0 | 5 | shelter_security | 305 |
 | `ShelterThermalPanel` | Shelter Thermal // Central Heating | `ShelterThermalHostSession` | `shell:single-column` | 1000×650 | 5 | 0 | 0 | 1 | shelter_thermal | 240 |
 | `SilentFoundryPanel` | The Silent Foundry // Cupola & Casting Bay | `—` | `shell:split-body` | 1100×720 | 8 | 0 | 0 | 0 | silent_foundry | 594 |

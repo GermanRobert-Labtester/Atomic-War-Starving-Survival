@@ -41,7 +41,10 @@ OVERSIZED_CHARS = 100_000
 # them makes docs/INDEX.md drift constantly (a recurring false-red) and scans
 # multi-MB files for no documentation value, so they are excluded from the
 # index. Plans (docs/plans/**, .ai/plans/**) are excluded for the same reason.
-COORDINATION_LEDGERS = {"WORKTREE_OWNERSHIP.md", "INTEGRATION_PLANS.md"}
+# `.ai/state.md` is already excluded by the hidden-directory rule; it is named
+# here explicitly so the intent survives any change to that rule (review ruling,
+# 2026-10-02). These are operational state, not documentation.
+COORDINATION_LEDGERS = {"WORKTREE_OWNERSHIP.md", "INTEGRATION_PLANS.md", ".ai/state.md"}
 
 def get_doc_files():
     docs = []

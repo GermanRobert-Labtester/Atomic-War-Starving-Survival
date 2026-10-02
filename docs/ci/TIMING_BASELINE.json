@@ -2,6 +2,15 @@
   "schema_version": "1.0",
   "description": "Reference wall-clock durations for ASHFALL builds, gates, and audits. Checked by scripts/ci/timing-budget.py: a stage running 30% or less over its reference is tolerable; strictly more than default_tolerance_ratio (1.30 = 30% over) is flagged SUSPICIOUS and means investigate and optimize the test, not raise its budget. References are deliberately authored/recorded values from a quiet-system run, never an automatically-updated live ledger; a single noisy sample must not silently rebase them.",
   "default_tolerance_ratio": 1.30,
+  "hardware": {
+    "captured": "2026-10-02",
+    "host": "AMD Ryzen 5 7530U with Radeon Graphics (integrated GPU)",
+    "physical_cores": 6,
+    "logical_cpus": 12,
+    "memory_total_kb": 6915560,
+    "memory_gib_approx": 6.6,
+    "note": "Static capture, not a timing measurement (required baseline field). Integrated GPU means frame-capture runs can land on llvmpipe software rendering, so record the renderer with every frame measurement. Wall-clock references were recorded under concurrent-session load (load average ~17-25) and are upper bounds."
+  },
   "budgets": {
     "docs_index_check": {
       "reference_seconds": 126.0,

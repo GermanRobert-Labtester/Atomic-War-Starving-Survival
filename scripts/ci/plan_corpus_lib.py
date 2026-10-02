@@ -328,7 +328,7 @@ def enumerate_docs(repo_root: Path, config: dict[str, Any]) -> list[Path]:
 
 def git_value(repo_root: Path, args: list[str], fallback: str = "") -> str:
     try:
-        return subprocess.run(["git", *args], cwd=repo_root, check=True, capture_output=True, text=True).stdout.strip()
+        return subprocess.run(["git", *args], cwd=repo_root, check=True, capture_output=True, text=True, timeout=60).stdout.strip()
     except (OSError, subprocess.CalledProcessError):
         return fallback
 

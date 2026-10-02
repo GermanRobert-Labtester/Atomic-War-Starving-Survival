@@ -1,5 +1,22 @@
 # ASHFALL Worktree Ownership
 
+## claim-docs-index-ledger-exclusion-2026-10-02 — IN PROGRESS
+
+Review directive (2026-10-02): apply ruling 2 — coordination/operational-state
+ledgers are excluded from the docs index as operational state, not documentation.
+
+**Exact owned paths:** `scripts/ci/generate-docs-index.py`, `docs/INDEX.md`, this
+claim.
+
+**Done:** `COORDINATION_LEDGERS = {WORKTREE_OWNERSHIP.md, INTEGRATION_PLANS.md,
+.ai/state.md}` (the first two were already excluded; `.ai/state.md` is named
+explicitly so the intent survives any change to the hidden-directory rule).
+Regenerating `docs/INDEX.md` under this claim; `WORKTREE_OWNERSHIP.md` row refs
+are already 0.
+
+**Not claimed:** `scripts/ci/run-gates.py`, `docs/ci/CI_GATE_MANIFEST.json`
+(concurrently hot), `tools/rstools/**` (Stage 3 agent), `tools/gotools/**`.
+
 ## claim-language-policy-agent-speedups-2026-10-02 — COMPLETE / FULLY INTEGRATED
 
 User-directed language-policy + speed batch (four-language policy; prohibit
@@ -77,7 +94,7 @@ Paths released. No full suite; no commit.
 per-file scan results to push `docs_index_check` under ~30 s; a one-command
 plan-closeout helper in the Rust tool suite.
 
-## claim-rust-port-gotools-2026-10-02 — STAGE 1 COMPLETE (plan not yet integrated)
+## claim-rust-port-gotools-2026-10-02 — STAGE 2 COMPLETE; STAGE 3 IN PROGRESS (plan not yet integrated)
 
 User-directed ("Please remove any .go code and either convert to rust or
 remove!"; disambiguated to "Staged full Rust port"). Plan:
@@ -85,11 +102,13 @@ remove!"; disambiguated to "Staged full Rust port"). Plan:
 a user-authorized override of the Go-Only Tool Creation Policy in
 `QWEN.md`/`AGENTS.md`/`TEST_POLICY.md`.
 
-**Exact owned paths (Stage 1, this turn):** new `tools/rstools/` — `Cargo.toml`,
-`README.md`, `.gitignore`, `crates/ashfall-dev/Cargo.toml`,
-`crates/ashfall-dev/src/{main.rs,selector.rs,runner.rs,scopedtest.rs}`, and the
-generated `tools/rstools/Cargo.lock`; this claim, `.ai/plans/rust-port-gotools-2026-10-02.md`,
-and `.ai/state.md`.
+**Exact owned paths:** all of `tools/rstools/**` — workspace/driver `Cargo.toml`,
+`README.md`, `.gitignore`, generated `Cargo.lock`, and
+`crates/ashfall-dev/{Cargo.toml,src/*}` — Stage 1 `main.rs,selector.rs,runner.rs,scopedtest.rs`;
+Stage 2 `validator.rs,config.rs,parser.rs,scanner.rs,manifest.rs,indexer.rs` +
+helpers `jsonout.rs,gowalk.rs,gotime.rs`; Stage 3 (in flight)
+`checkplan.rs,agentsync.rs,catalogaudit.rs,releasepolicy.rs,monitor.rs,proxy.rs,orchestrator.rs`;
+this claim, `.ai/plans/rust-port-gotools-2026-10-02.md`, and `.ai/state.md`.
 
 **Not claimed / untouched in Stage 1:** all of `tools/gotools/**`, `bin/**`,
 `docs/ci/CI_GATE_MANIFEST.json`, `scripts/ci/run-gates.py`, the pre-commit hook,
@@ -97,13 +116,28 @@ and `QWEN.md`/`AGENTS.md`/`TEST_POLICY.md` — those change only in the Stage 4
 cutover after per-command parity is clean. Additive-only this turn so a
 concurrent `tools/gotools` editor cannot conflict.
 
-**Status:** **Stage 1 COMPLETE 2026-10-02.** `select-tests --json` byte-identical
-to Go; `run-tasks -json` structurally identical (timeout path 124/`timed_out`);
-`run-scoped-tests --dry-run` and the full-test ban byte-identical; `cargo build
---release` 0 warnings, `cargo test` 18/18. Reproduced-and-flagged upstream
-`TrimSpace(line)[3:]` path-mangling quirk (not fixed). **Plan NOT fully
-integrated (Stages 2–4 pending) and NOT archived**; Go toolchain untouched and
-still authoritative. No full suite; no commit.
+**Status:** **Stage 1 COMPLETE; Stage 2 COMPLETE (2026-10-02).**
+- Stage 1: `select-tests --json` byte-identical; `run-tasks -json` structurally
+  identical (timeout 124/`timed_out`); `run-scoped-tests --dry-run` and the
+  full-test ban byte-identical.
+- Stage 2: `validate-json`, `validate-config`, `parse-results`, `scan-saves`,
+  `build-manifest`, `index` ported (delegated agent). Verified independently:
+  `cargo build --release` 0 warnings, `cargo test` **76/76**; `scan-saves --json`
+  and `parse-results --json` (with `&`/`<`) **byte-identical**; `validate-json`
+  identical modulo `duration_ms`. Deliberately limited: `index --watch/--serve`
+  exits 2 (unsupported); `validate-config` failure wording and `validate-json`
+  read/syntax error text can differ from Go while exit codes/pointers match.
+- Closed the Stage 1 `<`/`>`/`&` escaping gap via `jsonout`: `run-tasks -json`
+  now `RUN_TASKS_ESCAPING_IDENTICAL` with `&&`/angle brackets; `select-tests`
+  still byte-identical.
+- Reproduced-and-flagged upstream `TrimSpace(line)[3:]` path-mangling quirk
+  (not fixed).
+- **Stage 3 IN PROGRESS** (`check-plan`, `sync-agents`, `audit-catalogs`,
+  `releasepolicy`, `monitor-size/-compile`, `llm-proxy`, `agent-core`) via a
+  second delegated agent. **Stage 4 cutover** (bin shims, CI manifest, delete
+  `tools/gotools`) runs only after all stages are parity-clean.
+- **Plan NOT fully integrated and NOT archived**; Go toolchain untouched and
+  still authoritative. No full suite; no commit.
 
 ## claim-test-build-speedups-2026-10-02 — COMPLETE / FULLY INTEGRATED
 

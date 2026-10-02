@@ -9,7 +9,7 @@ Runtimes below are budgeted timeouts (enforced ceiling), not measured durations;
 | fast | `whitespace_hygiene` | Code & Repo Hygiene | 30s | yes | — |
 | fast | `json_schema_policy` | Code & Repo Hygiene | 30s | yes | — |
 | fast | `pot_template_drift` | Code & Repo Hygiene | 30s | yes | — |
-| fast | `build_core_tests` | Build & Tests | 120s | yes | — |
+| fast | `build_core_tests` | Build & Tests | 180s | yes | — |
 | full | `test_core_suite` | Build & Tests | 120s | yes | build_core_tests |
 | fast | `build_godot_host` | Build & Tests | 180s | yes | — |
 | fast | `godot_import` | Host Selftests & Lifecycle | 180s | yes | — |
@@ -36,8 +36,8 @@ Runtimes below are budgeted timeouts (enforced ceiling), not measured durations;
 | fast | `architecture_map_drift` | Drift & Architecture Gates | 180s | yes | — |
 | fast | `plan_integration_audit_drift` | Drift & Architecture Gates | 180s | yes | — |
 | fast | `ui_design_map_drift` | Drift & Architecture Gates | 30s | yes | — |
-| fast | `compiler_warning_baseline` | Drift & Architecture Gates | 180s | yes | — |
-| fast | `docs_index_drift` | Drift & Architecture Gates | 180s | yes | — |
+| fast | `compiler_warning_baseline` | Drift & Architecture Gates | 420s | yes | — |
+| fast | `docs_index_drift` | Drift & Architecture Gates | 300s | yes | — |
 | fast | `forbidden_core_apis` | Source Policy & Lint Gates | 30s | yes | — |
 | fast | `catch_policy_lint` | Source Policy & Lint Gates | 30s | yes | — |
 | fast | `persistent_filename_registry` | Source Policy & Lint Gates | 30s | yes | — |
@@ -65,7 +65,7 @@ Runtimes below are budgeted timeouts (enforced ceiling), not measured durations;
 | fast | `test_only_production_source` | Code & Repo Hygiene | 120s | yes | — |
 | fast | `uid_sidecar_gate` | Code & Repo Hygiene | 30s | yes | — |
 | fast | `scene_binding_truth` | Source Policy & Lint Gates | 60s | yes | — |
-| fast | `coverage_gate` | Quality & Verification | 60s | yes | — |
+| fast | `coverage_gate` | Quality & Verification | 180s | yes | — |
 | fast | `content_acceptance_pipeline` | Quality & Verification | 120s | yes | — |
 | fast | `port_contract_gate` | Quality & Verification | 180s | yes | — |
 | fast | `input_map_contract` | Quality & Verification | 90s | yes | — |

@@ -29,7 +29,7 @@ CLIPS = {
 
 
 def run(command: list[str]) -> None:
-    subprocess.run(command, check=True)
+    subprocess.run(command, check=True, timeout=120)
 
 
 def main() -> int:

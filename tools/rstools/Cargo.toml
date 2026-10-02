@@ -1,0 +1,26 @@
+[workspace]
+resolver = "2"
+members = ["crates/ashfall-dev"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+authors = ["Robert"]
+
+[workspace.dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+serde_yaml = "0.9"
+regex = "1"
+sha2 = "0.10"
+# Validation cluster (Stage 2): JSON-Schema validation for `validate-config`.
+# Default features pull in `reqwest` + TLS for HTTP `$ref` resolution; the Go
+# original only ever resolves local files, so the HTTP/async retriever is
+# disabled and external references are resolved from disk instead.
+jsonschema = { version = "0.58", default-features = false }
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+strip = true

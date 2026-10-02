@@ -15,7 +15,7 @@ OUTPUT = ROOT / "assets" / "audio" / "sfx" / "sfx_survivor_death.wav"
 
 
 def run(*args: str) -> None:
-    subprocess.run(args, check=True)
+    subprocess.run(args, check=True, timeout=120)
 
 
 def main() -> int:

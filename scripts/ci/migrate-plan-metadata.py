@@ -480,11 +480,11 @@ def finalize_report(
 def _historical_blob(repo_root: Path, revision: str, relative: str) -> tuple[str | None, str | None]:
     spec = f"{revision}:{relative}"
     blob = subprocess.run(
-        ["git", "rev-parse", "--verify", spec], cwd=repo_root, capture_output=True, text=True
+        ["git", "rev-parse", "--verify", spec], cwd=repo_root, capture_output=True, text=True, timeout=60
     )
     if blob.returncode != 0:
         return None, None
-    content = subprocess.run(["git", "show", spec], cwd=repo_root, capture_output=True)
+    content = subprocess.run(["git", "show", spec], cwd=repo_root, capture_output=True, timeout=60)
     if content.returncode != 0:
         return blob.stdout.strip(), None
     return blob.stdout.strip(), sha256_bytes(content.stdout)
@@ -518,7 +518,7 @@ def capture_execution_baseline(repo_root: Path, config: dict[str, Any], e1a_path
                 "MOVED_COPY_IDENTICAL" if live_replacement else "UNRESOLVED_MISSING_PATH"
             ),
         })
-    head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=repo_root, capture_output=True, text=True)
+    head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=repo_root, capture_output=True, text=True, timeout=60)
     now = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
     return {
         "schema_version": 1,
