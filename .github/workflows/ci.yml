@@ -25,11 +25,8 @@ jobs:
           # first parent without fetching the full divergent branch history.
           fetch-depth: 2
 
-      - name: Setup Go for repository monitors
-        uses: actions/setup-go@v5
-        with:
-          go-version-file: tools/gotools/go.mod
-          cache-dependency-path: tools/gotools/go.sum
+      - name: Setup Rust for repository monitors and dev tools
+        uses: dtolnay/rust-toolchain@stable
 
       - name: Setup .NET SDKs (8.0 for Godot host, 9.0 for tests)
         uses: actions/setup-dotnet@v4
@@ -52,7 +49,7 @@ jobs:
           if [ -x "bin/check-approved-plan" ]; then
             bin/check-approved-plan
           else
-            go run tools/gotools/cmd/check-approved-plan/main.go
+            cargo run --release --manifest-path tools/rstools/Cargo.toml -p ashfall-dev -- check-plan
           fi
 
       - name: Execute Canonical Verification Suite (Fast Tier)

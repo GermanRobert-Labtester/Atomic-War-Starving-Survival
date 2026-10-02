@@ -232,7 +232,7 @@ pub fn load_save(schema_path: &str, path: &str) -> Result<Save, ValidateError> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::path::PathBuf;
+    use std::path::{Path, PathBuf};
 
     fn tmpdir(tag: &str) -> PathBuf {
         let base = std::env::temp_dir().join(format!(
@@ -256,7 +256,7 @@ mod tests {
         p
     }
 
-    fn write(dir: &PathBuf, name: &str, body: &str) -> String {
+    fn write(dir: &Path, name: &str, body: &str) -> String {
         let p = dir.join(name);
         fs::write(&p, body).unwrap();
         p.to_string_lossy().into_owned()

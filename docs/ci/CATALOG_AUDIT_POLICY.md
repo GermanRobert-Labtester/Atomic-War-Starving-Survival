@@ -45,8 +45,8 @@ the item-id contract.
 ## Commands
 
 ```bash
-go run -C tools/gotools ./cmd/ashfall-dev audit-catalogs --root ../.. --check --strict-stale
-go run -C tools/gotools ./cmd/ashfall-dev audit-catalogs --root ../.. --list-checks
-go run -C tools/gotools ./cmd/ashfall-dev audit-catalogs --root ../.. --dump-ids canonical_item
-go run -C tools/gotools ./cmd/ashfall-dev audit-catalogs --root ../.. --update-baseline   # after review
+tools/rstools/target/release/ashfall-dev audit-catalogs --root . --check --strict-stale
+tools/rstools/target/release/ashfall-dev audit-catalogs --root . --list-checks
+tools/rstools/target/release/ashfall-dev audit-catalogs --root . --dump-ids canonical_item
+tools/rstools/target/release/ashfall-dev audit-catalogs --root . --update-baseline   # after review
 ```

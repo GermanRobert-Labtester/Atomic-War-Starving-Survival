@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "description": "Read-only catalog-hygiene audit policy for Assets/StreamingAssets/Data. Consumed by `ashfall-dev audit-catalogs` (tools/gotools/pkg/catalogaudit) and the `catalog_audit` CI gate. This is a fast static pre-flight over the authored JSON; the runtime authority for catalog cross-references remains Ashfall.Core.CatalogIntegrityValidator (--data-integrity-selftest).",
+  "description": "Read-only catalog-hygiene audit policy for Assets/StreamingAssets/Data. Consumed by `ashfall-dev audit-catalogs` (tools/rstools) and the `catalog_audit` CI gate. This is a fast static pre-flight over the authored JSON; the runtime authority for catalog cross-references remains Ashfall.Core.CatalogIntegrityValidator (--data-integrity-selftest).",
   "data_dir": "Assets/StreamingAssets/Data",
   "id_naming_regex": "^[a-z0-9]+(_[a-z0-9]+)*$",
   "default_domain": "unclassified",

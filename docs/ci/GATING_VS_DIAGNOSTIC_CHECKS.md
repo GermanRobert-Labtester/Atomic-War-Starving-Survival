@@ -83,10 +83,10 @@ These CLI commands execute deep domain and UI simulation passes. They use assert
 
 | Gate | Tier | Failure consequence | Owner |
 |---|---|---|---|
-| `catalog_audit` | fast | Blocks merge: dangling declared reference, cross-id-domain duplicate, non-snake_case id, or `schema_version` drift | `tools/gotools/pkg/catalogaudit` |
+| `catalog_audit` | fast | Blocks merge: dangling declared reference, cross-id-domain duplicate, non-snake_case id, or `schema_version` drift | `tools/rstools` |
 | `content_certification` | fast | Blocks merge: a Plan 49 family resolves to no live catalog/consumer | `ContentOrphanCertificationEngine` |
 | `content_utilization` | fast | Blocks merge: `GAMEPLAY_CONSUMED` regression or new orphan vs `artifacts/content-utilization-baseline.json` | `ContentUtilizationGate` |
-| `gotools_test` | fast | Blocks merge: a Go tool unit test fails | `tools/gotools` |
+| `rstools_test` | fast | Blocks merge: a Rust tool unit test fails | `tools/rstools` |
 | `gate_inventory_drift` | fast | Blocks merge: `GATE_INVENTORY.md` no longer matches the manifest | `scripts/ci/run-gates.py` |
 
 `audit-catalogs` advisories (`id_unit_suffix`, `mirror_resolution`) are **report-only** Tier 3 diagnostics unless the gate is run with `--fail-on-advisory`. The runtime cross-reference authority remains `CatalogIntegrityValidator` (`data_integrity`, Tier 1).

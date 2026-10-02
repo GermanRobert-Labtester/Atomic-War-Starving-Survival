@@ -41,7 +41,8 @@ python3 scripts/ci/run-gates.py --report-json artifacts/gates.json --no-fail-fas
   `GAMEPLAY_CONSUMED` regression and no new orphan versus
   `artifacts/content-utilization-baseline.json`
   (`--content-utilization-selftest`).
-- **`gotools_test`** (fast) — `go test -C tools/gotools ./...`.
+- **`rstools_test`** (fast) — `cargo test --release --manifest-path tools/rstools/Cargo.toml`.
+- **`rstools_vet`** (fast) — `cargo clippy --release --manifest-path tools/rstools/Cargo.toml --all-targets -- -D warnings`.
 - **`gate_inventory_drift`** (fast) — `GATE_INVENTORY.md` must match the
   manifest; regenerate with
   `python3 scripts/ci/run-gates.py --write-inventory docs/ci/GATE_INVENTORY.md`.

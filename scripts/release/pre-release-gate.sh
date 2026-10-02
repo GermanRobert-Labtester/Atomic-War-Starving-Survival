@@ -7,7 +7,7 @@
 #   2. scripts/ci/export-build.sh   — export the shipping build + runtime smoke
 #
 # This is a thin composition only. It owns no gate logic and adds no direct
-# gate command: release policy (tools/gotools/cmd/releasepolicy) still reads the
+# gate command: release policy (tools/rstools ashfall-dev releasepolicy) still reads the
 # canonical `bash scripts/ci/release-gate.sh` and `scripts/ci/export-build.sh`
 # as the authorities. The tagged CI workflow runs the same two steps in two
 # jobs; this wrapper exists so a local pre-tag run is one command.

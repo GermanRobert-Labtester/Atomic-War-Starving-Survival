@@ -1,31 +1,239 @@
 {
-  "schema_version": "1.0",
-  "description": "Reference wall-clock durations for ASHFALL builds, gates, and audits. Checked by scripts/ci/timing-budget.py: a stage running 30% or less over its reference is tolerable; strictly more than default_tolerance_ratio (1.30 = 30% over) is flagged SUSPICIOUS and means investigate and optimize the test, not raise its budget. References are deliberately authored/recorded values from a quiet-system run, never an automatically-updated live ledger; a single noisy sample must not silently rebase them.",
+  "schema_version": "1.1",
+  "description": "Reference durations and resource budgets for ASHFALL builds, gates, and audits. Checked by scripts/ci/timing-budget.py: a stage running 30% or less over its reference is tolerable; strictly more than default_tolerance_ratio (1.30) is flagged SUSPICIOUS and means investigate and optimize the test, not raise its budget. References are authored/recorded values, never an automatically-updated live ledger. Keys are gate ids as emitted by run-gates.py --report-json, so the check actually matches. Every entry carries its measurement context (see measurement_context).",
   "default_tolerance_ratio": 1.30,
-  "hardware": {
+  "measurement_context": {
     "captured": "2026-10-02",
     "host": "AMD Ryzen 5 7530U with Radeon Graphics (integrated GPU)",
     "physical_cores": 6,
     "logical_cpus": 12,
+    "threads": 12,
     "memory_total_kb": 6915560,
     "memory_gib_approx": 6.6,
-    "note": "Static capture, not a timing measurement (required baseline field). Integrated GPU means frame-capture runs can land on llvmpipe software rendering, so record the renderer with every frame measurement. Wall-clock references were recorded under concurrent-session load (load average ~17-25) and are upper bounds."
+    "free_memory_mb_observed": 2225,
+    "measurement_rule": "Every budget entry records load_at_start, free_mem_at_start_mb, and threads. Wall-clock references recorded under concurrent-session load (load average ~14-24) are worst-case upper bounds; quiet-tree medians are authoritative and supersede them once recorded. Peak RSS is comparatively load-insensitive and is recorded directly. Advisory load observed 14-24 on 12 threads = 1.2-2.0x oversubscription, which inflates wall times but not peak RSS.",
+    "memory_ceiling_note": "Memory-sensitive stages (compiler_warning_baseline, build_godot_host, build_core_tests) peak at 1.2-2.3 GiB on a host with ~2.2 GiB free; they are memory-bound as well as compiler-bound.",
+    "renderer_note": "Integrated GPU means frame-capture runs can land on llvmpipe software rendering; record the renderer with every frame measurement."
   },
   "budgets": {
-    "docs_index_check": {
-      "reference_seconds": 126.0,
+    "compiler_warning_baseline": {
+      "reference_seconds": 180.0,
+      "reference_kind": "measured_under_load",
+      "memory_sensitive": true,
+      "peak_rss_mb": 2273,
+      "load_at_start": 23.91,
+      "free_mem_at_start_mb": 2225,
+      "threads": 12,
+      "observed_seconds": {"n": 3, "min": 180.03, "median": 180.05, "max": 180.06},
+      "fresh_measured_seconds": 190.02,
       "recorded": "2026-10-02",
-      "note": "scripts/ci/generate-docs-index.py --check. Measured 215s before the plan corpora (docs/plans/**, 1472 files) were excluded; ~126s after; coordination ledgers (WORKTREE_OWNERSHIP.md, INTEGRATION_PLANS.md) also excluded. Load-sensitive \u2014 a concurrent dotnet/godot build can push this well past the reference."
+      "note": "Three deliberate `dotnet build -t:Rebuild -m:1 -p:UseSharedCompilation=false` runs; incremental builds emit no warnings so Rebuild is required to avoid a false pass. Duplicates build_core_tests + build_godot_host. Peak RSS 2273 MB is the host rebuild."
     },
-    "plan_register_check": {
-      "reference_seconds": 32.0,
+    "build_godot_host": {
+      "reference_seconds": 139.44,
+      "reference_kind": "worst_case_committed_report",
+      "memory_sensitive": true,
+      "peak_rss_mb": 2295,
+      "load_at_start": 15.78,
+      "free_mem_at_start_mb": 2225,
+      "threads": 12,
+      "observed_seconds": {"n": 7, "min": 3.82, "median": 6.4, "max": 139.44},
+      "fresh_measured_seconds": 72.86,
       "recorded": "2026-10-02",
-      "note": "scripts/ci/generate-plan-register.py --check."
+      "note": "dotnet build Ashfall.csproj. Huge variance: 3.8 s no-op vs 139.4 s cold/full; the reference is the worst case so a no-op does not trip it. Compiler-bound (one ~616 K-LOC assembly)."
+    },
+    "docs_index_drift": {
+      "reference_seconds": 126.0,
+      "reference_kind": "recorded_under_load",
+      "memory_sensitive": false,
+      "peak_rss_mb": 68,
+      "load_at_start": 19.17,
+      "free_mem_at_start_mb": 2225,
+      "threads": 12,
+      "observed_seconds": {"n": 3, "min": 120.05, "median": 120.12, "max": 124.03},
+      "fresh_measured_seconds": 57.94,
+      "recorded": "2026-10-02",
+      "note": "python3 scripts/ci/generate-docs-index.py --check over 4,159 files / 4.199 GB, uncached. CPU-bound (42.9 s user / 68 MB peak RSS); caching target of Track B. Key renamed from the legacy 'docs_index_check', which matched no gate id."
     },
     "build_core_tests": {
       "reference_seconds": 41.82,
-      "note": "recorded from a measured run; re-record on a quiet system if load made it unrepresentative",
-      "recorded": "2026-10-02"
+      "reference_kind": "recorded_quiet",
+      "memory_sensitive": true,
+      "peak_rss_mb": 1221,
+      "load_at_start": 15.78,
+      "free_mem_at_start_mb": 2225,
+      "threads": 12,
+      "observed_seconds": {"n": 3, "min": 6.63, "median": 32.52, "max": 120.58},
+      "fresh_measured_seconds": 66.21,
+      "recorded": "2026-10-02",
+      "note": "dotnet build Ashfall.Core.Tests. Authoritative reference stays 41.82 (quiet); the 120.6 s committed worst case is recorded in observed_seconds and is NOT used to raise the reference (it is the open 2.9x load/concurrency question)."
+    },
+    "real_campaign_journey": {
+      "reference_seconds": 108.36,
+      "reference_kind": "worst_case_committed_report",
+      "memory_sensitive": false,
+      "peak_rss_mb": null,
+      "load_at_start": null,
+      "free_mem_at_start_mb": null,
+      "threads": 12,
+      "observed_seconds": {"n": 2, "min": 0.03, "median": 54.2, "max": 108.36},
+      "recorded": "2026-10-02",
+      "note": "Godot headless --real-campaign-journey-selftest; engine-startup bound. Language conversion cannot help."
+    },
+    "content_acceptance_pipeline": {
+      "reference_seconds": 103.37,
+      "reference_kind": "worst_case_committed_report",
+      "memory_sensitive": false,
+      "peak_rss_mb": null,
+      "load_at_start": null,
+      "free_mem_at_start_mb": null,
+      "threads": 12,
+      "observed_seconds": {"n": 2, "min": 49.97, "median": 76.67, "max": 103.37},
+      "recorded": "2026-10-02",
+      "note": "content-acceptance-gate.sh; Godot/engine-work bound."
+    },
+    "coverage_gate": {
+      "reference_seconds": 95.79,
+      "reference_kind": "worst_case_committed_report",
+      "memory_sensitive": true,
+      "peak_rss_mb": null,
+      "load_at_start": null,
+      "free_mem_at_start_mb": null,
+      "threads": 12,
+      "observed_seconds": {"n": 3, "min": 29.48, "median": 60.06, "max": 95.79},
+      "recorded": "2026-10-02",
+      "note": "coverlet instrumentation over the CLR; conversion infeasible."
+    },
+    "port_contract_gate": {
+      "reference_seconds": 89.41,
+      "reference_kind": "worst_case_committed_report",
+      "memory_sensitive": false,
+      "peak_rss_mb": null,
+      "load_at_start": null,
+      "free_mem_at_start_mb": null,
+      "threads": 12,
+      "observed_seconds": {"n": 3, "min": 53.17, "median": 60.02, "max": 89.41},
+      "recorded": "2026-10-02",
+      "note": "python3 scripts/ci/generate-port-contract.py --check; corpus scan, Track B cache candidate."
+    },
+    "plan_integration_audit_drift": {
+      "reference_seconds": 82.77,
+      "reference_kind": "worst_case_committed_report",
+      "memory_sensitive": false,
+      "peak_rss_mb": null,
+      "load_at_start": null,
+      "free_mem_at_start_mb": null,
+      "threads": 12,
+      "observed_seconds": {"n": 2, "min": 60.14, "median": 71.45, "max": 82.77},
+      "recorded": "2026-10-02",
+      "note": "python3 scripts/ci/generate-plan-integration-audit.py --check; corpus scan, Track B cache candidate."
+    },
+    "doc_link_portability": {
+      "reference_seconds": 80.65,
+      "reference_kind": "worst_case_committed_report",
+      "memory_sensitive": false,
+      "peak_rss_mb": null,
+      "load_at_start": null,
+      "free_mem_at_start_mb": null,
+      "threads": 12,
+      "observed_seconds": {"n": 2, "min": 30.03, "median": 55.34, "max": 80.65},
+      "recorded": "2026-10-02",
+      "note": "doc-link-gate.sh; markdown corpus scan, Track B cache candidate."
+    },
+    "architecture_map_drift": {
+      "reference_seconds": 80.32,
+      "reference_kind": "worst_case_committed_report",
+      "memory_sensitive": false,
+      "peak_rss_mb": null,
+      "load_at_start": null,
+      "free_mem_at_start_mb": null,
+      "threads": 12,
+      "observed_seconds": {"n": 2, "min": 30.09, "median": 55.21, "max": 80.32},
+      "recorded": "2026-10-02",
+      "note": "generate-architecture-map.sh --check; corpus scan, Track B cache candidate."
+    },
+    "ui_panel_contracts_test": {
+      "reference_seconds": 60.63,
+      "reference_kind": "worst_case_committed_report",
+      "memory_sensitive": false,
+      "peak_rss_mb": null,
+      "load_at_start": null,
+      "free_mem_at_start_mb": null,
+      "threads": 12,
+      "observed_seconds": {"n": 2, "min": 12.95, "median": 36.79, "max": 60.63},
+      "recorded": "2026-10-02",
+      "note": "dotnet test --filter UiPanelContractTests; build+CLR per filtered run; Track C --no-build reuse candidate."
+    },
+    "audio_cue_integrity_gate": {
+      "reference_seconds": 60.49,
+      "reference_kind": "worst_case_committed_report",
+      "memory_sensitive": false,
+      "peak_rss_mb": null,
+      "load_at_start": null,
+      "free_mem_at_start_mb": null,
+      "threads": 12,
+      "observed_seconds": {"n": 2, "min": 8.65, "median": 34.57, "max": 60.49},
+      "recorded": "2026-10-02",
+      "note": "dotnet test --filter AudioCueIntegrityTests; build+CLR; Track C --no-build reuse candidate."
+    },
+    "player_panels_uitest": {
+      "reference_seconds": 60.1,
+      "reference_kind": "worst_case_committed_report",
+      "memory_sensitive": false,
+      "peak_rss_mb": null,
+      "load_at_start": null,
+      "free_mem_at_start_mb": null,
+      "threads": 12,
+      "observed_seconds": {"n": 2, "min": 54.65, "median": 57.37, "max": 60.1},
+      "recorded": "2026-10-02",
+      "note": "Godot headless --player-panels-uitest; engine-startup bound."
+    },
+    "input_map_contract": {
+      "reference_seconds": 47.39,
+      "reference_kind": "worst_case_committed_report",
+      "memory_sensitive": false,
+      "peak_rss_mb": null,
+      "load_at_start": null,
+      "free_mem_at_start_mb": null,
+      "threads": 12,
+      "observed_seconds": {"n": 3, "min": 29.87, "median": 30.05, "max": 47.39},
+      "recorded": "2026-10-02",
+      "note": "input-map-gate.sh."
+    },
+    "campaign_envelope_fuzz_test": {
+      "reference_seconds": 30.49,
+      "reference_kind": "worst_case_committed_report",
+      "memory_sensitive": false,
+      "peak_rss_mb": null,
+      "load_at_start": null,
+      "free_mem_at_start_mb": null,
+      "threads": 12,
+      "observed_seconds": {"n": 2, "min": 8.28, "median": 19.38, "max": 30.49},
+      "recorded": "2026-10-02",
+      "note": "dotnet test --filter CampaignEnvelopeFuzzTests; Track C --no-build reuse candidate."
+    },
+    "lfs_health_check": {
+      "reference_seconds": 30.04,
+      "reference_kind": "worst_case_committed_report",
+      "memory_sensitive": false,
+      "peak_rss_mb": null,
+      "load_at_start": null,
+      "free_mem_at_start_mb": null,
+      "threads": 12,
+      "observed_seconds": {"n": 3, "min": 22.03, "median": 23.04, "max": 30.04},
+      "recorded": "2026-10-02",
+      "note": "lfs-health-check.sh; git LFS scan."
+    },
+    "plan_register_check": {
+      "reference_seconds": 32.0,
+      "reference_kind": "recorded_under_load",
+      "memory_sensitive": false,
+      "peak_rss_mb": null,
+      "load_at_start": null,
+      "free_mem_at_start_mb": null,
+      "threads": 12,
+      "recorded": "2026-10-02",
+      "note": "Ad-hoc stage (python3 scripts/ci/generate-plan-register.py --check); not a run-gates gate id, so it is checked only when supplied explicitly via --key."
     }
   }
 }

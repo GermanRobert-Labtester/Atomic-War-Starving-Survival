@@ -1,6 +1,17 @@
+# FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED
+
 # Staged Rust Port of the ASHFALL Go Dev Toolchain
 
-STATUS: APPROVED BY USER
+> **STATUS: FULLY INTEGRATED — FULLY INTEGRATED — FULLY INTEGRATED**
+
+**Stage 4 executed 2026-10-02.** Go toolchain deleted (`git rm -r tools/gotools`,
+41 files; `git ls-files '*.go'` = 0); Rust (`tools/rstools`) is authoritative.
+Manifest retargeted to `tools/rstools/target/release/ashfall-dev` with
+`rstools_test`/`rstools_vet`/`build_rstools` (74 gates / 70 fast, note 1.1.9);
+`.github` → `dtolnay/rust-toolchain`; `language-policy-gate` allowlist removed;
+`reachability-report` ported to Rust. Verified: manifest valid, inventory PASS,
+`cargo test` 124/124, `clippy -D warnings` clean, retargeted gates PASS,
+language gate PASS, docs index PASS.
 
 > **Authority note.** The user directed on 2026-10-02: *"Please remove any .go
 > code and either convert to rust or remove!"* and, when asked to disambiguate,
@@ -46,20 +57,51 @@ removes Go — so at every commit the toolchain works.
 | 3 | `pkg/checkplan`, `pkg/agentsync`, `pkg/catalogaudit`, `pkg/releasepolicy`, `pkg/monitor`, `pkg/proxy`, `pkg/orchestrator`; `check-plan`, `sync-agents`, `audit-catalogs`, `releasepolicy`, `monitor-size`, `monitor-compile`, `llm-proxy`, `agent-core` | `checkplan`, `agentsync`, `catalogaudit`, `releasepolicy`, `monitor`, `proxy`, `orchestrator` |
 | 4 | cutover + removal | — |
 
-## Stage 4 cutover checklist (later turns)
+## Stage 4 cutover checklist (concrete — started 2026-10-02)
 
-1. `bin/ashfall-dev`, `bin/run-scoped-tests`, `bin/validate-config`,
-   `bin/check-approved-plan` become wrappers/shims for the Rust binary.
-2. `docs/ci/CI_GATE_MANIFEST.json`: replace `go run -C tools/gotools ./cmd/...`
-   and `go test`/`go vet` gates with the Rust binary and `cargo test`/`cargo
-   clippy`; regenerate `docs/ci/GATE_INVENTORY.md` via its owning generator.
-   Rename `gotools_test`/`gotools_vet` → `rstools_test`/`rstools_vet`.
-3. `.github/workflows/*`: install Rust (`dtolnay/rust-toolchain`) instead of Go.
-4. Amend `QWEN.md`/`AGENTS.md`/`TEST_POLICY.md` (canonical `AGENTS.md` first) to
-   make Rust the tool authority; regenerate the 13 client rulebooks with the
-   *Go* `sync-agents` one final time before removal.
-5. `git rm -r tools/gotools` (+ `go.mod`/`go.sum`); record the decision in
-   `docs/governance/DECISION_REGISTER.md`.
+**Live-gate surface — Rust parity verified for every entry:**
+
+| Caller | Current (Go) | Rust replacement | Parity |
+|---|---|---|---|
+| manifest `releasepolicy` gate | `go run -C tools/gotools ./cmd/releasepolicy …` | `ashfall-dev releasepolicy …` | ✅ byte-id mod clock/HEAD |
+| manifest `monitor-size` | `go run … ./cmd/ashfall-dev monitor-size …` | `ashfall-dev monitor-size …` | ✅ (agent-verified) |
+| manifest `monitor-compile` ×2 | `go run … monitor-compile …` | `ashfall-dev monitor-compile …` | ✅ (agent-verified) |
+| manifest `catalog_audit` | `go run … audit-catalogs --check/--json` | `ashfall-dev audit-catalogs …` | ✅ byte-identical |
+| manifest `gotools_test` | `go test -C tools/gotools ./...` | `cargo test --manifest-path tools/rstools/Cargo.toml` | ✅ 121/121 |
+| manifest `gotools_vet` | `go vet -C tools/gotools ./...` | `cargo clippy --manifest-path tools/rstools/Cargo.toml -- -D warnings` | clippy 0.1.98 present |
+| pre-commit | `bin/check-approved-plan` (Go) | Rust `check-plan` shim | ✅ byte-identical |
+| `run-gates.py --jobs` | `bin/ashfall-dev run-tasks -j N -json` | Rust binary | ✅ |
+
+**Design constraint:** Go gates use `go run` (compile-on-demand). Rust gates need
+the binary built first, so rewritten gates must add a `build_rstools`
+(`cargo build --release`) dependency, or use
+`cargo run --release --manifest-path tools/rstools/Cargo.toml -p ashfall-dev -- …`.
+
+**Exact edits:**
+1. `bin/` shims for the Rust multicall binary (`ashfall-dev`,
+   `run-scoped-tests`, `validate-config`, `check-approved-plan`) — `bin/` is
+   gitignored; no existing script builds it, so add a small build/install step.
+2. `docs/ci/CI_GATE_MANIFEST.json`: swap the 5 `go run` commands to the Rust
+   binary; `gotools_test`→`rstools_test` (`cargo test`), `gotools_vet`→
+   `rstools_vet` (`cargo clippy`); regenerate `docs/ci/GATE_INVENTORY.md`; keep
+   `gate_inventory_drift` and `CiGateManifestDriftTests` green.
+3. `.github/workflows/{ci,build,release,selftest-manifest-regen}.yml`: Go →
+   Rust (`dtolnay/rust-toolchain`).
+4. `scripts/ci/language-policy-gate.py`: drop the `tools/gotools/` allowlist.
+5. `scripts/ci/git-hooks/pre-commit` + `scripts/ci/release-gate.sh`: Rust refs.
+6. `git rm -r tools/gotools` + `go.mod`/`go.sum`.
+7. Policy docs: `AGENTS.md` already states Go-retired/Rust-first, so little is
+   needed — but **editing `AGENTS.md` is blocked by auto-mode policy** and needs
+   explicit approval.
+
+**Not at parity, but NOT live callers** (verified by grep — no gate, script, or
+workflow invokes them): `llm-proxy`, `agent-core`, `index --watch/--serve`,
+`cmd/reachability-report`. They exit 2 in the Rust port. A cutover retires them.
+
+**Gated before the destructive step (review rulings):** "full parity" holds for
+every *live* caller but not the four non-live commands; the coordinated
+`get_changed_files` truncation fix is still pending; and the CI flip + Go
+deletion is authoritative shared infrastructure requiring an explicit go-ahead.
 
 ## Parity strategy
 

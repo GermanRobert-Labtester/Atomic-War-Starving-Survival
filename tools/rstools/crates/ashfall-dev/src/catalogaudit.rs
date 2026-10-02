@@ -474,17 +474,17 @@ fn read_class_char(p: &[u8], i: &mut usize) -> Option<u8> {
 // JSON document walking
 // ---------------------------------------------------------------------------
 
-fn walk_json<F: FnMut(&str, &serde_json::Value)>(v: &serde_json::Value, key: &str, f: &mut F) {
+fn walk_json<F: FnMut(&str, &serde_json::Value)>(v: &serde_json::Value, f: &mut F) {
     match v {
         serde_json::Value::Object(m) => {
             for (k, child) in m {
                 f(k, child);
-                walk_json(child, k, f);
+                walk_json(child, f);
             }
         }
         serde_json::Value::Array(a) => {
             for child in a {
-                walk_json(child, key, f);
+                walk_json(child, f);
             }
         }
         _ => {}
@@ -623,7 +623,7 @@ fn read_catalogs(data_dir: &Path, p: &Policy) -> Result<(Vec<CatalogFile>, Vec<F
                 continue;
             }
         };
-        walk_json(&doc, "", &mut |key, value| match key {
+        walk_json(&doc, &mut |key, value| match key {
             "id" => {
                 if let serde_json::Value::String(s) = value {
                     if !s.is_empty() {
@@ -1096,7 +1096,7 @@ pub fn domain_ids(root: &str, p: &Policy, domain: &str) -> Result<Vec<String>, S
         let Some(doc) = parse_doc(&data_dir.join(name)) else {
             continue;
         };
-        walk_json(&doc, "", &mut |key, value| {
+        walk_json(&doc, &mut |key, value| {
             if key == "id" {
                 if let serde_json::Value::String(s) = value {
                     if !s.is_empty() {
@@ -1131,7 +1131,7 @@ pub fn duplicate_ids(root: &str, p: &Policy) -> Result<Vec<DuplicateEntry>, Stri
         let Some(doc) = parse_doc(&data_dir.join(name)) else {
             continue;
         };
-        walk_json(&doc, "", &mut |key, value| {
+        walk_json(&doc, &mut |key, value| {
             if key != "id" {
                 return;
             }
@@ -1384,7 +1384,7 @@ mod tests {
         p.duplicate_id_allowlist = vec!["bandage".to_string()];
         let rep = run(&root.to_string_lossy(), &p, &new_baseline()).unwrap();
         let b = baseline_from_report(&rep);
-        assert!(b.accepted.get("duplicate_ids").is_none());
+        assert!(!b.accepted.contains_key("duplicate_ids"));
         let _ = fs::remove_dir_all(&root);
     }
 

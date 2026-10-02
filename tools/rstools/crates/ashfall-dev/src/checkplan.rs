@@ -44,10 +44,10 @@ pub fn is_code_file(path: &str) -> bool {
         return false;
     }
 
-    match go_ext_lower(&norm).as_str() {
-        ".cs" | ".gd" | ".py" | ".go" | ".tscn" | ".godot" | ".shader" | ".json" => true,
-        _ => false,
-    }
+    matches!(
+        go_ext_lower(&norm).as_str(),
+        ".cs" | ".gd" | ".py" | ".go" | ".tscn" | ".godot" | ".shader" | ".json"
+    )
 }
 
 /// `filepath.Ext` lowercased.

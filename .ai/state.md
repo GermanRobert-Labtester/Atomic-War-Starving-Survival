@@ -1,5 +1,28 @@
 # Current Task State
 
+## Rust port Stage 4 cutover COMPLETE — Go deleted (2026-10-02)
+
+User-directed "stage 4" → "Full cutover now" → "finish the remaining". Go toolchain
+**deleted** (`git rm -r tools/gotools`, 41 files; `git ls-files '*.go'` = 0). Rust
+(`tools/rstools`) is authoritative.
+
+- Manifest: 5 `go run` gates → `tools/rstools/target/release/ashfall-dev`;
+  `gotools_test/vet` → `rstools_test` (cargo test) / `rstools_vet`
+  (cargo clippy -D warnings); new `build_rstools`; header 73→74 / 69→70, note 1.1.9.
+- `.github/workflows/{ci,release}.yml` → `dtolnay/rust-toolchain`; ci plan fallback
+  uses `cargo run … check-plan`. `language-policy-gate.py` allowlist removed;
+  pre-commit + release scripts + CI docs retargeted to Rust.
+- Gap closed mid-cutover: `cmd/reachability-report` (depended on by
+  `ContentReachabilityDispositionTests`) **ported to Rust** (`src/reachability.rs`,
+  CLI `reachability-report`; PascalCase JSON aliases). Retired non-live commands:
+  `llm-proxy`, `agent-core`, `index --watch/--serve` (exit 2).
+- Verified: manifest `--check-only` valid (74/70); `--check-inventory` PASS;
+  `cargo test` **124/124**; `cargo clippy -D warnings` clean; retargeted gates
+  (build_rstools, rstools_test, rstools_vet, catalog_audit) **PASS**; language gate
+  PASS; docs index PASS (4158). `bin/ashfall-dev` rebuilt from Rust (gitignored).
+- Plan `.ai/plans/rust-port-gotools-2026-10-02.md` marked FULLY INTEGRATED ×3 and
+  archived to `.ai/plans/integrated/tooling/`. Commit + push this turn.
+
 ## Rust port Stage 2 COMPLETE + Stage 3 running + PERF-001/Phase 1 (2026-10-02)
 
 **Rust port (claim `claim-rust-port-gotools-2026-10-02`):**

@@ -122,8 +122,7 @@ fn base_stem(s: &str, ext: &str) -> String {
 fn git_output(repo_root: &str, args: &[&str]) -> std::io::Result<String> {
     let out = Command::new("git").args(args).current_dir(repo_root).output()?;
     if !out.status.success() {
-        return Err(std::io::Error::new(
-            std::io::ErrorKind::Other,
+        return Err(std::io::Error::other(
             format!("git {:?} failed", args),
         ));
     }

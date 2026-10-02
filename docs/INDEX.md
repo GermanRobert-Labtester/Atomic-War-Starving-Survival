@@ -2,12 +2,16 @@
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
 <<<<<<< main
+<<<<<<< main
 **Total Indexed Documents:** 4159 | **Total Characters:** 4,169,298,723 | **Last Verified:** 2026-10-02
+=======
+**Total Indexed Documents:** 4158 | **Total Characters:** 4,169,296,682 | **Last Verified:** 2026-10-02
+>>>>>>> Main-alt-branch
 **Oversized (>= 100,000 characters):** 2210 documents carrying 4,138,691,836 characters — tracked in full, see the register below
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
-| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 4106 |
+| 🟢 `CURRENT` | Authoritative, active living documentation matching Godot architecture | 4105 |
 | 🟡 `HISTORICAL` | Forensic reports, phase logs, and historical postmortems (retained for record) | 51 |
 =======
 **Total Indexed Documents:** 2636 | **Last Verified:** 2026-09-28
@@ -2480,11 +2484,11 @@ The following documents share identical or near-identical filenames across root,
 | Status | Document | Characters | Title / Summary |
 |---|---|---|---|
 | 🟢 `CURRENT` | [`docs/CI.md`](CI.md) | 8,164 | **ASHFALL — Continuous Integration & Verification Guide** — **Authoritative host/engine:** Godot 4.7+ (.NET / C#) (`project.godot`) |
-| 🟢 `CURRENT` | [`docs/ci/CATALOG_AUDIT_POLICY.md`](ci/CATALOG_AUDIT_POLICY.md) | 2,962 | **Catalog Audit Policy (`docs/ci/catalog_audit_policy.json`)** — Read-only reference for the `catalog_audit` CI gate |
-| 🟢 `CURRENT` | [`docs/ci/GATE_INVENTORY.md`](ci/GATE_INVENTORY.md) | 6,890 | **CI Gate Inventory (Plan VIII · Task 24.1)** — Generated from `docs/ci/CI_GATE_MANIFEST.json` — 73 gates, 69 fast. Regenerate with `python3 scripts/ci/run-gates.py ... |
-| 🟢 `CURRENT` | [`docs/ci/GATING_VS_DIAGNOSTIC_CHECKS.md`](ci/GATING_VS_DIAGNOSTIC_CHECKS.md) | 9,509 | **ASHFALL — Verification Gates vs. Diagnostic-Only Checks** — **Date:** 2026-10-02 |
-| 🟢 `CURRENT` | [`docs/ci/LANGUAGE_POLICY.md`](ci/LANGUAGE_POLICY.md) | 3,482 | **ASHFALL Language Policy — Authoritative** — **Status:** ACTIVE (user-directed 2026-10-02). Canonical summary lives in |
-| 🟢 `CURRENT` | [`docs/ci/README.md`](ci/README.md) | 5,485 | **ASHFALL CI — Canonical Verification Contract (Plan VIII · Task 24)** — One runner, one manifest, one meaning of "green". |
+| 🟢 `CURRENT` | [`docs/ci/CATALOG_AUDIT_POLICY.md`](ci/CATALOG_AUDIT_POLICY.md) | 2,942 | **Catalog Audit Policy (`docs/ci/catalog_audit_policy.json`)** — Read-only reference for the `catalog_audit` CI gate |
+| 🟢 `CURRENT` | [`docs/ci/GATE_INVENTORY.md`](ci/GATE_INVENTORY.md) | 7,009 | **CI Gate Inventory (Plan VIII · Task 24.1)** — Generated from `docs/ci/CI_GATE_MANIFEST.json` — 74 gates, 70 fast. Regenerate with `python3 scripts/ci/run-gates.py ... |
+| 🟢 `CURRENT` | [`docs/ci/GATING_VS_DIAGNOSTIC_CHECKS.md`](ci/GATING_VS_DIAGNOSTIC_CHECKS.md) | 9,494 | **ASHFALL — Verification Gates vs. Diagnostic-Only Checks** — **Date:** 2026-10-02 |
+| 🟢 `CURRENT` | [`docs/ci/LANGUAGE_POLICY.md`](ci/LANGUAGE_POLICY.md) | 3,514 | **ASHFALL Language Policy — Authoritative** — **Status:** ACTIVE (user-directed 2026-10-02). Canonical summary lives in |
+| 🟢 `CURRENT` | [`docs/ci/README.md`](ci/README.md) | 5,641 | **ASHFALL CI — Canonical Verification Contract (Plan VIII · Task 24)** — One runner, one manifest, one meaning of "green". |
 | 🟢 `CURRENT` | [`docs/ci/TASK132_PRE2_BASELINE.md`](ci/TASK132_PRE2_BASELINE.md) | 8,675 | **Task #132 — PRE-2 Trusted Baseline** — Captured after PRE-1 (expedition test-oracle repair) and before any domain |
 | 🟢 `CURRENT` | [`docs/ci/TIMING_BUDGET.md`](ci/TIMING_BUDGET.md) | 2,639 | **Timing Budget — Reference Durations & the Suspicion Threshold** — **Authority:** `docs/ci/TIMING_BASELINE.json` (references) + `scripts/ci/timing-budget.py` (checker). |
 | 🟢 `CURRENT` | [`docs/ci/content_reachability_dormant_triage.md`](ci/content_reachability_dormant_triage.md) | 9,566 | **Content-Reachability DORMANT Triage (T079)** — Generated from `docs/ci/content_reachability_dispositions.json`. Every entry |
@@ -4692,7 +4696,11 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`scripts/maintenance/README.md`](../scripts/maintenance/README.md) | 2,358 | **ASHFALL — Maintenance & Migration Scripts** — This directory houses historical one-off migration utilities and reusable batch-transformation tools for the ASHFALL ... |
 
 <<<<<<< main
+<<<<<<< main
 ## 9. General Project Guides & Archive Reference (2081 documents)
+=======
+## 9. General Project Guides & Archive Reference (2080 documents)
+>>>>>>> Main-alt-branch
 
 | Status | Document | Characters | Title / Summary |
 |---|---|---|---|
@@ -5285,7 +5293,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`Seal-steps/ashfall-six-unblocked-partial-integration-plans-full-implementation-plan.md`](../Seal-steps/ashfall-six-unblocked-partial-integration-plans-full-implementation-plan.md) | 50,534 | **ASHFALL — Six Unblocked Partial-Integration Plans** — **Document class:** Implementation plan (integration ledger companion, not a replacement for `INTEGRATION_PLANS.md`). |
 | 🟢 `CURRENT` | [`Seal-steps/ashfall-wave2-decision-gated-chains-execution-program-2026-09-19.md`](../Seal-steps/ashfall-wave2-decision-gated-chains-execution-program-2026-09-19.md) | 90,126 | **ASHFALL — Wave 2, Program A: Decision-Gated Chains Execution Program** — This is Wave 2 Program A in the four-document chain begun on 2026-09-19: |
 | 🟢 `CURRENT` | [`Seal-steps/ashfall-wave2-successor-corpus-tranche-two-and-ship-readiness-program-2026-09-19.md`](../Seal-steps/ashfall-wave2-successor-corpus-tranche-two-and-ship-readiness-program-2026-09-19.md) | 90,201 | **ASHFALL — Wave 2, Program B: Successor Corpus Tranche-2 & Ship-Readiness Program** — This is Wave 2 Program B, the final forward document in the 2026-09-19 |
-| 🟢 `CURRENT` | [`TEST_POLICY.md`](../TEST_POLICY.md) | 6,117 | **ASHFALL Test Policy** — Tests protect current behavior; they are not a production-count target. This |
+| 🟢 `CURRENT` | [`TEST_POLICY.md`](../TEST_POLICY.md) | 6,101 | **ASHFALL Test Policy** — Tests protect current behavior; they are not a production-count target. This |
 | 🟢 `CURRENT` | [`VIBE.md`](../VIBE.md) | 19,536 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
 | 🟢 `CURRENT` | [`addons/godot_mcp/commands/master_checklist.md`](../addons/godot_mcp/commands/master_checklist.md) | 1,457 | **Master Checklist** — - [x] 01. `project_creation_commands.gd` |
 | 🟢 `CURRENT` | [`addons/ziva_agent/LICENSE.md`](../addons/ziva_agent/LICENSE.md) | 282 | **Proprietary License** — All rights reserved. |
@@ -6728,7 +6736,6 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`semantic-review/2026-08-30-023250-pr-0.md`](../semantic-review/2026-08-30-023250-pr-0.md) | 20,700 | **Cross-wave campaign persistence and lifecycle authority** — The working diff adds lifecycle-group metadata and alias normalization, tightens current campaign-envelope validation... |
 | 🟢 `CURRENT` | [`test-helpers/README.md`](../test-helpers/README.md) | 493 | **Test Helpers & Pytest Infrastructure (Python)** — This directory hosts Python-specific test infrastructure: |
 | 🟢 `CURRENT` | [`tools/README.md`](../tools/README.md) | 7,824 | **ASHFALL — Non-Runtime Tools & Utilities Catalog** — **Date:** 2026-08-27<br> |
-| 🟢 `CURRENT` | [`tools/gotools/README.md`](../tools/gotools/README.md) | 2,297 | **ASHFALL Go Tooling (`tools/gotools`)** — Persistent development/CI tooling, invoked through `bin/ashfall-dev` |
 | 🟢 `CURRENT` | [`tools/rstools/README.md`](../tools/rstools/README.md) | 10,238 | **tools/rstools — ASHFALL dev tool suite (Rust)** — Rust home of the ASHFALL development/CI tool suite, replacing the Go module at |
 | 🟡 `HISTORICAL` | [`Next-steps-plans/shipped_to_chat/Plan_218_Shelter_Museum_Historical_Archive.md`](../Next-steps-plans/shipped_to_chat/Plan_218_Shelter_Museum_Historical_Archive.md) | 254,597 | **Plan 218 — Shelter Museum Archive — Host, Projection, and Save Custody** — **VERIFIED Core:** `Assets/Ashfall.Core/Culture/ShelterMuseumSystem.cs`. **VERIFIED or absent host:** No ShelterMuseu... |
 | 🟡 `HISTORICAL` | [`docs/ARCHIVE_INDEX.md`](ARCHIVE_INDEX.md) | 2,510 | **ASHFALL Historical Documentation & External Archive Index** — This repository maintains a lean, living documentation corpus in `docs/` representing active, authoritative game spec... |

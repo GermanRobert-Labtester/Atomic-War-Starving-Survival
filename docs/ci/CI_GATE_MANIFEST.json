@@ -1,9 +1,9 @@
 {
-  "schema_version": "1.1.8",
-  "_schema_version_note": "1.1.0 \u2014 Plan 48 / C2[21] Phase 2: added version_gate and changelog_drift (fast, +2 gates); Phase 3: added save_support_window (full, +1 gate). 1.1.1 \u2014 Plans 210/214 audit package: added plan_integration_audit_drift and ui_design_map_drift (fast, +2 gates). 1.1.2 \u2014 W1 assurance: four fast monitors and release_required metadata on three full release gates. 1.1.3 \u2014 P008: added first_hour_onboarding_journey (fast, +1 gate) guarding the 7-stage onboarding floor. 1.1.4 \u2014 P096: added scene_binding_truth (fast, +1 gate) so no *Content.cs stub, unassigned/dangling scene script, PanelSceneLoader request-vs-root type mismatch, or pre-hidden bound content scene can regress. 1.1.5 \u2014 D01\u2013D05 catalog-hygiene wave: added catalog_audit (fast, +1 gate) and content_certification (fast, +1 gate). 1.1.6 \u2014 E01\u2013E15 follow-ups: added gotools_test, gate_inventory_drift, and content_utilization (fast, +3 gates). 1.1.7 \u2014 I01\u2013I15: added gotools_vet (fast, +1 gate); migrated per-gate remediation hints into the manifest. 1.1.8 \u2014 L01\u2013L04: added pot_template_drift (fast, +1 gate) for generated translator template freshness.",
+  "schema_version": "1.1.9",
+  "_schema_version_note": "1.1.0 \u2014 Plan 48 / C2[21] Phase 2: added version_gate and changelog_drift (fast, +2 gates); Phase 3: added save_support_window (full, +1 gate). 1.1.1 \u2014 Plans 210/214 audit package: added plan_integration_audit_drift and ui_design_map_drift (fast, +2 gates). 1.1.2 \u2014 W1 assurance: four fast monitors and release_required metadata on three full release gates. 1.1.3 \u2014 P008: added first_hour_onboarding_journey (fast, +1 gate) guarding the 7-stage onboarding floor. 1.1.4 \u2014 P096: added scene_binding_truth (fast, +1 gate) so no *Content.cs stub, unassigned/dangling scene script, PanelSceneLoader request-vs-root type mismatch, or pre-hidden bound content scene can regress. 1.1.5 \u2014 D01\u2013D05 catalog-hygiene wave: added catalog_audit (fast, +1 gate) and content_certification (fast, +1 gate). 1.1.6 \u2014 E01\u2013E15 follow-ups: added gotools_test, gate_inventory_drift, and content_utilization (fast, +3 gates). 1.1.7 \u2014 I01\u2013I15: added gotools_vet (fast, +1 gate); migrated per-gate remediation hints into the manifest. 1.1.8 \u2014 L01\u2013L04: added pot_template_drift (fast, +1 gate) for generated translator template freshness. 1.1.9 \u2014 Stage 4 Rust cutover: replaced gotools_test/gotools_vet with rstools_test/rstools_vet and added build_rstools (fast, net +1 gate); retargeted the releasepolicy/monitor/audit gates to tools/rstools (Rust).",
   "description": "Authoritative manifest of all verification gates for ASHFALL shared between local runner and hosted CI",
-  "total_gates": 73,
-  "fast_tier_count": 69,
+  "total_gates": 74,
+  "fast_tier_count": 70,
   "gates": [
     {
       "gate_id": "whitespace_hygiene",
@@ -48,6 +48,17 @@
       "classification": "fast",
       "critical": true,
       "remediation": "dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo"
+    },
+    {
+      "gate_id": "build_rstools",
+      "name": "Build Rust dev tools (tools/rstools, release)",
+      "category": "Build & Tests",
+      "command": "cargo build --release --manifest-path tools/rstools/Cargo.toml",
+      "timeout_seconds": 180,
+      "expected_summary": "Finished",
+      "classification": "fast",
+      "critical": false,
+      "remediation": "cargo build --release --manifest-path tools/rstools/Cargo.toml"
     },
     {
       "gate_id": "test_core_suite",
@@ -625,46 +636,46 @@
       "gate_id": "release_workflow_parity",
       "name": "Release workflow and required-gate parity (W1 assurance)",
       "category": "Release",
-      "command": "go run -C tools/gotools ./cmd/releasepolicy --root ../.. --out ../../build/reports/monitoring/release-policy.json",
+      "command": "tools/rstools/target/release/ashfall-dev releasepolicy --root . --out build/reports/monitoring/release-policy.json",
       "timeout_seconds": 120,
       "expected_summary": "[releasepolicy] PASS",
       "classification": "fast",
       "critical": true,
-      "depends_on": [],
-      "remediation": "go run -C tools/gotools ./cmd/releasepolicy --root ../.. --out ../../build/reports/monitoring/release-policy.json"
+      "depends_on": ["build_rstools"],
+      "remediation": "tools/rstools/target/release/ashfall-dev releasepolicy --root . --out build/reports/monitoring/release-policy.json"
     },
     {
       "gate_id": "repository_size_budget",
       "name": "Tracked repository growth and new Markdown budget (W1 assurance)",
       "category": "Code & Repo Hygiene",
-      "command": "go run -C tools/gotools ./cmd/ashfall-dev monitor-size --root ../.. --base HEAD^1 --out ../../build/reports/monitoring/repository-size.json",
+      "command": "tools/rstools/target/release/ashfall-dev monitor-size --root . --base HEAD^1 --out build/reports/monitoring/repository-size.json",
       "timeout_seconds": 120,
       "expected_summary": "[monitor-size] Report written",
       "classification": "fast",
       "critical": true,
-      "depends_on": []
+      "depends_on": ["build_rstools"]
     },
     {
       "gate_id": "compile_set_reachability",
       "name": "Tracked C# source versus evaluated production and test compile sets (W1 assurance)",
       "category": "Code & Repo Hygiene",
-      "command": "go run -C tools/gotools ./cmd/ashfall-dev monitor-compile --root ../.. --out ../../build/reports/monitoring/compile-set.json",
+      "command": "tools/rstools/target/release/ashfall-dev monitor-compile --root . --out build/reports/monitoring/compile-set.json",
       "timeout_seconds": 120,
       "expected_summary": "[monitor-compile] Report written",
       "classification": "fast",
       "critical": true,
-      "depends_on": []
+      "depends_on": ["build_rstools"]
     },
     {
       "gate_id": "test_only_production_source",
       "name": "Test-only production-like C# custody (W1 assurance)",
       "category": "Code & Repo Hygiene",
-      "command": "go run -C tools/gotools ./cmd/ashfall-dev monitor-compile --root ../.. --out ../../build/reports/monitoring/test-only-production.json",
+      "command": "tools/rstools/target/release/ashfall-dev monitor-compile --root . --out build/reports/monitoring/test-only-production.json",
       "timeout_seconds": 120,
       "expected_summary": "[monitor-compile] Report written",
       "classification": "fast",
       "critical": true,
-      "depends_on": []
+      "depends_on": ["build_rstools"]
     },
     {
       "gate_id": "uid_sidecar_gate",
@@ -772,12 +783,13 @@
       "gate_id": "catalog_audit",
       "name": "Catalog Hygiene Audit \u2014 reference integrity, cross-domain duplicate ids, id naming, schema_version drift (D01\u2013D04)",
       "category": "Source Policy & Lint Gates",
-      "command": "go run -C tools/gotools ./cmd/ashfall-dev audit-catalogs --root ../.. --check",
+      "command": "tools/rstools/target/release/ashfall-dev audit-catalogs --root . --check",
       "timeout_seconds": 120,
       "expected_summary": "CATALOG_AUDIT PASS",
       "classification": "fast",
       "critical": true,
-      "remediation": "go run -C tools/gotools ./cmd/ashfall-dev audit-catalogs --root ../.. --json"
+      "depends_on": ["build_rstools"],
+      "remediation": "tools/rstools/target/release/ashfall-dev audit-catalogs --root . --json"
     },
     {
       "gate_id": "content_certification",
@@ -808,15 +820,15 @@
       "remediation": "bash scripts/ci/run-godot-bounded.sh --path . -- --content-utilization-selftest"
     },
     {
-      "gate_id": "gotools_test",
-      "name": "Go Tooling Unit Tests (tools/gotools)",
+      "gate_id": "rstools_test",
+      "name": "Rust Tooling Unit Tests (tools/rstools)",
       "category": "Build & Tests",
-      "command": "go test -C tools/gotools ./...",
+      "command": "cargo test --release --manifest-path tools/rstools/Cargo.toml",
       "timeout_seconds": 180,
-      "expected_summary": "ok",
+      "expected_summary": "test result: ok",
       "classification": "fast",
       "critical": false,
-      "remediation": "go test -C tools/gotools ./..."
+      "remediation": "cargo test --release --manifest-path tools/rstools/Cargo.toml"
     },
     {
       "gate_id": "gate_inventory_drift",
@@ -830,15 +842,15 @@
       "remediation": "python3 scripts/ci/run-gates.py --write-inventory docs/ci/GATE_INVENTORY.md"
     },
     {
-      "gate_id": "gotools_vet",
-      "name": "Go Tooling Vet (tools/gotools)",
+      "gate_id": "rstools_vet",
+      "name": "Rust Tooling Lint (tools/rstools clippy)",
       "category": "Build & Tests",
-      "command": "go vet -C tools/gotools ./...",
+      "command": "cargo clippy --release --manifest-path tools/rstools/Cargo.toml --all-targets -- -D warnings",
       "timeout_seconds": 180,
       "expected_summary": "",
       "classification": "fast",
       "critical": false,
-      "remediation": "go vet -C tools/gotools ./..."
+      "remediation": "cargo clippy --release --manifest-path tools/rstools/Cargo.toml --all-targets -- -D warnings"
     }
   ]
 }

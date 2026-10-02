@@ -6,7 +6,7 @@
 # release-required full-tier gates through the canonical runner. Do not add
 # direct gate commands here — every gate this script needs must come from
 # the manifest via verify-fast.sh / run-gates.py, or the release policy
-# monitor (tools/gotools/cmd/releasepolicy) will flag drift.
+# monitor (tools/rstools ashfall-dev releasepolicy) will flag drift.
 #
 # Usage:
 #   bash scripts/ci/release-gate.sh

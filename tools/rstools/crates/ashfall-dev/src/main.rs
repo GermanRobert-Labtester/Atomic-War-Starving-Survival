@@ -24,6 +24,7 @@ mod monitor;
 mod orchestrator;
 mod parser;
 mod proxy;
+mod reachability;
 mod releasepolicy;
 mod runner;
 mod scanner;
@@ -158,12 +159,23 @@ fn main() {
         "monitor-size" => run_monitor_size(args),
         "monitor-compile" => run_monitor_compile(args),
         "releasepolicy" => run_releasepolicy(args),
+        "reachability-report" => run_reachability_report(args),
         "-h" | "--help" | "help" => print_usage(),
         _ => {
             eprintln!("Unknown command: {}\n", cmd);
             print_usage();
             std::process::exit(1);
         }
+    }
+}
+
+fn run_reachability_report(args: &[String]) {
+    let f = parse_flags(args, &["root", "out"], &[]);
+    let root = f.or("root", ".");
+    let out = f.or("out", "");
+    if let Err(e) = reachability::run(root, out) {
+        eprintln!("reachability-report: {}", e);
+        std::process::exit(1);
     }
 }
 

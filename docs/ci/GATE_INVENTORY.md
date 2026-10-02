@@ -1,6 +1,6 @@
 # CI Gate Inventory (Plan VIII · Task 24.1)
 
-Generated from `docs/ci/CI_GATE_MANIFEST.json` — 73 gates, 69 fast. Regenerate with `python3 scripts/ci/run-gates.py --write-inventory docs/ci/GATE_INVENTORY.md`. The manifest is the single authority: add or change gates THERE, never in prose only.
+Generated from `docs/ci/CI_GATE_MANIFEST.json` — 74 gates, 70 fast. Regenerate with `python3 scripts/ci/run-gates.py --write-inventory docs/ci/GATE_INVENTORY.md`. The manifest is the single authority: add or change gates THERE, never in prose only.
 
 Runtimes below are budgeted timeouts (enforced ceiling), not measured durations; measured durations land in every `--report-json` run (Task 24.10 budgets).
 
@@ -10,6 +10,7 @@ Runtimes below are budgeted timeouts (enforced ceiling), not measured durations;
 | fast | `json_schema_policy` | Code & Repo Hygiene | 30s | yes | — |
 | fast | `pot_template_drift` | Code & Repo Hygiene | 30s | yes | — |
 | fast | `build_core_tests` | Build & Tests | 180s | yes | — |
+| fast | `build_rstools` | Build & Tests | 180s | no | — |
 | full | `test_core_suite` | Build & Tests | 120s | yes | build_core_tests |
 | fast | `build_godot_host` | Build & Tests | 180s | yes | — |
 | fast | `godot_import` | Host Selftests & Lifecycle | 180s | yes | — |
@@ -59,10 +60,10 @@ Runtimes below are budgeted timeouts (enforced ceiling), not measured durations;
 | fast | `case_alias_guard` | Repository hygiene | 30s | no | — |
 | fast | `selftest_manifest_drift` | Drift guard | 60s | no | — |
 | full | `export_parity` | Release | 180s | yes | build_godot_host |
-| fast | `release_workflow_parity` | Release | 120s | yes | — |
-| fast | `repository_size_budget` | Code & Repo Hygiene | 120s | yes | — |
-| fast | `compile_set_reachability` | Code & Repo Hygiene | 120s | yes | — |
-| fast | `test_only_production_source` | Code & Repo Hygiene | 120s | yes | — |
+| fast | `release_workflow_parity` | Release | 120s | yes | build_rstools |
+| fast | `repository_size_budget` | Code & Repo Hygiene | 120s | yes | build_rstools |
+| fast | `compile_set_reachability` | Code & Repo Hygiene | 120s | yes | build_rstools |
+| fast | `test_only_production_source` | Code & Repo Hygiene | 120s | yes | build_rstools |
 | fast | `uid_sidecar_gate` | Code & Repo Hygiene | 30s | yes | — |
 | fast | `scene_binding_truth` | Source Policy & Lint Gates | 60s | yes | — |
 | fast | `coverage_gate` | Quality & Verification | 180s | yes | — |
@@ -73,12 +74,12 @@ Runtimes below are budgeted timeouts (enforced ceiling), not measured durations;
 | fast | `changelog_drift` | Release | 30s | no | — |
 | full | `save_support_window` | Release | 120s | yes | build_core_tests |
 | fast | `ui_layout_selftest` | UI & Accessibility | 180s | no | — |
-| fast | `catalog_audit` | Source Policy & Lint Gates | 120s | yes | — |
+| fast | `catalog_audit` | Source Policy & Lint Gates | 120s | yes | build_rstools |
 | fast | `content_certification` | Host Selftests & Lifecycle | 60s | no | build_godot_host |
 | fast | `content_utilization` | Host Selftests & Lifecycle | 120s | no | build_godot_host |
-| fast | `gotools_test` | Build & Tests | 180s | no | — |
+| fast | `rstools_test` | Build & Tests | 180s | no | — |
 | fast | `gate_inventory_drift` | Drift & Architecture Gates | 30s | no | — |
-| fast | `gotools_vet` | Build & Tests | 180s | no | — |
+| fast | `rstools_vet` | Build & Tests | 180s | no | — |
 
 ## Tier contract
 

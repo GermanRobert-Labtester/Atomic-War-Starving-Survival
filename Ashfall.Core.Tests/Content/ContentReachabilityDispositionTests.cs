@@ -93,7 +93,8 @@ namespace Ashfall.Core.Tests.Content
         [Fact]
         public void ReachabilityReportGenerator_ExistsAndPublishesTheArtifact()
         {
-            string tool = Path.Combine(RepoRoot, "tools", "gotools", "cmd", "reachability-report", "main.go");
+            // Stage 4: the Go cmd/reachability-report was ported to Rust.
+            string tool = Path.Combine(RepoRoot, "tools", "rstools", "crates", "ashfall-dev", "src", "reachability.rs");
             Assert.True(File.Exists(tool), "The reachability report generator must exist.");
             string source = File.ReadAllText(tool);
             Assert.Contains("disposition without an expiry", source);

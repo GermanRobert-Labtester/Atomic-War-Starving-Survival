@@ -54,7 +54,7 @@ where
         Err(_) => return,
     };
     let mut entries: Vec<fs::DirEntry> = read.filter_map(|e| e.ok()).collect();
-    entries.sort_by(|a, b| a.file_name().cmp(&b.file_name()));
+    entries.sort_by_key(|a| a.file_name());
 
     for entry in entries {
         let name = entry.file_name();

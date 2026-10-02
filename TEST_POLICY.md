@@ -92,9 +92,9 @@ and point to stored logs; do not paste large raw test output into handoffs.
   tasks — repository file indexer, changed-file/changed-test selector,
   test-result parser, fast JSON/YAML validator, save-file scanner, asset
   manifest builder, parallel subprocess/task runner, LLM API proxy/router — are
-  implemented in Rust (`tools/rstools`, binary `ashfall-dev`). The transitional
-  Go toolchain at `tools/gotools` / `bin/ashfall-dev` is being ported and must
-  not be extended (`.ai/plans/rust-port-gotools-2026-10-02.md`).
+  implemented in Rust (`tools/rstools`, binary `ashfall-dev`). The Go toolchain
+  (`tools/gotools`) was **deleted in Stage 4**; Go is prohibited and must not be
+  reintroduced (`docs/ci/LANGUAGE_POLICY.md`).
 - **Python** is for AI/agent orchestration, automation, tools, prototyping, and
   data/report processing only; it must be tightly scoped and every subprocess
   must carry a timeout. Do not launch Python (or Go) for trivial filesystem,

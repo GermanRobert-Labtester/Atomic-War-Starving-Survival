@@ -23,6 +23,7 @@ Usage:
 import argparse
 import collections
 import datetime
+import json
 import os
 import pathlib
 import re
@@ -45,6 +46,31 @@ OVERSIZED_CHARS = 100_000
 # here explicitly so the intent survives any change to that rule (review ruling,
 # 2026-10-02). These are operational state, not documentation.
 COORDINATION_LEDGERS = {"WORKTREE_OWNERSHIP.md", "INTEGRATION_PLANS.md", ".ai/state.md"}
+
+# Per-file scan cache. The extracted fields (title, summary, char_count,
+# historical marker) depend only on file content, so a file whose (size,
+# mtime_ns) is unchanged can reuse its cached fields instead of being re-read.
+# This is an INPUT cache only: `--check` still regenerates the index and
+# byte-compares it against docs/INDEX.md, which remains the sole correctness
+# authority. Stored under gitignored build/ and therefore disposable.
+CACHE_FILE = REPO_ROOT / "build" / "reports" / "docs_index_cache.json"
+CACHE_SCHEMA_VERSION = 1
+
+def load_scan_cache():
+    try:
+        data = json.loads(CACHE_FILE.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+    if data.get("schema_version") != CACHE_SCHEMA_VERSION or not isinstance(data.get("entries"), dict):
+        return {}
+    return data["entries"]
+
+def save_scan_cache(entries):
+    CACHE_FILE.parent.mkdir(parents=True, exist_ok=True)
+    payload = {"schema_version": CACHE_SCHEMA_VERSION, "entries": entries}
+    tmp = CACHE_FILE.with_name(CACHE_FILE.name + ".tmp")
+    tmp.write_text(json.dumps(payload, sort_keys=True, ensure_ascii=False), encoding="utf-8")
+    tmp.replace(CACHE_FILE)
 
 def get_doc_files():
     docs = []
@@ -125,7 +151,7 @@ def classify_doc(rel_path: str, title: str, summary: str, has_historical_marker:
 
     return status, category, summary
 
-def scan_doc(doc):
+def _scan_doc_uncached(doc):
     """Collect exact character count and index fields without holding large plans in memory."""
     title = ""
     summary = ""
@@ -158,6 +184,33 @@ def scan_doc(doc):
 
     return title, summary, char_count, has_historical_marker
 
+def scan_doc(doc, cache):
+    """Return scan fields, reusing the (size, mtime_ns) cache when the file is unchanged."""
+    rel = doc.relative_to(REPO_ROOT).as_posix()
+    try:
+        st = doc.stat()
+        size, mtime_ns = st.st_size, st.st_mtime_ns
+    except OSError:
+        size = mtime_ns = None
+
+    cached = cache.get(rel)
+    if (cached is not None and size is not None
+            and cached.get("size") == size and cached.get("mtime_ns") == mtime_ns):
+        return (cached["title"], cached["summary"], cached["char_count"],
+                cached["has_historical_marker"])
+
+    title, summary, char_count, has_historical_marker = _scan_doc_uncached(doc)
+    if size is not None:
+        cache[rel] = {
+            "size": size,
+            "mtime_ns": mtime_ns,
+            "title": title,
+            "summary": summary,
+            "char_count": char_count,
+            "has_historical_marker": has_historical_marker,
+        }
+    return title, summary, char_count, has_historical_marker
+
 def find_duplicate_generations(docs):
     by_filename = collections.defaultdict(list)
     for doc in docs:
@@ -167,13 +220,13 @@ def find_duplicate_generations(docs):
     duplicates = {k: v for k, v in by_filename.items() if len(v) > 1 and k != "README.md"}
     return duplicates
 
-def generate_index_markdown(docs, verified_date):
+def generate_index_markdown(docs, verified_date, cache):
     categorized = {}
     status_counts = {"CURRENT": 0, "HISTORICAL": 0, "GENERATED": 0}
 
     for doc in docs:
         rel_path = doc.relative_to(REPO_ROOT).as_posix()
-        title, summary_candidate, char_count, has_historical_marker = scan_doc(doc)
+        title, summary_candidate, char_count, has_historical_marker = scan_doc(doc, cache)
         if not title:
             title = doc.stem.replace("_", " ").title()
 
@@ -303,7 +356,12 @@ def main():
         if m:
             verified_date = m.group(1)
 
-    rendered = generate_index_markdown(docs, verified_date)
+    cache = load_scan_cache()
+    rendered = generate_index_markdown(docs, verified_date, cache)
+    # Keep only entries for files still in the corpus, then persist so the next
+    # run is warm. build/ is gitignored, so this is a disposable side effect.
+    current = {d.relative_to(REPO_ROOT).as_posix() for d in docs}
+    save_scan_cache({k: v for k, v in cache.items() if k in current})
 
     if check_mode:
         if not INDEX_FILE.exists():
