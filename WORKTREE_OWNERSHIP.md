@@ -1,5 +1,27 @@
 # ASHFALL Worktree Ownership
 
+## claim-perf-track-a-baseline-2026-10-02 — COMPLETE
+
+Performance program Track A (budgeted baseline with measurement context). Plan:
+`.ai/plans/perf-track-a-baseline-2026-10-02.md`. Delivered: `docs/ci/TIMING_BASELINE.json`
+schema 1.1 (3→18 entries covering every ≥30 s stage, measurement_context, peak-RSS
+budgets, gate-id key fix) and `scripts/ci/timing-budget.py` (`--rss` + RSS_SUSPICIOUS).
+**COMPLETE 2026-10-02.** Paths released.
+
+## claim-perf-track-b-docsindex-cache-2026-10-02 — COMPLETE
+
+Performance program Track B, docs-index portion. Exact owned paths:
+`scripts/ci/generate-docs-index.py`, `docs/INDEX.md`, this claim.
+Delivered: input-only `(relpath, size, mtime_ns)` cache under gitignored
+`build/reports/docs_index_cache.json`, populated/pruned each run; `--check`
+byte-comparison unchanged. Measured **64.16 s cold → 2.63 s warm (~24×)**,
+`--check` PASS both times, `docs/INDEX.md` untouched; cache invalidation verified
+by touch (re-scan). **COMPLETE 2026-10-02; paths released.**
+Remaining Track B items are queued as separate work: `generate-plan-register.py`
+(not in the sweep), and the sweep scanners `generate-port-contract.py`,
+`generate-plan-integration-audit.py`, `generate-architecture-map.py` (same
+cacheable pattern) plus the shell `doc-link-gate.sh` (different).
+
 ## claim-docs-index-ledger-exclusion-2026-10-02 — COMPLETE
 
 Review directive (2026-10-02): apply ruling 2 — coordination/operational-state

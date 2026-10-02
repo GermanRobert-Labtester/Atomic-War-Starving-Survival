@@ -17,6 +17,9 @@ Usage:
   # Compare a single ad-hoc stage (e.g. a build)
   python3 scripts/ci/timing-budget.py check --key build_core_tests --seconds 84.2
 
+  # Compare a single stage's peak RSS (MB) against its memory budget
+  python3 scripts/ci/timing-budget.py check --key build_godot_host --rss 2500
+
   # Refresh references from a real (quiet-system) run
   python3 scripts/ci/timing-budget.py update --measured build/reports/gates.json
   python3 scripts/ci/timing-budget.py update --key build_core_tests --seconds 56.0
@@ -95,29 +98,64 @@ def compare(budgets: dict, measured: dict, default_tol: float, override_tol):
     return rows, any_suspicious
 
 
+def compare_rss(budgets: dict, measured_rss: dict, default_tol: float, override_tol):
+    """Compare measured peak RSS (MB) to each entry's peak_rss_mb budget.
+
+    Same non-fatal posture as the wall-clock check: a stage over its RSS budget
+    beyond the tolerance is RSS_SUSPICIOUS (investigate, do not raise the budget).
+    An entry with no peak_rss_mb is reported RSS_NO-BUDGET and never fails.
+    """
+    rows = []
+    any_suspicious = False
+    for key in sorted(measured_rss):
+        mb = measured_rss[key]
+        entry = budgets.get(key) or {}
+        budget = entry.get("peak_rss_mb")
+        tol = override_tol if override_tol is not None else entry.get("tolerance_ratio") or default_tol
+        if not isinstance(budget, (int, float)) or budget <= 0:
+            rows.append((key, None, mb, None, "RSS_NO-BUDGET"))
+            continue
+        ratio = mb / float(budget)
+        verdict = "RSS_SUSPICIOUS" if ratio > float(tol) else "RSS_OK"
+        if verdict == "RSS_SUSPICIOUS":
+            any_suspicious = True
+        rows.append((key, float(budget), mb, ratio, verdict))
+    return rows, any_suspicious
+
+
 def cmd_check(args) -> int:
     baseline = load_json(Path(args.baseline))
     budgets = baseline.get("budgets", {})
     default_tol = float(baseline.get("default_tolerance_ratio", DEFAULT_TOLERANCE))
 
     measured: dict = {}
+    measured_rss: dict = {}
     if args.measured:
         measured.update(collect_measured(Path(args.measured)))
     if args.key and args.seconds is not None:
         measured[args.key] = float(args.seconds)
+    if args.key and args.rss is not None:
+        measured_rss[args.key] = float(args.rss)
 
-    if not measured:
-        print("timing-budget: nothing measured (pass --measured and/or --key/--seconds).", file=sys.stderr)
+    if not measured and not measured_rss:
+        print("timing-budget: nothing measured (pass --measured and/or --key/--seconds/--rss).", file=sys.stderr)
         return 2
 
     rows, suspicious = compare(budgets, measured, default_tol, args.tolerance_ratio)
+    rss_rows, rss_suspicious = compare_rss(budgets, measured_rss, default_tol, args.tolerance_ratio)
+    suspicious = suspicious or rss_suspicious
 
     if args.json:
-        print(json.dumps([
-            {"key": k, "reference_seconds": ref, "measured_seconds": secs,
+        payload = [
+            {"kind": "wall", "key": k, "reference_seconds": ref, "measured_seconds": secs,
              "ratio": ratio, "verdict": verdict}
             for k, ref, secs, ratio, verdict in rows
-        ], indent=2))
+        ] + [
+            {"kind": "rss", "key": k, "budget_mb": budget, "measured_mb": mb,
+             "ratio": ratio, "verdict": verdict}
+            for k, budget, mb, ratio, verdict in rss_rows
+        ]
+        print(json.dumps(payload, indent=2))
     else:
         print(f"TIMING BUDGET (tolerance {default_tol:.2f}x)")
         for key, ref, secs, ratio, verdict in rows:
@@ -125,11 +163,16 @@ def cmd_check(args) -> int:
                 print(f"  {verdict:<12} {key:<28} {secs:8.2f}s  (no reference recorded)")
             else:
                 print(f"  {verdict:<12} {key:<28} {secs:8.2f}s / ref {ref:7.2f}s = {ratio:4.2f}x")
+        for key, budget, mb, ratio, verdict in rss_rows:
+            if budget is None:
+                print(f"  {verdict:<16} {key:<28} {mb:8.0f}MB  (no RSS budget recorded)")
+            else:
+                print(f"  {verdict:<16} {key:<28} {mb:8.0f}MB / budget {budget:7.0f}MB = {ratio:4.2f}x")
         if suspicious:
-            print("\nSUSPICIOUS: a stage ran MORE THAN the tolerance over its reference. "
-                  "≤30% over is tolerable; >30% means investigate (stale build, "
-                  "deadlocked subprocess, undetected error) and optimize the test — "
-                  "do not just raise the budget.")
+            print("\nSUSPICIOUS: a stage ran MORE THAN the tolerance over its reference or RSS "
+                  "budget. ≤30% over is tolerable; >30% means investigate (stale build, "
+                  "deadlocked subprocess, undetected error, memory pressure) and optimize the "
+                  "test — do not just raise the budget.")
 
     return 1 if suspicious else 0
 
@@ -173,6 +216,8 @@ def main() -> int:
     check.add_argument("--measured", default=None, help="run-gates --report-json output")
     check.add_argument("--key", default=None, help="Ad-hoc stage name")
     check.add_argument("--seconds", type=float, default=None, help="Ad-hoc measured seconds")
+    check.add_argument("--rss", type=float, default=None,
+                       help="Ad-hoc measured peak RSS in MB; compared to the entry's peak_rss_mb budget")
     check.add_argument("--tolerance-ratio", type=float, default=None,
                        help="Override the baseline tolerance (e.g. 1.30)")
     check.add_argument("--json", action="store_true", help="Machine-readable output")
