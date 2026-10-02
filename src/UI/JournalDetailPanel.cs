@@ -7,6 +7,8 @@ using Ashfall.Core.UI;
 using Ashfall.Core.Journal;
 using AtomicWar.GodotApp.UI;
 
+using AtomicWar.GodotApp.Localization;
+
 namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
@@ -48,7 +50,7 @@ namespace AtomicWar.GodotApp.UI
 
             if (_journal == null)
             {
-                _entriesList.AddChild(MakeDimLine("No journal session bound."));
+                _entriesList.AddChild(MakeDimLine(AshfallLocalization.Tr("ui.journal_detail.no_session", "No journal session bound.")));
                 return;
             }
 
@@ -63,7 +65,7 @@ namespace AtomicWar.GodotApp.UI
                 RenderedRowCount++;
             }
             if (sys.EntryCount == 0)
-                _entriesList.AddChild(MakeDimLine("No journal entries yet."));
+                _entriesList.AddChild(MakeDimLine(AshfallLocalization.Tr("ui.journal_detail.no_entries", "No journal entries yet.")));
 
             // ── Codex unlocks ──
             AddRow(_codexList, $"Codex unlocks: {sys.CodexUnlockCount}", Ashfall.Core.UI.Theme.Lethe);

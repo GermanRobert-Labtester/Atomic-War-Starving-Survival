@@ -107,6 +107,91 @@ def classify_failure(record):
     return "fail"
 
 
+# ---------------------------------------------------------------------------
+# Optional parallel execution (--jobs N)
+#
+# Independent static gates are delegated to the approved Go task runner.
+# This Python orchestrator never creates parallel subprocesses itself.
+# ---------------------------------------------------------------------------
+HEAVY_COMMAND_MARKERS = (
+    "dotnet ", "dotnet\t",
+    "godot", "run-godot-bounded",
+    "ui-layout-check.sh", "warning-baseline-gate.sh",
+    "coverage-gate.sh", "content-acceptance-gate.sh",
+)
+
+
+def is_heavy_gate(gate):
+    """True for gates that must execute on the serial spine."""
+    cmd = gate.get("command", "") or ""
+    return any(marker in cmd for marker in HEAVY_COMMAND_MARKERS)
+
+
+def run_parallel_gates(gates, jobs, quarantine_by_gate):
+    """Run independent gates through the Go-only subprocess runner."""
+    tasks = []
+    for gate in gates:
+        timeout = min(max(int(gate.get("timeout_seconds", 30)), 1), MAX_GATE_TIMEOUT_SECONDS)
+        tasks.append({
+            "id": gate.get("gate_id", "unknown"),
+            "command": "bash",
+            "args": ["-c", gate.get("command", "")],
+            "working_dir": str(REPO_ROOT),
+            "timeout": timeout * 1_000_000_000,
+        })
+    try:
+        proc = subprocess.run(
+            [str(REPO_ROOT / "bin" / "ashfall-dev"), "run-tasks", "-j", str(jobs), "-json"],
+            input=json.dumps(tasks), capture_output=True, text=True, cwd=str(REPO_ROOT),
+            # Safety net only: the Go runner enforces each task's own timeout, so
+            # bound the batch by the worst case (all waves serial) rather than the
+            # single longest gate, which would kill a large pool early.
+            timeout=MAX_GATE_TIMEOUT_SECONDS * max(1, len(tasks)) + 60,
+        )
+        by_id = {result.get("id"): result for result in json.loads(proc.stdout)}
+    except Exception as ex:
+        by_id = {gate.get("gate_id", "unknown"): {
+            "exit_code": 1, "duration_seconds": 0, "output": "",
+            "error": f"Go task runner failed: {ex}", "timed_out": False,
+        } for gate in gates}
+
+    records = {}
+    for gate in gates:
+        gid = gate.get("gate_id", "unknown")
+        cmd = gate.get("command", "")
+        timeout = min(max(int(gate.get("timeout_seconds", 30)), 1), MAX_GATE_TIMEOUT_SECONDS)
+        task = by_id.get(gid, {})
+        exit_code = int(task.get("exit_code", 1))
+        output = task.get("output", "")
+        expected = gate.get("expected_summary", "")
+        error = task.get("error", "")
+        if task.get("timed_out"):
+            exit_code = 124
+            error = f"Gate timed out after {timeout} seconds"
+        passed = exit_code == 0 and (not expected or expected in output)
+        if exit_code != 0 and not error:
+            error = f"Command exited with non-zero code {exit_code}"
+        elif exit_code == 0 and expected and expected not in output:
+            error = f"Missing expected summary token '{expected}'"
+        record = {
+            "gate_id": gid, "name": gate.get("name", gid),
+            "category": gate.get("category", "General"), "command": cmd,
+            "timeout_seconds": timeout, "expected_summary": expected,
+            "classification": gate.get("classification", "fast"),
+            "remediation": gate.get("remediation"), "passed": passed,
+            "blocked": False, "quarantined": False, "exit_code": exit_code,
+            "duration": float(task.get("duration_seconds", 0)),
+            "error_reason": error, "output": output,
+        }
+        if not passed:
+            record["failure_type"] = classify_failure(record)
+            if gid in quarantine_by_gate:
+                record["quarantined"] = True
+                record["failure_type"] = "quarantined"
+        records[gid] = record
+    return records
+
+
 def load_manifest(manifest_path):
     if not manifest_path.exists():
         print(f"❌ Error: Gate manifest not found at {manifest_path}", file=sys.stderr)
@@ -477,8 +562,15 @@ def main():
                         help="Fail if the GATE_INVENTORY.md path does not match the manifest")
     parser.add_argument("--explain", type=str, default=None,
                         help="Print one gate's command/timeout/deps/classification and exit")
+    parser.add_argument("--jobs", type=int, default=1,
+                        help="Run independent static gates concurrently (default 1 = serial). "
+                             "Gates that build or run Godot always stay serial.")
 
     args = parser.parse_args()
+
+    if args.jobs < 1:
+        print("❌ --jobs must be at least 1.", file=sys.stderr)
+        return 2
 
     manifest_path = pathlib.Path(args.manifest)
     manifest = load_manifest(manifest_path)
@@ -611,7 +703,21 @@ def main():
     results = []
     failed_gates = []
     outcome_by_id = {}
+    parallel_records = {}
     start_all = time.time()
+
+    # Optional: run dependency-free, non-building gates concurrently. Their
+    # records are consumed in manifest order by the serial loop below, so
+    # reporting and exit codes are identical to the serial path.
+    if args.jobs and args.jobs > 1:
+        parallel_gates = [
+            g for g in gates_to_run
+            if not is_heavy_gate(g) and not (g.get("depends_on") or [])
+        ]
+        if parallel_gates:
+            print(f"Parallel:    {len(parallel_gates)} independent static gate(s) on "
+                  f"{args.jobs} worker(s) via bin/ashfall-dev")
+            parallel_records = run_parallel_gates(parallel_gates, args.jobs, quarantine_by_gate)
 
     for idx, gate in enumerate(gates_to_run, 1):
         gid = gate.get("gate_id", "unknown")
@@ -621,6 +727,33 @@ def main():
         timeout = min(max(configured_timeout, 1), MAX_GATE_TIMEOUT_SECONDS)
         expected_summary = gate.get("expected_summary", "")
         category = gate.get("category", "General")
+
+        pre = parallel_records.get(gid)
+        if pre is not None:
+            results.append(pre)
+            outcome_by_id[gid] = pre["passed"]
+            if pre.get("quarantined"):
+                state = "🛡 QUARANTINED"
+            elif pre["passed"]:
+                state = "PASS"
+            else:
+                state = "❌ FAIL"
+            print(f"\n[{idx}/{len(gates_to_run)}] [parallel] {name} ({gid}) -> {state} ({pre['duration']:.2f}s)")
+            if not pre["passed"]:
+                if pre.get("error_reason"):
+                    print(f"  -> {pre['error_reason']}")
+                snippet = pre.get("output", "").strip().splitlines()[-5:]
+                if snippet:
+                    print("  --- Output Snippet (last 5 lines) ---")
+                    for line in snippet:
+                        print(f"  {line}")
+                    print("  ------------------------------------")
+            if not pre["passed"] and not pre.get("quarantined"):
+                failed_gates.append(pre)
+                if fail_fast:
+                    print(f"\n❌ [ABORT] Fail-fast active: stopping on gate '{gid}'.")
+                    break
+            continue
 
         print(f"\n[{idx}/{len(gates_to_run)}] Running [{category}] {name} ({gid})...")
         if configured_timeout != timeout:

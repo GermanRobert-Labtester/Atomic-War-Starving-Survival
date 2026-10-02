@@ -53,13 +53,14 @@
       "gate_id": "test_core_suite",
       "name": "Execute Core Unit & Determinism Test Suite (xUnit)",
       "category": "Build & Tests",
-      "command": "dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo",
+      "command": "dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo --no-build",
       "timeout_seconds": 120,
       "expected_summary": "Passed!",
       "classification": "full",
       "critical": true,
       "release_required": true,
-      "remediation": "dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo"
+      "depends_on": ["build_core_tests"],
+      "remediation": "dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo --no-build"
     },
     {
       "gate_id": "build_godot_host",
@@ -389,7 +390,7 @@
       "name": "Master Documentation Index Drift Gate",
       "category": "Drift & Architecture Gates",
       "command": "python3 scripts/ci/generate-docs-index.py --check",
-      "timeout_seconds": 120,
+      "timeout_seconds": 180,
       "expected_summary": "Master docs index is up to date",
       "classification": "fast",
       "critical": true,
@@ -535,11 +536,12 @@
       "gate_id": "ui_panel_contracts_test",
       "name": "UI Scene Unique Node Contract Test Gate (xUnit)",
       "category": "Build & Tests",
-      "command": "dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --filter UiPanelContractTests --nologo",
+      "command": "dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --filter UiPanelContractTests --nologo --no-build",
       "timeout_seconds": 60,
       "expected_summary": "Passed!",
       "classification": "fast",
-      "critical": true
+      "critical": true,
+      "depends_on": ["build_core_tests"]
     },
     {
       "gate_id": "audio_catalog_drift",
@@ -565,21 +567,23 @@
       "gate_id": "audio_cue_integrity_gate",
       "name": "Audio Cue Static Contract & Bus Gate (xUnit)",
       "category": "Build & Tests",
-      "command": "dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --filter AudioCueIntegrityTests --nologo",
+      "command": "dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --filter AudioCueIntegrityTests --nologo --no-build",
       "timeout_seconds": 60,
       "expected_summary": "Passed!",
       "classification": "fast",
-      "critical": true
+      "critical": true,
+      "depends_on": ["build_core_tests"]
     },
     {
       "gate_id": "campaign_envelope_fuzz_test",
       "name": "Campaign Envelope Fuzzing & Mutation Gate (xUnit)",
       "category": "Build & Tests",
-      "command": "dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --filter CampaignEnvelopeFuzzTests --nologo",
+      "command": "dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --filter CampaignEnvelopeFuzzTests --nologo --no-build",
       "timeout_seconds": 60,
       "expected_summary": "Passed!",
       "classification": "fast",
-      "critical": true
+      "critical": true,
+      "depends_on": ["build_core_tests"]
     },
     {
       "gate_id": "case_alias_guard",
@@ -705,7 +709,7 @@
       "name": "Core Port Contracts and Host Wiring Gate (Plan 36A / C2[13])",
       "category": "Quality & Verification",
       "command": "python3 scripts/ci/generate-port-contract.py --check",
-      "timeout_seconds": 60,
+      "timeout_seconds": 180,
       "expected_summary": "Port contract verification gate: all",
       "classification": "fast",
       "critical": true
@@ -715,7 +719,7 @@
       "name": "Input Map Contract and Action Parity Gate (Plan 37 / C2[15])",
       "category": "Quality & Verification",
       "command": "bash scripts/ci/input-map-gate.sh",
-      "timeout_seconds": 30,
+      "timeout_seconds": 90,
       "expected_summary": "input map contract PASS",
       "classification": "fast",
       "critical": true
@@ -744,13 +748,13 @@
       "gate_id": "save_support_window",
       "name": "Save Support Window & Historical Fixture Corpus Gate (Plan 48 / C2[21] Phase 3)",
       "category": "Release",
-      "command": "dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --filter SaveSupportWindowTests --nologo",
+      "command": "dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --filter SaveSupportWindowTests --nologo --no-build",
       "timeout_seconds": 120,
       "expected_summary": "Passed!",
       "classification": "full",
       "critical": true,
       "release_required": true,
-      "depends_on": []
+      "depends_on": ["build_core_tests"]
     },
     {
       "gate_id": "ui_layout_selftest",

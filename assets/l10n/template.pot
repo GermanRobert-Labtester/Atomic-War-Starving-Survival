@@ -6,7 +6,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Source-Row-Count: 1183\n"
+"X-Source-Row-Count: 1473\n"
 "X-Generator: scripts/ci/generate_pot_template.py\n"
 
 #: src/UI/AshfallUiHelpers.cs
@@ -4740,3 +4740,1163 @@ msgstr "SAVE SETTINGS"
 #: src/UI/DifficultySettingsPanel.cs
 msgid "ui.difficulty.lock"
 msgstr "LOCK DIFFICULTY (IRONMAN)"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.title"
+msgstr "FACTIONS & WASTELAND DIPLOMACY"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.summary"
+msgstr "Monitor geopolitical standings, faction trust, trade specialization, claim boundaries, and diplomatic treaties."
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.overview.title"
+msgstr "WASTELAND DIPLOMATIC & TRADE NETWORK"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.overview.kicker"
+msgstr "REGISTRY STATUS"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.known_major"
+msgstr "Known Major Factions"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.guild_trust"
+msgstr "Scavenger Guild Trust"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.guild_claims"
+msgstr "Guild Claimed Sites"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.sanctions"
+msgstr "Sanctions & Blacklists"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.btn_muster"
+msgstr "OPEN SECTOR MUSTER // CURRENTS & ESCALATION"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.btn_culture"
+msgstr "OPEN FACTION CULTURE CODEX // EVERYDAY CUSTOMS"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.btn_stance"
+msgstr "FACTION STANCE MATRIX // RELATIONS GRID"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.btn_narratives"
+msgstr "FACTION NARRATIVES // DISPATCHES & ARCS"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.demand"
+msgstr "Demand (Wants)"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.supply"
+msgstr "Supply (Offers)"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.standing_trust"
+msgstr "Standing / Trust"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.foundry.kicker"
+msgstr "ACCORD SYSTEMS // THE WORKS"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.foundry.standing"
+msgstr "Foundry Standing"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.foundry.state"
+msgstr "Foundry"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.foundry.divisions"
+msgstr "Internal Divisions"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.btn_foundry"
+msgstr "OPEN THE FOUNDRY FLOOR"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.treaties.title"
+msgstr "STRATEGIC TREATIES & LEDGER DEBT"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.treaties.kicker"
+msgstr "TREATY STATUS"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.treaty.guild"
+msgstr "Scavenger Guild Claim Ledger"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.treaty.crossing"
+msgstr "Nobody's Crossing Accord"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.treaty.archive"
+msgstr "Ledger Keepers Archive"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.warlord.title"
+msgstr "WARLORD DOCTRINE — SECTOR 4"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.warlord.kicker"
+msgstr "ADAPTIVE STRATEGY (identity: {0})"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.warlord.doctrine"
+msgstr "Current Doctrine"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.warlord.supply"
+msgstr "Supply"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.warlord.tribute"
+msgstr "Tribute"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.warlord.paid"
+msgstr "Paid to Date"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.warlord.ops"
+msgstr "Operations"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.warlord.contest"
+msgstr "CONTEST"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.warlord.submit"
+msgstr "SUBMIT ALL"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.warlord.refuse"
+msgstr "REFUSE THIS WEEK"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.branch.title"
+msgstr "THE WEIGHT OF CHOICES // FACTION PROGRESSION"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.branch.kicker"
+msgstr "STRATEGIC ALLEGIANCE"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.branch.active"
+msgstr "Active Allegiance"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.branch.current"
+msgstr "Current Branch"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.branch.ponr"
+msgstr "PoNR Status"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.branch.ending"
+msgstr "Resolved Ending"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.informant.header"
+msgstr "INFORMANT NETWORK // FIELD TRADECRAFT"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.branch.paths"
+msgstr "BRANCH PATH AVAILABILITY & CONSEQUENCES:"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.branch.warning"
+msgstr "WARNING: Committing allegiance permanently locks out competing factions. The door will close."
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.events.title"
+msgstr "RECENT DIPLOMATIC COMMUNIQUES"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.events.kicker"
+msgstr "RADIO INTERCEPTS"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.events.status_label"
+msgstr "STATUS"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.events.none"
+msgstr "No diplomatic communiqués intercepted on local frequencies."
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.section.factions"
+msgstr "KNOWN FACTION PROTOCOLS & ALLIANCES"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.section.relations"
+msgstr "TREATIES, STANDING & DEBT OBLIGATIONS"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.section.events"
+msgstr "RECENT FACTION COMMUNIQUES & DISPATCHES"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.close"
+msgstr "CLOSE DIPLOMACY [Esc]"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.esc_hint"
+msgstr "[Esc] to close factions panel"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.none_registered"
+msgstr "None registered"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.base_stance"
+msgstr "Base: {0} · Stance: {1}"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.dossier"
+msgstr "DIPLOMATIC DOSSIER // [{0}]"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.caravan_registry"
+msgstr "CARAVAN REGISTRY & SCHEDULE"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.merchant_stock"
+msgstr "MERCHANT STOCK (OFFERED)"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.col.item"
+msgstr "ITEM IDENTIFIER"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.col.stock"
+msgstr "STOCK"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.col.value"
+msgstr "VALUE"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.col.take"
+msgstr "TAKE (QTY)"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.col.subtotal"
+msgstr "SUBTOTAL"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.requested_zero"
+msgstr "REQUESTED: 0.0 VALUE UNITS"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.shelter_stores"
+msgstr "SHELTER STORES (OFFERED)"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.col.avail"
+msgstr "AVAIL"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.col.offer"
+msgstr "OFFER (QTY)"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.offered_zero"
+msgstr "OFFERED: 0.0 VALUE UNITS"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.balance_scale"
+msgstr "ARBITRATOR BALANCE SCALE"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.balance_metrics_zero"
+msgstr "OFFERED: 0.0 VU | TOLERANCE THRESHOLD: 0.0 VU | REQUIRED: 0.0 VU"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.coverage_zero"
+msgstr "Coverage: 0% — Fair deal requires offer meeting caravan tolerance margin."
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.gate_diag"
+msgstr "PRE-CONDITION GATE DIAGNOSTICS"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.gate_airlock"
+msgstr "AIRLOCK ACCESSIBLE: [ ... ]"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.gate_presence"
+msgstr "CARAVAN AT AIRLOCK: [ ... ]"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.gate_requests"
+msgstr "GOODS REQUESTED: [ ... ]"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.gate_tolerance"
+msgstr "VALUATION THRESHOLD: [ ... ]"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.gate_counterfeit"
+msgstr "APPRAISAL VERIFICATION: [ ... ]"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.cost_none"
+msgstr "COST: None allocated."
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.gain_none"
+msgstr "GAIN: None requested."
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.consequence"
+msgstr "CONSEQUENCE: Deducts stock permanently from caravan; increments trade ledger; logs transaction to Journal."
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.clear"
+msgstr "CLEAR ALLOCATIONS"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.execute"
+msgstr "EXECUTE BARTER TRANSACTION"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.select_caravan"
+msgstr "Select a caravan from the registry."
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.no_caravan_stock"
+msgstr "Caravan has no stock configured."
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.storage_unavailable"
+msgstr "Storage system unavailable."
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.no_goods"
+msgstr "No tradeable goods in shelter storage."
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.requested_value"
+msgstr "REQUESTED: {0} VALUE UNITS"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.offered_value"
+msgstr "OFFERED: {0} VALUE UNITS"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.balance_metrics"
+msgstr "OFFERED: {0} VU | TOLERANCE THRESHOLD: ≥ {1} VU | REQUIRED: {2} VU"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.coverage_allocate"
+msgstr "Coverage: 0% — Allocate caravan stock on the left, then offer shelter stores on the right."
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.coverage_enroute"
+msgstr "Barter cannot be executed: Caravan is en route."
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.coverage_frozen"
+msgstr "Barter blocked: The shelter airlock is frozen."
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.coverage_viable"
+msgstr "Coverage: {0}% — Trade viable. Surplus of +{1} VU converts to merchant trust."
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.coverage_below"
+msgstr "Coverage: {0}% — Offer is below merchant's tolerance threshold."
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.cost_value"
+msgstr "COST: {0} (-{1} VU)"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.broker_inventory"
+msgstr "[BROKER INVENTORY]"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.vault_storage"
+msgstr "[VAULT STORAGE]"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.select_items"
+msgstr "[SELECT ITEMS]"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.caravan_departure"
+msgstr "[AT AIRLOCK - DEPARTS IN {0}D]"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.caravan_arrival"
+msgstr "[EN ROUTE - ARRIVES IN {0}D]"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.demands"
+msgstr "Demands: {0}"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.currently_inspecting"
+msgstr "▶ CURRENTLY INSPECTING"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.demand_bonus"
+msgstr "+DEMAND BONUS"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.gain_value"
+msgstr "GAIN: {0} (+{1} VU)"
+
+#: src/UI/AirlockSecurityPanel.cs
+msgid "ui.airlock.unbound"
+msgstr "Airlock security session is not bound. Sentry post & biometric scanners are offline."
+
+#: src/UI/ApprenticeshipPanel.cs
+msgid "ui.apprenticeship.unbound"
+msgstr "Apprenticeship host session is not bound. Mentor-apprentice skill progression records are offline."
+
+#: src/UI/CaregivingPanel.cs
+msgid "ui.caregiving.unbound"
+msgstr "Caregiving host session is not bound. Bedside tending assignments and bond records are offline."
+
+#: src/UI/CenturySeedPanel.cs
+msgid "ui.century_seed.unavailable"
+msgstr "Succession engine unavailable."
+
+#: src/UI/CenturySeedPanel.cs
+msgid "ui.century_seed.unbound"
+msgstr "Generational succession engine is not bound. Connect live succession data to view generational chapters and mentorship bonds."
+
+#: src/UI/CenturySeedPanel.cs
+msgid "ui.century_seed.offline_title"
+msgstr "GENERATIONAL SUCCESSION OFFLINE"
+
+#: src/UI/CenturySeedPanel.cs
+msgid "ui.century_seed.offline_hint"
+msgstr "Awaiting active campaign state"
+
+#: src/UI/DeepCoastPanel.cs
+msgid "ui.deep_coast.unavailable"
+msgstr "Deep coast session unavailable."
+
+#: src/UI/DutyRosterDetailPanel.cs
+msgid "ui.duty_roster_detail.no_marks"
+msgstr "Marks: none yet. The wall is blank."
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.bed_detail"
+msgstr "BED DETAIL"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.select_plot_hint"
+msgstr "Select a plot row to view irrigation balance, contamination history, and harvest yields."
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.hive_unit"
+msgstr "Hive Unit"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.colony_pop"
+msgstr "Colony Pop"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.queen_vitality"
+msgstr "Queen Vitality"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.feed_level"
+msgstr "Feed Level"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.water_level"
+msgstr "Water Level"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.hive_temp"
+msgstr "Hive Temp"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.pollination"
+msgstr "Pollination"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.honey_reserve"
+msgstr "Honey Reserve"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.wax_reserve"
+msgstr "Wax Reserve"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.apiary_actions"
+msgstr "APIARY ACTIONS"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.btn_inspect"
+msgstr "INSPECT"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.btn_feed_water"
+msgstr "FEED/WATER"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.btn_harvest"
+msgstr "HARVEST"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.no_hive"
+msgstr "No active beehive installed in the Orchard Apiary bay. Install a colony to provide pollination boost."
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.btn_install_hive"
+msgstr "INSTALL HIVE"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.host_offline"
+msgstr "Greenhouse engine offline. Bind a GreenhouseHostSession to see live plot data."
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.row_status"
+msgstr "Status"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.row_seed"
+msgstr "Seed"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.row_growth"
+msgstr "Growth"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.row_moisture"
+msgstr "Moisture"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.row_soil"
+msgstr "Soil mSv"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.row_blight"
+msgstr "Blight"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.row_blight_risk"
+msgstr "Blight risk"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.unfed_note"
+msgstr "Unfed crop — nutrient dosing lowers blight risk."
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.header_actions"
+msgstr "ACTIONS"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.btn_plant"
+msgstr "PLANT"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.btn_treat"
+msgstr "TREAT"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.btn_clear"
+msgstr "CLEAR"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.btn_dose"
+msgstr "DOSE NUTRIENTS"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.header_watering"
+msgstr "WATERING"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.btn_clean25"
+msgstr "CLEAN 25"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.btn_clean50"
+msgstr "CLEAN 50"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.btn_tainted50"
+msgstr "TAINTED 50"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.irradiated_note"
+msgstr "irradiated — crops remember"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.header_seed_select"
+msgstr "SEED SELECT"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.title"
+msgstr "The Glass Orchard // Sub-surface Hydroponics"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.col_bed"
+msgstr "Bed"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.col_stage"
+msgstr "Stage"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.col_water"
+msgstr "Water"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.col_soil"
+msgstr "Soil mSv"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.col_growth"
+msgstr "Growth"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.col_ready"
+msgstr "Ready"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.col_dry"
+msgstr "Dry"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.col_seed"
+msgstr "Seed"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.apiary_title"
+msgstr "APIARY // HIVE CONTROL"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.bed_detail_number"
+msgstr "BED #{0} DETAIL"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.stage_fallow"
+msgstr "FALLOW"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.stage_sprouting"
+msgstr "SPROUTING"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.stage_growing"
+msgstr "GROWING"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.stage_mature"
+msgstr "READY TO HARVEST"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.stage_failed"
+msgstr "FAILED"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.risk_prevented"
+msgstr "none (prevented)"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.risk_low"
+msgstr "low"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.risk_elevated"
+msgstr "elevated"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.risk_high"
+msgstr "high"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.rotation_pressure"
+msgstr "Repeated {0} crops exhaust this bed — rotate to another crop to clear the pressure."
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.water_stock"
+msgstr "clean ×{0}  ·  irradiated ×{1}"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.seed_option"
+msgstr "{0} — {1:0.#}d · yield {2} · blight {3:0}% · {4:0} water/day"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.seed_vault_sealed"
+msgstr "[SEED VAULT SEALED]"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.no_stock"
+msgstr "[no stock]"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.filter.title"
+msgstr "Filter"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.filter.all"
+msgstr "All Beds"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.filter.all_hint"
+msgstr "every plot · stage / water / soil"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.filter.fallow"
+msgstr "Fallow Only"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.filter.fallow_hint"
+msgstr "empty soil beds ready to seed"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.filter.damaged"
+msgstr "Damaged"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.filter.damaged_hint"
+msgstr "failed or blight-stricken beds"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.filter.ready"
+msgstr "Ready"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.filter.ready_hint"
+msgstr "beds at mature stage"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.filter.tubers"
+msgstr "Tubers"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.filter.tubers_hint"
+msgstr "frost & hardy tuber lines"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.filter.grains"
+msgstr "Grains"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.filter.grains_hint"
+msgstr "ash-barley, winter rye & wheat"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.filter.fungi"
+msgstr "Fungi"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.filter.fungi_hint"
+msgstr "spore & phosphor cap mycelium"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.filter.greens"
+msgstr "Greens & Herbs"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.filter.greens_hint"
+msgstr "winter cress, herbs & greens"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.filter.legumes"
+msgstr "Legumes & Seeds"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.filter.legumes_hint"
+msgstr "iron pea, oilseed & algae slurry"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.filter.apiary"
+msgstr "Apiary (Hives)"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.filter.apiary_hint"
+msgstr "colony health · pollination · honey & wax"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.rail.season"
+msgstr "Season"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.rail.active"
+msgstr "Active Beds"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.rail.plot_count"
+msgstr "Plot Count"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.rail.harvests"
+msgstr "Harvests"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.rail.seed_vault"
+msgstr "Seed Vault"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.rail.blight"
+msgstr "Blighted Beds"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.rail.glass"
+msgstr "Glass"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.rail.blight_supply"
+msgstr "Blight"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.rail.medium"
+msgstr "Medium"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.treaty.guild_detail"
+msgstr "Two-color boundary system active. Stripping marked sites causes immediate blacklist."
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.treaty.crossing_detail"
+msgstr "Vouch access required for passage across the northern ice road gate."
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.treaty.archive_detail"
+msgstr "Knowledge reciprocity active. Relic blueprints grant credit value."
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.warlord.tribute_short"
+msgstr "ask {0}× {1} — {2} short week(s), collector is keeping notes"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.warlord.tribute_current"
+msgstr "ask {0}× {1} — ledger current"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.warlord.pay"
+msgstr "PAY TRIBUTE ({0}× {1})"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.warlord.response_logged"
+msgstr "This week's answer is already logged: {0}. The collector will be back next week."
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.branch.unaligned"
+msgstr "Unaligned (Prospective Paths Open)"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.branch.ponr_locked"
+msgstr "LOCKED (Point of No Return Reached)"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.branch.ponr_open"
+msgstr "Open (Pre-PoNR)"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.branch.unresolved"
+msgstr "Unresolved"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.standing.joined"
+msgstr "Joined / Allied"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.standing.opposed"
+msgstr "Opposed"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.standing.hostile"
+msgstr "Hostile"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.standing.allied"
+msgstr "Allied"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.standing.neutral"
+msgstr "Neutral"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.standing.summary"
+msgstr "Standing: {0} | Alignment: {1} ({2})"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.informant.burned"
+msgstr "BURNED · suspicion {0}/1000"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.informant.readout"
+msgstr "loyalty {0}/1000 · suspicion {1}/1000 · yield {2}/1000"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.branch.consequence"
+msgstr "Consequence: {0} · Trigger: {1}"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.branch.commit"
+msgstr "COMMIT ALLEGIANCE // [{0}]"
+
+#: src/UI/FactionsPanel.cs
+msgid "ui.factions.events.day"
+msgstr "[Day {0:D2}] {1}"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.caravan_arrived"
+msgstr "Caravan arrived: {0} is now docked at the airlock."
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.caravan_departed"
+msgstr "Caravan departed: {0} moved on."
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.select_goods"
+msgstr "[SELECT GOODS TO PURCHASE]"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.caravan_not_docked"
+msgstr "[CARAVAN NOT AT AIRLOCK]"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.airlock_inaccessible"
+msgstr "[AIRLOCK FROZEN / INACCESSIBLE]"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.fair_deal"
+msgstr "[FAIR DEAL — MERCHANT ACCEPTS]"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.insufficient_offer"
+msgstr "[INSUFFICIENT OFFER — NEED +{0} VU]"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.gate_airlock_header"
+msgstr "AIRLOCK ACCESSIBLE"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.gate_presence_header"
+msgstr "CARAVAN AT AIRLOCK"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.gate_requests_header"
+msgstr "GOODS REQUESTED"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.gate_tolerance_header"
+msgstr "VALUATION THRESHOLD"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.gate_counterfeit_header"
+msgstr "APPRAISAL VERIFICATION"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.gate_pass"
+msgstr "PASS"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.gate_airlock_blocked"
+msgstr "BLOCKED (FROZEN)"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.gate_presence_blocked"
+msgstr "BLOCKED (EN ROUTE)"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.gate_item_count"
+msgstr "{0} ITEMS"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.gate_none_allocated"
+msgstr "NONE ALLOCATED"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.gate_meets_tolerance"
+msgstr "PASS (MEETS TOLERANCE)"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.gate_insufficient_offer"
+msgstr "INSUFFICIENT OFFER"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.gate_appraisal_pass"
+msgstr "PASS (APPRAISAL LVL {0})"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.gate_appraisal_risk"
+msgstr "RISK {0}% (UNAPPRAISED)"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.gate_line"
+msgstr "{0}: [ {1} ]"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.allocations_cleared"
+msgstr "Allocations cleared."
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.system_not_initialized"
+msgstr "Cannot execute trade: Barter system not initialized."
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.trade_executed"
+msgstr "Trade executed with {0}! Acquired {1} for {2}. (Trade #{3})"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.trade_blocked"
+msgstr "Trade blocked: {0}"
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.error.unknown_caravan"
+msgstr "Selected merchant caravan is not recognized by the manifest."
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.error.caravan_not_at_airlock"
+msgstr "The caravan is en route and has not arrived at the airlock yet."
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.error.airlock_inaccessible"
+msgstr "The shelter airlock is frozen or blocked. Restore heat before operating the airlock."
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.error.no_items_requested"
+msgstr "No merchant goods have been selected for trade."
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.error.insufficient_stock"
+msgstr "The caravan does not have enough remaining stock to fulfill this request."
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.error.insufficient_value"
+msgstr "Offered goods do not meet the merchant's required valuation and tolerance margin."
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.error.counterfeit"
+msgstr "Counterfeit or defective goods detected during trade appraisal. Negotiation aborted."
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.error.storage_capacity"
+msgstr "Shelter storage capacity or weight limit exceeded. Make room in storage first."
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.error.commit_failed"
+msgstr "Failed to commit inventory transfer."
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.error.unknown"
+msgstr "Unknown barter constraint failed."
+
+#: src/UI/ShelterBarterPanel.cs
+msgid "ui.barter.error.fallback"
+msgstr "{0}"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.stage.fallow"
+msgstr "FALLOW"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.stage.sprouting"
+msgstr "SPROUTING"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.stage.growing"
+msgstr "GROWING"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.stage.ready"
+msgstr "READY"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.stage.failed"
+msgstr "FAILED"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.seed.mushroom"
+msgstr "Mushroom Spores"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.seed.tuber"
+msgstr "Frost Tuber"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.seed.grain"
+msgstr "Winter Rye Grain"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.seed.wheat"
+msgstr "Pre-War Heritage Wheat"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.seed.hardy_tuber"
+msgstr "Hardy Frost Tuber"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.seed.ash_grain"
+msgstr "Ashland Grain"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.seed.biolum_mushroom"
+msgstr "Bioluminescent Mushroom"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.seed.nutrient_algae"
+msgstr "Nutrient Algae"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.seed.medicinal_herb"
+msgstr "Medicinal Herb"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.seed.leafy_green"
+msgstr "Leafy Green"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.seed.oilseed"
+msgstr "Oilseed"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.seed.cold_legume"
+msgstr "Cold Legume"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.seed.frost_pea"
+msgstr "Frost Pea"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.seed.glacier_greens"
+msgstr "Glacier Greens"
+
+#: src/UI/GreenhousePanel.cs
+msgid "ui.greenhouse.seed.mixed_packet"
+msgstr "Assorted Seed Packet"
+
+#: src/UI/AutopsyReportPanel.cs
+msgid "ui.autopsy.unbound"
+msgstr "Autopsy report host session is not bound. Post-mortem records and tissue pathology findings are offline."
+
+#: src/UI/CrossingQuestPanel.cs
+msgid "ui.crossing_quest.unbound"
+msgstr "Panel not bound to session."
+
+#: src/UI/EmergencyResponseHud.cs
+msgid "ui.emergency_response.action_unavailable"
+msgstr "Action unavailable — prerequisites not met."
+
+#: src/UI/MaritimePanel.cs
+msgid "ui.maritime.unavailable"
+msgstr "Maritime session unavailable."
+
+#: src/UI/MusterPanel.cs
+msgid "ui.muster.unbound"
+msgstr "Panel not bound to active Muster session."
+
+#: src/UI/StandingRecordPanel.cs
+msgid "ui.standing_record.unavailable"
+msgstr "Standing Record system unavailable."

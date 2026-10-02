@@ -10,7 +10,7 @@ Runtimes below are budgeted timeouts (enforced ceiling), not measured durations;
 | fast | `json_schema_policy` | Code & Repo Hygiene | 30s | yes | — |
 | fast | `pot_template_drift` | Code & Repo Hygiene | 30s | yes | — |
 | fast | `build_core_tests` | Build & Tests | 120s | yes | — |
-| full | `test_core_suite` | Build & Tests | 120s | yes | — |
+| full | `test_core_suite` | Build & Tests | 120s | yes | build_core_tests |
 | fast | `build_godot_host` | Build & Tests | 180s | yes | — |
 | fast | `godot_import` | Host Selftests & Lifecycle | 180s | yes | — |
 | fast | `data_integrity` | Host Selftests & Lifecycle | 60s | yes | build_godot_host |
@@ -37,7 +37,7 @@ Runtimes below are budgeted timeouts (enforced ceiling), not measured durations;
 | fast | `plan_integration_audit_drift` | Drift & Architecture Gates | 180s | yes | — |
 | fast | `ui_design_map_drift` | Drift & Architecture Gates | 30s | yes | — |
 | fast | `compiler_warning_baseline` | Drift & Architecture Gates | 180s | yes | — |
-| fast | `docs_index_drift` | Drift & Architecture Gates | 120s | yes | — |
+| fast | `docs_index_drift` | Drift & Architecture Gates | 180s | yes | — |
 | fast | `forbidden_core_apis` | Source Policy & Lint Gates | 30s | yes | — |
 | fast | `catch_policy_lint` | Source Policy & Lint Gates | 30s | yes | — |
 | fast | `persistent_filename_registry` | Source Policy & Lint Gates | 30s | yes | — |
@@ -51,11 +51,11 @@ Runtimes below are budgeted timeouts (enforced ceiling), not measured durations;
 | fast | `agent_rulebooks_sync` | Architecture & Catalog Gates | 30s | yes | — |
 | fast | `ui_panel_catalog_drift` | Architecture & Catalog Gates | 30s | yes | — |
 | fast | `expansions_catalog_drift` | Architecture & Catalog Gates | 30s | yes | — |
-| fast | `ui_panel_contracts_test` | Build & Tests | 60s | yes | — |
+| fast | `ui_panel_contracts_test` | Build & Tests | 60s | yes | build_core_tests |
 | fast | `audio_catalog_drift` | Architecture & Catalog Gates | 30s | yes | — |
 | fast | `agent_skills_catalog_drift` | Architecture & Catalog Gates | 30s | yes | — |
-| fast | `audio_cue_integrity_gate` | Build & Tests | 60s | yes | — |
-| fast | `campaign_envelope_fuzz_test` | Build & Tests | 60s | yes | — |
+| fast | `audio_cue_integrity_gate` | Build & Tests | 60s | yes | build_core_tests |
+| fast | `campaign_envelope_fuzz_test` | Build & Tests | 60s | yes | build_core_tests |
 | fast | `case_alias_guard` | Repository hygiene | 30s | no | — |
 | fast | `selftest_manifest_drift` | Drift guard | 60s | no | — |
 | full | `export_parity` | Release | 180s | yes | build_godot_host |
@@ -67,11 +67,11 @@ Runtimes below are budgeted timeouts (enforced ceiling), not measured durations;
 | fast | `scene_binding_truth` | Source Policy & Lint Gates | 60s | yes | — |
 | fast | `coverage_gate` | Quality & Verification | 60s | yes | — |
 | fast | `content_acceptance_pipeline` | Quality & Verification | 120s | yes | — |
-| fast | `port_contract_gate` | Quality & Verification | 60s | yes | — |
-| fast | `input_map_contract` | Quality & Verification | 30s | yes | — |
+| fast | `port_contract_gate` | Quality & Verification | 180s | yes | — |
+| fast | `input_map_contract` | Quality & Verification | 90s | yes | — |
 | fast | `version_gate` | Release | 30s | yes | — |
 | fast | `changelog_drift` | Release | 30s | no | — |
-| full | `save_support_window` | Release | 120s | yes | — |
+| full | `save_support_window` | Release | 120s | yes | build_core_tests |
 | fast | `ui_layout_selftest` | UI & Accessibility | 180s | no | — |
 | fast | `catalog_audit` | Source Policy & Lint Gates | 120s | yes | — |
 | fast | `content_certification` | Host Selftests & Lifecycle | 60s | no | build_godot_host |

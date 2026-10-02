@@ -1,0 +1,9 @@
+# ASHFALL graphical batch 21 — FINISHED / STAGED
+
+> STATUS: APPROVED BY USER — FINISHED / STAGED
+
+Generate 25 unique image subjects: six prop three-view reference sheets, four anonymous adult character sheets, ten material swatches, five alpha graphics. User asks to continue graphical assets; existing 25-subject and maximum-one-hour batch authorization persists. Start 18:06 UTC on 2026-10-01; deadline 19:06 UTC. User 60-minute limit supersedes generic 20-minute task limit. Prior graphical series 290 subjects complete, no pending generation. Preflight Go JSON validator: 715/715 valid, zero violations. Source 1cc4c773a. Equivalent candidate searches led to copper braid replacement with hematite; current candidates distinct from earlier packs, subject to independent premise audit.
+
+Own only exact new pack artifacts/asset-generation/graphics25-21-2026-10-01/, this plan, and own additive coordination entries. Done: 25 images saved and producer/independent reviewed; dimension/alpha checks, existing Go manifest, source/provenance/prompts, preview/report/Blender handoff, claim release. Built-in image_gen, one request per subject. No existing raster edits, new code, authored JSON, live imports or registry changes. No code tests apply. Images are staged references with manual modeling and repetition checks; no meshes, rigs, UVs, PBR sets or runtime integration. Leave staged plan outside integrated archive.
+
+Completed 18:29 UTC, about 23 minutes. All 25 originals saved and accepted by producer and independent visual review: six props, four characters, ten swatches, five alpha graphics. Go manifest records 58,108,324 bytes; 20 opaque PNGs and five PNGs with transparency. Previews, prompts, source records, provenance, report and Blender handoff complete. Claim released; no pending generation or errors. Perspective/pose reconciliation, loom and buckle mechanics, baked material shading and unverified tiling are documented limitations.

@@ -6,6 +6,8 @@ using Ashfall.Core.UI;
 using AtomicWar.GodotApp;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
+using AtomicWar.GodotApp.Localization;
+
 namespace AtomicWar.GodotApp.UI
 {
     public partial class ShelterSchedulePanel : Control, IBindablePanel
@@ -66,7 +68,7 @@ namespace AtomicWar.GodotApp.UI
 
             var buttonRow = AshfallUiHelpers.MakeActionBar(separation: 10);
 
-            _curfewBtn = AshfallUiHelpers.MakeButton("Toggle Night Curfew", () =>
+            _curfewBtn = AshfallUiHelpers.MakeButton(AshfallLocalization.Tr("ui.shelter_schedule.toggle_curfew", "Toggle Night Curfew"), () =>
             {
                 if (_host != null)
                 {
@@ -77,7 +79,7 @@ namespace AtomicWar.GodotApp.UI
             _curfewBtn.CustomMinimumSize = new Vector2(180, 36);
             buttonRow.AddChild(_curfewBtn);
 
-            _emergencyBtn = AshfallUiHelpers.MakeButton("Emergency Override", () =>
+            _emergencyBtn = AshfallUiHelpers.MakeButton(AshfallLocalization.Tr("ui.shelter_schedule.emergency_override", "Emergency Override"), () =>
             {
                 if (_host != null)
                 {

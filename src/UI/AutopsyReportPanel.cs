@@ -6,6 +6,8 @@ using Ashfall.Core.UI;
 using AtomicWar.GodotApp;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
+using AtomicWar.GodotApp.Localization;
+
 namespace AtomicWar.GodotApp.UI
 {
     public partial class AutopsyReportPanel : Control, IBindablePanel
@@ -79,7 +81,8 @@ namespace AtomicWar.GodotApp.UI
             {
                 if (_detailText != null)
                 {
-                    _detailText.Text = "Autopsy report host session is not bound. Post-mortem records and tissue pathology findings are offline.";
+                    _detailText.Text = AshfallLocalization.Tr("ui.autopsy.unbound",
+                        "Autopsy report host session is not bound. Post-mortem records and tissue pathology findings are offline.");
                 }
                 return;
             }

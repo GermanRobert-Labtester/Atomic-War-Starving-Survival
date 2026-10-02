@@ -6,6 +6,8 @@ using Ashfall.Core.Crafting;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
 
+using AtomicWar.GodotApp.Localization;
+
 namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
@@ -100,7 +102,7 @@ namespace AtomicWar.GodotApp.UI
 
             if (_craftingHost == null)
             {
-                _recipeList.AddChild(AshfallUiHelpers.MakeMetadata("No crafting session bound."));
+                _recipeList.AddChild(AshfallUiHelpers.MakeMetadata(AshfallLocalization.Tr("ui.crafting.no_session", "No crafting session bound.")));
                 return;
             }
 
@@ -139,7 +141,7 @@ namespace AtomicWar.GodotApp.UI
             }
             else
             {
-                _queueList.AddChild(AshfallUiHelpers.MakeMetadata("No active crafts. Start a recipe above."));
+                _queueList.AddChild(AshfallUiHelpers.MakeMetadata(AshfallLocalization.Tr("ui.crafting.no_active", "No active crafts. Start a recipe above.")));
             }
         }
 

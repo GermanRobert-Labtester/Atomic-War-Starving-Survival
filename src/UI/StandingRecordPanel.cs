@@ -6,6 +6,8 @@ using Ashfall.Core;
 using Ashfall.Core.UI;
 using CoreTheme = Ashfall.Core.UI.Theme;
 
+using AtomicWar.GodotApp.Localization;
+
 namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
@@ -169,7 +171,7 @@ namespace AtomicWar.GodotApp.UI
 
             if (_layoutSystem == null)
             {
-                _statusLabel.Text = "Standing Record system unavailable.";
+                _statusLabel.Text = AshfallLocalization.Tr("ui.standing_record.unavailable", "Standing Record system unavailable.");
                 return;
             }
 

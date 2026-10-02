@@ -1,5 +1,19 @@
 # ASHFALL Integration Plans
 
+## Build & test speedups — FULLY INTEGRATED (2026-10-02)
+
+Completed the approved five-task tooling plan: expanded changed-file selector
+coverage; configured five xUnit gates to reuse the Core test build; enabled
+setup-dotnet caching keyed by NuGet lock files; added opt-in local shared
+compilation; and added `--jobs N` light-gate execution through the Go task
+runner. Build, Godot, and dependency gates remain serial; the default remains
+`--jobs 1`. Focused Go test/vet, selector dry-run, gate manifest/inventory,
+serial gate, three parallel light gates, and both Core test-project build modes
+passed. The unrelated POT drift gate is currently stale from concurrent
+localization catalog changes and was excluded from this plan's scope.
+Archived plan:
+`.ai/plans/integrated/tooling/INTEGRATED_test-build-speedups-2026-10-02.md`.
+
 ## l10n sweep wave 9 — the three largest unregistered panels — FULLY INTEGRATED (2026-10-02)
 
 Localized and registered `FactionsPanel` (40→0 raw-chrome literals),

@@ -95,6 +95,14 @@ LOCALIZED_SURFACES = [
     ROOT / "src" / "UI" / "FactionsPanel.cs",
     ROOT / "src" / "UI" / "GreenhousePanel.cs",
     ROOT / "src" / "UI" / "ShelterBarterPanel.cs",
+    # Repo-wide 6-loop sweep round 2 (2026-10-02): small chrome-only panels
+    # fully localized and registered so the zero-tolerance raw-chrome gate holds.
+    ROOT / "src" / "UI" / "CraftingPanel.cs",
+    ROOT / "src" / "UI" / "DynamicQuestlinePanel.cs",
+    ROOT / "src" / "UI" / "InSarMappingPanel.cs",
+    ROOT / "src" / "UI" / "InventoryDetailPanel.cs",
+    ROOT / "src" / "UI" / "JournalDetailPanel.cs",
+    ROOT / "src" / "UI" / "ShelterSchedulePanel.cs",
 ]
 
 

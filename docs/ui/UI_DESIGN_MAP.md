@@ -1,15 +1,15 @@
 # ASHFALL UI Design Map — Programmatic
 
-**Generated:** 2026-10-01 (from source; regenerate with `python3 scripts/ci/generate-ui-design-map.py`)
+**Generated:** 2026-10-02 (from source; regenerate with `python3 scripts/ci/generate-ui-design-map.py`)
 
 **Method:** static parse of `src/UI/*.cs`, `src/Main.PlayerSurfaces.cs`, `src/UI/GameDashboardPanel.cs`, `Ashfall.Core.UI.Theme`
 **Canvas:** fixed 1920x1080 — full-rect modal shells
 
 ## 1. Surface inventory
 
-- **240** UI panels in `src/UI/` — **114** dashboard shells, **116** bindable, **22** scene-backed, **121** with status rails
-- Layout patterns: `shell:split-body` × 40, `shell:single-column` × 74, `scene-backed` × 22, `code-built` × 104
-- Distinct shell minimum sizes: 720×480, 900×560, 900×580, 900×600, 900×620, 920×600, 950×600, 950×620, 1000×640, 1000×650, 1000×660, 1040×680, 1050×680, 1060×680, 1080×680, 1100×640, 1100×680, 1100×700, 1100×720, 1120×720, 1160×700, 1180×700, 1280×720
+- **240** UI panels in `src/UI/` — **112** dashboard shells, **116** bindable, **22** scene-backed, **119** with status rails
+- Layout patterns: `shell:split-body` × 39, `shell:single-column` × 73, `scene-backed` × 22, `code-built` × 106
+- Distinct shell minimum sizes: 720×480, 900×560, 900×580, 900×600, 900×620, 920×600, 950×600, 950×620, 1000×640, 1000×650, 1000×660, 1040×680, 1050×680, 1060×680, 1080×680, 1100×680, 1100×700, 1100×720, 1120×720, 1160×700, 1180×700, 1280×720
 
 ## 2. Design tokens (Ashfall.Core.UI.Theme)
 
@@ -73,7 +73,7 @@ title bar → optional `AshfallStatusRail` (metric cards) → content stack (spl
 | Component | Total instances | Panels using it |
 |---|---:|---:|
 | `datagrid` | 2051 | 34 |
-| `metric_card` | 1645 | 122 |
+| `metric_card` | 1644 | 122 |
 | `vbox` | 489 | 156 |
 | `separators` | 428 | 120 |
 | `hbox` | 249 | 141 |
@@ -87,7 +87,7 @@ title bar → optional `AshfallStatusRail` (metric cards) → content stack (spl
 
 Dashboard navigation groups in declared order (label → route):
 
-### WEEK ONE
+### Primary
 
 ```
 INVENTORY -> inventory
@@ -97,11 +97,6 @@ MAP -> map
 JOURNAL -> journal
 SAVE / LOAD -> save
 SETTINGS -> settings
-```
-
-### ALL SURFACES
-
-```
 STATUS -> status
 SURVIVAL -> survival_detail
 CRAFTING -> crafting
@@ -136,11 +131,6 @@ DOSE ATLAS -> dose_geography
 ACHIEVEMENTS -> achievements
 HELP -> help
 GUIDANCE -> guidance
-```
-
-### EXPANSION SURFACES
-
-```
 POLITICS -> politics
 PRISONERS -> prisoners
 FORCED LABOR -> forced_labor
@@ -169,11 +159,6 @@ PERSONAL QUESTS -> personal_quests
 TIME CAPSULE -> time_capsule
 WILLS & LEGACY -> death_legacy
 SOCIAL BONDS -> relationship_decay
-```
-
-### SUBSYSTEM CONSOLES
-
-```
 MEMORIAL CENOTAPH -> iron_cenotaph_memorial
 BIOGAS DIGESTER -> biogas_digester
 FUNGAL FERMENTER -> fungal_protein_fermenter
@@ -220,10 +205,10 @@ BREACHING OPS -> vault_door_breaching
 
 | Rule | Holds | Evidence |
 |---|---|---|
-| Every dashboard shell declares a min size ≥ 720×480 | ✅ | 114 shell panels |
+| Every dashboard shell declares a min size ≥ 720×480 | ✅ | 112 shell panels |
 | Every bindable panel exposes Unbind (lifecycle symmetry) | ❌ | 116 bindable panels; missing: DutyRosterDetailPanel, EpiloguePanel, EventsLogPanel, FactionDetailPanel, MaritimeAtlasPanel, OnboardingHintPanel, OpeningProtocolModal, WeatherSondePanel |
 | Every expanded panel id has an open path (switch case or PanelRegistry binding) | ✅ | 64 ids, 65 switch cases, 143 registry bindings |
-| Every surface with status-rail cards obtains the rail via shell.SetStatusRail() | ✅ | 121 surfaces with rails |
+| Every surface with status-rail cards obtains the rail via shell.SetStatusRail() | ✅ | 119 surfaces with rails |
 
 ## 6. Shell surface design specs
 
@@ -231,20 +216,20 @@ Per-surface spec derived from source (binding target, layout, metrics, actions):
 
 | Panel | Shell title | Binds | Layout | Min size | Rail cards | Scroll | Options | Buttons | Routes | LOC |
 |---|---|---|---|---|---|---:|---:|---:|---|---:|
-| `AirlockSecurityPanel` | Airlock Security // Sentry & Biometrics | `AirlockSecurityHostSession` | `shell:single-column` | 1000×650 | 4 | 0 | 0 | 0 | airlock_security | 142 |
+| `AirlockSecurityPanel` | Airlock Security // Sentry & Biometrics | `AirlockSecurityHostSession` | `shell:single-column` | 1000×650 | 4 | 0 | 0 | 0 | airlock_security | 144 |
 | `AmphibiousDraisinePanel` | Amphibious Draisine // Flooded-Corridor Mobility | `AmphibiousDraisineHostSession` | `shell:single-column` | 950×620 | 4 | 0 | 0 | 0 | amphibious_draisine | 161 |
 | `AmputationTriagePanel` | TRIAGE TABLE // AMPUTATION & PROSTHETICS | `AmputationSystem` | `shell:single-column` | 1000×650 | 4 | 1 | 0 | 0 | — | 328 |
 | `AnomalyWatchPanel` | Anomaly Watch // Moving Hazards | `—` | `shell:single-column` | 900×560 | 4 | 0 | 0 | 0 | — | 136 |
-| `ApprenticeshipPanel` | Apprenticeship // Skill Mentorship | `ApprenticeshipHostSession` | `shell:split-body` | 1000×650 | 2 | 1 | 2 | 0 | apprenticeship | 232 |
+| `ApprenticeshipPanel` | Apprenticeship // Skill Mentorship | `ApprenticeshipHostSession` | `shell:split-body` | 1000×650 | 2 | 1 | 2 | 0 | apprenticeship | 234 |
 | `ArchaeologyExcavationPanel` | BEFORE // PRE-WAR ARCHIVES & DIG SITES | `ArchaeologySystem` | `shell:single-column` | 1000×650 | 4 | 1 | 0 | 0 | — | 227 |
 | `ArchiveDeskPanel` | SYS: ARCHIVAL SCRIPT & TRANSCRIPTION // ARCHIVE DESK | `ArchiveDeskHostSession` | `shell:split-body` | 1040×680 | 6 | 3 | 1 | 1 | archive_desk | 412 |
-| `AutopsyReportPanel` | Clinical Autopsy // Forensic Pathology | `AutopsyHostSession` | `shell:single-column` | 1000×650 | 2 | 0 | 0 | 0 | autopsy_report | 117 |
+| `AutopsyReportPanel` | Clinical Autopsy // Forensic Pathology | `AutopsyHostSession` | `shell:single-column` | 1000×650 | 2 | 0 | 0 | 0 | autopsy_report | 120 |
 | `AviationUI` | Aviation // Airfield & Reconnaissance | `AviationSystem` | `shell:single-column` | 1000×650 | 3 | 0 | 0 | 0 | aviation | 127 |
 | `BeliefsPanel` | Beliefs // Doctrinal Climate | `—` | `shell:single-column` | 900×560 | 4 | 0 | 0 | 0 | — | 138 |
 | `BestiaryPanel` | Wasteland Bestiary // Field Ledger | `—` | `shell:single-column` | 1000×660 | 4 | 0 | 0 | 0 | bestiary | 282 |
 | `BioFermentationPanel` | FERMENTATION REACTOR // BIOLOGICAL PROCESS | `BioFermentationEngine` | `shell:single-column` | 1000×640 | 0 | 1 | 2 | 0 | — | 393 |
 | `BlackMarketPanel` | The Quiet Counter // Underworld Trade | `BlackMarketHostSession` | `shell:split-body` | 920×600 | 5 | 1 | 0 | 4 | — | 449 |
-| `CaregivingPanel` | Caregiving // Bedside Tending | `CaregivingHostSession` | `shell:single-column` | 1000×650 | 3 | 0 | 0 | 0 | caregiving | 128 |
+| `CaregivingPanel` | Caregiving // Bedside Tending | `CaregivingHostSession` | `shell:single-column` | 1000×650 | 3 | 0 | 0 | 0 | caregiving | 130 |
 | `CargoAirdropPanel` | AIRDROP WATCH // CARGO RECOVERY | `CargoAirdropHostSession` | `shell:single-column` | 1000×650 | 0 | 1 | 0 | 0 | cargo_airdrop | 235 |
 | `CeremonyFestivalPanel` | COMMON HEARTH // WASTELAND FESTIVALS | `CeremonySystem` | `shell:single-column` | 1000×650 | 4 | 1 | 0 | 0 | — | 294 |
 | `ChemUI` | Pharmacy // Chemical Engineering & Narcotics | `NarcoticsSystem` | `shell:single-column` | 1000×650 | 4 | 0 | 0 | 0 | narcotics, pharma_lab | 126 |
@@ -269,13 +254,11 @@ Per-surface spec derived from source (binding target, layout, metrics, actions):
 | `EbPvdCoatingPanel` | EB-PVD COATER // THERMAL BARRIER DEPOSITION | `EbPvdCoatingHostSession` | `shell:single-column` | 1100×720 | 4 | 0 | 0 | 0 | ebpvd_coating | 345 |
 | `EquipmentConditionPanel` | SYS: ARMORY WORKBENCH & CONDITION // DURABILITY MATRIX | `EquipmentConditionHostSession` | `shell:split-body` | 1040×680 | 5 | 3 | 0 | 0 | equipment_condition | 315 |
 | `ExcavationPanel` | Subterranean Excavation // Deep Strata | `ExcavationHostSession` | `shell:single-column` | 1000×650 | 1 | 0 | 0 | 0 | excavation | 107 |
-| `ExpeditionRadarPanel` | Sortie Radar // Wasteland Movement Network | `—` | `shell:split-body` | 1100×640 | 6 | 0 | 0 | 0 | — | 603 |
 | `FactionsNarrativePanel` | Factions Narrative // Trust Tree & Diplomacy | `IFactionStanceProvider` | `shell:single-column` | 1100×720 | 6 | 0 | 0 | 0 | event_detail, journal | 501 |
 | `FalloutPlumePanel` | ATMOSPHERIC HAZARD // FALLOUT TRACKING & DISPERSAL | `FalloutSystem` | `shell:single-column` | 1000×650 | 3 | 0 | 0 | 1 | — | 145 |
 | `FarmingPanel` | Advanced Agriculture // Bench & Compost | `AgricultureHostSession` | `shell:single-column` | 1100×720 | 5 | 0 | 1 | 0 | — | 482 |
 | `FungiCultivationBedPanel` | DARK BEDS // SUBTERRANEAN FUNGI CULTIVATION | `FungiCultivationSystem` | `shell:single-column` | 1000×650 | 0 | 1 | 2 | 0 | — | 315 |
 | `GeodeticSurveyPanel` | Geodetic Survey // Triangulation Network | `GeodeticSurveyHostSession` | `shell:single-column` | 1100×720 | 5 | 0 | 0 | 0 | — | 399 |
-| `GreenhousePanel` | The Glass Orchard // Sub-surface Hydroponics | `GreenhouseHostSession` | `shell:single-column` | 1100×720 | 9 | 0 | 0 | 0 | greenhouse | 806 |
 | `HiddenAgendaPanel` | Survivor Intrigue // Hidden Agendas & Betrayals | `HiddenAgendaHostSession` | `shell:split-body` | 1000×650 | 4 | 1 | 0 | 1 | hidden_agenda | 321 |
 | `HydraulicExtrusionPanel` | Heavy Fabrication // Hydraulic Extrusion | `HydraulicExtrusionHostSession` | `shell:single-column` | 1000×650 | 4 | 0 | 2 | 3 | hydraulic_extrusion | 297 |
 | `InSarMappingPanel` | Deformation Intelligence // InSAR Mapping | `InSarMappingHostSession` | `shell:single-column` | 1000×650 | 4 | 0 | 2 | 2 | insar_mapping | 275 |
@@ -288,7 +271,7 @@ Per-surface spec derived from source (binding target, layout, metrics, actions):
 | `LibraryStudyPanel` | SYS: COHORT LIBRARY & TECH STUDY // STUDY MATRIX | `LibraryStudyHostSession` | `shell:split-body` | 1040×680 | 5 | 3 | 0 | 0 | library_study | 348 |
 | `LowBackgroundLeadPanel` | Assay Bench // Low-Background Metrology | `LowBackgroundMetrologyHostSession` | `shell:single-column` | 1000×650 | 4 | 0 | 1 | 4 | low_background_metrology | 270 |
 | `MaritimeAtlasPanel` | Maritime Atlas // Deep Coast Dive Coordinates | `MaritimeHostSession` | `shell:split-body` | 1280×720 | 6 | 0 | 0 | 0 | — | 467 |
-| `MedicalWardPanel` | SYS: TRAUMA WARD & SURGICAL TRIAGE BAY-03 | `MedicalWardHostSession` | `shell:split-body` | 1060×680 | 5 | 3 | 0 | 0 | medical_ward | 476 |
+| `MedicalWardPanel` | SYS: TRAUMA WARD & SURGICAL TRIAGE BAY-03 | `MedicalWardHostSession` | `shell:split-body` | 1060×680 | 5 | 3 | 0 | 0 | medical_ward | 480 |
 | `MentalHealthCrisisPanel` | SYS: PSYCHIATRIC WARD & CRISIS INTERVENTION // TRIAGE MATRIX | `MentalHealthCrisisHostSession` | `shell:split-body` | 1040×680 | 5 | 3 | 0 | 0 | mental_health_crisis | 302 |
 | `MercenaryBountyBoardPanel` | WARLORD CONTRACTS // MERCENARY BOUNTY BOARD | `MercenarySystem` | `shell:single-column` | 1000×650 | 4 | 1 | 0 | 0 | — | 237 |
 | `MicrofluidicDiagnosticPanel` | MICROFLUIDIC DIAGNOSTICS // RAPID IMMUNOCHIP ANALYZER | `MicrofluidicDiagnosticHostSession` | `shell:single-column` | 1100×720 | 4 | 0 | 0 | 0 | microfluidic_diagnostic | 394 |
@@ -318,7 +301,7 @@ Per-surface spec derived from source (binding target, layout, metrics, actions):
 | `RunFlatTirePanel` | Vehicle Shop // Run-Flat Wheel Set | `RunFlatTireHostSession` | `shell:single-column` | 1000×650 | 5 | 0 | 3 | 4 | runflat_tire | 249 |
 | `SanitationPanel` | Waste & Sanitation // Shelter Hygiene | `SanitationHostSession` | `shell:single-column` | 900×580 | 4 | 0 | 0 | 0 | sanitation | 142 |
 | `ShelterAtmospherePanel` | Shelter Atmosphere & Ambiance // Environmental Character | `ShelterAtmosphereHostSession` | `shell:single-column` | 950×600 | 4 | 0 | 0 | 2 | shelter_atmosphere | 233 |
-| `ShelterBarterPanel` | SHELTER AIRLOCK BARTER // CARAVAN TRADING ROUTE | `—` | `shell:split-body` | 1100×700 | 5 | 3 | 0 | 0 | — | 1165 |
+| `ShelterBarterPanel` | SHELTER AIRLOCK BARTER // CARAVAN TRADING ROUTE | `—` | `shell:split-body` | 1100×700 | 5 | 3 | 0 | 0 | — | 1169 |
 | `ShelterDecorPanel` | Shelter Interior // Memorial Wall | `ShelterDecorHostSession` | `shell:single-column` | 1160×700 | 4 | 2 | 1 | 0 | — | 451 |
 | `ShelterOperationsPanel` | Shelter Operations // Works, Crews & Outposts | `ShelterOperationsHostSession` | `shell:single-column` | 1120×720 | 4 | 1 | 1 | 0 | shelter_operations | 399 |
 | `ShelterReputationPanel` | Shelter Reputation // External Perception & Notoriety | `ShelterReputationHostSession` | `shell:split-body` | 1000×650 | 4 | 1 | 0 | 0 | shelter_reputation | 329 |
@@ -348,7 +331,7 @@ Per-surface spec derived from source (binding target, layout, metrics, actions):
 
 ## 7. Non-shell bindable surfaces
 
-22 bindable panels render without the dashboard shell (scene-backed forms, sub-views, read-only rows):
+23 bindable panels render without the dashboard shell (scene-backed forms, sub-views, read-only rows):
 
 | Panel | Binds | Pattern | Routes | LOC |
 |---|---|---|---|---:|
@@ -356,14 +339,15 @@ Per-surface spec derived from source (binding target, layout, metrics, actions):
 | `CombatDetailPanel` | `CombatHostSession` | `scene-backed` | combat, combat_detail | 162 |
 | `CombatHistoryPanel` | `CombatHostSession` | `code-built` | combat, combat_detail | 211 |
 | `CombatPanel` | `CombatHostSession` | `code-built` | combat, combat_detail | 723 |
-| `DutyRosterDetailPanel` | `DutyRosterHostSession` | `scene-backed` | duty_roster, duty_roster_detail | 164 |
-| `EmergencyResponseHud` | `CrisisPresentationSnapshot` | `scene-backed` | — | 328 |
+| `DutyRosterDetailPanel` | `DutyRosterHostSession` | `scene-backed` | duty_roster, duty_roster_detail | 165 |
+| `EmergencyResponseHud` | `CrisisPresentationSnapshot` | `scene-backed` | — | 330 |
 | `EpiloguePanel` | `CampaignOutcomeSnapshot` | `code-built` | chronicle, epilogue | 252 |
 | `EventsLogPanel` | `object` | `code-built` | event_detail, journal | 205 |
 | `FactionDetailPanel` | `object` | `scene-backed` | — | 156 |
 | `FactionMatrixPanel` | `IFactionStanceProvider` | `code-built` | — | 482 |
 | `FeedbackPanel` | `IFeedbackService` | `code-built` | — | 262 |
 | `GeothermalAquiferPanel` | `GeothermalAquiferHostSession` | `code-built` | — | 173 |
+| `GreenhousePanel` | `GreenhouseHostSession` | `code-built` | greenhouse | 806 |
 | `InventoryPanel` | `InventoryHostSession` | `code-built` | inventory, inventory_detail | 341 |
 | `OnboardingHintPanel` | `OnboardingJourney` | `code-built` | help | 498 |
 | `OpeningProtocolModal` | `StartingLevelHostSession` | `code-built` | protocol | 277 |
@@ -377,5 +361,5 @@ Per-surface spec derived from source (binding target, layout, metrics, actions):
 
 ## 8. Machine-readable output
 
-Full token/route/panel JSON: `docs/ui/ui_design_map.json` (240 panels, 4 nav groups).
+Full token/route/panel JSON: `docs/ui/ui_design_map.json` (240 panels, 1 nav groups).
 

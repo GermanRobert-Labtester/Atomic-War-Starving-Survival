@@ -5,6 +5,8 @@ using Ashfall.Core.UI;
 using Ashfall.Core;
 using Ashfall.Core.Inventory;
 
+using AtomicWar.GodotApp.Localization;
+
 namespace AtomicWar.GodotApp.UI;
 
 /// <summary>
@@ -121,7 +123,7 @@ public partial class InventoryDetailPanel : Control
 
         if (_inventory?.Inventory == null || string.IsNullOrEmpty(_itemId))
         {
-            _itemInfo.AddChild(MakeDimLine("No item selected."));
+            _itemInfo.AddChild(MakeDimLine(AshfallLocalization.Tr("ui.inventory_detail.no_item", "No item selected.")));
             return;
         }
 
@@ -270,7 +272,7 @@ public partial class InventoryDetailPanel : Control
         if (def.tradeValue > 0) { AddRow(_itemStats, $"Trade Value: {def.tradeValue:0} (tier {def.tradeTier})", Ashfall.Core.UI.Theme.Pale); RenderedRowCount++; statCount++; }
         if (def.isEquipable) { AddRow(_itemStats, $"Equipable: {def.equipSlot}", Ashfall.Core.UI.Theme.Lethe); RenderedRowCount++; statCount++; }
         if (statCount == 0)
-            _itemStats.AddChild(MakeDimLine("No special stats."));
+            _itemStats.AddChild(MakeDimLine(AshfallLocalization.Tr("ui.inventory_detail.no_stats", "No special stats.")));
 
         // ── Actions (contextual) ──
         if (def.IsConsumable())

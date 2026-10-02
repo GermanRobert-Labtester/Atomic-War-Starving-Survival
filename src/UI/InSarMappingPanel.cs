@@ -7,6 +7,8 @@ using Ashfall.Core.UI;
 using AtomicWar.GodotApp;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
+using AtomicWar.GodotApp.Localization;
+
 namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
@@ -78,7 +80,7 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.AddChild(_detailText = new Label { AutowrapMode = TextServer.AutowrapMode.WordSmart });
 
             _contentStack.AddChild(AshfallUiHelpers.MakeSeparator());
-            _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader("SURVEY PLATFORM"));
+            _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader(AshfallLocalization.Tr("ui.insar.survey_platform", "SURVEY PLATFORM")));
 
             _sensorSelector = new OptionButton { CustomMinimumSize = new Vector2(420, 36) };
             _sensorSelector.ItemSelected += idx =>
@@ -93,7 +95,7 @@ namespace AtomicWar.GodotApp.UI
                 "Repeat passes must share a platform line. Two compatible passes over the same sector are required before a deformation map exists."));
 
             _contentStack.AddChild(AshfallUiHelpers.MakeSeparator());
-            _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader("REPEAT-PASS SURVEY"));
+            _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader(AshfallLocalization.Tr("ui.insar.repeat_pass_survey", "REPEAT-PASS SURVEY")));
 
             _sectorSelector = new OptionButton { CustomMinimumSize = new Vector2(420, 36) };
             _sectorSelector.ItemSelected += idx =>

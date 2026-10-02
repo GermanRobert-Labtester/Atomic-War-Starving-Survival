@@ -1,5 +1,23 @@
 # ASHFALL Worktree Ownership
 
+## claim-test-build-speedups-2026-10-02 — COMPLETE / FULLY INTEGRATED
+
+User-directed ("find 5 tasks that can help speed up building and testing the game
+overall test suite faster usage! ... and implement!"). Plan:
+`.ai/plans/integrated/tooling/INTEGRATED_test-build-speedups-2026-10-02.md`
+(originally approved by the user). Exact
+owned paths: `tools/gotools/pkg/selector/selector.go` (+ new `selector_test.go`),
+`tools/gotools/pkg/runner/runner.go`, `tools/gotools/cmd/ashfall-dev/main.go`,
+`bin/run-scoped-tests`, `bin/ashfall-dev`, `docs/ci/CI_GATE_MANIFEST.json`,
+`docs/ci/GATE_INVENTORY.md`, `.github/workflows/ci.yml`,
+`.github/workflows/build.yml`, `Directory.Build.targets` (new),
+`scripts/run_test.sh`, `scripts/ci/verify-fast.sh`, `scripts/ci/run-gates.py`,
+this claim, `.ai/state.md`, `INTEGRATION_PLANS.md`, and the generated lock files
+`packages.lock.json`, `Ashfall.Core/packages.lock.json`, and
+`Ashfall.Core.Tests/packages.lock.json`. Behaviour-preserving tooling/CI only;
+no Core/gameplay/save/determinism change. **COMPLETE / FULLY INTEGRATED
+2026-10-02**; plan archived in `.ai/plans/integrated/tooling/`.
+
 ## claim-repo-wide-6-loop-localization-sweep-2026-10-02 — COMPLETE / FULLY INTEGRATED
 
 User-directed six-loop UI l10n hardening. Plan:

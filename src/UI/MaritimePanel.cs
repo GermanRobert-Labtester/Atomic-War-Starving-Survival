@@ -7,6 +7,8 @@ using Ashfall.Core.Maritime;
 using Ashfall.Core.UI;
 using CoreTheme = Ashfall.Core.UI.Theme;
 
+using AtomicWar.GodotApp.Localization;
+
 namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
@@ -144,7 +146,7 @@ namespace AtomicWar.GodotApp.UI
 
             if (_maritime == null)
             {
-                _statusLabel.Text = "Maritime session unavailable.";
+                _statusLabel.Text = AshfallLocalization.Tr("ui.maritime.unavailable", "Maritime session unavailable.");
                 return;
             }
 

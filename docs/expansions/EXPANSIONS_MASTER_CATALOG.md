@@ -1,6 +1,6 @@
 # ASHFALL Expansions 01–11 Master Systems & Integration Atlas
 
-**Authoritative Expansion Catalog** | **Generated:** 2026-10-01 | **Total Expansions:** 11
+**Authoritative Expansion Catalog** | **Generated:** 2026-10-02 | **Total Expansions:** 11
 
 > [!IMPORTANT]
 > **EXPANSION INTEGRATION RULES:**

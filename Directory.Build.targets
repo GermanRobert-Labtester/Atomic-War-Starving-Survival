@@ -1,0 +1,21 @@
+<Project>
+  <!--
+    ASHFALL — opt-in local build acceleration.
+
+    Directory.Build.props disables the Roslyn compiler server
+    (UseSharedCompilation=false) and MSBuild node reuse so isolated CI and
+    concurrent agent sessions never share build processes. That default costs
+    every local build a cold Roslyn start.
+
+    This targets file is imported AFTER each project body, so it overrides the
+    per-project <UseSharedCompilation>false</UseSharedCompilation>. It only
+    takes effect when ASHFALL_BUILD_FAST=1, which the local runners export
+    (scripts/run_test.sh, scripts/ci/verify-fast.sh). Plain `dotnet build`,
+    `dotnet test`, and CI keep the isolated default.
+
+    Disable an individual run with ASHFALL_BUILD_FAST=0.
+  -->
+  <PropertyGroup Condition="'$(ASHFALL_BUILD_FAST)' == '1'">
+    <UseSharedCompilation>true</UseSharedCompilation>
+  </PropertyGroup>
+</Project>

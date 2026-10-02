@@ -186,6 +186,52 @@ func SelectTestsForFiles(repoRoot string, changedFiles []string) *SelectionPlan 
 			}
 			continue
 		}
+
+		// 4. Godot host C# sources: src/<Dir>/<Name>.cs. Panels and host
+		// sessions are covered by the xUnit UI/Tooling source-contract suites,
+		// not by Core domain tests, so fall back to the closest existing dir.
+		if strings.HasPrefix(clean, "src/") && strings.HasSuffix(clean, ".cs") {
+			sub := strings.TrimPrefix(clean, "src/")
+			dir := filepath.Dir(sub)
+			base := strings.TrimSuffix(filepath.Base(sub), ".cs")
+			var candidates []string
+			if dir != "." {
+				candidates = append(candidates,
+					fmt.Sprintf("Ashfall.Core.Tests/%s/%sTests.cs", dir, base),
+					fmt.Sprintf("Ashfall.Core.Tests/%s/%sTest.cs", dir, base),
+					fmt.Sprintf("Ashfall.Core.Tests/%s", dir),
+				)
+			}
+			candidates = append(candidates, "Ashfall.Core.Tests/Tooling")
+			if addXUnitTarget(repoRoot, candidates, testSet, plan, file) {
+				continue
+			}
+		}
+
+		// 5. Authored game data: catalog changes are covered by the Core
+		// data-authority and presentation suites.
+		if strings.HasPrefix(clean, "Assets/StreamingAssets/Data/") {
+			if addXUnitTarget(repoRoot, []string{"Ashfall.Core.Tests/Data", "Ashfall.Core.Tests/Tooling"}, testSet, plan, file) {
+				continue
+			}
+		}
+
+		// 6. Localization catalog: strings.csv / POT drift is covered by the
+		// Localization suites (locale gate, ratchet, key parity).
+		if strings.HasPrefix(clean, "assets/l10n/") {
+			if addXUnitTarget(repoRoot, []string{"Ashfall.Core.Tests/Localization", "Ashfall.Core.Tests/Tooling"}, testSet, plan, file) {
+				continue
+			}
+		}
+
+		// 7. Gate/tooling/CI config: the Tooling source-contract and gate-drift
+		// suites assert on the manifest, scripts, and workflows themselves.
+		if strings.HasPrefix(clean, "scripts/") || strings.HasPrefix(clean, "docs/ci/") ||
+			strings.HasPrefix(clean, ".github/") || strings.HasPrefix(clean, "tools/gotools/") {
+			if addXUnitTarget(repoRoot, []string{"Ashfall.Core.Tests/Tooling"}, testSet, plan, file) {
+				continue
+			}
+		}
 	}
 
 	if len(plan.SelectedTests) == 0 {
@@ -196,4 +242,38 @@ func SelectTestsForFiles(repoRoot string, changedFiles []string) *SelectionPlan 
 	}
 
 	return plan
+}
+
+// addXUnitTarget records the first existing xUnit file/directory candidate for
+// a changed production file. Directories are valid run_test.sh targets, so a
+// host/data/tooling change always resolves to a bounded suite instead of the
+// whole project. Returns true when a target was matched (newly added or already
+// present for this invocation).
+func addXUnitTarget(
+	repoRoot string,
+	candidates []string,
+	testSet map[string]bool,
+	plan *SelectionPlan,
+	trigger string,
+) bool {
+	for _, cand := range candidates {
+		if cand == "" || cand == "Ashfall.Core.Tests/." {
+			continue
+		}
+		if _, err := os.Stat(filepath.Join(repoRoot, cand)); err != nil {
+			continue
+		}
+		if !testSet[cand] {
+			testSet[cand] = true
+			plan.SelectedTests = append(plan.SelectedTests, SelectedTest{
+				TargetFile:  cand,
+				Kind:        KindXUnit,
+				Command:     fmt.Sprintf("bash scripts/run_test.sh %s", cand),
+				Tier:        "Fast (<30s)",
+				TriggerFile: trigger,
+			})
+		}
+		return true
+	}
+	return false
 }

@@ -510,9 +510,28 @@ func runBuildManifest(args []string) {
 func runTasks(args []string) {
 	fs := flag.NewFlagSet("run-tasks", flag.ExitOnError)
 	concurrency := fs.Int("j", 4, "Concurrency / worker count")
+	asJSON := fs.Bool("json", false, "Read task array from stdin and emit JSON results")
 	_ = fs.Parse(args)
 
 	pool := runner.NewTaskRunnerPool(*concurrency)
+	if *asJSON {
+		var tasks []runner.Task
+		if err := json.NewDecoder(os.Stdin).Decode(&tasks); err != nil {
+			fmt.Fprintf(os.Stderr, "Error reading task JSON: %v\n", err)
+			os.Exit(2)
+		}
+		results := pool.RunTasks(tasks)
+		if err := json.NewEncoder(os.Stdout).Encode(results); err != nil {
+			fmt.Fprintf(os.Stderr, "Error writing task results: %v\n", err)
+			os.Exit(2)
+		}
+		for _, result := range results {
+			if result.ExitCode != 0 {
+				os.Exit(1)
+			}
+		}
+		return
+	}
 
 	// Example default task when no sub-commands supplied
 	tasks := []runner.Task{

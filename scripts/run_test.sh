@@ -9,6 +9,13 @@
 # each run at the project-wide 180 second limit.
 set -euo pipefail
 
+# Local runs opt into the shared Roslyn compiler server (see
+# Directory.Build.targets); CI and plain `dotnet` invocations keep the isolated
+# default. Set ASHFALL_BUILD_FAST=0 to force a cold, fully-isolated build.
+export ASHFALL_BUILD_FAST="${ASHFALL_BUILD_FAST:-1}"
+export DOTNET_CLI_TELEMETRY_OPTOUT="${DOTNET_CLI_TELEMETRY_OPTOUT:-1}"
+export DOTNET_NOLOGO=1
+
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 TEST_ROOT="$ROOT/Ashfall.Core.Tests"
 TEST_PROJECT="$TEST_ROOT/Ashfall.Core.Tests.csproj"

@@ -6,6 +6,8 @@ using Ashfall.Core.UI;
 using AtomicWar.GodotApp.Audio;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
+using AtomicWar.GodotApp.Localization;
+
 namespace AtomicWar.GodotApp.UI
 {
     public partial class EmergencyResponseHud : Control, IBindablePanel
@@ -211,7 +213,7 @@ namespace AtomicWar.GodotApp.UI
                         Disabled = !act.IsEnabled
                     };
                     if (!act.IsEnabled)
-                        btn.TooltipText = "Action unavailable — prerequisites not met.";
+                        btn.TooltipText = AshfallLocalization.Tr("ui.emergency_response.action_unavailable", "Action unavailable — prerequisites not met.");
                     string actionId = act.ActionId;
                     btn.Pressed += () =>
                     {

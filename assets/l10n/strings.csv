@@ -1466,3 +1466,21 @@ ui.greenhouse.seed.cold_legume,Cold Legume,Kältebohne,src/UI/GreenhousePanel.cs
 ui.greenhouse.seed.frost_pea,Frost Pea,Frosterbse,src/UI/GreenhousePanel.cs
 ui.greenhouse.seed.glacier_greens,Glacier Greens,Gletschergemüse,src/UI/GreenhousePanel.cs
 ui.greenhouse.seed.mixed_packet,Assorted Seed Packet,Sortierte Samentüte,src/UI/GreenhousePanel.cs
+ui.autopsy.unbound,Autopsy report host session is not bound. Post-mortem records and tissue pathology findings are offline.,Autopsie-Host-Sitzung ist nicht gebunden. Post-mortem-Berichte und Gewebepathologie-Befunde sind offline.,src/UI/AutopsyReportPanel.cs
+ui.crossing_quest.unbound,Panel not bound to session.,Panel ist nicht an eine Sitzung gebunden.,src/UI/CrossingQuestPanel.cs
+ui.emergency_response.action_unavailable,Action unavailable — prerequisites not met.,Aktion nicht verfügbar — Voraussetzungen nicht erfüllt.,src/UI/EmergencyResponseHud.cs
+ui.maritime.unavailable,Maritime session unavailable.,Maritime Sitzung nicht verfügbar.,src/UI/MaritimePanel.cs
+ui.muster.unbound,Panel not bound to active Muster session.,Panel ist nicht an eine aktive Muster-Sitzung gebunden.,src/UI/MusterPanel.cs
+ui.standing_record.unavailable,Standing Record system unavailable.,Ständiges Register-System nicht verfügbar.,src/UI/StandingRecordPanel.cs
+ui.crafting.no_session,No crafting session bound.,Keine Handwerkssitzung gebunden.,src/UI/CraftingPanel.cs
+ui.crafting.no_active,No active crafts. Start a recipe above.,Keine aktiven Handwerke. Starte oben ein Rezept.,src/UI/CraftingPanel.cs
+ui.dynamic_questline.active_operations,ACTIVE OPERATIONS,AKTIVE OPERATIONEN,src/UI/DynamicQuestlinePanel.cs
+ui.dynamic_questline.resolved_failed,RESOLVED & FAILED,ABGESCHLOSSEN & GESCHEITERT,src/UI/DynamicQuestlinePanel.cs
+ui.insar.survey_platform,SURVEY PLATFORM,VERMESSUNGSPLATTFORM,src/UI/InSarMappingPanel.cs
+ui.insar.repeat_pass_survey,REPEAT-PASS SURVEY,WIEDERHOLUNGSDURCHGANG,src/UI/InSarMappingPanel.cs
+ui.inventory_detail.no_item,No item selected.,Kein Gegenstand ausgewählt.,src/UI/InventoryDetailPanel.cs
+ui.inventory_detail.no_stats,No special stats.,Keine besonderen Werte.,src/UI/InventoryDetailPanel.cs
+ui.journal_detail.no_session,No journal session bound.,Keine Journalsitzung gebunden.,src/UI/JournalDetailPanel.cs
+ui.journal_detail.no_entries,No journal entries yet.,Noch keine Journaleinträge.,src/UI/JournalDetailPanel.cs
+ui.shelter_schedule.toggle_curfew,Toggle Night Curfew,Nachtausgangssperre umschalten,src/UI/ShelterSchedulePanel.cs
+ui.shelter_schedule.emergency_override,Emergency Override,Notfallübersteuerung,src/UI/ShelterSchedulePanel.cs

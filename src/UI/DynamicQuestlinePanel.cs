@@ -6,6 +6,8 @@ using Ashfall.Core.Quests;
 using Ashfall.Core.UI;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
+using AtomicWar.GodotApp.Localization;
+
 namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
@@ -79,11 +81,11 @@ namespace AtomicWar.GodotApp.UI
             _contentStack.AddChild(_detailText = new Label { AutowrapMode = TextServer.AutowrapMode.WordSmart });
 
             _contentStack.AddChild(AshfallUiHelpers.MakeSeparator());
-            _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader("ACTIVE OPERATIONS"));
+            _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader(AshfallLocalization.Tr("ui.dynamic_questline.active_operations", "ACTIVE OPERATIONS")));
             _contentStack.AddChild(_activeText = new Label { AutowrapMode = TextServer.AutowrapMode.WordSmart });
 
             _contentStack.AddChild(AshfallUiHelpers.MakeSeparator());
-            _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader("RESOLVED & FAILED"));
+            _contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader(AshfallLocalization.Tr("ui.dynamic_questline.resolved_failed", "RESOLVED & FAILED")));
             _contentStack.AddChild(_historyText = new Label { AutowrapMode = TextServer.AutowrapMode.WordSmart });
 
             var note = AshfallUiHelpers.MakeBody(

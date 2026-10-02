@@ -8,6 +8,8 @@ using Ashfall.Core.Muster;
 using Ashfall.Core.UI;
 using CoreTheme = Ashfall.Core.UI.Theme;
 
+using AtomicWar.GodotApp.Localization;
+
 namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
@@ -195,7 +197,7 @@ namespace AtomicWar.GodotApp.UI
 
             if (_muster == null)
             {
-                _escalationStatus.Text = "Panel not bound to active Muster session.";
+                _escalationStatus.Text = AshfallLocalization.Tr("ui.muster.unbound", "Panel not bound to active Muster session.");
                 return;
             }
 

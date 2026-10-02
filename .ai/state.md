@@ -1,5 +1,44 @@
 # Current Task State
 
+## Build & test speedups — FULLY INTEGRATED (2026-10-02)
+
+Integrated the approved 5-task plan. Focused-test selector mappings now cover
+host/data/tooling changes; five xUnit manifest gates reuse `build_core_tests`
+with `--no-build`; CI NuGet caching keys on the three committed package lock
+files; local test/gate wrappers opt into shared Roslyn compilation through
+`ASHFALL_BUILD_FAST=1`; and `run-gates.py --jobs N` delegates independent light
+gate batches to the existing Go task runner while build, Godot, and dependency
+gates remain serial. Default `--jobs 1` remains serial.
+
+Verification: `go test -C tools/gotools ./pkg/selector/ ./pkg/runner/` PASS;
+focused `go vet` PASS; both Go CLIs rebuilt; selector dry run mapped changed
+host files to the Tooling xUnit target; manifest/inventory checks PASS; scoped
+serial hygiene gate PASS; 3 unaffected light gates PASS with `--jobs 4`; default
+and fast Core test-project builds both PASS (0 warnings/errors). POT drift check
+remains blocked by concurrent, out-of-scope localization catalog edits; those
+files were preserved and excluded from this plan's commit. No full test suite.
+
+Plan archived at
+`.ai/plans/integrated/tooling/INTEGRATED_test-build-speedups-2026-10-02.md`.
+
+---
+
+## Repo-wide 6-loop sweep round 2 — FULLY INTEGRATED (2026-10-02)
+
+User-directed ("do 6 looping phases of find issues, repair them, harden spots where
+issues found and repeat repo wide!"). Plan archived
+`.ai/plans/integrated/maintenance/INTEGRATED_repo-wide-6-loop-sweep-round2-2026-10-02.md`.
+**Loops 1–3:** localized the last unbound/unavailable placeholders in
+`AutopsyReportPanel`, `CrossingQuestPanel`, `EmergencyResponseHud`, `MaritimePanel`,
+`MusterPanel`, `StandingRecordPanel`. **Loops 4–6:** fully localized and registered
+`CraftingPanel`, `DynamicQuestlinePanel`, `InSarMappingPanel`, `InventoryDetailPanel`,
+`JournalDetailPanel`, `ShelterSchedulePanel` (12 new `ui.*` keys; zero-tolerance raw
+chrome gate now holds them). **Hardening:** `Text=` ratchet 510→490; raw `Make*(...)`
+ratchet 1411→1399. **Evidence:** host build 0/0; `StringsCsvLocaleGateTests` 4/4;
+`StatusPanelThresholdTests` 211/211; `LocalizationRatchetTests` 3/3;
+`ExpeditionLocaleKeysTests` 5/5; `l10n_drift_gate` PASS (1485 keys, German parity);
+0 duplicate keys; `git diff --check` clean. No full suite; no commit.
+
 ## l10n sweep wave 9 — the three largest unregistered panels — FULLY INTEGRATED (2026-10-02)
 
 User-directed ("work on this small task! Remaining: the broad ~150-file

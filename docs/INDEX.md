@@ -1,8 +1,8 @@
 # ASHFALL — Master Documentation Index
 
 **Authoritative Engine:** Godot 4.7+ (.NET / C#) | **Status:** Migration Complete (Unity host removed)
-**Total Indexed Documents:** 5627 | **Total Characters:** 6,974,319,815 | **Last Verified:** 2026-10-02
-**Oversized (>= 100,000 characters):** 3553 documents carrying 6,942,370,467 characters — tracked in full, see the register below
+**Total Indexed Documents:** 5627 | **Total Characters:** 6,974,320,697 | **Last Verified:** 2026-10-02
+**Oversized (>= 100,000 characters):** 3553 documents carrying 6,942,371,274 characters — tracked in full, see the register below
 
 | Status Badge | Meaning | Corpus Count |
 |---|---|---|
@@ -12,7 +12,7 @@
 
 ---
 
-## Oversized Document Register (>= 100,000 characters) — 3553 documents, 6,942,370,467 characters
+## Oversized Document Register (>= 100,000 characters) — 3553 documents, 6,942,371,274 characters
 
 Authored plan and prose documents at or above the size threshold, recorded to the exact character count. These documents are tracked in full: the register reports their size so it stays visible and reviewable, and no document is excluded from the corpus or from this index.
 
@@ -1440,8 +1440,8 @@ Authored plan and prose documents at or above the size threshold, recorded to th
 | 1,595,181 | [`docs/expansions/prose_wave134/cw134_12_the_book_is_the_ground_i_made_plan.md`](expansions/prose_wave134/cw134_12_the_book_is_the_ground_i_made_plan.md) |
 | 1,593,812 | [`docs/plans/integrated/content/INTEGRATED_cw133_18_filled_not_full_plan.md`](plans/integrated/content/INTEGRATED_cw133_18_filled_not_full_plan.md) |
 | 1,593,808 | [`docs/expansions/prose_wave137/cw137_02_the_last_leaflet_at_the_printworks_plan.md`](expansions/prose_wave137/cw137_02_the_last_leaflet_at_the_printworks_plan.md) |
+| 1,593,447 | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) |
 | 1,593,133 | [`docs/expansions/prose_wave132/cw132_10_nine_sets_of_tracks_plan.md`](expansions/prose_wave132/cw132_10_nine_sets_of_tracks_plan.md) |
-| 1,592,640 | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) |
 | 1,591,338 | [`docs/expansions/prose_wave137/cw137_13_an_evening_story_slot_without_a_lesson_plan.md`](expansions/prose_wave137/cw137_13_an_evening_story_slot_without_a_lesson_plan.md) |
 | 1,591,008 | [`docs/expansions/prose_wave137/cw137_05_the_rate_has_never_gone_down_plan.md`](expansions/prose_wave137/cw137_05_the_rate_has_never_gone_down_plan.md) |
 | 1,590,335 | [`docs/expansions/prose_wave131/cw131_17_a_clipboard_at_the_rope_plan.md`](expansions/prose_wave131/cw131_17_a_clipboard_at_the_rope_plan.md) |
@@ -3818,7 +3818,7 @@ The following documents share identical or near-identical filenames across root,
 |---|---|---|---|
 | 🟢 `CURRENT` | [`docs/CI.md`](CI.md) | 8,164 | **ASHFALL — Continuous Integration & Verification Guide** — **Authoritative host/engine:** Godot 4.7+ (.NET / C#) (`project.godot`) |
 | 🟢 `CURRENT` | [`docs/ci/CATALOG_AUDIT_POLICY.md`](ci/CATALOG_AUDIT_POLICY.md) | 2,962 | **Catalog Audit Policy (`docs/ci/catalog_audit_policy.json`)** — Read-only reference for the `catalog_audit` CI gate |
-| 🟢 `CURRENT` | [`docs/ci/GATE_INVENTORY.md`](ci/GATE_INVENTORY.md) | 6,813 | **CI Gate Inventory (Plan VIII · Task 24.1)** — Generated from `docs/ci/CI_GATE_MANIFEST.json` — 73 gates, 69 fast. Regenerate with `python3 scripts/ci/run-gates.py ... |
+| 🟢 `CURRENT` | [`docs/ci/GATE_INVENTORY.md`](ci/GATE_INVENTORY.md) | 6,888 | **CI Gate Inventory (Plan VIII · Task 24.1)** — Generated from `docs/ci/CI_GATE_MANIFEST.json` — 73 gates, 69 fast. Regenerate with `python3 scripts/ci/run-gates.py ... |
 | 🟢 `CURRENT` | [`docs/ci/GATING_VS_DIAGNOSTIC_CHECKS.md`](ci/GATING_VS_DIAGNOSTIC_CHECKS.md) | 9,509 | **ASHFALL — Verification Gates vs. Diagnostic-Only Checks** — **Date:** 2026-10-02 |
 | 🟢 `CURRENT` | [`docs/ci/README.md`](ci/README.md) | 5,485 | **ASHFALL CI — Canonical Verification Contract (Plan VIII · Task 24)** — One runner, one manifest, one meaning of "green". |
 | 🟢 `CURRENT` | [`docs/ci/TASK132_PRE2_BASELINE.md`](ci/TASK132_PRE2_BASELINE.md) | 8,675 | **Task #132 — PRE-2 Trusted Baseline** — Captured after PRE-1 (expedition test-oracle repair) and before any domain |
@@ -6975,7 +6975,7 @@ The following documents share identical or near-identical filenames across root,
 | 🟢 `CURRENT` | [`Seal-steps/ashfall-wave2-successor-corpus-tranche-two-and-ship-readiness-program-2026-09-19.md`](../Seal-steps/ashfall-wave2-successor-corpus-tranche-two-and-ship-readiness-program-2026-09-19.md) | 90,201 | **ASHFALL — Wave 2, Program B: Successor Corpus Tranche-2 & Ship-Readiness Program** — This is Wave 2 Program B, the final forward document in the 2026-09-19 |
 | 🟢 `CURRENT` | [`TEST_POLICY.md`](../TEST_POLICY.md) | 5,220 | **ASHFALL Test Policy** — Tests protect current behavior; they are not a production-count target. This |
 | 🟢 `CURRENT` | [`VIBE.md`](../VIBE.md) | 18,363 | **PROJECT: ASHFALL — Godot 2D Survival Management Game** — This is the active, compact instruction authority for humans and AI agents. |
-| 🟢 `CURRENT` | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) | 1,592,640 | **ASHFALL Worktree Ownership** — User-directed six-loop UI l10n hardening. Plan: |
+| 🟢 `CURRENT` | [`WORKTREE_OWNERSHIP.md`](../WORKTREE_OWNERSHIP.md) | 1,593,447 | **ASHFALL Worktree Ownership** — User-directed ("find 5 tasks that can help speed up building and testing the game |
 | 🟢 `CURRENT` | [`addons/godot_mcp/commands/master_checklist.md`](../addons/godot_mcp/commands/master_checklist.md) | 1,457 | **Master Checklist** — - [x] 01. `project_creation_commands.gd` |
 | 🟢 `CURRENT` | [`addons/ziva_agent/LICENSE.md`](../addons/ziva_agent/LICENSE.md) | 282 | **Proprietary License** — All rights reserved. |
 | 🟢 `CURRENT` | [`addons/ziva_agent/README.md`](../addons/ziva_agent/README.md) | 2,787 | **Ziva AI Agent – The S-Tier AI Coding Assistant for Godot** — ![Godot 4.2+](https://godotengine.org/) |

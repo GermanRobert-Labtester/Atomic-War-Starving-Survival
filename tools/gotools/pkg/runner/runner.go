@@ -20,13 +20,14 @@ type Task struct {
 }
 
 type TaskResult struct {
-	ID        string        `json:"id"`
-	ExitCode  int           `json:"exit_code"`
-	Duration  time.Duration `json:"duration"`
-	Output    string        `json:"output"`
-	PeakRSSKb int64         `json:"peak_rss_kb"`
-	Error     string        `json:"error,omitempty"`
-	TimedOut  bool          `json:"timed_out"`
+	ID              string        `json:"id"`
+	ExitCode        int           `json:"exit_code"`
+	Duration        time.Duration `json:"duration"`
+	DurationSeconds float64       `json:"duration_seconds"`
+	Output          string        `json:"output"`
+	PeakRSSKb       int64         `json:"peak_rss_kb"`
+	Error           string        `json:"error,omitempty"`
+	TimedOut        bool          `json:"timed_out"`
 }
 
 type TaskRunnerPool struct {
@@ -83,6 +84,7 @@ func executeTask(t Task) TaskResult {
 
 	err := cmd.Run()
 	res.Duration = time.Since(start)
+	res.DurationSeconds = res.Duration.Seconds()
 	res.Output = buf.String()
 
 	if ctx.Err() == context.DeadlineExceeded {

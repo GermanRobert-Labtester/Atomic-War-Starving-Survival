@@ -7,6 +7,8 @@ using Ashfall.Core.Crossing;
 using Ashfall.Core.UI;
 using CoreTheme = Ashfall.Core.UI.Theme;
 
+using AtomicWar.GodotApp.Localization;
+
 namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
@@ -174,7 +176,7 @@ namespace AtomicWar.GodotApp.UI
 
             if (_expansions == null)
             {
-                _emptyState.Text = "Panel not bound to session.";
+                _emptyState.Text = AshfallLocalization.Tr("ui.crossing_quest.unbound", "Panel not bound to session.");
                 _emptyState.Visible = true;
                 return;
             }
